@@ -27,6 +27,7 @@ jobs:
         env:
           IFIND_AUTH_TOKEN: ${{ secrets.IFIND_AUTH_TOKEN }}
           IFIND_AUTH_TOKEN_BACKUP: ${{ secrets.IFIND_AUTH_TOKEN_BACKUP }}
+          IFIND_ACTIVE_SLOT: primary
           IFIND_USER_AGENT: github-actions
         run: python daily_update.py
 

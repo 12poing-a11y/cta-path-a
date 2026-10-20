@@ -12,7 +12,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
-from ifind_call import call  # noqa: E402
+from ifind_call import active_slot, call  # noqa: E402
+from position_rules import apply_portfolio_caps  # noqa: E402
 
 LOOKBACK_DAYS = 260
 WARMUP = 60
@@ -25,7 +26,9 @@ def _load_cfg():
     equity = float(cfg.get("equity", 200_000))
     risk_pct = float(cfg.get("risk_pct", 1.5))
     l1_mult = float(cfg.get("l1_mult", 1.0))
-    return cfg, equity, equity * risk_pct / 100.0 * l1_mult
+    max_positions = int(cfg.get("max_positions", 3))
+    max_gross_pct = float(cfg.get("max_gross_exposure_pct", 50))
+    return cfg, equity, equity * risk_pct / 100.0 * l1_mult, max_positions, max_gross_pct
 
 
 def _answer_text(res: dict) -> str:
@@ -345,7 +348,7 @@ def _write_equity_svg(curve: list[dict], path: Path, title: str):
     return path
 
 
-def simulate(symbols, risk_budget, equity0):
+def simulate(symbols, risk_budget, equity0, max_positions=3, max_gross_pct=50.0):
     series = {}
     errors = {}
     for u in symbols:
@@ -404,7 +407,7 @@ def simulate(symbols, risk_budget, equity0):
         dd = (peak - equity) / peak * 100 if peak else 0
         max_dd = max(max_dd, dd)
 
-        new_pos = {}
+        cands = []
         for code, s in series.items():
             i = idx[code].get(d)
             if i is None or i < WARMUP:
@@ -421,14 +424,50 @@ def simulate(symbols, risk_budget, equity0):
             lots = int(math.floor(risk_budget / risk_per_lot))
             if lots <= 0:
                 continue
-            new_pos[code] = {
-                "direction": direction,
-                "lots": lots,
-                "atr": round(a, 2),
-                "r20": round(r20, 3),
-                "r60": round(r60, 3),
+            close = hist[i]["close"]
+            cands.append(
+                {
+                    "code": code,
+                    "direction": direction,
+                    "lots": lots,
+                    "close": close,
+                    "mult": s["meta"]["mult"],
+                    "r20": round(r20, 3),
+                    "r60": round(r60, 3),
+                    "atr": round(a, 2),
+                }
+            )
+        selected, _meta = apply_portfolio_caps(
+            cands,
+            equity=equity0,
+            max_positions=max_positions,
+            max_gross_exposure_pct=max_gross_pct,
+        )
+        # Cap vs current equity as well (never >50% of live equity)
+        if equity > 0 and equity != equity0:
+            selected, _meta = apply_portfolio_caps(
+                selected,
+                equity=equity,
+                max_positions=max_positions,
+                max_gross_exposure_pct=max_gross_pct,
+            )
+        new_pos = {
+            c["code"]: {
+                "direction": c["direction"],
+                "lots": int(c["lots"]),
+                "atr": c.get("atr"),
+                "r20": c.get("r20"),
+                "r60": c.get("r60"),
             }
+            for c in selected
+            if int(c.get("lots") or 0) > 0
+        }
         pos = new_pos
+        gross = sum(
+            abs(p["lots"]) * series[c]["hist"][idx[c][d]]["close"] * series[c]["meta"]["mult"]
+            for c, p in pos.items()
+            if idx[c].get(d) is not None
+        )
         curve.append(
             {
                 "date": d,
@@ -436,6 +475,7 @@ def simulate(symbols, risk_budget, equity0):
                 "held": len(pos),
                 "pnl": round(pnl, 2),
                 "dd_pct": round(dd, 3),
+                "gross_pct": round(gross / equity * 100, 2) if equity else 0,
                 "codes": sorted(pos.keys()),
             }
         )
@@ -454,9 +494,12 @@ def simulate(symbols, risk_budget, equity0):
     pool = ",".join(u["code"] for u in symbols)
     return {
         "ok": True,
-        "schema_version": "cta-backtest-v3-zl-1y",
+        "schema_version": "cta-backtest-v4-top3-50pct",
         "batch": BATCH_LABEL,
         "data_source": "iFinD 主力连续 ZL",
+        "max_positions": max_positions,
+        "max_gross_exposure_pct": max_gross_pct,
+        "ifind_slot": active_slot(),
         "universe_n": len(symbols),
         "universe": pool,
         "start": trade_dates[0],
@@ -478,15 +521,25 @@ def simulate(symbols, risk_budget, equity0):
         "summary": (
             f"ZL主力 {trade_dates[0]}→{trade_dates[-1]} 权益 {equity:.0f}（{ret_pct:+.2f}%），"
             f"MaxDD {max_dd:.2f}%，日胜率 {(wins/n*100 if n else 0):.1f}%（{n}日），"
-            f"均持仓 {avg_held:.1f}，池 {len(symbols)}，结论 {conclusion}"
+            f"均持仓 {avg_held:.1f}，池 {len(symbols)}，"
+            f"Top{max_positions}/敞口≤{max_gross_pct}%，结论 {conclusion}"
         ),
     }
 
 
 def main():
-    cfg, equity0, risk_budget = _load_cfg()
-    print(f"[bt] ZL equity={equity0} risk={risk_budget} n={len(cfg['symbols'])}")
-    out = simulate(cfg["symbols"], risk_budget, equity0)
+    cfg, equity0, risk_budget, max_positions, max_gross_pct = _load_cfg()
+    print(
+        f"[bt] ZL equity={equity0} risk={risk_budget} n={len(cfg['symbols'])} "
+        f"max_pos={max_positions} max_gross={max_gross_pct}% ifind={active_slot()}"
+    )
+    out = simulate(
+        cfg["symbols"],
+        risk_budget,
+        equity0,
+        max_positions=max_positions,
+        max_gross_pct=max_gross_pct,
+    )
     path = ROOT / "historical_backtest_latest.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     arch = ROOT / "archive"

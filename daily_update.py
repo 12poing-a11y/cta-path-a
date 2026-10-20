@@ -12,22 +12,58 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
-from ifind_call import call  # noqa: E402
+from ifind_call import call, active_slot  # noqa: E402
+from position_rules import (  # noqa: E402
+    apply_portfolio_caps,
+    compound_equity,
+    risk_budget_yuan,
+)
 
 TZ = ZoneInfo("Asia/Shanghai")
+EQUITY_STATE_PATH = ROOT / "equity_state.json"
 
 
 def _load_universe():
     cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
-    equity = float(cfg.get("equity", 200_000))
+    equity_base = float(cfg.get("equity", 200_000))
+    compound = bool(cfg.get("equity_compound", True))
     risk_pct = float(cfg.get("risk_pct", 1.5))
     l1_mult = float(cfg.get("l1_mult", 1.0))
+    max_positions = int(cfg.get("max_positions", 3))
+    max_gross_pct = float(cfg.get("max_gross_exposure_pct", 50))
     symbols = cfg.get("symbols") or []
-    return equity, risk_pct, l1_mult, symbols
+    return equity_base, compound, risk_pct, l1_mult, max_positions, max_gross_pct, symbols
 
 
-EQUITY, RISK_PCT, L1_MULT, UNIVERSE = _load_universe()
-L1_RISK = EQUITY * RISK_PCT / 100.0 * L1_MULT
+def _load_live_equity(equity_base: float) -> tuple[float, dict]:
+    """Paper equity from equity_state.json (updated by weekly / prior days)."""
+    state = {
+        "equity_base": equity_base,
+        "equity": equity_base,
+        "peak": equity_base,
+        "asof": None,
+        "source": "universe",
+    }
+    if EQUITY_STATE_PATH.exists():
+        try:
+            raw = json.loads(EQUITY_STATE_PATH.read_text(encoding="utf-8"))
+            state.update(raw if isinstance(raw, dict) else {})
+        except Exception:
+            pass
+    live = float(state.get("equity") or equity_base)
+    if live <= 0:
+        live = equity_base
+    state["equity"] = live
+    state["equity_base"] = equity_base
+    return live, state
+
+
+EQUITY_BASE, EQUITY_COMPOUND, RISK_PCT, L1_MULT, MAX_POSITIONS, MAX_GROSS_PCT, UNIVERSE = (
+    _load_universe()
+)
+LIVE_EQUITY, _EQUITY_STATE = _load_live_equity(EQUITY_BASE)
+EQUITY = compound_equity(LIVE_EQUITY, EQUITY_BASE, EQUITY_COMPOUND)
+L1_RISK = risk_budget_yuan(EQUITY, RISK_PCT, L1_MULT)
 
 
 def _answer_text(res: dict) -> str:
@@ -181,7 +217,7 @@ def _fetch_snapshot(code: str, name: str) -> dict:
     return {"close": close, "r20": r20, "r60": r60, "atr": atr, "raw_preview": ans[:240]}
 
 
-def _signal(u: dict, snap: dict) -> dict:
+def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
     close, atr, r20, r60 = snap.get("close"), snap.get("atr"), snap.get("r20"), snap.get("r60")
     risk_per_lot = (atr * u["mult"]) if atr is not None else None
     align = "冲突/不足"
@@ -193,14 +229,14 @@ def _signal(u: dict, snap: dict) -> dict:
 
     lots = 0
     if align == "同向" and risk_per_lot and risk_per_lot > 0:
-        lots = int(math.floor(L1_RISK / risk_per_lot))
+        lots = int(math.floor(risk_budget / risk_per_lot))
 
     if align != "同向":
         action = "空仓（20日与60日不同向）"
     elif lots <= 0:
         action = f"有{direction}向，1.5%仍不足1手（每手约{risk_per_lot}）"
     else:
-        action = f"路径A记账：记{direction}{lots}手（不下单）"
+        action = f"候选：{direction}{lots}手（待Top{MAX_POSITIONS}/敞口≤{MAX_GROSS_PCT}%筛选）"
 
     today = datetime.now(TZ).strftime("%Y%m%d")
     return {
@@ -217,8 +253,10 @@ def _signal(u: dict, snap: dict) -> dict:
         "r60": r60,
         "align": align,
         "direction": direction if align == "同向" else "空仓",
+        "lots_raw": lots,
         "lots_l1": lots,
         "lots_full": lots,
+        "selected": False,
         "action": action,
     }
 
@@ -227,9 +265,63 @@ def is_weekday_cn() -> bool:
     return datetime.now(TZ).weekday() < 5
 
 
+def _apply_caps(signals: list[dict], *, sizing_equity: float) -> dict:
+    cands = []
+    for s in signals:
+        if s.get("align") != "同向":
+            continue
+        lots = int(s.get("lots_raw") or s.get("lots_l1") or 0)
+        if lots <= 0 or not s.get("close"):
+            continue
+        cands.append(
+            {
+                "code": s["code"],
+                "direction": s.get("direction"),
+                "lots": lots,
+                "close": s.get("close"),
+                "mult": s.get("mult"),
+                "r20": s.get("r20"),
+                "r60": s.get("r60"),
+                "atr": s.get("atr"),
+            }
+        )
+    selected, meta = apply_portfolio_caps(
+        cands,
+        equity=sizing_equity,
+        max_positions=MAX_POSITIONS,
+        max_gross_exposure_pct=MAX_GROSS_PCT,
+    )
+    by_code = {c["code"]: c for c in selected}
+    for s in signals:
+        code = s.get("code")
+        if code in by_code:
+            lots = int(by_code[code]["lots"])
+            s["lots_l1"] = lots
+            s["lots_full"] = lots
+            s["selected"] = True
+            s["action"] = f"路径A记账：记{s.get('direction')}{lots}手（Top{MAX_POSITIONS}·敞口≤{MAX_GROSS_PCT}%·不下单）"
+        else:
+            raw = int(s.get("lots_raw") or 0)
+            if s.get("align") == "同向" and raw > 0:
+                s["lots_l1"] = 0
+                s["lots_full"] = 0
+                s["selected"] = False
+                s["action"] = f"有信号但未入选（限{MAX_POSITIONS}品种/总仓≤{MAX_GROSS_PCT}%）"
+            else:
+                s["selected"] = False
+    return meta
+
+
 def main():
     now = datetime.now(TZ)
-    print(f"[cta] start {now.isoformat()} risk={L1_RISK}")
+    live, state = _load_live_equity(EQUITY_BASE)
+    sizing_eq = compound_equity(live, EQUITY_BASE, EQUITY_COMPOUND)
+    risk_budget = risk_budget_yuan(sizing_eq, RISK_PCT, L1_MULT)
+    print(
+        f"[cta] start {now.isoformat()} equity_base={EQUITY_BASE} live={live} "
+        f"sizing={sizing_eq} compound={EQUITY_COMPOUND} risk={risk_budget} "
+        f"max_pos={MAX_POSITIONS} max_gross={MAX_GROSS_PCT}% ifind={active_slot()}"
+    )
     if not is_weekday_cn():
         print("[cta] skip: weekend")
         out = {"asof": now.strftime("%Y%m%d"), "skipped": "weekend"}
@@ -243,7 +335,7 @@ def main():
         print(f"[cta] fetch {u['code']}...")
         try:
             snap = _fetch_snapshot(u["code"], u["name"])
-            sig = _signal(u, snap)
+            sig = _signal(u, snap, risk_budget=risk_budget)
             signals.append(sig)
             print(
                 f"  {u['code']} close={sig['close']} r20={sig['r20']} r60={sig['r60']} "
@@ -256,19 +348,42 @@ def main():
                     "name": u["name"],
                     "error": str(e)[:300],
                     "lots_l1": 0,
+                    "lots_raw": 0,
+                    "selected": False,
                     "direction": "空仓",
                     "action": f"拉取失败: {e}",
                 }
             )
             print(f"  ERR {u['code']}: {e}")
 
+    port_meta = _apply_caps(signals, sizing_equity=sizing_eq)
+    port_meta["sizing_equity"] = round(sizing_eq, 2)
+    port_meta["equity_compound"] = EQUITY_COMPOUND
+    print(
+        f"[cta] portfolio selected={port_meta.get('selected')} "
+        f"gross={port_meta.get('gross_after')} ({port_meta.get('gross_pct')}%) "
+        f"scale={port_meta.get('scale')}"
+    )
+
     report = {
         "asof": now.strftime("%Y%m%d"),
         "updated_at": now.isoformat(),
-        "equity": EQUITY,
+        "equity_base": EQUITY_BASE,
+        "equity": sizing_eq,
+        "equity_live": live,
+        "equity_compound": EQUITY_COMPOUND,
         "risk_pct": RISK_PCT,
         "l1_mult": L1_MULT,
-        "l1_risk_yuan": L1_RISK,
+        "l1_risk_yuan": risk_budget,
+        "max_positions": MAX_POSITIONS,
+        "max_gross_exposure_pct": MAX_GROSS_PCT,
+        "ifind_slot": active_slot(),
+        "portfolio": port_meta,
+        "equity_state": {
+            "asof": state.get("asof"),
+            "source": state.get("source"),
+            "peak": state.get("peak"),
+        },
         "signals": signals,
     }
     path = ROOT / "l1_report_risk15.json"

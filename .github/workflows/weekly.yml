@@ -24,11 +24,14 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run backtest
+        env:
+          IFIND_ACTIVE_SLOT: primary
         run: python weekly_backtest.py
 
       - name: Sync Notion
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          IFIND_ACTIVE_SLOT: primary
         run: python notion_sync.py backtest
 
       - name: Upload artifacts

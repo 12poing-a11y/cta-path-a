@@ -8,8 +8,20 @@
 
 1. **信号**：主力合约近 20 日收益与近 60 日收益同向 → 顺势；否则空仓  
 2. **仓位**：`lots = floor(风险预算 / (ATR14 × 合约乘数))`  
-3. **参数**：见 `universe.json`（Equity / 风险% / 多板块品种池）  
-4. **路径A**：只记账、不自动下单；用于规则与执行纪律验证
+3. **组合上限**：最多 **3** 个品种；总名义敞口 `Σ|lots|×close×mult` ≤ 权益的 **50%**（`position_rules.apply_portfolio_caps`）  
+4. **参数**：见 `universe.json`（Equity ¥20万 / 风险% / `max_positions` / `max_gross_exposure_pct`）  
+5. **路径A**：只记账、不自动下单；用于规则与执行纪律验证
+
+## iFinD Key（primary / backup）
+
+启动时**始终优先 primary**。额度/鉴权失败时进程内切到 backup；**默认不写回** `mcp_config.json`（避免粘在 backup）。
+
+| 变量 | 作用 |
+|------|------|
+| `IFIND_AUTH_TOKEN` | primary Key |
+| `IFIND_AUTH_TOKEN_BACKUP` | backup Key（可选） |
+| `IFIND_ACTIVE_SLOT` | 默认 `primary`；仅调试时设 `backup` |
+| `IFIND_PERSIST_FAILOVER` | 设为 `1` 才把 failover 写入本地 `mcp_config.json` |
 
 ## 手机无电脑自动验证
 

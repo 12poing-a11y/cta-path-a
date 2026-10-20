@@ -51,27 +51,55 @@ def _normalize_token(raw: str) -> str:
     return s
 
 
+def _resolve_slot(requested: str, primary: str, backup: str) -> str:
+    """Prefer primary unless IFIND_ACTIVE_SLOT explicitly forces backup (and backup exists)."""
+    req = (requested or "primary").strip().lower() or "primary"
+    if req == "backup" and backup:
+        return "backup"
+    if primary:
+        return "primary"
+    if backup:
+        return "backup"
+    return "primary"
+
+
 def _load_config():
-    """Prefer env (GitHub Actions secrets), then local mcp_config.json."""
-    primary = _normalize_token(os.environ.get("IFIND_AUTH_TOKEN") or "")
-    backup = _normalize_token(os.environ.get("IFIND_AUTH_TOKEN_BACKUP") or "")
-    slot = (os.environ.get("IFIND_ACTIVE_SLOT") or "primary").strip() or "primary"
-    if primary or backup:
+    """Prefer env (GitHub Actions secrets), then local mcp_config.json.
+
+    Startup always prefers primary when available. A sticky ``active_slot=backup``
+    in mcp_config.json is ignored unless ``IFIND_ACTIVE_SLOT=backup``.
+    """
+    env_primary = _normalize_token(os.environ.get("IFIND_AUTH_TOKEN") or "")
+    env_backup = _normalize_token(os.environ.get("IFIND_AUTH_TOKEN_BACKUP") or "")
+    env_slot = (os.environ.get("IFIND_ACTIVE_SLOT") or "").strip()
+
+    if env_primary or env_backup:
+        slot = _resolve_slot(env_slot or "primary", env_primary, env_backup)
         return {
-            "auth_token": primary,
-            "auth_token_backup": backup,
-            "active_slot": slot if (slot == "backup" and backup) or (slot == "primary" and primary) else (
-                "primary" if primary else "backup"
-            ),
+            "auth_token": env_primary,
+            "auth_token_backup": env_backup,
+            "active_slot": slot,
         }
+
     if CONFIG_PATH.exists():
-        return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        cfg = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        primary = _normalize_token(cfg.get("auth_token") or "")
+        backup = _normalize_token(cfg.get("auth_token_backup") or "")
+        # Reset sticky backup: prefer primary on every process start.
+        requested = env_slot or "primary"
+        cfg["active_slot"] = _resolve_slot(requested, primary, backup)
+        if cfg.get("failover_reason") and cfg["active_slot"] == "primary":
+            cfg.pop("failover_reason", None)
+        return cfg
+
     raise RuntimeError("缺少 IFIND_AUTH_TOKEN / mcp_config.json")
 
 
 def _save_config(cfg):
-    # In CI, do not persist failover onto disk secrets; keep in-memory only.
+    """Persist failover only when IFIND_PERSIST_FAILOVER=1 (never in CI by default)."""
     if os.environ.get("GITHUB_ACTIONS") == "true":
+        return
+    if (os.environ.get("IFIND_PERSIST_FAILOVER") or "").strip() != "1":
         return
     CONFIG_PATH.write_text(json.dumps(cfg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
@@ -91,7 +119,7 @@ def _active_token(cfg=None):
     tok = _token_for_slot(cfg, slot)
     if tok:
         return slot, tok
-    # fall back to whichever is present
+    # fall back to whichever is present (primary first)
     for s in ("primary", "backup"):
         t = _token_for_slot(cfg, s)
         if t:
@@ -100,6 +128,11 @@ def _active_token(cfg=None):
 
 
 _ACTIVE_SLOT, AUTH_TOKEN = _active_token(CONFIG)
+
+
+def active_slot() -> str:
+    """Return the in-memory active iFinD key slot (primary|backup)."""
+    return _ACTIVE_SLOT
 
 
 def _load_agent_name():
@@ -164,22 +197,22 @@ def _clear_sessions():
 
 
 def _switch_to_backup(reason):
-    """Switch active_slot to backup if available. Returns True if switched."""
+    """In-memory failover to backup for this process only (unless persist env set)."""
     global AUTH_TOKEN, _ACTIVE_SLOT, CONFIG
-    cfg = _load_config()
+    cfg = dict(_load_config())
     backup = _token_for_slot(cfg, "backup")
     if not backup:
         return False
-    if (cfg.get("active_slot") or "primary") == "backup" and AUTH_TOKEN == backup:
+    if _ACTIVE_SLOT == "backup" and AUTH_TOKEN == backup:
         return False
     cfg["active_slot"] = "backup"
     cfg["failover_reason"] = str(reason)[:300]
-    _save_config(cfg)
+    _save_config(cfg)  # no-op unless IFIND_PERSIST_FAILOVER=1
     CONFIG = cfg
     _ACTIVE_SLOT = "backup"
     AUTH_TOKEN = backup
     _clear_sessions()
-    print(f"[ifind] switched to backup key: {reason}")
+    print(f"[ifind] switched to backup key (session): {reason}")
     return True
 
 

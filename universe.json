@@ -2,14 +2,14 @@
   "equity": 200000,
   "risk_pct": 1.5,
   "l1_mult": 1.0,
-  "notes": "Path-A 20/60同向；动量门槛3%/5%；止损1×ATR、止盈2×ATR（盈亏比2:1）；Top3、板块1、名义≤50%、组合ATR风险≤8%。",
+  "notes": "Path-A 20/60同向；动量门槛3%/5%；止损1×ATR、止盈2×ATR。日报 entry_filter=seats：信号先过 20/60，再按席位级联确认——跟随中信、国泰君安、华泰、永安、东证；其次摩根大通、摩根士丹利、瑞银、高盛；再次与东方财富、平安、方正中期、徽商、中信建投反向；单边不开反向单。2025-11-27至2026-10-20 seats 净收益+6.22%、净回撤5.04%（同窗 base +6.77%/5.50%）。排名中信建投计入中建投，东证期货计入东证融汇；大商所无会员排名时放行。回测列毛收益、净收益、1跳滑点和2026-09-02客户手续费。",
   "selection": {
-    "rule": "Path-A入场 + ATR止损1R/止盈2R；板块去重+Top3+名义/风险帽",
+    "rule": "Path-A入场 + 席位级联确认 + ATR止损1R/止盈2R；板块去重+Top3+名义/风险帽",
     "strategy": "path_a_atr_rr2",
     "reward_rr": 2,
     "stop_atr_mult": 1,
     "asof": "2026-10-20",
-    "source": "iFinD future_quotes 主力连续 ZL",
+    "source": "新浪 InnerFuturesNewService {CODE}0 优先，腾讯 kline 补缺，不足或缺失时 iFinD ZL",
     "excluded": [
       "CU",
       "AU",
@@ -32,7 +32,10 @@
       "ticker": "MAZL.CZC",
       "bucket": "能化",
       "mult": 10,
-      "vol_rank": 1
+      "vol_rank": 1,
+      "tick": 1,
+      "fee_yuan": 0,
+      "fee_rate": 0.0005
     },
     {
       "code": "V",
@@ -40,7 +43,10 @@
       "ticker": "VZL.DCE",
       "bucket": "能化",
       "mult": 5,
-      "vol_rank": 2
+      "vol_rank": 2,
+      "tick": 1,
+      "fee_yuan": 5,
+      "fee_rate": 0
     },
     {
       "code": "EG",
@@ -48,7 +54,10 @@
       "ticker": "EGZL.DCE",
       "bucket": "能化",
       "mult": 10,
-      "vol_rank": 3
+      "vol_rank": 3,
+      "tick": 1,
+      "fee_yuan": 15,
+      "fee_rate": 0
     },
     {
       "code": "M",
@@ -56,7 +65,10 @@
       "ticker": "MZL.DCE",
       "bucket": "农产品",
       "mult": 10,
-      "vol_rank": 4
+      "vol_rank": 4,
+      "tick": 1,
+      "fee_yuan": 7.5,
+      "fee_rate": 0
     },
     {
       "code": "FG",
@@ -64,7 +76,10 @@
       "ticker": "FGZL.CZC",
       "bucket": "能化",
       "mult": 20,
-      "vol_rank": 5
+      "vol_rank": 5,
+      "tick": 1,
+      "fee_yuan": 10,
+      "fee_rate": 0
     },
     {
       "code": "EB",
@@ -72,7 +87,10 @@
       "ticker": "EBZL.DCE",
       "bucket": "能化",
       "mult": 5,
-      "vol_rank": 6
+      "vol_rank": 6,
+      "tick": 1,
+      "fee_yuan": 5,
+      "fee_rate": 0
     },
     {
       "code": "TA",
@@ -80,7 +98,10 @@
       "ticker": "TAZL.CZC",
       "bucket": "能化",
       "mult": 5,
-      "vol_rank": 7
+      "vol_rank": 7,
+      "tick": 2,
+      "fee_yuan": 15,
+      "fee_rate": 0
     },
     {
       "code": "SA",
@@ -88,7 +109,10 @@
       "ticker": "SAZL.CZC",
       "bucket": "能化",
       "mult": 20,
-      "vol_rank": 8
+      "vol_rank": 8,
+      "tick": 1,
+      "fee_yuan": 0,
+      "fee_rate": 0.0005
     },
     {
       "code": "PP",
@@ -96,7 +120,10 @@
       "ticker": "PPZL.DCE",
       "bucket": "能化",
       "mult": 5,
-      "vol_rank": 9
+      "vol_rank": 9,
+      "tick": 1,
+      "fee_yuan": 5,
+      "fee_rate": 0
     },
     {
       "code": "L",
@@ -104,7 +131,10 @@
       "ticker": "LZL.DCE",
       "bucket": "能化",
       "mult": 5,
-      "vol_rank": 10
+      "vol_rank": 10,
+      "tick": 1,
+      "fee_yuan": 5,
+      "fee_rate": 0
     },
     {
       "code": "JD",
@@ -112,7 +142,10 @@
       "ticker": "JDZL.DCE",
       "bucket": "农产品",
       "mult": 10,
-      "vol_rank": 11
+      "vol_rank": 11,
+      "tick": 1,
+      "fee_yuan": 0,
+      "fee_rate": 0.00075
     },
     {
       "code": "P",
@@ -120,7 +153,10 @@
       "ticker": "PZL.DCE",
       "bucket": "农产品",
       "mult": 10,
-      "vol_rank": 12
+      "vol_rank": 12,
+      "tick": 2,
+      "fee_yuan": 12.5,
+      "fee_rate": 0
     },
     {
       "code": "RB",
@@ -128,7 +164,10 @@
       "ticker": "RBZL.SHF",
       "bucket": "黑色",
       "mult": 10,
-      "vol_rank": 13
+      "vol_rank": 13,
+      "tick": 1,
+      "fee_yuan": 0,
+      "fee_rate": 0.0005
     },
     {
       "code": "FU",
@@ -136,7 +175,10 @@
       "ticker": "FUZL.SHF",
       "bucket": "能化",
       "mult": 10,
-      "vol_rank": 14
+      "vol_rank": 14,
+      "tick": 1,
+      "fee_yuan": 0,
+      "fee_rate": 0.00025
     },
     {
       "code": "CF",
@@ -144,7 +186,10 @@
       "ticker": "CFZL.CZC",
       "bucket": "农产品",
       "mult": 5,
-      "vol_rank": 15
+      "vol_rank": 15,
+      "tick": 5,
+      "fee_yuan": 21.5,
+      "fee_rate": 0
     },
     {
       "code": "BU",
@@ -152,7 +197,10 @@
       "ticker": "BUZL.SHF",
       "bucket": "能化",
       "mult": 10,
-      "vol_rank": 16
+      "vol_rank": 16,
+      "tick": 1,
+      "fee_yuan": 0,
+      "fee_rate": 0.00025
     },
     {
       "code": "RU",
@@ -160,7 +208,10 @@
       "ticker": "RUZL.SHF",
       "bucket": "能化",
       "mult": 10,
-      "vol_rank": 17
+      "vol_rank": 17,
+      "tick": 5,
+      "fee_yuan": 15,
+      "fee_rate": 0
     },
     {
       "code": "AG",
@@ -168,7 +219,10 @@
       "ticker": "AGZL.SHF",
       "bucket": "有色",
       "mult": 15,
-      "vol_rank": 18
+      "vol_rank": 18,
+      "tick": 1,
+      "fee_yuan": 0,
+      "fee_rate": 5e-05
     },
     {
       "code": "SP",
@@ -176,7 +230,10 @@
       "ticker": "SPZL.SHF",
       "bucket": "能化",
       "mult": 10,
-      "vol_rank": 19
+      "vol_rank": 19,
+      "tick": 2,
+      "fee_yuan": 0,
+      "fee_rate": 0.0001
     },
     {
       "code": "SR",
@@ -184,7 +241,10 @@
       "ticker": "SRZL.CZC",
       "bucket": "农产品",
       "mult": 10,
-      "vol_rank": 20
+      "vol_rank": 20,
+      "tick": 1,
+      "fee_yuan": 10,
+      "fee_rate": 0
     }
   ],
   "max_positions": 3,
@@ -193,5 +253,9 @@
   "max_per_bucket": 1,
   "min_r20_pct": 3,
   "min_r60_pct": 5,
-  "equity_compound": true
+  "equity_compound": true,
+  "entry_filter": "seats",
+  "slippage_ticks": 1,
+  "fee_asof": "2026-09-02",
+  "fee_source": "申银万国期货客户手续费公示，2026-09-02起，按单边计。螺纹用1/5/10月的万分之五，燃油用1/5/9月的万分之二点五。白银用普通月份万分之零点五，交割月前加收未计入。滑点为每边1个最小变动价位。"
 }

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Path-A ~1y paper backtest on iFinD 主力连续 (ZL) daily bars."""
+"""Path-A ~1y paper backtest. Sina/Tencent daily bars, iFinD if those are short."""
 from __future__ import annotations
 
 import json
@@ -12,7 +12,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
-from ifind_call import active_slot, call  # noqa: E402
+from ifind_call import active_slot, call, usage_report  # noqa: E402
+from member_rank import load_member_changes, load_member_seats  # noqa: E402
+from path_a_filters import entry_block, fill_cost, seat_decision  # noqa: E402
+from public_curve import curve_coverage, load_curves  # noqa: E402
 from position_rules import (  # noqa: E402
     apply_portfolio_caps,
     compound_equity,
@@ -55,6 +58,7 @@ def _load_cfg():
         "min_r60": min_r60,
         "reward_rr": reward_rr,
         "stop_atr_mult": stop_atr_mult,
+        "entry_filter": cfg.get("entry_filter") or "base",
     }
 
 
@@ -239,8 +243,8 @@ def _parse_zl_history(ans: str) -> list[dict]:
     return out
 
 
-def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
-    """Fetch ~1y OHLC for 主力连续 using ticker (e.g. RBZL.SHF)."""
+def _fetch_ifind_history(u: dict, n: int = LOOKBACK_DAYS):
+    """iFinD 主力连续 fallback. Used only when Sina and Tencent are not enough."""
     name = u["name"]
     ticker = u.get("ticker") or ""
     by = {}
@@ -293,7 +297,33 @@ def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
             print(f"    fallback fail: {e}")
 
     hist = [by[k] for k in sorted(by)]
-    return hist, last_ans[:240]
+    return hist
+
+
+def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
+    """Sina + Tencent first. iFinD fills missing dates when that set is short or stale."""
+    from market_data import load_free_bars, merge_bars, series_sufficient, trim_bars
+
+    code = u.get("code") or ""
+    free, meta = load_free_bars(code)
+    need = max(80, WARMUP + 20)
+    if series_sufficient(free, need):
+        bars = free
+        meta["ifind"] = False
+    else:
+        ifind = _fetch_ifind_history(u, n)
+        bars = merge_bars(free, ifind)
+        meta["ifind_n"] = len(ifind)
+        meta["ifind"] = True
+        meta["source"] = (meta.get("source") + "+ifind") if meta.get("source") else "ifind"
+    bars = trim_bars(bars, CUTOFF_DAYS)
+    meta["bars"] = len(bars)
+    print(
+        f"  source={meta.get('source')} sina={meta.get('sina_n')} "
+        f"tencent={meta.get('tencent_n')} ifind={meta.get('ifind')} bars={len(bars)} "
+        f"last={bars[-1]['date'] if bars else '-'}"
+    )
+    return bars, meta
 
 
 def atr14(hist, i):
@@ -390,15 +420,18 @@ def simulate(
     min_r60=5.0,
     reward_rr=2.0,
     stop_atr_mult=1.0,
+    mode="p0",
 ):
     series = {}
     errors = {}
+    sources = {}
     for u in symbols:
         code = u["code"]
-        print(f"[bt] fetch ZL {code} {u.get('ticker')} {u['name']}...")
+        print(f"[bt] fetch {code} {u.get('ticker')} {u['name']}...")
         try:
-            hist, _ = fetch_history(u)
+            hist, meta = fetch_history(u)
             series[code] = {"meta": u, "hist": hist}
+            sources[code] = {k: v for k, v in (meta or {}).items() if k != "code"}
             print(
                 f"  bars={len(hist)} "
                 f"range={hist[0]['date'] if hist else '-'}→{hist[-1]['date'] if hist else '-'}"
@@ -418,7 +451,7 @@ def simulate(
     if len(dates) < WARMUP + 5:
         return {
             "ok": False,
-            "error": "history too short after ZL window filter",
+            "error": "history too short after Sina/Tencent window",
             "errors": errors,
             "bars": {k: len(v["hist"]) for k, v in series.items()},
         }
@@ -426,17 +459,32 @@ def simulate(
     idx = {code: {h["date"]: i for i, h in enumerate(s["hist"])} for code, s in series.items()}
 
     equity = equity0
+    gross_equity = equity0
     peak = equity
+    gross_peak = equity0
     max_dd = 0.0
+    gross_max_dd = 0.0
+    cost_total = 0.0
     curve = []
     day_pnls = []
     pos: dict = {}
     trade_exits = {"target": 0, "stop": 0, "signal": 0}
     closed_pnls = []
+    block_counts: dict[str, int] = {}
 
     trade_dates = dates[WARMUP:]
+    curves = {}
+    if mode not in ("base", "seats"):
+        curves = load_curves([u["code"] for u in symbols])
+    member = {}
+    if mode == "member":
+        member = load_member_changes(trade_dates, [c for c in series])
+    elif mode == "seats":
+        member = load_member_seats(trade_dates, [c for c in series])
+    seat_follows: dict[str, int] = {}
     for di, d in enumerate(trade_dates):
-        pnl = 0.0
+        price_pnl = 0.0
+        day_cost = 0.0
         prev_d = trade_dates[di - 1] if di > 0 else None
 
         # 1) manage open positions: stop / target / signal flip
@@ -466,19 +514,14 @@ def simulate(
                 if i0 is not None:
                     prev_close = hist[i0]["close"]
                     exit_px = px if reason else bar["close"]
-                    pnl += (exit_px - prev_close) * mult * p["lots"] * sign
+                    price_pnl += (exit_px - prev_close) * mult * p["lots"] * sign
             if reason:
+                day_cost += fill_cost(series[code]["meta"], px, p["lots"])
                 trade_exits[reason] = trade_exits.get(reason, 0) + 1
                 risk = abs(p["entry"] - p["stop"]) or 1e-9
                 r_mult = ((px - p["entry"]) * sign) / risk
                 closed_pnls.append({"date": d, "code": code, "reason": reason, "R": round(r_mult, 2)})
                 del pos[code]
-
-        equity += pnl
-        day_pnls.append({"date": d, "pnl": round(pnl, 2), "equity": round(equity, 2)})
-        peak = max(peak, equity)
-        dd = (peak - equity) / peak * 100 if peak else 0
-        max_dd = max(max_dd, dd)
 
         # 2) Path-A entries with ATR stop/target (RR=reward_rr)
         cands = []
@@ -502,6 +545,34 @@ def simulate(
                 if not ((r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0)):
                     continue
                 direction = "多" if r20 > 0 else "空"
+                peers = []
+                if mode == "climax":
+                    bucket = s["meta"].get("bucket")
+                    for other, other_s in series.items():
+                        if other == code or other_s["meta"].get("bucket") != bucket:
+                            continue
+                        oi = idx[other].get(d)
+                        if oi is None:
+                            continue
+                        peers.append(ret_n(other_s["hist"], oi, 20))
+                blocked = entry_block(
+                    mode,
+                    hist,
+                    i,
+                    direction,
+                    d,
+                    code,
+                    a,
+                    curves,
+                    member,
+                    [p for p in peers if p is not None],
+                )
+                if mode == "seats" and not blocked:
+                    _reason, label = seat_decision(direction, (member.get(code) or {}).get(d))
+                    seat_follows[label] = seat_follows.get(label, 0) + 1
+                if blocked:
+                    block_counts[blocked] = block_counts.get(blocked, 0) + 1
+                    continue
                 close = hist[i]["close"]
                 stop_dist = stop_atr_mult * a
                 if direction == "多":
@@ -566,7 +637,20 @@ def simulate(
                     "bucket": c.get("bucket"),
                     "reason": c.get("reason"),
                 }
+                day_cost += fill_cost(series[c["code"]]["meta"], c["entry"], c["lots"])
                 open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
+
+        pnl = price_pnl - day_cost
+        cost_total += day_cost
+        equity += pnl
+        gross_equity += price_pnl
+        day_pnls.append({"date": d, "pnl": round(pnl, 2), "equity": round(equity, 2)})
+        peak = max(peak, equity)
+        gross_peak = max(gross_peak, gross_equity)
+        dd = (peak - equity) / peak * 100 if peak else 0
+        max_dd = max(max_dd, dd)
+        gdd = (gross_peak - gross_equity) / gross_peak * 100 if gross_peak else 0
+        gross_max_dd = max(gross_max_dd, gdd)
 
         gross = 0.0
         for c, p in pos.items():
@@ -589,6 +673,7 @@ def simulate(
     wins_day = sum(1 for x in day_pnls if x["pnl"] > 0)
     n = len(day_pnls)
     ret_pct = (equity / equity0 - 1) * 100
+    gross_ret_pct = (gross_equity / equity0 - 1) * 100
     avg_held = (sum(c["held"] for c in curve) / len(curve)) if curve else 0
     closed_n = len(closed_pnls)
     trade_wins = sum(1 for t in closed_pnls if t.get("R", 0) > 0)
@@ -603,10 +688,13 @@ def simulate(
     pool = ",".join(u["code"] for u in symbols)
     return {
         "ok": True,
-        "schema_version": "cta-backtest-v8-pathA-atr-rr2",
+        "schema_version": "cta-backtest-v9-pathA-cost-filters",
         "batch": BATCH_LABEL,
         "strategy": "path_a_atr_rr2",
-        "data_source": "iFinD 主力连续 ZL",
+        "mode": mode,
+        "data_source": "sina+tencent primary, iFinD fallback",
+        "curve_coverage": curve_coverage(curves),
+        "sources": sources,
         "reward_rr": reward_rr,
         "stop_atr_mult": stop_atr_mult,
         "equity_compound": compound,
@@ -624,8 +712,14 @@ def simulate(
         "trade_days": n,
         "equity_start": equity0,
         "equity_end": round(equity, 2),
+        "gross_equity_end": round(gross_equity, 2),
         "ret_pct": round(ret_pct, 3),
+        "gross_ret_pct": round(gross_ret_pct, 3),
+        "cost_yuan": round(cost_total, 2),
         "max_dd_pct": round(max_dd, 3),
+        "gross_max_dd_pct": round(gross_max_dd, 3),
+        "blocks": block_counts,
+        "seat_follows": seat_follows,
         "win_rate": round(wins_day / n * 100, 2) if n else None,
         "trade_win_rate": round(trade_wr, 2) if trade_wr is not None else None,
         "closed_trades": closed_n,
@@ -639,28 +733,21 @@ def simulate(
         "equity_curve_weekly": _downsample_weekly(curve),
         "day_pnls_tail": day_pnls[-20:],
         "closed_pnls_tail": closed_pnls[-30:],
+        "ifind_calls": usage_report()["count"],
         "summary": (
-            f"PathA+ATR止盈止损{reward_rr:.0f}:1 {trade_dates[0]}→{trade_dates[-1]} "
-            f"权益 {equity:.0f}（{ret_pct:+.2f}%），"
-            f"MaxDD {max_dd:.2f}%，日胜率 {(wins_day/n*100 if n else 0):.1f}%（{n}日），"
-            f"成交{closed_n}笔/止盈{trade_exits.get('target',0)}/"
-            f"止损{trade_exits.get('stop',0)}/信号平{trade_exits.get('signal',0)}，"
-            f"均持仓 {avg_held:.1f}，结论 {conclusion}"
+            f"PathA {mode} {trade_dates[0]}→{trade_dates[-1]} "
+            f"净权益 {equity:.0f}（{ret_pct:+.2f}%）毛权益 {gross_equity:.0f}（{gross_ret_pct:+.2f}%）"
+            f"成本 {cost_total:.0f}，"
+            f"净MaxDD {max_dd:.2f}% 毛MaxDD {gross_max_dd:.2f}%，"
+            f"成交{closed_n}笔，结论 {conclusion}"
         ),
     }
 
 
-def main():
-    p = _load_cfg()
+def _simulate_cfg(p, mode):
     cfg = p["cfg"]
-    print(
-        f"[bt] pathA-rr{p['reward_rr']:.0f} equity0={p['equity0']} "
-        f"stopATR={p['stop_atr_mult']} compound={p['compound']} n={len(cfg['symbols'])} "
-        f"max_pos={p['max_positions']} gross≤{p['max_gross_pct']}% "
-        f"atr_risk≤{p['max_port_risk']}% bucket≤{p['max_per_bucket']} "
-        f"min_r={p['min_r20']}/{p['min_r60']} ifind={active_slot()}"
-    )
-    out = simulate(
+    print(f"[bt] mode={mode} ifind_so_far={usage_report()['count']}")
+    return simulate(
         cfg["symbols"],
         p["equity0"],
         compound=p["compound"],
@@ -674,7 +761,104 @@ def main():
         min_r60=p["min_r60"],
         reward_rr=p["reward_rr"],
         stop_atr_mult=p["stop_atr_mult"],
+        mode=mode,
     )
+
+
+def _row(out: dict) -> dict:
+    return {
+        "mode": out.get("mode"),
+        "net_ret_pct": out.get("ret_pct"),
+        "gross_ret_pct": out.get("gross_ret_pct"),
+        "max_dd_pct": out.get("max_dd_pct"),
+        "gross_max_dd_pct": out.get("gross_max_dd_pct"),
+        "cost_yuan": out.get("cost_yuan"),
+        "closed_trades": out.get("closed_trades"),
+        "trade_win_rate": out.get("trade_win_rate"),
+        "blocks": out.get("blocks"),
+        "conclusion": out.get("conclusion"),
+        "ok": out.get("ok"),
+    }
+
+
+def _choose(rows: list[dict]) -> str:
+    """Turn on one P1 filter only when it beats the current 20/60 book on net return and max drawdown.
+
+    The comparison book is `base`: same costs, 20/60 entry, no roll blackout and no P1 filter.
+    A filter is adopted only when it beats that book. Otherwise the book stays on base.
+    """
+    base = next((r for r in rows if r.get("mode") == "base" and r.get("ok")), None)
+    if not base:
+        return "base"
+    best = None
+    for row in rows:
+        if row.get("mode") not in ("carry", "oi", "member", "climax", "seats"):
+            continue
+        if not row.get("ok"):
+            continue
+        if row["net_ret_pct"] > base["net_ret_pct"] and row["max_dd_pct"] < base["max_dd_pct"]:
+            if best is None or row["net_ret_pct"] > best["net_ret_pct"]:
+                best = row
+    return best["mode"] if best else "base"
+
+
+def _write_entry_filter(mode: str) -> None:
+    path = ROOT / "universe.json"
+    cfg = json.loads(path.read_text(encoding="utf-8"))
+    cfg["entry_filter"] = mode
+    path.write_text(json.dumps(cfg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def main():
+    import sys
+
+    compare = "--compare" in sys.argv
+    p = _load_cfg()
+    cfg = p["cfg"]
+    print(
+        f"[bt] pathA-rr{p['reward_rr']:.0f} equity0={p['equity0']} "
+        f"stopATR={p['stop_atr_mult']} compound={p['compound']} n={len(cfg['symbols'])} "
+        f"max_pos={p['max_positions']} gross≤{p['max_gross_pct']}% "
+        f"atr_risk≤{p['max_port_risk']}% bucket≤{p['max_per_bucket']} "
+        f"min_r={p['min_r20']}/{p['min_r60']} ifind={active_slot()} compare={compare}"
+    )
+    if compare:
+        saved = {}
+        rows = []
+        for mode in ("base", "p0", "carry", "oi", "member", "climax", "seats"):
+            one = _simulate_cfg(p, mode)
+            saved[mode] = one
+            rows.append(_row(one))
+            print(one.get("summary") or one.get("error"))
+        chosen = _choose(rows)
+        current = p["entry_filter"]
+        # Keep a manually adopted seats book when the dual-metric pick is still base.
+        if chosen == "base" and current == "seats":
+            chosen = "seats"
+            print("[bt] keep entry_filter=seats (adopted seat book)")
+        else:
+            _write_entry_filter(chosen)
+        print(f"[bt] entry_filter={chosen}")
+        out = saved[chosen]
+        out["comparison"] = rows
+        out["entry_filter"] = chosen
+    else:
+        prior_cmp = None
+        try:
+            prior_cmp = json.loads((ROOT / "historical_backtest_latest.json").read_text(encoding="utf-8")).get(
+                "comparison"
+            )
+        except Exception:
+            prior_cmp = None
+        mode = p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax", "seats") else "base"
+        out = _simulate_cfg(p, mode)
+        out["entry_filter"] = mode
+        if prior_cmp:
+            out["comparison"] = prior_cmp
+    rep = usage_report()
+    out["ifind_calls"] = rep["count"]
+    out["ifind_call_log"] = rep["calls"]
+    print(f"[ifind] calls={rep['count']}")
     path = ROOT / "historical_backtest_latest.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     arch = ROOT / "archive"

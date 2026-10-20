@@ -2,11 +2,12 @@
   "equity": 200000,
   "risk_pct": 1.5,
   "l1_mult": 1.0,
-  "notes": "趋势确认+回踩+威科夫量价；止损后止盈5:1；最多3品种；名义≤50%；组合ATR风险≤8%；动量门槛3%/5%。",
+  "notes": "Path-A 20/60同向；动量门槛3%/5%；止损1×ATR、止盈2×ATR（盈亏比2:1）；Top3、板块1、名义≤50%、组合ATR风险≤8%。",
   "selection": {
-    "rule": "EMA趋势+回踩量缩收复→入场；止损=回踩极值；止盈=5R；板块去重+Top3+名义/风险帽",
-    "strategy": "wyckoff_pullback_5r",
-    "reward_rr": 5,
+    "rule": "Path-A入场 + ATR止损1R/止盈2R；板块去重+Top3+名义/风险帽",
+    "strategy": "path_a_atr_rr2",
+    "reward_rr": 2,
+    "stop_atr_mult": 1,
     "asof": "2026-10-20",
     "source": "iFinD future_quotes 主力连续 ZL",
     "excluded": [

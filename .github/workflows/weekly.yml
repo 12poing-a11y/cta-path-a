@@ -47,7 +47,7 @@ jobs:
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
-          git add weekly_backtest_latest.json archive/*.json || true
+          git add weekly_backtest_latest.json equity_state.json archive/*.json || true
           if git diff --cached --quiet; then
             echo "no changes"
             exit 0

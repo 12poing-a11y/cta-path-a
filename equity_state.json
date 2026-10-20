@@ -1,0 +1,9 @@
+{
+  "equity_base": 200000,
+  "equity": 200000,
+  "peak": 200000,
+  "asof": null,
+  "source": "init",
+  "equity_compound": true,
+  "notes": "纸面滚动权益；周回测更新。定仓用 equity（超过20万则按当前权益累加放大）。"
+}

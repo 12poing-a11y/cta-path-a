@@ -58,7 +58,7 @@ def _load_cfg():
         "min_r60": min_r60,
         "reward_rr": reward_rr,
         "stop_atr_mult": stop_atr_mult,
-        "entry_filter": cfg.get("entry_filter") or "p0",
+        "entry_filter": cfg.get("entry_filter") or "base",
     }
 
 
@@ -473,7 +473,9 @@ def simulate(
     block_counts: dict[str, int] = {}
 
     trade_dates = dates[WARMUP:]
-    curves = load_curves([u["code"] for u in symbols])
+    curves = {}
+    if mode != "base":
+        curves = load_curves([u["code"] for u in symbols])
     member = {}
     if mode == "member":
         member = load_member_changes(trade_dates, [c for c in series])
@@ -775,12 +777,12 @@ def _row(out: dict) -> dict:
 def _choose(rows: list[dict]) -> str:
     """Turn on one P1 filter only when it beats the current 20/60 book on net return and max drawdown.
 
-    The comparison book is `base`: same costs, no roll blackout and no P1 filter.
-    P0 stays on either way. Filters are not stacked.
+    The comparison book is `base`: same costs, 20/60 entry, no roll blackout and no P1 filter.
+    A filter is adopted only when it beats that book. Otherwise the book stays on base.
     """
     base = next((r for r in rows if r.get("mode") == "base" and r.get("ok")), None)
     if not base:
-        return "p0"
+        return "base"
     best = None
     for row in rows:
         if row.get("mode") not in ("carry", "oi", "member", "climax"):
@@ -790,7 +792,7 @@ def _choose(rows: list[dict]) -> str:
         if row["net_ret_pct"] > base["net_ret_pct"] and row["max_dd_pct"] < base["max_dd_pct"]:
             if best is None or row["net_ret_pct"] > best["net_ret_pct"]:
                 best = row
-    return best["mode"] if best else "p0"
+    return best["mode"] if best else "base"
 
 
 def _write_entry_filter(mode: str) -> None:
@@ -813,7 +815,6 @@ def main():
         f"atr_risk≤{p['max_port_risk']}% bucket≤{p['max_per_bucket']} "
         f"min_r={p['min_r20']}/{p['min_r60']} ifind={active_slot()} compare={compare}"
     )
-    comparison = None
     if compare:
         saved = {}
         rows = []
@@ -829,8 +830,18 @@ def main():
         out["comparison"] = rows
         out["entry_filter"] = chosen
     else:
-        mode = p["entry_filter"] if p["entry_filter"] in ("p0", "carry", "oi", "member", "climax") else "p0"
+        prior_cmp = None
+        try:
+            prior_cmp = json.loads((ROOT / "historical_backtest_latest.json").read_text(encoding="utf-8")).get(
+                "comparison"
+            )
+        except Exception:
+            prior_cmp = None
+        mode = p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax") else "base"
         out = _simulate_cfg(p, mode)
+        out["entry_filter"] = mode
+        if prior_cmp:
+            out["comparison"] = prior_cmp
     rep = usage_report()
     out["ifind_calls"] = rep["count"]
     out["ifind_call_log"] = rep["calls"]

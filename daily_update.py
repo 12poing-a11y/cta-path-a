@@ -96,9 +96,9 @@ L1_RISK = risk_budget_yuan(EQUITY, RISK_PCT, L1_MULT)
 
 def _entry_mode() -> str:
     cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
-    mode = cfg.get("entry_filter") or "p0"
-    if mode not in ("p0", "carry", "oi", "member", "climax"):
-        return "p0"
+    mode = cfg.get("entry_filter") or "base"
+    if mode not in ("base", "p0", "carry", "oi", "member", "climax"):
+        return "base"
     return mode
 
 
@@ -286,7 +286,7 @@ def main():
 
     mode = _entry_mode()
     print(f"[cta] entry_filter={mode}")
-    curves = load_curves([u["code"] for u in UNIVERSE])
+    curves = {} if mode == "base" else load_curves([u["code"] for u in UNIVERSE])
     signals = []
     snaps = []
     for u in UNIVERSE:

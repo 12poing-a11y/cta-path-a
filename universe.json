@@ -2,7 +2,7 @@
   "equity": 200000,
   "risk_pct": 1.5,
   "l1_mult": 1.0,
-  "notes": "Path-A 20/60同向；动量门槛3%/5%；止损1×ATR、止盈2×ATR。P0：缺量或ATR>8%收盘不开仓，换月当日及前一日不开新仓；报告含1跳滑点和客户手续费。P1过滤见 entry_filter，仅在净收益和最大回撤同时好于P0时启用。",
+  "notes": "Path-A 20/60同向；动量门槛3%/5%；止损1×ATR、止盈2×ATR。2025-11-26至2026-10-20对照后日报用 base：净收益+6.75%、净回撤5.50%。换月、ATR>8%和四条P1未超过该结果，entry_filter=base。回测仍列毛收益、净收益、1跳滑点和2026-09-02客户手续费。",
   "selection": {
     "rule": "Path-A入场 + ATR止损1R/止盈2R；板块去重+Top3+名义/风险帽",
     "strategy": "path_a_atr_rr2",
@@ -254,7 +254,7 @@
   "min_r20_pct": 3,
   "min_r60_pct": 5,
   "equity_compound": true,
-  "entry_filter": "p0",
+  "entry_filter": "base",
   "slippage_ticks": 1,
   "fee_asof": "2026-09-02",
   "fee_source": "申银万国期货客户手续费公示，2026-09-02起，按单边计。螺纹用1/5/10月的万分之五，燃油用1/5/9月的万分之二点五。白银用普通月份万分之零点五，交割月前加收未计入。滑点为每边1个最小变动价位。"

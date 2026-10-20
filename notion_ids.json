@@ -6,5 +6,11 @@
   "signals_ds": "5a05bd03-9fa9-4665-b249-acdc1877ed71",
   "backtest_db_id": "7c3494b2-7936-4fc5-86dd-a3071ef83dd5",
   "backtest_db_url": "https://app.notion.com/p/7c3494b279364fc586dda3071ef83dd5",
-  "backtest_ds": "45b0bdd4-5b30-4e6d-b548-9bcd690c1f2b"
+  "backtest_ds": "45b0bdd4-5b30-4e6d-b548-9bcd690c1f2b",
+  "annual_report_db_id": "0a0961c3-badd-46ef-b9af-cd2578838c30",
+  "annual_report_db_url": "https://app.notion.com/p/0a0961c3badd46efb9afcd2578838c30",
+  "annual_report_ds": "8c8d11e1-99f2-4e0e-a528-01f5b8a5ce40",
+  "annual_curve_db_id": "29b3f011-d871-4727-9a09-b66f2d96f1d3",
+  "annual_curve_db_url": "https://app.notion.com/p/29b3f011d87147279a09b66f2d96f1d3",
+  "annual_curve_ds": "d91a1a1a-1836-43b1-a385-ad08254bb890"
 }

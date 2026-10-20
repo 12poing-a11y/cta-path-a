@@ -58,6 +58,17 @@ def _num(v):
     return {"number": float(v)}
 
 
+def _safe_action(text: str) -> str:
+    """Never write secrets / MCP JSON blobs into Notion action notes."""
+    s = str(text or "")
+    low = s.lower()
+    if "authorization" in low or "mcpservers" in low or "eyjraWQi".lower() in low:
+        if s.startswith("拉取失败"):
+            return "拉取失败: iFinD 鉴权/配置异常（详情已省略）"
+        return "（敏感错误详情已省略）"
+    return s[:500]
+
+
 def _select(name: str | None):
     if not name:
         return {"select": None}
@@ -92,7 +103,7 @@ def sync_signals(report_path: Path | None = None):
             "ATR14": _num(s.get("atr")),
             "每手风险": _num(s.get("risk_per_lot")),
             "对齐": _select(s.get("align") or "冲突/不足"),
-            "动作": _rich(s.get("action") or s.get("error") or ""),
+            "动作": _rich(_safe_action(s.get("action") or s.get("error") or "")),
             "Key槽": _select(key_slot if key_slot in ("primary", "backup") else "primary"),
         }
         _create_page(SIGNALS_DB, props)

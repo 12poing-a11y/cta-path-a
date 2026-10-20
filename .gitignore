@@ -1,0 +1,10 @@
+mcp_config.json
+skill_env_config.json
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+weekly_backtest_latest.json
+# keep archive in git optionally; ignore local noise
+*.conflict.*

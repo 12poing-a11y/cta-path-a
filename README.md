@@ -12,7 +12,19 @@
 4. **参数**：见 `universe.json`（Equity ¥20万 / 风险% / `max_positions` / `max_gross_exposure_pct`）  
 5. **路径A**：只记账、不自动下单；用于规则与执行纪律验证
 
+## 行情来源
+
+日线先拉**新浪**和**腾讯**，按交易日合并：同一天新浪覆盖腾讯，腾讯只补缺口。下面任一情况才调用 iFinD 主力连续，重叠日期仍以免费源为准：
+
+- 合并后不足 80 根
+- 最后一根或最近 80 根缺收盘、最高、最低
+- 最后交易日早于今天 12 个自然日
+
+新浪接口是 `InnerFuturesNewService.getDailyKLine`，代码为 `{品种}0`（例如 `M0`、`MA0`）。`IndexService.getInnerFuturesDailyKLine` 停在 2024-07，不使用。腾讯公开 K 线目前对 `nf_M0` 这类期货代码返回参数错误，请求仍会发出，一旦返回日线会自动并入。`hq.sinajs.cn` 的实时字段和日线 OHLC 对不齐，不用它改写日线。
+
 ## iFinD Key（primary / backup）
+
+仅在新浪和腾讯不够用时作为补缺。
 
 启动时**始终优先 primary**。额度/鉴权失败时进程内切到 backup；**默认不写回** `mcp_config.json`（避免粘在 backup）。
 
@@ -54,9 +66,10 @@ python notion_sync.py signals   # 可选
 ## 目录
 
 - `universe.json` — 品种池与资金参数（改这里即可扩品种）  
-- `daily_update.py` — 日信号  
+- `market_data.py` — 新浪、腾讯日线  
+- `daily_update.py` — 日信号（免费源不足时才走 iFinD）  
 - `weekly_backtest.py` — 基于 `archive/` 滚动纸面 PnL  
-- `historical_backtest.py` — 拉近约 120 日行情做路径A历史回测  
+- `historical_backtest.py` — 近一年路径A纸面回测  
 - `notion_sync.py` / `ifind_call.py`  
 - `MOBILE.md` — 手机端配置说明  
 - `.github/workflows/` — 定时 + 手动任务  

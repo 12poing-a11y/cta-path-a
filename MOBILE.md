@@ -36,4 +36,5 @@ Notion Integration 需连接「CTA日信号台账 / CTA回测报告」。
 
 - GitHub cron 可能延迟几分钟到十几分钟  
 - 国内节假日仍可能触发；无行情时报告会异常或空  
+- 行情：先拉新浪和腾讯日线；根数不足、缺 OHLC，或最后一根早于 12 个自然日，才用 iFinD
 - iFinD：优先 primary；额度不足时**当次进程**切 backup，下次跑仍从 primary 起；两 Key 都没额度则失败 

@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-"""CTA L1 Path-A daily paper update for China commodity futures."""
+"""CTA L1 Path-A daily paper update. Sina/Tencent bars, iFinD only if those are short."""
 from __future__ import annotations
 
 import json
 import math
-import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -12,7 +11,7 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
-from ifind_call import call, active_slot  # noqa: E402
+from ifind_call import active_slot  # noqa: E402
 from position_rules import (  # noqa: E402
     apply_portfolio_caps,
     compound_equity,
@@ -92,155 +91,28 @@ EQUITY = compound_equity(LIVE_EQUITY, EQUITY_BASE, EQUITY_COMPOUND)
 L1_RISK = risk_budget_yuan(EQUITY, RISK_PCT, L1_MULT)
 
 
-def _answer_text(res: dict) -> str:
-    if not res.get("ok"):
-        raise RuntimeError(json.dumps(res, ensure_ascii=False)[:500])
-    text = res["data"]["result"]["content"][0]["text"]
-    try:
-        payload = json.loads(text)
-        return payload.get("data", {}).get("answer", text)
-    except Exception:
-        return text
+def _fetch_snapshot(u: dict) -> dict:
+    """OHLCV from Sina and Tencent. iFinD runs only when that history is short or stale."""
+    from historical_backtest import atr14, fetch_history, ret_n
 
-
-def _parse_md_table(ans: str):
-    rows = []
-    for line in ans.splitlines():
-        line = line.strip()
-        if not line.startswith("|"):
-            continue
-        cells = [c.strip() for c in line.strip("|").split("|")]
-        if not cells or all(set(c) <= set("-: ") for c in cells):
-            continue
-        rows.append(cells)
-    return rows
-
-
-def _to_float(x):
-    if x is None:
-        return None
-    s = str(x).replace(",", "").replace("%", "").strip()
-    if s in ("", "-", "—", "NA", "N/A"):
-        return None
-    try:
-        return float(s)
-    except Exception:
-        return None
-
-
-def _looks_like_yyyymmdd(n: float | None) -> bool:
-    """Reject compact trade dates (e.g. 20260916) mistaken for prices/ATR."""
-    if n is None:
-        return False
-    if abs(n - round(n)) > 1e-9:
-        return False
-    v = int(round(n))
-    if not (20000101 <= v <= 20991231):
-        return False
-    mm, dd = (v // 100) % 100, v % 100
-    return 1 <= mm <= 12 and 1 <= dd <= 31
-
-
-def _price_num(x) -> float | None:
-    n = _to_float(x)
-    if n is None or _looks_like_yyyymmdd(n):
-        return None
-    # futures settlement prices are almost never this huge as a single tick
-    if abs(n) >= 5_000_000:
-        return None
-    return n
-
-
-def _fetch_snapshot(code: str, name: str) -> dict:
-    q = (
-        f"{name}主力合约最新交易日收盘价、近20日涨跌幅%、近60日涨跌幅%、"
-        f"以及最近30个交易日的日收盘价与最高价最低价列表（用于ATR）"
-    )
-    ans = _answer_text(call("future", "future_quotes", {"query": q}))
-    rows = _parse_md_table(ans)
-
-    close = r20 = r60 = None
-    # Prefer a summary row with percent returns
-    for cells in rows:
-        joined = " ".join(cells)
-        if code.upper() in joined.upper() or name in joined or "ZL." in joined:
-            nums = [_price_num(c) for c in cells]
-            nums = [n for n in nums if n is not None]
-            if len(nums) >= 1:
-                # close: price-like, not a compact YYYYMMDD, typically > ~50 for most contracts
-                for n in nums:
-                    if abs(n) > 50:
-                        close = n
-                        break
-                pcts = [n for n in nums if abs(n) < 80]
-                if len(pcts) >= 2:
-                    r20, r60 = pcts[0], pcts[1]
-                elif len(pcts) == 1:
-                    r20 = pcts[0]
-
-    # Parse OHLC history from markdown / numbered lines
-    hist = []
-    for line in ans.splitlines():
-        m = re.search(
-            r"(20\d{2}[-/]?\d{1,2}[-/]?\d{1,2}).{0,40}?(\d+\.?\d*).{0,20}?(\d+\.?\d*).{0,20}?(\d+\.?\d*)",
-            line,
-        )
-        if not m:
-            continue
-        d = m.group(1)
-        a, b, c = _price_num(m.group(2)), _price_num(m.group(3)), _price_num(m.group(4))
-        vals = [v for v in (a, b, c) if v is not None]
-        if len(vals) >= 3:
-            high, low, cl = vals[0], vals[1], vals[2]
-            if high < low:
-                high, low = low, high
-            hist.append({"date": d, "high": high, "low": low, "close": cl})
-        elif len(vals) == 1:
-            hist.append({"date": d, "high": vals[0], "low": vals[0], "close": vals[0]})
-
-    hist = sorted(hist, key=lambda x: x["date"])[-30:]
-    if hist and (close is None or _looks_like_yyyymmdd(close)):
-        close = hist[-1]["close"]
-
-    atr = None
-    if len(hist) >= 15:
-        trs = []
-        for i in range(1, len(hist)):
-            h, l, pc = hist[i]["high"], hist[i]["low"], hist[i - 1]["close"]
-            trs.append(max(h - l, abs(h - pc), abs(l - pc)))
-        atr = sum(trs[-14:]) / 14.0
-        if atr is not None and _looks_like_yyyymmdd(atr):
-            atr = None
-
-    # fallback dedicated ATR query
-    if atr is None:
-        ans2 = _answer_text(
-            call("future", "future_quotes", {"query": f"{name}主力近20日真实波幅ATR14"})
-        )
-        for m in re.finditer(r"(\d+\.?\d*)", ans2):
-            cand = _price_num(m.group(1))
-            if cand is not None and cand > 0:
-                atr = cand
-                break
-
-    if r20 is None or r60 is None:
-        ans3 = _answer_text(
-            call(
-                "future",
-                "future_quotes",
-                {"query": f"{name}主力近20日涨跌幅和近60日涨跌幅百分比"},
-            )
-        )
-        pcts = re.findall(r"(-?\d+\.?\d*)\s*%?", ans3)
-        floats = [_to_float(p) for p in pcts]
-        floats = [f for f in floats if f is not None and abs(f) < 100 and not _looks_like_yyyymmdd(f)]
-        if len(floats) >= 2:
-            r20 = r20 if r20 is not None else floats[0]
-            r60 = r60 if r60 is not None else floats[1]
-
-    if close is not None and _looks_like_yyyymmdd(close):
-        close = None
-    return {"close": close, "r20": r20, "r60": r60, "atr": atr, "raw_preview": ans[:240]}
+    hist, meta = fetch_history(u, n=120)
+    if len(hist) < 61:
+        raise RuntimeError(f"bars {len(hist)} source={meta.get('source')}")
+    i = len(hist) - 1
+    r20 = ret_n(hist, i, 20)
+    r60 = ret_n(hist, i, 60)
+    atr = atr14(hist, i)
+    return {
+        "close": hist[i]["close"],
+        "r20": round(r20, 4) if r20 is not None else None,
+        "r60": round(r60, 4) if r60 is not None else None,
+        "atr": round(atr, 2) if atr is not None else None,
+        "source": meta.get("source"),
+        "bar_date": hist[i]["date"],
+        "sina_n": meta.get("sina_n"),
+        "tencent_n": meta.get("tencent_n"),
+        "ifind": meta.get("ifind"),
+    }
 
 
 def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
@@ -283,6 +155,8 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
         "align": align,
         "direction": direction if align == "同向" else "空仓",
         "lots_raw": lots,
+        "data_source": snap.get("source"),
+        "bar_date": snap.get("bar_date"),
         "lots_l1": lots,
         "lots_full": lots,
         "selected": False,
@@ -382,11 +256,12 @@ def main():
     for u in UNIVERSE:
         print(f"[cta] fetch {u['code']}...")
         try:
-            snap = _fetch_snapshot(u["code"], u["name"])
+            snap = _fetch_snapshot(u)
             sig = _signal(u, snap, risk_budget=risk_budget)
             signals.append(sig)
             print(
-                f"  {u['code']} close={sig['close']} r20={sig['r20']} r60={sig['r60']} "
+                f"  {u['code']} src={snap.get('source')} date={snap.get('bar_date')} "
+                f"close={sig['close']} r20={sig['r20']} r60={sig['r60']} "
                 f"atr={sig['atr']} lots={sig['lots_l1']} {sig['direction']}"
             )
         except Exception as e:
@@ -431,6 +306,7 @@ def main():
         "max_per_bucket": MAX_PER_BUCKET,
         "min_r20_pct": MIN_R20_PCT,
         "min_r60_pct": MIN_R60_PCT,
+        "data_source": "sina+tencent primary, iFinD fallback",
         "ifind_slot": active_slot(),
         "portfolio": port_meta,
         "equity_state": {

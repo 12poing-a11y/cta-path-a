@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Path-A ~1y paper backtest on iFinD 主力连续 (ZL) daily bars."""
+"""Path-A ~1y paper backtest. Sina/Tencent daily bars, iFinD if those are short."""
 from __future__ import annotations
 
 import json
@@ -239,8 +239,8 @@ def _parse_zl_history(ans: str) -> list[dict]:
     return out
 
 
-def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
-    """Fetch ~1y OHLC for 主力连续 using ticker (e.g. RBZL.SHF)."""
+def _fetch_ifind_history(u: dict, n: int = LOOKBACK_DAYS):
+    """iFinD 主力连续 fallback. Used only when Sina and Tencent are not enough."""
     name = u["name"]
     ticker = u.get("ticker") or ""
     by = {}
@@ -293,7 +293,33 @@ def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
             print(f"    fallback fail: {e}")
 
     hist = [by[k] for k in sorted(by)]
-    return hist, last_ans[:240]
+    return hist
+
+
+def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
+    """Sina + Tencent first. iFinD fills missing dates when that set is short or stale."""
+    from market_data import load_free_bars, merge_bars, series_sufficient, trim_bars
+
+    code = u.get("code") or ""
+    free, meta = load_free_bars(code)
+    need = max(80, WARMUP + 20)
+    if series_sufficient(free, need):
+        bars = free
+        meta["ifind"] = False
+    else:
+        ifind = _fetch_ifind_history(u, n)
+        bars = merge_bars(free, ifind)
+        meta["ifind_n"] = len(ifind)
+        meta["ifind"] = True
+        meta["source"] = (meta.get("source") + "+ifind") if meta.get("source") else "ifind"
+    bars = trim_bars(bars, CUTOFF_DAYS)
+    meta["bars"] = len(bars)
+    print(
+        f"  source={meta.get('source')} sina={meta.get('sina_n')} "
+        f"tencent={meta.get('tencent_n')} ifind={meta.get('ifind')} bars={len(bars)} "
+        f"last={bars[-1]['date'] if bars else '-'}"
+    )
+    return bars, meta
 
 
 def atr14(hist, i):
@@ -393,12 +419,14 @@ def simulate(
 ):
     series = {}
     errors = {}
+    sources = {}
     for u in symbols:
         code = u["code"]
-        print(f"[bt] fetch ZL {code} {u.get('ticker')} {u['name']}...")
+        print(f"[bt] fetch {code} {u.get('ticker')} {u['name']}...")
         try:
-            hist, _ = fetch_history(u)
+            hist, meta = fetch_history(u)
             series[code] = {"meta": u, "hist": hist}
+            sources[code] = {k: v for k, v in (meta or {}).items() if k != "code"}
             print(
                 f"  bars={len(hist)} "
                 f"range={hist[0]['date'] if hist else '-'}→{hist[-1]['date'] if hist else '-'}"
@@ -418,7 +446,7 @@ def simulate(
     if len(dates) < WARMUP + 5:
         return {
             "ok": False,
-            "error": "history too short after ZL window filter",
+            "error": "history too short after Sina/Tencent window",
             "errors": errors,
             "bars": {k: len(v["hist"]) for k, v in series.items()},
         }
@@ -606,7 +634,8 @@ def simulate(
         "schema_version": "cta-backtest-v8-pathA-atr-rr2",
         "batch": BATCH_LABEL,
         "strategy": "path_a_atr_rr2",
-        "data_source": "iFinD 主力连续 ZL",
+        "data_source": "sina+tencent primary, iFinD fallback",
+        "sources": sources,
         "reward_rr": reward_rr,
         "stop_atr_mult": stop_atr_mult,
         "equity_compound": compound,

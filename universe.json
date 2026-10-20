@@ -9,7 +9,7 @@
     "reward_rr": 2,
     "stop_atr_mult": 1,
     "asof": "2026-10-20",
-    "source": "iFinD future_quotes 主力连续 ZL",
+    "source": "新浪 InnerFuturesNewService {CODE}0 优先，腾讯 kline 补缺，不足或缺失时 iFinD ZL",
     "excluded": [
       "CU",
       "AU",

@@ -31,7 +31,7 @@ def _load_universe():
     l1_mult = float(cfg.get("l1_mult", 1.0))
     max_positions = int(cfg.get("max_positions", 3))
     max_gross_pct = float(cfg.get("max_gross_exposure_pct", 50))
-    max_port_risk = float(cfg.get("max_portfolio_risk_pct", 8))
+    max_port_risk = float(cfg.get("max_portfolio_risk_pct", 10))
     max_per_bucket = int(cfg.get("max_per_bucket", 1))
     min_r20 = float(cfg.get("min_r20_pct", 3))
     min_r60 = float(cfg.get("min_r60_pct", 5))

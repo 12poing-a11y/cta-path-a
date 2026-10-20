@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Path-A historical paper backtest (~1y) for small-capital liquid universe."""
+"""Path-A ~1y paper backtest on iFinD 主力连续 (ZL) daily bars."""
 from __future__ import annotations
 
 import json
@@ -14,7 +14,6 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 from ifind_call import call  # noqa: E402
 
-# ~1 calendar year of trading days + warmup buffer
 LOOKBACK_DAYS = 260
 WARMUP = 60
 BATCH_LABEL = "2026一年"
@@ -44,8 +43,12 @@ def _to_float(x):
     if x is None:
         return None
     s = str(x).replace(",", "").replace("%", "").strip()
-    if s in ("", "-", "—", "NA", "N/A"):
+    if s in ("", "-", "—", "NA", "N/A", "\t"):
         return None
+    # 成交量 occasionally like 101.96万
+    m = re.match(r"^(-?\d+\.?\d*)\s*万$", s)
+    if m:
+        return float(m.group(1)) * 10_000
     try:
         return float(s)
     except Exception:
@@ -64,73 +67,159 @@ def _looks_like_yyyymmdd(n: float | None) -> bool:
     return 1 <= mm <= 12 and 1 <= dd <= 31
 
 
-def _price_num(x) -> float | None:
-    n = _to_float(x)
-    if n is None or _looks_like_yyyymmdd(n) or abs(n) >= 5_000_000:
-        return None
-    return n
+def _norm_date(s: str) -> str | None:
+    s = str(s or "").strip()
+    if re.fullmatch(r"20\d{6}", s):
+        return f"{s[:4]}-{s[4:6]}-{s[6:8]}"
+    if re.fullmatch(r"20\d{2}-\d{1,2}-\d{1,2}", s):
+        y, m, d = s.split("-")
+        return f"{y}-{int(m):02d}-{int(d):02d}"
+    return None
 
 
-def _parse_ohlc_history(ans: str):
-    hist = []
-    for line in ans.splitlines():
-        m = re.search(
-            r"(20\d{2}[-/]?\d{1,2}[-/]?\d{1,2}).{0,60}?(\d+\.?\d*).{0,30}?(\d+\.?\d*).{0,30}?(\d+\.?\d*)",
-            line,
-        )
-        if not m:
+def _col_key(h: str) -> str:
+    h = str(h or "").strip().lower()
+    if "日期" in h or h in ("date", "time"):
+        return "date"
+    if "开盘" in h or h == "open":
+        return "open"
+    if "最高" in h or h == "high":
+        return "high"
+    if "最低" in h or h == "low":
+        return "low"
+    if "收盘" in h or h in ("close", "settle", "结算"):
+        return "close"
+    if "成交量" in h or "volume" in h or "量" == h:
+        return "volume"
+    if "成交额" in h or "amount" in h:
+        return "amount"
+    if "代码" in h or "code" in h:
+        return "code"
+    if "名称" in h or "name" in h:
+        return "name"
+    return h
+
+
+def _parse_md_tables(ans: str) -> list[list[dict]]:
+    """Parse all markdown tables into list of row dicts keyed by normalized headers."""
+    lines = [ln.strip() for ln in ans.splitlines()]
+    tables = []
+    i = 0
+    while i < len(lines):
+        if not lines[i].startswith("|"):
+            i += 1
             continue
-        d = m.group(1).replace("/", "-")
-        if len(d) == 8 and d.isdigit():
-            d = f"{d[:4]}-{d[4:6]}-{d[6:8]}"
-        a, b, c = _price_num(m.group(2)), _price_num(m.group(3)), _price_num(m.group(4))
-        vals = [v for v in (a, b, c) if v is not None]
-        if len(vals) >= 3:
-            high, low, cl = vals[0], vals[1], vals[2]
+        block = []
+        while i < len(lines) and lines[i].startswith("|"):
+            block.append(lines[i])
+            i += 1
+        if len(block) < 2:
+            continue
+        headers = [c.strip() for c in block[0].strip("|").split("|")]
+        body = block[1:]
+        if body and re.match(r"^\|[\s\-:|]+\|$", body[0]):
+            body = body[1:]
+        rows = []
+        for ln in body:
+            if re.match(r"^\|[\s\-:|]+\|$", ln):
+                continue
+            cells = [c.strip() for c in ln.strip("|").split("|")]
+            if len(cells) < 2:
+                continue
+            row = {}
+            for j, h in enumerate(headers):
+                if j >= len(cells):
+                    break
+                row[_col_key(h)] = cells[j]
+            rows.append(row)
+        if rows:
+            tables.append(rows)
+    return tables
+
+
+def _row_to_bar(row: dict) -> dict | None:
+    d = _norm_date(row.get("date") or "")
+    if not d:
+        # sometimes date is a bare YYYYMMDD in a wrong column
+        for v in row.values():
+            d = _norm_date(str(v))
+            if d:
+                break
+    if not d:
+        return None
+    close = _to_float(row.get("close"))
+    high = _to_float(row.get("high"))
+    low = _to_float(row.get("low"))
+    open_ = _to_float(row.get("open"))
+    # if only one price field filled, use it
+    prices = [p for p in (close, high, low, open_) if p is not None and not _looks_like_yyyymmdd(p)]
+    if not prices:
+        return None
+    if close is None or _looks_like_yyyymmdd(close):
+        close = prices[-1]
+    if high is None or _looks_like_yyyymmdd(high):
+        high = max(prices)
+    if low is None or _looks_like_yyyymmdd(low):
+        low = min(prices)
+    if not (50 <= abs(close) <= 200_000):
+        return None
+    if high < low:
+        high, low = low, high
+    if high / max(low, 1e-9) > 5:
+        return None
+    return {
+        "date": d,
+        "high": high,
+        "low": low,
+        "close": close,
+        "volume": _to_float(row.get("volume")),
+    }
+
+
+def _parse_zl_history(ans: str) -> list[dict]:
+    bars = {}
+    for table in _parse_md_tables(ans):
+        for row in table:
+            bar = _row_to_bar(row)
+            if bar:
+                bars[bar["date"]] = bar
+    # fallback regex for date + 3 numbers (legacy)
+    if len(bars) < 10:
+        for line in ans.splitlines():
+            m = re.search(
+                r"(20\d{6}|20\d{2}-\d{1,2}-\d{1,2}).{0,80}?(\d+\.?\d*).{0,40}?(\d+\.?\d*).{0,40}?(\d+\.?\d*)",
+                line,
+            )
+            if not m:
+                continue
+            d = _norm_date(m.group(1))
+            nums = [_to_float(m.group(i)) for i in (2, 3, 4)]
+            nums = [n for n in nums if n is not None and not _looks_like_yyyymmdd(n) and 50 <= abs(n) <= 200_000]
+            if not d or len(nums) < 1:
+                continue
+            if len(nums) >= 3:
+                high, low, cl = nums[0], nums[1], nums[2]
+            else:
+                high = low = cl = nums[0]
             if high < low:
                 high, low = low, high
-            hist.append({"date": d, "high": high, "low": low, "close": cl})
-        elif len(vals) == 1:
-            hist.append({"date": d, "high": vals[0], "low": vals[0], "close": vals[0]})
-    by = {}
-    for h in hist:
-        by[h["date"]] = h
-    return [by[k] for k in sorted(by)]
-
-
-def _filter_window(hist: list[dict]) -> list[dict]:
-    """Keep only recent bars; drop absurd prices mistaken from dates/text."""
-    if not hist:
-        return []
-    today = date.today()
-    cutoff = (today - timedelta(days=CUTOFF_DAYS)).isoformat()
-    out = []
-    for h in hist:
-        d = h.get("date") or ""
-        if d < cutoff:
-            continue
-        cl = h.get("close")
-        if cl is None or _looks_like_yyyymmdd(cl):
-            continue
-        # commodity futures continuous: typically 200..100000
-        if not (50 <= abs(cl) <= 200_000):
-            continue
-        hi, lo = h.get("high", cl), h.get("low", cl)
-        if _looks_like_yyyymmdd(hi) or _looks_like_yyyymmdd(lo):
-            continue
-        # reject wild OHLC ranges (bad parse)
-        if hi and lo and hi > 0 and (hi / max(lo, 1e-9) > 5):
-            continue
-        out.append(h)
+            bars[d] = {"date": d, "high": high, "low": low, "close": cl, "volume": None}
+    cutoff = (date.today() - timedelta(days=CUTOFF_DAYS)).isoformat()
+    out = [bars[k] for k in sorted(bars) if k >= cutoff]
     return out
 
 
-def fetch_history(name: str, n: int = LOOKBACK_DAYS):
-    """Pull ~1y bars in quarterly chunks (LLM truncates long lists)."""
+def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
+    """Fetch ~1y OHLC for 主力连续 using ticker (e.g. RBZL.SHF)."""
+    name = u["name"]
+    ticker = u.get("ticker") or ""
+    by = {}
+    last_ans = ""
+
+    # Prefer ticker-targeted monthly/quarterly chunks
     today = date.today()
-    chunks = []
-    # 5 overlapping quarters covering ~14 months
     cursor = today.replace(day=1)
+    chunks = []
     for _ in range(5):
         y, m = cursor.year, cursor.month
         m0 = m - 2
@@ -138,49 +227,43 @@ def fetch_history(name: str, n: int = LOOKBACK_DAYS):
         while m0 <= 0:
             m0 += 12
             y0 -= 1
-        start_label = f"{y0}年{m0}月"
-        end_label = f"{y}年{m}月"
-        chunks.append((start_label, end_label))
-        # step back 3 months
+        chunks.append((f"{y0}-{m0:02d}", f"{y}-{m:02d}"))
         m -= 3
         while m <= 0:
             m += 12
             y -= 1
-        cursor = cursor.replace(year=y, month=m, day=1)
+        cursor = date(y, m, 1)
 
-    by = {}
-    last_ans = ""
-    for start_label, end_label in reversed(chunks):
+    for start_ym, end_ym in reversed(chunks):
         q = (
-            f"请给出{name}主力连续合约从{start_label}到{end_label}每个交易日的"
-            f"日期、最高价、最低价、收盘价。"
-            f"用Markdown表格，日期格式YYYY-MM-DD，价格为真实行情数字（不要写YYYYMMDD当价格）。"
-            f"尽量列出该区间全部交易日。"
+            f"证券代码{ticker}（{name}主力连续）从{start_ym}到{end_ym}每个交易日的"
+            f"日期、开盘价、最高价、最低价、收盘价、成交量。"
+            f"一张Markdown表；日期用YYYYMMDD或YYYY-MM-DD；价格为真实行情。"
         )
         try:
             ans = _answer_text(call("future", "future_quotes", {"query": q}))
             last_ans = ans
-            for h in _parse_ohlc_history(ans):
+            for h in _parse_zl_history(ans):
                 by[h["date"]] = h
-            print(f"    chunk {start_label}->{end_label} bars_so_far={len(by)}")
+            print(f"    {ticker} chunk {start_ym}->{end_ym} bars={len(by)}")
         except Exception as e:
-            print(f"    chunk fail {start_label}: {e}")
+            print(f"    {ticker} chunk fail {start_ym}: {e}")
 
     if len(by) < WARMUP + 20:
         q2 = (
-            f"{name}主力最近{n}个交易日日期+最高价+最低价+收盘价，"
-            f"Markdown表，YYYY-MM-DD，真实价格"
+            f"{ticker} {name}主力连续最近{n}个交易日日期、最高价、最低价、收盘价、成交量，"
+            f"Markdown表"
         )
         try:
             ans2 = _answer_text(call("future", "future_quotes", {"query": q2}))
             last_ans = ans2
-            for h in _parse_ohlc_history(ans2):
+            for h in _parse_zl_history(ans2):
                 by[h["date"]] = h
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"    fallback fail: {e}")
 
-    hist = _filter_window([by[k] for k in sorted(by)])
-    return hist, last_ans[:200]
+    hist = [by[k] for k in sorted(by)]
+    return hist, last_ans[:240]
 
 
 def atr14(hist, i):
@@ -208,10 +291,8 @@ def _downsample_weekly(curve: list[dict]) -> list[dict]:
     out = []
     last_week = None
     for row in curve:
-        # ISO week key
-        key = row["date"][:8]  # YYYY-MM roughly group by month-week via date
         y, m, d = row["date"].split("-")
-        week = f"{y}-W{int(d)//7}"
+        week = f"{y}-W{int(d) // 7}"
         if week != last_week:
             out.append(row)
             last_week = week
@@ -237,7 +318,6 @@ def _write_equity_svg(curve: list[dict], path: Path, title: str):
         return t + ph * (1 - (v - lo) / (hi - lo))
 
     pts = " ".join(f"{x(i):.1f},{y(v):.1f}" for i, v in enumerate(eq))
-    # grid
     grids = []
     for k in range(5):
         yy = t + ph * k / 4
@@ -258,7 +338,7 @@ def _write_equity_svg(curve: list[dict], path: Path, title: str):
   {''.join(grids)}
   <polyline fill="none" stroke="#2563eb" stroke-width="2" points="{pts}"/>
   {''.join(labels)}
-  <text x="{w/2}" y="{h-2}" text-anchor="middle" font-size="10" fill="#999">Path-A TSMOM+ATR · equity curve</text>
+  <text x="{w/2}" y="{h-2}" text-anchor="middle" font-size="10" fill="#999">主力连续 ZL · Path-A TSMOM+ATR</text>
 </svg>
 '''
     path.write_text(svg, encoding="utf-8")
@@ -270,16 +350,15 @@ def simulate(symbols, risk_budget, equity0):
     errors = {}
     for u in symbols:
         code = u["code"]
-        print(f"[bt] fetch history {code} {u['name']}...")
+        print(f"[bt] fetch ZL {code} {u.get('ticker')} {u['name']}...")
         try:
-            hist, _ = fetch_history(u["name"])
+            hist, _ = fetch_history(u)
             series[code] = {"meta": u, "hist": hist}
-            print(f"  bars={len(hist)}")
+            print(f"  bars={len(hist)} range={hist[0]['date'] if hist else '-'}→{hist[-1]['date'] if hist else '-'}")
         except Exception as e:
             errors[code] = str(e)[:200]
             print(f"  ERR {e}")
 
-    # Prefer dates covered by many symbols (avoid sparse year-union junk)
     date_hits = Counter()
     for s in series.values():
         for h in s["hist"]:
@@ -287,22 +366,16 @@ def simulate(symbols, risk_budget, equity0):
     min_cover = max(3, len(series) // 3)
     dates = sorted(d for d, c in date_hits.items() if c >= min_cover)
     if len(dates) < WARMUP + 5:
-        # fallback: densest recent window
-        dates = sorted(date_hits.keys())
-        dates = dates[-LOOKBACK_DAYS:] if len(dates) > LOOKBACK_DAYS else dates
+        dates = sorted(date_hits.keys())[-LOOKBACK_DAYS:]
     if len(dates) < WARMUP + 5:
         return {
             "ok": False,
-            "error": "history too short after window filter",
+            "error": "history too short after ZL window filter",
             "errors": errors,
             "bars": {k: len(v["hist"]) for k, v in series.items()},
-            "date_hits_sample": dict(list(date_hits.most_common(5))),
         }
 
-    idx = {
-        code: {h["date"]: i for i, h in enumerate(s["hist"])}
-        for code, s in series.items()
-    }
+    idx = {code: {h["date"]: i for i, h in enumerate(s["hist"])} for code, s in series.items()}
 
     equity = equity0
     peak = equity
@@ -381,8 +454,9 @@ def simulate(symbols, risk_budget, equity0):
     pool = ",".join(u["code"] for u in symbols)
     return {
         "ok": True,
-        "schema_version": "cta-backtest-v2-1y",
+        "schema_version": "cta-backtest-v3-zl-1y",
         "batch": BATCH_LABEL,
+        "data_source": "iFinD 主力连续 ZL",
         "universe_n": len(symbols),
         "universe": pool,
         "start": trade_dates[0],
@@ -402,16 +476,16 @@ def simulate(symbols, risk_budget, equity0):
         "equity_curve_weekly": _downsample_weekly(curve),
         "day_pnls_tail": day_pnls[-20:],
         "summary": (
-            f"{trade_dates[0]}→{trade_dates[-1]} 权益 {equity:.0f}（{ret_pct:+.2f}%），"
+            f"ZL主力 {trade_dates[0]}→{trade_dates[-1]} 权益 {equity:.0f}（{ret_pct:+.2f}%），"
             f"MaxDD {max_dd:.2f}%，日胜率 {(wins/n*100 if n else 0):.1f}%（{n}日），"
-            f"均持仓 {avg_held:.1f}，池 {len(symbols)} 品种，结论 {conclusion}"
+            f"均持仓 {avg_held:.1f}，池 {len(symbols)}，结论 {conclusion}"
         ),
     }
 
 
 def main():
     cfg, equity0, risk_budget = _load_cfg()
-    print(f"[bt] equity={equity0} risk_budget={risk_budget} n={len(cfg['symbols'])} lookback={LOOKBACK_DAYS}")
+    print(f"[bt] ZL equity={equity0} risk={risk_budget} n={len(cfg['symbols'])}")
     out = simulate(cfg["symbols"], risk_budget, equity0)
     path = ROOT / "historical_backtest_latest.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -426,7 +500,7 @@ def main():
         _write_equity_svg(
             out["equity_curve"],
             chart,
-            f"CTA Path-A 一年权益曲线 {out.get('start')}→{out.get('end')}",
+            f"CTA Path-A 主力连续一年 {out.get('start')}→{out.get('end')}",
         )
         print(f"[bt] chart {chart}")
     print(out.get("summary") or out.get("error"))

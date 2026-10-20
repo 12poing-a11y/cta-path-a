@@ -42,7 +42,7 @@ def apply_portfolio_caps(
     equity: float,
     max_positions: int = 3,
     max_gross_exposure_pct: float = 50.0,
-    max_portfolio_risk_pct: float = 8.0,
+    max_portfolio_risk_pct: float = 10.0,
     max_per_bucket: int = 1,
     min_r20_pct: float = 3.0,
     min_r60_pct: float = 5.0,

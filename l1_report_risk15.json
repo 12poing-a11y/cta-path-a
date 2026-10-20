@@ -1,6 +1,6 @@
 {
   "asof": "20261020",
-  "updated_at": "2026-10-20T23:29:11.316306+08:00",
+  "updated_at": "2026-10-20T23:51:21.713929+08:00",
   "equity_base": 200000.0,
   "equity": 200000.0,
   "equity_live": 200000.0,
@@ -15,6 +15,9 @@
   "min_r20_pct": 3.0,
   "min_r60_pct": 5.0,
   "data_source": "sina+tencent primary, iFinD fallback",
+  "entry_filter": "p0",
+  "ifind_calls": 0,
+  "ifind_call_log": [],
   "ifind_slot": "primary",
   "portfolio": {
     "max_positions": 3,

@@ -11,7 +11,10 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
-from ifind_call import active_slot  # noqa: E402
+from ifind_call import active_slot, usage_report  # noqa: E402
+from member_rank import load_member_changes  # noqa: E402
+from path_a_filters import bucket_reason, entry_block, member_reason  # noqa: E402
+from public_curve import load_curves  # noqa: E402
 from position_rules import (  # noqa: E402
     apply_portfolio_caps,
     compound_equity,
@@ -91,7 +94,15 @@ EQUITY = compound_equity(LIVE_EQUITY, EQUITY_BASE, EQUITY_COMPOUND)
 L1_RISK = risk_budget_yuan(EQUITY, RISK_PCT, L1_MULT)
 
 
-def _fetch_snapshot(u: dict) -> dict:
+def _entry_mode() -> str:
+    cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
+    mode = cfg.get("entry_filter") or "p0"
+    if mode not in ("p0", "carry", "oi", "member", "climax"):
+        return "p0"
+    return mode
+
+
+def _fetch_snapshot(u: dict, curves: dict, mode: str) -> dict:
     """OHLCV from Sina and Tencent. iFinD runs only when that history is short or stale."""
     from historical_backtest import atr14, fetch_history, ret_n
 
@@ -102,16 +113,37 @@ def _fetch_snapshot(u: dict) -> dict:
     r20 = ret_n(hist, i, 20)
     r60 = ret_n(hist, i, 60)
     atr = atr14(hist, i)
+    direction = "空仓"
+    if r20 is not None and r60 is not None and r20 != 0 and r60 != 0:
+        if (r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0):
+            direction = "多" if r20 > 0 else "空"
+    blocked = None
+    if direction in ("多", "空") and r20 is not None and r60 is not None:
+        blocked = entry_block(
+            mode,
+            hist,
+            i,
+            direction,
+            hist[i]["date"],
+            u["code"],
+            atr,
+            curves,
+            {},
+            [],
+        )
     return {
         "close": hist[i]["close"],
         "r20": round(r20, 4) if r20 is not None else None,
         "r60": round(r60, 4) if r60 is not None else None,
         "atr": round(atr, 2) if atr is not None else None,
+        "volume": hist[i].get("volume"),
         "source": meta.get("source"),
         "bar_date": hist[i]["date"],
+        "prev_date": hist[i - 1]["date"],
         "sina_n": meta.get("sina_n"),
         "tencent_n": meta.get("tencent_n"),
         "ifind": meta.get("ifind"),
+        "block": blocked,
     }
 
 
@@ -252,12 +284,19 @@ def main():
         )
         return 0
 
+    mode = _entry_mode()
+    print(f"[cta] entry_filter={mode}")
+    curves = load_curves([u["code"] for u in UNIVERSE])
     signals = []
+    snaps = []
     for u in UNIVERSE:
         print(f"[cta] fetch {u['code']}...")
         try:
-            snap = _fetch_snapshot(u)
+            snap = _fetch_snapshot(u, curves, mode)
+            snaps.append(snap)
             sig = _signal(u, snap, risk_budget=risk_budget)
+            if snap.get("block"):
+                sig["block"] = snap["block"]
             signals.append(sig)
             print(
                 f"  {u['code']} src={snap.get('source')} date={snap.get('bar_date')} "
@@ -278,6 +317,36 @@ def main():
                 }
             )
             print(f"  ERR {u['code']}: {e}")
+            snaps.append({})
+
+    if mode == "member":
+        days = sorted({s.get("prev_date") or s.get("bar_date") for s in snaps if s.get("bar_date")})
+        member = load_member_changes(days, [u["code"] for u in UNIVERSE]) if days else {}
+        for sig in signals:
+            if sig.get("block") or sig.get("direction") not in ("多", "空"):
+                continue
+            reason = member_reason(sig["direction"], (member.get(sig["code"]) or {}).get(sig.get("bar_date")))
+            if reason:
+                sig["block"] = reason
+    if mode == "climax":
+        for sig in signals:
+            if sig.get("block") or sig.get("direction") not in ("多", "空"):
+                continue
+            peers = [
+                other.get("r20")
+                for other in signals
+                if other.get("code") != sig.get("code") and other.get("bucket") == sig.get("bucket")
+            ]
+            reason = bucket_reason(sig["direction"], [p for p in peers if p is not None])
+            if reason:
+                sig["block"] = reason
+    for sig in signals:
+        if sig.get("block"):
+            sig["lots_raw"] = 0
+            sig["lots_l1"] = 0
+            sig["lots_full"] = 0
+            sig["selected"] = False
+            sig["action"] = sig["block"]
 
     port_meta = _apply_caps(signals, sizing_equity=sizing_eq)
     port_meta["sizing_equity"] = round(sizing_eq, 2)
@@ -307,6 +376,9 @@ def main():
         "min_r20_pct": MIN_R20_PCT,
         "min_r60_pct": MIN_R60_PCT,
         "data_source": "sina+tencent primary, iFinD fallback",
+        "entry_filter": mode,
+        "ifind_calls": usage_report()["count"],
+        "ifind_call_log": usage_report()["calls"],
         "ifind_slot": active_slot(),
         "portfolio": port_meta,
         "equity_state": {
@@ -323,6 +395,8 @@ def main():
     arch = ROOT / "archive"
     arch.mkdir(exist_ok=True)
     (arch / f"l1_report_{report['asof']}.json").write_text(blob, encoding="utf-8")
+    rep = usage_report()
+    print(f"[ifind] calls={rep['count']}")
     print(f"[cta] wrote {path}")
     return 0
 

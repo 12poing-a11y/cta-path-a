@@ -7,6 +7,16 @@ from pathlib import Path
 import requests
 
 CONFIG_PATH = Path(__file__).resolve().parent / "mcp_config.json"
+_USAGE: list[dict] = []
+
+
+def reset_usage() -> None:
+    _USAGE.clear()
+
+
+def usage_report() -> dict:
+    """How many tools/call requests this process sent to iFinD."""
+    return {"count": len(_USAGE), "calls": list(_USAGE)}
 
 
 def _normalize_token(raw: str) -> str:
@@ -332,6 +342,11 @@ def call(server_type, tool_name, params):
     if server_type not in SERVERS:
         raise ValueError(f"unknown server_type: {server_type}")
 
+    query = ""
+    if isinstance(params, dict):
+        query = str(params.get("query") or "")[:160]
+    _USAGE.append({"server": server_type, "tool": tool_name, "query": query})
+
     _validate_params(params)
     allowed_tools = _load_tool_set(server_type)
     if tool_name not in allowed_tools:
@@ -351,6 +366,9 @@ def call(server_type, tool_name, params):
 
     if isinstance(data, dict) and "error" in data:
         if _looks_like_quota_or_auth_fail(resp, data) and _switch_to_backup(data.get("error")):
+            _USAGE.append(
+                {"server": server_type, "tool": tool_name, "query": query, "retry": True}
+            )
             _init(server_type)
             resp, data = _post(server_type, payload)
             if isinstance(data, dict) and "error" in data:

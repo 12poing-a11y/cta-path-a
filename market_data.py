@@ -2,9 +2,15 @@
 """Futures daily bars: Sina and Tencent first, iFinD only fills gaps."""
 from __future__ import annotations
 
+import json
 from datetime import date, timedelta
+from pathlib import Path
 
 import requests
+
+ROOT = Path(__file__).resolve().parent
+_MEM: dict[str, list] = {}
+_FREE: dict[str, tuple] = {}
 
 SINA_DAILY_URL = (
     "https://stock2.finance.sina.com.cn/futures/api/json.php/"
@@ -77,21 +83,37 @@ def _bar(d: str, open_, high, low, close, volume=None, oi=None, settle=None) -> 
     }
 
 
-def fetch_sina_daily(code: str, timeout: float = 20) -> list[dict]:
-    """Sina main-continuous daily bars, including the latest session.
+def fetch_sina_symbol(symbol: str, timeout: float = 20) -> list[dict]:
+    """Sina daily bars for a continuous or delivery-month symbol.
 
     IndexService.getInnerFuturesDailyKLine stops in 2024-07. NewService
     returns date/ohlc/volume/open interest/settlement through the current day.
+    Same-day responses are cached so a filter comparison does not refetch.
     """
+    symbol = str(symbol or "").upper()
+    if not symbol:
+        return []
+    if symbol in _MEM:
+        return _MEM[symbol]
+    cache = ROOT / ".cache" / "sina" / date.today().isoformat() / f"{symbol}.json"
+    if cache.exists():
+        try:
+            cached = json.loads(cache.read_text(encoding="utf-8"))
+            if isinstance(cached, list):
+                _MEM[symbol] = cached
+                return cached
+        except Exception:
+            pass
     resp = requests.get(
         SINA_DAILY_URL,
-        params={"symbol": sina_symbol(code)},
+        params={"symbol": symbol},
         headers=HTTP_HEADERS,
         timeout=timeout,
     )
     resp.raise_for_status()
     payload = resp.json()
     if not isinstance(payload, list):
+        _MEM[symbol] = []
         return []
     out = []
     for row in payload:
@@ -110,7 +132,18 @@ def fetch_sina_daily(code: str, timeout: float = 20) -> list[dict]:
         if bar:
             out.append(bar)
     out.sort(key=lambda b: b["date"])
+    _MEM[symbol] = out
+    try:
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        cache.write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
+    except Exception:
+        pass
     return out
+
+
+def fetch_sina_daily(code: str, timeout: float = 20) -> list[dict]:
+    """Main-continuous daily bars, symbol `{CODE}0`."""
+    return fetch_sina_symbol(sina_symbol(code), timeout=timeout)
 
 
 def fetch_tencent_daily(code: str, timeout: float = 8) -> list[dict]:
@@ -195,6 +228,9 @@ def trim_bars(bars: list[dict], cutoff_days: int) -> list[dict]:
 
 def load_free_bars(code: str) -> tuple[list[dict], dict]:
     """Sina and Tencent only. Does not call iFinD."""
+    if code in _FREE:
+        bars, meta = _FREE[code]
+        return bars, dict(meta)
     meta = {
         "code": code,
         "sina_symbol": sina_symbol(code),
@@ -227,4 +263,5 @@ def load_free_bars(code: str) -> tuple[list[dict], dict]:
     meta["free_n"] = len(merged)
     if merged:
         meta["last"] = merged[-1]["date"]
-    return merged, meta
+    _FREE[code] = (merged, dict(meta))
+    return merged, dict(meta)

@@ -8,3 +8,4 @@ venv/
 weekly_backtest_latest.json
 # keep archive in git optionally; ignore local noise
 *.conflict.*
+.cache/

@@ -9,11 +9,14 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent
 TZ = ZoneInfo("Asia/Shanghai")
-EQUITY0 = 200_000.0
+def _cfg():
+    cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
+    equity = float(cfg.get("equity", 200_000))
+    mult = {s["code"]: s["mult"] for s in cfg.get("symbols", [])}
+    return equity, mult
 
-# approx point value already embedded as ATR*mult = yuan risk; for PnL use
-# close delta * mult * lots * sign
-MULT = {"JD": 10, "JM": 60, "CF": 5, "SR": 10, "RU": 10, "MA": 10}
+
+EQUITY0, MULT = _cfg()
 
 
 def _load_reports():

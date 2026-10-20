@@ -1,0 +1,5 @@
+{
+  "auth_token": "PASTE_PRIMARY_IFIND_TOKEN",
+  "auth_token_backup": "PASTE_BACKUP_IFIND_TOKEN",
+  "active_slot": "primary"
+}

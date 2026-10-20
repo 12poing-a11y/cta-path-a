@@ -2,9 +2,9 @@
   "equity": 200000,
   "risk_pct": 1.5,
   "l1_mult": 1.0,
-  "notes": "起点权益20万；equity_compound=true 时纸面权益超过20万后按当前权益滚动定仓（单品种1.5%风险与总名义≤50%同步放大）。扫描池ZL前20，实际持仓≤3。",
+  "notes": "起点20万；复利定仓；同向且|r20|≥3%、|r60|≥5%；同板块最多1个；最多3品种；名义≤50%且组合ATR风险≤8%。",
   "selection": {
-    "rule": "池内扫描；同向信号按 |r20|+|r60| 取 Top3；按当前权益ATR定仓再缩至≤50%名义敞口",
+    "rule": "动量门槛→板块去重→Top3→名义50%帽→组合ATR风险8%帽",
     "asof": "2026-10-20",
     "source": "iFinD future_quotes 主力连续 ZL",
     "excluded": [
@@ -186,5 +186,9 @@
   ],
   "max_positions": 3,
   "max_gross_exposure_pct": 50,
+  "max_portfolio_risk_pct": 8,
+  "max_per_bucket": 1,
+  "min_r20_pct": 3,
+  "min_r60_pct": 5,
   "equity_compound": true
 }

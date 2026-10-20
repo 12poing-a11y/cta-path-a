@@ -13,7 +13,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 from ifind_call import active_slot, call  # noqa: E402
-from position_rules import apply_portfolio_caps  # noqa: E402
+from position_rules import (  # noqa: E402
+    apply_portfolio_caps,
+    compound_equity,
+    risk_budget_yuan,
+)
 
 LOOKBACK_DAYS = 260
 WARMUP = 60
@@ -24,11 +28,28 @@ CUTOFF_DAYS = 420
 def _load_cfg():
     cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
     equity = float(cfg.get("equity", 200_000))
+    compound = bool(cfg.get("equity_compound", True))
     risk_pct = float(cfg.get("risk_pct", 1.5))
     l1_mult = float(cfg.get("l1_mult", 1.0))
     max_positions = int(cfg.get("max_positions", 3))
     max_gross_pct = float(cfg.get("max_gross_exposure_pct", 50))
-    return cfg, equity, equity * risk_pct / 100.0 * l1_mult, max_positions, max_gross_pct
+    max_port_risk = float(cfg.get("max_portfolio_risk_pct", 8))
+    max_per_bucket = int(cfg.get("max_per_bucket", 1))
+    min_r20 = float(cfg.get("min_r20_pct", 3))
+    min_r60 = float(cfg.get("min_r60_pct", 5))
+    return {
+        "cfg": cfg,
+        "equity0": equity,
+        "compound": compound,
+        "risk_pct": risk_pct,
+        "l1_mult": l1_mult,
+        "max_positions": max_positions,
+        "max_gross_pct": max_gross_pct,
+        "max_port_risk": max_port_risk,
+        "max_per_bucket": max_per_bucket,
+        "min_r20": min_r20,
+        "min_r60": min_r60,
+    }
 
 
 def _answer_text(res: dict) -> str:
@@ -348,7 +369,20 @@ def _write_equity_svg(curve: list[dict], path: Path, title: str):
     return path
 
 
-def simulate(symbols, risk_budget, equity0, max_positions=3, max_gross_pct=50.0):
+def simulate(
+    symbols,
+    equity0,
+    *,
+    compound=True,
+    risk_pct=1.5,
+    l1_mult=1.0,
+    max_positions=3,
+    max_gross_pct=50.0,
+    max_port_risk=8.0,
+    max_per_bucket=1,
+    min_r20=3.0,
+    min_r60=5.0,
+):
     series = {}
     errors = {}
     for u in symbols:
@@ -420,8 +454,10 @@ def simulate(symbols, risk_budget, equity0, max_positions=3, max_gross_pct=50.0)
             if not ((r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0)):
                 continue
             direction = "多" if r20 > 0 else "空"
+            sizing_eq = compound_equity(equity, equity0, compound)
+            day_risk = risk_budget_yuan(sizing_eq, risk_pct, l1_mult)
             risk_per_lot = a * s["meta"]["mult"]
-            lots = int(math.floor(risk_budget / risk_per_lot))
+            lots = int(math.floor(day_risk / risk_per_lot)) if risk_per_lot > 0 else 0
             if lots <= 0:
                 continue
             close = hist[i]["close"]
@@ -435,22 +471,20 @@ def simulate(symbols, risk_budget, equity0, max_positions=3, max_gross_pct=50.0)
                     "r20": round(r20, 3),
                     "r60": round(r60, 3),
                     "atr": round(a, 2),
+                    "bucket": s["meta"].get("bucket"),
                 }
             )
+        sizing_eq = compound_equity(equity, equity0, compound)
         selected, _meta = apply_portfolio_caps(
             cands,
-            equity=equity0,
+            equity=sizing_eq,
             max_positions=max_positions,
             max_gross_exposure_pct=max_gross_pct,
+            max_portfolio_risk_pct=max_port_risk,
+            max_per_bucket=max_per_bucket,
+            min_r20_pct=min_r20,
+            min_r60_pct=min_r60,
         )
-        # Cap vs current equity as well (never >50% of live equity)
-        if equity > 0 and equity != equity0:
-            selected, _meta = apply_portfolio_caps(
-                selected,
-                equity=equity,
-                max_positions=max_positions,
-                max_gross_exposure_pct=max_gross_pct,
-            )
         new_pos = {
             c["code"]: {
                 "direction": c["direction"],
@@ -494,11 +528,16 @@ def simulate(symbols, risk_budget, equity0, max_positions=3, max_gross_pct=50.0)
     pool = ",".join(u["code"] for u in symbols)
     return {
         "ok": True,
-        "schema_version": "cta-backtest-v4-top3-50pct",
+        "schema_version": "cta-backtest-v6-filters-compound",
         "batch": BATCH_LABEL,
         "data_source": "iFinD 主力连续 ZL",
+        "equity_compound": compound,
         "max_positions": max_positions,
         "max_gross_exposure_pct": max_gross_pct,
+        "max_portfolio_risk_pct": max_port_risk,
+        "max_per_bucket": max_per_bucket,
+        "min_r20_pct": min_r20,
+        "min_r60_pct": min_r60,
         "ifind_slot": active_slot(),
         "universe_n": len(symbols),
         "universe": pool,
@@ -522,23 +561,34 @@ def simulate(symbols, risk_budget, equity0, max_positions=3, max_gross_pct=50.0)
             f"ZL主力 {trade_dates[0]}→{trade_dates[-1]} 权益 {equity:.0f}（{ret_pct:+.2f}%），"
             f"MaxDD {max_dd:.2f}%，日胜率 {(wins/n*100 if n else 0):.1f}%（{n}日），"
             f"均持仓 {avg_held:.1f}，池 {len(symbols)}，"
-            f"Top{max_positions}/敞口≤{max_gross_pct}%，结论 {conclusion}"
+            f"Top{max_positions}/名义≤{max_gross_pct}%/ATR风险≤{max_port_risk}%/"
+            f"板块≤{max_per_bucket}/门槛{min_r20}/{min_r60}，结论 {conclusion}"
         ),
     }
 
 
 def main():
-    cfg, equity0, risk_budget, max_positions, max_gross_pct = _load_cfg()
+    p = _load_cfg()
+    cfg = p["cfg"]
     print(
-        f"[bt] ZL equity={equity0} risk={risk_budget} n={len(cfg['symbols'])} "
-        f"max_pos={max_positions} max_gross={max_gross_pct}% ifind={active_slot()}"
+        f"[bt] ZL equity0={p['equity0']} compound={p['compound']} "
+        f"n={len(cfg['symbols'])} max_pos={p['max_positions']} "
+        f"gross≤{p['max_gross_pct']}% atr_risk≤{p['max_port_risk']}% "
+        f"bucket≤{p['max_per_bucket']} min_r={p['min_r20']}/{p['min_r60']} "
+        f"ifind={active_slot()}"
     )
     out = simulate(
         cfg["symbols"],
-        risk_budget,
-        equity0,
-        max_positions=max_positions,
-        max_gross_pct=max_gross_pct,
+        p["equity0"],
+        compound=p["compound"],
+        risk_pct=p["risk_pct"],
+        l1_mult=p["l1_mult"],
+        max_positions=p["max_positions"],
+        max_gross_pct=p["max_gross_pct"],
+        max_port_risk=p["max_port_risk"],
+        max_per_bucket=p["max_per_bucket"],
+        min_r20=p["min_r20"],
+        min_r60=p["min_r60"],
     )
     path = ROOT / "historical_backtest_latest.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")

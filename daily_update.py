@@ -31,8 +31,24 @@ def _load_universe():
     l1_mult = float(cfg.get("l1_mult", 1.0))
     max_positions = int(cfg.get("max_positions", 3))
     max_gross_pct = float(cfg.get("max_gross_exposure_pct", 50))
+    max_port_risk = float(cfg.get("max_portfolio_risk_pct", 8))
+    max_per_bucket = int(cfg.get("max_per_bucket", 1))
+    min_r20 = float(cfg.get("min_r20_pct", 3))
+    min_r60 = float(cfg.get("min_r60_pct", 5))
     symbols = cfg.get("symbols") or []
-    return equity_base, compound, risk_pct, l1_mult, max_positions, max_gross_pct, symbols
+    return (
+        equity_base,
+        compound,
+        risk_pct,
+        l1_mult,
+        max_positions,
+        max_gross_pct,
+        max_port_risk,
+        max_per_bucket,
+        min_r20,
+        min_r60,
+        symbols,
+    )
 
 
 def _load_live_equity(equity_base: float) -> tuple[float, dict]:
@@ -58,9 +74,19 @@ def _load_live_equity(equity_base: float) -> tuple[float, dict]:
     return live, state
 
 
-EQUITY_BASE, EQUITY_COMPOUND, RISK_PCT, L1_MULT, MAX_POSITIONS, MAX_GROSS_PCT, UNIVERSE = (
-    _load_universe()
-)
+(
+    EQUITY_BASE,
+    EQUITY_COMPOUND,
+    RISK_PCT,
+    L1_MULT,
+    MAX_POSITIONS,
+    MAX_GROSS_PCT,
+    MAX_PORT_RISK_PCT,
+    MAX_PER_BUCKET,
+    MIN_R20_PCT,
+    MIN_R60_PCT,
+    UNIVERSE,
+) = _load_universe()
 LIVE_EQUITY, _EQUITY_STATE = _load_live_equity(EQUITY_BASE)
 EQUITY = compound_equity(LIVE_EQUITY, EQUITY_BASE, EQUITY_COMPOUND)
 L1_RISK = risk_budget_yuan(EQUITY, RISK_PCT, L1_MULT)
@@ -236,7 +262,10 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
     elif lots <= 0:
         action = f"有{direction}向，1.5%仍不足1手（每手约{risk_per_lot}）"
     else:
-        action = f"候选：{direction}{lots}手（待Top{MAX_POSITIONS}/敞口≤{MAX_GROSS_PCT}%筛选）"
+        action = (
+            f"候选：{direction}{lots}手（待门槛/板块/Top{MAX_POSITIONS}/"
+            f"名义≤{MAX_GROSS_PCT}%/风险≤{MAX_PORT_RISK_PCT}%）"
+        )
 
     today = datetime.now(TZ).strftime("%Y%m%d")
     return {
@@ -283,6 +312,7 @@ def _apply_caps(signals: list[dict], *, sizing_equity: float) -> dict:
                 "r20": s.get("r20"),
                 "r60": s.get("r60"),
                 "atr": s.get("atr"),
+                "bucket": s.get("bucket"),
             }
         )
     selected, meta = apply_portfolio_caps(
@@ -290,8 +320,14 @@ def _apply_caps(signals: list[dict], *, sizing_equity: float) -> dict:
         equity=sizing_equity,
         max_positions=MAX_POSITIONS,
         max_gross_exposure_pct=MAX_GROSS_PCT,
+        max_portfolio_risk_pct=MAX_PORT_RISK_PCT,
+        max_per_bucket=MAX_PER_BUCKET,
+        min_r20_pct=MIN_R20_PCT,
+        min_r60_pct=MIN_R60_PCT,
     )
     by_code = {c["code"]: c for c in selected}
+    weak = set(meta.get("weak_filtered") or [])
+    bucket_skip = set(meta.get("bucket_skipped") or [])
     for s in signals:
         code = s.get("code")
         if code in by_code:
@@ -299,14 +335,25 @@ def _apply_caps(signals: list[dict], *, sizing_equity: float) -> dict:
             s["lots_l1"] = lots
             s["lots_full"] = lots
             s["selected"] = True
-            s["action"] = f"路径A记账：记{s.get('direction')}{lots}手（Top{MAX_POSITIONS}·敞口≤{MAX_GROSS_PCT}%·不下单）"
+            s["action"] = (
+                f"路径A记账：记{s.get('direction')}{lots}手"
+                f"（Top{MAX_POSITIONS}·名义≤{MAX_GROSS_PCT}%·风险≤{MAX_PORT_RISK_PCT}%·不下单）"
+            )
         else:
             raw = int(s.get("lots_raw") or 0)
             if s.get("align") == "同向" and raw > 0:
                 s["lots_l1"] = 0
                 s["lots_full"] = 0
                 s["selected"] = False
-                s["action"] = f"有信号但未入选（限{MAX_POSITIONS}品种/总仓≤{MAX_GROSS_PCT}%）"
+                if code in weak:
+                    s["action"] = f"同向但动量不足（需|r20|≥{MIN_R20_PCT}%且|r60|≥{MIN_R60_PCT}%）"
+                elif code in bucket_skip:
+                    s["action"] = f"同板块已有更强信号（每板块最多{MAX_PER_BUCKET}个）"
+                else:
+                    s["action"] = (
+                        f"有信号但未入选（限{MAX_POSITIONS}品种/"
+                        f"名义≤{MAX_GROSS_PCT}%/风险≤{MAX_PORT_RISK_PCT}%）"
+                    )
             else:
                 s["selected"] = False
     return meta
@@ -320,7 +367,8 @@ def main():
     print(
         f"[cta] start {now.isoformat()} equity_base={EQUITY_BASE} live={live} "
         f"sizing={sizing_eq} compound={EQUITY_COMPOUND} risk={risk_budget} "
-        f"max_pos={MAX_POSITIONS} max_gross={MAX_GROSS_PCT}% ifind={active_slot()}"
+        f"max_pos={MAX_POSITIONS} gross≤{MAX_GROSS_PCT}% atr_risk≤{MAX_PORT_RISK_PCT}% "
+        f"bucket≤{MAX_PER_BUCKET} min_r={MIN_R20_PCT}/{MIN_R60_PCT} ifind={active_slot()}"
     )
     if not is_weekday_cn():
         print("[cta] skip: weekend")
@@ -362,7 +410,9 @@ def main():
     print(
         f"[cta] portfolio selected={port_meta.get('selected')} "
         f"gross={port_meta.get('gross_after')} ({port_meta.get('gross_pct')}%) "
-        f"scale={port_meta.get('scale')}"
+        f"atr_risk={port_meta.get('atr_risk_after')} ({port_meta.get('atr_risk_pct')}%) "
+        f"scale={port_meta.get('scale')} weak={port_meta.get('weak_filtered')} "
+        f"bucket_skip={port_meta.get('bucket_skipped')}"
     )
 
     report = {
@@ -377,6 +427,10 @@ def main():
         "l1_risk_yuan": risk_budget,
         "max_positions": MAX_POSITIONS,
         "max_gross_exposure_pct": MAX_GROSS_PCT,
+        "max_portfolio_risk_pct": MAX_PORT_RISK_PCT,
+        "max_per_bucket": MAX_PER_BUCKET,
+        "min_r20_pct": MIN_R20_PCT,
+        "min_r60_pct": MIN_R60_PCT,
         "ifind_slot": active_slot(),
         "portfolio": port_meta,
         "equity_state": {

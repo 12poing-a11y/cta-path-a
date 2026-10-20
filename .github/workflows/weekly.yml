@@ -1,0 +1,52 @@
+name: CTA Weekly Backtest Sun 20:00 CST
+
+on:
+  schedule:
+    # 北京时间周日 20:00 = UTC 12:00
+    - cron: "0 12 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Run backtest
+        run: python weekly_backtest.py
+
+      - name: Sync Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: python notion_sync.py backtest
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cta-weekly-${{ github.run_id }}
+          path: weekly_backtest_latest.json
+          if-no-files-found: warn
+
+      - name: Commit backtest snapshot
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: |
+          git config user.name "cta-bot"
+          git config user.email "cta-bot@users.noreply.github.com"
+          git add weekly_backtest_latest.json archive/*.json || true
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "chore(cta): weekly backtest $(date -u +%Y%m%d)"
+            git push
+          fi

@@ -62,7 +62,7 @@ def _safe_action(text: str) -> str:
     """Never write secrets / MCP JSON blobs into Notion action notes."""
     s = str(text or "")
     low = s.lower()
-    if "authorization" in low or "mcpservers" in low or "eyjraWQi".lower() in low:
+    if "authorization" in low or "mcpservers" in low or "eyjrawqi" in low:
         if s.startswith("拉取失败"):
             return "拉取失败: iFinD 鉴权/配置异常（详情已省略）"
         return "（敏感错误详情已省略）"

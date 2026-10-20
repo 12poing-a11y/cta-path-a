@@ -66,6 +66,29 @@ def _to_float(x):
         return None
 
 
+def _looks_like_yyyymmdd(n: float | None) -> bool:
+    """Reject compact trade dates (e.g. 20260916) mistaken for prices/ATR."""
+    if n is None:
+        return False
+    if abs(n - round(n)) > 1e-9:
+        return False
+    v = int(round(n))
+    if not (20000101 <= v <= 20991231):
+        return False
+    mm, dd = (v // 100) % 100, v % 100
+    return 1 <= mm <= 12 and 1 <= dd <= 31
+
+
+def _price_num(x) -> float | None:
+    n = _to_float(x)
+    if n is None or _looks_like_yyyymmdd(n):
+        return None
+    # futures settlement prices are almost never this huge as a single tick
+    if abs(n) >= 5_000_000:
+        return None
+    return n
+
+
 def _fetch_snapshot(code: str, name: str) -> dict:
     q = (
         f"{name}主力合约最新交易日收盘价、近20日涨跌幅%、近60日涨跌幅%、"
@@ -79,10 +102,10 @@ def _fetch_snapshot(code: str, name: str) -> dict:
     for cells in rows:
         joined = " ".join(cells)
         if code.upper() in joined.upper() or name in joined or "ZL." in joined:
-            nums = [_to_float(c) for c in cells]
+            nums = [_price_num(c) for c in cells]
             nums = [n for n in nums if n is not None]
             if len(nums) >= 1:
-                # heuristic: close often largest absolute among price-like, returns small
+                # close: price-like, not a compact YYYYMMDD, typically > ~50 for most contracts
                 for n in nums:
                     if abs(n) > 50:
                         close = n
@@ -102,14 +125,10 @@ def _fetch_snapshot(code: str, name: str) -> dict:
         )
         if not m:
             continue
-        d, a, b, c = m.group(1), _to_float(m.group(2)), _to_float(m.group(3)), _to_float(m.group(4))
-        if a is None:
-            continue
-        # treat as date, close[, high, low] or date high low close
-        vals = [a, b, c]
-        vals = [v for v in vals if v is not None]
+        d = m.group(1)
+        a, b, c = _price_num(m.group(2)), _price_num(m.group(3)), _price_num(m.group(4))
+        vals = [v for v in (a, b, c) if v is not None]
         if len(vals) >= 3:
-            # assume high, low, close if close-like last
             high, low, cl = vals[0], vals[1], vals[2]
             if high < low:
                 high, low = low, high
@@ -118,7 +137,7 @@ def _fetch_snapshot(code: str, name: str) -> dict:
             hist.append({"date": d, "high": vals[0], "low": vals[0], "close": vals[0]})
 
     hist = sorted(hist, key=lambda x: x["date"])[-30:]
-    if hist and close is None:
+    if hist and (close is None or _looks_like_yyyymmdd(close)):
         close = hist[-1]["close"]
 
     atr = None
@@ -128,15 +147,19 @@ def _fetch_snapshot(code: str, name: str) -> dict:
             h, l, pc = hist[i]["high"], hist[i]["low"], hist[i - 1]["close"]
             trs.append(max(h - l, abs(h - pc), abs(l - pc)))
         atr = sum(trs[-14:]) / 14.0
+        if atr is not None and _looks_like_yyyymmdd(atr):
+            atr = None
 
     # fallback dedicated ATR query
     if atr is None:
         ans2 = _answer_text(
             call("future", "future_quotes", {"query": f"{name}主力近20日真实波幅ATR14"})
         )
-        m = re.search(r"(\d+\.?\d*)", ans2)
-        if m:
-            atr = _to_float(m.group(1))
+        for m in re.finditer(r"(\d+\.?\d*)", ans2):
+            cand = _price_num(m.group(1))
+            if cand is not None and cand > 0:
+                atr = cand
+                break
 
     if r20 is None or r60 is None:
         ans3 = _answer_text(
@@ -148,11 +171,13 @@ def _fetch_snapshot(code: str, name: str) -> dict:
         )
         pcts = re.findall(r"(-?\d+\.?\d*)\s*%?", ans3)
         floats = [_to_float(p) for p in pcts]
-        floats = [f for f in floats if f is not None and abs(f) < 100]
+        floats = [f for f in floats if f is not None and abs(f) < 100 and not _looks_like_yyyymmdd(f)]
         if len(floats) >= 2:
             r20 = r20 if r20 is not None else floats[0]
             r60 = r60 if r60 is not None else floats[1]
 
+    if close is not None and _looks_like_yyyymmdd(close):
+        close = None
     return {"close": close, "r20": r20, "r60": r60, "atr": atr, "raw_preview": ans[:240]}
 
 

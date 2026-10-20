@@ -115,6 +115,49 @@ def member_reason(direction: str, change) -> str | None:
     return None
 
 
+def _seat_side(net) -> int:
+    if net is None:
+        return 0
+    try:
+        val = float(net)
+    except (TypeError, ValueError):
+        return 0
+    if val > 0:
+        return 1
+    if val < 0:
+        return -1
+    return 0
+
+
+def seat_decision(direction: str, book) -> tuple[str | None, str]:
+    """Confirm a 20/60 entry with member seats. Never opens the other side.
+
+    Order: follow 机构, then 外资, then the opposite of 家人.
+    A seat that points against the trend blocks the entry. That is the
+    one-sided rule: do not buy the dip or sell the rally.
+    A missing book does not block.
+    """
+    if not isinstance(book, dict):
+        return None, "缺席位"
+    want = 1 if direction == "多" else -1
+    inst = _seat_side(book.get("inst"))
+    foreign = _seat_side(book.get("foreign"))
+    holder = _seat_side(book.get("holder"))
+    if inst == want:
+        return None, "跟随机构"
+    if inst == -want:
+        return "机构席位反向", "机构席位反向"
+    if foreign == want:
+        return None, "跟随外资"
+    if foreign == -want:
+        return "外资席位反向", "外资席位反向"
+    if holder == -want:
+        return None, "家人对立"
+    if holder == want:
+        return "与家人同向", "与家人同向"
+    return None, "席位持平"
+
+
 def entry_block(
     mode: str,
     hist: list[dict],
@@ -130,6 +173,9 @@ def entry_block(
 ) -> str | None:
     if mode == "base":
         return None
+    if mode == "seats":
+        book = (member.get(code) or {}).get(day)
+        return seat_decision(direction, book)[0]
     reason = measurement_reason(hist, i, atr, max_atr_pct)
     if reason:
         return reason

@@ -13,8 +13,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 from ifind_call import active_slot, call, usage_report  # noqa: E402
-from member_rank import load_member_changes  # noqa: E402
-from path_a_filters import entry_block, fill_cost  # noqa: E402
+from member_rank import load_member_changes, load_member_seats  # noqa: E402
+from path_a_filters import entry_block, fill_cost, seat_decision  # noqa: E402
 from public_curve import curve_coverage, load_curves  # noqa: E402
 from position_rules import (  # noqa: E402
     apply_portfolio_caps,
@@ -474,11 +474,14 @@ def simulate(
 
     trade_dates = dates[WARMUP:]
     curves = {}
-    if mode != "base":
+    if mode not in ("base", "seats"):
         curves = load_curves([u["code"] for u in symbols])
     member = {}
     if mode == "member":
         member = load_member_changes(trade_dates, [c for c in series])
+    elif mode == "seats":
+        member = load_member_seats(trade_dates, [c for c in series])
+    seat_follows: dict[str, int] = {}
     for di, d in enumerate(trade_dates):
         price_pnl = 0.0
         day_cost = 0.0
@@ -564,6 +567,9 @@ def simulate(
                     member,
                     [p for p in peers if p is not None],
                 )
+                if mode == "seats" and not blocked:
+                    _reason, label = seat_decision(direction, (member.get(code) or {}).get(d))
+                    seat_follows[label] = seat_follows.get(label, 0) + 1
                 if blocked:
                     block_counts[blocked] = block_counts.get(blocked, 0) + 1
                     continue
@@ -713,6 +719,7 @@ def simulate(
         "max_dd_pct": round(max_dd, 3),
         "gross_max_dd_pct": round(gross_max_dd, 3),
         "blocks": block_counts,
+        "seat_follows": seat_follows,
         "win_rate": round(wins_day / n * 100, 2) if n else None,
         "trade_win_rate": round(trade_wr, 2) if trade_wr is not None else None,
         "closed_trades": closed_n,
@@ -785,7 +792,7 @@ def _choose(rows: list[dict]) -> str:
         return "base"
     best = None
     for row in rows:
-        if row.get("mode") not in ("carry", "oi", "member", "climax"):
+        if row.get("mode") not in ("carry", "oi", "member", "climax", "seats"):
             continue
         if not row.get("ok"):
             continue
@@ -818,7 +825,7 @@ def main():
     if compare:
         saved = {}
         rows = []
-        for mode in ("base", "p0", "carry", "oi", "member", "climax"):
+        for mode in ("base", "p0", "carry", "oi", "member", "climax", "seats"):
             one = _simulate_cfg(p, mode)
             saved[mode] = one
             rows.append(_row(one))
@@ -837,7 +844,7 @@ def main():
             )
         except Exception:
             prior_cmp = None
-        mode = p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax") else "base"
+        mode = p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax", "seats") else "base"
         out = _simulate_cfg(p, mode)
         out["entry_filter"] = mode
         if prior_cmp:

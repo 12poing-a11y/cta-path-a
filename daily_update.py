@@ -12,8 +12,8 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 from ifind_call import active_slot, usage_report  # noqa: E402
-from member_rank import load_member_changes  # noqa: E402
-from path_a_filters import bucket_reason, entry_block, member_reason  # noqa: E402
+from member_rank import load_member_changes, load_member_seats  # noqa: E402
+from path_a_filters import bucket_reason, entry_block, member_reason, seat_decision  # noqa: E402
 from public_curve import load_curves  # noqa: E402
 from position_rules import (  # noqa: E402
     apply_portfolio_caps,
@@ -97,7 +97,7 @@ L1_RISK = risk_budget_yuan(EQUITY, RISK_PCT, L1_MULT)
 def _entry_mode() -> str:
     cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
     mode = cfg.get("entry_filter") or "base"
-    if mode not in ("base", "p0", "carry", "oi", "member", "climax"):
+    if mode not in ("base", "p0", "carry", "oi", "member", "climax", "seats"):
         return "base"
     return mode
 
@@ -286,7 +286,7 @@ def main():
 
     mode = _entry_mode()
     print(f"[cta] entry_filter={mode}")
-    curves = {} if mode == "base" else load_curves([u["code"] for u in UNIVERSE])
+    curves = {} if mode in ("base", "seats") else load_curves([u["code"] for u in UNIVERSE])
     signals = []
     snaps = []
     for u in UNIVERSE:
@@ -327,6 +327,18 @@ def main():
                 continue
             reason = member_reason(sig["direction"], (member.get(sig["code"]) or {}).get(sig.get("bar_date")))
             if reason:
+                sig["block"] = reason
+    if mode == "seats":
+        days = sorted({s.get("bar_date") for s in snaps if s.get("bar_date")})
+        seats = load_member_seats(days, [u["code"] for u in UNIVERSE]) if days else {}
+        for sig in signals:
+            if sig.get("direction") not in ("多", "空"):
+                continue
+            reason, label = seat_decision(
+                sig["direction"], (seats.get(sig["code"]) or {}).get(sig.get("bar_date"))
+            )
+            sig["seat"] = label
+            if reason and not sig.get("block"):
                 sig["block"] = reason
     if mode == "climax":
         for sig in signals:

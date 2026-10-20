@@ -3846,6 +3846,26 @@
       },
       "conclusion": "继续L1",
       "ok": true
+    },
+    {
+      "mode": "seats",
+      "window": "2025-11-27/2026-10-20",
+      "net_ret_pct": 6.219,
+      "gross_ret_pct": 9.527,
+      "max_dd_pct": 5.035,
+      "gross_max_dd_pct": 4.306,
+      "cost_yuan": 6616.8,
+      "closed_trades": 76,
+      "trade_win_rate": 39.47,
+      "blocks": {
+        "机构席位反向": 276
+      },
+      "seat_follows": {
+        "跟随机构": 506,
+        "缺席位": 552
+      },
+      "conclusion": "继续L1",
+      "ok": true
     }
   ],
   "ifind_call_log": []

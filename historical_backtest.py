@@ -831,7 +831,13 @@ def main():
             rows.append(_row(one))
             print(one.get("summary") or one.get("error"))
         chosen = _choose(rows)
-        _write_entry_filter(chosen)
+        current = p["entry_filter"]
+        # Keep a manually adopted seats book when the dual-metric pick is still base.
+        if chosen == "base" and current == "seats":
+            chosen = "seats"
+            print("[bt] keep entry_filter=seats (adopted seat book)")
+        else:
+            _write_entry_filter(chosen)
         print(f"[bt] entry_filter={chosen}")
         out = saved[chosen]
         out["comparison"] = rows

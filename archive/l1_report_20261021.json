@@ -1,6 +1,6 @@
 {
   "asof": "20261021",
-  "updated_at": "2026-10-21T00:08:27.720039+08:00",
+  "updated_at": "2026-10-21T01:20:03.179012+08:00",
   "equity_base": 200000.0,
   "equity": 200000.0,
   "equity_live": 200000.0,
@@ -15,7 +15,7 @@
   "min_r20_pct": 3.0,
   "min_r60_pct": 5.0,
   "data_source": "sina+tencent primary, iFinD fallback",
-  "entry_filter": "base",
+  "entry_filter": "seats",
   "ifind_calls": 0,
   "ifind_call_log": [],
   "ifind_slot": "primary",
@@ -26,13 +26,12 @@
     "max_per_bucket": 1,
     "min_r20_pct": 3.0,
     "min_r60_pct": 5.0,
-    "candidates_n": 13,
+    "candidates_n": 12,
     "weak_filtered": [
       "V",
       "FG",
       "TA",
       "L",
-      "RB",
       "CF",
       "SP"
     ],
@@ -85,7 +84,8 @@
       "lots_l1": 1,
       "lots_full": 1,
       "selected": true,
-      "action": "路径A记账：记多1手（Top3·名义≤50.0%·风险≤8.0%·不下单）"
+      "action": "路径A记账：记多1手（Top3·名义≤50.0%·风险≤8.0%·不下单）",
+      "seat": "跟随机构"
     },
     {
       "code": "V",
@@ -107,7 +107,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）"
+      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）",
+      "seat": "缺席位"
     },
     {
       "code": "EG",
@@ -173,7 +174,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）"
+      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）",
+      "seat": "跟随机构"
     },
     {
       "code": "EB",
@@ -195,7 +197,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同板块已有更强信号（每板块最多1个）"
+      "action": "同板块已有更强信号（每板块最多1个）",
+      "seat": "缺席位"
     },
     {
       "code": "TA",
@@ -217,7 +220,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）"
+      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）",
+      "seat": "跟随机构"
     },
     {
       "code": "SA",
@@ -239,7 +243,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同板块已有更强信号（每板块最多1个）"
+      "action": "同板块已有更强信号（每板块最多1个）",
+      "seat": "跟随机构"
     },
     {
       "code": "PP",
@@ -261,7 +266,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同板块已有更强信号（每板块最多1个）"
+      "action": "同板块已有更强信号（每板块最多1个）",
+      "seat": "缺席位"
     },
     {
       "code": "L",
@@ -283,7 +289,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）"
+      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）",
+      "seat": "缺席位"
     },
     {
       "code": "JD",
@@ -305,7 +312,8 @@
       "lots_l1": 2,
       "lots_full": 2,
       "selected": true,
-      "action": "路径A记账：记空2手（Top3·名义≤50.0%·风险≤8.0%·不下单）"
+      "action": "路径A记账：记空2手（Top3·名义≤50.0%·风险≤8.0%·不下单）",
+      "seat": "缺席位"
     },
     {
       "code": "P",
@@ -343,13 +351,15 @@
       "r60": -0.8398,
       "align": "同向",
       "direction": "空",
-      "lots_raw": 11,
+      "lots_raw": 0,
       "data_source": "sina",
       "bar_date": "2026-10-20",
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）"
+      "action": "机构席位反向",
+      "seat": "机构席位反向",
+      "block": "机构席位反向"
     },
     {
       "code": "FU",
@@ -371,7 +381,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "有信号但未入选（限3品种/名义≤50.0%/风险≤8.0%）"
+      "action": "有信号但未入选（限3品种/名义≤50.0%/风险≤8.0%）",
+      "seat": "跟随机构"
     },
     {
       "code": "CF",
@@ -393,7 +404,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）"
+      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）",
+      "seat": "跟随机构"
     },
     {
       "code": "BU",
@@ -437,7 +449,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "有多向，1.5%仍不足1手（每手约5346.4）"
+      "action": "有多向，1.5%仍不足1手（每手约5346.4）",
+      "seat": "跟随机构"
     },
     {
       "code": "AG",
@@ -481,7 +494,8 @@
       "lots_l1": 0,
       "lots_full": 0,
       "selected": false,
-      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）"
+      "action": "同向但动量不足（需|r20|≥3.0%且|r60|≥5.0%）",
+      "seat": "跟随机构"
     },
     {
       "code": "SR",

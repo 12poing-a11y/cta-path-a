@@ -12,7 +12,7 @@ permissions:
 jobs:
   backtest:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,24 +20,23 @@ jobs:
           python-version: "3.12"
       - name: Install
         run: pip install -r requirements.txt
-      - name: Historical Path-A backtest
+      - name: Historical Path-A 1y backtest
         env:
           IFIND_AUTH_TOKEN: ${{ secrets.IFIND_AUTH_TOKEN }}
           IFIND_AUTH_TOKEN_BACKUP: ${{ secrets.IFIND_AUTH_TOKEN_BACKUP }}
           IFIND_USER_AGENT: github-actions
         run: python historical_backtest.py
-      - name: Sync Notion backtest row
+      - name: Sync Notion (legacy weekly row + annual DBs)
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
         run: |
           python - <<'PY'
-          import json, os, shutil
+          import json
           from pathlib import Path
           src = Path("historical_backtest_latest.json")
           if not src.exists():
               raise SystemExit(0)
           data = json.loads(src.read_text(encoding="utf-8"))
-          # map to weekly_backtest_latest shape for notion_sync
           mapped = {
               "start": data.get("start"),
               "end": data.get("end"),
@@ -46,35 +45,38 @@ jobs:
               "ret_pct": data.get("ret_pct"),
               "max_dd_pct": data.get("max_dd_pct"),
               "win_rate": data.get("win_rate"),
-              "avg_held": None,
+              "avg_held": data.get("avg_held"),
               "violations": 0,
               "conclusion": data.get("conclusion") or "继续L1",
               "summary": data.get("summary") or "",
-              "detail": json.dumps({"bars": data.get("bars"), "errors": data.get("errors")}, ensure_ascii=False)[:1800],
+              "detail": json.dumps({"bars": data.get("bars"), "errors": data.get("errors"), "universe": data.get("universe")}, ensure_ascii=False)[:1800],
           }
           Path("weekly_backtest_latest.json").write_text(
               json.dumps(mapped, ensure_ascii=False, indent=2), encoding="utf-8"
           )
           PY
           python notion_sync.py backtest
+          python notion_sync.py annual
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: cta-hist-bt-${{ github.run_id }}
           path: |
             historical_backtest_latest.json
+            historical_equity_curve.svg
             archive/backtest_*.json
+          if-no-files-found: warn
       - name: Commit results
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         continue-on-error: true
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
-          git add historical_backtest_latest.json archive/*.json universe.json || true
+          git add historical_backtest_latest.json historical_equity_curve.svg archive/*.json universe.json || true
           if git diff --cached --quiet; then
             echo "no changes"
             exit 0
           fi
-          git commit -m "chore(cta): historical backtest $(date -u +%Y%m%d)"
+          git commit -m "chore(cta): historical 1y backtest $(date -u +%Y%m%d)"
           git pull --rebase --autostash origin "${{ github.ref_name }}" || true
           git push origin "HEAD:${{ github.ref_name }}"

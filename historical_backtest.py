@@ -18,10 +18,11 @@ from position_rules import (  # noqa: E402
     compound_equity,
     risk_budget_yuan,
 )
+from wyckoff_pullback import apply_stop_target, detect_entry  # noqa: E402
 
 LOOKBACK_DAYS = 260
 WARMUP = 60
-BATCH_LABEL = "2026一年-v6b"
+BATCH_LABEL = "2026一年-wyckoff-5r"
 CUTOFF_DAYS = 420
 
 
@@ -33,10 +34,12 @@ def _load_cfg():
     l1_mult = float(cfg.get("l1_mult", 1.0))
     max_positions = int(cfg.get("max_positions", 3))
     max_gross_pct = float(cfg.get("max_gross_exposure_pct", 50))
-    max_port_risk = float(cfg.get("max_portfolio_risk_pct", 10))
+    max_port_risk = float(cfg.get("max_portfolio_risk_pct", 8))
     max_per_bucket = int(cfg.get("max_per_bucket", 1))
     min_r20 = float(cfg.get("min_r20_pct", 3))
     min_r60 = float(cfg.get("min_r60_pct", 5))
+    sel = cfg.get("selection") or {}
+    reward_rr = float(sel.get("reward_rr") or cfg.get("reward_rr") or 5)
     return {
         "cfg": cfg,
         "equity0": equity,
@@ -49,6 +52,7 @@ def _load_cfg():
         "max_per_bucket": max_per_bucket,
         "min_r20": min_r20,
         "min_r60": min_r60,
+        "reward_rr": reward_rr,
     }
 
 
@@ -378,10 +382,11 @@ def simulate(
     l1_mult=1.0,
     max_positions=3,
     max_gross_pct=50.0,
-    max_port_risk=10.0,
+    max_port_risk=8.0,
     max_per_bucket=1,
     min_r20=3.0,
     min_r60=5.0,
+    reward_rr=5.0,
 ):
     series = {}
     errors = {}
@@ -391,7 +396,11 @@ def simulate(
         try:
             hist, _ = fetch_history(u)
             series[code] = {"meta": u, "hist": hist}
-            print(f"  bars={len(hist)} range={hist[0]['date'] if hist else '-'}→{hist[-1]['date'] if hist else '-'}")
+            vol_n = sum(1 for h in hist if h.get("volume"))
+            print(
+                f"  bars={len(hist)} vol_bars={vol_n} "
+                f"range={hist[0]['date'] if hist else '-'}→{hist[-1]['date'] if hist else '-'}"
+            )
         except Exception as e:
             errors[code] = str(e)[:200]
             print(f"  ERR {e}")
@@ -419,89 +428,137 @@ def simulate(
     max_dd = 0.0
     curve = []
     day_pnls = []
-    pos = {}
+    pos: dict = {}
+    trade_exits = {"target": 0, "stop": 0, "time": 0}
+    closed_pnls = []
 
     trade_dates = dates[WARMUP:]
     for di, d in enumerate(trade_dates):
         pnl = 0.0
-        if di > 0:
-            prev_d = trade_dates[di - 1]
-            for code, p in list(pos.items()):
-                hist = series[code]["hist"]
+        prev_d = trade_dates[di - 1] if di > 0 else None
+
+        # 1) manage open positions: mark-to-market / stop / target
+        for code, p in list(pos.items()):
+            hist = series[code]["hist"]
+            i1 = idx[code].get(d)
+            if i1 is None:
+                continue
+            bar = hist[i1]
+            mult = series[code]["meta"]["mult"]
+            sign = 1 if p["direction"] == "多" else -1
+            reason, px = apply_stop_target(
+                p["direction"], p["entry"], p["stop"], p["target"], bar
+            )
+            if prev_d is not None:
                 i0 = idx[code].get(prev_d)
-                i1 = idx[code].get(d)
-                if i0 is None or i1 is None:
-                    continue
-                mult = series[code]["meta"]["mult"]
-                sign = 1 if p["direction"] == "多" else -1
-                pnl += (hist[i1]["close"] - hist[i0]["close"]) * mult * p["lots"] * sign
+                if i0 is not None:
+                    prev_close = hist[i0]["close"]
+                    exit_px = px if reason else bar["close"]
+                    pnl += (exit_px - prev_close) * mult * p["lots"] * sign
+            if reason:
+                trade_exits[reason] = trade_exits.get(reason, 0) + 1
+                # approximate trade R multiple
+                risk = abs(p["entry"] - p["stop"]) or 1e-9
+                r_mult = ((px - p["entry"]) * sign) / risk
+                closed_pnls.append({"date": d, "code": code, "reason": reason, "R": round(r_mult, 2)})
+                del pos[code]
+
         equity += pnl
         day_pnls.append({"date": d, "pnl": round(pnl, 2), "equity": round(equity, 2)})
         peak = max(peak, equity)
         dd = (peak - equity) / peak * 100 if peak else 0
         max_dd = max(max_dd, dd)
 
+        # 2) new pullback+Wyckoff entries (skip names already held)
         cands = []
-        for code, s in series.items():
-            i = idx[code].get(d)
-            if i is None or i < WARMUP:
-                continue
-            hist = s["hist"]
-            r20, r60 = ret_n(hist, i, 20), ret_n(hist, i, 60)
-            a = atr14(hist, i)
-            if r20 is None or r60 is None or a is None or a <= 0:
-                continue
-            if not ((r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0)):
-                continue
-            direction = "多" if r20 > 0 else "空"
-            sizing_eq = compound_equity(equity, equity0, compound)
-            day_risk = risk_budget_yuan(sizing_eq, risk_pct, l1_mult)
-            risk_per_lot = a * s["meta"]["mult"]
-            lots = int(math.floor(day_risk / risk_per_lot)) if risk_per_lot > 0 else 0
-            if lots <= 0:
-                continue
-            close = hist[i]["close"]
-            cands.append(
-                {
-                    "code": code,
-                    "direction": direction,
-                    "lots": lots,
-                    "close": close,
-                    "mult": s["meta"]["mult"],
-                    "r20": round(r20, 3),
-                    "r60": round(r60, 3),
-                    "atr": round(a, 2),
-                    "bucket": s["meta"].get("bucket"),
-                }
-            )
         sizing_eq = compound_equity(equity, equity0, compound)
-        selected, _meta = apply_portfolio_caps(
-            cands,
-            equity=sizing_eq,
-            max_positions=max_positions,
-            max_gross_exposure_pct=max_gross_pct,
-            max_portfolio_risk_pct=max_port_risk,
-            max_per_bucket=max_per_bucket,
-            min_r20_pct=min_r20,
-            min_r60_pct=min_r60,
-        )
-        new_pos = {
-            c["code"]: {
-                "direction": c["direction"],
-                "lots": int(c["lots"]),
-                "atr": c.get("atr"),
-                "r20": c.get("r20"),
-                "r60": c.get("r60"),
-            }
-            for c in selected
-            if int(c.get("lots") or 0) > 0
-        }
-        pos = new_pos
-        gross = sum(
-            abs(p["lots"]) * series[c]["hist"][idx[c][d]]["close"] * series[c]["meta"]["mult"]
-            for c, p in pos.items()
-            if idx[c].get(d) is not None
-        )
+        day_risk = risk_budget_yuan(sizing_eq, risk_pct, l1_mult)
+        slots_left = max(0, int(max_positions) - len(pos))
+        if slots_left > 0:
+            for code, s in series.items():
+                if code in pos:
+                    continue
+                i = idx[code].get(d)
+                if i is None or i < WARMUP:
+                    continue
+                plan = detect_entry(
+                    s["hist"],
+                    i,
+                    min_r20_pct=min_r20,
+                    min_r60_pct=min_r60,
+                    reward_rr=reward_rr,
+                )
+                if not plan:
+                    continue
+                stop_dist = abs(plan["entry"] - plan["stop"])
+                if stop_dist <= 0:
+                    continue
+                risk_per_lot = stop_dist * s["meta"]["mult"]
+                lots = int(math.floor(day_risk / risk_per_lot)) if risk_per_lot > 0 else 0
+                if lots <= 0:
+                    continue
+                cands.append(
+                    {
+                        "code": code,
+                        "direction": plan["direction"],
+                        "lots": lots,
+                        "close": plan["entry"],
+                        "mult": s["meta"]["mult"],
+                        "r20": round(plan["r20"], 3),
+                        "r60": round(plan["r60"], 3),
+                        "atr": round(plan["atr"], 2),
+                        "bucket": s["meta"].get("bucket"),
+                        "entry": plan["entry"],
+                        "stop": plan["stop"],
+                        "target": plan["target"],
+                        "reason": plan.get("reason"),
+                        "wyckoff_ok": plan.get("wyckoff_ok"),
+                        "vol_filter": plan.get("vol_filter"),
+                    }
+                )
+            selected, _meta = apply_portfolio_caps(
+                cands,
+                equity=sizing_eq,
+                max_positions=slots_left,
+                max_gross_exposure_pct=max_gross_pct,
+                max_portfolio_risk_pct=max_port_risk,
+                max_per_bucket=max_per_bucket,
+                min_r20_pct=min_r20,
+                min_r60_pct=min_r60,
+            )
+            open_buckets = {}
+            for p in pos.values():
+                b = str(p.get("bucket") or "_")
+                open_buckets[b] = open_buckets.get(b, 0) + 1
+            for c in selected:
+                if int(c.get("lots") or 0) <= 0:
+                    continue
+                if len(pos) >= int(max_positions):
+                    break
+                bucket = str(c.get("bucket") or "_")
+                if max_per_bucket > 0 and open_buckets.get(bucket, 0) >= int(max_per_bucket):
+                    continue
+                pos[c["code"]] = {
+                    "code": c["code"],
+                    "direction": c["direction"],
+                    "lots": int(c["lots"]),
+                    "entry": float(c["entry"]),
+                    "stop": float(c["stop"]),
+                    "target": float(c["target"]),
+                    "atr": c.get("atr"),
+                    "r20": c.get("r20"),
+                    "r60": c.get("r60"),
+                    "bucket": c.get("bucket"),
+                    "reason": c.get("reason"),
+                }
+                open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
+
+        gross = 0.0
+        for c, p in pos.items():
+            ii = idx[c].get(d)
+            if ii is None:
+                continue
+            gross += abs(p["lots"]) * series[c]["hist"][ii]["close"] * series[c]["meta"]["mult"]
         curve.append(
             {
                 "date": d,
@@ -514,10 +571,13 @@ def simulate(
             }
         )
 
-    wins = sum(1 for x in day_pnls if x["pnl"] > 0)
+    wins_day = sum(1 for x in day_pnls if x["pnl"] > 0)
     n = len(day_pnls)
     ret_pct = (equity / equity0 - 1) * 100
     avg_held = (sum(c["held"] for c in curve) / len(curve)) if curve else 0
+    closed_n = len(closed_pnls)
+    trade_wins = sum(1 for t in closed_pnls if t.get("R", 0) > 0)
+    trade_wr = (trade_wins / closed_n * 100) if closed_n else None
     if max_dd >= 20:
         conclusion = "暂停"
     elif max_dd >= 12 or ret_pct <= -5:
@@ -528,9 +588,11 @@ def simulate(
     pool = ",".join(u["code"] for u in symbols)
     return {
         "ok": True,
-        "schema_version": "cta-backtest-v6-filters-compound",
+        "schema_version": "cta-backtest-v7-wyckoff-pullback-5r",
         "batch": BATCH_LABEL,
+        "strategy": "wyckoff_pullback_5r",
         "data_source": "iFinD 主力连续 ZL",
+        "reward_rr": reward_rr,
         "equity_compound": compound,
         "max_positions": max_positions,
         "max_gross_exposure_pct": max_gross_pct,
@@ -548,7 +610,10 @@ def simulate(
         "equity_end": round(equity, 2),
         "ret_pct": round(ret_pct, 3),
         "max_dd_pct": round(max_dd, 3),
-        "win_rate": round(wins / n * 100, 2) if n else None,
+        "win_rate": round(wins_day / n * 100, 2) if n else None,
+        "trade_win_rate": round(trade_wr, 2) if trade_wr is not None else None,
+        "closed_trades": closed_n,
+        "exits": trade_exits,
         "avg_held": round(avg_held, 2),
         "conclusion": conclusion,
         "errors": errors,
@@ -557,12 +622,12 @@ def simulate(
         "equity_curve": curve,
         "equity_curve_weekly": _downsample_weekly(curve),
         "day_pnls_tail": day_pnls[-20:],
+        "closed_pnls_tail": closed_pnls[-30:],
         "summary": (
-            f"ZL主力 {trade_dates[0]}→{trade_dates[-1]} 权益 {equity:.0f}（{ret_pct:+.2f}%），"
-            f"MaxDD {max_dd:.2f}%，日胜率 {(wins/n*100 if n else 0):.1f}%（{n}日），"
-            f"均持仓 {avg_held:.1f}，池 {len(symbols)}，"
-            f"Top{max_positions}/名义≤{max_gross_pct}%/ATR风险≤{max_port_risk}%/"
-            f"板块≤{max_per_bucket}/门槛{min_r20}/{min_r60}，结论 {conclusion}"
+            f"威科夫回踩5R {trade_dates[0]}→{trade_dates[-1]} 权益 {equity:.0f}（{ret_pct:+.2f}%），"
+            f"MaxDD {max_dd:.2f}%，日胜率 {(wins_day/n*100 if n else 0):.1f}%（{n}日），"
+            f"成交{closed_n}笔/止盈{trade_exits.get('target',0)}/止损{trade_exits.get('stop',0)}，"
+            f"均持仓 {avg_held:.1f}，结论 {conclusion}"
         ),
     }
 
@@ -571,8 +636,8 @@ def main():
     p = _load_cfg()
     cfg = p["cfg"]
     print(
-        f"[bt] ZL equity0={p['equity0']} compound={p['compound']} "
-        f"n={len(cfg['symbols'])} max_pos={p['max_positions']} "
+        f"[bt] wyckoff-pullback-5r equity0={p['equity0']} rr={p['reward_rr']} "
+        f"compound={p['compound']} n={len(cfg['symbols'])} max_pos={p['max_positions']} "
         f"gross≤{p['max_gross_pct']}% atr_risk≤{p['max_port_risk']}% "
         f"bucket≤{p['max_per_bucket']} min_r={p['min_r20']}/{p['min_r60']} "
         f"ifind={active_slot()}"
@@ -589,6 +654,7 @@ def main():
         max_per_bucket=p["max_per_bucket"],
         min_r20=p["min_r20"],
         min_r60=p["min_r60"],
+        reward_rr=p["reward_rr"],
     )
     path = ROOT / "historical_backtest_latest.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -603,7 +669,7 @@ def main():
         _write_equity_svg(
             out["equity_curve"],
             chart,
-            f"CTA Path-A 主力连续一年 {out.get('start')}→{out.get('end')}",
+            f"威科夫回踩5R {out.get('start')}→{out.get('end')}",
         )
         print(f"[bt] chart {chart}")
     print(out.get("summary") or out.get("error"))

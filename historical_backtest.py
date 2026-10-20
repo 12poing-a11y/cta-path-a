@@ -21,7 +21,7 @@ from position_rules import (  # noqa: E402
 
 LOOKBACK_DAYS = 260
 WARMUP = 60
-BATCH_LABEL = "2026一年"
+BATCH_LABEL = "2026一年-v6"
 CUTOFF_DAYS = 420
 
 

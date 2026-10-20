@@ -13,8 +13,10 @@ ROOT = Path(__file__).resolve().parent
 IDS = json.loads((ROOT / "notion_ids.json").read_text(encoding="utf-8"))
 
 NOTION_VERSION = "2022-06-28"
-SIGNALS_DB = "8ee24dca-b4e0-4df9-985c-2451ee4004c4"
-BACKTEST_DB = "7c3494b2-7936-4fc5-86dd-a3071ef83dd5"
+SIGNALS_DB = IDS.get("signals_db_id") or "8ee24dca-b4e0-4df9-985c-2451ee4004c4"
+BACKTEST_DB = IDS.get("backtest_db_id") or "7c3494b2-7936-4fc5-86dd-a3071ef83dd5"
+ANNUAL_REPORT_DB = IDS.get("annual_report_db_id") or "0a0961c3-badd-46ef-b9af-cd2578838c30"
+ANNUAL_CURVE_DB = IDS.get("annual_curve_db_id") or "29b3f011-d871-4727-9a09-b66f2d96f1d3"
 
 
 def _token():
@@ -145,6 +147,68 @@ def sync_backtest(path: Path | None = None):
     return 0
 
 
+def sync_annual(path: Path | None = None):
+    """Write 1y backtest summary + weekly equity curve into dedicated Notion DBs."""
+    p = path or (ROOT / "historical_backtest_latest.json")
+    b = json.loads(p.read_text(encoding="utf-8"))
+    if not b.get("ok"):
+        print("[notion] annual skip — backtest not ok:", b.get("error"))
+        return 1
+    start = b.get("start") or ""
+    end = b.get("end") or ""
+    name = f"一年回测 {start}→{end}"
+    props = {
+        "Name": _title(name),
+        "交易日数": _num(b.get("trade_days")),
+        "期末权益": _num(b.get("equity_end")),
+        "期间收益%": _num(b.get("ret_pct")),
+        "最大回撤%": _num(b.get("max_dd_pct")),
+        "胜率%": _num(b.get("win_rate")),
+        "持仓品种数均值": _num(b.get("avg_held")),
+        "品种数": _num(b.get("universe_n")),
+        "结论": _select(b.get("conclusion") or "继续L1"),
+        "摘要": _rich(b.get("summary") or ""),
+        "品种池": _rich(b.get("universe") or ""),
+        "明细": _rich(
+            json.dumps(
+                {"bars": b.get("bars"), "errors": b.get("errors"), "final": b.get("final_positions")},
+                ensure_ascii=False,
+            )[:1800]
+        ),
+    }
+    if start:
+        props["周期起点"] = _date(start)
+    if end:
+        props["周期终点"] = _date(end)
+    _create_page(ANNUAL_REPORT_DB, props)
+    print("[notion] annual report row ok")
+
+    batch = b.get("batch") or "2026一年"
+    full = b.get("equity_curve") or []
+    curve = b.get("equity_curve_weekly") or full
+    if len(curve) > 80:
+        step = max(1, len(curve) // 72)
+        curve = list(curve[::step])
+        if full and (not curve or curve[-1].get("date") != full[-1].get("date")):
+            curve.append(full[-1])
+    n = 0
+    for row in curve:
+        d = row.get("date") or ""
+        props_c = {
+            "Name": _title(d),
+            "日期": _date(d) if d else _date(end or start),
+            "权益": _num(row.get("equity")),
+            "持仓数": _num(row.get("held")),
+            "日盈亏": _num(row.get("pnl")),
+            "回撤%": _num(row.get("dd_pct")),
+            "批次": _select(batch if batch in ("2026一年", "其他") else "2026一年"),
+        }
+        _create_page(ANNUAL_CURVE_DB, props_c)
+        n += 1
+    print(f"[notion] annual curve rows={n}")
+    return 0
+
+
 if __name__ == "__main__":
     if not _token():
         print("[notion] NOTION_TOKEN empty — skip sync")
@@ -152,5 +216,7 @@ if __name__ == "__main__":
     mode = (sys.argv[1] if len(sys.argv) > 1 else "signals").lower()
     if mode == "backtest":
         raise SystemExit(sync_backtest())
+    if mode in ("annual", "annual_backtest", "1y"):
+        raise SystemExit(sync_annual())
     raise SystemExit(sync_signals())
 

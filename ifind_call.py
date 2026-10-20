@@ -9,10 +9,52 @@ import requests
 CONFIG_PATH = Path(__file__).resolve().parent / "mcp_config.json"
 
 
+def _normalize_token(raw: str) -> str:
+    """Accept bare JWT, or a pasted mcpServers JSON blob; return Authorization value only."""
+    s = (raw or "").strip()
+    if not s:
+        return ""
+    if s.lower().startswith("bearer "):
+        s = s[7:].strip()
+    # User sometimes pastes the whole Cursor/MCP config JSON into the Secret.
+    if s.startswith("{") and ("mcpServers" in s or "Authorization" in s):
+        try:
+            obj = json.loads(s)
+        except json.JSONDecodeError:
+            m = re.search(r'"Authorization"\s*:\s*"([^"]+)"', s)
+            return (m.group(1) if m else "").strip()
+        servers = obj.get("mcpServers") if isinstance(obj, dict) else None
+        if isinstance(servers, dict):
+            for key in (
+                "hexin-ifind-ds-mcp",
+                "hexin-ifind-ds-stock-mcp",
+                "kuaicha-enterprise-mcp",
+            ):
+                node = servers.get(key) or {}
+                headers = node.get("headers") if isinstance(node, dict) else None
+                if isinstance(headers, dict) and headers.get("Authorization"):
+                    return str(headers["Authorization"]).strip()
+            for node in servers.values():
+                if not isinstance(node, dict):
+                    continue
+                headers = node.get("headers") or {}
+                if isinstance(headers, dict) and headers.get("Authorization"):
+                    return str(headers["Authorization"]).strip()
+        if isinstance(obj, dict) and obj.get("Authorization"):
+            return str(obj["Authorization"]).strip()
+        m = re.search(r'"Authorization"\s*:\s*"([^"]+)"', s)
+        return (m.group(1) if m else "").strip()
+    # Reject multi-line garbage that would break HTTP headers
+    if "\n" in s or "\r" in s:
+        m = re.search(r"(eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+)", s)
+        return m.group(1) if m else ""
+    return s
+
+
 def _load_config():
     """Prefer env (GitHub Actions secrets), then local mcp_config.json."""
-    primary = (os.environ.get("IFIND_AUTH_TOKEN") or "").strip()
-    backup = (os.environ.get("IFIND_AUTH_TOKEN_BACKUP") or "").strip()
+    primary = _normalize_token(os.environ.get("IFIND_AUTH_TOKEN") or "")
+    backup = _normalize_token(os.environ.get("IFIND_AUTH_TOKEN_BACKUP") or "")
     slot = (os.environ.get("IFIND_ACTIVE_SLOT") or "primary").strip() or "primary"
     if primary or backup:
         return {
@@ -39,8 +81,8 @@ CONFIG = _load_config()
 
 def _token_for_slot(cfg, slot):
     if slot == "backup":
-        return (cfg.get("auth_token_backup") or "").strip()
-    return (cfg.get("auth_token") or "").strip()
+        return _normalize_token(cfg.get("auth_token_backup") or "")
+    return _normalize_token(cfg.get("auth_token") or "")
 
 
 def _active_token(cfg=None):

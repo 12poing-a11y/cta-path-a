@@ -8,8 +8,13 @@
 
 1. **信号**：主力合约近 20 日收益与近 60 日收益同向 → 顺势；否则空仓  
 2. **仓位**：`lots = floor(风险预算 / (ATR14 × 合约乘数))`  
-3. **参数**：Equity ¥200,000；单品种风险 1.5%（¥3,000）；品种池 JD / JM / CF / SR / RU / MA  
+3. **参数**：见 `universe.json`（Equity / 风险% / 多板块品种池）  
 4. **路径A**：只记账、不自动下单；用于规则与执行纪律验证
+
+## 手机无电脑自动验证
+
+可以。流程跑在 **GitHub Actions**，不依赖你电脑开机。  
+**先配 Secrets**，否则会失败 —— 见 [`MOBILE.md`](./MOBILE.md)。
 
 ## 自动化
 
@@ -17,10 +22,11 @@
 |----------|------------|----------|
 | `CTA Daily 15:30 CST` | `30 7 * * 1-5` | 工作日 15:30 |
 | `CTA Weekly Backtest` | `0 12 * * 0` | 周日 20:00 |
+| `CTA Historical Backtest` | `0 13 * * 0` + 手动 | 周日 21:00 / 随时 Run |
 
 手机：GitHub App → **Actions** → **Run workflow**。
 
-可选写入 Notion 日信号库 / 回测库（需 `NOTION_TOKEN` + 页面授权）。
+可选写入 Notion（需 `NOTION_TOKEN`）。
 
 ## 本地 / CI
 
@@ -35,11 +41,13 @@ python notion_sync.py signals   # 可选
 
 ## 目录
 
-- `daily_update.py` — 拉行情、算信号、落盘 `l1_report_risk15.json`  
-- `weekly_backtest.py` — 基于 `archive/` 的纸面 PnL  
-- `notion_sync.py` — 官方 Notion API 同步  
-- `ifind_call.py` — iFinD MCP HTTP 客户端（支持 primary/backup Key）  
-- `.github/workflows/` — 定时任务  
+- `universe.json` — 品种池与资金参数（改这里即可扩品种）  
+- `daily_update.py` — 日信号  
+- `weekly_backtest.py` — 基于 `archive/` 滚动纸面 PnL  
+- `historical_backtest.py` — 拉近约 120 日行情做路径A历史回测  
+- `notion_sync.py` / `ifind_call.py`  
+- `MOBILE.md` — 手机端配置说明  
+- `.github/workflows/` — 定时 + 手动任务  
 
 ## Disclaimer
 

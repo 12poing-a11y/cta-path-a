@@ -15,19 +15,19 @@ sys.path.insert(0, str(ROOT))
 from ifind_call import call  # noqa: E402
 
 TZ = ZoneInfo("Asia/Shanghai")
-EQUITY = 200_000
-RISK_PCT = 1.5
-L1_MULT = 1.0
-L1_RISK = EQUITY * RISK_PCT / 100.0 * L1_MULT
 
-UNIVERSE = [
-    {"code": "JD", "name": "鸡蛋", "ticker": "JDZL.DCE", "bucket": "农产品", "mult": 10},
-    {"code": "JM", "name": "焦煤", "ticker": "JMZL.DCE", "bucket": "黑色", "mult": 60},
-    {"code": "CF", "name": "棉花", "ticker": "CFZL.CZC", "bucket": "农产品", "mult": 5},
-    {"code": "SR", "name": "白糖", "ticker": "SRZL.CZC", "bucket": "农产品", "mult": 10},
-    {"code": "RU", "name": "橡胶", "ticker": "RUZL.SHF", "bucket": "能化", "mult": 10},
-    {"code": "MA", "name": "甲醇", "ticker": "MAZL.CZC", "bucket": "能化", "mult": 10},
-]
+
+def _load_universe():
+    cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
+    equity = float(cfg.get("equity", 200_000))
+    risk_pct = float(cfg.get("risk_pct", 1.5))
+    l1_mult = float(cfg.get("l1_mult", 1.0))
+    symbols = cfg.get("symbols") or []
+    return equity, risk_pct, l1_mult, symbols
+
+
+EQUITY, RISK_PCT, L1_MULT, UNIVERSE = _load_universe()
+L1_RISK = EQUITY * RISK_PCT / 100.0 * L1_MULT
 
 
 def _answer_text(res: dict) -> str:

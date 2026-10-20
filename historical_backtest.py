@@ -6,6 +6,8 @@ import json
 import math
 import re
 import sys
+from collections import Counter
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -13,9 +15,10 @@ sys.path.insert(0, str(ROOT))
 from ifind_call import call  # noqa: E402
 
 # ~1 calendar year of trading days + warmup buffer
-LOOKBACK_DAYS = 280
+LOOKBACK_DAYS = 260
 WARMUP = 60
 BATCH_LABEL = "2026一年"
+CUTOFF_DAYS = 420
 
 
 def _load_cfg():
@@ -95,39 +98,89 @@ def _parse_ohlc_history(ans: str):
     return [by[k] for k in sorted(by)]
 
 
+def _filter_window(hist: list[dict]) -> list[dict]:
+    """Keep only recent bars; drop absurd prices mistaken from dates/text."""
+    if not hist:
+        return []
+    today = date.today()
+    cutoff = (today - timedelta(days=CUTOFF_DAYS)).isoformat()
+    out = []
+    for h in hist:
+        d = h.get("date") or ""
+        if d < cutoff:
+            continue
+        cl = h.get("close")
+        if cl is None or _looks_like_yyyymmdd(cl):
+            continue
+        # commodity futures continuous: typically 200..100000
+        if not (50 <= abs(cl) <= 200_000):
+            continue
+        hi, lo = h.get("high", cl), h.get("low", cl)
+        if _looks_like_yyyymmdd(hi) or _looks_like_yyyymmdd(lo):
+            continue
+        # reject wild OHLC ranges (bad parse)
+        if hi and lo and hi > 0 and (hi / max(lo, 1e-9) > 5):
+            continue
+        out.append(h)
+    return out
+
+
 def fetch_history(name: str, n: int = LOOKBACK_DAYS):
-    q = (
-        f"{name}主力合约最近{n}个交易日的日期、最高价、最低价、收盘价列表，"
-        f"按日期升序，尽量完整给出每一日，不要用YYYYMMDD冒充价格"
-    )
-    ans = _answer_text(call("future", "future_quotes", {"query": q}))
-    hist = _parse_ohlc_history(ans)
-    if len(hist) < WARMUP + 20:
-        ans2 = _answer_text(
-            call(
-                "future",
-                "future_quotes",
-                {"query": f"{name}主力近{n}日收盘价序列（日期+收盘），按日列出"},
-            )
+    """Pull ~1y bars in quarterly chunks (LLM truncates long lists)."""
+    today = date.today()
+    chunks = []
+    # 5 overlapping quarters covering ~14 months
+    cursor = today.replace(day=1)
+    for _ in range(5):
+        y, m = cursor.year, cursor.month
+        m0 = m - 2
+        y0 = y
+        while m0 <= 0:
+            m0 += 12
+            y0 -= 1
+        start_label = f"{y0}年{m0}月"
+        end_label = f"{y}年{m}月"
+        chunks.append((start_label, end_label))
+        # step back 3 months
+        m -= 3
+        while m <= 0:
+            m += 12
+            y -= 1
+        cursor = cursor.replace(year=y, month=m, day=1)
+
+    by = {}
+    last_ans = ""
+    for start_label, end_label in reversed(chunks):
+        q = (
+            f"请给出{name}主力连续合约从{start_label}到{end_label}每个交易日的"
+            f"日期、最高价、最低价、收盘价。"
+            f"用Markdown表格，日期格式YYYY-MM-DD，价格为真实行情数字（不要写YYYYMMDD当价格）。"
+            f"尽量列出该区间全部交易日。"
         )
-        hist2 = _parse_ohlc_history(ans2)
-        if len(hist2) > len(hist):
-            hist = hist2
-            ans = ans2
-    # second chunk if still short (model often truncates)
-    if len(hist) < 150:
-        first = hist[0]["date"] if hist else None
-        q3 = f"{name}主力从{first or '一年前'}起再往后补全交易日收盘价列表（日期+最高+最低+收盘）"
         try:
-            ans3 = _answer_text(call("future", "future_quotes", {"query": q3}))
-            hist3 = _parse_ohlc_history(ans3)
-            by = {h["date"]: h for h in hist}
-            for h in hist3:
+            ans = _answer_text(call("future", "future_quotes", {"query": q}))
+            last_ans = ans
+            for h in _parse_ohlc_history(ans):
                 by[h["date"]] = h
-            hist = [by[k] for k in sorted(by)]
+            print(f"    chunk {start_label}->{end_label} bars_so_far={len(by)}")
+        except Exception as e:
+            print(f"    chunk fail {start_label}: {e}")
+
+    if len(by) < WARMUP + 20:
+        q2 = (
+            f"{name}主力最近{n}个交易日日期+最高价+最低价+收盘价，"
+            f"Markdown表，YYYY-MM-DD，真实价格"
+        )
+        try:
+            ans2 = _answer_text(call("future", "future_quotes", {"query": q2}))
+            last_ans = ans2
+            for h in _parse_ohlc_history(ans2):
+                by[h["date"]] = h
         except Exception:
             pass
-    return hist, ans[:200]
+
+    hist = _filter_window([by[k] for k in sorted(by)])
+    return hist, last_ans[:200]
 
 
 def atr14(hist, i):
@@ -226,13 +279,24 @@ def simulate(symbols, risk_budget, equity0):
             errors[code] = str(e)[:200]
             print(f"  ERR {e}")
 
-    dates = sorted({h["date"] for s in series.values() for h in s["hist"]})
+    # Prefer dates covered by many symbols (avoid sparse year-union junk)
+    date_hits = Counter()
+    for s in series.values():
+        for h in s["hist"]:
+            date_hits[h["date"]] += 1
+    min_cover = max(3, len(series) // 3)
+    dates = sorted(d for d, c in date_hits.items() if c >= min_cover)
+    if len(dates) < WARMUP + 5:
+        # fallback: densest recent window
+        dates = sorted(date_hits.keys())
+        dates = dates[-LOOKBACK_DAYS:] if len(dates) > LOOKBACK_DAYS else dates
     if len(dates) < WARMUP + 5:
         return {
             "ok": False,
-            "error": "history too short",
+            "error": "history too short after window filter",
             "errors": errors,
             "bars": {k: len(v["hist"]) for k, v in series.items()},
+            "date_hits_sample": dict(list(date_hits.most_common(5))),
         }
 
     idx = {

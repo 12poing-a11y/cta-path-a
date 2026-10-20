@@ -2,9 +2,9 @@
   "equity": 200000,
   "risk_pct": 1.5,
   "l1_mult": 1.0,
-  "notes": "起点20万；复利定仓；同向且|r20|≥3%、|r60|≥5%；同板块最多1个；最多3品种；名义≤50%且组合ATR风险≤8%。",
+  "notes": "起点20万；复利定仓；同向且|r20|≥3%、|r60|≥5%；同板块最多1个；最多3品种；名义≤50%且组合ATR风险≤10%。",
   "selection": {
-    "rule": "动量门槛→板块去重→Top3→名义50%帽→组合ATR风险8%帽",
+    "rule": "动量门槛→板块去重→Top3→名义50%帽→组合ATR风险10%帽",
     "asof": "2026-10-20",
     "source": "iFinD future_quotes 主力连续 ZL",
     "excluded": [
@@ -186,7 +186,7 @@
   ],
   "max_positions": 3,
   "max_gross_exposure_pct": 50,
-  "max_portfolio_risk_pct": 8,
+  "max_portfolio_risk_pct": 10,
   "max_per_bucket": 1,
   "min_r20_pct": 3,
   "min_r60_pct": 5,

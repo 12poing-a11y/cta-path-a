@@ -18,11 +18,11 @@ from position_rules import (  # noqa: E402
     compound_equity,
     risk_budget_yuan,
 )
-from wyckoff_pullback import apply_stop_target, detect_entry  # noqa: E402
+from wyckoff_pullback import apply_stop_target  # noqa: E402
 
 LOOKBACK_DAYS = 260
 WARMUP = 60
-BATCH_LABEL = "2026一年-wyckoff-5r"
+BATCH_LABEL = "2026一年-pathA-rr2"
 CUTOFF_DAYS = 420
 
 
@@ -39,7 +39,8 @@ def _load_cfg():
     min_r20 = float(cfg.get("min_r20_pct", 3))
     min_r60 = float(cfg.get("min_r60_pct", 5))
     sel = cfg.get("selection") or {}
-    reward_rr = float(sel.get("reward_rr") or cfg.get("reward_rr") or 5)
+    reward_rr = float(sel.get("reward_rr") or cfg.get("reward_rr") or 2)
+    stop_atr_mult = float(sel.get("stop_atr_mult") or cfg.get("stop_atr_mult") or 1)
     return {
         "cfg": cfg,
         "equity0": equity,
@@ -53,6 +54,7 @@ def _load_cfg():
         "min_r20": min_r20,
         "min_r60": min_r60,
         "reward_rr": reward_rr,
+        "stop_atr_mult": stop_atr_mult,
     }
 
 
@@ -386,7 +388,8 @@ def simulate(
     max_per_bucket=1,
     min_r20=3.0,
     min_r60=5.0,
-    reward_rr=5.0,
+    reward_rr=2.0,
+    stop_atr_mult=1.0,
 ):
     series = {}
     errors = {}
@@ -396,9 +399,8 @@ def simulate(
         try:
             hist, _ = fetch_history(u)
             series[code] = {"meta": u, "hist": hist}
-            vol_n = sum(1 for h in hist if h.get("volume"))
             print(
-                f"  bars={len(hist)} vol_bars={vol_n} "
+                f"  bars={len(hist)} "
                 f"range={hist[0]['date'] if hist else '-'}→{hist[-1]['date'] if hist else '-'}"
             )
         except Exception as e:
@@ -429,7 +431,7 @@ def simulate(
     curve = []
     day_pnls = []
     pos: dict = {}
-    trade_exits = {"target": 0, "stop": 0, "time": 0}
+    trade_exits = {"target": 0, "stop": 0, "signal": 0}
     closed_pnls = []
 
     trade_dates = dates[WARMUP:]
@@ -437,7 +439,7 @@ def simulate(
         pnl = 0.0
         prev_d = trade_dates[di - 1] if di > 0 else None
 
-        # 1) manage open positions: mark-to-market / stop / target
+        # 1) manage open positions: stop / target / signal flip
         for code, p in list(pos.items()):
             hist = series[code]["hist"]
             i1 = idx[code].get(d)
@@ -449,6 +451,16 @@ def simulate(
             reason, px = apply_stop_target(
                 p["direction"], p["entry"], p["stop"], p["target"], bar
             )
+            # trend flip exit (Path-A conflict / opposite)
+            if reason is None:
+                r20, r60 = ret_n(hist, i1, 20), ret_n(hist, i1, 60)
+                if r20 is not None and r60 is not None:
+                    long_ok = r20 > 0 and r60 > 0
+                    short_ok = r20 < 0 and r60 < 0
+                    if p["direction"] == "多" and not long_ok:
+                        reason, px = "signal", bar["close"]
+                    elif p["direction"] == "空" and not short_ok:
+                        reason, px = "signal", bar["close"]
             if prev_d is not None:
                 i0 = idx[code].get(prev_d)
                 if i0 is not None:
@@ -457,7 +469,6 @@ def simulate(
                     pnl += (exit_px - prev_close) * mult * p["lots"] * sign
             if reason:
                 trade_exits[reason] = trade_exits.get(reason, 0) + 1
-                # approximate trade R multiple
                 risk = abs(p["entry"] - p["stop"]) or 1e-9
                 r_mult = ((px - p["entry"]) * sign) / risk
                 closed_pnls.append({"date": d, "code": code, "reason": reason, "R": round(r_mult, 2)})
@@ -469,7 +480,7 @@ def simulate(
         dd = (peak - equity) / peak * 100 if peak else 0
         max_dd = max(max_dd, dd)
 
-        # 2) new pullback+Wyckoff entries (skip names already held)
+        # 2) Path-A entries with ATR stop/target (RR=reward_rr)
         cands = []
         sizing_eq = compound_equity(equity, equity0, compound)
         day_risk = risk_budget_yuan(sizing_eq, risk_pct, l1_mult)
@@ -481,18 +492,24 @@ def simulate(
                 i = idx[code].get(d)
                 if i is None or i < WARMUP:
                     continue
-                plan = detect_entry(
-                    s["hist"],
-                    i,
-                    min_r20_pct=min_r20,
-                    min_r60_pct=min_r60,
-                    reward_rr=reward_rr,
-                )
-                if not plan:
+                hist = s["hist"]
+                r20, r60 = ret_n(hist, i, 20), ret_n(hist, i, 60)
+                a = atr14(hist, i)
+                if r20 is None or r60 is None or a is None or a <= 0:
                     continue
-                stop_dist = abs(plan["entry"] - plan["stop"])
-                if stop_dist <= 0:
+                if abs(r20) < min_r20 or abs(r60) < min_r60:
                     continue
+                if not ((r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0)):
+                    continue
+                direction = "多" if r20 > 0 else "空"
+                close = hist[i]["close"]
+                stop_dist = stop_atr_mult * a
+                if direction == "多":
+                    stop = close - stop_dist
+                    target = close + reward_rr * stop_dist
+                else:
+                    stop = close + stop_dist
+                    target = close - reward_rr * stop_dist
                 risk_per_lot = stop_dist * s["meta"]["mult"]
                 lots = int(math.floor(day_risk / risk_per_lot)) if risk_per_lot > 0 else 0
                 if lots <= 0:
@@ -500,20 +517,18 @@ def simulate(
                 cands.append(
                     {
                         "code": code,
-                        "direction": plan["direction"],
+                        "direction": direction,
                         "lots": lots,
-                        "close": plan["entry"],
+                        "close": close,
                         "mult": s["meta"]["mult"],
-                        "r20": round(plan["r20"], 3),
-                        "r60": round(plan["r60"], 3),
-                        "atr": round(plan["atr"], 2),
+                        "r20": round(r20, 3),
+                        "r60": round(r60, 3),
+                        "atr": round(a, 2),
                         "bucket": s["meta"].get("bucket"),
-                        "entry": plan["entry"],
-                        "stop": plan["stop"],
-                        "target": plan["target"],
-                        "reason": plan.get("reason"),
-                        "wyckoff_ok": plan.get("wyckoff_ok"),
-                        "vol_filter": plan.get("vol_filter"),
+                        "entry": close,
+                        "stop": stop,
+                        "target": target,
+                        "reason": "path_a_rr2",
                     }
                 )
             selected, _meta = apply_portfolio_caps(
@@ -588,11 +603,12 @@ def simulate(
     pool = ",".join(u["code"] for u in symbols)
     return {
         "ok": True,
-        "schema_version": "cta-backtest-v7-wyckoff-pullback-5r",
+        "schema_version": "cta-backtest-v8-pathA-atr-rr2",
         "batch": BATCH_LABEL,
-        "strategy": "wyckoff_pullback_5r",
+        "strategy": "path_a_atr_rr2",
         "data_source": "iFinD 主力连续 ZL",
         "reward_rr": reward_rr,
+        "stop_atr_mult": stop_atr_mult,
         "equity_compound": compound,
         "max_positions": max_positions,
         "max_gross_exposure_pct": max_gross_pct,
@@ -624,9 +640,11 @@ def simulate(
         "day_pnls_tail": day_pnls[-20:],
         "closed_pnls_tail": closed_pnls[-30:],
         "summary": (
-            f"威科夫回踩5R {trade_dates[0]}→{trade_dates[-1]} 权益 {equity:.0f}（{ret_pct:+.2f}%），"
+            f"PathA+ATR止盈止损{reward_rr:.0f}:1 {trade_dates[0]}→{trade_dates[-1]} "
+            f"权益 {equity:.0f}（{ret_pct:+.2f}%），"
             f"MaxDD {max_dd:.2f}%，日胜率 {(wins_day/n*100 if n else 0):.1f}%（{n}日），"
-            f"成交{closed_n}笔/止盈{trade_exits.get('target',0)}/止损{trade_exits.get('stop',0)}，"
+            f"成交{closed_n}笔/止盈{trade_exits.get('target',0)}/"
+            f"止损{trade_exits.get('stop',0)}/信号平{trade_exits.get('signal',0)}，"
             f"均持仓 {avg_held:.1f}，结论 {conclusion}"
         ),
     }
@@ -636,11 +654,11 @@ def main():
     p = _load_cfg()
     cfg = p["cfg"]
     print(
-        f"[bt] wyckoff-pullback-5r equity0={p['equity0']} rr={p['reward_rr']} "
-        f"compound={p['compound']} n={len(cfg['symbols'])} max_pos={p['max_positions']} "
-        f"gross≤{p['max_gross_pct']}% atr_risk≤{p['max_port_risk']}% "
-        f"bucket≤{p['max_per_bucket']} min_r={p['min_r20']}/{p['min_r60']} "
-        f"ifind={active_slot()}"
+        f"[bt] pathA-rr{p['reward_rr']:.0f} equity0={p['equity0']} "
+        f"stopATR={p['stop_atr_mult']} compound={p['compound']} n={len(cfg['symbols'])} "
+        f"max_pos={p['max_positions']} gross≤{p['max_gross_pct']}% "
+        f"atr_risk≤{p['max_port_risk']}% bucket≤{p['max_per_bucket']} "
+        f"min_r={p['min_r20']}/{p['min_r60']} ifind={active_slot()}"
     )
     out = simulate(
         cfg["symbols"],
@@ -655,6 +673,7 @@ def main():
         min_r20=p["min_r20"],
         min_r60=p["min_r60"],
         reward_rr=p["reward_rr"],
+        stop_atr_mult=p["stop_atr_mult"],
     )
     path = ROOT / "historical_backtest_latest.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -669,7 +688,7 @@ def main():
         _write_equity_svg(
             out["equity_curve"],
             chart,
-            f"威科夫回踩5R {out.get('start')}→{out.get('end')}",
+            f"PathA ATR RR2 {out.get('start')}→{out.get('end')}",
         )
         print(f"[bt] chart {chart}")
     print(out.get("summary") or out.get("error"))

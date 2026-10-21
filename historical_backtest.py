@@ -448,6 +448,10 @@ def _fetch_pack(symbols):
     return series, errors, sources
 
 
+# Target reward:risk and stop width, in ATR units. Execution book only (no option overlay).
+RR_GRID = (1.0, 1.5, 2.0, 2.5, 3.0, 4.0)
+STOP_GRID = (0.8, 1.0, 1.2)
+
 # name, strike_atr_mult, premium_atr_mult. None = futures only, same equity and min lot.
 HEDGE_GRID = (
     ("fut_only", None, None),
@@ -759,8 +763,17 @@ def simulate(
     gross_ret_pct = (gross_equity / equity0 - 1) * 100
     avg_held = (sum(c["held"] for c in curve) / len(curve)) if curve else 0
     closed_n = len(closed_pnls)
-    trade_wins = sum(1 for t in closed_pnls if t.get("R", 0) > 0)
+    win_rs = [float(t["R"]) for t in closed_pnls if float(t.get("R") or 0) > 0]
+    loss_rs = [float(t["R"]) for t in closed_pnls if float(t.get("R") or 0) <= 0]
+    trade_wins = len(win_rs)
     trade_wr = (trade_wins / closed_n * 100) if closed_n else None
+    avg_win_r = (sum(win_rs) / len(win_rs)) if win_rs else None
+    avg_loss_r = (sum(loss_rs) / len(loss_rs)) if loss_rs else None
+    realized_rr = (
+        avg_win_r / abs(avg_loss_r) if avg_win_r is not None and avg_loss_r not in (None, 0) else None
+    )
+    expectancy_r = (sum(float(t["R"]) for t in closed_pnls) / closed_n) if closed_n else None
+    breakeven_wr = 100.0 / (1.0 + reward_rr) if reward_rr > 0 else None
     if max_dd >= 20:
         conclusion = "暂停"
     elif max_dd >= 12 or ret_pct <= -5:
@@ -813,6 +826,11 @@ def simulate(
         "seat_follows": seat_follows,
         "win_rate": round(wins_day / n * 100, 2) if n else None,
         "trade_win_rate": round(trade_wr, 2) if trade_wr is not None else None,
+        "avg_win_r": round(avg_win_r, 3) if avg_win_r is not None else None,
+        "avg_loss_r": round(avg_loss_r, 3) if avg_loss_r is not None else None,
+        "realized_rr": round(realized_rr, 3) if realized_rr is not None else None,
+        "expectancy_r": round(expectancy_r, 3) if expectancy_r is not None else None,
+        "breakeven_win_rate": round(breakeven_wr, 2) if breakeven_wr is not None else None,
         "closed_trades": closed_n,
         "exits": trade_exits,
         "avg_held": round(avg_held, 2),
@@ -840,7 +858,17 @@ def simulate(
     }
 
 
-def _simulate_cfg(p, mode, *, pack=None, premium_atr_mult=None, strike_atr_mult=None, option_hedge=None):
+def _simulate_cfg(
+    p,
+    mode,
+    *,
+    pack=None,
+    premium_atr_mult=None,
+    strike_atr_mult=None,
+    option_hedge=None,
+    reward_rr=None,
+    stop_atr_mult=None,
+):
     cfg = p["cfg"]
     print(f"[bt] mode={mode} ifind_so_far={usage_report()['count']}")
     return simulate(
@@ -859,8 +887,8 @@ def _simulate_cfg(p, mode, *, pack=None, premium_atr_mult=None, strike_atr_mult=
         option_hedge=bool(p.get("option_hedge") if option_hedge is None else option_hedge),
         premium_atr_mult=float(p.get("premium_atr_mult") if premium_atr_mult is None else premium_atr_mult),
         strike_atr_mult=float(p.get("strike_atr_mult") if strike_atr_mult is None else strike_atr_mult),
-        reward_rr=p["reward_rr"],
-        stop_atr_mult=p["stop_atr_mult"],
+        reward_rr=float(p["reward_rr"] if reward_rr is None else reward_rr),
+        stop_atr_mult=float(p["stop_atr_mult"] if stop_atr_mult is None else stop_atr_mult),
         mode=mode,
         pack=pack,
     )
@@ -941,7 +969,13 @@ def main():
 
     compare = "--compare" in sys.argv
     hedge_grid = "--hedge-grid" in sys.argv
+    rr_grid = "--rr-grid" in sys.argv
     p = _load_cfg()
+    if rr_grid:
+        p["equity0"] = float(p["cfg"].get("equity") or 200_000)
+        p["min_lots"] = 0
+        p["option_hedge"] = False
+        p["observe_mode"] = False
     cfg = p["cfg"]
     print(
         f"[bt] pathA-rr{p['reward_rr']:.0f} equity0={p['equity0']} "
@@ -951,9 +985,70 @@ def main():
         f"min_r={p['min_r20']}/{p['min_r60']} min_lots={p.get('min_lots')} "
         f"observe={p.get('observe_mode')} optHedge={p.get('option_hedge')} "
         f"premATR={p.get('premium_atr_mult')} strikeATR={p.get('strike_atr_mult')} "
-        f"ifind={active_slot()} compare={compare} hedge_grid={hedge_grid}"
+        f"ifind={active_slot()} compare={compare} hedge_grid={hedge_grid} rr_grid={rr_grid}"
     )
-    if hedge_grid:
+    if rr_grid:
+        mode = p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax", "seats") else "base"
+        pack = _fetch_pack(p["cfg"]["symbols"])
+        rows = []
+        saved = {}
+        for stop in STOP_GRID:
+            for rr in RR_GRID:
+                name = f"stop{stop:g}_rr{rr:g}"
+                print(f"[bt] rr-grid {name}")
+                one = _simulate_cfg(
+                    p,
+                    mode,
+                    pack=pack,
+                    option_hedge=False,
+                    reward_rr=rr,
+                    stop_atr_mult=stop,
+                )
+                saved[name] = one
+                rows.append(
+                    {
+                        "name": name,
+                        "stop_atr_mult": stop,
+                        "reward_rr": rr,
+                        "ret_pct": one.get("ret_pct"),
+                        "max_dd_pct": one.get("max_dd_pct"),
+                        "trade_win_rate": one.get("trade_win_rate"),
+                        "breakeven_win_rate": one.get("breakeven_win_rate"),
+                        "avg_win_r": one.get("avg_win_r"),
+                        "avg_loss_r": one.get("avg_loss_r"),
+                        "realized_rr": one.get("realized_rr"),
+                        "expectancy_r": one.get("expectancy_r"),
+                        "closed_trades": one.get("closed_trades"),
+                        "exits": one.get("exits"),
+                        "equity_end": one.get("equity_end"),
+                        "conclusion": one.get("conclusion"),
+                        "calmar": round(one["ret_pct"] / one["max_dd_pct"], 3)
+                        if one.get("ok") and one.get("max_dd_pct")
+                        else None,
+                    }
+                )
+                print(
+                    f"  ret={one.get('ret_pct')} dd={one.get('max_dd_pct')} "
+                    f"wr={one.get('trade_win_rate')} realized_rr={one.get('realized_rr')} "
+                    f"E={one.get('expectancy_r')} {one.get('conclusion')}"
+                )
+        ranked = [r for r in rows if r.get("calmar") is not None]
+        best = max(ranked, key=lambda r: (r["calmar"], r["ret_pct"])) if ranked else rows[0]
+        out = saved[best["name"]]
+        out["rr_grid"] = rows
+        out["rr_grid_best"] = best["name"]
+        out["entry_filter"] = mode
+        out["summary"] = (
+            f"盈亏比对照 best={best['name']} calmar={best.get('calmar')} "
+            f"ret={best.get('ret_pct')} dd={best.get('max_dd_pct')} "
+            f"realized_rr={best.get('realized_rr')}"
+        )
+        (ROOT / "archive").mkdir(exist_ok=True)
+        (ROOT / "archive" / "rr_grid.json").write_text(
+            json.dumps({"best": best, "rows": rows}, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+    elif hedge_grid:
         mode = p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax", "seats") else "base"
         pack = _fetch_pack(p["cfg"]["symbols"])
         rows = []

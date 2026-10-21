@@ -427,6 +427,37 @@ def _write_equity_svg(curve: list[dict], path: Path, title: str):
     return path
 
 
+def _fetch_pack(symbols):
+    series = {}
+    errors = {}
+    sources = {}
+    for u in symbols:
+        code = u["code"]
+        print(f"[bt] fetch {code} {u.get('ticker')} {u['name']}...")
+        try:
+            hist, meta = fetch_history(u)
+            series[code] = {"meta": u, "hist": hist}
+            sources[code] = {k: v for k, v in (meta or {}).items() if k != "code"}
+            print(
+                f"  bars={len(hist)} "
+                f"range={hist[0]['date'] if hist else '-'}→{hist[-1]['date'] if hist else '-'}"
+            )
+        except Exception as e:
+            errors[code] = str(e)[:200]
+            print(f"  ERR {e}")
+    return series, errors, sources
+
+
+# name, strike_atr_mult, premium_atr_mult. None = futures only, same equity and min lot.
+HEDGE_GRID = (
+    ("fut_only", None, None),
+    ("k1_p2", 1.0, 2.0),
+    ("atm_p2", 0.0, 2.0),
+    ("k1_p06", 1.0, 0.6),
+    ("atm_p06", 0.0, 0.6),
+)
+
+
 def simulate(
     symbols,
     equity0,
@@ -447,24 +478,12 @@ def simulate(
     reward_rr=2.0,
     stop_atr_mult=1.0,
     mode="p0",
+    pack=None,
 ):
-    series = {}
-    errors = {}
-    sources = {}
-    for u in symbols:
-        code = u["code"]
-        print(f"[bt] fetch {code} {u.get('ticker')} {u['name']}...")
-        try:
-            hist, meta = fetch_history(u)
-            series[code] = {"meta": u, "hist": hist}
-            sources[code] = {k: v for k, v in (meta or {}).items() if k != "code"}
-            print(
-                f"  bars={len(hist)} "
-                f"range={hist[0]['date'] if hist else '-'}→{hist[-1]['date'] if hist else '-'}"
-            )
-        except Exception as e:
-            errors[code] = str(e)[:200]
-            print(f"  ERR {e}")
+    if pack is None:
+        series, errors, sources = _fetch_pack(symbols)
+    else:
+        series, errors, sources = pack
 
     date_hits = Counter()
     for s in series.values():
@@ -821,7 +840,7 @@ def simulate(
     }
 
 
-def _simulate_cfg(p, mode):
+def _simulate_cfg(p, mode, *, pack=None, premium_atr_mult=None, strike_atr_mult=None, option_hedge=None):
     cfg = p["cfg"]
     print(f"[bt] mode={mode} ifind_so_far={usage_report()['count']}")
     return simulate(
@@ -837,13 +856,40 @@ def _simulate_cfg(p, mode):
         min_r20=p["min_r20"],
         min_r60=p["min_r60"],
         min_lots=p.get("min_lots") or 0,
-        option_hedge=bool(p.get("option_hedge")),
-        premium_atr_mult=float(p.get("premium_atr_mult") or 2.0),
-        strike_atr_mult=float(p.get("strike_atr_mult") or 1.0),
+        option_hedge=bool(p.get("option_hedge") if option_hedge is None else option_hedge),
+        premium_atr_mult=float(p.get("premium_atr_mult") if premium_atr_mult is None else premium_atr_mult),
+        strike_atr_mult=float(p.get("strike_atr_mult") if strike_atr_mult is None else strike_atr_mult),
         reward_rr=p["reward_rr"],
         stop_atr_mult=p["stop_atr_mult"],
         mode=mode,
+        pack=pack,
     )
+
+
+def _hedge_row(name: str, strike: float, premium: float, out: dict) -> dict:
+    return {
+        "name": name,
+        "strike_atr_mult": strike,
+        "premium_atr_mult": premium,
+        "ok": out.get("ok"),
+        "equity_start": out.get("equity_start"),
+        "equity_end": out.get("equity_end"),
+        "ret_pct": out.get("ret_pct"),
+        "gross_ret_pct": out.get("gross_ret_pct"),
+        "max_dd_pct": out.get("max_dd_pct"),
+        "gross_max_dd_pct": out.get("gross_max_dd_pct"),
+        "premium_yuan": out.get("premium_yuan"),
+        "hedge_payoff_yuan": out.get("hedge_payoff_yuan"),
+        "hedge_net_yuan": out.get("hedge_net_yuan"),
+        "cost_yuan": out.get("cost_yuan"),
+        "closed_trades": out.get("closed_trades"),
+        "trade_win_rate": out.get("trade_win_rate"),
+        "win_rate": out.get("win_rate"),
+        "exits": out.get("exits"),
+        "avg_held": out.get("avg_held"),
+        "conclusion": out.get("conclusion"),
+        "summary": out.get("summary"),
+    }
 
 
 def _row(out: dict) -> dict:
@@ -894,6 +940,7 @@ def main():
     import sys
 
     compare = "--compare" in sys.argv
+    hedge_grid = "--hedge-grid" in sys.argv
     p = _load_cfg()
     cfg = p["cfg"]
     print(
@@ -904,9 +951,41 @@ def main():
         f"min_r={p['min_r20']}/{p['min_r60']} min_lots={p.get('min_lots')} "
         f"observe={p.get('observe_mode')} optHedge={p.get('option_hedge')} "
         f"premATR={p.get('premium_atr_mult')} strikeATR={p.get('strike_atr_mult')} "
-        f"ifind={active_slot()} compare={compare}"
+        f"ifind={active_slot()} compare={compare} hedge_grid={hedge_grid}"
     )
-    if compare:
+    if hedge_grid:
+        mode = p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax", "seats") else "base"
+        pack = _fetch_pack(p["cfg"]["symbols"])
+        rows = []
+        saved = {}
+        for name, strike, premium in HEDGE_GRID:
+            hedged = strike is not None
+            print(f"[bt] hedge-grid {name} strike={strike} premium={premium}")
+            one = _simulate_cfg(
+                p,
+                mode,
+                pack=pack,
+                premium_atr_mult=0.0 if premium is None else premium,
+                strike_atr_mult=0.0 if strike is None else strike,
+                option_hedge=hedged,
+            )
+            saved[name] = one
+            rows.append(_hedge_row(name, strike, premium, one))
+            print(one.get("summary") or one.get("error"))
+        viable = [r for r in rows if r.get("ok") and r.get("ret_pct") is not None]
+        best_name = max(viable, key=lambda r: (r["ret_pct"], -r["max_dd_pct"]))["name"] if viable else HEDGE_GRID[0][0]
+        out = saved[best_name]
+        out["hedge_grid"] = rows
+        out["hedge_grid_best"] = best_name
+        out["entry_filter"] = mode
+        out["summary"] = (
+            f"对冲对照 best={best_name} | "
+            + " ; ".join(
+                f"{r['name']} ret={r.get('ret_pct')} dd={r.get('max_dd_pct')} hedge_net={r.get('hedge_net_yuan')}"
+                for r in rows
+            )
+        )
+    elif compare:
         saved = {}
         rows = []
         for mode in ("base", "p0", "carry", "oi", "member", "climax", "seats"):

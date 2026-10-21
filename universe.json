@@ -260,9 +260,9 @@
     "min_lots": 1,
     "option_hedge": {
       "enabled": true,
-      "premium_atr_mult": 2.0,
-      "strike_atr_mult": 1.0,
-      "note": "纸面观察：权益基数放大至100万；期货信号保证至少1手（仍受名义/ATR帽约束）；开仓买合成保护期权，权利金=2×ATR×乘数×手数（放大），行权价=入场±1×ATR；多买Put/空买Call，平仓按内在价值结算。不影响日报20万基数。"
+      "premium_atr_mult": 0.6,
+      "strike_atr_mult": 0.0,
+      "note": "纸面观察：权益100万、至少1手。2025-11-27→2026-10-20 对照：期货裸仓 +8.88%/DD15.0%；行权1ATR+权利金2×ATR -73%；ATM+2×ATR -64%；行权1ATR+0.6×ATR -32%；ATM+0.6×ATR +8.26%/DD9.5%（对冲净约-1.9万）。观察默认改为 ATM、权利金0.6×ATR。不改日报20万执行盘。"
     }
   },
   "slippage_ticks": 1,

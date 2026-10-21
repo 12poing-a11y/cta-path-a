@@ -569,7 +569,7 @@ def simulate(
 
     trade_dates = dates[WARMUP:]
     curves = {}
-    if mode not in ("base", "seats"):
+    if mode not in ("base", "seats", "ctf"):
         curves = load_curves([u["code"] for u in symbols])
     member = {}
     if mode == "member":

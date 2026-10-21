@@ -37,6 +37,9 @@ def _load_universe():
     max_per_bucket = int(cfg.get("max_per_bucket", 1))
     min_r20 = float(cfg.get("min_r20_pct", 3))
     min_r60 = float(cfg.get("min_r60_pct", 5))
+    sel = cfg.get("selection") or {}
+    stop_atr_mult = float(sel.get("stop_atr_mult") or cfg.get("stop_atr_mult") or 1)
+    reward_rr = float(sel.get("reward_rr") or cfg.get("reward_rr") or 2)
     symbols = cfg.get("symbols") or []
     return (
         equity_base,
@@ -49,6 +52,8 @@ def _load_universe():
         max_per_bucket,
         min_r20,
         min_r60,
+        stop_atr_mult,
+        reward_rr,
         symbols,
     )
 
@@ -87,6 +92,8 @@ def _load_live_equity(equity_base: float) -> tuple[float, dict]:
     MAX_PER_BUCKET,
     MIN_R20_PCT,
     MIN_R60_PCT,
+    STOP_ATR_MULT,
+    REWARD_RR,
     UNIVERSE,
 ) = _load_universe()
 LIVE_EQUITY, _EQUITY_STATE = _load_live_equity(EQUITY_BASE)
@@ -149,7 +156,8 @@ def _fetch_snapshot(u: dict, curves: dict, mode: str) -> dict:
 
 def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
     close, atr, r20, r60 = snap.get("close"), snap.get("atr"), snap.get("r20"), snap.get("r60")
-    risk_per_lot = (atr * u["mult"]) if atr is not None else None
+    stop_dist = (STOP_ATR_MULT * atr) if atr is not None else None
+    risk_per_lot = (stop_dist * u["mult"]) if stop_dist is not None else None
     align = "冲突/不足"
     direction = "空仓"
     if r20 is not None and r60 is not None and r20 != 0 and r60 != 0:
@@ -158,8 +166,15 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
             direction = "多" if r20 > 0 else "空"
 
     lots = 0
-    if align == "同向" and risk_per_lot and risk_per_lot > 0:
+    stop = target = None
+    if align == "同向" and risk_per_lot and risk_per_lot > 0 and close is not None and stop_dist is not None:
         lots = int(math.floor(risk_budget / risk_per_lot))
+        if direction == "多":
+            stop = close - stop_dist
+            target = close + REWARD_RR * stop_dist
+        else:
+            stop = close + stop_dist
+            target = close - REWARD_RR * stop_dist
 
     if align != "同向":
         action = "空仓（20日与60日不同向）"
@@ -182,6 +197,10 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
         "close": close,
         "atr": round(atr, 2) if atr is not None else None,
         "risk_per_lot": round(risk_per_lot, 1) if risk_per_lot is not None else None,
+        "stop_atr_mult": STOP_ATR_MULT,
+        "reward_rr": REWARD_RR,
+        "stop": round(stop, 4) if stop is not None else None,
+        "target": round(target, 4) if target is not None else None,
         "r20": r20,
         "r60": r60,
         "align": align,
@@ -243,7 +262,9 @@ def _apply_caps(signals: list[dict], *, sizing_equity: float) -> dict:
             s["selected"] = True
             s["action"] = (
                 f"路径A记账：记{s.get('direction')}{lots}手"
-                f"（Top{MAX_POSITIONS}·名义≤{MAX_GROSS_PCT}%·风险≤{MAX_PORT_RISK_PCT}%·不下单）"
+                f" 止损{s.get('stop')} 止盈{s.get('target')}"
+                f"（止损{STOP_ATR_MULT:g}×ATR·盈亏比{REWARD_RR:g}·"
+                f"Top{MAX_POSITIONS}·名义≤{MAX_GROSS_PCT}%·风险≤{MAX_PORT_RISK_PCT}%·不下单）"
             )
         else:
             raw = int(s.get("lots_raw") or 0)

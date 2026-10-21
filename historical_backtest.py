@@ -38,9 +38,7 @@ CUTOFF_DAYS = 420
 def _load_cfg():
     cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
     observe = cfg.get("observe") or {}
-    use_observe = bool(observe) and (
-        "--observe" in sys.argv or hedge_enabled(observe) or hedge_enabled(cfg)
-    )
+    use_observe = "--observe" in sys.argv
     # Observe mode: amplify equity base for 1-lot futures + option-premium overlay.
     if use_observe and observe.get("equity") is not None:
         equity = float(observe["equity"])

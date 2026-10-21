@@ -69,6 +69,59 @@ python weekly_backtest.py
 python notion_sync.py signals   # 可选
 ```
 
+## 本地研究台（Streamlit）
+
+只读看板：多策略净值对比、日信号、策略注册表、保护期权纸面机会。不接实盘、不爬真实期权链。
+
+```bash
+pip install -r requirements-desk.txt
+streamlit run desk/app.py
+```
+
+依赖单独放在 `requirements-desk.txt`（`streamlit` / `plotly` / `pandas`），不并入 CI 的 `requirements.txt`。
+
+### 15:30 日报与本地同步
+
+GitHub Actions（工作日 **15:30 北京时间**）会更新远端的 `l1_report.json`、`archive/`（以及可选 Notion）。Streamlit **只读本地磁盘**，不会自动看见远端写入。
+
+本地研究台侧栏有 **「同步日报」**：
+
+1. 默认勾选「同步 git 报告」→ `git pull --ff-only`（把 Actions 落盘的日报/archive 拉到本机）
+2. 可选「刷新本地缓存」→ `python daily_update.py`（席位 member + 新浪等，较慢、需网络；HMM/席位图依赖这些缓存时再勾）
+3. 同步成功后会清 Streamlit 缓存并刷新页面
+
+若本机不是 git 仓库、或没有 remote，按钮仍可用：勾选「刷新本地缓存」从免费源重建日报与缓存，侧栏会提示原因。侧栏也会显示本地 `l1_report.json` 的 mtime / asof，15:30 后若偏旧会提示去同步。
+
+### 如何挂新策略
+
+1. 引擎产出一份含 `equity_curve`（及可选 KPI）的 JSON  
+2. 在 `desk/strategies/extra/<id>.json` 写入，例如：
+
+```json
+{"id": "my_custom", "name": "自定义", "curve_file": "path/to/backtest.json", "tags": ["extra"]}
+```
+
+3. 重启 Streamlit，侧栏多选即可叠加  
+
+内置：`path_a`、`benchmark`、`path_a_opt_hedge`、`wyckoff`（无 JSON 时为占位）。`benchmark_latest.json` 若尚无 `equity_curve`，概览页对该策略仅展示 KPI 并灰显提示。
+
+### 期权机会说明
+
+「期权机会」页复用 `option_hedge.py` 与 `universe.json` → `observe.option_hedge` 默认（`premium_atr_mult` / `strike_atr_mult`）。多→买保护 Put，空→买保护 Call；行权价与权利金为 **合成 ATR 估算，非交易所期权链**，仅研究观察。
+
+### 状态评分
+
+「状态评分」页把席位页同一套 signed 评分拆成多 / 空 / 震荡（非负且和为 100），并对当前品种用本地日线拟合三状态高斯 HMM，不现拉行情。事件只对比 `archive/l1_report_*.json` 和 `.cache/member` 里已有的变化。
+
+**事件驱动层**（研究观察，不下单）至少包括：
+
+- **动量跨越** — 动量本身是事件驱动的一种；r20/r60 门槛穿越单独成行，不被同向事件替换
+- **席位/机构** — 前 20 净持仓翻向等
+- **动量机构同向** — 动量方向（门槛穿越或 20/60 同向已指向）与五家机构净持仓（中信期货、国泰君安、华泰、永安、东证）符号一致，且当日至少一侧有触发；大商所无会员文件时跳过
+- 以及方向翻转、席位切换、入选变化
+
+模型板对动量、均值回归、HMM、波动突破、席位资金，以及本地缓存能对齐的升贴水做历史方向命中；综合方向按评分加权。评分不是未来收益承诺。
+
 ## 目录
 
 - `universe.json` — 品种池与资金参数（改这里即可扩品种）  
@@ -76,6 +129,7 @@ python notion_sync.py signals   # 可选
 - `daily_update.py` — 日信号（免费源不足时才走 iFinD）  
 - `weekly_backtest.py` — 基于 `archive/` 滚动纸面 PnL  
 - `historical_backtest.py` — 近一年路径A纸面回测  
+- `desk/` — Streamlit 研究台（`app.py` + 策略注册表）  
 - `notion_sync.py` / `ifind_call.py`  
 - `MOBILE.md` — 手机端配置说明  
 - `.github/workflows/` — 定时 + 手动任务  

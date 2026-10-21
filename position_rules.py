@@ -46,6 +46,7 @@ def apply_portfolio_caps(
     max_per_bucket: int = 1,
     min_r20_pct: float = 3.0,
     min_r60_pct: float = 5.0,
+    min_lots: int = 0,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """
     Pipeline:
@@ -54,6 +55,7 @@ def apply_portfolio_caps(
       3) Pick ≤ max_positions with ≤ max_per_bucket per sector bucket
       4) Scale lots so gross notional ≤ equity × max_gross_exposure_pct%
       5) Scale lots so Σ(lots×ATR×mult) ≤ equity × max_portfolio_risk_pct%
+      6) Optional min_lots floor (observe mode): bump to ≥ min_lots if caps still hold
 
     Candidate fields: code, direction, lots, close, mult, r20, r60, optional atr/bucket.
     """
@@ -64,6 +66,7 @@ def apply_portfolio_caps(
         "max_per_bucket": max_per_bucket,
         "min_r20_pct": min_r20_pct,
         "min_r60_pct": min_r60_pct,
+        "min_lots": int(min_lots or 0),
         "candidates_n": len(candidates),
         "weak_filtered": [],
         "bucket_skipped": [],
@@ -74,6 +77,7 @@ def apply_portfolio_caps(
         "gross_after": 0.0,
         "atr_risk_before": 0.0,
         "atr_risk_after": 0.0,
+        "min_lots_bumped": [],
         "dropped": [],
     }
     if equity <= 0:
@@ -173,6 +177,23 @@ def apply_portfolio_caps(
                 selected.append(trial)
                 have.add(trial.get("code"))
                 bucket_counts[bucket] = bucket_counts.get(bucket, 0) + 1
+
+    # 6) min_lots floor for paper observe (keep only if still under caps)
+    floor = max(0, int(min_lots or 0))
+    if floor > 0 and selected:
+        bumped: list[dict[str, Any]] = []
+        for c in selected:
+            lots = int(c.get("lots") or 0)
+            if lots >= floor:
+                bumped.append(c)
+                continue
+            trial = dict(c)
+            trial["lots"] = floor
+            peers = bumped + [trial]
+            if _gross(peers) <= gross_cap + 1e-6 and _risk(peers) <= risk_cap + 1e-6:
+                bumped.append(trial)
+                meta["min_lots_bumped"].append(c.get("code"))
+        selected = bumped
 
     meta["gross_after"] = round(_gross(selected), 2)
     meta["atr_risk_after"] = round(_risk(selected), 2)

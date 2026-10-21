@@ -16,6 +16,12 @@ from ifind_call import active_slot, call, usage_report  # noqa: E402
 from member_rank import load_member_changes, load_member_seats  # noqa: E402
 from path_a_filters import entry_block, fill_cost, seat_decision  # noqa: E402
 from public_curve import curve_coverage, load_curves  # noqa: E402
+from option_hedge import (  # noqa: E402
+    attach_hedge_to_position,
+    hedge_enabled,
+    hedge_params,
+    option_payoff,
+)
 from position_rules import (  # noqa: E402
     apply_portfolio_caps,
     compound_equity,
@@ -25,13 +31,21 @@ from wyckoff_pullback import apply_stop_target  # noqa: E402
 
 LOOKBACK_DAYS = 260
 WARMUP = 60
-BATCH_LABEL = "2026一年-pathA-rr2"
+BATCH_LABEL = "2026一年-pathA-optHedge"
 CUTOFF_DAYS = 420
 
 
 def _load_cfg():
     cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
-    equity = float(cfg.get("equity", 200_000))
+    observe = cfg.get("observe") or {}
+    use_observe = bool(observe) and (
+        "--observe" in sys.argv or hedge_enabled(observe) or hedge_enabled(cfg)
+    )
+    # Observe mode: amplify equity base for 1-lot futures + option-premium overlay.
+    if use_observe and observe.get("equity") is not None:
+        equity = float(observe["equity"])
+    else:
+        equity = float(cfg.get("equity", 200_000))
     compound = bool(cfg.get("equity_compound", True))
     risk_pct = float(cfg.get("risk_pct", 1.5))
     l1_mult = float(cfg.get("l1_mult", 1.0))
@@ -41,6 +55,9 @@ def _load_cfg():
     max_per_bucket = int(cfg.get("max_per_bucket", 1))
     min_r20 = float(cfg.get("min_r20_pct", 3))
     min_r60 = float(cfg.get("min_r60_pct", 5))
+    min_lots = int(observe.get("min_lots") if use_observe else cfg.get("min_lots") or 0)
+    oh_src = observe if use_observe and (observe.get("option_hedge") or hedge_enabled(observe)) else cfg
+    oh = hedge_params(oh_src) if hedge_enabled(oh_src) else {"premium_atr_mult": 0.0, "strike_atr_mult": 0.0}
     sel = cfg.get("selection") or {}
     reward_rr = float(sel.get("reward_rr") or cfg.get("reward_rr") or 2)
     stop_atr_mult = float(sel.get("stop_atr_mult") or cfg.get("stop_atr_mult") or 1)
@@ -56,6 +73,11 @@ def _load_cfg():
         "max_per_bucket": max_per_bucket,
         "min_r20": min_r20,
         "min_r60": min_r60,
+        "min_lots": min_lots,
+        "option_hedge": hedge_enabled(oh_src),
+        "premium_atr_mult": float(oh.get("premium_atr_mult") or 0),
+        "strike_atr_mult": float(oh.get("strike_atr_mult") or 0),
+        "observe_mode": use_observe,
         "reward_rr": reward_rr,
         "stop_atr_mult": stop_atr_mult,
         "entry_filter": cfg.get("entry_filter") or "base",
@@ -418,6 +440,10 @@ def simulate(
     max_per_bucket=1,
     min_r20=3.0,
     min_r60=5.0,
+    min_lots=0,
+    option_hedge=False,
+    premium_atr_mult=2.0,
+    strike_atr_mult=1.0,
     reward_rr=2.0,
     stop_atr_mult=1.0,
     mode="p0",
@@ -465,6 +491,8 @@ def simulate(
     max_dd = 0.0
     gross_max_dd = 0.0
     cost_total = 0.0
+    premium_total = 0.0
+    hedge_payoff_total = 0.0
     curve = []
     day_pnls = []
     pos: dict = {}
@@ -487,7 +515,7 @@ def simulate(
         day_cost = 0.0
         prev_d = trade_dates[di - 1] if di > 0 else None
 
-        # 1) manage open positions: stop / target / signal flip
+        # 1) manage open positions: stop / target / signal flip (+ option payoff)
         for code, p in list(pos.items()):
             hist = series[code]["hist"]
             i1 = idx[code].get(d)
@@ -517,10 +545,30 @@ def simulate(
                     price_pnl += (exit_px - prev_close) * mult * p["lots"] * sign
             if reason:
                 day_cost += fill_cost(series[code]["meta"], px, p["lots"])
+                opt_pnl = 0.0
+                if option_hedge and p.get("opt_strike") is not None:
+                    opt_pnl = option_payoff(
+                        p["direction"],
+                        lots=int(p["lots"]),
+                        strike=float(p["opt_strike"]),
+                        exit_px=float(px),
+                        mult=mult,
+                    )
+                    price_pnl += opt_pnl
+                    hedge_payoff_total += opt_pnl
                 trade_exits[reason] = trade_exits.get(reason, 0) + 1
                 risk = abs(p["entry"] - p["stop"]) or 1e-9
                 r_mult = ((px - p["entry"]) * sign) / risk
-                closed_pnls.append({"date": d, "code": code, "reason": reason, "R": round(r_mult, 2)})
+                closed_pnls.append(
+                    {
+                        "date": d,
+                        "code": code,
+                        "reason": reason,
+                        "R": round(r_mult, 2),
+                        "opt_payoff": round(opt_pnl, 2),
+                        "opt_premium": p.get("opt_premium"),
+                    }
+                )
                 del pos[code]
 
         # 2) Path-A entries with ATR stop/target (RR=reward_rr)
@@ -583,6 +631,8 @@ def simulate(
                     target = close - reward_rr * stop_dist
                 risk_per_lot = stop_dist * s["meta"]["mult"]
                 lots = int(math.floor(day_risk / risk_per_lot)) if risk_per_lot > 0 else 0
+                if min_lots > 0 and lots < min_lots:
+                    lots = int(min_lots)
                 if lots <= 0:
                     continue
                 cands.append(
@@ -611,6 +661,7 @@ def simulate(
                 max_per_bucket=max_per_bucket,
                 min_r20_pct=min_r20,
                 min_r60_pct=min_r60,
+                min_lots=min_lots,
             )
             open_buckets = {}
             for p in pos.values():
@@ -624,7 +675,7 @@ def simulate(
                 bucket = str(c.get("bucket") or "_")
                 if max_per_bucket > 0 and open_buckets.get(bucket, 0) >= int(max_per_bucket):
                     continue
-                pos[c["code"]] = {
+                row = {
                     "code": c["code"],
                     "direction": c["direction"],
                     "lots": int(c["lots"]),
@@ -637,6 +688,19 @@ def simulate(
                     "bucket": c.get("bucket"),
                     "reason": c.get("reason"),
                 }
+                if option_hedge:
+                    atr_v = float(c.get("atr") or 0)
+                    row = attach_hedge_to_position(
+                        row,
+                        atr=atr_v,
+                        mult=float(series[c["code"]]["meta"]["mult"]),
+                        premium_atr_mult=premium_atr_mult,
+                        strike_atr_mult=strike_atr_mult,
+                    )
+                    prem = float(row.get("opt_premium") or 0)
+                    day_cost += prem
+                    premium_total += prem
+                pos[c["code"]] = row
                 day_cost += fill_cost(series[c["code"]]["meta"], c["entry"], c["lots"])
                 open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
 
@@ -686,11 +750,12 @@ def simulate(
         conclusion = "继续L1"
 
     pool = ",".join(u["code"] for u in symbols)
+    hedge_net = hedge_payoff_total - premium_total
     return {
         "ok": True,
-        "schema_version": "cta-backtest-v9-pathA-cost-filters",
+        "schema_version": "cta-backtest-v10-pathA-optHedge",
         "batch": BATCH_LABEL,
-        "strategy": "path_a_atr_rr2",
+        "strategy": "path_a_atr_rr2_opt_hedge" if option_hedge else "path_a_atr_rr2",
         "mode": mode,
         "data_source": "sina+tencent primary, iFinD fallback",
         "curve_coverage": curve_coverage(curves),
@@ -704,6 +769,13 @@ def simulate(
         "max_per_bucket": max_per_bucket,
         "min_r20_pct": min_r20,
         "min_r60_pct": min_r60,
+        "min_lots": min_lots,
+        "option_hedge": option_hedge,
+        "premium_atr_mult": premium_atr_mult if option_hedge else None,
+        "strike_atr_mult": strike_atr_mult if option_hedge else None,
+        "premium_yuan": round(premium_total, 2),
+        "hedge_payoff_yuan": round(hedge_payoff_total, 2),
+        "hedge_net_yuan": round(hedge_net, 2),
         "ifind_slot": active_slot(),
         "universe_n": len(symbols),
         "universe": pool,
@@ -735,10 +807,15 @@ def simulate(
         "closed_pnls_tail": closed_pnls[-30:],
         "ifind_calls": usage_report()["count"],
         "summary": (
-            f"PathA {mode} {trade_dates[0]}→{trade_dates[-1]} "
+            f"PathA{'+OptHedge' if option_hedge else ''} {mode} {trade_dates[0]}→{trade_dates[-1]} "
             f"净权益 {equity:.0f}（{ret_pct:+.2f}%）毛权益 {gross_equity:.0f}（{gross_ret_pct:+.2f}%）"
-            f"成本 {cost_total:.0f}，"
-            f"净MaxDD {max_dd:.2f}% 毛MaxDD {gross_max_dd:.2f}%，"
+            f"成本 {cost_total:.0f}"
+            + (
+                f"/权利金 {premium_total:.0f}/对冲赔付 {hedge_payoff_total:.0f}/对冲净 {hedge_net:.0f}"
+                if option_hedge
+                else ""
+            )
+            + f"，净MaxDD {max_dd:.2f}% 毛MaxDD {gross_max_dd:.2f}%，"
             f"成交{closed_n}笔，结论 {conclusion}"
         ),
     }
@@ -759,6 +836,10 @@ def _simulate_cfg(p, mode):
         max_per_bucket=p["max_per_bucket"],
         min_r20=p["min_r20"],
         min_r60=p["min_r60"],
+        min_lots=p.get("min_lots") or 0,
+        option_hedge=bool(p.get("option_hedge")),
+        premium_atr_mult=float(p.get("premium_atr_mult") or 2.0),
+        strike_atr_mult=float(p.get("strike_atr_mult") or 1.0),
         reward_rr=p["reward_rr"],
         stop_atr_mult=p["stop_atr_mult"],
         mode=mode,
@@ -820,7 +901,10 @@ def main():
         f"stopATR={p['stop_atr_mult']} compound={p['compound']} n={len(cfg['symbols'])} "
         f"max_pos={p['max_positions']} gross≤{p['max_gross_pct']}% "
         f"atr_risk≤{p['max_port_risk']}% bucket≤{p['max_per_bucket']} "
-        f"min_r={p['min_r20']}/{p['min_r60']} ifind={active_slot()} compare={compare}"
+        f"min_r={p['min_r20']}/{p['min_r60']} min_lots={p.get('min_lots')} "
+        f"observe={p.get('observe_mode')} optHedge={p.get('option_hedge')} "
+        f"premATR={p.get('premium_atr_mult')} strikeATR={p.get('strike_atr_mult')} "
+        f"ifind={active_slot()} compare={compare}"
     )
     if compare:
         saved = {}

@@ -255,6 +255,16 @@
   "min_r60_pct": 5,
   "equity_compound": true,
   "entry_filter": "seats",
+  "observe": {
+    "equity": 1000000,
+    "min_lots": 1,
+    "option_hedge": {
+      "enabled": true,
+      "premium_atr_mult": 2.0,
+      "strike_atr_mult": 1.0,
+      "note": "纸面观察：权益基数放大至100万；期货信号保证至少1手（仍受名义/ATR帽约束）；开仓买合成保护期权，权利金=2×ATR×乘数×手数（放大），行权价=入场±1×ATR；多买Put/空买Call，平仓按内在价值结算。不影响日报20万基数。"
+    }
+  },
   "slippage_ticks": 1,
   "fee_asof": "2026-09-02",
   "fee_source": "申银万国期货客户手续费公示，2026-09-02起，按单边计。螺纹用1/5/10月的万分之五，燃油用1/5/9月的万分之二点五。白银用普通月份万分之零点五，交割月前加收未计入。滑点为每边1个最小变动价位。"

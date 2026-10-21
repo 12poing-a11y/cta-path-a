@@ -356,6 +356,52 @@ def atr14(hist, i):
     return sum(trs) / 14.0
 
 
+def _sma_key(hist, i, n, key):
+    if i < n - 1:
+        return None
+    vals = []
+    for j in range(i - n + 1, i + 1):
+        v = hist[j].get(key)
+        if v is None:
+            return None
+        vals.append(float(v))
+    return sum(vals) / n
+
+
+def composite_trend(hist, i, short=20, long=60, vol_n=20):
+    """F = ((MA_s-MA_l)/MA_l) * (mean range / today's range) * (volume / MA volume)."""
+    if i < long - 1:
+        return None
+    ma_s = _sma_key(hist, i, short, "close")
+    ma_l = _sma_key(hist, i, long, "close")
+    if not ma_s or not ma_l:
+        return None
+    trend = (ma_s - ma_l) / ma_l
+    ranges = []
+    for j in range(i - vol_n + 1, i + 1):
+        high, low, close = hist[j].get("high"), hist[j].get("low"), hist[j].get("close")
+        if high is None or low is None or not close:
+            return None
+        ranges.append((float(high) - float(low)) / float(close))
+    today_r = ranges[-1]
+    mean_r = sum(ranges) / len(ranges)
+    if today_r <= 0 or mean_r <= 0:
+        return None
+    vols = []
+    for j in range(i - vol_n + 1, i + 1):
+        v = hist[j].get("volume")
+        if v is None:
+            vols = None
+            break
+        vols.append(float(v))
+    if not vols or sum(vols) <= 0:
+        q = 1.0
+    else:
+        ma_v = sum(vols) / len(vols)
+        q = (vols[-1] / ma_v) if ma_v > 0 else 1.0
+    return {"f": trend * (mean_r / today_r) * q, "t": trend, "r": today_r, "q": q}
+
+
 def ret_n(hist, i, n):
     if i < n:
         return None
@@ -548,16 +594,24 @@ def simulate(
             reason, px = apply_stop_target(
                 p["direction"], p["entry"], p["stop"], p["target"], bar
             )
-            # trend flip exit (Path-A conflict / opposite)
+            # trend flip exit (Path-A conflict / opposite, or composite-trend sign flip)
             if reason is None:
-                r20, r60 = ret_n(hist, i1, 20), ret_n(hist, i1, 60)
-                if r20 is not None and r60 is not None:
-                    long_ok = r20 > 0 and r60 > 0
-                    short_ok = r20 < 0 and r60 < 0
-                    if p["direction"] == "多" and not long_ok:
-                        reason, px = "signal", bar["close"]
-                    elif p["direction"] == "空" and not short_ok:
-                        reason, px = "signal", bar["close"]
+                if mode == "ctf":
+                    fac = composite_trend(hist, i1)
+                    if fac is not None:
+                        if p["direction"] == "多" and fac["f"] <= 0:
+                            reason, px = "signal", bar["close"]
+                        elif p["direction"] == "空" and fac["f"] >= 0:
+                            reason, px = "signal", bar["close"]
+                else:
+                    r20, r60 = ret_n(hist, i1, 20), ret_n(hist, i1, 60)
+                    if r20 is not None and r60 is not None:
+                        long_ok = r20 > 0 and r60 > 0
+                        short_ok = r20 < 0 and r60 < 0
+                        if p["direction"] == "多" and not long_ok:
+                            reason, px = "signal", bar["close"]
+                        elif p["direction"] == "空" and not short_ok:
+                            reason, px = "signal", bar["close"]
             if prev_d is not None:
                 i0 = idx[code].get(prev_d)
                 if i0 is not None:
@@ -605,15 +659,26 @@ def simulate(
                 if i is None or i < WARMUP:
                     continue
                 hist = s["hist"]
-                r20, r60 = ret_n(hist, i, 20), ret_n(hist, i, 60)
                 a = atr14(hist, i)
-                if r20 is None or r60 is None or a is None or a <= 0:
+                if a is None or a <= 0:
                     continue
-                if abs(r20) < min_r20 or abs(r60) < min_r60:
-                    continue
-                if not ((r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0)):
-                    continue
-                direction = "多" if r20 > 0 else "空"
+                fac = None
+                if mode == "ctf":
+                    fac = composite_trend(hist, i)
+                    if fac is None or fac["f"] == 0:
+                        continue
+                    direction = "多" if fac["f"] > 0 else "空"
+                    score = abs(fac["f"]) * 100.0
+                    r20, r60 = score, score
+                else:
+                    r20, r60 = ret_n(hist, i, 20), ret_n(hist, i, 60)
+                    if r20 is None or r60 is None:
+                        continue
+                    if abs(r20) < min_r20 or abs(r60) < min_r60:
+                        continue
+                    if not ((r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0)):
+                        continue
+                    direction = "多" if r20 > 0 else "空"
                 peers = []
                 if mode == "climax":
                     bucket = s["meta"].get("bucket")
@@ -624,7 +689,7 @@ def simulate(
                         if oi is None:
                             continue
                         peers.append(ret_n(other_s["hist"], oi, 20))
-                blocked = entry_block(
+                blocked = None if mode == "ctf" else entry_block(
                     mode,
                     hist,
                     i,
@@ -670,7 +735,8 @@ def simulate(
                         "entry": close,
                         "stop": stop,
                         "target": target,
-                        "reason": "path_a_rr2",
+                        "reason": "composite_trend" if mode == "ctf" else "path_a_rr2",
+                        "factor": None if fac is None else round(fac["f"], 6),
                     }
                 )
             selected, _meta = apply_portfolio_caps(
@@ -680,8 +746,8 @@ def simulate(
                 max_gross_exposure_pct=max_gross_pct,
                 max_portfolio_risk_pct=max_port_risk,
                 max_per_bucket=max_per_bucket,
-                min_r20_pct=min_r20,
-                min_r60_pct=min_r60,
+                min_r20_pct=0.0 if mode == "ctf" else min_r20,
+                min_r60_pct=0.0 if mode == "ctf" else min_r60,
                 min_lots=min_lots,
             )
             open_buckets = {}
@@ -968,6 +1034,7 @@ def main():
     compare = "--compare" in sys.argv
     hedge_grid = "--hedge-grid" in sys.argv
     rr_grid = "--rr-grid" in sys.argv
+    ctf = "--ctf" in sys.argv
     p = _load_cfg()
     if rr_grid:
         p["equity0"] = float(p["cfg"].get("equity") or 200_000)
@@ -1106,7 +1173,9 @@ def main():
             )
         except Exception:
             prior_cmp = None
-        mode = p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax", "seats") else "base"
+        mode = "ctf" if ctf else (
+            p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax", "seats") else "base"
+        )
         out = _simulate_cfg(p, mode)
         out["entry_filter"] = mode
         if prior_cmp:

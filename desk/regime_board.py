@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """Direction buckets, HMM state, event list, and model scores for the desk.
 
-Daily closes are read from local Sina cache files only. This module does not
-call the network. Hit rates are counted from those closes and from member
-files already on disk.
+Daily closes are read from local Sina cache files. Hit rates use those closes
+and member files on disk. Carry/basis may soft-call akshare when the local
+交割月 cache is thin (see ``basis_data``); failures leave the series empty.
 """
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from basis_data import BASIS_EXTREME, basis_extreme_events, carry_gaps_from_akshare
 from desk.hmm_regime import fit_hmm
 from desk.loaders import load_json, load_universe
 from desk.seat_board import (
@@ -67,9 +68,10 @@ MODEL_RULES = (
     "方向用当日收盘收益的符号。ATR 用 high/low/前收。"
     "席位资金：机构净持仓非零则跟随其符号；否则跟随外资；否则与家人净持仓相反。"
     "三者都是 0 则震荡。净持仓是席位页同一组前 20 多单减空单。"
-    "升贴水：本地交割月缓存里，同一天按到期月排序的近月和次近月。"
+    "升贴水：优先本地交割月缓存，同一天按到期月排序的近月和次近月；"
+    "不够时用 akshare 现货基差（近月→主力价差）或展期收益率补。"
     "gap=(次近-近月)/近月。gap<=-0.2% 记多（贴水），gap>=0.2% 记空（升水），其间震荡。"
-    "没有两个可对齐的交割月就不列这一行。"
+    "两边都没有可对齐序列就不列这一行。"
 )
 
 
@@ -453,44 +455,56 @@ def _bar_alive(bar: dict) -> bool:
 
 
 def load_carry_gaps(root: Path, code: str) -> list[dict] | None:
-    """Front vs next close from local delivery-month files. No network."""
+    """Front vs next close; Sina delivery months first, akshare basis/roll next."""
     code = str(code or "").upper()
     sina = root / ".cache" / "sina"
-    if not sina.is_dir():
-        return None
-    pat = re.compile(rf"^{re.escape(code)}\d{{4}}$", re.I)
-    best: dict[str, tuple[str, list[dict]]] = {}
-    for path in sina.glob(f"*/{code}[0-9][0-9][0-9][0-9].json"):
-        if not pat.match(path.stem):
-            continue
-        bars = _read_bars(path)
-        if len(bars) < 5:
-            continue
-        key = path.stem.upper()
-        prev = best.get(key)
-        stamp = path.parent.name
-        if prev is None or len(bars) > len(prev[1]) or (len(bars) == len(prev[1]) and stamp > prev[0]):
-            best[key] = (stamp, bars)
-    if len(best) < 2:
-        return None
-    books = {sym: {bar["date"]: bar for bar in bars} for sym, (_stamp, bars) in best.items()}
-    dates = sorted({day for book in books.values() for day in book})
-    rows = []
-    for day in dates:
-        alive = []
-        for sym, book in books.items():
-            bar = book.get(day)
-            if not bar or not _bar_alive(bar):
+    rows: list[dict] = []
+    if sina.is_dir():
+        pat = re.compile(rf"^{re.escape(code)}\d{{4}}$", re.I)
+        best: dict[str, tuple[str, list[dict]]] = {}
+        for path in sina.glob(f"*/{code}[0-9][0-9][0-9][0-9].json"):
+            if not pat.match(path.stem):
                 continue
-            alive.append((_expiry(sym), float(bar["close"])))
-        if len(alive) < 2:
-            continue
-        alive.sort()
-        front, nxt = alive[0][1], alive[1][1]
-        if front <= 0:
-            continue
-        rows.append({"date": day, "gap": (nxt - front) / front})
-    return rows or None
+            bars = _read_bars(path)
+            if len(bars) < 5:
+                continue
+            key = path.stem.upper()
+            prev = best.get(key)
+            stamp = path.parent.name
+            if prev is None or len(bars) > len(prev[1]) or (
+                len(bars) == len(prev[1]) and stamp > prev[0]
+            ):
+                best[key] = (stamp, bars)
+        if len(best) >= 2:
+            books = {
+                sym: {bar["date"]: bar for bar in bars}
+                for sym, (_stamp, bars) in best.items()
+            }
+            dates = sorted({day for book in books.values() for day in book})
+            for day in dates:
+                alive = []
+                for sym, book in books.items():
+                    bar = book.get(day)
+                    if not bar or not _bar_alive(bar):
+                        continue
+                    alive.append((_expiry(sym), float(bar["close"])))
+                if len(alive) < 2:
+                    continue
+                alive.sort()
+                front, nxt = alive[0][1], alive[1][1]
+                if front <= 0:
+                    continue
+                rows.append({"date": day, "gap": (nxt - front) / front, "source": "sina"})
+    if len(rows) >= 10:
+        return rows
+    ak_rows = carry_gaps_from_akshare(root, code) or []
+    if not rows:
+        return ak_rows or None
+    # Merge: prefer Sina on overlapping days, keep akshare-only days.
+    by_day = {r["date"]: r for r in ak_rows}
+    by_day.update({r["date"]: r for r in rows})
+    merged = [by_day[d] for d in sorted(by_day)]
+    return merged or None
 
 
 def _carry_calls(root: Path, code: str, bars: list[dict]) -> list[dict] | None:
@@ -542,7 +556,7 @@ def build_model_rows(
     if not seats:
         exchange = _exchange_for(root, code, report)
         if exchange == "DCE":
-            notes.append("席位资金：大商所没有 .cache/member 排名，本品种略过。")
+            notes.append("席位资金：本地无 dce-*.json（akshare 缓存），本品种略过。")
         else:
             notes.append("席位资金：本地会员排名里没有这个品种，本品种略过。")
     else:
@@ -550,7 +564,7 @@ def build_model_rows(
 
     carry = _carry_calls(root, code, bars)
     if carry is None:
-        notes.append("升贴水：本地缓存没有两个可对齐的交割月收盘，本品种略过。")
+        notes.append("升贴水：本地交割月与 akshare 基差/展期都不够，本品种略过。")
     else:
         rows.append(_score_calls("升贴水", carry, chop_hits=False))
     return _sort_models(rows), notes
@@ -803,11 +817,14 @@ def joint_skip_reason(root: Path, code: str, report: dict | None = None) -> str 
     """Why this symbol cannot form 动量机构同向; None if member files exist."""
     code = str(code or "").upper()
     exchange = _exchange_for(root, code, report)
-    if exchange == "DCE":
-        return f"{code} 属大商所，本地无会员排名文件，无法形成「动量机构同向」。"
-    if exchange not in ("CZCE", "SHFE"):
+    if exchange not in ("CZCE", "SHFE", "DCE"):
         return f"{code} 交易所 {exchange or '未知'}，无机构净持仓序列，无法形成「动量机构同向」。"
     if not member_dates(root, exchange):
+        if exchange == "DCE":
+            return (
+                f"{code} 属大商所，本地无 dce-*.json（akshare 缓存），"
+                "无法形成「动量机构同向」。"
+            )
         return f"{code} 本地 .cache/member 无 {exchange} 文件，无法形成「动量机构同向」。"
     return None
 
@@ -937,6 +954,7 @@ def events_for_codes(root: Path, report: dict | None, codes: list[str]) -> list[
     for code in sorted(want):
         rows.extend(member_flip_events(root, code, report))
     rows.extend(joint_momentum_institution_events(root, report, want))
+    rows.extend(basis_extreme_events(root, want))
     # 动量机构同向 first (badge), then by date; 动量跨越 stays a first-class row.
     joints = [row for row in rows if row.get("类型") == "动量机构同向"]
     others = [row for row in rows if row.get("类型") != "动量机构同向"]
@@ -1009,7 +1027,7 @@ def _hmm_figures(chart: dict) -> tuple[go.Figure, go.Figure]:
         )
     )
     bars.update_layout(template="plotly_white")
-    _light(bars, "近期日收益（颜色是 HMM 状态）", 320)
+    _light(bars, "近期日收益（颜色是 HMM 状态）", 320, time_axis="recent_left")
     zmap = {"偏多": 1, "震荡": 0, "偏空": -1}
     strip = go.Figure(
         go.Heatmap(
@@ -1025,7 +1043,7 @@ def _hmm_figures(chart: dict) -> tuple[go.Figure, go.Figure]:
         )
     )
     strip.update_layout(template="plotly_white")
-    _light(strip, "状态条", 140)
+    _light(strip, "状态条", 140, time_axis="recent_left")
     return bars, strip
 
 
@@ -1070,12 +1088,40 @@ def render_regime_tab(root: Path) -> None:
         pack = _cached_pack(str(root), code)
     from desk.decision import render_decision_banner
 
+    from desk.composite_eval import build_full_assessment, render_full_assessment
+    from desk.decision import build_decision
+
+    decision = build_decision(root, code, pack=pack, report=report, events=[])
     render_decision_banner(root, code, pack, report)
     st.caption(
         f"品种列表与席位页相同。当前 {code} {meta['name']} · "
         f"{EX_ZH.get(meta['exchange'], meta['exchange'])}。"
         "初次打开若席位页已选过品种，沿用那个品种。"
     )
+
+    # Direction buckets needed for full assessment — compute early.
+    uni_early = load_universe(root) or {}
+    r20_early = _num(uni_early.get("min_r20_pct")) or _num((report or {}).get("min_r20_pct")) or 3.0
+    r60_early = _num(uni_early.get("min_r60_pct")) or _num((report or {}).get("min_r60_pct")) or 5.0
+    signals_early = (report or {}).get("signals") or []
+    regime_row = None
+    if signals_early:
+        scored_early = regime_bucket_scores(
+            signals_early, r20_min=float(r20_early), r60_min=float(r60_early)
+        )
+        for row in scored_early:
+            if str(row.get("代码") or "").upper() == code:
+                regime_row = row
+                break
+    assessment = build_full_assessment(
+        root,
+        code,
+        pack=pack,
+        report=report,
+        regime_row=regime_row,
+        decision=decision,
+    )
+    render_full_assessment(assessment, expanded=True)
 
     st.markdown("**方向评分**")
     st.caption(REGIME_FORMULA)
@@ -1187,10 +1233,11 @@ def render_regime_tab(root: Path) -> None:
 
     st.markdown("**事件**")
     st.caption(
-        "事件驱动层（研究用，非下单指令）：动量跨越、席位/机构净持仓翻向、动量机构同向；"
+        "事件驱动层（研究用，非下单指令）：动量跨越、席位/机构净持仓翻向、动量机构同向、"
+        f"基差极端（|主力基差率|≥{BASIS_EXTREME:.0%}，贴水偏多、升水偏空）；"
         "另有方向翻转、席位切换、入选变化。"
         "动量本身是事件驱动的一种，单独成行，不因同向事件被替换或隐藏。"
-        "只比较 archive/l1_report_*.json 与当前日报，以及 .cache/member 里已有变化；不补造。"
+        "只比较 archive/l1_report_*.json 与当前日报，以及 .cache/member / akshare 基差缓存；不补造。"
         "「动量机构同向」要求动量方向与五家机构净持仓符号一致，且当日至少一侧有触发；排在列表最前并带「同向」标记。"
     )
     scope = st.radio("范围", ["当前品种", "入选组合"], horizontal=True, key="regime_event_scope")

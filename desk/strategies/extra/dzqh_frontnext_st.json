@@ -1,0 +1,14 @@
+{
+  "id": "dzqh_frontnext_st",
+  "name": "东证·C_frontnext&ShortTrend组合",
+  "description": "导航：多因子截面 → 另类复合。近远月价差为主、短趋势为副。本地有 proxy_frontnext_st。",
+  "curve_file": "external/strategies/dzqh_frontnext_st.json",
+  "tags": [
+    "external",
+    "dzqh",
+    "commodity",
+    "term_structure",
+    "cs_alt"
+  ],
+  "placeholder": false
+}

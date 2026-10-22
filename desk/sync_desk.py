@@ -170,7 +170,13 @@ def sync_desk(
     if dry_run:
         if pull_git:
             if status.get("is_git") and status.get("has_remote"):
-                steps.append({"step": "git_pull", "planned": True, "detail": "git pull --ff-only"})
+                steps.append(
+                    {
+                        "step": "git_pull",
+                        "planned": True,
+                        "detail": "git fetch origin main && git checkout origin/main -- l1_report.json l1_report_risk15.json archive",
+                    }
+                )
             elif status.get("is_git"):
                 steps.append(
                     {
@@ -210,18 +216,41 @@ def sync_desk(
     pulled = False
     if pull_git:
         if status.get("is_git") and status.get("has_remote"):
-            result = _run(["git", "pull", "--ff-only"], root, timeout=180)
-            steps.append({"step": "git_pull", **result})
-            if result["ok"]:
-                pulled = True
-                messages.append(result["stdout"] or "git pull 完成。")
-            else:
+            fetch = _run(["git", "fetch", "origin", "main"], root, timeout=180)
+            steps.append({"step": "git_fetch_main", **fetch})
+            if not fetch["ok"]:
                 ok = False
                 messages.append(
-                    "git pull 失败："
-                    + (result["stderr"] or result["stdout"] or f"code={result['returncode']}")
+                    "git fetch origin main 失败："
+                    + (fetch["stderr"] or fetch["stdout"] or f"code={fetch['returncode']}")
                 )
-                messages.append("可改勾「刷新本地缓存」用 daily_update.py 从免费源重建。")
+            else:
+                checkout = _run(
+                    [
+                        "git",
+                        "checkout",
+                        "origin/main",
+                        "--",
+                        "l1_report.json",
+                        "l1_report_risk15.json",
+                        "archive",
+                    ],
+                    root,
+                    timeout=60,
+                )
+                steps.append({"step": "git_checkout_reports", **checkout})
+                if checkout["ok"]:
+                    pulled = True
+                    messages.append(
+                        "已从 origin/main 取回日报（l1_report.json、l1_report_risk15.json、archive）。"
+                        "日常任务只提交到 main，当前功能分支的 git pull 带不回这些文件。"
+                    )
+                else:
+                    ok = False
+                    messages.append(
+                        "取出 main 日报失败："
+                        + (checkout["stderr"] or checkout["stdout"] or f"code={checkout['returncode']}")
+                    )
         else:
             steps.append(
                 {

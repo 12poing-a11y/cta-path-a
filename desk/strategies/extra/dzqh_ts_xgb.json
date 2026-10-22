@@ -1,0 +1,14 @@
+{
+  "id": "dzqh_ts_xgb",
+  "name": "东证·RuleBasedTSXGB-combine",
+  "description": "规则型时序多空信号的 XGB 组合。本仓库无其训练管线，仅跟踪 KPI。",
+  "curve_file": "external/strategies/dzqh_ts_xgb.json",
+  "tags": [
+    "external",
+    "dzqh",
+    "commodity",
+    "ml",
+    "timeseries"
+  ],
+  "placeholder": false
+}

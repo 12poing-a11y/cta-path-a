@@ -137,7 +137,7 @@ def institution_status(root: Path, code: str, report: dict | None) -> dict[str, 
     skip = joint_skip_reason(root, code, report)
     if skip:
         if exchange == "DCE":
-            cause = "该品种在大商所，没有机构净持仓"
+            cause = "大商所本地无 dce-*.json 缓存，机构净持仓缺失"
         else:
             cause = "本地没有可用的会员排名，机构净持仓缺失"
         return {
@@ -491,10 +491,18 @@ def _conclusion_style(value: Any) -> str:
 
 
 def render_decision_card(decision: dict, *, compact: bool = False) -> None:
-    c1, c2, c3 = st.columns(3)
-    c1.metric("结论", decision.get("结论") or "观望")
-    c2.metric("把握", decision.get("把握") or "低")
-    c3.metric("纸面", decision.get("动作") or "观察")
+    eq_brief = str(decision.get("股指简要") or "").strip()
+    if eq_brief:
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("结论", decision.get("结论") or "观望")
+        c2.metric("把握", decision.get("把握") or "低")
+        c3.metric("纸面", decision.get("动作") or "观察")
+        c4.metric("股指", decision.get("股指标签") or "—")
+    else:
+        c1, c2, c3 = st.columns(3)
+        c1.metric("结论", decision.get("结论") or "观望")
+        c2.metric("把握", decision.get("把握") or "低")
+        c3.metric("纸面", decision.get("动作") or "观察")
     st.caption(CONVICTION_RULE)
     bits = []
     if decision.get("领先方向") and decision.get("领先方向") != "无":
@@ -504,6 +512,8 @@ def render_decision_card(decision: dict, *, compact: bool = False) -> None:
     if decision.get("同向均分") is not None:
         bits.append(f"评分均值{float(decision['同向均分']):.1f}")
     bits.append(f"权重差距{float(decision.get('spread') or 0.0) * 100:.1f}%")
+    if eq_brief:
+        bits.append(eq_brief)
     st.caption("，".join(bits) + "。")
     st.write(decision.get("理由") or "")
     if compact:
@@ -553,6 +563,18 @@ def render_decision_card(decision: dict, *, compact: bool = False) -> None:
 
 def render_decision_banner(root: Path, code: str, pack: dict, report: dict | None) -> None:
     decision = build_decision(root, code, pack=pack, report=report, events=[])
+    try:
+        from desk.composite_eval import _equity_brief, equity_timing_snapshot
+
+        eq = equity_timing_snapshot(root)
+        brief_pair = _equity_brief(eq)
+        if brief_pair:
+            label, brief = brief_pair
+            decision = dict(decision)
+            decision["股指标签"] = label
+            decision["股指简要"] = brief
+    except Exception:
+        pass
     render_decision_card(decision, compact=True)
 
 

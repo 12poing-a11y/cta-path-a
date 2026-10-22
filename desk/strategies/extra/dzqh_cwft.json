@@ -1,0 +1,14 @@
+{
+  "id": "dzqh_cwft",
+  "name": "东证·CWFT组合",
+  "description": "导航：多因子截面 → 普通线性复合 → CWFT。Carry/Warrant/Futures-spot/Trend 大类内等权，大类间 5:2:2:1。本地有 proxy_cwft 近似。",
+  "curve_file": "external/strategies/dzqh_cwft.json",
+  "tags": [
+    "external",
+    "dzqh",
+    "commodity",
+    "cwft",
+    "cs_linear"
+  ],
+  "placeholder": false
+}

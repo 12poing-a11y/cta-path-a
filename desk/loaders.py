@@ -37,6 +37,14 @@ def strategy_availability(spec: StrategySpec, root: Path | None = None) -> Avail
         if spec.placeholder:
             return "placeholder"
         return "missing"
+    if spec.placeholder or data.get("placeholder"):
+        # Explicit track slots with no report numbers yet.
+        has_metric = any(
+            data.get(k) is not None
+            for k in ("ret_ann_pct", "ret_pct", "sharpe", "calmar", "max_dd_pct", "equity_curve")
+        )
+        if not has_metric:
+            return "placeholder"
     curve = data.get("equity_curve")
     if isinstance(curve, list) and len(curve) > 0:
         return "ready"
@@ -75,8 +83,11 @@ def equity_curve_df(data: dict[str, Any] | None) -> pd.DataFrame:
     df = pd.DataFrame(rows)
     if "date" not in df.columns:
         return pd.DataFrame()
-    df["date"] = pd.to_datetime(df["date"])
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
+    df = df.dropna(subset=["date"])
     df = df.sort_values("date").reset_index(drop=True)
+    # Keep one row per calendar day (proxy dumps sometimes repeat the first day).
+    df = df.drop_duplicates(subset=["date"], keep="last").reset_index(drop=True)
     if "equity" in df.columns:
         df["equity"] = pd.to_numeric(df["equity"], errors="coerce")
     if "dd_pct" in df.columns:
@@ -151,9 +162,14 @@ def _extract_kpis(data: dict[str, Any], strategy_id: str = "") -> dict[str, Any]
             "equity_start",
             "equity_end",
             "ret_pct",
+            "ret_ann_pct",
             "max_dd_pct",
             "gross_ret_pct",
             "gross_max_dd_pct",
+            "sharpe",
+            "calmar",
+            "week_ret_pct",
+            "ytd_ret_pct",
             "cost_yuan",
             "premium_yuan",
             "hedge_payoff_yuan",
@@ -161,6 +177,9 @@ def _extract_kpis(data: dict[str, Any], strategy_id: str = "") -> dict[str, Any]
             "option_hedge",
             "premium_atr_mult",
             "strike_atr_mult",
+            "family",
+            "track_source",
+            "proxy_of",
         ):
             if key in data and data[key] is not None:
                 kpis[key] = data[key]
@@ -226,25 +245,35 @@ def align_curves(
     equity_col: str = "equity",
 ) -> pd.DataFrame:
     """Outer-join equity series by date; optional normalize first point to 100."""
-    series: dict[str, pd.Series] = {}
+    pieces: list[pd.DataFrame] = []
     for sid, df in curves.items():
         if df is None or df.empty or equity_col not in df.columns:
             continue
-        sub = df[["date", equity_col]].dropna().copy()
+        sub = df[["date", equity_col]].copy()
+        sub["date"] = pd.to_datetime(sub["date"], errors="coerce")
+        sub[equity_col] = pd.to_numeric(sub[equity_col], errors="coerce")
+        sub = sub.dropna(subset=["date", equity_col])
         if start is not None:
-            sub = sub[sub["date"] >= start]
+            sub = sub[sub["date"] >= pd.Timestamp(start)]
         if end is not None:
-            sub = sub[sub["date"] <= end]
+            sub = sub[sub["date"] <= pd.Timestamp(end)]
         if sub.empty:
             continue
-        s = sub.set_index("date")[equity_col].astype(float)
-        if normalize and float(s.iloc[0]) != 0:
-            s = s / float(s.iloc[0]) * 100.0
-        series[sid] = s
-    if not series:
+        sub = sub.sort_values("date").drop_duplicates(subset=["date"], keep="last")
+        piece = sub.rename(columns={equity_col: str(sid)}).set_index("date")
+        # Belt-and-suspenders: index must be unique for outer join.
+        piece = piece[~piece.index.duplicated(keep="last")]
+        if normalize:
+            first = float(piece.iloc[0, 0])
+            if first != 0:
+                piece = piece / first * 100.0
+        pieces.append(piece)
+    if not pieces:
         return pd.DataFrame()
-    out = pd.DataFrame(series).sort_index()
-    return out
+    out = pieces[0]
+    for piece in pieces[1:]:
+        out = out.join(piece, how="outer")
+    return out.sort_index()
 
 
 def drawdown_from_equity(equity: pd.Series) -> pd.Series:

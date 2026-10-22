@@ -1,0 +1,12 @@
+{
+  "id": "proxy_frontnext_st",
+  "name": "本地代理·C_frontnext&ShortTrend",
+  "description": "本地代理·C_frontnext&ShortTrend：东证 CWFT/期限结构思路的本地近似，用近远月升贴水 + 动量代理 C/F/T；仓单 W 缺数据时置 0。",
+  "curve_file": "external/strategies/proxy_frontnext_st.json",
+  "tags": [
+    "proxy",
+    "dzqh_inspired",
+    "commodity",
+    "frontnext_st"
+  ]
+}

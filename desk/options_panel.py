@@ -14,11 +14,13 @@ from desk.strategies.registry import REPO_ROOT, get_strategy
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from option_compare import CODE_TO_SINA, compare_protective  # noqa: E402
 from option_hedge import option_premium, option_strike  # noqa: E402
 
 
 DISCLAIMER = (
-    "合成 ATR 权利金，非交易所期权链；仅研究观察，不构成交易建议。"
+    "合成 ATR 权利金对照新浪商品期权近月链（有上市品种才比）；"
+    "无链或拉失败时对照列为空。仅研究观察，不构成交易建议。"
 )
 
 
@@ -85,6 +87,14 @@ def build_opportunities(
         if name_risk <= 0 and risk_budget > 0:
             name_risk = risk_budget
         prem_risk_ratio = (premium / name_risk) if name_risk > 0 else None
+        cmp = compare_protective(
+            str(s.get("code") or ""),
+            direction=direction,
+            strike=strike,
+            lots=lots,
+            mult=mult,
+            synth_premium=premium,
+        )
         rows.append(
             {
                 "品种": s.get("code"),
@@ -93,6 +103,11 @@ def build_opportunities(
                 "建议期权": opt_type,
                 "估算行权价": round(strike, 4) if strike is not None else None,
                 "估算权利金(元)": round(premium, 2),
+                "实盘期权": cmp.get("option_symbol") or ("—" if str(s.get("code") or "").upper() not in CODE_TO_SINA else ""),
+                "实盘行权价": round(cmp["listed_strike"], 4) if cmp.get("listed_strike") is not None else None,
+                "实盘权利金(元)": round(cmp["listed_premium"], 2) if cmp.get("listed_premium") is not None else None,
+                "合成/实盘": round(cmp["synth_over_listed"], 2) if cmp.get("synth_over_listed") is not None else None,
+                "对照说明": cmp.get("note") or "",
                 "ATR": round(atr, 4),
                 "手数": lots,
                 "收盘": entry,

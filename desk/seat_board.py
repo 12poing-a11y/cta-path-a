@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """Seat and sector board for the research desk.
 
-Position series come from local SHFE/CZCE member files in ``.cache/member``.
+Position series come from local member files in ``.cache/member``:
+SHFE/CZCE ``*.txt`` and DCE ``dce-YYYYMMDD.json`` (akshare, soft-fail on WAF).
 They are the project's three seat lists (机构 / 外资 / 家人), not Tonghuashun's
-机构/私募/产业大户/中户/散户 classes. DCE has no member file. Sector strength
-is the mean r20/r60 already stored on l1_report signals. Strategy PnL is read
-from each strategy JSON and is portfolio-level.
+机构/私募/产业大户/中户/散户 classes. Sector strength is the mean r20/r60 already
+stored on l1_report signals. Strategy PnL is read from each strategy JSON and
+is portfolio-level.
 """
 from __future__ import annotations
 
@@ -34,7 +35,7 @@ from desk.loaders import (  # noqa: E402
     strategy_kpis,
 )
 from desk.strategies.registry import all_strategies  # noqa: E402
-from member_rank import clean_member_name, seat_kind  # noqa: E402
+from member_rank import clean_member_name, fetch_dce_member_day, seat_kind  # noqa: E402
 
 GREEN = "#14804a"
 RED = "#d1242f"
@@ -51,7 +52,24 @@ KIND_ZH = {"inst": "机构", "foreign": "外资", "holder": "家人"}
 EX_ZH = {"CZCE": "郑商所", "SHFE": "上期所", "DCE": "大商所"}
 BUCKET_ORDER = ["能化", "黑色", "有色", "农产品"]
 WINDOWS = (("6日", 6), ("12日", 12), ("70日", 70), ("全部", 0))
-STRATEGY_IDS = ("path_a", "benchmark", "path_a_opt_hedge", "wyckoff")
+STRATEGY_IDS = (
+    "path_a",
+    "benchmark",
+    "path_a_opt_hedge",
+    "param_sweep",
+    "proxy_cwft",
+    "proxy_frontnext_st",
+    "proxy_long_short_cwft",
+    "dzqh_cwft",
+    "dzqh_frontnext_st",
+    "dzqh_long_short_trend",
+    "dzqh_long_short_cwft",
+    "dzqh_cs_xgboost",
+    "dzqh_cs_ew",
+    "dzqh_ts_sharp",
+    "dzqh_ts_xgb",
+    "dzqh_t_daily",
+)
 _CZCE_RE = re.compile(
     r"(PTA|AP|CF|CJ|CY|FG|MA|OI|PF|PK|PL|PR|PX|RM|RS|SA|SF|SH|SM|SR|UR|TA)"
 )
@@ -93,7 +111,8 @@ MAPPING_NOTE = (
     "外资 = 摩根大通、摩根士丹利、瑞银、高盛；"
     "家人 = 东方财富、平安、方正中期、徽商、中信建投。"
     "私募、产业大户、中户没有本地序列，本页不画这三条。"
-    "郑商所用品种汇总表；上期所用持买仓合计最大的合约。大商所没有这份排名。"
+    "郑商所用品种汇总表；上期所用持买仓合计最大的合约；"
+    "大商所读 akshare 缓存的 dce-*.json（官网 WAF 时可能为空）。"
 )
 
 
@@ -171,14 +190,18 @@ def universe_rows(root: Path) -> list[dict[str, str]]:
 
 
 def member_dates(root: Path, exchange: str) -> list[str]:
-    prefix = {"CZCE": "czce", "SHFE": "shfe"}.get(exchange)
-    if not prefix:
-        return []
     folder = root / ".cache" / "member"
     if not folder.is_dir():
         return []
+    if exchange == "DCE":
+        paths = list(folder.glob("dce-*.json"))
+    else:
+        prefix = {"CZCE": "czce", "SHFE": "shfe"}.get(exchange)
+        if not prefix:
+            return []
+        paths = list(folder.glob(f"{prefix}-*.txt"))
     out = []
-    for path in folder.glob(f"{prefix}-*.txt"):
+    for path in paths:
         ymd = path.stem.split("-", 1)[-1]
         if len(ymd) == 8 and ymd.isdigit():
             out.append(ymd)
@@ -190,11 +213,17 @@ def trading_day_options(root: Path, exchange: str) -> list[str]:
 
     ``member_dates`` stays oldest-first. ``load_group_frame`` walks that
     chronological order and takes a tail, so the chart series is unchanged.
+    For DCE, calendar days also include SHFE/CZCE cache dates so the desk can
+    pick a session and attempt an akshare pull when ``dce-*.json`` is missing.
     """
     if exchange == "DCE":
-        raw = set(member_dates(root, "CZCE")) | set(member_dates(root, "SHFE"))
+        raw = (
+            set(member_dates(root, "DCE"))
+            | set(member_dates(root, "CZCE"))
+            | set(member_dates(root, "SHFE"))
+        )
     else:
-        raw = member_dates(root, exchange)
+        raw = set(member_dates(root, exchange))
     return sorted(raw, reverse=True)
 
 
@@ -357,26 +386,68 @@ def _shfe_snapshot(payload: dict, code: str) -> dict | None:
     return _pack(best_id.upper(), longs, shorts, len(best))
 
 
+def _dce_snapshot(payload: dict, code: str) -> dict | None:
+    want = code.upper()
+    row = (payload.get("products") or {}).get(want)
+    if not isinstance(row, dict):
+        return None
+    n = int(row.get("n") or 0)
+    if n < 15:
+        return None
+    longs: list[tuple[str, float]] = []
+    shorts: list[tuple[str, float]] = []
+    for item in row.get("longs") or []:
+        if not isinstance(item, (list, tuple)) or len(item) < 2:
+            continue
+        name = clean_member_name(str(item[0]))
+        qty = _num(item[1])
+        if name and qty is not None:
+            longs.append((name, qty))
+    for item in row.get("shorts") or []:
+        if not isinstance(item, (list, tuple)) or len(item) < 2:
+            continue
+        name = clean_member_name(str(item[0]))
+        qty = _num(item[1])
+        if name and qty is not None:
+            shorts.append((name, qty))
+    if len(longs) < 10 and len(shorts) < 10:
+        return None
+    contract = str(row.get("contract") or want).upper()
+    return _pack(contract, longs, shorts, n)
+
+
 def _snapshot_uncached(root: Path, code: str, exchange: str, ymd: str) -> dict:
-    prefix = {"CZCE": "czce", "SHFE": "shfe"}.get(exchange)
-    if not prefix:
-        return {"ok": False}
-    path = root / ".cache" / "member" / f"{prefix}-{ymd}.txt"
-    if not path.is_file():
-        return {"ok": False}
-    if exchange == "CZCE":
-        text = _read_text(path)
-        if not text:
+    if exchange == "DCE":
+        path = root / ".cache" / "member" / f"dce-{ymd}.json"
+        if not path.is_file():
             return {"ok": False}
-        snap = _czce_snapshot(text, code)
-    else:
         try:
             payload = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
+        except (OSError, json.JSONDecodeError, UnicodeError):
             return {"ok": False}
         if not isinstance(payload, dict):
             return {"ok": False}
-        snap = _shfe_snapshot(payload, code)
+        snap = _dce_snapshot(payload, code)
+    else:
+        prefix = {"CZCE": "czce", "SHFE": "shfe"}.get(exchange)
+        if not prefix:
+            return {"ok": False}
+        path = root / ".cache" / "member" / f"{prefix}-{ymd}.txt"
+        if not path.is_file():
+            return {"ok": False}
+        if exchange == "CZCE":
+            text = _read_text(path)
+            if not text:
+                return {"ok": False}
+            snap = _czce_snapshot(text, code)
+        else:
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                return {"ok": False}
+            if not isinstance(payload, dict):
+                return {"ok": False}
+            snap = _shfe_snapshot(payload, code)
     if not snap:
         return {"ok": False}
     snap["date"] = _iso(ymd)
@@ -421,7 +492,14 @@ def session_delta(series: pd.Series, sessions: int) -> float | None:
     return latest - prev
 
 
-def _light(fig: go.Figure, title: str, height: int, *, cartesian: bool = True) -> go.Figure:
+def _light(
+    fig: go.Figure,
+    title: str,
+    height: int,
+    *,
+    cartesian: bool = True,
+    time_axis: bool | str = False,
+) -> go.Figure:
     fig.update_layout(
         title=dict(text=title, font=dict(size=15, color=INK)),
         paper_bgcolor=PAPER,
@@ -435,6 +513,11 @@ def _light(fig: go.Figure, title: str, height: int, *, cartesian: bool = True) -
     if cartesian:
         fig.update_xaxes(gridcolor=GRID, linecolor="#cccccc", zerolinecolor="#cccccc", tickfont=dict(color=INK))
         fig.update_yaxes(gridcolor=GRID, linecolor="#cccccc", zerolinecolor="#cccccc", tickfont=dict(color=INK))
+    # time_axis: "recent_right"/True = 右近左远；"recent_left" = 左近右远
+    if time_axis in (True, "recent_right"):
+        fig.update_xaxes(autorange=True, title_text="日期（右近左远）")
+    elif time_axis == "recent_left":
+        fig.update_xaxes(autorange="reversed", title_text="日期（左近右远）")
     return fig
 
 
@@ -443,6 +526,8 @@ def net_position_fig(view: pd.DataFrame, key: str, title: str) -> go.Figure:
     if view is None or view.empty or f"{key}_net" not in view.columns:
         fig.update_layout(annotations=[dict(text="无本地序列", showarrow=False, font=dict(color=INK))])
         return _light(fig, title, 250)
+    # 保证横轴从远到近（左远右近）
+    view = view.sort_values("date").reset_index(drop=True)
     y = view[f"{key}_net"].astype(float)
     chg = y.diff()
     colors = [GREEN if (v or 0) >= 0 else RED for v in chg.fillna(0)]
@@ -463,7 +548,7 @@ def net_position_fig(view: pd.DataFrame, key: str, title: str) -> go.Figure:
     )
     fig.update_yaxes(title_text="日变动(手)", secondary_y=False, showgrid=False, tickfont=dict(color=INK))
     fig.update_yaxes(title_text="净持仓(手)", secondary_y=True, tickfont=dict(color=INK))
-    return _light(fig, title, 250)
+    return _light(fig, title, 250, time_axis="recent_right")
 
 
 def long_short_fig(snap: dict) -> go.Figure:
@@ -587,7 +672,7 @@ def sector_frames(root: Path, current: dict | None) -> list[tuple[str, list[dict
     if current and current.get("signals"):
         found[str(current.get("asof") or "latest")] = current
     frames = []
-    for asof in sorted(found):
+    for asof in sorted(found, reverse=True):
         rows = _bucket_rows(found[asof].get("signals") or [])
         if rows:
             label = asof if "-" in asof else _iso(asof) if len(asof) == 8 and asof.isdigit() else asof
@@ -958,6 +1043,9 @@ def render_seat_sector(root: Path) -> None:
     with c_btn:
         st.caption("")
         if st.button("刷新", key="seat_refresh"):
+            if exchange == "DCE" and end_ymd:
+                with st.spinner("拉取大商所持仓排名（akshare）…"):
+                    fetch_dce_member_day(end_ymd, force=True)
             cached_snapshot.clear()
             st.rerun()
 
@@ -966,25 +1054,33 @@ def render_seat_sector(root: Path) -> None:
         f"交易日 {_iso(end_ymd) if end_ymd else '—'} · 窗口 {win_label}"
     )
 
-    if exchange == "DCE":
-        st.info(
-            "该品种在大商所。member_rank 没有大商所会员排名文件，"
-            "分类持仓、龙虎榜和持仓变化留空，不补造序列。"
-            "板块、量化策略和多空评分仍使用日报与回测 JSON。"
-        )
-        frame = pd.DataFrame()
-        snap = {"ok": False}
-    elif not end_ymd:
-        st.info("没有找到 .cache/member 下的上期所或郑商所排名文件。")
+    if not end_ymd:
+        st.info("没有找到 .cache/member 下的会员排名文件。")
         frame = pd.DataFrame()
         snap = {"ok": False}
     else:
+        if exchange == "DCE":
+            dce_path = root / ".cache" / "member" / f"dce-{end_ymd}.json"
+            if not dce_path.is_file():
+                with st.spinner("拉取大商所持仓排名（akshare）…"):
+                    got = fetch_dce_member_day(end_ymd, force=False)
+                if not got:
+                    st.info(
+                        "大商所官网常返回 412/WAF，akshare 拉不到 zip 时软失败。"
+                        "已有缓存则读 `.cache/member/dce-*.json`；"
+                        "点「刷新」可重试当日。板块与多空评分仍用日报 JSON。"
+                    )
+            else:
+                st.caption("大商所持仓来自本地 dce-*.json（akshare 缓存）。")
         lookback = win_n if win_n == 0 else max(win_n, 11)
         with st.spinner("读取本地会员排名…"):
             frame = load_group_frame(root, code, exchange, end_ymd, lookback)
             snap = cached_snapshot(str(root), code, exchange, end_ymd)
         if frame.empty or not snap.get("ok"):
-            st.info(f"{_iso(end_ymd)} 的{EX_ZH.get(exchange, exchange)}排名里没有 {code}，或排名不足 15 名。")
+            st.info(
+                f"{_iso(end_ymd)} 的{EX_ZH.get(exchange, exchange)}排名里没有 {code}，"
+                "或排名不足 15 名。"
+            )
 
     left, right = st.columns([1.15, 1])
     with left:
@@ -1063,7 +1159,7 @@ def render_seat_sector(root: Path) -> None:
     if not frames:
         st.info("l1_report 里没有带 r20 的信号。")
     else:
-        latest_label, latest_rows = frames[-1]
+        latest_label, latest_rows = frames[0]
         sec = pd.DataFrame(
             [
                 {

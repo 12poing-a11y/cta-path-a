@@ -27,6 +27,7 @@ from desk.loaders import (  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
+from desk.scoreboard import scoreboard_rows  # noqa: E402
 from desk.seat_board import render_seat_sector  # noqa: E402
 from desk.strategies.registry import all_strategies  # noqa: E402
 from desk.sync_desk import (  # noqa: E402
@@ -68,7 +69,7 @@ def _render_sync_panel() -> None:
             "git pull 不可用时，勾选「刷新本地缓存」可跑 daily_update.py，"
             "从免费源重建日报与 member/sina 缓存。"
         )
-    pull_git = st.checkbox("同步 git 报告（git pull）", value=True, key="desk_sync_git")
+    pull_git = st.checkbox("同步 main 日报（fetch + 取出报告文件）", value=True, key="desk_sync_git")
     refresh_cache = st.checkbox(
         "刷新本地缓存（daily_update.py，较慢/需网络）",
         value=False,
@@ -96,10 +97,10 @@ def _render_sync_panel() -> None:
 
 def _status_label(avail: str) -> str:
     return {
-        "ready": "可用",
-        "kpi_only": "仅 KPI（缺曲线）",
-        "missing": "缺产物",
-        "placeholder": "占位",
+        "ready": "有曲线",
+        "kpi_only": "KPI跟踪",
+        "missing": "缺文件",
+        "placeholder": "占位待填",
     }.get(avail, avail)
 
 
@@ -109,6 +110,8 @@ def main() -> None:
 
     specs = all_strategies(ROOT)
     avail_map = {s.id: strategy_availability(s, ROOT) for s in specs}
+    scored_ids = {row["id"] for row in scoreboard_rows(ROOT)}
+    specs = [s for s in specs if s.id in scored_ids]
 
     # --- sidebar ---
     with st.sidebar:
@@ -118,16 +121,13 @@ def main() -> None:
         default_sel = []
         for s in specs:
             avail = avail_map[s.id]
-            mark = {"ready": "", "kpi_only": " [KPI]", "missing": " [缺]", "placeholder": " [占位]"}.get(avail, "")
+            mark = " ·曲线" if avail == "ready" else " ·KPI"
             label = f"{s.name}{mark}"
             labels.append(label)
             id_by_label[label] = s.id
-            if avail == "ready" and s.id in ("path_a", "benchmark", "path_a_opt_hedge"):
+            if avail == "ready" and s.id in ("path_a", "proxy_cwft", "benchmark"):
                 default_sel.append(label)
-            elif avail == "ready" and not default_sel:
-                default_sel.append(label)
-            elif avail == "kpi_only" and s.id == "benchmark" and label not in default_sel:
-                # still select benchmark for KPI compare even without curve
+            elif avail == "ready" and s.id.startswith("proxy_") and len(default_sel) < 4:
                 default_sel.append(label)
 
         chosen_labels = st.multiselect("叠加对比", labels, default=default_sel)
@@ -180,8 +180,8 @@ def main() -> None:
         st.divider()
         _render_sync_panel()
 
-    tab_compare, tab_signals, tab_lib, tab_opts, tab_seats, tab_regime, tab_decision = st.tabs(
-        ["概览对比", "日信号", "策略库", "期权机会", "席位板块", "状态评分", "决策"]
+    tab_compare, tab_signals, tab_opts, tab_seats, tab_regime, tab_decision = st.tabs(
+        ["概览对比", "日信号", "期权机会", "席位板块", "状态评分", "决策"]
     )
 
     # --- Tab 1: compare ---
@@ -197,6 +197,10 @@ def main() -> None:
             row = {
                 "策略": spec.name,
                 "状态": _status_label(avail),
+                "年化/收益%": kpis.get("ret_ann_pct", kpis.get("ret_pct")),
+                "夏普": kpis.get("sharpe"),
+                "Calmar": kpis.get("calmar"),
+                "近一周%": kpis.get("week_ret_pct"),
                 "区间收益%": kpis.get("ret_pct"),
                 "最大回撤%": kpis.get("max_dd_pct"),
                 "毛收益%": kpis.get("gross_ret_pct"),
@@ -216,38 +220,45 @@ def main() -> None:
                             eq_col = c
                             break
                 if not df.empty and eq_col in df.columns:
-                    curves[spec.name] = df.rename(columns={eq_col: "equity"}) if eq_col != "equity" else df
+                    # Key by strategy id so display names never collide in align_curves.
+                    one = df.rename(columns={eq_col: "equity"}) if eq_col != "equity" else df
+                    curves[spec.name or sid] = one.copy()
             elif avail == "kpi_only":
-                grey_notes.append(f"**{spec.name}**：产物仅有 KPI，尚无 `equity_curve`（例如 benchmark 待落盘）。")
+                grey_notes.append(f"{spec.name}：KPI 跟踪（无曲线属正常，看上表数字）")
             elif avail == "placeholder":
-                grey_notes.append(f"**{spec.name}**：占位策略，需后续落盘回测 JSON。")
+                grey_notes.append(f"{spec.name}：占位待填")
             elif avail == "missing":
-                grey_notes.append(f"**{spec.name}**：缺少 `{spec.curve_path}`。")
-
-        if grey_notes:
-            for n in grey_notes:
-                st.warning(n)
+                grey_notes.append(f"{spec.name}：缺少 `{spec.curve_path}`")
 
         if kpi_rows:
-            st.subheader("窗口 KPI")
+            st.subheader("窗口 KPI / 跟踪数字")
+            st.caption("有曲线与仅 KPI 都在此表；外部跟踪本来就没有权益曲线。")
             st.dataframe(pd.DataFrame(kpi_rows), width="stretch", hide_index=True)
 
-        aligned = align_curves(
-            curves,
-            start=start_ts,
-            end=end_ts,
-            normalize=normalize,
-            equity_col="equity",
-        )
-        y_title = "归一化=100" if normalize else "权益"
-        st.plotly_chart(
-            equity_overlay_fig(aligned, title="多策略净值叠加", y_title=y_title),
-            width="stretch",
-        )
-        st.plotly_chart(
-            drawdown_overlay_fig(aligned, title="回撤叠加"),
-            width="stretch",
-        )
+        if grey_notes:
+            with st.expander("无曲线说明（可折叠）", expanded=False):
+                for n in grey_notes:
+                    st.caption(n)
+
+        if curves:
+            aligned = align_curves(
+                curves,
+                start=start_ts,
+                end=end_ts,
+                normalize=normalize,
+                equity_col="equity",
+            )
+            y_title = "归一化=100" if normalize else "权益"
+            st.plotly_chart(
+                equity_overlay_fig(aligned, title="多策略净值叠加（仅有曲线者）", y_title=y_title),
+                width="stretch",
+            )
+            st.plotly_chart(
+                drawdown_overlay_fig(aligned, title="回撤叠加"),
+                width="stretch",
+            )
+        else:
+            st.info("当前勾选里没有带 `equity_curve` 的策略；KPI 数字见上表。可选侧栏带「·曲线」的 Path-A / 本地代理。")
 
         # sleeve panel for benchmark if selected
         if "benchmark" in chosen_ids:
@@ -256,7 +267,11 @@ def main() -> None:
             st.subheader("对照 sleeve")
             if sleeve_df is not None and not sleeve_df.empty:
                 st.plotly_chart(sleeve_bar_fig(sleeve_df), width="stretch")
-                st.dataframe(sleeve_df, width="stretch", hide_index=True)
+                st.dataframe(
+                    sleeve_df.sort_values("date", ascending=False),
+                    width="stretch",
+                    hide_index=True,
+                )
             else:
                 st.info("benchmark 暂无 sleeve 序列；窗口 KPI 中的 pnl_by_sleeve 见上表。")
                 k = strategy_kpis(next(s for s in specs if s.id == "benchmark"), ROOT)
@@ -330,33 +345,7 @@ def main() -> None:
                 ]
                 st.dataframe(sigs[cols], width="stretch", hide_index=True)
 
-    # --- Tab 3: strategy library ---
-    with tab_lib:
-        st.subheader("注册表")
-        status_df = _cached_status()
-        st.dataframe(status_df, width="stretch", hide_index=True)
-        st.markdown(
-            """
-**添加新策略**
-
-1. 引擎产出含 `equity_curve`（及可选 KPI）的 JSON  
-2. 在 `desk/strategies/extra/<id>.json` 写入：`{"id","name","curve_file","tags":[]}`  
-3. 重启 Streamlit 后出现在侧栏  
-
-示例见 `desk/strategies/extra/example_custom.json.example`。
-            """
-        )
-        for s in specs:
-            avail = avail_map[s.id]
-            with st.expander(f"{s.name} (`{s.id}`) — {_status_label(avail)}"):
-                st.write(s.description)
-                st.write("tags:", ", ".join(s.tags))
-                st.write("curve:", s.curve_path)
-                st.write("signal:", s.signal_path)
-                if avail == "placeholder":
-                    st.info("威科夫等模块已注册规则说明位；有独立回测 JSON 后自动亮起。")
-
-    # --- Tab 4: options ---
+    # --- Tab: options ---
     with tab_opts:
         st.subheader("保护期权纸面机会")
         st.caption(DISCLAIMER)
@@ -374,7 +363,26 @@ def main() -> None:
                 f"asof={opp.attrs.get('asof')} · premium_atr_mult={prem_m} · strike_atr_mult={strike_m}"
             )
 
-        st.subheader("叠加后回测 KPI（若有）")
+        st.subheader("叠加后回测")
+        hedge_curves = {}
+        for label, sid in (("路径A", "path_a"), ("路径A+保护期权", "path_a_opt_hedge")):
+            curve = equity_curve_df(_cached_payload(sid))
+            if not curve.empty:
+                hedge_curves[label] = curve
+        if hedge_curves:
+            aligned_h = align_curves(hedge_curves, normalize=True)
+            st.plotly_chart(
+                equity_overlay_fig(
+                    aligned_h,
+                    title="保护期权叠加权益（归一化=100，左近右远）",
+                    y_title="归一化=100",
+                ),
+                width="stretch",
+            )
+            st.plotly_chart(
+                drawdown_overlay_fig(aligned_h, title="叠加回撤"),
+                width="stretch",
+            )
         oh_kpis = opt_hedge_backtest_kpis(ROOT)
         if oh_kpis:
             cols = st.columns(4)
@@ -382,8 +390,7 @@ def main() -> None:
             cols[1].metric("最大回撤%", oh_kpis.get("max_dd_pct"))
             cols[2].metric("权利金(元)", oh_kpis.get("premium_yuan"))
             cols[3].metric("对冲赔付(元)", oh_kpis.get("hedge_payoff_yuan"))
-            st.json(oh_kpis)
-        else:
+        elif not hedge_curves:
             st.info("未找到 path_a_opt_hedge 回测产物。")
 
         st.markdown(f"> **免责声明**：{DISCLAIMER}")

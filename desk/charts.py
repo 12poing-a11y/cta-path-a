@@ -30,12 +30,13 @@ def equity_overlay_fig(
         )
     fig.update_layout(
         title=title,
-        xaxis_title="日期",
+        xaxis_title="日期（左近右远）",
         yaxis_title=y_title,
         legend=dict(orientation="h", yanchor="bottom", y=1.02, x=0),
         margin=dict(l=40, r=20, t=60, b=40),
         hovermode="x unified",
     )
+    fig.update_xaxes(autorange="reversed")
     return fig
 
 
@@ -61,12 +62,13 @@ def drawdown_overlay_fig(
         )
     fig.update_layout(
         title=title,
-        xaxis_title="日期",
+        xaxis_title="日期（左近右远）",
         yaxis_title="回撤 %",
         legend=dict(orientation="h", yanchor="bottom", y=1.02, x=0),
         margin=dict(l=40, r=20, t=60, b=40),
         hovermode="x unified",
     )
+    fig.update_xaxes(autorange="reversed")
     return fig
 
 
@@ -83,7 +85,12 @@ def sleeve_bar_fig(sleeve_df: pd.DataFrame, *, title: str = "对照 sleeve 累�
     value_cols = [c for c in sleeve_df.columns if c != "date"]
     melted = sleeve_df.melt(id_vars=["date"], value_vars=value_cols, var_name="sleeve", value_name="pnl")
     fig = px.line(melted, x="date", y="pnl", color="sleeve", title=title)
-    fig.update_layout(margin=dict(l=40, r=20, t=60, b=40), hovermode="x unified")
+    fig.update_layout(
+        margin=dict(l=40, r=20, t=60, b=40),
+        hovermode="x unified",
+        xaxis_title="日期（左近右远）",
+    )
+    fig.update_xaxes(autorange="reversed")
     return fig
 
 

@@ -38,14 +38,6 @@ def _builtin() -> list[StrategySpec]:
             tags=["path_a", "option_hedge", "observe"],
             loader=_load_opt_hedge,
         ),
-        StrategySpec(
-            id="wyckoff",
-            name="威科夫回撤",
-            description="规则模块 wyckoff_pullback.py；尚无独立回测 JSON 时为占位",
-            curve_path=Path("wyckoff_backtest_latest.json"),
-            tags=["wyckoff", "placeholder"],
-            placeholder=True,
-        ),
     ]
 
 
@@ -84,6 +76,8 @@ def _load_extra_json(path: Path) -> StrategySpec | None:
     desc = str(raw.get("description") or f"extra strategy from {path.name}")
     curve = raw.get("curve_file") or raw.get("curve_path")
     signal = raw.get("signal_file") or raw.get("signal_path")
+    if raw.get("placeholder"):
+        return None
     tags = list(raw.get("tags") or ["extra"])
     return StrategySpec(
         id=sid,

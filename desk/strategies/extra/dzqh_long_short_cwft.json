@@ -1,0 +1,14 @@
+{
+  "id": "dzqh_long_short_cwft",
+  "name": "东证·LongCWFT&ShortCWFT",
+  "description": "长周期 CWFT 为主、短周期 CWFT 为副。本地有 proxy_long_short_cwft。",
+  "curve_file": "external/strategies/dzqh_long_short_cwft.json",
+  "tags": [
+    "external",
+    "dzqh",
+    "commodity",
+    "cwft",
+    "cs_alt"
+  ],
+  "placeholder": false
+}

@@ -1,0 +1,14 @@
+{
+  "id": "dzqh_cs_xgboost",
+  "name": "东证·CS XGBoost组合",
+  "description": "导航：多因子截面 → 非线性复合 → CS XGBoost。2009–2019 训练；本仓库无因子库，仅跟踪 KPI。",
+  "curve_file": "external/strategies/dzqh_cs_xgboost.json",
+  "tags": [
+    "external",
+    "dzqh",
+    "commodity",
+    "ml",
+    "cs_nonlinear"
+  ],
+  "placeholder": false
+}

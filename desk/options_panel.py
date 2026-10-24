@@ -21,11 +21,74 @@ from option_hedge import option_premium, option_strike  # noqa: E402
 DISCLAIMER = (
     "合成 ATR 权利金对照新浪商品期权近月链（有上市品种才比）；"
     "无链或拉失败时对照列为空。仅研究观察，不构成交易建议。"
+    "候选仓与决策页/Notion 同源：paper_book_latest（回退 final_positions）。"
 )
 
 
+def _candidate_from_paper(root: Path, report: dict[str, Any]) -> list[dict[str, Any]]:
+    """Open paper lots — same book as decision / Notion 持仓中."""
+    try:
+        from paper_book import load_paper_positions
+
+        paper = load_paper_positions(root)
+    except Exception:
+        paper = {"positions": {}}
+    positions = paper.get("positions") or {}
+    if not positions:
+        return []
+
+    sig_by = {
+        str(s.get("code") or "").upper(): s
+        for s in (report.get("signals") or [])
+        if isinstance(s, dict)
+    }
+    uni = load_universe(root) or {}
+    mult_by = {
+        str(s.get("code") or "").upper(): s.get("mult")
+        for s in (uni.get("symbols") or [])
+        if isinstance(s, dict)
+    }
+    out: list[dict[str, Any]] = []
+    for code, pos in positions.items():
+        if not isinstance(pos, dict):
+            continue
+        direction = str(pos.get("direction") or "").strip()
+        lots = int(pos.get("lots") or 0)
+        if direction not in ("多", "空") or lots <= 0:
+            continue
+        sig = dict(sig_by.get(code) or {})
+        # Prefer live bar fields from l1; fall back to position snapshot.
+        row = {
+            "code": code,
+            "name": sig.get("name") or code,
+            "direction": direction,
+            "lots_l1": lots,
+            "close": sig.get("close") if sig.get("close") is not None else pos.get("entry"),
+            "atr": sig.get("atr") if sig.get("atr") is not None else pos.get("atr"),
+            "mult": sig.get("mult") or pos.get("mult") or mult_by.get(code) or 0,
+            "risk_per_lot": sig.get("risk_per_lot"),
+            "selected": True,
+            "_paper_source": paper.get("source"),
+            "_paper_asof": paper.get("end"),
+        }
+        # Skip unusable ATR (same guard as paper_book opens).
+        atr = float(row.get("atr") or 0)
+        close = float(row.get("close") or 0)
+        if atr <= 0 or close <= 0:
+            continue
+        if atr >= close * 0.25 and sig.get("atr") is not None:
+            # Bad daily ATR — keep position entry atr if saner
+            pos_atr = float(pos.get("atr") or 0)
+            if 0 < pos_atr < close * 0.25:
+                row["atr"] = pos_atr
+            else:
+                continue
+        out.append(row)
+    return out
+
+
 def _candidate_signals(report: dict[str, Any]) -> list[dict[str, Any]]:
-    """Positions with direction and lots_l1>0, preferring portfolio.selected."""
+    """Legacy fallback: l1 lots_l1>0 (usually empty after caps)."""
     signals = report.get("signals") or []
     selected = set(report.get("portfolio", {}).get("selected") or [])
     out: list[dict[str, Any]] = []
@@ -36,13 +99,11 @@ def _candidate_signals(report: dict[str, Any]) -> list[dict[str, Any]]:
         if lots <= 0 or direction not in ("多", "空"):
             continue
         if selected and code not in selected:
-            # still allow if explicitly selected flag
             if not s.get("selected"):
                 continue
         out.append(s)
     if out:
         return out
-    # fallback: any aligned with lots
     for s in signals:
         lots = int(s.get("lots_l1") or 0)
         direction = str(s.get("direction") or "")
@@ -70,9 +131,15 @@ def build_opportunities(
     risk_budget = float(report.get("l1_risk_yuan") or 0)
     equity = float(report.get("equity") or report.get("equity_base") or 0)
     observe_eq = float((uni.get("observe") or {}).get("equity") or 0)
-    # risk budget for ratio: per-name L1 risk yuan if present
+
+    candidates = _candidate_from_paper(root, report)
+    source = "paper_book"
+    if not candidates:
+        candidates = _candidate_signals(report)
+        source = "l1_lots"
+
     rows = []
-    for s in _candidate_signals(report):
+    for s in candidates:
         direction = str(s["direction"])
         lots = int(s.get("lots_l1") or 0)
         atr = float(s.get("atr") or 0)
@@ -103,10 +170,17 @@ def build_opportunities(
                 "建议期权": opt_type,
                 "估算行权价": round(strike, 4) if strike is not None else None,
                 "估算权利金(元)": round(premium, 2),
-                "实盘期权": cmp.get("option_symbol") or ("—" if str(s.get("code") or "").upper() not in CODE_TO_SINA else ""),
-                "实盘行权价": round(cmp["listed_strike"], 4) if cmp.get("listed_strike") is not None else None,
-                "实盘权利金(元)": round(cmp["listed_premium"], 2) if cmp.get("listed_premium") is not None else None,
-                "合成/实盘": round(cmp["synth_over_listed"], 2) if cmp.get("synth_over_listed") is not None else None,
+                "实盘期权": cmp.get("option_symbol")
+                or ("—" if str(s.get("code") or "").upper() not in CODE_TO_SINA else ""),
+                "实盘行权价": round(cmp["listed_strike"], 4)
+                if cmp.get("listed_strike") is not None
+                else None,
+                "实盘权利金(元)": round(cmp["listed_premium"], 2)
+                if cmp.get("listed_premium") is not None
+                else None,
+                "合成/实盘": round(cmp["synth_over_listed"], 2)
+                if cmp.get("synth_over_listed") is not None
+                else None,
                 "对照说明": cmp.get("note") or "",
                 "ATR": round(atr, 4),
                 "手数": lots,
@@ -115,6 +189,7 @@ def build_opportunities(
                 "权利金/风险预算": round(prem_risk_ratio, 3) if prem_risk_ratio is not None else None,
                 "premium_atr_mult": prem_m,
                 "strike_atr_mult": strike_m,
+                "仓来源": source,
             }
         )
     df = pd.DataFrame(rows)
@@ -122,6 +197,7 @@ def build_opportunities(
         df.attrs["equity"] = equity
         df.attrs["observe_equity"] = observe_eq
         df.attrs["asof"] = report.get("asof")
+        df.attrs["book_source"] = source
     return df
 
 
@@ -134,9 +210,6 @@ def opt_hedge_backtest_kpis(root: Path | None = None) -> dict[str, Any]:
     data = load_strategy_payload(spec, root)
     if not data or data.get("_desk_missing"):
         return {}
-    if not data.get("option_hedge") and not data.get("premium_yuan"):
-        # still show if we have ret/dd
-        pass
     keys = (
         "start",
         "end",

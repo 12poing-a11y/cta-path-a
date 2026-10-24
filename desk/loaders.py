@@ -214,6 +214,68 @@ def option_hedge_defaults(root: Path | None = None) -> dict[str, float]:
     }
 
 
+def dominant_contract_symbol(root: Path | None, code: str) -> str:
+    """Local dominant month contract like CF2701; empty if unavailable."""
+    root = root or REPO_ROOT
+    code = str(code or "").upper()
+    try:
+        from minute_data import resolve_dominant_contract
+
+        dom = resolve_dominant_contract(root, code)
+    except Exception:
+        return ""
+    if not isinstance(dom, dict):
+        return ""
+    sym = str(dom.get("symbol") or "").upper()
+    if not sym or sym == f"{code}0":
+        return ""
+    return sym
+
+
+def format_variety_label(
+    code: str,
+    name: str = "",
+    *,
+    contract: str | None = None,
+    exchange_zh: str = "",
+    root: Path | None = None,
+) -> str:
+    """``CF2701 棉花 · 郑商所`` — code+period, Chinese name, optional exchange."""
+    code = str(code or "").upper()
+    name = str(name or "").strip()
+    contract = str(contract or "").upper().strip()
+    if not contract or contract == code or contract == f"{code}0":
+        contract = dominant_contract_symbol(root, code) if root is not None else ""
+    head = contract if contract else code
+    parts = [head]
+    if name:
+        parts.append(name)
+    label = " ".join(parts)
+    if exchange_zh:
+        label = f"{label} · {exchange_zh}"
+    return label
+
+
+def variety_select_labels(root: Path, symbols: list[dict[str, Any]], *, ex_zh: dict[str, str] | None = None) -> list[str]:
+    """Selectbox labels: contract period after code + Chinese name + exchange."""
+    ex_zh = ex_zh or {}
+    out: list[str] = []
+    for row in symbols:
+        code = str(row.get("code") or "").upper()
+        name = str(row.get("name") or "")
+        exchange = str(row.get("exchange") or "")
+        out.append(
+            format_variety_label(
+                code,
+                name,
+                root=root,
+                exchange_zh=ex_zh.get(exchange, exchange),
+            )
+        )
+    return out
+
+
+
 def registry_status_table(root: Path | None = None) -> pd.DataFrame:
     root = root or REPO_ROOT
     rows = []

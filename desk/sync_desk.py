@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Pull GitHub Actions daily reports into the local Streamlit desk.
 
-Actions write remote l1_report.json / archive / Notion at 15:30 CST.
-The desk only reads local disk; this helper pulls the repo (and optionally
-re-runs daily_update.py for member+sina cache). No orders are placed.
+Actions at 15:30 CST commit l1_report / archive, full member ranks,
+sina continuous CODE0, and 15m/60m minute caches. The desk only reads
+local disk; this helper git-pulls (and optionally re-runs daily_update.py).
+No orders are placed.
 """
 from __future__ import annotations
 
@@ -91,6 +92,20 @@ def git_repo_status(root: Path) -> dict:
     }
 
 
+def _read_json(path: Path) -> dict | None:
+    try:
+        import json
+
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _norm_ymd(value: str | None) -> str:
+    return str(value or "").replace("-", "")[:8]
+
+
 def report_mtime_note(root: Path, now: datetime | None = None) -> dict:
     """Local l1_report.json mtime vs Shanghai calendar day (staleness hint)."""
     path = root / "l1_report.json"
@@ -105,17 +120,10 @@ def report_mtime_note(root: Path, now: datetime | None = None) -> dict:
             "note": "本地没有 l1_report.json。请「同步日报」或运行 daily_update.py。",
         }
     mtime = datetime.fromtimestamp(path.stat().st_mtime, TZ)
-    asof = None
-    try:
-        import json
-
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        if isinstance(payload, dict):
-            asof = str(payload.get("asof") or "") or None
-    except Exception:
-        asof = None
+    payload = _read_json(path) or {}
+    asof = str(payload.get("asof") or "") or None
     today = now.strftime("%Y%m%d")
-    asof_ymd = (asof or "").replace("-", "")
+    asof_ymd = _norm_ymd(asof)
     # After 15:30 CST on a weekday, today's Actions run should exist; before that, yesterday is fine.
     after_cutoff = (now.hour, now.minute) >= (15, 30)
     expect = today if after_cutoff else None
@@ -146,6 +154,81 @@ def report_mtime_note(root: Path, now: datetime | None = None) -> dict:
         "asof": asof,
         "stale": stale,
         "note": note,
+    }
+
+
+def book_freshness(root: Path, now: datetime | None = None) -> dict:
+    """Single glance: l1 asof vs paper book vs backtest end vs equity_state."""
+    now = now or datetime.now(TZ)
+    root = Path(root)
+    l1 = report_mtime_note(root, now=now)
+    l1_ymd = _norm_ymd(l1.get("asof"))
+
+    paper = _read_json(root / "paper_book_latest.json") or {}
+    paper_ymd = _norm_ymd(paper.get("asof") or paper.get("asof_ymd"))
+    paper_held = len(paper.get("positions") or {}) if paper.get("ok") else None
+
+    bt = _read_json(root / "historical_backtest_latest.json") or {}
+    bt_end = str(bt.get("end") or "") if bt else ""
+    bt_ymd = _norm_ymd(bt_end)
+    bt_held = (
+        len(bt.get("final_positions") or {})
+        if isinstance(bt.get("final_positions"), dict)
+        else None
+    )
+
+    eq = _read_json(root / "equity_state.json") or {}
+    eq_asof = str(eq.get("asof") or "") or None
+    eq_path = root / "equity_state.json"
+    eq_mtime = None
+    if eq_path.is_file():
+        eq_mtime = datetime.fromtimestamp(eq_path.stat().st_mtime, TZ).strftime(
+            "%Y-%m-%d %H:%M:%S %Z"
+        )
+
+    clocks_aligned = bool(l1_ymd and paper_ymd and l1_ymd == paper_ymd)
+    book_behind = bool(l1_ymd and paper_ymd and paper_ymd < l1_ymd)
+    book_missing = not bool(paper.get("ok"))
+    stale = bool(l1.get("stale") or book_behind or book_missing)
+
+    lines = [
+        f"日信号 asof={l1.get('asof') or '—'}",
+        f"模拟仓 asof={paper.get('asof') or '—'} · 持仓{paper_held if paper_held is not None else '—'}",
+        f"回测期末 end={bt_end or '—'} · 期末持仓{bt_held if bt_held is not None else '—'}",
+        f"equity_state asof={eq_asof or '—'} · mtime {eq_mtime or '—'}",
+    ]
+    if clocks_aligned:
+        note = "时钟对齐：" + " · ".join(lines)
+    elif book_missing:
+        note = (
+            "模拟仓缺失 paper_book_latest.json。同步日报后会自动刷新，"
+            "或运行 python paper_book.py。 · "
+            + " · ".join(lines)
+        )
+    elif book_behind:
+        note = (
+            f"模拟仓落后日信号（{paper.get('asof')} < {l1.get('asof')}）。"
+            "请同步/刷新日报，或运行 python paper_book.py。 · "
+            + " · ".join(lines)
+        )
+    else:
+        note = "新鲜度：" + " · ".join(lines)
+
+    return {
+        "stale": stale,
+        "aligned": clocks_aligned,
+        "book_behind": book_behind,
+        "book_missing": book_missing,
+        "l1_asof": l1.get("asof"),
+        "paper_asof": paper.get("asof"),
+        "backtest_end": bt_end or None,
+        "equity_asof": eq_asof,
+        "equity_mtime": eq_mtime,
+        "paper_held": paper_held,
+        "backtest_held": bt_held,
+        "l1": l1,
+        "note": note,
+        "lines": lines,
     }
 
 
@@ -309,13 +392,43 @@ def sync_desk(
                 + (result["stderr"] or result["stdout"] or f"code={result['returncode']}")
             )
 
+    # Roll simulated open book to latest l1 asof (desk/Notion shared source).
+    paper_step: dict = {"step": "paper_book", "ok": False}
+    try:
+        from paper_book import refresh_paper_book
+
+        paper_out = refresh_paper_book(root)
+        paper_step.update(
+            {
+                "ok": bool(paper_out.get("ok")),
+                "asof": paper_out.get("asof"),
+                "held_n": paper_out.get("held_n"),
+                "detail": paper_out.get("error") or paper_out.get("notes"),
+            }
+        )
+        if paper_out.get("ok"):
+            messages.append(
+                f"模拟仓已刷新 asof={paper_out.get('asof')} · "
+                f"持仓{paper_out.get('held_n')} · "
+                f"新开{paper_out.get('opened_n')} · 平仓{paper_out.get('closed_n')}。"
+            )
+        else:
+            messages.append("模拟仓刷新跳过：" + str(paper_out.get("error") or "unknown"))
+    except Exception as exc:
+        paper_step["stderr"] = str(exc)[:300]
+        messages.append(f"模拟仓刷新异常：{exc}")
+    steps.append(paper_step)
+
     mtime_after = report_mtime_note(root)
+    fresh = book_freshness(root)
     messages.append(mtime_after["note"])
+    messages.append(fresh["note"])
     return {
         "ok": ok,
         "dry_run": False,
         "git": status,
         "report": mtime_after,
+        "freshness": fresh,
         "steps": steps,
         "messages": messages,
         "ran_update": bool(refresh_cache),

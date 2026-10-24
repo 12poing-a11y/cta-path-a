@@ -24,18 +24,45 @@ from desk.loaders import (  # noqa: E402
     strategy_availability,
     strategy_kpis,
 )
+from desk.chart_board import render_chart_tab  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
 from desk.scoreboard import scoreboard_rows  # noqa: E402
 from desk.seat_board import render_seat_sector  # noqa: E402
 from desk.strategies.registry import all_strategies  # noqa: E402
-from desk.sync_desk import (  # noqa: E402
-    clear_streamlit_caches,
-    git_repo_status,
-    report_mtime_note,
-    sync_desk,
-)
+import importlib  # noqa: E402
+
+import desk.sync_desk as _sync_desk_mod  # noqa: E402
+
+# Streamlit may keep a pre-edit sync_desk in sys.modules; reload so new helpers appear.
+_sync_desk_mod = importlib.reload(_sync_desk_mod)
+clear_streamlit_caches = _sync_desk_mod.clear_streamlit_caches
+git_repo_status = _sync_desk_mod.git_repo_status
+report_mtime_note = _sync_desk_mod.report_mtime_note
+sync_desk = _sync_desk_mod.sync_desk
+book_freshness = getattr(_sync_desk_mod, "book_freshness", None)
+if book_freshness is None:
+    # Extremely stale module: degrade to l1-only freshness.
+    def book_freshness(root, now=None):  # type: ignore[misc]
+        l1 = report_mtime_note(root, now=now)
+        lines = [f"日信号 asof={l1.get('asof') or '—'}（请重启 Streamlit 以加载完整新鲜度）"]
+        return {
+            "stale": bool(l1.get("stale")),
+            "aligned": False,
+            "book_behind": False,
+            "book_missing": True,
+            "l1_asof": l1.get("asof"),
+            "paper_asof": None,
+            "backtest_end": None,
+            "equity_asof": None,
+            "equity_mtime": None,
+            "paper_held": None,
+            "backtest_held": None,
+            "l1": l1,
+            "note": l1.get("note") or lines[0],
+            "lines": lines,
+        }
 
 st.set_page_config(page_title="CTA Path-A Desk", layout="wide", initial_sidebar_state="expanded")
 
@@ -57,12 +84,45 @@ def _cached_payload(strategy_id: str):
 def _render_sync_panel() -> None:
     """Pull 15:30 Actions reports (and optional local cache refresh) into the desk."""
     st.subheader("同步日报")
-    mtime = report_mtime_note(ROOT)
+    fresh = book_freshness(ROOT)
+    mtime = fresh.get("l1") or report_mtime_note(ROOT)
     git = git_repo_status(ROOT)
-    if mtime.get("stale"):
-        st.warning(mtime["note"])
+    st.markdown("**新鲜度**")
+    for line in fresh.get("lines") or []:
+        st.caption(line)
+    try:
+        er = (ROOT / "execution_rules.json")
+        if er.is_file():
+            import json as _json
+
+            _er = _json.loads(er.read_text(encoding="utf-8"))
+            if _er.get("ok"):
+                _cb = _er.get("carry_bypass") or {}
+                _vb = _er.get("vol_bypass") or {}
+                _extra = ""
+                if isinstance(_cb, dict) and _cb.get("enabled"):
+                    _extra += (
+                        f" · 升贴水旁路|{_cb.get('extreme_gap_pct')}%/"
+                        f"{_cb.get('action')}"
+                    )
+                if isinstance(_vb, dict) and _vb.get("enabled"):
+                    _extra += (
+                        f" · 波动旁路|{_vb.get('expand_ratio')}×/"
+                        f"{_vb.get('action')}"
+                    )
+                st.caption(
+                    f"执行SSOT：止损 {_er.get('stop_atr_mult')}×ATR / "
+                    f"止盈 {_er.get('reward_rr')}R{_extra} · "
+                    f"{_er.get('summary_zh') or ''}"
+                )
+    except Exception:
+        pass
+    if fresh.get("stale") or mtime.get("stale"):
+        st.warning(fresh.get("note") or mtime["note"])
+    elif fresh.get("aligned"):
+        st.success("日信号与模拟仓 asof 对齐。")
     else:
-        st.caption(mtime["note"])
+        st.caption(fresh.get("note") or mtime["note"])
     st.caption(git["message"])
     if not git.get("has_remote"):
         st.caption(
@@ -93,6 +153,23 @@ def _render_sync_panel() -> None:
             st.rerun()
         else:
             st.error("同步未完全成功；可改勾「刷新本地缓存」或检查 remote。")
+    if st.button("仅刷新模拟仓", key="desk_paper_btn"):
+        with st.spinner("刷新 paper_book…"):
+            try:
+                from paper_book import refresh_paper_book
+
+                paper = refresh_paper_book(ROOT)
+            except Exception as exc:
+                paper = {"ok": False, "error": str(exc)}
+        if paper.get("ok"):
+            clear_streamlit_caches()
+            st.success(
+                f"模拟仓 asof={paper.get('asof')} 持仓={paper.get('held_n')} "
+                f"（开{paper.get('opened_n')} / 平{paper.get('closed_n')}）"
+            )
+            st.rerun()
+        else:
+            st.error(f"模拟仓刷新失败：{paper.get('error')}")
 
 
 def _status_label(avail: str) -> str:
@@ -180,8 +257,8 @@ def main() -> None:
         st.divider()
         _render_sync_panel()
 
-    tab_compare, tab_signals, tab_opts, tab_seats, tab_regime, tab_decision = st.tabs(
-        ["概览对比", "日信号", "期权机会", "席位板块", "状态评分", "决策"]
+    tab_compare, tab_signals, tab_chart, tab_opts, tab_seats, tab_regime, tab_decision = st.tabs(
+        ["概览对比", "日信号", "图表", "期权机会", "席位板块", "状态评分", "决策"]
     )
 
     # --- Tab 1: compare ---
@@ -345,6 +422,10 @@ def main() -> None:
                 ]
                 st.dataframe(sigs[cols], width="stretch", hide_index=True)
 
+    # --- Tab: TV-style chart ---
+    with tab_chart:
+        render_chart_tab(ROOT)
+
     # --- Tab: options ---
     with tab_opts:
         st.subheader("保护期权纸面机会")
@@ -355,7 +436,10 @@ def main() -> None:
             root=ROOT,
         )
         if opp.empty:
-            st.info("当前 l1_report 无持仓候选（需 direction + lots_l1>0）。")
+            st.info(
+                "当前模拟仓无持仓候选（paper_book / final_positions 为空，"
+                "且 l1_report 也无 lots_l1>0）。可先侧栏「仅刷新模拟仓」。"
+            )
         else:
             show = opp.drop(columns=["premium_atr_mult", "strike_atr_mult"], errors="ignore")
             st.dataframe(show, width="stretch", hide_index=True)
@@ -374,7 +458,7 @@ def main() -> None:
             st.plotly_chart(
                 equity_overlay_fig(
                     aligned_h,
-                    title="保护期权叠加权益（归一化=100，左近右远）",
+                    title="保护期权叠加权益（归一化=100，左远右近）",
                     y_title="归一化=100",
                 ),
                 width="stretch",

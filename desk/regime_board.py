@@ -18,7 +18,7 @@ import streamlit as st
 
 from basis_data import BASIS_EXTREME, basis_extreme_events, carry_gaps_from_akshare
 from desk.hmm_regime import fit_hmm
-from desk.loaders import load_json, load_universe
+from desk.loaders import format_variety_label, load_json, load_universe, variety_select_labels
 from desk.seat_board import (
     EX_ZH,
     GREEN,
@@ -54,14 +54,15 @@ MODEL_SCORE_FORMULA = (
     "只有「震荡均值回归」额外把 |次日收益|<0.5% 的震荡日算命中。"
     "均收益只平均非平信号日的「方向乘次日收益」，单位是百分数；没有非平信号时记 0。"
     "窗口是最近 60 个已有次日收益的信号日，不足 60 则用全部；少于 20 日则命中率、均收益、评分写样本不足。"
-    "综合方向按评分加权投票。两个方向的权重相同则记震荡。"
+    "综合方向按「评分×模型乘数」加权投票（趋势R2主轴、HMM降权，见 desk/model_vote_weights.json）。两向同权则震荡。"
 )
 MODEL_RULES = (
     "动量20/60：与路径A开仓门槛相同，r20 与 r60 同号且 |r20|>=3%、|r60|>=5% 时取 r20 的方向，否则震荡。"
     "rN = (close[t]/close[t-N] - 1) * 100，用本地连续合约收盘。"
     "震荡均值回归：|r60|<5% 且 |5日收益|>=1.5% 时与 5 日收益反向；"
     "否则同样在 |r60|<5% 且收盘偏离 20 日均线达到 1.5% 时与偏离反向；其余震荡。"
-    "HMM三状态：三状态高斯 HMM，拟合后按均值排序（高=偏多，低=偏空，中=震荡）。"
+    "趋势R2：近窗 log(收盘)~时间 OLS，R²达阈则取斜率方向（联合OOS C=R2 主轴；池已排除SC）。"
+    "HMM三状态：三状态高斯 HMM，拟合后按均值排序（高=偏多，低=偏空，中=震荡）；投票乘数按A门控OOS降权，不作硬否决。"
     "当天状态是前向滤波的最大概率，不含之后的收益；参数用整段日收益估计。"
     "偏多记多，偏空记空，中间状态记震荡。震荡日不计入这个模型的命中率。"
     "波动突破：ATR14 高于近 60 日 ATR 中位数，或 |r20| 大于 20 日前且 |r20|>=3%。"
@@ -143,30 +144,128 @@ def _sort_models(rows: list[dict]) -> list[dict]:
     return sorted(rows, key=key, reverse=True)
 
 
-def ensemble_of(rows: list[dict]) -> dict[str, Any]:
+def load_vote_weights(root: Path | None = None) -> dict[str, Any]:
+    """Desk model vote multipliers + trend-R2 params (soft defaults if missing)."""
+    path = (root or Path(__file__).resolve().parents[1]) / "desk" / "model_vote_weights.json"
+    defaults = {
+        "multipliers": {
+            "趋势R2": 2.0,
+            "动量20/60": 1.5,
+            "席位资金": 1.2,
+            "升贴水": 0.8,
+            "波动突破": 0.8,
+            "震荡均值回归": 0.5,
+            "HMM三状态": 0.25,
+        },
+        "trend_r2": {"window": 60, "r2_min": 0.2},
+    }
+    if not path.is_file():
+        return defaults
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return defaults
+    if not isinstance(raw, dict):
+        return defaults
+    mult = dict(defaults["multipliers"])
+    mult.update({str(k): float(v) for k, v in (raw.get("multipliers") or {}).items()})
+    tr = dict(defaults["trend_r2"])
+    src = raw.get("trend_r2") or {}
+    if isinstance(src, dict):
+        if src.get("window") is not None:
+            tr["window"] = int(src["window"])
+        if src.get("r2_min") is not None:
+            tr["r2_min"] = float(src["r2_min"])
+    return {"multipliers": mult, "trend_r2": tr, "raw": raw}
+
+
+def ensemble_of(rows: list[dict], *, root: Path | None = None) -> dict[str, Any]:
+    cfg = load_vote_weights(root)
+    mults = cfg.get("multipliers") or {}
     weights = {"多": 0.0, "空": 0.0, "震荡": 0.0}
     used = 0
     for row in rows:
         score = row.get("评分")
         direc = row.get("最新方向")
+        name = str(row.get("模型") or "")
         if not isinstance(score, (int, float)) or direc not in weights:
             continue
-        weights[direc] += float(score)
+        m = float(mults.get(name, 1.0))
+        weights[direc] += float(score) * m
         used += 1
     if used == 0:
         return {
             "direction": "样本不足",
             "weights": weights,
             "text": "综合方向：样本不足",
+            "vote_multipliers": mults,
         }
     top = max(weights.values())
     winners = [name for name, value in weights.items() if abs(value - top) < 1e-6]
     choice = winners[0] if len(winners) == 1 else "震荡"
+    hmm_m = mults.get("HMM三状态", 1.0)
+    r2_m = mults.get("趋势R2", 1.0)
     text = (
         f"综合方向：{choice}（多 {weights['多']:.1f} / 空 {weights['空']:.1f} / "
-        f"震荡 {weights['震荡']:.1f}，权重=评分）"
+        f"震荡 {weights['震荡']:.1f}，权重=评分×乘数；R2×{r2_m:g} 主轴 / HMM×{hmm_m:g}）"
     )
-    return {"direction": choice, "weights": weights, "text": text}
+    return {
+        "direction": choice,
+        "weights": weights,
+        "text": text,
+        "vote_multipliers": mults,
+    }
+
+
+def _trend_r2_calls(
+    bars: list[dict], *, window: int = 60, r2_min: float = 0.2
+) -> list[dict]:
+    """OLS log(close) ~ time; direction = sign(slope) when R² ≥ r2_min else flat."""
+    import math
+
+    closes = [float(b["close"]) for b in bars]
+    n = len(closes)
+    w = max(20, int(window))
+    thr = max(0.0, float(r2_min))
+    calls: list[dict] = []
+    for i in range(n):
+        if i + 1 < w:
+            calls.append({"date": bars[i]["date"], "signal": 0, "next_ret": None})
+            continue
+        xs: list[float] = []
+        ys: list[float] = []
+        ok = True
+        for j, idx in enumerate(range(i - w + 1, i + 1)):
+            c = closes[idx]
+            if c <= 0:
+                ok = False
+                break
+            xs.append(float(j))
+            ys.append(math.log(c))
+        if not ok or len(xs) < w:
+            calls.append({"date": bars[i]["date"], "signal": 0, "next_ret": None})
+            continue
+        nobs = float(len(xs))
+        mx = sum(xs) / nobs
+        my = sum(ys) / nobs
+        sxx = sum((x - mx) ** 2 for x in xs)
+        sxy = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+        syy = sum((y - my) ** 2 for y in ys)
+        if sxx <= 1e-18 or syy <= 1e-18:
+            calls.append({"date": bars[i]["date"], "signal": 0, "next_ret": None})
+            continue
+        slope = sxy / sxx
+        r2 = (sxy * sxy) / (sxx * syy)
+        if r2 < thr:
+            signal = 0
+        elif slope > 0:
+            signal = 1
+        elif slope < 0:
+            signal = -1
+        else:
+            signal = 0
+        calls.append({"date": bars[i]["date"], "signal": signal, "next_ret": None})
+    return _attach_next(calls, bars)
 
 
 def _read_bars(path: Path) -> list[dict]:
@@ -412,10 +511,18 @@ def _seat_signal(snap: dict) -> int:
 def seat_series(root: Path, code: str, report: dict | None = None) -> list[dict]:
     code = str(code or "").upper()
     exchange = _exchange_for(root, code, report)
-    if exchange not in ("CZCE", "SHFE"):
+    if exchange not in ("CZCE", "SHFE", "DCE"):
         return []
+    # Exchange prints + Eastmoney/Sina underlay (em-*.json) so DCE is not skipped.
+    ymds = set(member_dates(root, exchange))
+    em_folder = root / ".cache" / "member"
+    if em_folder.is_dir():
+        for path in em_folder.glob("em-*.json"):
+            ymd = path.stem.split("-", 1)[-1]
+            if len(ymd) == 8 and ymd.isdigit():
+                ymds.add(ymd)
     rows = []
-    for ymd in member_dates(root, exchange):
+    for ymd in sorted(ymds):
         snap = _snapshot_uncached(root, code, exchange, ymd)
         if not snap.get("ok"):
             continue
@@ -537,13 +644,20 @@ def build_model_rows(
 ) -> tuple[list[dict], list[str]]:
     notes: list[str] = []
     rows: list[dict] = []
+    vote_cfg = load_vote_weights(root)
+    tr = vote_cfg.get("trend_r2") or {}
+    r2_window = int(tr.get("window") or 60)
+    r2_min = float(tr.get("r2_min") or 0.2)
     if len(bars) < 80:
+        rows.append(_blank_row("趋势R2", "样本不足", len(bars)))
         rows.append(_blank_row("动量20/60", "样本不足", len(bars)))
         rows.append(_blank_row("震荡均值回归", "样本不足", len(bars)))
         rows.append(_blank_row("HMM三状态", "无足够日线", len(bars)))
         rows.append(_blank_row("波动突破", "样本不足", len(bars)))
     else:
+        r2_calls = _trend_r2_calls(bars, window=r2_window, r2_min=r2_min)
         momentum, revert, breakout = _price_calls(bars, r20_min=r20_min, r60_min=r60_min)
+        rows.append(_score_calls("趋势R2", r2_calls, chop_hits=False))
         rows.append(_score_calls("动量20/60", momentum, chop_hits=False))
         rows.append(_score_calls("震荡均值回归", revert, chop_hits=True))
         if hmm_ok and hmm_calls:
@@ -556,7 +670,7 @@ def build_model_rows(
     if not seats:
         exchange = _exchange_for(root, code, report)
         if exchange == "DCE":
-            notes.append("席位资金：本地无 dce-*.json（akshare 缓存），本品种略过。")
+            notes.append("席位资金：本地无 dce/em 会员缓存（东财/新浪应已补），本品种略过。")
         else:
             notes.append("席位资金：本地会员排名里没有这个品种，本品种略过。")
     else:
@@ -595,7 +709,8 @@ def build_symbol_pack(root: Path, code: str) -> dict[str, Any]:
         "hmm": hmm,
         "models": models,
         "notes": notes,
-        "ensemble": ensemble_of(models),
+        "ensemble": ensemble_of(models, root=root),
+        "vote_weights": load_vote_weights(root).get("multipliers"),
     }
 
 
@@ -982,11 +1097,13 @@ def _symbol_choices(root: Path, report: dict | None) -> list[dict]:
     return rows
 
 
-def _labels(rows: list[dict]) -> list[str]:
-    return [
-        f"{row['code']} {row['name']} · {EX_ZH.get(row['exchange'], row['exchange'])}"
-        for row in rows
-    ]
+def _labels(rows: list[dict], root: Path | None = None) -> list[str]:
+    if root is None:
+        return [
+            f"{row['code']} {row['name']} · {EX_ZH.get(row['exchange'], row['exchange'])}"
+            for row in rows
+        ]
+    return variety_select_labels(root, rows, ex_zh=EX_ZH)
 
 
 @st.cache_data(show_spinner=False)
@@ -1027,7 +1144,7 @@ def _hmm_figures(chart: dict) -> tuple[go.Figure, go.Figure]:
         )
     )
     bars.update_layout(template="plotly_white")
-    _light(bars, "近期日收益（颜色是 HMM 状态）", 320, time_axis="recent_left")
+    _light(bars, "近期日收益（颜色是 HMM 状态）", 320, time_axis="recent_right")
     zmap = {"偏多": 1, "震荡": 0, "偏空": -1}
     strip = go.Figure(
         go.Heatmap(
@@ -1043,7 +1160,7 @@ def _hmm_figures(chart: dict) -> tuple[go.Figure, go.Figure]:
         )
     )
     strip.update_layout(template="plotly_white")
-    _light(strip, "状态条", 140, time_axis="recent_left")
+    _light(strip, "状态条", 140, time_axis="recent_right")
     return bars, strip
 
 
@@ -1056,7 +1173,7 @@ def render_regime_tab(root: Path) -> None:
     if not symbols:
         st.error("universe.json 没有品种")
         return
-    labels = _labels(symbols)
+    labels = _labels(symbols, root)
     selected_codes = [
         str(sig.get("code") or "").upper()
         for sig in (report or {}).get("signals") or []
@@ -1081,6 +1198,12 @@ def render_regime_tab(root: Path) -> None:
         _cached_events.clear()
         _cached_coverage.clear()
         cached_snapshot.clear()
+        try:
+            from desk.regime_factor_eval import _cached_regime_factor_assessment
+
+            _cached_regime_factor_assessment.clear()
+        except Exception:
+            pass
         st.rerun()
     meta = symbols[labels.index(choice)]
     code = meta["code"]
@@ -1094,8 +1217,8 @@ def render_regime_tab(root: Path) -> None:
     decision = build_decision(root, code, pack=pack, report=report, events=[])
     render_decision_banner(root, code, pack, report)
     st.caption(
-        f"品种列表与席位页相同。当前 {code} {meta['name']} · "
-        f"{EX_ZH.get(meta['exchange'], meta['exchange'])}。"
+        f"品种列表与席位页相同。当前 "
+        f"{format_variety_label(code, meta.get('name') or '', root=root, exchange_zh=EX_ZH.get(meta.get('exchange'), meta.get('exchange')))}。"
         "初次打开若席位页已选过品种，沿用那个品种。"
     )
 
@@ -1121,7 +1244,11 @@ def render_regime_tab(root: Path) -> None:
         regime_row=regime_row,
         decision=decision,
     )
-    render_full_assessment(assessment, expanded=True)
+    render_full_assessment(assessment, expanded=True, root=root)
+
+    from desk.regime_factor_eval import render_regime_factor_panel
+
+    render_regime_factor_panel(root, code)
 
     st.markdown("**方向评分**")
     st.caption(REGIME_FORMULA)

@@ -137,21 +137,64 @@ def build_full_assessment(
     eq = equity_timing_snapshot(root)
     lib = strategy_library_stats(root)
 
-    # Layer votes in {-1,0,1} then map to 综合分 0–100 research index.
+    # Layer weights: R2 main axis, HMM demoted (HMM×R2 OOS A-gate fail).
+    layer_w = {
+        "方向三桶": 1.2,
+        "趋势R2": 1.8,
+        "HMM": 0.25,
+        "模型投票": 1.5,
+        "决策卡": 1.3,
+        "股指择时": 0.8,
+        "策略库均分": 0.7,
+    }
+    try:
+        from desk.regime_board import load_vote_weights
+
+        cw = (load_vote_weights(root).get("raw") or {}).get("composite_layer_weights") or {}
+        if isinstance(cw, dict):
+            for k, v in cw.items():
+                try:
+                    layer_w[str(k)] = float(v)
+                except (TypeError, ValueError):
+                    continue
+    except Exception:
+        pass
+
+    r2_row = next((m for m in models if m.get("模型") == "趋势R2"), None)
+    r2_dir = str((r2_row or {}).get("最新方向") or "样本不足")
+    r2_score = (r2_row or {}).get("评分")
+
+    # Layer votes then map to 综合分 0–100 research index.
     layers = [
         {"层": "方向三桶", "方向": (
             "多" if (long_b or 0) > (short_b or 0) and (long_b or 0) >= (chop_b or 0)
             else "空" if (short_b or 0) > (long_b or 0) and (short_b or 0) >= (chop_b or 0)
             else "震荡" if regime_row else "样本不足"
-        ), "分": signed, "权重": 1.2},
-        {"层": "HMM", "方向": hmm_label if hmm_label in ("偏多", "偏空", "震荡") else "样本不足", "分": None, "权重": 1.0},
-        {"层": "模型投票", "方向": ens_dir, "分": None, "权重": 1.5},
-        {"层": "决策卡", "方向": conclusion.replace("偏", "") if conclusion.startswith("偏") else conclusion, "分": None, "权重": 1.3},
+        ), "分": signed, "权重": layer_w["方向三桶"]},
+        {
+            "层": "趋势R2",
+            "方向": r2_dir if r2_dir in ("多", "空", "震荡") else "样本不足",
+            "分": r2_score if isinstance(r2_score, (int, float)) else None,
+            "权重": layer_w["趋势R2"] if r2_row else 0.0,
+        },
+        {
+            "层": "HMM",
+            "方向": hmm_label if hmm_label in ("偏多", "偏空", "震荡") else "样本不足",
+            "分": None,
+            "权重": layer_w["HMM"],
+        },
+        {"层": "模型投票", "方向": ens_dir, "分": None, "权重": layer_w["模型投票"]},
+        {
+            "层": "决策卡",
+            "方向": conclusion.replace("偏", "") if conclusion.startswith("偏") else conclusion,
+            "分": None,
+            "权重": layer_w["决策卡"],
+        },
         {
             "层": "股指择时",
             "方向": eq["bias"],
             "分": (eq["mean_weight"] * 50.0) if eq["mean_weight"] is not None else None,
-            "权重": 0.8 if eq["n_filled"] else 0.0,
+            "权重": (layer_w["股指择时"] if eq["n_filled"] else 0.0),
         },
         {
             "层": "策略库均分",
@@ -162,7 +205,7 @@ def build_full_assessment(
                 else "无"
             ),
             "分": lib["mean_score"],
-            "权重": 0.7 if lib["n_scored"] else 0.0,
+            "权重": (layer_w["策略库均分"] if lib["n_scored"] else 0.0),
         },
     ]
 
@@ -204,8 +247,19 @@ def build_full_assessment(
     full_score = round(max(0.0, min(100.0, base)), 1)
 
     model_ok = [m for m in models if isinstance(m.get("评分"), (int, float))]
+
+    # Soft attach HMM multi-factor / combo summary (same foundation as regime_factor_eval).
+    factor_eval: dict[str, Any] | None = None
+    try:
+        from desk.regime_factor_eval import build_regime_factor_assessment
+
+        factor_eval = build_regime_factor_assessment(root, code)
+    except Exception:
+        factor_eval = None
+
     return {
         "code": code,
+        "root": str(root),
         "overall": overall,
         "full_score": full_score,
         "conviction": conviction,
@@ -223,6 +277,7 @@ def build_full_assessment(
         "models": model_ok,
         "equity": eq,
         "library": lib,
+        "factor_eval": factor_eval,
         "notes": list(pack.get("notes") or []),
     }
 
@@ -249,11 +304,18 @@ def _equity_brief(eq: dict[str, Any]) -> tuple[str, str] | None:
     return f"{bias}（均权 {mean_txt}）", f"股指 {detail}"
 
 
-def render_full_assessment(assessment: dict[str, Any], *, expanded: bool = True) -> None:
+def render_full_assessment(
+    assessment: dict[str, Any],
+    *,
+    expanded: bool = True,
+    root: Path | None = None,
+) -> None:
     st.markdown("**综合评估**")
     st.caption(
         "合并方向三桶、HMM、模型投票、决策卡、股指择时与策略库评分板，"
         "得到研究用综合方向与 0–100 全面统计分；不是下单指令。"
+        "决策卡已含升贴水旁路与多维波动旁路（高波扩张时可降观望）。"
+        "因子实验室 Gate 只读展示，不计入本页投票、不改开仓。"
     )
     eq = assessment.get("equity") or {}
     brief = _equity_brief(eq)
@@ -355,6 +417,31 @@ def render_full_assessment(assessment: dict[str, Any], *, expanded: bool = True)
                 pass
         else:
             st.warning("没有带评分的策略。")
+
+        fe = assessment.get("factor_eval") or {}
+        if fe.get("ok"):
+            st.markdown("**HMM 多因子摘要**（详见下方「HMM 多因子 · 组合 · 事件评估」）")
+            counts = fe.get("regime_counts") or {}
+            st.caption(
+                f"HMM→{fe.get('hmm', {}).get('latest') or '—'} · "
+                f"日数 多 {counts.get('多', 0)} / 空 {counts.get('空', 0)} / "
+                f"震荡 {counts.get('震荡', 0)} · "
+                f"因子 {len(fe.get('factors') or [])} · "
+                f"组合 {len(fe.get('combos') or [])}"
+            )
+            if any(True for c in (fe.get("combos") or []) if c.get("优势状态")):
+                bits = [
+                    f"{c.get('因子')}→优势{c.get('优势状态')}"
+                    for c in (fe.get("combos") or [])
+                ]
+                st.caption("组合优势状态：" + "；".join(bits))
+
+        desk_root = root
+        if desk_root is None:
+            desk_root = Path(str(assessment.get("root") or Path(__file__).resolve().parents[1]))
+        from desk.lab_panel import render_lab_gate_panel
+
+        render_lab_gate_panel(Path(desk_root), compact=True, widget_ns="regime_assess")
 
         for note in assessment.get("notes") or []:
             st.caption(note)

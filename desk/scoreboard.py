@@ -155,11 +155,20 @@ def conviction_label(
 
 
 def scoreboard_rows(root: Path | None = None) -> list[dict[str, Any]]:
-    """Strategies that actually have a numeric score. Placeholders are omitted."""
+    """Strategies that actually have a numeric score. Placeholders are omitted.
+
+    Paste-only / unstable tracks (e.g. 东证周报) are excluded from the desk;
+    their files remain under ``external/archive`` for later validation.
+    """
     root = root or REPO_ROOT
     rows: list[dict[str, Any]] = []
     for spec in all_strategies(root):
         if spec.placeholder:
+            continue
+        tags = set(spec.tags or [])
+        if "validation_archive" in tags or "unstable_source" in tags:
+            continue
+        if str(spec.id).startswith("dzqh_"):
             continue
         avail = strategy_availability(spec, root)
         if avail in ("missing", "placeholder"):

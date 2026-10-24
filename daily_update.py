@@ -12,8 +12,25 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 from ifind_call import active_slot, usage_report  # noqa: E402
-from member_rank import load_member_changes, load_member_seats  # noqa: E402
-from path_a_filters import bucket_reason, entry_block, member_reason, seat_decision  # noqa: E402
+from member_rank import (  # noqa: E402
+    ensure_member_days,
+    ensure_universe_member_coverage,
+    load_member_changes,
+    load_member_seats,
+)
+from path_a_filters import (  # noqa: E402
+    bucket_reason,
+    carry_bypass_cfg,
+    carry_bypass_decision,
+    entry_block,
+    member_reason,
+    seat_decision,
+)
+from lab_signal import (  # noqa: E402
+    lab_edge_bypass_cfg,
+    lab_edge_decision,
+    refresh_latest as refresh_lab_signals,
+)
 from public_curve import load_curves  # noqa: E402
 from position_rules import (  # noqa: E402
     apply_portfolio_caps,
@@ -101,12 +118,24 @@ EQUITY = compound_equity(LIVE_EQUITY, EQUITY_BASE, EQUITY_COMPOUND)
 L1_RISK = risk_budget_yuan(EQUITY, RISK_PCT, L1_MULT)
 
 
+def _universe_cfg() -> dict:
+    return json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
+
+
 def _entry_mode() -> str:
-    cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
+    cfg = _universe_cfg()
     mode = cfg.get("entry_filter") or "base"
     if mode not in ("base", "p0", "carry", "oi", "member", "climax", "seats"):
         return "base"
     return mode
+
+
+def _carry_bypass() -> dict:
+    return carry_bypass_cfg(_universe_cfg().get("carry_bypass"))
+
+
+def _lab_edge_bypass() -> dict:
+    return lab_edge_bypass_cfg(_universe_cfg().get("lab_edge_bypass"))
 
 
 def _fetch_snapshot(u: dict, curves: dict, mode: str) -> dict:
@@ -306,8 +335,25 @@ def main():
         return 0
 
     mode = _entry_mode()
-    print(f"[cta] entry_filter={mode}")
-    curves = {} if mode in ("base", "seats") else load_curves([u["code"] for u in UNIVERSE])
+    bypass = _carry_bypass()
+    lab_bypass = _lab_edge_bypass()
+    print(
+        f"[cta] entry_filter={mode} carry_bypass={bypass.get('enabled')} "
+        f"lab_edge={lab_bypass.get('enabled')}"
+    )
+    lab_pack = {}
+    if lab_bypass.get("enabled"):
+        try:
+            lab_pack = refresh_lab_signals(root=ROOT, cfg=lab_bypass)
+            print(
+                f"[cta] lab_edge date={lab_pack.get('panel_date')} "
+                f"ok={lab_pack.get('ok')} n={lab_pack.get('n_codes')}"
+            )
+        except Exception as exc:  # noqa: BLE001
+            print(f"[cta] lab_edge refresh soft-fail: {exc}")
+            lab_pack = {}
+    need_curves = mode not in ("base", "seats") or bool(bypass.get("enabled"))
+    curves = load_curves([u["code"] for u in UNIVERSE]) if need_curves else {}
     signals = []
     snaps = []
     for u in UNIVERSE:
@@ -340,6 +386,58 @@ def main():
             print(f"  ERR {u['code']}: {e}")
             snaps.append({})
 
+    observe_coverage: dict = {
+        "complete": False,
+        "bars_ok": [],
+        "bars_missing": [],
+        "seats_ok": [],
+        "seats_missing": [],
+        "seat_fill": {},
+    }
+    bar_ok = [s["code"] for s in signals if s.get("bar_date") and not str(s.get("error") or "")]
+    bar_miss = [u["code"] for u in UNIVERSE if u["code"] not in set(bar_ok)]
+    observe_coverage["bars_ok"] = bar_ok
+    observe_coverage["bars_missing"] = bar_miss
+
+    # Observation sample: all 20 must have seats — exchange → 东财 → 新浪.
+    # Short lookback densifies DCE/EM so 席位页 is not stuck on 2–3 sparse days.
+    seat_days = sorted({s.get("bar_date") for s in snaps if s.get("bar_date")})
+    if seat_days:
+        try:
+            from member_rank import backfill_member_lookback
+
+            end_ymd = str(seat_days[-1]).replace("-", "")[:8]
+            bf = backfill_member_lookback(
+                lookback_calendar_days=10,
+                end=end_ymd,
+                dce=True,
+                coverage=False,
+            )
+            print(
+                f"  [observe] member lookback days={bf.get('days')} "
+                f"shfe={bf.get('shfe')} czce={bf.get('czce')} "
+                f"dce={bf.get('dce')} em={bf.get('eastmoney', 0)}"
+            )
+        except Exception as exc:  # noqa: BLE001
+            print(f"  [observe] member lookback soft-fail: {exc}")
+            stats = ensure_member_days(seat_days, dce=True)
+            print(
+                f"  [observe] member ensure days={stats['days']} "
+                f"shfe={stats['shfe']} czce={stats['czce']} "
+                f"dce={stats['dce']} em={stats.get('eastmoney', 0)}"
+            )
+        cov = ensure_universe_member_coverage(seat_days[-1], [u["code"] for u in UNIVERSE])
+        observe_coverage["seats_ok"] = cov.get("ok") or []
+        observe_coverage["seats_missing"] = cov.get("missing") or []
+        observe_coverage["seat_fill"] = cov.get("filled") or {}
+        observe_coverage["seat_ymd"] = cov.get("ymd")
+        print(
+            f"  [observe] seats {cov.get('n_ok')}/{cov.get('n_codes')} "
+            f"missing={cov.get('missing')} filled={cov.get('filled')}"
+        )
+    else:
+        observe_coverage["seats_missing"] = [u["code"] for u in UNIVERSE]
+
     if mode == "member":
         days = sorted({s.get("prev_date") or s.get("bar_date") for s in snaps if s.get("bar_date")})
         member = load_member_changes(days, [u["code"] for u in UNIVERSE]) if days else {}
@@ -350,7 +448,7 @@ def main():
             if reason:
                 sig["block"] = reason
     if mode == "seats":
-        days = sorted({s.get("bar_date") for s in snaps if s.get("bar_date")})
+        days = seat_days
         seats = load_member_seats(days, [u["code"] for u in UNIVERSE]) if days else {}
         for sig in signals:
             if sig.get("direction") not in ("多", "空"):
@@ -361,6 +459,40 @@ def main():
             sig["seat"] = label
             if reason and not sig.get("block"):
                 sig["block"] = reason
+    observe_coverage["complete"] = (
+        not observe_coverage["bars_missing"] and not observe_coverage["seats_missing"]
+    )
+    if not observe_coverage["complete"]:
+        print(
+            f"[cta] OBSERVE INCOMPLETE bars_missing={observe_coverage['bars_missing']} "
+            f"seats_missing={observe_coverage['seats_missing']}"
+        )
+
+    # Batch 15m/60m into .cache/akshare/minute (CI commits; local desk git pull).
+    minute_summary: dict = {"ok": 0, "fail": 0, "periods": ["15", "60"], "rows": []}
+    try:
+        from minute_data import refresh_universe_minutes
+
+        print("[cta] refresh minute 15/60...")
+        minute_summary = refresh_universe_minutes(
+            ROOT,
+            [u["code"] for u in UNIVERSE],
+            periods=("15", "60"),
+            force=True,
+            verify_em=False,
+        )
+        print(
+            f"[cta] minute ok={minute_summary.get('ok')} fail={minute_summary.get('fail')}"
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[cta] minute soft-fail: {exc}")
+        minute_summary = {
+            "ok": 0,
+            "fail": len(UNIVERSE) * 2,
+            "periods": ["15", "60"],
+            "error": str(exc)[:300],
+            "rows": [],
+        }
     if mode == "climax":
         for sig in signals:
             if sig.get("block") or sig.get("direction") not in ("多", "空"):
@@ -373,6 +505,58 @@ def main():
             reason = bucket_reason(sig["direction"], [p for p in peers if p is not None])
             if reason:
                 sig["block"] = reason
+    # Soft carry extreme bypass: after seats/entry_filter; missing gap does not block.
+    if bypass.get("enabled"):
+        for sig in signals:
+            if sig.get("direction") not in ("多", "空"):
+                continue
+            day = sig.get("bar_date") or sig.get("date")
+            pair = ((curves.get(sig["code"]) or {}).get("carry") or {}).get(day)
+            reason, mult, label, gap = carry_bypass_decision(
+                sig["direction"],
+                pair,
+                extreme_gap_pct=float(bypass["extreme_gap_pct"]),
+                action=str(bypass["action"]),
+                scale=float(bypass["scale"]),
+            )
+            sig["carry_gap_pct"] = None if gap is None else round(gap, 4)
+            sig["carry_bypass"] = label
+            if reason and not sig.get("block"):
+                sig["block"] = reason
+            elif not sig.get("block") and mult < 1.0 and mult > 0:
+                for key in ("lots_raw", "lots_l1", "lots_full"):
+                    if sig.get(key):
+                        sig[key] = int(math.floor(float(sig[key]) * mult))
+                sig["carry_scale"] = mult
+                if int(sig.get("lots_l1") or 0) <= 0:
+                    sig["block"] = f"{label}后不足1手"
+    # Lab edge: annotate only under action=observe (decision page vetoes).
+    # action=block also tags block reason but does not replace seats filter alone.
+    if lab_bypass.get("enabled"):
+        from lab_signal import load_latest_pack
+
+        pack = load_latest_pack(ROOT) if not lab_pack.get("scores") else {
+            "ok": bool(lab_pack.get("ok")),
+            "date": lab_pack.get("panel_date"),
+            "n_codes": lab_pack.get("n_codes") or 0,
+            "scores": lab_pack.get("scores") or {},
+            "percentiles": lab_pack.get("percentiles") or {},
+            "members": lab_pack.get("members") or [],
+            "reason": lab_pack.get("reason"),
+        }
+        for sig in signals:
+            if sig.get("direction") not in ("多", "空"):
+                continue
+            edge = lab_edge_decision(sig["direction"], sig["code"], pack, lab_bypass)
+            sig["lab_edge"] = edge.get("label")
+            sig["lab_score"] = edge.get("score")
+            sig["lab_pct"] = edge.get("percentile")
+            if (
+                lab_bypass.get("action") == "block"
+                and edge.get("block")
+                and not sig.get("block")
+            ):
+                sig["block"] = edge["block"]
     for sig in signals:
         if sig.get("block"):
             sig["lots_raw"] = 0
@@ -408,8 +592,17 @@ def main():
         "max_per_bucket": MAX_PER_BUCKET,
         "min_r20_pct": MIN_R20_PCT,
         "min_r60_pct": MIN_R60_PCT,
-        "data_source": "sina+tencent primary, iFinD fallback",
+        "data_source": "bars=sina+tencent→iFinD; seats=eastmoney→sina (exchange soft)",
         "entry_filter": mode,
+        "carry_bypass": bypass,
+        "lab_edge_bypass": lab_bypass,
+        "observe_coverage": observe_coverage,
+        "minute_summary": {
+            "ok": minute_summary.get("ok"),
+            "fail": minute_summary.get("fail"),
+            "periods": minute_summary.get("periods"),
+            "error": minute_summary.get("error"),
+        },
         "ifind_calls": usage_report()["count"],
         "ifind_call_log": usage_report()["calls"],
         "ifind_slot": active_slot(),
@@ -431,7 +624,27 @@ def main():
     rep = usage_report()
     print(f"[ifind] calls={rep['count']}")
     print(f"[cta] wrote {path}")
-    return 0
+    if observe_coverage.get("complete"):
+        print(
+            f"[cta] observe coverage OK "
+            f"bars={len(observe_coverage.get('bars_ok') or [])} "
+            f"seats={len(observe_coverage.get('seats_ok') or [])}"
+        )
+    try:
+        from paper_book import refresh_paper_book
+
+        paper = refresh_paper_book(ROOT, report=report)
+        if paper.get("ok"):
+            print(
+                f"[paper] asof={paper.get('asof')} held={paper.get('held_n')} "
+                f"opened={paper.get('opened_n')} closed={paper.get('closed_n')}"
+            )
+        else:
+            print("[paper] skip:", paper.get("error"))
+    except Exception as exc:
+        print(f"[paper] refresh failed: {exc}")
+    # Observation sample incomplete → fail CI / local job so seats are not silently empty.
+    return 0 if observe_coverage.get("complete") else 2
 
 
 if __name__ == "__main__":

@@ -1,0 +1,19 @@
+{
+  "id": "dzqh_cs_ew",
+  "name": "东证·CSstrategies,EWcombine",
+  "description": "截面策略周度收益等权复合（配置层常用基准）。",
+  "curve_file": "external/strategies/dzqh_cs_ew.json",
+  "tags": [
+    "external",
+    "dzqh",
+    "commodity",
+    "combine",
+    "cta_alloc",
+    "validation_archive",
+    "unstable_source"
+  ],
+  "placeholder": false,
+  "desk_active": false,
+  "archive_reason": "不能长期稳定自动获取（依赖用户粘贴东证周报 KPI）；退出研究台展示，保留供后期对照验证。",
+  "archived_at": "2026-10-23"
+}

@@ -22,5 +22,7 @@
   "leverage": 1.0,
   "disclaimer": "外部研报 KPI，非本仓库回测；不可作为下单指令。模型基于历史数据，环境变化可能导致失效。",
   "placeholder": false,
-  "summary": "东证·十年期国债日频择时 跟踪 asof=2026-10-16 ann=2.75 sharpe=1.27 dd=1.91"
+  "summary": "东证·十年期国债日频择时 跟踪 asof=2026-10-16 ann=2.75 sharpe=1.27 dd=1.91 · 验证归档（不进研究台）",
+  "desk_active": false,
+  "validation_archive": true
 }

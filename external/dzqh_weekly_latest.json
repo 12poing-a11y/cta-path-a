@@ -1,5 +1,8 @@
 {
   "source": "东证衍生品研究院《金工策略周报》跟踪摘录（用户粘贴）",
+  "desk_active": false,
+  "validation_archive": true,
+  "archive_note": "不能长期稳定自动获取 → 已退出研究台策略库/评分栏；数据保留在 external/strategies 与 external/archive，供后期对照验证本地代理与 Path-A。",
   "asof": "2026-10-16",
   "disclaimer": "外部研报 KPI，非本仓库回测；不可作为下单指令。模型基于历史数据，环境变化可能导致失效。",
   "market_note": "10/09–10/16 CCI −1.91%；截面商品因子总体仍偏强，关注资金拥挤与回调风险。",

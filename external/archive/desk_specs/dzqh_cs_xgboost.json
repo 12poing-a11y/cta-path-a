@@ -8,7 +8,12 @@
     "dzqh",
     "commodity",
     "ml",
-    "cs_nonlinear"
+    "cs_nonlinear",
+    "validation_archive",
+    "unstable_source"
   ],
-  "placeholder": false
+  "placeholder": false,
+  "desk_active": false,
+  "archive_reason": "不能长期稳定自动获取（依赖用户粘贴东证周报 KPI）；退出研究台展示，保留供后期对照验证。",
+  "archived_at": "2026-10-23"
 }

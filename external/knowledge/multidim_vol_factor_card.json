@@ -1,0 +1,46 @@
+{
+  "id": "multidim_vol_factor_combo",
+  "title": "多维波动率因子组合（知识卡）",
+  "asof": "2026-10-23",
+  "market": "中国商品期货（研究/纸面）",
+  "status": "desk_soft_bypass",
+  "validation": {
+    "asof": "2026-10-23",
+    "report": "lab/research/oos/vol_bypass_validate_latest.json",
+    "entry_hard_block": "rejected",
+    "note_zh": "seats±高波入场硬拦：近一年与2022+窗收益转负、回撤加大 → 不适用并入入场；保留决策 action=observe 软观望。"
+  },
+  "summary_zh": "综合短/中/长窗已实现波动，用短÷长刻画扩张与压缩；高波扩张时决策软降为观望，不替换 Path-A 20/60+席位入场。入场硬拦经验证不适用。本地实现见 vol_factor_combo.py。",
+  "problem": "单一波动率窗口滞后或噪声大；趋势策略在波动急剧扩张（常伴随反转）时回撤放大。",
+  "framework": {
+    "dimensions": [
+      {"id": "vol_s", "name": "短窗已实现波动", "default_n": 5, "role": "敏感"},
+      {"id": "vol_m", "name": "中窗已实现波动", "default_n": 20, "role": "过渡"},
+      {"id": "vol_l", "name": "长窗已实现波动", "default_n": 60, "role": "基准"}
+    ],
+    "composite": "ratio = vol_s / vol_l",
+    "regimes": [
+      {"id": "expand", "rule": "ratio ≥ expand_ratio（默认1.6）", "desk": "高波扩张 → 决策观望（action=observe）"},
+      {"id": "compress", "rule": "ratio ≤ compress_ratio（默认0.7）", "desk": "低波压缩 → 仅标注，不自动加仓"},
+      {"id": "normal", "rule": "其余", "desk": "放行标注"}
+    ]
+  },
+  "industry_refs": [
+    "华泰期货 CTA 因子系列：波动率因子 + 高波偏期限结构、低波偏动量的择时思路",
+    "中信建投：时序分位波动率加权（仓位），截面分位提升有限",
+    "东证多因子截面（CWFT 等）：本卡不复刻仓单/XGB，只做波动旁路"
+  ],
+  "path_a_integration": {
+    "entry_filter": "不变（仍为 seats）",
+    "carry_bypass": "并行软旁路",
+    "decision": "证据行「多维波动」；force_observe 时结论降观望",
+    "not_included": ["QACD", "GARCH/隐含波动完整库", "截面波动率多空组合"]
+  },
+  "config_keys": {
+    "universe": "vol_bypass",
+    "execution_rules": "vol_bypass",
+    "module": "vol_factor_combo.py"
+  },
+  "score_note": "预期主要抬「稳健/回撤」分，不保证抬绝对收益；短样本勿当实盘 KPI。",
+  "disclaimer": "研究用知识卡与软旁路，非下单指令；模型基于历史数据，环境变化可失效。"
+}

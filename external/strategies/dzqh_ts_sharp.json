@@ -22,5 +22,7 @@
   "leverage": null,
   "disclaimer": "外部研报 KPI，非本仓库回测；不可作为下单指令。模型基于历史数据，环境变化可能导致失效。",
   "placeholder": false,
-  "summary": "东证·RuleBasedTSSharp-combine 跟踪 asof=2026-10-16 ann=11.6 sharpe=1.53 dd=8.26"
+  "summary": "东证·RuleBasedTSSharp-combine 跟踪 asof=2026-10-16 ann=11.6 sharpe=1.53 dd=8.26 · 验证归档（不进研究台）",
+  "desk_active": false,
+  "validation_archive": true
 }

@@ -28,14 +28,21 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from desk.loaders import (  # noqa: E402
+    format_variety_label,
     load_json,
     load_strategy_payload,
     load_universe,
     strategy_availability,
     strategy_kpis,
+    variety_select_labels,
 )
 from desk.strategies.registry import all_strategies  # noqa: E402
-from member_rank import clean_member_name, fetch_dce_member_day, seat_kind  # noqa: E402
+from member_rank import (  # noqa: E402
+    clean_member_name,
+    ensure_public_member_day,
+    fetch_dce_member_day,
+    seat_kind,
+)
 
 GREEN = "#14804a"
 RED = "#d1242f"
@@ -60,15 +67,7 @@ STRATEGY_IDS = (
     "proxy_cwft",
     "proxy_frontnext_st",
     "proxy_long_short_cwft",
-    "dzqh_cwft",
-    "dzqh_frontnext_st",
-    "dzqh_long_short_trend",
-    "dzqh_long_short_cwft",
-    "dzqh_cs_xgboost",
-    "dzqh_cs_ew",
-    "dzqh_ts_sharp",
-    "dzqh_ts_xgb",
-    "dzqh_t_daily",
+    # 东证周报 KPI：不能稳定自动获取 → external/archive，不进研究台。
 )
 _CZCE_RE = re.compile(
     r"(PTA|AP|CF|CJ|CY|FG|MA|OI|PF|PK|PL|PR|PX|RM|RS|SA|SF|SH|SM|SR|UR|TA)"
@@ -112,7 +111,7 @@ MAPPING_NOTE = (
     "家人 = 东方财富、平安、方正中期、徽商、中信建投。"
     "私募、产业大户、中户没有本地序列，本页不画这三条。"
     "郑商所用品种汇总表；上期所用持买仓合计最大的合约；"
-    "大商所读 akshare 缓存的 dce-*.json（官网 WAF 时可能为空）。"
+    "席位统一走东财→新浪补缺（em/dce 缓存）；交易所 txt 仅作辅。"
 )
 
 
@@ -206,6 +205,33 @@ def member_dates(root: Path, exchange: str) -> list[str]:
         if len(ymd) == 8 and ymd.isdigit():
             out.append(ymd)
     return sorted(out)
+
+
+def ensure_dce_latest(root: Path, *, try_n: int = 5) -> str | None:
+    """If DCE cache is empty/stale, pull recent sessions using SHFE/CZCE dates.
+
+    Daily ``load_member_seats`` used to read ``dce-*.json`` only and never
+    call akshare; the desk then showed 机构净持仓缺失 for all DCE symbols.
+    Tries newest shared calendar days first; returns the ymd that landed.
+    """
+    have = member_dates(root, "DCE")
+    if have:
+        return have[-1]
+    calendar = sorted(
+        set(member_dates(root, "SHFE")) | set(member_dates(root, "CZCE")),
+        reverse=True,
+    )
+    if not calendar:
+        return None
+    for ymd in calendar[: max(1, int(try_n))]:
+        got = fetch_dce_member_day(ymd, force=False)
+        if got and got.get("products"):
+            try:
+                cached_snapshot.clear()
+            except Exception:
+                pass
+            return ymd
+    return None
 
 
 def trading_day_options(root: Path, exchange: str) -> list[str]:
@@ -416,38 +442,50 @@ def _dce_snapshot(payload: dict, code: str) -> dict | None:
     return _pack(contract, longs, shorts, n)
 
 
+def _em_product_snapshot(root: Path, code: str, ymd: str) -> dict | None:
+    """Eastmoney/Sina underlay written by member_rank.ensure_universe_member_coverage."""
+    path = root / ".cache" / "member" / f"em-{ymd}.json"
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, UnicodeError):
+        return None
+    if not isinstance(payload, dict):
+        return None
+    return _dce_snapshot(payload, code)
+
+
 def _snapshot_uncached(root: Path, code: str, exchange: str, ymd: str) -> dict:
+    snap = None
     if exchange == "DCE":
         path = root / ".cache" / "member" / f"dce-{ymd}.json"
-        if not path.is_file():
-            return {"ok": False}
-        try:
-            payload = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError, UnicodeError):
-            return {"ok": False}
-        if not isinstance(payload, dict):
-            return {"ok": False}
-        snap = _dce_snapshot(payload, code)
+        if path.is_file():
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError, UnicodeError):
+                payload = None
+            if isinstance(payload, dict):
+                snap = _dce_snapshot(payload, code)
     else:
         prefix = {"CZCE": "czce", "SHFE": "shfe"}.get(exchange)
         if not prefix:
             return {"ok": False}
         path = root / ".cache" / "member" / f"{prefix}-{ymd}.txt"
-        if not path.is_file():
-            return {"ok": False}
-        if exchange == "CZCE":
-            text = _read_text(path)
-            if not text:
-                return {"ok": False}
-            snap = _czce_snapshot(text, code)
-        else:
-            try:
-                payload = json.loads(path.read_text(encoding="utf-8"))
-            except (OSError, json.JSONDecodeError):
-                return {"ok": False}
-            if not isinstance(payload, dict):
-                return {"ok": False}
-            snap = _shfe_snapshot(payload, code)
+        if path.is_file():
+            if exchange == "CZCE":
+                text = _read_text(path)
+                if text:
+                    snap = _czce_snapshot(text, code)
+            else:
+                try:
+                    payload = json.loads(path.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError):
+                    payload = None
+                if isinstance(payload, dict):
+                    snap = _shfe_snapshot(payload, code)
+    if not snap:
+        snap = _em_product_snapshot(root, code, ymd)
     if not snap:
         return {"ok": False}
     snap["date"] = _iso(ymd)
@@ -460,8 +498,34 @@ def cached_snapshot(root_s: str, code: str, exchange: str, ymd: str) -> dict:
     return _snapshot_uncached(Path(root_s), code, exchange, ymd)
 
 
+def _em_dates(root: Path) -> list[str]:
+    folder = root / ".cache" / "member"
+    if not folder.is_dir():
+        return []
+    out = []
+    for path in folder.glob("em-*.json"):
+        ymd = path.stem.split("-", 1)[-1]
+        if len(ymd) == 8 and ymd.isdigit():
+            out.append(ymd)
+    return out
+
+
 def load_group_frame(root: Path, code: str, exchange: str, end_ymd: str, n_back: int) -> pd.DataFrame:
-    dates = [d for d in member_dates(root, exchange) if d <= end_ymd]
+    """Build net-position series for the chart.
+
+    DCE previously only walked ``dce-*.json`` dates (often 2–3 days). Use the
+    denser SHFE/CZCE/EM calendar so Eastmoney underlay fills the gaps.
+    """
+    if exchange == "DCE":
+        dates = sorted(
+            set(member_dates(root, "DCE"))
+            | set(member_dates(root, "SHFE"))
+            | set(member_dates(root, "CZCE"))
+            | set(_em_dates(root))
+        )
+        dates = [d for d in dates if d <= end_ymd]
+    else:
+        dates = [d for d in member_dates(root, exchange) if d <= end_ymd]
     if n_back > 0:
         dates = dates[-n_back:]
     rows = []
@@ -513,11 +577,10 @@ def _light(
     if cartesian:
         fig.update_xaxes(gridcolor=GRID, linecolor="#cccccc", zerolinecolor="#cccccc", tickfont=dict(color=INK))
         fig.update_yaxes(gridcolor=GRID, linecolor="#cccccc", zerolinecolor="#cccccc", tickfont=dict(color=INK))
-    # time_axis: "recent_right"/True = 右近左远；"recent_left" = 左近右远
-    if time_axis in (True, "recent_right"):
-        fig.update_xaxes(autorange=True, title_text="日期（右近左远）")
-    elif time_axis == "recent_left":
-        fig.update_xaxes(autorange="reversed", title_text="日期（左近右远）")
+    # Desk charts use chronological x: 左远右近 (old left, recent right).
+    # "recent_left" kept as alias but no longer reverses the axis.
+    if time_axis in (True, "recent_right", "recent_left"):
+        fig.update_xaxes(autorange=True, title_text="日期（左远右近）")
     return fig
 
 
@@ -1000,7 +1063,7 @@ def render_seat_sector(root: Path) -> None:
     if not symbols:
         st.error("universe.json 没有品种")
         return
-    labels = [f"{row['code']} {row['name']} · {EX_ZH.get(row['exchange'], row['exchange'])}" for row in symbols]
+    labels = variety_select_labels(root, symbols, ex_zh=EX_ZH)
     report = load_json(root / "l1_report.json")
     selected_codes = [
         str(sig.get("code") or "").upper()
@@ -1014,9 +1077,12 @@ def render_seat_sector(root: Path) -> None:
     if st.session_state["seat_sym"] not in labels:
         st.session_state["seat_sym"] = default_label
 
+    def _push_chart_sym() -> None:
+        st.session_state["chart_sym"] = st.session_state.get("seat_sym")
+
     c_day, c_sym, c_win, c_btn = st.columns([1.15, 1.7, 0.9, 0.55])
     with c_sym:
-        choice = st.selectbox("品种", labels, key="seat_sym")
+        choice = st.selectbox("品种", labels, key="seat_sym", on_change=_push_chart_sym)
     meta = symbols[labels.index(choice)]
     code = meta["code"]
     exchange = meta["exchange"]
@@ -1043,14 +1109,14 @@ def render_seat_sector(root: Path) -> None:
     with c_btn:
         st.caption("")
         if st.button("刷新", key="seat_refresh"):
-            if exchange == "DCE" and end_ymd:
-                with st.spinner("拉取大商所持仓排名（akshare）…"):
-                    fetch_dce_member_day(end_ymd, force=True)
+            if end_ymd:
+                with st.spinner("东财→新浪补席位…"):
+                    ensure_public_member_day(end_ymd, force_em=True)
             cached_snapshot.clear()
             st.rerun()
 
     st.caption(
-        f"当前 {code} {meta['name']} · {EX_ZH.get(exchange, exchange)} · "
+        f"当前 {format_variety_label(code, meta.get('name') or '', root=root, exchange_zh=EX_ZH.get(exchange, exchange))} · "
         f"交易日 {_iso(end_ymd) if end_ymd else '—'} · 窗口 {win_label}"
     )
 
@@ -1059,19 +1125,21 @@ def render_seat_sector(root: Path) -> None:
         frame = pd.DataFrame()
         snap = {"ok": False}
     else:
-        if exchange == "DCE":
-            dce_path = root / ".cache" / "member" / f"dce-{end_ymd}.json"
-            if not dce_path.is_file():
-                with st.spinner("拉取大商所持仓排名（akshare）…"):
-                    got = fetch_dce_member_day(end_ymd, force=False)
-                if not got:
-                    st.info(
-                        "大商所官网常返回 412/WAF，akshare 拉不到 zip 时软失败。"
-                        "已有缓存则读 `.cache/member/dce-*.json`；"
-                        "点「刷新」可重试当日。板块与多空评分仍用日报 JSON。"
-                    )
+        em_path = root / ".cache" / "member" / f"em-{end_ymd}.json"
+        dce_path = root / ".cache" / "member" / f"dce-{end_ymd}.json"
+        if exchange == "DCE" and not dce_path.is_file() and not em_path.is_file():
+            with st.spinner("东财→新浪补大商所席位…"):
+                got = ensure_public_member_day(end_ymd, force_em=False)
+            if not got.get("ok") and not dce_path.is_file() and not em_path.is_file():
+                st.info(
+                    "东财/新浪暂无该日席位。点「刷新」重试；"
+                    "或等 GitHub 日报/周跑落库后 git pull。"
+                    "板块与多空评分仍可用日报 JSON。"
+                )
             else:
-                st.caption("大商所持仓来自本地 dce-*.json（akshare 缓存）。")
+                st.caption("大商所持仓：东财→新浪统一缓存（em/dce）。")
+        elif exchange == "DCE":
+            st.caption("大商所持仓：东财→新浪统一缓存（em/dce）。")
         lookback = win_n if win_n == 0 else max(win_n, 11)
         with st.spinner("读取本地会员排名…"):
             frame = load_group_frame(root, code, exchange, end_ymd, lookback)
@@ -1149,6 +1217,81 @@ def render_seat_sector(root: Path) -> None:
         st.dataframe(sty, width="stretch", hide_index=True)
         if len(frame) <= 10:
             st.caption(f"当前读入 {len(frame)} 个交易日，不够 10 日的格子为空。")
+
+    if code == "CF":
+        from desk.cf_option_pressure import (  # noqa: WPS433
+            attach_marker_premiums,
+            hedge_pressure_blurb,
+            load_cf_premium_series,
+            load_cf_trade_markers,
+            premium_trade_fig,
+        )
+
+        st.markdown("**CF 期权套保压力 · 权利金与建平仓**")
+        st.caption(
+            "棉花期权权利金为套保/保险需求旁证，与席位交叉验证；非独立交易信号。"
+            "曲线默认合成 ATR 权利金（1 手观察）；有链缓存时在旁注对照。标注来自纸面回测/日报进出。"
+        )
+        lookback = win_n if win_n else 70
+        with st.spinner("读取 CF 权利金与建平仓标注…"):
+            prem_full = load_cf_premium_series(root, end_ymd=end_ymd or "", n_back=0)
+            markers = attach_marker_premiums(prem_full, load_cf_trade_markers(root))
+            if lookback and lookback > 0 and len(prem_full) > lookback:
+                prem_df = prem_full.tail(lookback).reset_index(drop=True)
+            else:
+                prem_df = prem_full
+            start_d = str(prem_df["date"].iloc[0]) if len(prem_df) else ""
+            chart_markers = [
+                m
+                for m in markers
+                if (not start_d or str(m.get("date") or "") >= start_d)
+                and (not end_ymd or str(m.get("date") or "") <= _iso(end_ymd))
+            ]
+        seat_chg = None
+        if not frame.empty and "inst_net" in frame.columns and len(frame) >= 2:
+            seat_chg = session_delta(frame["inst_net"], 5 if len(frame) > 5 else 1)
+        st.info(hedge_pressure_blurb(prem_df, seat_chg, lookback=min(5, max(2, len(prem_df)))))
+        if prem_df.empty and not markers:
+            st.caption("样本不足：本地无 CF0 日线或纸面 CF 事件。")
+        else:
+            st.plotly_chart(
+                premium_trade_fig(prem_df, chart_markers, title="CF 权利金（合成）· 建平仓标注"),
+                width="stretch",
+            )
+            if markers:
+                show_m = pd.DataFrame(
+                    [
+                        {
+                            "日期": m.get("date"),
+                            "品种": m.get("label")
+                            or format_variety_label(
+                                str(m.get("code") or "CF"),
+                                meta.get("name") or "棉花",
+                                contract=m.get("contract"),
+                                root=root,
+                            ),
+                            "事件": m.get("event"),
+                            "方向": m.get("direction"),
+                            "条件": m.get("condition"),
+                            "权利金": m.get("premium"),
+                            "来源": m.get("premium_source") or "—",
+                            "R": m.get("R"),
+                        }
+                        for m in markers
+                        if not end_ymd or str(m.get("date") or "") <= _iso(end_ymd)
+                    ]
+                )
+                if not show_m.empty:
+                    st.dataframe(show_m, width="stretch", hide_index=True)
+            cmp_ = prem_df.attrs.get("listed_compare") if not prem_df.empty else None
+            if isinstance(cmp_, dict) and cmp_.get("ok"):
+                st.caption(
+                    f"链对照：{cmp_.get('product')} {cmp_.get('month')} · "
+                    f"{cmp_.get('option_symbol')} · 链权利金约 {cmp_.get('listed_premium')} · "
+                    f"合成/链≈{cmp_.get('synth_over_listed')}"
+                )
+            elif isinstance(cmp_, dict) and cmp_.get("note"):
+                st.caption(f"链对照软失败：{cmp_.get('note')}")
 
     st.markdown("**板块强弱**")
     st.caption(

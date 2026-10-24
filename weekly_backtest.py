@@ -50,6 +50,23 @@ def _sign(direction: str) -> int:
 
 
 def run(days: int = 7) -> dict:
+    # GitHub weekly: densify seat ranks (esp. DCE/EM) so desk charts are readable.
+    try:
+        from member_rank import backfill_member_lookback
+
+        bf = backfill_member_lookback(
+            lookback_calendar_days=max(14, int(days) + 7),
+            dce=True,
+            coverage=True,
+        )
+        print(
+            f"[weekly] member backfill days={bf.get('days')} "
+            f"dce={bf.get('dce')} em={bf.get('eastmoney')} "
+            f"cov_ok={bf.get('coverage_ok')}"
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[weekly] member backfill soft-fail: {exc}")
+
     reps = _load_reports()
     if len(reps) < 2:
         now = datetime.now(TZ)

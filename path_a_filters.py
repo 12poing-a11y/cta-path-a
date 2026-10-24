@@ -104,6 +104,77 @@ def carry_reason(direction: str, pair) -> str | None:
     return None
 
 
+def carry_gap_pct(pair) -> float | None:
+    """Relative front→next gap in percent. Positive = contango (升水)."""
+    if not pair or len(pair) < 2:
+        return None
+    try:
+        front, nxt = float(pair[0]), float(pair[1])
+    except (TypeError, ValueError):
+        return None
+    if front <= 0:
+        return None
+    return (nxt - front) / front * 100.0
+
+
+def carry_bypass_cfg(raw: dict | None = None) -> dict:
+    """Normalize universe/execution carry_bypass block. Default off-safe."""
+    src = raw if isinstance(raw, dict) else {}
+    action = str(src.get("action") or "block").strip().lower()
+    if action not in ("block", "scale"):
+        action = "block"
+    try:
+        thr = float(src.get("extreme_gap_pct") if src.get("extreme_gap_pct") is not None else 1.0)
+    except (TypeError, ValueError):
+        thr = 1.0
+    try:
+        scale = float(src.get("scale") if src.get("scale") is not None else 0.5)
+    except (TypeError, ValueError):
+        scale = 0.5
+    return {
+        "enabled": bool(src.get("enabled")),
+        "extreme_gap_pct": max(0.0, thr),
+        "action": action,
+        "scale": min(1.0, max(0.0, scale)),
+        "note": str(src.get("note") or ""),
+    }
+
+
+def carry_bypass_decision(
+    direction: str,
+    pair,
+    *,
+    extreme_gap_pct: float = 1.0,
+    action: str = "block",
+    scale: float = 0.5,
+) -> tuple[str | None, float, str, float | None]:
+    """Soft carry extreme gate for NEW entries (does not replace entry_filter).
+
+    Contango (gap ≥ thr): long is adverse → block or scale 多.
+    Backwardation (gap ≤ −thr): short is adverse → block or scale 空.
+    Missing pair does not block (scale=1, label=缺升贴水).
+    Returns (block_reason|None, lots_mult, label, gap_pct).
+    """
+    gap = carry_gap_pct(pair)
+    if gap is None:
+        return None, 1.0, "缺升贴水", None
+    thr = abs(float(extreme_gap_pct or 0.0))
+    if thr <= 0:
+        return None, 1.0, "旁路关闭", gap
+    if direction == "多" and gap >= thr:
+        label = f"升水极端(+{gap:.2f}%)"
+        if action == "scale":
+            return None, float(scale), f"{label}·减仓", gap
+        return "升水极端禁开多", 0.0, label, gap
+    if direction == "空" and gap <= -thr:
+        label = f"贴水极端({gap:.2f}%)"
+        if action == "scale":
+            return None, float(scale), f"{label}·减仓", gap
+        return "贴水极端禁开空", 0.0, label, gap
+    side = "升水" if gap > 0 else ("贴水" if gap < 0 else "平水")
+    return None, 1.0, f"{side}{gap:+.2f}%·放行", gap
+
+
 def member_reason(direction: str, change) -> str | None:
     """Missing member change does not block. Opposite top-20 net-long change does."""
     if change is None:

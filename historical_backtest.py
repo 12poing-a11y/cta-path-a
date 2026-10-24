@@ -14,8 +14,15 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 from ifind_call import active_slot, call, usage_report  # noqa: E402
 from member_rank import load_member_changes, load_member_seats  # noqa: E402
-from path_a_filters import entry_block, fill_cost, seat_decision  # noqa: E402
+from path_a_filters import (  # noqa: E402
+    carry_bypass_cfg,
+    carry_bypass_decision,
+    entry_block,
+    fill_cost,
+    seat_decision,
+)
 from public_curve import curve_coverage, load_curves  # noqa: E402
+from vol_factor_combo import vol_bypass_cfg, vol_entry_block  # noqa: E402
 from option_hedge import (  # noqa: E402
     attach_hedge_to_position,
     hedge_enabled,
@@ -79,6 +86,8 @@ def _load_cfg():
         "reward_rr": reward_rr,
         "stop_atr_mult": stop_atr_mult,
         "entry_filter": cfg.get("entry_filter") or "base",
+        "carry_bypass": carry_bypass_cfg(cfg.get("carry_bypass")),
+        "vol_bypass": vol_bypass_cfg(cfg.get("vol_bypass")),
     }
 
 
@@ -527,7 +536,11 @@ def simulate(
     stop_atr_mult=1.0,
     mode="p0",
     pack=None,
+    carry_bypass=None,
+    vol_bypass=None,
 ):
+    bypass = carry_bypass_cfg(carry_bypass)
+    vbypass = vol_bypass_cfg(vol_bypass)
     if pack is None:
         series, errors, sources = _fetch_pack(symbols)
     else:
@@ -569,7 +582,7 @@ def simulate(
 
     trade_dates = dates[WARMUP:]
     curves = {}
-    if mode not in ("base", "seats", "ctf"):
+    if mode not in ("base", "seats", "ctf") or bypass.get("enabled"):
         curves = load_curves([u["code"] for u in symbols])
     member = {}
     if mode == "member":
@@ -577,6 +590,8 @@ def simulate(
     elif mode == "seats":
         member = load_member_seats(trade_dates, [c for c in series])
     seat_follows: dict[str, int] = {}
+    bypass_counts: dict[str, int] = {}
+    vol_bypass_counts: dict[str, int] = {}
     for di, d in enumerate(trade_dates):
         price_pnl = 0.0
         day_cost = 0.0
@@ -638,6 +653,14 @@ def simulate(
                     {
                         "date": d,
                         "code": code,
+                        "direction": p.get("direction"),
+                        "lots": p.get("lots"),
+                        "entry_date": p.get("entry_date"),
+                        "entry": round(float(p["entry"]), 4),
+                        "exit": round(float(px), 4),
+                        "stop": round(float(p["stop"]), 4) if p.get("stop") is not None else None,
+                        "target": round(float(p["target"]), 4) if p.get("target") is not None else None,
+                        "entry_reason": p.get("reason") or "path_a",
                         "reason": reason,
                         "R": round(r_mult, 2),
                         "opt_payoff": round(opt_pnl, 2),
@@ -707,6 +730,38 @@ def simulate(
                 if blocked:
                     block_counts[blocked] = block_counts.get(blocked, 0) + 1
                     continue
+                carry_mult = 1.0
+                if bypass.get("enabled"):
+                    pair = ((curves.get(code) or {}).get("carry") or {}).get(d)
+                    by_reason, carry_mult, by_label, _gap = carry_bypass_decision(
+                        direction,
+                        pair,
+                        extreme_gap_pct=float(bypass["extreme_gap_pct"]),
+                        action=str(bypass["action"]),
+                        scale=float(bypass["scale"]),
+                    )
+                    if by_reason:
+                        bypass_counts[by_reason] = bypass_counts.get(by_reason, 0) + 1
+                        block_counts[by_reason] = block_counts.get(by_reason, 0) + 1
+                        continue
+                    if carry_mult < 1.0:
+                        bypass_counts[by_label] = bypass_counts.get(by_label, 0) + 1
+                if vbypass.get("enabled"):
+                    vol_reason = vol_entry_block(
+                        hist,
+                        i,
+                        enabled=True,
+                        action=str(vbypass.get("action") or "observe"),
+                        short_n=int(vbypass["short_n"]),
+                        mid_n=int(vbypass["mid_n"]),
+                        long_n=int(vbypass["long_n"]),
+                        expand_ratio=float(vbypass["expand_ratio"]),
+                        compress_ratio=float(vbypass["compress_ratio"]),
+                    )
+                    if vol_reason:
+                        vol_bypass_counts[vol_reason] = vol_bypass_counts.get(vol_reason, 0) + 1
+                        block_counts[vol_reason] = block_counts.get(vol_reason, 0) + 1
+                        continue
                 close = hist[i]["close"]
                 stop_dist = stop_atr_mult * a
                 if direction == "多":
@@ -717,6 +772,8 @@ def simulate(
                     target = close - reward_rr * stop_dist
                 risk_per_lot = stop_dist * s["meta"]["mult"]
                 lots = int(math.floor(day_risk / risk_per_lot)) if risk_per_lot > 0 else 0
+                if carry_mult < 1.0 and lots > 0:
+                    lots = int(math.floor(lots * carry_mult))
                 if min_lots > 0 and lots < min_lots:
                     lots = int(min_lots)
                 if lots <= 0:
@@ -767,6 +824,7 @@ def simulate(
                     "direction": c["direction"],
                     "lots": int(c["lots"]),
                     "entry": float(c["entry"]),
+                    "entry_date": d,
                     "stop": float(c["stop"]),
                     "target": float(c["target"]),
                     "atr": c.get("atr"),
@@ -887,6 +945,10 @@ def simulate(
         "max_dd_pct": round(max_dd, 3),
         "gross_max_dd_pct": round(gross_max_dd, 3),
         "blocks": block_counts,
+        "carry_bypass": bypass,
+        "carry_bypass_counts": bypass_counts,
+        "vol_bypass": vbypass,
+        "vol_bypass_counts": vol_bypass_counts,
         "seat_follows": seat_follows,
         "win_rate": round(wins_day / n * 100, 2) if n else None,
         "trade_win_rate": round(trade_wr, 2) if trade_wr is not None else None,
@@ -905,7 +967,34 @@ def simulate(
         "equity_curve": curve,
         "equity_curve_weekly": _downsample_weekly(curve),
         "day_pnls_tail": day_pnls[-20:],
-        "closed_pnls_tail": closed_pnls[-30:],
+        "closed_pnls_tail": closed_pnls[-100:],
+        "closed_pnls": closed_pnls,
+        "entry_exit_rules": {
+            "open": (
+                "r20/r60同向且|r20|≥min_r20、|r60|≥min_r60（ctf模式改用composite_trend）；"
+                "经entry_filter/席位等过滤；升贴水极端旁路（carry_bypass）可禁开或减仓；"
+                "再经组合帽（TopN、名义暴露、组合风险、板块上限）；"
+                "止损=stop_atr_mult×ATR，止盈=reward_rr×止损距。"
+            ),
+            "close": (
+                "同根K线先止损(stop)后止盈(target)；"
+                "趋势不再同向或composite_trend翻号则以signal在收盘价平仓。"
+            ),
+            "exit_codes": {
+                "target": "触及止盈",
+                "stop": "触及止损",
+                "signal": "趋势/信号失效平仓",
+            },
+            "params": {
+                "reward_rr": reward_rr,
+                "stop_atr_mult": stop_atr_mult,
+                "min_r20": min_r20,
+                "min_r60": min_r60,
+                "max_positions": max_positions,
+                "mode": mode,
+            },
+        },
+
         "ifind_calls": usage_report()["count"],
         "summary": (
             f"PathA{'+OptHedge' if option_hedge else ''} {mode} {trade_dates[0]}→{trade_dates[-1]} "
@@ -955,6 +1044,8 @@ def _simulate_cfg(
         stop_atr_mult=float(p["stop_atr_mult"] if stop_atr_mult is None else stop_atr_mult),
         mode=mode,
         pack=pack,
+        carry_bypass=p.get("carry_bypass"),
+        vol_bypass=p.get("vol_bypass"),
     )
 
 

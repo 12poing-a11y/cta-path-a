@@ -60,8 +60,8 @@ def _expiry(symbol: str) -> int:
     return int(digits[-4:]) if len(digits) >= 4 else 0
 
 
-def _build_one(code: str) -> dict:
-    symbols = contract_symbols(code)
+def _build_one(code: str, *, back_days: int = 460) -> dict:
+    symbols = contract_symbols(code, back_days=back_days)
     books: dict[str, dict] = {}
     for sym in symbols:
         try:
@@ -160,13 +160,26 @@ def _ifind_carry(code: str) -> dict[str, tuple[float, float]]:
     return out
 
 
-def load_curves(codes: list[str]) -> dict[str, dict]:
+def load_curves(codes: list[str], *, back_days: int = 460, force: bool = False) -> dict[str, dict]:
+    """Front/next carry from Sina delivery months.
+
+    ``back_days`` controls how far contract symbols are generated (desk default
+    460 ≈ 1.5y; lab factor panel may pass 4000+ for IS coverage). Sina often
+    only has bars from ~2018–2019 onward for many months.
+    """
     global _CURVES
-    if _CURVES is not None and all(c in _CURVES for c in codes):
-        return _CURVES
+    codes = [str(c).upper() for c in codes]
+    cache_ok = (
+        not force
+        and _CURVES is not None
+        and _CURVES.get("_back_days") == back_days
+        and all(c in _CURVES for c in codes)
+    )
+    if cache_ok:
+        return {c: _CURVES[c] for c in codes}  # type: ignore[index]
     found: dict[str, dict] = {}
     with ThreadPoolExecutor(max_workers=4) as pool:
-        futs = {pool.submit(_build_one, c): c for c in codes}
+        futs = {pool.submit(_build_one, c, back_days=back_days): c for c in codes}
         for fut in as_completed(futs):
             code = futs[fut]
             try:
@@ -192,10 +205,15 @@ def load_curves(codes: list[str]) -> dict[str, dict]:
             f"  [curve] {code} source={row.get('source')} "
             f"contracts={row.get('contracts')}/{row.get('tried')} "
             f"roll={len(row.get('roll_dates') or [])} "
-            f"carry={len(row.get('carry') or {})}"
+            f"carry={len(row.get('carry') or {})} back_days={back_days}"
         )
-    _CURVES = found
-    return found
+    merged = dict(_CURVES or {})
+    if merged.get("_back_days") != back_days:
+        merged = {}
+    merged.update(found)
+    merged["_back_days"] = back_days  # type: ignore[assignment]
+    _CURVES = merged
+    return {c: found[c] for c in codes}
 
 
 def curve_coverage(curves: dict) -> dict:

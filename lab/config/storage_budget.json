@@ -1,0 +1,11 @@
+{
+  "plan": "A",
+  "root": "D:/AI/cta-path-a/lab",
+  "drive": "D:",
+  "budget_gb": {
+    "soft": 5,
+    "hard": 20,
+    "warn_free_gb": 30
+  },
+  "notes": "日频连续+分月+席位补丁+因子面板+OOS 产物。不上全市场分钟/Tick。"
+}

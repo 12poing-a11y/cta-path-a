@@ -1,0 +1,1434 @@
+{
+  "asof": "2026-10-23T11:29:14Z",
+  "universe": "Path-A 20",
+  "window_start": "2025-11-27",
+  "bar": "daily continuous (sina pack)",
+  "note_zh": "vnpy 官方 CTA 示例默认参数；Boll/Keltner/DualThrust/MultiTimeframe 原为分钟/日内，日线仅为逻辑族适用性探测，不作实盘参数。",
+  "path_a_seats_ref": {
+    "ret_pct": 5.23,
+    "max_dd_pct": 6.105,
+    "calmar": 0.857,
+    "window": "2025-11-27+"
+  },
+  "strategies": [
+    {
+      "strategy": "DoubleMaStrategy",
+      "kind": "双均线",
+      "fidelity": "日线可忠实复现",
+      "n_symbols": 20,
+      "median_ret_pct": -0.666,
+      "median_max_dd_pct": 15.91,
+      "calmar_proxy": -0.042,
+      "closed_trades_sum": 126,
+      "positive_symbol_share": 45.0,
+      "by_symbol": [
+        {
+          "code": "MA",
+          "ret_pct": -2.24,
+          "max_dd_pct": 21.802,
+          "calmar": -0.103,
+          "trade_win_rate": 57.14,
+          "closed_trades": 7
+        },
+        {
+          "code": "V",
+          "ret_pct": -1.5,
+          "max_dd_pct": 13.382,
+          "calmar": -0.112,
+          "trade_win_rate": 42.86,
+          "closed_trades": 7
+        },
+        {
+          "code": "EG",
+          "ret_pct": 6.6,
+          "max_dd_pct": 16.877,
+          "calmar": 0.391,
+          "trade_win_rate": 28.57,
+          "closed_trades": 7
+        },
+        {
+          "code": "M",
+          "ret_pct": 9.1,
+          "max_dd_pct": 4.879,
+          "calmar": 1.865,
+          "trade_win_rate": 66.67,
+          "closed_trades": 6
+        },
+        {
+          "code": "FG",
+          "ret_pct": -6.6,
+          "max_dd_pct": 10.492,
+          "calmar": -0.629,
+          "trade_win_rate": 33.33,
+          "closed_trades": 6
+        },
+        {
+          "code": "EB",
+          "ret_pct": -10.8,
+          "max_dd_pct": 25.585,
+          "calmar": -0.422,
+          "trade_win_rate": 20.0,
+          "closed_trades": 5
+        },
+        {
+          "code": "TA",
+          "ret_pct": -12.36,
+          "max_dd_pct": 12.96,
+          "calmar": -0.954,
+          "trade_win_rate": 33.33,
+          "closed_trades": 9
+        },
+        {
+          "code": "SA",
+          "ret_pct": -6.361,
+          "max_dd_pct": 9.545,
+          "calmar": -0.666,
+          "trade_win_rate": 0.0,
+          "closed_trades": 6
+        },
+        {
+          "code": "PP",
+          "ret_pct": 6.4,
+          "max_dd_pct": 18.988,
+          "calmar": 0.337,
+          "trade_win_rate": 55.56,
+          "closed_trades": 9
+        },
+        {
+          "code": "L",
+          "ret_pct": 2.8,
+          "max_dd_pct": 17.473,
+          "calmar": 0.16,
+          "trade_win_rate": 62.5,
+          "closed_trades": 8
+        },
+        {
+          "code": "JD",
+          "ret_pct": 5.997,
+          "max_dd_pct": 17.749,
+          "calmar": 0.338,
+          "trade_win_rate": 20.0,
+          "closed_trades": 5
+        },
+        {
+          "code": "P",
+          "ret_pct": -1.3,
+          "max_dd_pct": 25.613,
+          "calmar": -0.051,
+          "trade_win_rate": 33.33,
+          "closed_trades": 6
+        },
+        {
+          "code": "RB",
+          "ret_pct": -0.032,
+          "max_dd_pct": 3.141,
+          "calmar": -0.01,
+          "trade_win_rate": 50.0,
+          "closed_trades": 6
+        },
+        {
+          "code": "FU",
+          "ret_pct": 57.109,
+          "max_dd_pct": 13.982,
+          "calmar": 4.084,
+          "trade_win_rate": 50.0,
+          "closed_trades": 4
+        },
+        {
+          "code": "CF",
+          "ret_pct": 10.134,
+          "max_dd_pct": 8.71,
+          "calmar": 1.163,
+          "trade_win_rate": 66.67,
+          "closed_trades": 6
+        },
+        {
+          "code": "BU",
+          "ret_pct": 7.475,
+          "max_dd_pct": 21.509,
+          "calmar": 0.348,
+          "trade_win_rate": 40.0,
+          "closed_trades": 5
+        },
+        {
+          "code": "RU",
+          "ret_pct": -51.46,
+          "max_dd_pct": 54.734,
+          "calmar": -0.94,
+          "trade_win_rate": 16.67,
+          "closed_trades": 6
+        },
+        {
+          "code": "AG",
+          "ret_pct": 185.259,
+          "max_dd_pct": 117.064,
+          "calmar": 1.583,
+          "trade_win_rate": 60.0,
+          "closed_trades": 5
+        },
+        {
+          "code": "SP",
+          "ret_pct": -11.462,
+          "max_dd_pct": 14.944,
+          "calmar": -0.767,
+          "trade_win_rate": 14.29,
+          "closed_trades": 7
+        },
+        {
+          "code": "SR",
+          "ret_pct": -4.92,
+          "max_dd_pct": 6.478,
+          "calmar": -0.76,
+          "trade_win_rate": 33.33,
+          "closed_trades": 6
+        }
+      ],
+      "applicability": "低",
+      "adopt": false,
+      "reason": "中位收益-0.666% 中位回撤15.91% Calmar≈-0.042 盈利品种占比45.0%"
+    },
+    {
+      "strategy": "AtrRsiStrategy",
+      "kind": "动量+过滤",
+      "fidelity": "日线可复现（原示例常配分钟）",
+      "n_symbols": 20,
+      "median_ret_pct": -8.007,
+      "median_max_dd_pct": 15.94,
+      "calmar_proxy": -0.502,
+      "closed_trades_sum": 378,
+      "positive_symbol_share": 45.0,
+      "by_symbol": [
+        {
+          "code": "MA",
+          "ret_pct": 0.146,
+          "max_dd_pct": 13.13,
+          "calmar": 0.011,
+          "trade_win_rate": 44.44,
+          "closed_trades": 18
+        },
+        {
+          "code": "V",
+          "ret_pct": -16.527,
+          "max_dd_pct": 17.825,
+          "calmar": -0.927,
+          "trade_win_rate": 40.91,
+          "closed_trades": 22
+        },
+        {
+          "code": "EG",
+          "ret_pct": -22.704,
+          "max_dd_pct": 38.476,
+          "calmar": -0.59,
+          "trade_win_rate": 37.5,
+          "closed_trades": 24
+        },
+        {
+          "code": "M",
+          "ret_pct": 6.717,
+          "max_dd_pct": 7.005,
+          "calmar": 0.959,
+          "trade_win_rate": 50.0,
+          "closed_trades": 16
+        },
+        {
+          "code": "FG",
+          "ret_pct": 1.669,
+          "max_dd_pct": 8.792,
+          "calmar": 0.19,
+          "trade_win_rate": 33.33,
+          "closed_trades": 15
+        },
+        {
+          "code": "EB",
+          "ret_pct": 12.035,
+          "max_dd_pct": 15.332,
+          "calmar": 0.785,
+          "trade_win_rate": 45.0,
+          "closed_trades": 20
+        },
+        {
+          "code": "TA",
+          "ret_pct": -10.387,
+          "max_dd_pct": 16.237,
+          "calmar": -0.64,
+          "trade_win_rate": 25.0,
+          "closed_trades": 20
+        },
+        {
+          "code": "SA",
+          "ret_pct": 4.037,
+          "max_dd_pct": 9.348,
+          "calmar": 0.432,
+          "trade_win_rate": 42.86,
+          "closed_trades": 14
+        },
+        {
+          "code": "PP",
+          "ret_pct": -25.749,
+          "max_dd_pct": 35.853,
+          "calmar": -0.718,
+          "trade_win_rate": 34.48,
+          "closed_trades": 29
+        },
+        {
+          "code": "L",
+          "ret_pct": -10.27,
+          "max_dd_pct": 25.147,
+          "calmar": -0.408,
+          "trade_win_rate": 40.91,
+          "closed_trades": 22
+        },
+        {
+          "code": "JD",
+          "ret_pct": 48.452,
+          "max_dd_pct": 4.896,
+          "calmar": 9.896,
+          "trade_win_rate": 77.78,
+          "closed_trades": 9
+        },
+        {
+          "code": "P",
+          "ret_pct": -23.157,
+          "max_dd_pct": 39.266,
+          "calmar": -0.59,
+          "trade_win_rate": 38.89,
+          "closed_trades": 18
+        },
+        {
+          "code": "RB",
+          "ret_pct": 4.583,
+          "max_dd_pct": 2.918,
+          "calmar": 1.571,
+          "trade_win_rate": 66.67,
+          "closed_trades": 12
+        },
+        {
+          "code": "FU",
+          "ret_pct": 26.949,
+          "max_dd_pct": 15.643,
+          "calmar": 1.723,
+          "trade_win_rate": 45.45,
+          "closed_trades": 22
+        },
+        {
+          "code": "CF",
+          "ret_pct": 1.457,
+          "max_dd_pct": 13.562,
+          "calmar": 0.107,
+          "trade_win_rate": 38.89,
+          "closed_trades": 18
+        },
+        {
+          "code": "BU",
+          "ret_pct": -16.129,
+          "max_dd_pct": 24.354,
+          "calmar": -0.662,
+          "trade_win_rate": 42.31,
+          "closed_trades": 26
+        },
+        {
+          "code": "RU",
+          "ret_pct": -116.42,
+          "max_dd_pct": 119.267,
+          "calmar": -0.976,
+          "trade_win_rate": 17.39,
+          "closed_trades": 23
+        },
+        {
+          "code": "AG",
+          "ret_pct": -85.395,
+          "max_dd_pct": 96.653,
+          "calmar": -0.884,
+          "trade_win_rate": 41.18,
+          "closed_trades": 17
+        },
+        {
+          "code": "SP",
+          "ret_pct": -14.204,
+          "max_dd_pct": 17.492,
+          "calmar": -0.812,
+          "trade_win_rate": 25.0,
+          "closed_trades": 16
+        },
+        {
+          "code": "SR",
+          "ret_pct": -5.744,
+          "max_dd_pct": 8.749,
+          "calmar": -0.657,
+          "trade_win_rate": 29.41,
+          "closed_trades": 17
+        }
+      ],
+      "applicability": "低",
+      "adopt": false,
+      "reason": "中位收益-8.007% 中位回撤15.94% Calmar≈-0.502 盈利品种占比45.0%"
+    },
+    {
+      "strategy": "BollChannelStrategy",
+      "kind": "通道",
+      "fidelity": "原15m；日线为降采样近似",
+      "n_symbols": 20,
+      "median_ret_pct": -0.404,
+      "median_max_dd_pct": 10.675,
+      "calmar_proxy": -0.038,
+      "closed_trades_sum": 31,
+      "positive_symbol_share": 40.0,
+      "by_symbol": [
+        {
+          "code": "MA",
+          "ret_pct": 3.881,
+          "max_dd_pct": 11.528,
+          "calmar": 0.337,
+          "trade_win_rate": 50.0,
+          "closed_trades": 2
+        },
+        {
+          "code": "V",
+          "ret_pct": -0.807,
+          "max_dd_pct": 11.587,
+          "calmar": -0.07,
+          "trade_win_rate": 0.0,
+          "closed_trades": 1
+        },
+        {
+          "code": "EG",
+          "ret_pct": 13.687,
+          "max_dd_pct": 15.201,
+          "calmar": 0.9,
+          "trade_win_rate": 100.0,
+          "closed_trades": 1
+        },
+        {
+          "code": "M",
+          "ret_pct": -2.411,
+          "max_dd_pct": 4.81,
+          "calmar": -0.501,
+          "trade_win_rate": 0.0,
+          "closed_trades": 2
+        },
+        {
+          "code": "FG",
+          "ret_pct": -4.488,
+          "max_dd_pct": 5.695,
+          "calmar": -0.788,
+          "trade_win_rate": 0.0,
+          "closed_trades": 1
+        },
+        {
+          "code": "EB",
+          "ret_pct": -8.985,
+          "max_dd_pct": 19.149,
+          "calmar": -0.469,
+          "trade_win_rate": 0.0,
+          "closed_trades": 1
+        },
+        {
+          "code": "TA",
+          "ret_pct": -1.863,
+          "max_dd_pct": 9.823,
+          "calmar": -0.19,
+          "trade_win_rate": 0.0,
+          "closed_trades": 2
+        },
+        {
+          "code": "SA",
+          "ret_pct": -5.878,
+          "max_dd_pct": 6.178,
+          "calmar": -0.951,
+          "trade_win_rate": 0.0,
+          "closed_trades": 1
+        },
+        {
+          "code": "PP",
+          "ret_pct": 10.543,
+          "max_dd_pct": 13.461,
+          "calmar": 0.783,
+          "trade_win_rate": 100.0,
+          "closed_trades": 2
+        },
+        {
+          "code": "L",
+          "ret_pct": 7.5,
+          "max_dd_pct": 16.381,
+          "calmar": 0.458,
+          "trade_win_rate": 75.0,
+          "closed_trades": 4
+        },
+        {
+          "code": "JD",
+          "ret_pct": -6.192,
+          "max_dd_pct": 20.637,
+          "calmar": -0.3,
+          "trade_win_rate": 50.0,
+          "closed_trades": 2
+        },
+        {
+          "code": "P",
+          "ret_pct": -7.034,
+          "max_dd_pct": 12.855,
+          "calmar": -0.547,
+          "trade_win_rate": 0.0,
+          "closed_trades": 1
+        },
+        {
+          "code": "RB",
+          "ret_pct": 0.0,
+          "max_dd_pct": 0.0,
+          "calmar": null,
+          "trade_win_rate": null,
+          "closed_trades": 0
+        },
+        {
+          "code": "FU",
+          "ret_pct": 43.417,
+          "max_dd_pct": 8.913,
+          "calmar": 4.871,
+          "trade_win_rate": 100.0,
+          "closed_trades": 2
+        },
+        {
+          "code": "CF",
+          "ret_pct": 11.924,
+          "max_dd_pct": 8.108,
+          "calmar": 1.471,
+          "trade_win_rate": 100.0,
+          "closed_trades": 1
+        },
+        {
+          "code": "BU",
+          "ret_pct": 25.21,
+          "max_dd_pct": 15.924,
+          "calmar": 1.583,
+          "trade_win_rate": 66.67,
+          "closed_trades": 3
+        },
+        {
+          "code": "RU",
+          "ret_pct": 18.661,
+          "max_dd_pct": 23.479,
+          "calmar": 0.795,
+          "trade_win_rate": 100.0,
+          "closed_trades": 1
+        },
+        {
+          "code": "AG",
+          "ret_pct": 0.0,
+          "max_dd_pct": 0.0,
+          "calmar": null,
+          "trade_win_rate": null,
+          "closed_trades": 0
+        },
+        {
+          "code": "SP",
+          "ret_pct": -6.512,
+          "max_dd_pct": 7.28,
+          "calmar": -0.894,
+          "trade_win_rate": 0.0,
+          "closed_trades": 1
+        },
+        {
+          "code": "SR",
+          "ret_pct": -7.192,
+          "max_dd_pct": 9.718,
+          "calmar": -0.74,
+          "trade_win_rate": 33.33,
+          "closed_trades": 3
+        }
+      ],
+      "applicability": "低",
+      "adopt": false,
+      "reason": "中位收益-0.404% 中位回撤10.675% Calmar≈-0.038 盈利品种占比40.0%"
+    },
+    {
+      "strategy": "DualThrustStrategy",
+      "kind": "日内突破",
+      "fidelity": "原日内；日线用昨幅近似，保真度低",
+      "n_symbols": 20,
+      "median_ret_pct": 0.935,
+      "median_max_dd_pct": 21.811,
+      "calmar_proxy": 0.043,
+      "closed_trades_sum": 1743,
+      "positive_symbol_share": 50.0,
+      "by_symbol": [
+        {
+          "code": "MA",
+          "ret_pct": -6.381,
+          "max_dd_pct": 23.411,
+          "calmar": -0.273,
+          "trade_win_rate": 28.57,
+          "closed_trades": 91
+        },
+        {
+          "code": "V",
+          "ret_pct": 8.202,
+          "max_dd_pct": 8.911,
+          "calmar": 0.92,
+          "trade_win_rate": 32.53,
+          "closed_trades": 83
+        },
+        {
+          "code": "EG",
+          "ret_pct": -63.92,
+          "max_dd_pct": 68.487,
+          "calmar": -0.933,
+          "trade_win_rate": 25.53,
+          "closed_trades": 94
+        },
+        {
+          "code": "M",
+          "ret_pct": -1.974,
+          "max_dd_pct": 7.678,
+          "calmar": -0.257,
+          "trade_win_rate": 32.61,
+          "closed_trades": 92
+        },
+        {
+          "code": "FG",
+          "ret_pct": -19.008,
+          "max_dd_pct": 19.784,
+          "calmar": -0.961,
+          "trade_win_rate": 24.75,
+          "closed_trades": 101
+        },
+        {
+          "code": "EB",
+          "ret_pct": 18.862,
+          "max_dd_pct": 30.314,
+          "calmar": 0.622,
+          "trade_win_rate": 35.0,
+          "closed_trades": 80
+        },
+        {
+          "code": "TA",
+          "ret_pct": -24.704,
+          "max_dd_pct": 28.644,
+          "calmar": -0.862,
+          "trade_win_rate": 27.47,
+          "closed_trades": 91
+        },
+        {
+          "code": "SA",
+          "ret_pct": -18.065,
+          "max_dd_pct": 18.88,
+          "calmar": -0.957,
+          "trade_win_rate": 28.57,
+          "closed_trades": 91
+        },
+        {
+          "code": "PP",
+          "ret_pct": 5.934,
+          "max_dd_pct": 28.303,
+          "calmar": 0.21,
+          "trade_win_rate": 33.33,
+          "closed_trades": 84
+        },
+        {
+          "code": "L",
+          "ret_pct": 5.298,
+          "max_dd_pct": 20.211,
+          "calmar": 0.262,
+          "trade_win_rate": 33.71,
+          "closed_trades": 89
+        },
+        {
+          "code": "JD",
+          "ret_pct": -15.408,
+          "max_dd_pct": 23.998,
+          "calmar": -0.642,
+          "trade_win_rate": 30.61,
+          "closed_trades": 98
+        },
+        {
+          "code": "P",
+          "ret_pct": -14.16,
+          "max_dd_pct": 32.656,
+          "calmar": -0.434,
+          "trade_win_rate": 31.87,
+          "closed_trades": 91
+        },
+        {
+          "code": "RB",
+          "ret_pct": -8.998,
+          "max_dd_pct": 12.625,
+          "calmar": -0.713,
+          "trade_win_rate": 27.27,
+          "closed_trades": 88
+        },
+        {
+          "code": "FU",
+          "ret_pct": 73.131,
+          "max_dd_pct": 14.97,
+          "calmar": 4.885,
+          "trade_win_rate": 37.5,
+          "closed_trades": 72
+        },
+        {
+          "code": "CF",
+          "ret_pct": 3.844,
+          "max_dd_pct": 19.503,
+          "calmar": 0.197,
+          "trade_win_rate": 37.5,
+          "closed_trades": 72
+        },
+        {
+          "code": "BU",
+          "ret_pct": 11.736,
+          "max_dd_pct": 18.44,
+          "calmar": 0.636,
+          "trade_win_rate": 31.76,
+          "closed_trades": 85
+        },
+        {
+          "code": "RU",
+          "ret_pct": 25.0,
+          "max_dd_pct": 61.066,
+          "calmar": 0.409,
+          "trade_win_rate": 32.0,
+          "closed_trades": 75
+        },
+        {
+          "code": "AG",
+          "ret_pct": 46.359,
+          "max_dd_pct": 88.069,
+          "calmar": 0.526,
+          "trade_win_rate": 37.93,
+          "closed_trades": 87
+        },
+        {
+          "code": "SP",
+          "ret_pct": -19.232,
+          "max_dd_pct": 25.537,
+          "calmar": -0.753,
+          "trade_win_rate": 30.43,
+          "closed_trades": 92
+        },
+        {
+          "code": "SR",
+          "ret_pct": 4.984,
+          "max_dd_pct": 7.927,
+          "calmar": 0.629,
+          "trade_win_rate": 35.63,
+          "closed_trades": 87
+        }
+      ],
+      "applicability": "低",
+      "adopt": false,
+      "reason": "中位收益0.935% 中位回撤21.811% Calmar≈0.043 盈利品种占比50.0%"
+    },
+    {
+      "strategy": "KingKeltnerStrategy",
+      "kind": "通道",
+      "fidelity": "原5m；日线降采样近似",
+      "n_symbols": 20,
+      "median_ret_pct": -6.051,
+      "median_max_dd_pct": 17.027,
+      "calmar_proxy": -0.355,
+      "closed_trades_sum": 360,
+      "positive_symbol_share": 25.0,
+      "by_symbol": [
+        {
+          "code": "MA",
+          "ret_pct": -9.914,
+          "max_dd_pct": 19.13,
+          "calmar": -0.518,
+          "trade_win_rate": 36.36,
+          "closed_trades": 22
+        },
+        {
+          "code": "V",
+          "ret_pct": -18.65,
+          "max_dd_pct": 20.222,
+          "calmar": -0.922,
+          "trade_win_rate": 36.36,
+          "closed_trades": 22
+        },
+        {
+          "code": "EG",
+          "ret_pct": -12.618,
+          "max_dd_pct": 30.094,
+          "calmar": -0.419,
+          "trade_win_rate": 36.36,
+          "closed_trades": 22
+        },
+        {
+          "code": "M",
+          "ret_pct": -0.13,
+          "max_dd_pct": 5.538,
+          "calmar": -0.023,
+          "trade_win_rate": 41.18,
+          "closed_trades": 17
+        },
+        {
+          "code": "FG",
+          "ret_pct": -4.172,
+          "max_dd_pct": 12.788,
+          "calmar": -0.326,
+          "trade_win_rate": 35.71,
+          "closed_trades": 14
+        },
+        {
+          "code": "EB",
+          "ret_pct": 17.116,
+          "max_dd_pct": 13.492,
+          "calmar": 1.269,
+          "trade_win_rate": 52.63,
+          "closed_trades": 19
+        },
+        {
+          "code": "TA",
+          "ret_pct": -12.248,
+          "max_dd_pct": 20.481,
+          "calmar": -0.598,
+          "trade_win_rate": 26.32,
+          "closed_trades": 19
+        },
+        {
+          "code": "SA",
+          "ret_pct": 0.772,
+          "max_dd_pct": 9.544,
+          "calmar": 0.081,
+          "trade_win_rate": 42.86,
+          "closed_trades": 14
+        },
+        {
+          "code": "PP",
+          "ret_pct": -6.232,
+          "max_dd_pct": 20.25,
+          "calmar": -0.308,
+          "trade_win_rate": 36.36,
+          "closed_trades": 22
+        },
+        {
+          "code": "L",
+          "ret_pct": -0.472,
+          "max_dd_pct": 14.93,
+          "calmar": -0.032,
+          "trade_win_rate": 38.1,
+          "closed_trades": 21
+        },
+        {
+          "code": "JD",
+          "ret_pct": 37.652,
+          "max_dd_pct": 7.24,
+          "calmar": 5.201,
+          "trade_win_rate": 50.0,
+          "closed_trades": 14
+        },
+        {
+          "code": "P",
+          "ret_pct": -22.958,
+          "max_dd_pct": 31.424,
+          "calmar": -0.731,
+          "trade_win_rate": 23.53,
+          "closed_trades": 17
+        },
+        {
+          "code": "RB",
+          "ret_pct": -2.982,
+          "max_dd_pct": 5.422,
+          "calmar": -0.55,
+          "trade_win_rate": 35.71,
+          "closed_trades": 14
+        },
+        {
+          "code": "FU",
+          "ret_pct": 41.683,
+          "max_dd_pct": 17.111,
+          "calmar": 2.436,
+          "trade_win_rate": 56.25,
+          "closed_trades": 16
+        },
+        {
+          "code": "CF",
+          "ret_pct": 8.443,
+          "max_dd_pct": 14.886,
+          "calmar": 0.567,
+          "trade_win_rate": 41.18,
+          "closed_trades": 17
+        },
+        {
+          "code": "BU",
+          "ret_pct": -10.626,
+          "max_dd_pct": 25.91,
+          "calmar": -0.41,
+          "trade_win_rate": 37.5,
+          "closed_trades": 24
+        },
+        {
+          "code": "RU",
+          "ret_pct": -23.01,
+          "max_dd_pct": 35.484,
+          "calmar": -0.648,
+          "trade_win_rate": 38.46,
+          "closed_trades": 13
+        },
+        {
+          "code": "AG",
+          "ret_pct": -273.294,
+          "max_dd_pct": 160.16,
+          "calmar": -1.706,
+          "trade_win_rate": 38.1,
+          "closed_trades": 21
+        },
+        {
+          "code": "SP",
+          "ret_pct": -13.886,
+          "max_dd_pct": 16.943,
+          "calmar": -0.82,
+          "trade_win_rate": 25.0,
+          "closed_trades": 16
+        },
+        {
+          "code": "SR",
+          "ret_pct": -5.87,
+          "max_dd_pct": 10.086,
+          "calmar": -0.582,
+          "trade_win_rate": 31.25,
+          "closed_trades": 16
+        }
+      ],
+      "applicability": "低",
+      "adopt": false,
+      "reason": "中位收益-6.051% 中位回撤17.027% Calmar≈-0.355 盈利品种占比25.0%"
+    },
+    {
+      "strategy": "TurtleSignalStrategy",
+      "kind": "海龟",
+      "fidelity": "日线可忠实复现唐奇安逻辑",
+      "n_symbols": 20,
+      "median_ret_pct": -6.295,
+      "median_max_dd_pct": 21.971,
+      "calmar_proxy": -0.287,
+      "closed_trades_sum": 211,
+      "positive_symbol_share": 45.0,
+      "by_symbol": [
+        {
+          "code": "MA",
+          "ret_pct": -12.749,
+          "max_dd_pct": 26.275,
+          "calmar": -0.485,
+          "trade_win_rate": 36.36,
+          "closed_trades": 11
+        },
+        {
+          "code": "V",
+          "ret_pct": -7.96,
+          "max_dd_pct": 10.738,
+          "calmar": -0.741,
+          "trade_win_rate": 30.0,
+          "closed_trades": 10
+        },
+        {
+          "code": "EG",
+          "ret_pct": 6.32,
+          "max_dd_pct": 22.516,
+          "calmar": 0.281,
+          "trade_win_rate": 54.55,
+          "closed_trades": 11
+        },
+        {
+          "code": "M",
+          "ret_pct": 3.86,
+          "max_dd_pct": 4.954,
+          "calmar": 0.779,
+          "trade_win_rate": 55.56,
+          "closed_trades": 9
+        },
+        {
+          "code": "FG",
+          "ret_pct": -8.52,
+          "max_dd_pct": 13.739,
+          "calmar": -0.62,
+          "trade_win_rate": 27.27,
+          "closed_trades": 11
+        },
+        {
+          "code": "EB",
+          "ret_pct": 28.24,
+          "max_dd_pct": 17.613,
+          "calmar": 1.603,
+          "trade_win_rate": 55.56,
+          "closed_trades": 9
+        },
+        {
+          "code": "TA",
+          "ret_pct": -9.28,
+          "max_dd_pct": 23.636,
+          "calmar": -0.393,
+          "trade_win_rate": 44.44,
+          "closed_trades": 9
+        },
+        {
+          "code": "SA",
+          "ret_pct": -4.63,
+          "max_dd_pct": 13.923,
+          "calmar": -0.333,
+          "trade_win_rate": 16.67,
+          "closed_trades": 12
+        },
+        {
+          "code": "PP",
+          "ret_pct": 1.58,
+          "max_dd_pct": 22.519,
+          "calmar": 0.07,
+          "trade_win_rate": 33.33,
+          "closed_trades": 12
+        },
+        {
+          "code": "L",
+          "ret_pct": 4.29,
+          "max_dd_pct": 14.426,
+          "calmar": 0.297,
+          "trade_win_rate": 45.45,
+          "closed_trades": 11
+        },
+        {
+          "code": "JD",
+          "ret_pct": 19.082,
+          "max_dd_pct": 12.557,
+          "calmar": 1.52,
+          "trade_win_rate": 45.45,
+          "closed_trades": 11
+        },
+        {
+          "code": "P",
+          "ret_pct": -27.33,
+          "max_dd_pct": 52.261,
+          "calmar": -0.523,
+          "trade_win_rate": 30.0,
+          "closed_trades": 10
+        },
+        {
+          "code": "RB",
+          "ret_pct": -8.306,
+          "max_dd_pct": 9.13,
+          "calmar": -0.91,
+          "trade_win_rate": 41.67,
+          "closed_trades": 12
+        },
+        {
+          "code": "FU",
+          "ret_pct": 42.789,
+          "max_dd_pct": 22.435,
+          "calmar": 1.907,
+          "trade_win_rate": 37.5,
+          "closed_trades": 8
+        },
+        {
+          "code": "CF",
+          "ret_pct": 3.712,
+          "max_dd_pct": 21.508,
+          "calmar": 0.173,
+          "trade_win_rate": 44.44,
+          "closed_trades": 9
+        },
+        {
+          "code": "BU",
+          "ret_pct": -23.576,
+          "max_dd_pct": 39.18,
+          "calmar": -0.602,
+          "trade_win_rate": 33.33,
+          "closed_trades": 12
+        },
+        {
+          "code": "RU",
+          "ret_pct": -88.66,
+          "max_dd_pct": 92.935,
+          "calmar": -0.954,
+          "trade_win_rate": 27.27,
+          "closed_trades": 11
+        },
+        {
+          "code": "AG",
+          "ret_pct": 27.16,
+          "max_dd_pct": 107.962,
+          "calmar": 0.252,
+          "trade_win_rate": 50.0,
+          "closed_trades": 8
+        },
+        {
+          "code": "SP",
+          "ret_pct": -28.804,
+          "max_dd_pct": 30.276,
+          "calmar": -0.951,
+          "trade_win_rate": 15.38,
+          "closed_trades": 13
+        },
+        {
+          "code": "SR",
+          "ret_pct": -12.38,
+          "max_dd_pct": 16.31,
+          "calmar": -0.759,
+          "trade_win_rate": 25.0,
+          "closed_trades": 12
+        }
+      ],
+      "applicability": "低",
+      "adopt": false,
+      "reason": "中位收益-6.295% 中位回撤21.971% Calmar≈-0.287 盈利品种占比45.0%"
+    },
+    {
+      "strategy": "MultiTimeframeStrategy",
+      "kind": "多周期",
+      "fidelity": "原5m+15m；日线用MA趋势+RSI近似",
+      "n_symbols": 20,
+      "median_ret_pct": 0.93,
+      "median_max_dd_pct": 17.115,
+      "calmar_proxy": 0.054,
+      "closed_trades_sum": 169,
+      "positive_symbol_share": 55.0,
+      "by_symbol": [
+        {
+          "code": "MA",
+          "ret_pct": -4.961,
+          "max_dd_pct": 16.801,
+          "calmar": -0.295,
+          "trade_win_rate": 44.44,
+          "closed_trades": 9
+        },
+        {
+          "code": "V",
+          "ret_pct": -8.8,
+          "max_dd_pct": 13.855,
+          "calmar": -0.635,
+          "trade_win_rate": 12.5,
+          "closed_trades": 8
+        },
+        {
+          "code": "EG",
+          "ret_pct": 6.4,
+          "max_dd_pct": 23.325,
+          "calmar": 0.274,
+          "trade_win_rate": 22.22,
+          "closed_trades": 9
+        },
+        {
+          "code": "M",
+          "ret_pct": 6.23,
+          "max_dd_pct": 7.093,
+          "calmar": 0.878,
+          "trade_win_rate": 62.5,
+          "closed_trades": 8
+        },
+        {
+          "code": "FG",
+          "ret_pct": -12.8,
+          "max_dd_pct": 16.52,
+          "calmar": -0.775,
+          "trade_win_rate": 20.0,
+          "closed_trades": 10
+        },
+        {
+          "code": "EB",
+          "ret_pct": 37.89,
+          "max_dd_pct": 10.904,
+          "calmar": 3.475,
+          "trade_win_rate": 83.33,
+          "closed_trades": 6
+        },
+        {
+          "code": "TA",
+          "ret_pct": -3.66,
+          "max_dd_pct": 17.679,
+          "calmar": -0.207,
+          "trade_win_rate": 25.0,
+          "closed_trades": 8
+        },
+        {
+          "code": "SA",
+          "ret_pct": -2.616,
+          "max_dd_pct": 11.734,
+          "calmar": -0.223,
+          "trade_win_rate": 22.22,
+          "closed_trades": 9
+        },
+        {
+          "code": "PP",
+          "ret_pct": 2.39,
+          "max_dd_pct": 18.772,
+          "calmar": 0.127,
+          "trade_win_rate": 33.33,
+          "closed_trades": 9
+        },
+        {
+          "code": "L",
+          "ret_pct": 0.58,
+          "max_dd_pct": 16.628,
+          "calmar": 0.035,
+          "trade_win_rate": 33.33,
+          "closed_trades": 9
+        },
+        {
+          "code": "JD",
+          "ret_pct": 7.008,
+          "max_dd_pct": 19.085,
+          "calmar": 0.367,
+          "trade_win_rate": 27.27,
+          "closed_trades": 11
+        },
+        {
+          "code": "P",
+          "ret_pct": 1.28,
+          "max_dd_pct": 18.118,
+          "calmar": 0.071,
+          "trade_win_rate": 57.14,
+          "closed_trades": 7
+        },
+        {
+          "code": "RB",
+          "ret_pct": -6.442,
+          "max_dd_pct": 8.287,
+          "calmar": -0.777,
+          "trade_win_rate": 20.0,
+          "closed_trades": 10
+        },
+        {
+          "code": "FU",
+          "ret_pct": 66.749,
+          "max_dd_pct": 9.734,
+          "calmar": 6.857,
+          "trade_win_rate": 60.0,
+          "closed_trades": 5
+        },
+        {
+          "code": "CF",
+          "ret_pct": 7.598,
+          "max_dd_pct": 13.55,
+          "calmar": 0.561,
+          "trade_win_rate": 42.86,
+          "closed_trades": 7
+        },
+        {
+          "code": "BU",
+          "ret_pct": 9.323,
+          "max_dd_pct": 19.569,
+          "calmar": 0.476,
+          "trade_win_rate": 55.56,
+          "closed_trades": 9
+        },
+        {
+          "code": "RU",
+          "ret_pct": -65.52,
+          "max_dd_pct": 69.104,
+          "calmar": -0.948,
+          "trade_win_rate": 37.5,
+          "closed_trades": 8
+        },
+        {
+          "code": "AG",
+          "ret_pct": 339.697,
+          "max_dd_pct": 54.274,
+          "calmar": 6.259,
+          "trade_win_rate": 60.0,
+          "closed_trades": 5
+        },
+        {
+          "code": "SP",
+          "ret_pct": -17.961,
+          "max_dd_pct": 20.469,
+          "calmar": -0.877,
+          "trade_win_rate": 27.27,
+          "closed_trades": 11
+        },
+        {
+          "code": "SR",
+          "ret_pct": -12.74,
+          "max_dd_pct": 17.43,
+          "calmar": -0.731,
+          "trade_win_rate": 27.27,
+          "closed_trades": 11
+        }
+      ],
+      "applicability": "低",
+      "adopt": false,
+      "reason": "中位收益0.93% 中位回撤17.115% Calmar≈0.054 盈利品种占比55.0%"
+    },
+    {
+      "strategy": "MultiSignalStrategy",
+      "kind": "多信号合成",
+      "fidelity": "日线合成 RSI/CCI/MA（MA原5m）",
+      "n_symbols": 20,
+      "median_ret_pct": -4.124,
+      "median_max_dd_pct": 19.205,
+      "calmar_proxy": -0.215,
+      "closed_trades_sum": 318,
+      "positive_symbol_share": 40.0,
+      "by_symbol": [
+        {
+          "code": "MA",
+          "ret_pct": -24.521,
+          "max_dd_pct": 33.508,
+          "calmar": -0.732,
+          "trade_win_rate": 17.65,
+          "closed_trades": 17
+        },
+        {
+          "code": "V",
+          "ret_pct": -15.91,
+          "max_dd_pct": 20.747,
+          "calmar": -0.767,
+          "trade_win_rate": 15.79,
+          "closed_trades": 19
+        },
+        {
+          "code": "EG",
+          "ret_pct": 11.4,
+          "max_dd_pct": 26.68,
+          "calmar": 0.427,
+          "trade_win_rate": 42.86,
+          "closed_trades": 14
+        },
+        {
+          "code": "M",
+          "ret_pct": 7.46,
+          "max_dd_pct": 7.012,
+          "calmar": 1.064,
+          "trade_win_rate": 40.0,
+          "closed_trades": 15
+        },
+        {
+          "code": "FG",
+          "ret_pct": -7.48,
+          "max_dd_pct": 16.291,
+          "calmar": -0.459,
+          "trade_win_rate": 29.41,
+          "closed_trades": 17
+        },
+        {
+          "code": "EB",
+          "ret_pct": 44.43,
+          "max_dd_pct": 10.881,
+          "calmar": 4.083,
+          "trade_win_rate": 50.0,
+          "closed_trades": 8
+        },
+        {
+          "code": "TA",
+          "ret_pct": 1.5,
+          "max_dd_pct": 17.278,
+          "calmar": 0.087,
+          "trade_win_rate": 25.0,
+          "closed_trades": 20
+        },
+        {
+          "code": "SA",
+          "ret_pct": -3.99,
+          "max_dd_pct": 14.288,
+          "calmar": -0.279,
+          "trade_win_rate": 37.5,
+          "closed_trades": 16
+        },
+        {
+          "code": "PP",
+          "ret_pct": -7.71,
+          "max_dd_pct": 27.013,
+          "calmar": -0.285,
+          "trade_win_rate": 40.0,
+          "closed_trades": 15
+        },
+        {
+          "code": "L",
+          "ret_pct": -2.38,
+          "max_dd_pct": 18.222,
+          "calmar": -0.131,
+          "trade_win_rate": 33.33,
+          "closed_trades": 15
+        },
+        {
+          "code": "JD",
+          "ret_pct": 19.079,
+          "max_dd_pct": 17.376,
+          "calmar": 1.098,
+          "trade_win_rate": 33.33,
+          "closed_trades": 15
+        },
+        {
+          "code": "P",
+          "ret_pct": -23.77,
+          "max_dd_pct": 37.894,
+          "calmar": -0.627,
+          "trade_win_rate": 22.22,
+          "closed_trades": 18
+        },
+        {
+          "code": "RB",
+          "ret_pct": -4.258,
+          "max_dd_pct": 8.612,
+          "calmar": -0.494,
+          "trade_win_rate": 41.18,
+          "closed_trades": 17
+        },
+        {
+          "code": "FU",
+          "ret_pct": 44.328,
+          "max_dd_pct": 23.025,
+          "calmar": 1.925,
+          "trade_win_rate": 28.57,
+          "closed_trades": 14
+        },
+        {
+          "code": "CF",
+          "ret_pct": 5.324,
+          "max_dd_pct": 20.188,
+          "calmar": 0.264,
+          "trade_win_rate": 29.41,
+          "closed_trades": 17
+        },
+        {
+          "code": "BU",
+          "ret_pct": -11.151,
+          "max_dd_pct": 31.685,
+          "calmar": -0.352,
+          "trade_win_rate": 38.46,
+          "closed_trades": 13
+        },
+        {
+          "code": "RU",
+          "ret_pct": -51.6,
+          "max_dd_pct": 71.917,
+          "calmar": -0.717,
+          "trade_win_rate": 25.0,
+          "closed_trades": 16
+        },
+        {
+          "code": "AG",
+          "ret_pct": 101.74,
+          "max_dd_pct": 95.155,
+          "calmar": 1.069,
+          "trade_win_rate": 37.5,
+          "closed_trades": 16
+        },
+        {
+          "code": "SP",
+          "ret_pct": -11.462,
+          "max_dd_pct": 17.987,
+          "calmar": -0.637,
+          "trade_win_rate": 30.0,
+          "closed_trades": 20
+        },
+        {
+          "code": "SR",
+          "ret_pct": -8.16,
+          "max_dd_pct": 13.926,
+          "calmar": -0.586,
+          "trade_win_rate": 25.0,
+          "closed_trades": 16
+        }
+      ],
+      "applicability": "低",
+      "adopt": false,
+      "reason": "中位收益-4.124% 中位回撤19.205% Calmar≈-0.215 盈利品种占比40.0%"
+    },
+    {
+      "strategy": "TestStrategy",
+      "kind": "测试用",
+      "fidelity": "测下单接口，不做适用性回测",
+      "applicability": "跳过",
+      "adopt": false,
+      "reason": "非交易策略"
+    }
+  ],
+  "adopt_list": [],
+  "decision_zh": "建议并入研究台纸面对照：无（无一达到高适用且日线可忠实）；其余保留归档观察，不替换 Path-A seats 入场。",
+  "fetch_errors": {}
+}

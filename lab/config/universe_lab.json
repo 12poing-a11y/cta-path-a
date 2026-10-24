@@ -1,0 +1,17 @@
+{
+  "id": "lab_plan_a_v1",
+  "name": "Plan A 日频因子池",
+  "asof": "2026-10-23",
+  "source": "path_a_universe + watchlist_expand",
+  "path_a_codes": [
+    "MA", "V", "EG", "M", "FG", "EB", "TA", "SA", "PP", "L",
+    "JD", "P", "RB", "FU", "CF", "BU", "RU", "AG", "SP", "SR"
+  ],
+  "watchlist_expand": [
+    "I", "J", "JM", "HC", "CU", "AL", "ZN", "NI", "SN", "AO",
+    "SC", "LU", "PG", "LH", "C", "CS", "Y", "OI", "RM", "AP",
+    "CJ", "UR", "SF", "SM", "SS", "PF", "PX", "SH", "BR"
+  ],
+  "excluded_from_factors_until_data": ["IF", "IH", "IC", "IM", "T", "TF", "TL"],
+  "note": "先灌 path_a_codes；watchlist 有连续日线后再纳入面板。股指国债另册。"
+}

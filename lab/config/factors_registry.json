@@ -1,0 +1,127 @@
+{
+  "schema": "cta-lab-factors-v1",
+  "knowledge_cards": [
+    "external/knowledge/multidim_vol_factor_card.json"
+  ],
+  "factors": [
+    {
+      "id": "mom_20",
+      "name": "动量20日",
+      "family": "momentum",
+      "horizon": "D",
+      "inputs": ["close"],
+      "missing": "null",
+      "direction": "higher_more_long"
+    },
+    {
+      "id": "mom_60",
+      "name": "动量60日",
+      "family": "momentum",
+      "horizon": "D",
+      "inputs": ["close"],
+      "missing": "null",
+      "direction": "higher_more_long"
+    },
+    {
+      "id": "vol_s",
+      "name": "短窗已实现波动5日",
+      "family": "volatility",
+      "horizon": "D",
+      "inputs": ["close"],
+      "missing": "null",
+      "direction": "risk_measure"
+    },
+    {
+      "id": "vol_m",
+      "name": "中窗已实现波动20日",
+      "family": "volatility",
+      "horizon": "D",
+      "inputs": ["close"],
+      "missing": "null",
+      "direction": "risk_measure"
+    },
+    {
+      "id": "vol_l",
+      "name": "长窗已实现波动60日",
+      "family": "volatility",
+      "horizon": "D",
+      "inputs": ["close"],
+      "missing": "null",
+      "direction": "risk_measure"
+    },
+    {
+      "id": "vol_ratio_sl",
+      "name": "短长波动比",
+      "family": "volatility",
+      "horizon": "D",
+      "inputs": ["vol_s", "vol_l"],
+      "missing": "null",
+      "direction": "expand_caution"
+    },
+    {
+      "id": "carry_gap_pct",
+      "name": "近次月升贴水%",
+      "family": "term_structure",
+      "horizon": "D",
+      "inputs": ["front", "next"],
+      "missing": "null_if_no_curve",
+      "direction": "contango_caution_long"
+    },
+    {
+      "id": "basis_mom_20",
+      "name": "基差动量20日(近月−远月动量)",
+      "family": "term_structure",
+      "horizon": "D",
+      "inputs": ["front", "next"],
+      "missing": "null_if_no_curve",
+      "direction": "higher_more_long",
+      "source": "Boons-style nearby-minus-deferred mom proxy"
+    },
+    {
+      "id": "skew_60",
+      "name": "收益偏度60日",
+      "family": "higher_moment",
+      "horizon": "D",
+      "inputs": ["close"],
+      "missing": "null",
+      "direction": "tbd_by_ic"
+    },
+    {
+      "id": "mom_vol_20",
+      "name": "波动缩放动量20日",
+      "family": "momentum",
+      "horizon": "D",
+      "inputs": ["mom_20", "vol_s"],
+      "missing": "null",
+      "direction": "higher_more_long"
+    },
+    {
+      "id": "hedge_pressure",
+      "name": "对冲压力(机构席位净多)",
+      "family": "positioning",
+      "horizon": "D",
+      "inputs": ["member_seats.inst"],
+      "missing": "null_if_no_seats_cache",
+      "direction": "tbd_by_ic",
+      "note": "仅覆盖 .cache/member 有文件的交易日；面板内存品种内 60 日滚动 z（min40）"
+    },
+    {
+      "id": "warrant_w",
+      "name": "仓单因子W",
+      "family": "fundamental",
+      "horizon": "D",
+      "inputs": ["warehouse_receipt"],
+      "missing": "always_null_until_feed",
+      "direction": "tbd",
+      "status": "placeholder"
+    }
+  ],
+  "composites": [
+    {
+      "id": "lab_equal_mom_volcarry",
+      "name": "动量+波动比+升贴水 等权合成（实验室）",
+      "members": ["mom_20", "mom_60", "vol_ratio_sl", "carry_gap_pct"],
+      "note": "仅 OOS 对照；不写入 Path-A 开仓。"
+    }
+  ]
+}

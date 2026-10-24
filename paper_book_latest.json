@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "asof": "2026-10-23",
+  "asof_ymd": "20261023",
+  "source": "paper_book",
+  "seed": "paper_book_latest",
+  "parent_backtest_end": "2026-10-20",
+  "batch": "2026一年-pathA-optHedge",
+  "stop_atr_mult": 1.2,
+  "reward_rr": 1.5,
+  "positions": {
+    "V": {
+      "code": "V",
+      "direction": "多",
+      "lots": 1,
+      "entry": 4847.0,
+      "stop": 4657.228571428572,
+      "target": 5131.657142857142,
+      "atr": 120.14,
+      "r20": 2.6397,
+      "r60": 9.8795,
+      "bucket": "能化",
+      "reason": "composite_trend"
+    },
+    "EB": {
+      "code": "EB",
+      "direction": "多",
+      "lots": 1,
+      "entry": 10672.0,
+      "stop": 10168.252,
+      "target": 11427.622,
+      "atr": 419.79,
+      "r20": 7.1378,
+      "r60": 22.1332,
+      "bucket": "能化",
+      "reason": "daily_selected",
+      "entry_date": "2026-10-22"
+    }
+  },
+  "closed_today": [],
+  "opened_n": 0,
+  "closed_n": 0,
+  "held_n": 2,
+  "notes": "纸面模拟仓：以回测期末持仓为种子，按最新 l1_report 做信号平仓/组合入选开仓；不改写 historical_backtest KPI。与 Notion 持仓中、决策页账面同源。",
+  "l1_asof": "20261023",
+  "updated_from_l1": true
+}

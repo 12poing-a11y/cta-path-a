@@ -14,5 +14,16 @@
   "annual_curve_db_url": "https://app.notion.com/p/29b3f011d87147279a09b66f2d96f1d3",
   "annual_curve_ds": "d91a1a1a-1836-43b1-a385-ad08254bb890",
   "annual_page_id": "3ffca62a-b5a7-8162-9068-cc7280265611",
-  "annual_page_url": "https://app.notion.com/p/3ffca62ab5a781629068cc7280265611"
+  "annual_page_url": "https://app.notion.com/p/3ffca62ab5a781629068cc7280265611",
+  "trades_db_id": "845ee89c-668a-40f1-adbe-e1a220136d5b",
+  "trades_db_url": "https://app.notion.com/p/845ee89c668a40f1adbee1a220136d5b",
+  "trades_ds": "2b90dedf-7829-4a5a-bd90-3315818ee53d",
+  "rules_page_id": "401ca62a-b5a7-81b6-8a88-c16b548715f2",
+  "rules_page_url": "https://app.notion.com/p/401ca62ab5a781b68a88c16b548715f2",
+  "cf2701_page_id": "401ca62a-b5a7-81d0-962d-df420f106e91",
+  "cf2701_page_url": "https://app.notion.com/p/401ca62ab5a781d0962ddf420f106e91",
+  "nav_page_id": "401ca62a-b5a7-8185-8cb0-c67eb122d7fa",
+  "nav_page_url": "https://app.notion.com/p/401ca62ab5a781858cb0c67eb122d7fa",
+  "distill_page_id": "3ffca62a-b5a7-8150-abe9-c2270ccaae02",
+  "distill_page_url": "https://app.notion.com/p/3ffca62ab5a78150abe9c2270ccaae02"
 }

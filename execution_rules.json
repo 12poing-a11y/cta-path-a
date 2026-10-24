@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "asof": "2026-10-20",
+  "source": "universe.json → selection",
+  "paper_only": true,
+  "stop_atr_mult": 1.2,
+  "reward_rr": 1.5,
+  "stop_distance_atr": 1.2,
+  "target_distance_atr": 1.8,
+  "min_r20_pct": 3.0,
+  "min_r60_pct": 5.0,
+  "max_positions": 3,
+  "max_per_bucket": 1,
+  "max_gross_exposure_pct": 50,
+  "max_portfolio_risk_pct": 8,
+  "risk_pct": 1.5,
+  "equity": 200000,
+  "equity_compound": true,
+  "entry_filter": "seats",
+  "carry_bypass": {
+    "enabled": true,
+    "extreme_gap_pct": 1.0,
+    "action": "block",
+    "scale": 0.5,
+    "note": "席位之后软旁路：|近次月gap|≥1% 时升水禁开多、贴水禁开空；缺数据放行。"
+  },
+  "vol_bypass": {
+    "enabled": true,
+    "action": "observe",
+    "expand_ratio": 1.6,
+    "compress_ratio": 0.7,
+    "short_n": 5,
+    "mid_n": 20,
+    "long_n": 60,
+    "note": "多维波动旁路：短÷长≥1.6 高波扩张→决策观望；知识卡 multidim_vol_factor_card。"
+  },
+  "lab_edge_bypass": {
+    "enabled": true,
+    "action": "observe",
+    "disagree_frac": 0.2,
+    "note": "席位之后：lab IS合成截面分位与方向严重逆向→决策观望；缺面板放行。不改 entry_filter。"
+  },
+  "summary_zh": "止损 1.2×ATR14；止盈 1.5R（止盈距离 1.8×ATR）；动量门槛 |r20|≥3%、|r60|≥5%；席位确认后升贴水旁路(|gap|≥1%禁开逆向)+多维波动旁路(短/长≥1.6决策观望)+lab边逆向观望；Top3+板块1；名义≤50%；组合ATR风险≤8%。纸面不下单。",
+  "archived_params": [
+    {
+      "label": "旧主方案 1×ATR / 2R",
+      "stop_atr_mult": 1.0,
+      "reward_rr": 2.0,
+      "note": "已归档对照；蒸馏卡前文若仍写 1×ATR/2R 仅作历史，执行以本文件与 universe.selection 为准。"
+    }
+  ],
+  "desk_paths": {
+    "universe": "universe.json",
+    "paper_book": "paper_book_latest.json",
+    "backtest": "historical_backtest_latest.json",
+    "daily": "l1_report.json"
+  }
+}

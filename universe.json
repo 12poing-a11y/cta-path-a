@@ -4,7 +4,7 @@
   "l1_mult": 1.0,
   "notes": "Path-A 20/60同向；动量门槛3%/5%；止损1.2×ATR、止盈1.5R（止盈距离1.8×ATR）。2025-11-27至2026-10-20 该档净收益+10.09%、净回撤4.86%（原1×ATR/2R为+6.22%/5.04%）。日报 entry_filter=seats：信号先过 20/60，再按席位级联确认——跟随中信、国泰君安、华泰、永安、东证；其次摩根大通、摩根士丹利、瑞银、高盛；再次与东方财富、平安、方正中期、徽商、中信建投反向；单边不开反向单。2025-11-27至2026-10-20 seats 净收益+6.22%、净回撤5.04%（同窗 base +6.77%/5.50%）。排名中信建投计入中建投，东证期货计入东证融汇；大商所无会员排名时放行。回测列毛收益、净收益、1跳滑点和2026-09-02客户手续费。",
   "selection": {
-    "rule": "Path-A入场 + 席位级联确认 + ATR止损1.2R/止盈1.5R；板块去重+Top3+名义/风险帽",
+    "rule": "Path-A入场 + 席位级联确认 + 升贴水极端旁路(≥1%禁开逆向) + ATR止损1.2R/止盈1.5R；板块去重+Top3+名义/风险帽",
     "strategy": "path_a_atr_rr1_5",
     "reward_rr": 1.5,
     "stop_atr_mult": 1.2,
@@ -255,6 +255,29 @@
   "min_r60_pct": 5,
   "equity_compound": true,
   "entry_filter": "seats",
+  "carry_bypass": {
+    "enabled": true,
+    "extreme_gap_pct": 1.0,
+    "action": "block",
+    "scale": 0.5,
+    "note": "席位确认之后的软旁路：近次月升贴水 |gap|≥1% 时，升水禁开多、贴水禁开空；缺数据不拦。不替换 entry_filter=seats，也不改 ATR 止损止盈。"
+  },
+  "vol_bypass": {
+    "enabled": true,
+    "action": "observe",
+    "expand_ratio": 1.6,
+    "compress_ratio": 0.7,
+    "short_n": 5,
+    "mid_n": 20,
+    "long_n": 60,
+    "note": "多维波动率旁路：短5/中20/长60，短÷长≥1.6→决策观望（action=observe）。入场硬拦(action=block)经 OOS 验证不适用（见 lab/research/oos/vol_bypass_validate_latest.json）。不改 seats/ATR。"
+  },
+  "lab_edge_bypass": {
+    "enabled": true,
+    "action": "observe",
+    "disagree_frac": 0.2,
+    "note": "席位确认之后：lab IS冻结合成截面分位与拟开仓方向严重逆向（最低/最高20%）→决策观望；缺面板或截面过稀放行。不改 entry_filter=seats，也不改 ATR。"
+  },
   "observe": {
     "equity": 1000000,
     "min_lots": 1,

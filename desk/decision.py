@@ -1061,6 +1061,13 @@ def render_decision_tab(root: Path) -> None:
     st.subheader("决策")
     st.caption(DECISION_RULE)
     st.caption("研究用结论。纸面动作只有维持或观察，不写委托。")
+    try:
+        from desk.composite_eval import render_desk_composite_banner
+
+        render_desk_composite_banner(root)
+        st.divider()
+    except Exception as exc:  # noqa: BLE001
+        st.caption(f"桌面综合分暂不可用：{exc}")
     report = load_json(root / "l1_report.json")
     paper = load_paper_book(root)
     symbols = _symbol_choices(root, report)

@@ -945,6 +945,44 @@ def _paper_holdings_frame(root: Path, symbols: list[dict], paper: dict[str, Any]
                 "建仓因": pos.get("reason") or "—",
                 "止损": pos.get("stop"),
                 "止盈": pos.get("target"),
+                "浮动盈亏": pos.get("equity_delta"),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def _paper_ledger_frame(
+    root: Path, symbols: list[dict], ledger: list[dict]
+) -> pd.DataFrame:
+    name_by = {str(s.get("code") or "").upper(): s.get("name") for s in symbols}
+    try:
+        from paper_book import strategy_label
+    except Exception:
+        strategy_label = lambda r: str(r or "Path-A")  # noqa: E731
+    rows = []
+    for t in ledger:
+        if not isinstance(t, dict):
+            continue
+        code_u = str(t.get("code") or "").upper()
+        rows.append(
+            {
+                "日期": t.get("date") or "—",
+                "事件": t.get("event") or "—",
+                "品种": format_variety_label(
+                    code_u, str(name_by.get(code_u) or ""), root=root
+                ),
+                "方向": t.get("direction") or "—",
+                "手数": t.get("lots"),
+                "入场价": t.get("entry"),
+                "出场价": t.get("exit"),
+                "止损价": t.get("stop"),
+                "止盈价": t.get("target"),
+                "止盈止损方案": t.get("tp_sl_scheme") or "—",
+                "策略": t.get("strategy") or strategy_label(t.get("entry_reason")),
+                "平仓因": t.get("reason") or "—",
+                "R": t.get("R"),
+                "权益增减": t.get("equity_delta"),
+                "权益余额": t.get("equity_after"),
             }
         )
     return pd.DataFrame(rows)
@@ -1059,6 +1097,20 @@ def render_decision_tab(root: Path) -> None:
             st.info(f"模拟仓当前空仓（asof {asof}）。")
         else:
             st.dataframe(holdings, width="stretch", hide_index=True)
+        ledger = list(paper.get("trade_ledger") or [])
+        with st.expander(f"交易明细（本地台账 {len(ledger)} 笔 · 同步 Notion「建平仓流水」）"):
+            st.caption(
+                "含入场/出场点位、止盈止损方案、参考策略。"
+                "纸面模拟，非实盘成交。日报/notion_sync 会写入 Notion 表格。"
+            )
+            if not ledger:
+                st.info("尚无建平仓流水。刷新模拟仓后会从当前持仓种子建仓行。")
+            else:
+                st.dataframe(
+                    _paper_ledger_frame(root, symbols, ledger),
+                    width="stretch",
+                    hide_index=True,
+                )
 
     c_sym, c_btn = st.columns([3, 1])
     with c_sym:

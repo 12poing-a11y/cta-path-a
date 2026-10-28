@@ -21,7 +21,12 @@ jobs:
           python-version: "3.12"
 
       - name: Install
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Unit tests before formal daily
+        run: python -m pytest tests/ -q --tb=short
 
       - name: Fetch signals + seats + minute 15/60
         env:
@@ -32,17 +37,24 @@ jobs:
         run: python daily_update.py
 
       - name: Sync Notion
+        if: success()
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           IFIND_ACTIVE_SLOT: primary
-        run: python notion_sync.py signals
+        run: |
+          python notion_sync.py signals
+          # signals already pushes trades; explicit trades keeps ledger if signals skipped
+          python notion_sync.py trades
 
       - name: Upload artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cta-daily-${{ github.run_id }}
           path: |
             l1_report_risk15.json
+            l1_report_quality_failed.json
+            data/sentiment_mds/
             archive/
             .cache/member/dce-*.json
             .cache/member/em-*.json
@@ -53,13 +65,14 @@ jobs:
           if-no-files-found: warn
 
       - name: Commit archive + full cache
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         continue-on-error: true
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
-          mkdir -p .cache/member .cache/akshare/minute
-          git add archive/*.json l1_report_risk15.json l1_report.json || true
+          mkdir -p .cache/member .cache/akshare/minute data/sentiment_mds
+          git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
+          git add data/sentiment_mds/*.json || true
           git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
           git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true
           git add -f .cache/akshare/minute/*.json || true
@@ -86,6 +99,6 @@ jobs:
             echo "no changes"
             exit 0
           fi
-          git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+CODE0"
+          git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+CODE0+sentiment"
           git pull --rebase --autostash origin "${{ github.ref_name }}" || true
           git push origin "HEAD:${{ github.ref_name }}"

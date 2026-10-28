@@ -580,7 +580,12 @@ def _light(
     # Desk charts use chronological x: 左远右近 (old left, recent right).
     # "recent_left" kept as alias but no longer reverses the axis.
     if time_axis in (True, "recent_right", "recent_left"):
-        fig.update_xaxes(autorange=True, title_text="日期（左远右近）")
+        fig.update_xaxes(
+            autorange=True,
+            title_text="日期（左远右近 · 框选拉近 · 滚轮/滑条拉远时间轴）",
+            rangeslider=dict(visible=True, thickness=0.08),
+        )
+        fig.update_layout(dragmode="zoom")
     return fig
 
 
@@ -1162,21 +1167,36 @@ def render_seat_sector(root: Path) -> None:
             if len(view) < 2:
                 st.caption(f"席位序列只有 {len(view)} 个交易日，按单日快照理解。{span}")
             else:
-                st.caption(
+                note = (
                     f"本地排名 {len(view)} 个交易日（{span}）。"
                     "柱是相邻排名日的净持仓差，线是净持仓。没有这三组的 OHLC，所以不用 K 线。"
                 )
+                if exchange == "DCE" and win_n and len(view) < win_n:
+                    note += (
+                        " 大商所（含苯乙烯）序列疏于上期/郑商是共性，不是 EB 个例："
+                        f"窗口要 {win_n} 日，本地只有已落库的东财/新浪日；"
+                        "同所部分品种更少。点「刷新」或等周跑补全后再看。"
+                    )
+                st.caption(note)
+            from desk.charts import PLOTLY_TIME_CONFIG
+
             for key, label in GROUPS:
                 chg = session_delta(frame[f"{key}_net"], 1) if f"{key}_net" in frame.columns else None
                 last = frame[f"{key}_net"].iloc[-1] if f"{key}_net" in frame.columns and len(frame) else None
-                st.plotly_chart(net_position_fig(view, key, label), width="stretch")
+                st.plotly_chart(
+                    net_position_fig(view, key, label),
+                    width="stretch",
+                    config=PLOTLY_TIME_CONFIG,
+                )
                 contract = str(frame["contract"].iloc[-1]) if "contract" in frame.columns and len(frame) else code
                 st.caption(f"{label} · {contract} · 持仓 {_fmt_lots(last)} 手 · 变动 {_fmt_chg(chg)} 手")
     with right:
         if snap.get("ok"):
             st.caption(f"当日合约/品种：{snap.get('contract')} · 排名行数 {snap.get('n')} · 单位：手")
-            st.plotly_chart(long_short_fig(snap), width="stretch")
-            st.plotly_chart(net_group_fig(snap), width="stretch")
+            from desk.charts import PLOTLY_TIME_CONFIG
+
+            st.plotly_chart(long_short_fig(snap), width="stretch", config=PLOTLY_TIME_CONFIG)
+            st.plotly_chart(net_group_fig(snap), width="stretch", config=PLOTLY_TIME_CONFIG)
             st.markdown("**席位龙虎榜**")
             st.caption("多单、空单、净持仓各自排序。同一行不是同一个会员。分组只标出项目名单内的席位。")
             rank_df = _rank_table(snap)

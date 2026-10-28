@@ -157,7 +157,19 @@ def _select(name: str | None):
 
 
 def _date(iso: str):
-    return {"date": {"start": iso}}
+    s = str(iso or "").strip()
+    if not s:
+        return {"date": None}
+    if len(s) == 8 and s.isdigit():
+        s = f"{s[:4]}-{s[4:6]}-{s[6:8]}"
+    return {"date": {"start": s[:10]}}
+
+
+def _maybe_date(iso: str | None) -> dict | None:
+    s = str(iso or "").strip()
+    if not s:
+        return None
+    return _date(s)
 
 
 def _prop_select_name(props: dict, key: str) -> str:
@@ -270,6 +282,11 @@ def sync_signals(report_path: Path | None = None):
         f"[notion] signals date={date} created={created} updated={updated} "
         f"archived_dupes={archived}"
     )
+    # Keep 建平仓流水 table aligned with paper_book trade_ledger after daily signals.
+    try:
+        sync_trades()
+    except Exception as exc:
+        print("[notion] trades sync after signals failed:", str(exc)[:300])
     return 0
 
 
@@ -485,21 +502,123 @@ def _open_positions_for_sync(b: dict) -> tuple[dict[str, dict], str]:
     return out, str(b.get("end") or "")
 
 
+def _paper_for_sync() -> dict:
+    try:
+        from paper_book import load_paper_positions
+
+        return load_paper_positions(ROOT)
+    except Exception:
+        return {}
+
+
+def _strategy_and_scheme(t: dict, *, params: dict | None = None) -> tuple[str, str]:
+    try:
+        from paper_book import strategy_label, tp_sl_scheme
+    except Exception:
+        strategy_label = lambda r: str(r or "Path-A")  # noqa: E731
+        tp_sl_scheme = None  # type: ignore
+
+    entry_reason = str(t.get("entry_reason") or t.get("reason") or "path_a")
+    strategy = str(t.get("strategy") or strategy_label(entry_reason))
+    scheme = str(t.get("tp_sl_scheme") or "")
+    if not scheme and tp_sl_scheme:
+        p = params or {}
+        scheme = tp_sl_scheme(
+            stop=t.get("stop"),
+            target=t.get("target"),
+            atr=t.get("atr"),
+            stop_atr_mult=t.get("stop_atr_mult", p.get("stop_atr_mult")),
+            reward_rr=t.get("reward_rr", p.get("reward_rr")),
+        )
+    return strategy, scheme
+
+
+def _trade_detail_props(
+    t: dict,
+    *,
+    event: str,
+    batch: str,
+    params: dict | None = None,
+    asof: str | None = None,
+) -> dict:
+    code = str(t.get("code") or "?").upper()
+    label = _variety_label(code)
+    direction = t.get("direction") or "未知"
+    if direction not in ("多", "空"):
+        direction = "未知"
+    entry_reason = str(t.get("entry_reason") or t.get("reason") or "path_a")
+    strategy, scheme = _strategy_and_scheme(t, params=params)
+    exit_reason = str(t.get("reason") or "") if event == "平仓" else ""
+    d = str(t.get("date") or asof or "")
+    entry_date = str(t.get("entry_date") or (d if event == "建仓" else "") or "")
+    exit_date = str(t.get("exit_date") or (d if event == "平仓" else "") or "")
+    if event == "持仓中":
+        name = f"{asof or d} {label} 持仓中"
+    elif event == "建仓":
+        name = f"{d} {label} 建仓"
+    else:
+        name = f"{d} {label} 平仓·{exit_reason or '其他'}"
+    note = (
+        f"root={code};品种={label}；事件={event}；"
+        f"策略={strategy}；方案={scheme}；"
+        f"建仓日={entry_date or '?'} 建仓因={entry_reason}；"
+        f"入场={t.get('entry')} 出场={t.get('exit')}；"
+        f"止损={t.get('stop')} 止盈={t.get('target')}；"
+        f"R={t.get('R')}；权益增减={t.get('equity_delta')}；"
+        f"权益余额={t.get('equity_after')}"
+    )
+    props = {
+        "Name": _title(name),
+        "日期": _date(d or asof or "1970-01-01"),
+        "品种": _rich(label),
+        "方向": _select(direction),
+        "事件": _select(event),
+        "建仓原因": _rich(entry_reason),
+        "平仓原因": _select(_exit_label(exit_reason) if event == "平仓" else "其他"),
+        "R倍数": _num(t.get("R")),
+        "入场价": _num(t.get("entry")),
+        "出场价": _num(t.get("exit")),
+        "止损价": _num(t.get("stop")),
+        "止盈价": _num(t.get("target")),
+        "手数": _num(t.get("lots")),
+        "权益增减": _num(t.get("equity_delta")),
+        "权益余额": _num(t.get("equity_after")),
+        "策略": _rich(strategy),
+        "止盈止损方案": _rich(scheme),
+        "批次": _rich(batch),
+        "备注": _rich(note),
+    }
+    ed = _maybe_date(entry_date)
+    if ed:
+        props["入场日"] = ed
+    xd = _maybe_date(exit_date)
+    if xd:
+        props["出场日"] = xd
+    return props
+
+
 def sync_trades(path: Path | None = None, *, limit: int = 80):
-    """Sync closed/open paper trades + rules; upsert open book, dedupe closes."""
+    """Sync paper trade ledger + open book into Notion 建平仓流水 table."""
     if not TRADES_DB:
         print("[notion] trades_db_id missing — skip")
         return 1
     p = path or (ROOT / "historical_backtest_latest.json")
+    if not p.is_file():
+        print("[notion] trades skip — missing", p.name)
+        return 1
     b = json.loads(p.read_text(encoding="utf-8"))
     if not b.get("ok"):
         print("[notion] trades skip — backtest not ok:", b.get("error"))
         return 1
 
-    batch = str(b.get("batch") or "pathA")
+    paper = _paper_for_sync()
+    batch = str(paper.get("batch") or b.get("batch") or "pathA")
+    params = {
+        "stop_atr_mult": paper.get("stop_atr_mult", b.get("stop_atr_mult")),
+        "reward_rr": paper.get("reward_rr", b.get("reward_rr")),
+    }
     rules_blob = _rules_text(b)
     rules_name = f"规则+统计 {b.get('start')}→{b.get('end')}"
-    # Upsert single rules summary row by Name
     existing_rules = _query_db(
         TRADES_DB,
         {
@@ -517,6 +636,10 @@ def sync_trades(path: Path | None = None, *, limit: int = 80):
         "事件": _select("平仓"),
         "建仓原因": _rich("见备注·建仓条件"),
         "平仓原因": _select("其他"),
+        "策略": _rich("Path-A 执行规则"),
+        "止盈止损方案": _rich(
+            f"止损={params.get('stop_atr_mult')}×ATR；止盈=RR×{params.get('reward_rr')}"
+        ),
         "R倍数": _num(b.get("expectancy_r")),
         "批次": _rich(batch),
         "备注": _rich(rules_blob),
@@ -528,89 +651,95 @@ def sync_trades(path: Path | None = None, *, limit: int = 80):
         _create_page(TRADES_DB, rules_props)
         print("[notion] trades rules+stats row ok")
 
-    # Existing closed keys for this batch (dedupe)
-    closed_pages = _query_db(
-        TRADES_DB,
-        {
-            "and": [
-                {"property": "事件", "select": {"equals": "平仓"}},
-                {"property": "批次", "rich_text": {"equals": batch}},
-            ]
-        },
-    )
+    # Dedupe set for 建仓 + 平仓 (by Name and closed key)
+    existing_names: set[str] = set()
     existing_closed: set[str] = set()
-    for page in closed_pages:
-        props = page.get("properties") or {}
-        if _plain_rich(props.get("品种")) == "ALL":
-            continue
-        note = _plain_rich(props.get("备注"))
-        name = _plain_rich(props.get("Name"))
-        # Prefer explicit root= in note; else parse Name "YYYY-MM-DD LABEL 平仓·reason"
-        root_code = ""
-        if "root=" in note:
-            root_code = note.split("root=", 1)[1].split(";", 1)[0].strip().upper()
-        d = ""
-        date_prop = props.get("日期") or {}
-        if date_prop.get("date"):
-            d = str((date_prop["date"] or {}).get("start") or "")[:10]
-        reason_sel = ((props.get("平仓原因") or {}).get("select") or {}).get("name") or ""
-        r_mult = (props.get("R倍数") or {}).get("number")
-        if root_code and d:
-            existing_closed.add(_closed_dedupe_key(d, root_code, reason_sel, r_mult))
-        elif name:
-            existing_closed.add(f"name|{name}")
+    for event_name in ("平仓", "建仓"):
+        pages = _query_db(
+            TRADES_DB,
+            {
+                "and": [
+                    {"property": "事件", "select": {"equals": event_name}},
+                    {"property": "批次", "rich_text": {"equals": batch}},
+                ]
+            },
+        )
+        for page in pages:
+            props = page.get("properties") or {}
+            if _plain_rich(props.get("品种")) == "ALL":
+                continue
+            name = ""
+            title = (props.get("Name") or {}).get("title") or []
+            if title:
+                name = "".join(x.get("plain_text") or "" for x in title)
+            if not name:
+                name = _plain_rich(props.get("Name"))
+            if name:
+                existing_names.add(name)
+            note = _plain_rich(props.get("备注"))
+            root_code = ""
+            if "root=" in note:
+                root_code = note.split("root=", 1)[1].split(";", 1)[0].strip().upper()
+            d = _prop_date_start(props, "日期")
+            reason_sel = _prop_select_name(props, "平仓原因")
+            r_mult = (props.get("R倍数") or {}).get("number")
+            if event_name == "平仓" and root_code and d:
+                existing_closed.add(_closed_dedupe_key(d, root_code, reason_sel, r_mult))
 
     n = 0
     skipped = 0
+
+    # 1) Prefer paper trade_ledger (full entry/exit/stop/target/strategy)
+    ledger = list(paper.get("trade_ledger") or [])
+    for t in ledger:
+        event = str(t.get("event") or "")
+        if event not in ("建仓", "平仓"):
+            continue
+        props = _trade_detail_props(t, event=event, batch=batch, params=params)
+        name = props["Name"]["title"][0]["text"]["content"]
+        if name in existing_names:
+            skipped += 1
+            continue
+        if event == "平仓":
+            key = _closed_dedupe_key(
+                str(t.get("date") or ""),
+                str(t.get("code") or ""),
+                _exit_label(t.get("reason")),
+                t.get("R"),
+            )
+            if key in existing_closed:
+                skipped += 1
+                continue
+            existing_closed.add(key)
+        _create_page(TRADES_DB, props)
+        existing_names.add(name)
+        n += 1
+
+    # 2) Backfill sparse backtest closed tail (often lacks entry/exit)
     closed = list(b.get("closed_pnls_tail") or [])[-limit:]
-    # Also append paper_book closed_today if present
-    try:
-        from paper_book import load_paper_positions
-
-        paper = load_paper_positions(ROOT)
-        for t in paper.get("closed_today") or []:
+    for t in paper.get("closed_today") or []:
+        if t not in closed:
             closed.append(t)
-    except Exception:
-        pass
-
     for t in closed:
         code = str(t.get("code") or "?").upper()
         label = _variety_label(code)
         d = str(t.get("date") or b.get("end") or "")
         reason = str(t.get("reason") or "")
-        entry_reason = str(t.get("entry_reason") or "path_a / composite_trend")
-        direction = t.get("direction") or "未知"
-        if direction not in ("多", "空"):
-            direction = "未知"
         r_mult = t.get("R")
         key = _closed_dedupe_key(d, code, _exit_label(reason), r_mult)
         name = f"{d} {label} 平仓·{reason}"
-        if key in existing_closed or f"name|{name}" in existing_closed:
+        if key in existing_closed or name in existing_names:
             skipped += 1
             continue
-        note = (
-            f"root={code};品种={label}；建仓日={t.get('entry_date') or '?'} 建仓因={entry_reason}；"
-            f"平仓因={reason}（target止盈/stop止损/signal趋势失效）；"
-            f"R={r_mult}"
-        )
-        props = {
-            "Name": _title(name),
-            "日期": _date(d),
-            "品种": _rich(label),
-            "方向": _select(direction),
-            "事件": _select("平仓"),
-            "建仓原因": _rich(entry_reason),
-            "平仓原因": _select(_exit_label(reason)),
-            "R倍数": _num(r_mult),
-            "入场价": _num(t.get("entry")),
-            "出场价": _num(t.get("exit")),
-            "手数": _num(t.get("lots")),
-            "批次": _rich(batch),
-            "备注": _rich(note),
-        }
+        # Enrich thin backtest rows with live TP/SL params when missing.
+        row = dict(t)
+        row.setdefault("entry_reason", t.get("entry_reason") or "path_a / composite_trend")
+        row.setdefault("stop_atr_mult", params.get("stop_atr_mult"))
+        row.setdefault("reward_rr", params.get("reward_rr"))
+        props = _trade_detail_props(row, event="平仓", batch=batch, params=params)
         _create_page(TRADES_DB, props)
         existing_closed.add(key)
-        existing_closed.add(f"name|{name}")
+        existing_names.add(name)
         n += 1
 
     # Open book: archive old 持仓中 for batch, write current set (idempotent snapshot)
@@ -633,34 +762,35 @@ def sync_trades(path: Path | None = None, *, limit: int = 80):
         if not isinstance(ppos, dict):
             continue
         code = str(code or "?").upper()
-        label = _variety_label(code)
-        direction = ppos.get("direction") or "未知"
-        if direction not in ("多", "空"):
-            direction = "未知"
-        entry_reason = str(ppos.get("reason") or "path_a")
-        d = str(ppos.get("entry_date") or asof or b.get("end") or "")
-        note = (
-            f"root={code};品种={label}；持仓中：建仓因={entry_reason}；"
-            f"止损={ppos.get('stop')} 止盈={ppos.get('target')}；"
-            f"r20={ppos.get('r20')} r60={ppos.get('r60')}；asof={asof}"
+        row = dict(ppos)
+        row["code"] = code
+        row["date"] = asof or str(ppos.get("entry_date") or b.get("end") or "")
+        row["entry_reason"] = str(ppos.get("reason") or "path_a")
+        row["stop_atr_mult"] = params.get("stop_atr_mult")
+        row["reward_rr"] = params.get("reward_rr")
+        # 持仓中：权益增减=浮动盈亏；权益余额=账面权益（不含浮动）
+        if row.get("equity_delta") is None:
+            try:
+                from paper_book import pnl_yuan, _mult_map
+
+                mark = row.get("mark") or row.get("close")
+                row["equity_delta"] = pnl_yuan(
+                    direction=str(row.get("direction") or ""),
+                    entry=row.get("entry"),
+                    mark=mark,
+                    lots=row.get("lots"),
+                    mult=row.get("mult") or _mult_map(ROOT).get(code),
+                )
+            except Exception:
+                pass
+        row["equity_after"] = paper.get("equity")
+        props = _trade_detail_props(
+            row, event="持仓中", batch=batch, params=params, asof=asof
         )
-        props = {
-            "Name": _title(f"{asof or d} {label} 持仓中"),
-            "日期": _date(asof or d if (asof or d) else str(b.get("end"))),
-            "品种": _rich(label),
-            "方向": _select(direction),
-            "事件": _select("持仓中"),
-            "建仓原因": _rich(entry_reason),
-            "平仓原因": _select("其他"),
-            "入场价": _num(ppos.get("entry")),
-            "手数": _num(ppos.get("lots")),
-            "批次": _rich(batch),
-            "备注": _rich(note),
-        }
         _create_page(TRADES_DB, props)
         n += 1
 
-    print(f"[notion] trades rows={n} skipped_dup_closed={skipped} (+1 rules)")
+    print(f"[notion] trades rows={n} skipped_dup={skipped} (+1 rules)")
     _sync_rules_page(b)
     return 0
 

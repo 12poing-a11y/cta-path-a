@@ -73,7 +73,7 @@ def _read_bars(path: Path) -> list[dict]:
 
 
 def load_local_bars(root: Path, code: str) -> tuple[list[dict], str]:
-    """Longest local continuous series; offline only."""
+    """Best local continuous series; prefers newest last bar. Offline only."""
     code = str(code or "").upper()
     sina = root / ".cache" / "sina"
     paths: list[Path] = []
@@ -88,8 +88,11 @@ def load_local_bars(root: Path, code: str) -> tuple[list[dict], str]:
     best_key = ""
     for path in paths:
         bars = _read_bars(path)
+        if not bars:
+            continue
         stamp = path.parent.name
-        key = f"{len(bars):08d}-{stamp}"
+        last = str((bars[-1] or {}).get("date") or "")
+        key = f"{last}-{len(bars):08d}-{stamp}"
         if key > best_key:
             best = bars
             best_key = key

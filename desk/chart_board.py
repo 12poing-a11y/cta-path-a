@@ -403,7 +403,13 @@ def _candlestick_fig(
         ),
         xaxis2_rangeslider_visible=False,
     )
-    fig.update_xaxes(gridcolor=GRID, linecolor="#cccccc", title_text="时间（左远右近 · 可拖拽/框选放大）", row=2, col=1)
+    fig.update_xaxes(
+        gridcolor=GRID,
+        linecolor="#cccccc",
+        title_text="时间（左远右近 · 框选拉近 · 滚轮/底部滑条拉远时间轴）",
+        row=2,
+        col=1,
+    )
     fig.update_xaxes(gridcolor=GRID, linecolor="#cccccc", row=1, col=1)
     fig.update_yaxes(gridcolor=GRID, linecolor="#cccccc", title_text="价格", row=1, col=1, secondary_y=False)
     fig.update_yaxes(
@@ -424,7 +430,7 @@ def render_chart_tab(root: Path) -> None:
     st.subheader("图表")
     st.caption(
         "日/周/月本地连续 · 小周期默认 60m 量价（比日线敏感、比 15m 更平滑）· "
-        "15m 可下钻 · 新浪主力分钟（东财备选）· 纸面观察 · 不下单"
+        "15m 可下钻 · 框选拉近时间轴、滚轮/滑条拉远 · 新浪主力分钟（东财备选）· 纸面观察 · 不下单"
     )
 
     symbols = universe_rows(root)
@@ -612,7 +618,9 @@ def render_chart_tab(root: Path) -> None:
         event_rows=event_rows,
         x_col=x_col if x_col in df.columns else "date",
     )
-    st.plotly_chart(fig, width="stretch")
+    from desk.charts import PLOTLY_TIME_CONFIG
+
+    st.plotly_chart(fig, width="stretch", config=PLOTLY_TIME_CONFIG)
 
     if vp and vp.get("ok"):
         vp_p = vp.get("period") or "?"

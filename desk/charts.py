@@ -8,6 +8,21 @@ import plotly.graph_objects as go
 
 from desk.loaders import drawdown_from_equity
 
+# Shared Streamlit ``st.plotly_chart(..., config=...)``.
+# Plotly's built-in Zoom in/out stay English; drop them and steer users to
+# box-zoom + rangeslider / scroll as 拉近 / 拉远时间轴.
+PLOTLY_TIME_CONFIG: dict = {
+    "displaylogo": False,
+    "scrollZoom": True,
+    "modeBarButtonsToRemove": [
+        "lasso2d",
+        "select2d",
+        "zoomIn2d",
+        "zoomOut2d",
+        "autoScale2d",
+    ],
+}
+
 
 def equity_overlay_fig(
     aligned: pd.DataFrame,

@@ -58,6 +58,8 @@ def _load_universe():
     stop_atr_mult = float(sel.get("stop_atr_mult") or cfg.get("stop_atr_mult") or 1)
     reward_rr = float(sel.get("reward_rr") or cfg.get("reward_rr") or 2)
     symbols = cfg.get("symbols") or []
+    observe = cfg.get("observe") if isinstance(cfg.get("observe"), dict) else {}
+    observe_min_lots = int(observe.get("min_lots") or 0)
     return (
         equity_base,
         compound,
@@ -72,6 +74,7 @@ def _load_universe():
         stop_atr_mult,
         reward_rr,
         symbols,
+        observe_min_lots,
     )
 
 
@@ -112,6 +115,7 @@ def _load_live_equity(equity_base: float) -> tuple[float, dict]:
     STOP_ATR_MULT,
     REWARD_RR,
     UNIVERSE,
+    OBSERVE_MIN_LOTS,
 ) = _load_universe()
 LIVE_EQUITY, _EQUITY_STATE = _load_live_equity(EQUITY_BASE)
 EQUITY = compound_equity(LIVE_EQUITY, EQUITY_BASE, EQUITY_COMPOUND)
@@ -149,6 +153,14 @@ def _fetch_snapshot(u: dict, curves: dict, mode: str) -> dict:
     r20 = ret_n(hist, i, 20)
     r60 = ret_n(hist, i, 60)
     atr = atr14(hist, i)
+    ret_1d = None
+    try:
+        c0 = float(hist[i - 1]["close"])
+        c1 = float(hist[i]["close"])
+        if c0 > 0:
+            ret_1d = (c1 / c0) - 1.0
+    except (TypeError, ValueError, KeyError, IndexError):
+        ret_1d = None
     direction = "空仓"
     if r20 is not None and r60 is not None and r20 != 0 and r60 != 0:
         if (r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0):
@@ -172,7 +184,9 @@ def _fetch_snapshot(u: dict, curves: dict, mode: str) -> dict:
         "r20": round(r20, 4) if r20 is not None else None,
         "r60": round(r60, 4) if r60 is not None else None,
         "atr": round(atr, 2) if atr is not None else None,
+        "ret_1d": round(ret_1d, 6) if ret_1d is not None else None,
         "volume": hist[i].get("volume"),
+        "oi": hist[i].get("oi") or hist[i].get("open_interest"),
         "source": meta.get("source"),
         "bar_date": hist[i]["date"],
         "prev_date": hist[i - 1]["date"],
@@ -196,6 +210,8 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
 
     lots = 0
     stop = target = None
+    sleeve = str(u.get("sleeve") or "").strip() or None
+    min_lots_bumped = False
     if align == "同向" and risk_per_lot and risk_per_lot > 0 and close is not None and stop_dist is not None:
         lots = int(math.floor(risk_budget / risk_per_lot))
         if direction == "多":
@@ -204,11 +220,28 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
         else:
             stop = close + stop_dist
             target = close - REWARD_RR * stop_dist
+        # Observe-sleeve metals: floor to observe.min_lots so high-margin names can enter paper book.
+        if (
+            sleeve == "observe"
+            and OBSERVE_MIN_LOTS > 0
+            and lots < OBSERVE_MIN_LOTS
+            and atr is not None
+            and atr > 0
+            and atr < float(close) * 0.25
+        ):
+            lots = int(OBSERVE_MIN_LOTS)
+            min_lots_bumped = True
 
     if align != "同向":
         action = "空仓（20日与60日不同向）"
     elif lots <= 0:
         action = f"有{direction}向，1.5%仍不足1手（每手约{risk_per_lot}）"
+    elif min_lots_bumped:
+        action = (
+            f"候选：{direction}{lots}手（观察袖套抬至{OBSERVE_MIN_LOTS}手·"
+            f"待门槛/板块/Top{MAX_POSITIONS}/"
+            f"名义≤{MAX_GROSS_PCT}%/风险≤{MAX_PORT_RISK_PCT}%）"
+        )
     else:
         action = (
             f"候选：{direction}{lots}手（待门槛/板块/Top{MAX_POSITIONS}/"
@@ -222,6 +255,7 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
         "ticker": u["ticker"],
         "bucket": u["bucket"],
         "mult": u["mult"],
+        "sleeve": sleeve,
         "date": today,
         "close": close,
         "atr": round(atr, 2) if atr is not None else None,
@@ -232,9 +266,13 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
         "target": round(target, 4) if target is not None else None,
         "r20": r20,
         "r60": r60,
+        "ret_1d": snap.get("ret_1d"),
+        "volume": snap.get("volume"),
+        "oi": snap.get("oi"),
         "align": align,
         "direction": direction if align == "同向" else "空仓",
         "lots_raw": lots,
+        "min_lots_bumped": min_lots_bumped,
         "data_source": snap.get("source"),
         "bar_date": snap.get("bar_date"),
         "lots_l1": lots,
@@ -289,11 +327,14 @@ def _apply_caps(signals: list[dict], *, sizing_equity: float) -> dict:
             s["lots_l1"] = lots
             s["lots_full"] = lots
             s["selected"] = True
+            sleeve_note = "·观察袖套" if s.get("sleeve") == "observe" else ""
+            bump_note = "·已抬min_lots" if s.get("min_lots_bumped") else ""
             s["action"] = (
                 f"路径A记账：记{s.get('direction')}{lots}手"
                 f" 止损{s.get('stop')} 止盈{s.get('target')}"
                 f"（止损{STOP_ATR_MULT:g}×ATR·盈亏比{REWARD_RR:g}·"
-                f"Top{MAX_POSITIONS}·名义≤{MAX_GROSS_PCT}%·风险≤{MAX_PORT_RISK_PCT}%·不下单）"
+                f"Top{MAX_POSITIONS}·名义≤{MAX_GROSS_PCT}%·风险≤{MAX_PORT_RISK_PCT}%"
+                f"{sleeve_note}{bump_note}·不下单）"
             )
         else:
             raw = int(s.get("lots_raw") or 0)
@@ -565,6 +606,35 @@ def main():
             sig["selected"] = False
             sig["action"] = sig["block"]
 
+    # Re-apply observe min_lots after seats/carry/lab blocks (high-margin metals).
+    for sig in signals:
+        if sig.get("block") or sig.get("sleeve") != "observe":
+            continue
+        if sig.get("align") != "同向" or sig.get("direction") not in ("多", "空"):
+            continue
+        if OBSERVE_MIN_LOTS <= 0:
+            continue
+        atr = sig.get("atr")
+        close = sig.get("close")
+        try:
+            atr_f = float(atr) if atr is not None else 0.0
+            close_f = float(close) if close is not None else 0.0
+        except (TypeError, ValueError):
+            continue
+        if atr_f <= 0 or close_f <= 0 or atr_f >= close_f * 0.25:
+            continue
+        lots = int(sig.get("lots_raw") or 0)
+        if lots < OBSERVE_MIN_LOTS:
+            sig["lots_raw"] = int(OBSERVE_MIN_LOTS)
+            sig["lots_l1"] = int(OBSERVE_MIN_LOTS)
+            sig["lots_full"] = int(OBSERVE_MIN_LOTS)
+            sig["min_lots_bumped"] = True
+            if not str(sig.get("action") or "").startswith("路径A"):
+                sig["action"] = (
+                    f"候选：{sig.get('direction')}{OBSERVE_MIN_LOTS}手"
+                    f"（观察袖套抬至{OBSERVE_MIN_LOTS}手·待组合帽）"
+                )
+
     port_meta = _apply_caps(signals, sizing_equity=sizing_eq)
     port_meta["sizing_equity"] = round(sizing_eq, 2)
     port_meta["equity_compound"] = EQUITY_COMPOUND
@@ -576,8 +646,75 @@ def main():
         f"bucket_skip={port_meta.get('bucket_skipped')}"
     )
 
+    asof_ymd = now.strftime("%Y%m%d")
+    from research_quality import validate_signals
+
+    quality = validate_signals(signals, asof=asof_ymd)
+    if not quality.get("ok"):
+        print(
+            f"[cta] QUALITY GATE FAIL bad={quality.get('bad_codes')} "
+            f"failures={quality.get('failures')[:12]}"
+        )
+        for sig in signals:
+            sig["selected"] = False
+            sig["lots_l1"] = 0
+            sig["lots_raw"] = 0
+            sig["lots_full"] = 0
+            if not str(sig.get("action") or "").startswith("质量门禁"):
+                sig["action"] = f"质量门禁阻断: {','.join(quality.get('bad_codes') or [])}"
+        port_meta["selected"] = []
+        port_meta["quality_blocked"] = True
+    else:
+        print(
+            f"[cta] quality ok checked={quality.get('checked')} "
+            f"bad_n={quality.get('bad_n')}"
+        )
+
+    # Paper-only MDS+EHI sentiment sleeve (ChatGPT share); never sizes Path-A lots.
+    sentiment_meta: dict = {"ok": False}
+    try:
+        from sentiment_mds import build_snapshot, write_snapshot
+
+        seat_rows = []
+        seats_book = {}
+        if seat_days:
+            seats_book = load_member_seats(seat_days[-1:], [u["code"] for u in UNIVERSE])
+        day_key = seat_days[-1] if seat_days else None
+        for sig in signals:
+            code = str(sig.get("code") or "").upper()
+            book = (seats_book.get(code) or {}).get(day_key) if day_key else None
+            net = float((book or {}).get("inst") or 0.0) if book else 0.0
+            seat_rows.append(
+                {
+                    "code": code,
+                    "net": net,
+                    "net_chg": net,
+                    "ret_1d": sig.get("ret_1d"),
+                    "oi": sig.get("oi"),
+                    "volume": sig.get("volume"),
+                }
+            )
+        snap_sent = build_snapshot(seat_rows, asof=asof_ymd)
+        sent_path = write_snapshot(snap_sent)
+        sentiment_meta = {
+            "ok": True,
+            "path": str(sent_path.name),
+            "stance": snap_sent.get("stance"),
+            "portfolio_p3": snap_sent.get("portfolio_p3"),
+            "longs": snap_sent.get("longs"),
+            "shorts": snap_sent.get("shorts"),
+            "live": False,
+        }
+        print(
+            f"[sentiment] paper MDS+EHI stance={snap_sent.get('stance')} "
+            f"p3={snap_sent.get('portfolio_p3')} n={snap_sent.get('n')}"
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[sentiment] soft-fail: {exc}")
+        sentiment_meta = {"ok": False, "error": str(exc)[:300], "live": False}
+
     report = {
-        "asof": now.strftime("%Y%m%d"),
+        "asof": asof_ymd,
         "updated_at": now.isoformat(),
         "equity_base": EQUITY_BASE,
         "equity": sizing_eq,
@@ -597,12 +734,25 @@ def main():
         "carry_bypass": bypass,
         "lab_edge_bypass": lab_bypass,
         "observe_coverage": observe_coverage,
+        "observe_min_lots": OBSERVE_MIN_LOTS,
+        "observe_sleeve_codes": [
+            str(u.get("code") or "").upper()
+            for u in UNIVERSE
+            if str(u.get("sleeve") or "") == "observe"
+        ],
+        "min_lots_bumped": [
+            s.get("code") for s in signals if s.get("min_lots_bumped")
+        ],
         "minute_summary": {
             "ok": minute_summary.get("ok"),
             "fail": minute_summary.get("fail"),
             "periods": minute_summary.get("periods"),
             "error": minute_summary.get("error"),
         },
+        "quality": quality,
+        "quality_ok": bool(quality.get("ok")),
+        "sentiment_mds": sentiment_meta,
+        "live_trading": False,
         "ifind_calls": usage_report()["count"],
         "ifind_call_log": usage_report()["calls"],
         "ifind_slot": active_slot(),
@@ -614,36 +764,50 @@ def main():
         },
         "signals": signals,
     }
-    path = ROOT / "l1_report_risk15.json"
-    blob = json.dumps(report, ensure_ascii=False, indent=2)
-    path.write_text(blob, encoding="utf-8")
-    (ROOT / "l1_report.json").write_text(blob, encoding="utf-8")
+    # Formal report only when quality passes; otherwise write quarantine artifact.
     arch = ROOT / "archive"
     arch.mkdir(exist_ok=True)
-    (arch / f"l1_report_{report['asof']}.json").write_text(blob, encoding="utf-8")
+    blob = json.dumps(report, ensure_ascii=False, indent=2)
+    if quality.get("ok"):
+        path = ROOT / "l1_report_risk15.json"
+        path.write_text(blob, encoding="utf-8")
+        (ROOT / "l1_report.json").write_text(blob, encoding="utf-8")
+        (arch / f"l1_report_{report['asof']}.json").write_text(blob, encoding="utf-8")
+        print(f"[cta] wrote {path}")
+    else:
+        qpath = ROOT / "l1_report_quality_failed.json"
+        qpath.write_text(blob, encoding="utf-8")
+        (arch / f"l1_report_quality_failed_{report['asof']}.json").write_text(
+            blob, encoding="utf-8"
+        )
+        print(f"[cta] QUALITY: formal report withheld; wrote {qpath}")
     rep = usage_report()
     print(f"[ifind] calls={rep['count']}")
-    print(f"[cta] wrote {path}")
     if observe_coverage.get("complete"):
         print(
             f"[cta] observe coverage OK "
             f"bars={len(observe_coverage.get('bars_ok') or [])} "
             f"seats={len(observe_coverage.get('seats_ok') or [])}"
         )
-    try:
-        from paper_book import refresh_paper_book
+    if quality.get("ok"):
+        try:
+            from paper_book import refresh_paper_book
 
-        paper = refresh_paper_book(ROOT, report=report)
-        if paper.get("ok"):
-            print(
-                f"[paper] asof={paper.get('asof')} held={paper.get('held_n')} "
-                f"opened={paper.get('opened_n')} closed={paper.get('closed_n')}"
-            )
-        else:
-            print("[paper] skip:", paper.get("error"))
-    except Exception as exc:
-        print(f"[paper] refresh failed: {exc}")
-    # Observation sample incomplete → fail CI / local job so seats are not silently empty.
+            paper = refresh_paper_book(ROOT, report=report)
+            if paper.get("ok"):
+                print(
+                    f"[paper] asof={paper.get('asof')} held={paper.get('held_n')} "
+                    f"opened={paper.get('opened_n')} closed={paper.get('closed_n')}"
+                )
+            else:
+                print("[paper] skip:", paper.get("error"))
+        except Exception as exc:
+            print(f"[paper] refresh failed: {exc}")
+    else:
+        print("[paper] skip: quality gate failed")
+    # Observation incomplete or quality fail → non-zero so CI does not publish formal.
+    if not quality.get("ok"):
+        return 3
     return 0 if observe_coverage.get("complete") else 2
 
 

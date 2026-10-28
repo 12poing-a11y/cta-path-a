@@ -17,6 +17,7 @@ from member_rank import load_member_changes, load_member_seats  # noqa: E402
 from path_a_filters import (  # noqa: E402
     carry_bypass_cfg,
     carry_bypass_decision,
+    carry_gap_pct,
     entry_block,
     fill_cost,
     seat_decision,
@@ -582,14 +583,15 @@ def simulate(
 
     trade_dates = dates[WARMUP:]
     curves = {}
-    if mode not in ("base", "seats", "ctf") or bypass.get("enabled"):
+    if mode == "roll" or mode not in ("base", "seats", "ctf") or bypass.get("enabled"):
         curves = load_curves([u["code"] for u in symbols])
     member = {}
     if mode == "member":
         member = load_member_changes(trade_dates, [c for c in series])
-    elif mode == "seats":
+    elif mode in ("seats", "roll"):
         member = load_member_seats(trade_dates, [c for c in series])
     seat_follows: dict[str, int] = {}
+    sleeve_counts: dict[str, int] = {}
     bypass_counts: dict[str, int] = {}
     vol_bypass_counts: dict[str, int] = {}
     for di, d in enumerate(trade_dates):
@@ -610,7 +612,15 @@ def simulate(
                 p["direction"], p["entry"], p["stop"], p["target"], bar
             )
             # trend flip exit (Path-A conflict / opposite, or composite-trend sign flip)
-            if reason is None:
+            if reason is None and p.get("reason") == "roll_carry":
+                pair = ((curves.get(code) or {}).get("carry") or {}).get(d)
+                gap = carry_gap_pct(pair)
+                if gap is not None:
+                    if p["direction"] == "多" and gap > 0:
+                        reason, px = "signal", bar["close"]
+                    elif p["direction"] == "空" and gap < 0:
+                        reason, px = "signal", bar["close"]
+            elif reason is None:
                 if mode == "ctf":
                     fac = composite_trend(hist, i1)
                     if fac is not None:
@@ -647,6 +657,8 @@ def simulate(
                     price_pnl += opt_pnl
                     hedge_payoff_total += opt_pnl
                 trade_exits[reason] = trade_exits.get(reason, 0) + 1
+                sleeve = str(p.get("reason") or "path_a")
+                sleeve_counts[sleeve] = sleeve_counts.get(sleeve, 0) + 1
                 risk = abs(p["entry"] - p["stop"]) or 1e-9
                 r_mult = ((px - p["entry"]) * sign) / risk
                 closed_pnls.append(
@@ -662,6 +674,7 @@ def simulate(
                         "target": round(float(p["target"]), 4) if p.get("target") is not None else None,
                         "entry_reason": p.get("reason") or "path_a",
                         "reason": reason,
+                        "sleeve": p.get("reason"),
                         "R": round(r_mult, 2),
                         "opt_payoff": round(opt_pnl, 2),
                         "opt_premium": p.get("opt_premium"),
@@ -712,8 +725,9 @@ def simulate(
                         if oi is None:
                             continue
                         peers.append(ret_n(other_s["hist"], oi, 20))
+                block_mode = "seats" if mode == "roll" else mode
                 blocked = None if mode == "ctf" else entry_block(
-                    mode,
+                    block_mode,
                     hist,
                     i,
                     direction,
@@ -724,7 +738,7 @@ def simulate(
                     member,
                     [p for p in peers if p is not None],
                 )
-                if mode == "seats" and not blocked:
+                if mode in ("seats", "roll") and not blocked:
                     _reason, label = seat_decision(direction, (member.get(code) or {}).get(d))
                     seat_follows[label] = seat_follows.get(label, 0) + 1
                 if blocked:
@@ -849,6 +863,110 @@ def simulate(
                 day_cost += fill_cost(series[c["code"]]["meta"], c["entry"], c["lots"])
                 open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
 
+            # Idle slots earn short-end roll: long backwardation, short contango.
+            if mode == "roll" and len(pos) < int(max_positions):
+                roll_cands = []
+                for code, s in series.items():
+                    if code in pos:
+                        continue
+                    i = idx[code].get(d)
+                    if i is None or i < WARMUP:
+                        continue
+                    pair = ((curves.get(code) or {}).get("carry") or {}).get(d)
+                    gap = carry_gap_pct(pair)
+                    if gap is None or abs(gap) < 0.5:
+                        continue
+                    hist = s["hist"]
+                    a = atr14(hist, i)
+                    if a is None or a <= 0:
+                        continue
+                    direction = "空" if gap > 0 else "多"
+                    close = hist[i]["close"]
+                    stop_dist = stop_atr_mult * a
+                    if direction == "多":
+                        stop = close - stop_dist
+                        target = close + reward_rr * stop_dist
+                    else:
+                        stop = close + stop_dist
+                        target = close - reward_rr * stop_dist
+                    risk_per_lot = stop_dist * s["meta"]["mult"]
+                    lots = int(math.floor(day_risk / risk_per_lot)) if risk_per_lot > 0 else 0
+                    if lots <= 0:
+                        continue
+                    score = abs(gap)
+                    roll_cands.append(
+                        {
+                            "code": code,
+                            "direction": direction,
+                            "lots": lots,
+                            "close": close,
+                            "mult": s["meta"]["mult"],
+                            "r20": score,
+                            "r60": score,
+                            "atr": round(a, 2),
+                            "bucket": s["meta"].get("bucket"),
+                            "entry": close,
+                            "stop": stop,
+                            "target": target,
+                            "reason": "roll_carry",
+                        }
+                    )
+                used_gross = 0.0
+                used_risk = 0.0
+                for held_code, held in pos.items():
+                    hi = idx[held_code].get(d)
+                    if hi is None:
+                        continue
+                    hx = series[held_code]["hist"][hi]["close"]
+                    hm = float(series[held_code]["meta"]["mult"])
+                    hl = abs(int(held["lots"]))
+                    used_gross += hl * hx * hm
+                    ha = atr14(series[held_code]["hist"], hi) or float(held.get("atr") or 0)
+                    used_risk += hl * float(ha) * hm
+                eq_base = sizing_eq if sizing_eq > 0 else 1.0
+                gross_left = max(0.0, float(max_gross_pct) - used_gross / eq_base * 100.0)
+                risk_left = max(0.0, float(max_port_risk) - used_risk / eq_base * 100.0)
+                if max_per_bucket > 0:
+                    roll_cands = [
+                        c
+                        for c in roll_cands
+                        if open_buckets.get(str(c.get("bucket") or "_"), 0) < int(max_per_bucket)
+                    ]
+                roll_selected = []
+                if roll_cands and gross_left > 0 and risk_left > 0:
+                    roll_selected, _roll_meta = apply_portfolio_caps(
+                        roll_cands,
+                        equity=sizing_eq,
+                        max_positions=max(0, int(max_positions) - len(pos)),
+                        max_gross_exposure_pct=gross_left,
+                        max_portfolio_risk_pct=risk_left,
+                        max_per_bucket=max_per_bucket,
+                        min_r20_pct=0.0,
+                        min_r60_pct=0.0,
+                    )
+                for c in roll_selected:
+                    if int(c.get("lots") or 0) <= 0 or len(pos) >= int(max_positions):
+                        continue
+                    bucket = str(c.get("bucket") or "_")
+                    if max_per_bucket > 0 and open_buckets.get(bucket, 0) >= int(max_per_bucket):
+                        continue
+                    pos[c["code"]] = {
+                        "code": c["code"],
+                        "direction": c["direction"],
+                        "lots": int(c["lots"]),
+                        "entry": float(c["entry"]),
+                        "entry_date": d,
+                        "stop": float(c["stop"]),
+                        "target": float(c["target"]),
+                        "atr": c.get("atr"),
+                        "r20": c.get("r20"),
+                        "r60": c.get("r60"),
+                        "bucket": c.get("bucket"),
+                        "reason": "roll_carry",
+                    }
+                    day_cost += fill_cost(series[c["code"]]["meta"], c["entry"], c["lots"])
+                    open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
+
         pnl = price_pnl - day_cost
         cost_total += day_cost
         equity += pnl
@@ -959,6 +1077,7 @@ def simulate(
         "breakeven_win_rate": round(breakeven_wr, 2) if breakeven_wr is not None else None,
         "closed_trades": closed_n,
         "exits": trade_exits,
+        "sleeve_counts": sleeve_counts,
         "avg_held": round(avg_held, 2),
         "conclusion": conclusion,
         "errors": errors,
@@ -1126,6 +1245,7 @@ def main():
     hedge_grid = "--hedge-grid" in sys.argv
     rr_grid = "--rr-grid" in sys.argv
     ctf = "--ctf" in sys.argv
+    roll_grid = "--roll-grid" in sys.argv
     p = _load_cfg()
     if rr_grid:
         p["equity0"] = float(p["cfg"].get("equity") or 200_000)
@@ -1141,9 +1261,56 @@ def main():
         f"min_r={p['min_r20']}/{p['min_r60']} min_lots={p.get('min_lots')} "
         f"observe={p.get('observe_mode')} optHedge={p.get('option_hedge')} "
         f"premATR={p.get('premium_atr_mult')} strikeATR={p.get('strike_atr_mult')} "
-        f"ifind={active_slot()} compare={compare} hedge_grid={hedge_grid} rr_grid={rr_grid}"
+        f"ifind={active_slot()} compare={compare} hedge_grid={hedge_grid} rr_grid={rr_grid} roll_grid={roll_grid}"
     )
-    if rr_grid:
+    if roll_grid:
+        pack = _fetch_pack(p["cfg"]["symbols"])
+        rows = []
+        for equity in (100_000, 200_000, 500_000, 1_000_000):
+            trial = dict(p)
+            trial["equity0"] = float(equity)
+            trial["min_lots"] = 0
+            trial["option_hedge"] = False
+            trial["observe_mode"] = False
+            for mode in ("seats", "roll"):
+                print(f"[bt] roll-grid equity={equity} mode={mode}")
+                one = _simulate_cfg(trial, mode, pack=pack, option_hedge=False)
+                rows.append(
+                    {
+                        "equity": equity,
+                        "mode": mode,
+                        "ret_pct": one.get("ret_pct"),
+                        "max_dd_pct": one.get("max_dd_pct"),
+                        "equity_end": one.get("equity_end"),
+                        "closed_trades": one.get("closed_trades"),
+                        "trade_win_rate": one.get("trade_win_rate"),
+                        "expectancy_r": one.get("expectancy_r"),
+                        "avg_held": one.get("avg_held"),
+                        "sleeve_counts": one.get("sleeve_counts"),
+                        "conclusion": one.get("conclusion"),
+                    }
+                )
+                print(
+                    f"  ret={one.get('ret_pct')} dd={one.get('max_dd_pct')} "
+                    f"trades={one.get('closed_trades')} sleeves={one.get('sleeve_counts')} "
+                    f"{one.get('conclusion')}"
+                )
+        out = {
+            "ok": True,
+            "strategy": "path_a_plus_roll",
+            "roll_grid": rows,
+            "summary": " ; ".join(
+                f"{r['equity']/10000:.0f}万/{r['mode']} {r['ret_pct']}% dd {r['max_dd_pct']}%"
+                for r in rows
+            ),
+        }
+        (ROOT / "archive").mkdir(exist_ok=True)
+        grid_path = ROOT / "archive" / "roll_equity_grid.json"
+        grid_path.write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(out["summary"])
+        print(f"[bt] wrote {grid_path}")
+        return 0
+    elif rr_grid:
         mode = p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax", "seats") else "base"
         pack = _fetch_pack(p["cfg"]["symbols"])
         rows = []
@@ -1274,7 +1441,38 @@ def main():
     rep = usage_report()
     out["ifind_calls"] = rep["count"]
     out["ifind_call_log"] = rep["calls"]
+    out["live_trading"] = False
     print(f"[ifind] calls={rep['count']}")
+    try:
+        from research_quality import validate_backtest_meta
+
+        q = validate_backtest_meta(
+            {
+                "start": out.get("start"),
+                "end": out.get("end"),
+                "trade_days": out.get("trade_days"),
+            }
+        )
+        out["quality"] = q
+        out["quality_ok"] = bool(q.get("ok"))
+        if not q.get("ok"):
+            print(f"[bt] QUALITY GATE FAIL {q.get('failures')}")
+            out["ok"] = False
+            out["error"] = "quality_gate:" + ",".join(q.get("failures") or [])
+            fail_path = ROOT / "historical_backtest_quality_failed.json"
+            fail_path.write_text(
+                json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+            arch = ROOT / "archive"
+            arch.mkdir(exist_ok=True)
+            if out.get("end"):
+                (arch / f"backtest_quality_failed_{str(out['end']).replace('-', '')}.json").write_text(
+                    fail_path.read_text(encoding="utf-8"), encoding="utf-8"
+                )
+            print(f"[bt] formal historical_backtest_latest withheld; wrote {fail_path}")
+            return out
+    except Exception as exc:  # noqa: BLE001
+        print(f"[bt] quality check soft-fail: {exc}")
     path = ROOT / "historical_backtest_latest.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     arch = ROOT / "archive"

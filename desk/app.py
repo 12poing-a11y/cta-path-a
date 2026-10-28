@@ -366,6 +366,18 @@ def main() -> None:
             c2.metric("权益", f"{report.get('equity'):,.0f}" if report.get("equity") is not None else "—")
             c3.metric("入场过滤", report.get("entry_filter"))
             c4.metric("数据源", str(report.get("data_source") or "")[:24])
+            q = report.get("quality") or {}
+            if report.get("quality_ok") is False:
+                st.error(
+                    f"质量门禁未通过：{q.get('failures') or q.get('bad_codes') or '见 quality'}；"
+                    "正式报告已扣留，不下单。"
+                )
+            elif report.get("quality_ok"):
+                st.caption(f"质量门禁通过（checked={q.get('checked')}）· live_trading=否")
+
+            from desk.sentiment_panel import render_sentiment_panel
+
+            render_sentiment_panel(ROOT)
 
             port = report.get("portfolio") or {}
             st.subheader("组合帽摘要")

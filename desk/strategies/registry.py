@@ -38,7 +38,37 @@ def _builtin() -> list[StrategySpec]:
             tags=["path_a", "option_hedge", "observe"],
             loader=_load_opt_hedge,
         ),
+        StrategySpec(
+            id="sentiment_mds",
+            name="情绪MDS+EHI（纸面）",
+            description="ChatGPT 三层情绪简化：MDS+EHI 纸面对照，无权益曲线、不下单",
+            curve_path=None,
+            signal_path=Path("data/sentiment_mds/latest.json"),
+            tags=["sentiment", "mds", "ehi", "paper_only"],
+            loader=_load_sentiment,
+        ),
     ]
+
+
+def _load_sentiment(root: Path, spec: StrategySpec) -> dict[str, Any]:
+    path = root / "data" / "sentiment_mds" / "latest.json"
+    if not path.is_file():
+        return {"_desk_missing": True, "_desk_tried": [str(path)]}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {"_desk_missing": True, "_desk_tried": [str(path)]}
+    data = dict(data)
+    data["_desk_source"] = "data/sentiment_mds/latest.json"
+    data["live_trading"] = False
+    # KPI-only: portfolio_p3 as ret_pct stand-in so desk shows kpi_only status.
+    data["ret_pct"] = data.get("portfolio_p3")
+    data["family"] = "sentiment_mds_paper"
+    data["summary"] = (
+        f"paper MDS+EHI asof={data.get('asof')} stance={data.get('stance')} "
+        f"p3={data.get('portfolio_p3')} (no live)"
+    )
+    return data
 
 
 def _load_opt_hedge(root: Path, spec: StrategySpec) -> dict[str, Any]:

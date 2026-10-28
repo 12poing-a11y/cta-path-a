@@ -303,7 +303,10 @@ def _read_bars(path: Path) -> list[dict]:
 
 
 def load_local_bars(root: Path, code: str) -> tuple[list[dict], str]:
-    """Longest local continuous series. Does not open a network connection."""
+    """Best local continuous series. Prefers newest last bar, then length.
+
+    Does not open a network connection — refresh via daily_update / git pull.
+    """
     code = str(code or "").upper()
     sina = root / ".cache" / "sina"
     paths: list[Path] = []
@@ -318,8 +321,12 @@ def load_local_bars(root: Path, code: str) -> tuple[list[dict], str]:
     best_key = ""
     for path in paths:
         bars = _read_bars(path)
+        if not bars:
+            continue
         stamp = path.parent.name
-        key = f"{len(bars):08d}-{stamp}"
+        last = str((bars[-1] or {}).get("date") or "")
+        # Newest session first; tie-break on length then folder stamp.
+        key = f"{last}-{len(bars):08d}-{stamp}"
         if key > best_key:
             best = bars
             best_key = key

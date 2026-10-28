@@ -23,6 +23,7 @@ jobs:
       - name: Install
         run: |
           pip install -r requirements.txt
+          pip install -r requirements-desk.txt
           pip install pytest
 
       - name: Unit tests (quality + sentiment)

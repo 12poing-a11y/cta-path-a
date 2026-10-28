@@ -9,7 +9,6 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-import streamlit as st
 
 from desk.loaders import format_variety_label, load_json, load_l1_report, load_universe
 from desk.sentiment_panel import load_sentiment_snapshot, sentiment_verdict
@@ -708,6 +707,8 @@ def _display_frame(rows: list[dict]) -> pd.DataFrame:
 
 
 def render_final_signal_tab(root: Path) -> None:
+    import streamlit as st
+
     st.subheader("最终信号")
     st.caption(FOOTER + " · 纸面行动总表；日信号/情绪/状态/决策为明细。")
 

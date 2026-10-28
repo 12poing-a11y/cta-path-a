@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-import streamlit as st
 
 from desk.loaders import format_variety_label, load_json, load_universe
 
@@ -138,6 +137,8 @@ def _signal_zh(sig: Any) -> str:
 
 
 def render_sentiment_panel(root: Path) -> None:
+    import streamlit as st
+
     st.subheader("情绪袖套 MDS+EHI（纸面对照）")
     st.caption(
         "MDS（席位流与价格同/背离）+ EHI（|净持仓|/OI）+ 软 P3。"

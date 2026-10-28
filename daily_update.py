@@ -799,6 +799,44 @@ def main():
                     f"[paper] asof={paper.get('asof')} held={paper.get('held_n')} "
                     f"opened={paper.get('opened_n')} closed={paper.get('closed_n')}"
                 )
+                # Sync accounting equity into formal report + equity_state (realized only for sizing).
+                eq_real = float(paper.get("equity") or report.get("equity") or EQUITY_BASE)
+                eq_float = float(paper.get("equity_floating") or 0.0)
+                eq_mark = float(paper.get("equity_mark") or (eq_real + eq_float))
+                report["equity"] = round(eq_real, 2)
+                report["equity_live"] = round(eq_real, 2)
+                report["equity_floating"] = round(eq_float, 2)
+                report["equity_mark"] = round(eq_mark, 2)
+                report["equity_source"] = "paper_book"
+                report["paper_asof"] = paper.get("asof")
+                if isinstance(report.get("portfolio"), dict):
+                    report["portfolio"]["sizing_equity"] = round(eq_real, 2)
+                state_out = {
+                    "equity_base": EQUITY_BASE,
+                    "equity": round(eq_real, 2),
+                    "peak": round(max(float(state.get("peak") or EQUITY_BASE), eq_real), 2),
+                    "asof": str(paper.get("asof") or report.get("asof")),
+                    "source": "paper_book",
+                    "equity_floating": round(eq_float, 2),
+                    "equity_mark": round(eq_mark, 2),
+                }
+                EQUITY_STATE_PATH.write_text(
+                    json.dumps(state_out, ensure_ascii=False, indent=2),
+                    encoding="utf-8",
+                )
+                report["equity_state"] = {
+                    "asof": state_out.get("asof"),
+                    "source": state_out.get("source"),
+                    "peak": state_out.get("peak"),
+                }
+                blob = json.dumps(report, ensure_ascii=False, indent=2)
+                (ROOT / "l1_report_risk15.json").write_text(blob, encoding="utf-8")
+                (ROOT / "l1_report.json").write_text(blob, encoding="utf-8")
+                (arch / f"l1_report_{report['asof']}.json").write_text(blob, encoding="utf-8")
+                print(
+                    f"[equity] synced paper equity={eq_real:.0f} "
+                    f"float={eq_float:.0f} mark={eq_mark:.0f}"
+                )
             else:
                 print("[paper] skip:", paper.get("error"))
         except Exception as exc:

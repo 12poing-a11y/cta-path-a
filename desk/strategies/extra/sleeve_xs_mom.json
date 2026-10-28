@@ -1,0 +1,12 @@
+{
+  "id": "sleeve_xs_mom",
+  "name": "纸面·波动调整截面动量",
+  "description": "纸面互补：波动调整动量多空各 top_n；次日收益；与 Path-A 同宇宙。",
+  "curve_file": "external/strategies/sleeve_xs_mom.json",
+  "tags": [
+    "paper_sleeve",
+    "cross_section",
+    "momentum",
+    "complementary"
+  ]
+}

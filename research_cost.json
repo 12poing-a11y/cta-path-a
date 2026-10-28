@@ -1,0 +1,14 @@
+{
+  "schema": "cta-research-cost-v1",
+  "note": "统一纸面成交假设。手数策略用 path_a_filters.fill_cost；截面代理用 bps。live_trading=false。",
+  "live_trading": false,
+  "path_a_fill": {
+    "slippage_ticks": 1.0,
+    "fee_from_symbol_meta": true
+  },
+  "sleeve_proxy": {
+    "cost_bps_one_way": 3.0,
+    "note": "代理日换仓：单边 3bp，双边约 6bp（与 lab OOS 口径对齐）"
+  },
+  "benchmark_equity": 200000.0
+}

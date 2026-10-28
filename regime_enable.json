@@ -1,0 +1,47 @@
+{
+  "schema": "cta-regime-enable-v1",
+  "note": "规则版 Regime 启用矩阵：决定纸面互补 sleeve 是否计入对照，不触发实盘。",
+  "live_trading": false,
+  "default_regime": "mixed",
+  "regimes": ["strong_trend", "trend", "mixed", "chop", "chop_strong"],
+  "rules": [
+    {
+      "sleeve": "sleeve_donchian",
+      "enable_when": ["strong_trend", "trend", "mixed"],
+      "disable_when": ["chop_strong"],
+      "role": "trend_breakout"
+    },
+    {
+      "sleeve": "sleeve_mr",
+      "enable_when": ["chop", "chop_strong", "mixed"],
+      "disable_when": ["strong_trend"],
+      "role": "mean_reversion"
+    },
+    {
+      "sleeve": "sleeve_xs_mom",
+      "enable_when": ["strong_trend", "trend", "mixed"],
+      "disable_when": ["chop_strong"],
+      "role": "cross_section"
+    },
+    {
+      "sleeve": "path_a",
+      "enable_when": ["strong_trend", "trend", "mixed", "chop"],
+      "disable_when": [],
+      "role": "core_seats"
+    },
+    {
+      "sleeve": "sentiment_mds",
+      "enable_when": ["strong_trend", "trend", "mixed", "chop", "chop_strong"],
+      "disable_when": [],
+      "role": "filter_only",
+      "note": "情绪仅作过滤/加权，不单独下单"
+    }
+  ],
+  "label_map": {
+    "偏多": "trend",
+    "偏空": "trend",
+    "震荡": "chop",
+    "强趋势": "strong_trend",
+    "强震荡": "chop_strong"
+  }
+}

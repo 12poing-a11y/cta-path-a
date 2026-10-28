@@ -1251,6 +1251,43 @@ def render_regime_tab(root: Path) -> None:
         regime_row=regime_row,
         decision=decision,
     )
+    try:
+        from desk.composite_eval import render_desk_composite_banner
+
+        fs = assessment.get("full_score")
+        render_desk_composite_banner(
+            root,
+            full_score=float(fs) if isinstance(fs, (int, float)) else None,
+        )
+        st.divider()
+    except Exception as exc:  # noqa: BLE001
+        st.caption(f"桌面综合分暂不可用：{exc}")
+
+    # Stage-2: regime → paper sleeve enable matrix (rules only, no live).
+    try:
+        from regime_enable import enable_matrix_table, normalize_regime
+
+        stance = None
+        if isinstance(decision, dict):
+            stance = decision.get("stance") or decision.get("dir") or decision.get("方向")
+        if not stance and isinstance(regime_row, dict):
+            # Prefer dominant bucket label from scored row if present
+            for key in ("主导", "状态", "bucket"):
+                if regime_row.get(key):
+                    stance = regime_row.get(key)
+                    break
+        regime_key = normalize_regime(str(stance) if stance else "mixed")
+        matrix = enable_matrix_table(regime_key, root=root)
+        if matrix:
+            st.markdown("**Regime 启用矩阵（纸面）**")
+            st.caption(
+                f"当前归一状态：`{regime_key}`。决定互补 sleeve 是否计入对照，"
+                "不触发实盘；情绪 sleeve 仅过滤/加权。"
+            )
+            st.dataframe(pd.DataFrame(matrix), width="stretch", hide_index=True)
+    except Exception as exc:  # noqa: BLE001
+        st.caption(f"Regime 启用矩阵暂不可用：{exc}")
+
     render_full_assessment(assessment, expanded=True, root=root)
 
     from desk.regime_factor_eval import render_regime_factor_panel

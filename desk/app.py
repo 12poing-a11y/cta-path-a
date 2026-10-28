@@ -27,6 +27,7 @@ from desk.loaders import (  # noqa: E402
 from desk.chart_board import render_chart_tab  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
+from desk.final_signal import DETAIL_CAPTION, render_final_signal_tab  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
 from desk.scoreboard import scoreboard_rows  # noqa: E402
 from desk.seat_board import render_seat_sector  # noqa: E402
@@ -257,9 +258,32 @@ def main() -> None:
         st.divider()
         _render_sync_panel()
 
-    tab_compare, tab_signals, tab_chart, tab_opts, tab_seats, tab_regime, tab_decision = st.tabs(
-        ["概览对比", "日信号", "图表", "期权机会", "席位板块", "状态评分", "决策"]
+    (
+        tab_final,
+        tab_compare,
+        tab_signals,
+        tab_sentiment,
+        tab_chart,
+        tab_opts,
+        tab_seats,
+        tab_regime,
+        tab_decision,
+    ) = st.tabs(
+        [
+            "最终信号",
+            "概览对比",
+            "日信号",
+            "情绪",
+            "图表",
+            "期权机会",
+            "席位板块",
+            "状态评分",
+            "决策",
+        ]
     )
+
+    with tab_final:
+        render_final_signal_tab(ROOT)
 
     # --- Tab 1: compare ---
     with tab_compare:
@@ -357,15 +381,39 @@ def main() -> None:
 
     # --- Tab 2: daily signals ---
     with tab_signals:
+        st.caption(DETAIL_CAPTION)
         report = load_l1_report(ROOT)
         if not report:
             st.error("缺少 l1_report.json，请先运行 daily_update.py")
         else:
+            from desk.equity_book import load_book_equity
+
+            book_eq = load_book_equity(ROOT, report)
             c1, c2, c3, c4 = st.columns(4)
             c1.metric("asof", report.get("asof"))
-            c2.metric("权益", f"{report.get('equity'):,.0f}" if report.get("equity") is not None else "—")
+            if book_eq.get("ok") and book_eq.get("equity_mark") is not None:
+                c2.metric(
+                    "盯市权益",
+                    f"{book_eq['equity_mark']:,.0f}",
+                    delta=(
+                        f"浮动 {book_eq['equity_floating']:+,.0f}"
+                        if book_eq.get("equity_floating") is not None
+                        else None
+                    ),
+                )
+            else:
+                c2.metric(
+                    "权益",
+                    f"{report.get('equity'):,.0f}" if report.get("equity") is not None else "—",
+                )
             c3.metric("入场过滤", report.get("entry_filter"))
             c4.metric("数据源", str(report.get("data_source") or "")[:24])
+            if book_eq.get("ok") and book_eq.get("equity") is not None:
+                st.caption(
+                    f"记账对齐 paper_book（{book_eq.get('source')} asof {book_eq.get('asof') or '—'}）："
+                    f"已实现 {book_eq['equity']:,.0f} · 浮动 {book_eq.get('equity_floating') or 0:+,.0f} · "
+                    f"盯市 {book_eq['equity_mark']:,.0f}；手数按已实现权益计风险，浮动仅展示。"
+                )
             q = report.get("quality") or {}
             if report.get("quality_ok") is False:
                 st.error(
@@ -374,10 +422,7 @@ def main() -> None:
                 )
             elif report.get("quality_ok"):
                 st.caption(f"质量门禁通过（checked={q.get('checked')}）· live_trading=否")
-
-            from desk.sentiment_panel import render_sentiment_panel
-
-            render_sentiment_panel(ROOT)
+            st.info("情绪多空结论、把握%与中文品种表已挪到顶部「情绪」页（不再嵌在本页）。")
 
             port = report.get("portfolio") or {}
             st.subheader("组合帽摘要")
@@ -433,6 +478,13 @@ def main() -> None:
                     c for c in sigs.columns if c not in prefer
                 ]
                 st.dataframe(sigs[cols], width="stretch", hide_index=True)
+
+    # --- Tab: sentiment sleeve ---
+    with tab_sentiment:
+        st.caption(DETAIL_CAPTION)
+        from desk.sentiment_panel import render_sentiment_panel
+
+        render_sentiment_panel(ROOT)
 
     # --- Tab: TV-style chart ---
     with tab_chart:
@@ -495,9 +547,11 @@ def main() -> None:
         render_seat_sector(ROOT)
 
     with tab_regime:
+        st.caption(DETAIL_CAPTION)
         render_regime_tab(ROOT)
 
     with tab_decision:
+        st.caption(DETAIL_CAPTION)
         render_decision_tab(ROOT)
 
 

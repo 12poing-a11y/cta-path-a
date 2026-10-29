@@ -1,0 +1,730 @@
+{
+  "ok": true,
+  "live_trading": false,
+  "entry_filter_unchanged": "seats",
+  "generated_at": "2026-10-29T16:14:36+08:00",
+  "codes": [
+    "CF",
+    "SR",
+    "MA",
+    "TA",
+    "RU",
+    "AG",
+    "RB"
+  ],
+  "reports": [
+    {
+      "ok": true,
+      "code": "CF",
+      "product": "棉花期权",
+      "venue": "czce",
+      "live_trading": false,
+      "asof": "20261028",
+      "bars_n": 5306,
+      "iv_days": 60,
+      "rv": {
+        "ok": true,
+        "rv20": 0.135395,
+        "rv_pct": 54.4,
+        "n_hist": 250
+      },
+      "iv": {
+        "ok": true,
+        "iv": 0.152959,
+        "iv_pct": 61.67,
+        "n_hist": 60,
+        "iv_thin": false,
+        "date": "20261028"
+      },
+      "vrp": 0.017564,
+      "iv_velocity": {
+        "ok": true,
+        "delta_iv": 0.005194,
+        "z": 0.1789,
+        "n": 60
+      },
+      "vol_state": {
+        "score": 58.0,
+        "label": "mid",
+        "parts": [
+          54.4,
+          61.67
+        ]
+      },
+      "vol_pricing": {
+        "score": 63.2,
+        "label": "fair",
+        "rich": null
+      },
+      "trend": {
+        "score": -32.0,
+        "label": "short",
+        "side": -1,
+        "path_a_side": -1,
+        "path_a_selected": false,
+        "mom_side": 0,
+        "breakout_side": 0
+      },
+      "momentum": {
+        "ok": true,
+        "side": 0,
+        "r20": -3.293,
+        "r60": -3.538
+      },
+      "breakout": {
+        "side": 0,
+        "date": "2026-10-27",
+        "stale": true,
+        "iv_tag": "true_candidate",
+        "delta_iv": 0.014416
+      },
+      "calendar": {
+        "ok": false
+      },
+      "matrix": {
+        "tag": "no_trade",
+        "tags": [
+          "no_trade"
+        ],
+        "reason": "条件不清晰 → 空仓/观望",
+        "false_breakout": false,
+        "buy_vol": false,
+        "sell_vol": false
+      },
+      "cfg": {
+        "action": "annotate",
+        "low_pct": 30.0,
+        "high_pct": 70.0,
+        "vrp_sell_min": 0.03
+      },
+      "note": "研究筛选；卖波仅 annotate，不改 Path-A 入场。",
+      "tag_window": {
+        "n": 1,
+        "counts": {
+          "no_trade": 1
+        }
+      }
+    },
+    {
+      "ok": true,
+      "code": "SR",
+      "product": "白糖期权",
+      "venue": "czce",
+      "live_trading": false,
+      "asof": "20261028",
+      "bars_n": 5049,
+      "iv_days": 60,
+      "rv": {
+        "ok": true,
+        "rv20": 0.128368,
+        "rv_pct": 95.2,
+        "n_hist": 250
+      },
+      "iv": {
+        "ok": true,
+        "iv": 0.117252,
+        "iv_pct": 1.67,
+        "n_hist": 60,
+        "iv_thin": false,
+        "date": "20261028"
+      },
+      "vrp": -0.011116,
+      "iv_velocity": {
+        "ok": true,
+        "delta_iv": -0.024259,
+        "z": -0.794,
+        "n": 60
+      },
+      "vol_state": {
+        "score": 48.4,
+        "label": "mid",
+        "parts": [
+          95.2,
+          1.67
+        ]
+      },
+      "vol_pricing": {
+        "score": 21.2,
+        "label": "cheap",
+        "rich": false
+      },
+      "trend": {
+        "score": 0.0,
+        "label": "flat",
+        "side": 0,
+        "path_a_side": 0,
+        "path_a_selected": false,
+        "mom_side": 0,
+        "breakout_side": 0
+      },
+      "momentum": {
+        "ok": true,
+        "side": 0,
+        "r20": -1.346,
+        "r60": 2.625
+      },
+      "breakout": {
+        "side": 0,
+        "date": "2026-10-27",
+        "stale": true,
+        "iv_tag": "true_candidate",
+        "delta_iv": 0.008972
+      },
+      "calendar": {
+        "ok": false
+      },
+      "matrix": {
+        "tag": "no_trade",
+        "tags": [
+          "no_trade"
+        ],
+        "reason": "条件不清晰 → 空仓/观望",
+        "false_breakout": false,
+        "buy_vol": false,
+        "sell_vol": false
+      },
+      "cfg": {
+        "action": "annotate",
+        "low_pct": 30.0,
+        "high_pct": 70.0,
+        "vrp_sell_min": 0.03
+      },
+      "note": "研究筛选；卖波仅 annotate，不改 Path-A 入场。",
+      "tag_window": {
+        "n": 1,
+        "counts": {
+          "no_trade": 1
+        }
+      }
+    },
+    {
+      "ok": true,
+      "code": "MA",
+      "product": "甲醇期权",
+      "venue": "czce",
+      "live_trading": false,
+      "asof": "20261028",
+      "bars_n": 2869,
+      "iv_days": 60,
+      "rv": {
+        "ok": true,
+        "rv20": 0.456255,
+        "rv_pct": 71.6,
+        "n_hist": 250
+      },
+      "iv": {
+        "ok": true,
+        "iv": 0.542077,
+        "iv_pct": 81.67,
+        "n_hist": 60,
+        "iv_thin": false,
+        "date": "20261028"
+      },
+      "vrp": 0.085822,
+      "iv_velocity": {
+        "ok": true,
+        "delta_iv": 0.003392,
+        "z": -0.0077,
+        "n": 60
+      },
+      "vol_state": {
+        "score": 76.6,
+        "label": "high",
+        "parts": [
+          71.6,
+          81.67
+        ]
+      },
+      "vol_pricing": {
+        "score": 90.8,
+        "label": "rich",
+        "rich": true
+      },
+      "trend": {
+        "score": 62.0,
+        "label": "long",
+        "side": 1,
+        "path_a_side": 1,
+        "path_a_selected": false,
+        "mom_side": 1,
+        "breakout_side": 0
+      },
+      "momentum": {
+        "ok": true,
+        "side": 1,
+        "r20": 17.663,
+        "r60": 33.18
+      },
+      "breakout": {
+        "side": 0,
+        "date": "2026-10-27",
+        "stale": true,
+        "iv_tag": "true_candidate",
+        "delta_iv": 0.006208
+      },
+      "calendar": {
+        "ok": false
+      },
+      "matrix": {
+        "tag": "no_trade",
+        "tags": [
+          "no_trade"
+        ],
+        "reason": "条件不清晰 → 空仓/观望",
+        "false_breakout": false,
+        "buy_vol": false,
+        "sell_vol": false
+      },
+      "cfg": {
+        "action": "annotate",
+        "low_pct": 30.0,
+        "high_pct": 70.0,
+        "vrp_sell_min": 0.03
+      },
+      "note": "研究筛选；卖波仅 annotate，不改 Path-A 入场。",
+      "tag_window": {
+        "n": 1,
+        "counts": {
+          "no_trade": 1
+        }
+      }
+    },
+    {
+      "ok": true,
+      "code": "TA",
+      "product": "PTA期权",
+      "venue": "czce",
+      "live_trading": false,
+      "asof": "20261028",
+      "bars_n": 4823,
+      "iv_days": 60,
+      "rv": {
+        "ok": true,
+        "rv20": 0.382518,
+        "rv_pct": 79.2,
+        "n_hist": 250
+      },
+      "iv": {
+        "ok": true,
+        "iv": 0.395796,
+        "iv_pct": 71.67,
+        "n_hist": 60,
+        "iv_thin": false,
+        "date": "20261028"
+      },
+      "vrp": 0.013278,
+      "iv_velocity": {
+        "ok": true,
+        "delta_iv": 0.005046,
+        "z": 0.0611,
+        "n": 60
+      },
+      "vol_state": {
+        "score": 75.4,
+        "label": "high",
+        "parts": [
+          79.2,
+          71.67
+        ]
+      },
+      "vol_pricing": {
+        "score": 66.4,
+        "label": "fair",
+        "rich": null
+      },
+      "trend": {
+        "score": 62.0,
+        "label": "long",
+        "side": 1,
+        "path_a_side": 1,
+        "path_a_selected": false,
+        "mom_side": 1,
+        "breakout_side": 0
+      },
+      "momentum": {
+        "ok": true,
+        "side": 1,
+        "r20": 6.376,
+        "r60": 18.586
+      },
+      "breakout": {
+        "side": 0,
+        "date": "2026-10-08",
+        "stale": true,
+        "iv_tag": "true_candidate",
+        "delta_iv": 0.048864
+      },
+      "calendar": {
+        "ok": false
+      },
+      "matrix": {
+        "tag": "no_trade",
+        "tags": [
+          "no_trade"
+        ],
+        "reason": "条件不清晰 → 空仓/观望",
+        "false_breakout": false,
+        "buy_vol": false,
+        "sell_vol": false
+      },
+      "cfg": {
+        "action": "annotate",
+        "low_pct": 30.0,
+        "high_pct": 70.0,
+        "vrp_sell_min": 0.03
+      },
+      "note": "研究筛选；卖波仅 annotate，不改 Path-A 入场。",
+      "tag_window": {
+        "n": 1,
+        "counts": {
+          "no_trade": 1
+        }
+      }
+    },
+    {
+      "ok": true,
+      "code": "RU",
+      "product": "天胶期权",
+      "venue": "shfe",
+      "live_trading": false,
+      "asof": "20261028",
+      "bars_n": 5303,
+      "iv_days": 60,
+      "rv": {
+        "ok": true,
+        "rv20": 0.289555,
+        "rv_pct": 96.4,
+        "n_hist": 250
+      },
+      "iv": {
+        "ok": true,
+        "iv": 0.261222,
+        "iv_pct": 75.0,
+        "n_hist": 60,
+        "iv_thin": false,
+        "date": "20261028"
+      },
+      "vrp": -0.028333,
+      "iv_velocity": {
+        "ok": true,
+        "delta_iv": -0.00261,
+        "z": -0.0531,
+        "n": 60
+      },
+      "vol_state": {
+        "score": 85.7,
+        "label": "high",
+        "parts": [
+          96.4,
+          75.0
+        ]
+      },
+      "vol_pricing": {
+        "score": 50.7,
+        "label": "fair",
+        "rich": null
+      },
+      "trend": {
+        "score": 62.0,
+        "label": "long",
+        "side": 1,
+        "path_a_side": 1,
+        "path_a_selected": false,
+        "mom_side": 1,
+        "breakout_side": 0
+      },
+      "momentum": {
+        "ok": true,
+        "side": 1,
+        "r20": 3.19,
+        "r60": 17.115
+      },
+      "breakout": {
+        "side": 0,
+        "date": "2026-10-09",
+        "stale": true,
+        "iv_tag": "iv_flat",
+        "delta_iv": -0.002792
+      },
+      "calendar": {
+        "ok": false
+      },
+      "matrix": {
+        "tag": "no_trade",
+        "tags": [
+          "no_trade"
+        ],
+        "reason": "条件不清晰 → 空仓/观望",
+        "false_breakout": true,
+        "buy_vol": false,
+        "sell_vol": false
+      },
+      "cfg": {
+        "action": "annotate",
+        "low_pct": 30.0,
+        "high_pct": 70.0,
+        "vrp_sell_min": 0.03
+      },
+      "note": "研究筛选；卖波仅 annotate，不改 Path-A 入场。",
+      "tag_window": {
+        "n": 1,
+        "counts": {
+          "no_trade": 1
+        }
+      }
+    },
+    {
+      "ok": true,
+      "code": "AG",
+      "product": "白银期权",
+      "venue": "shfe",
+      "live_trading": false,
+      "asof": "20261028",
+      "bars_n": 3519,
+      "iv_days": 59,
+      "rv": {
+        "ok": true,
+        "rv20": 0.353443,
+        "rv_pct": 12.8,
+        "n_hist": 250
+      },
+      "iv": {
+        "ok": true,
+        "iv": 0.441065,
+        "iv_pct": 42.37,
+        "n_hist": 59,
+        "iv_thin": false,
+        "date": "20261028"
+      },
+      "vrp": 0.087622,
+      "iv_velocity": {
+        "ok": true,
+        "delta_iv": -0.004082,
+        "z": -0.1919,
+        "n": 59
+      },
+      "vol_state": {
+        "score": 27.6,
+        "label": "low",
+        "parts": [
+          12.8,
+          42.37
+        ]
+      },
+      "vol_pricing": {
+        "score": 71.2,
+        "label": "rich",
+        "rich": true
+      },
+      "trend": {
+        "score": -62.0,
+        "label": "short",
+        "side": -1,
+        "path_a_side": -1,
+        "path_a_selected": false,
+        "mom_side": -1,
+        "breakout_side": 0
+      },
+      "momentum": {
+        "ok": true,
+        "side": -1,
+        "r20": -18.427,
+        "r60": -7.652
+      },
+      "breakout": {
+        "side": 0,
+        "date": "2026-10-27",
+        "stale": true,
+        "iv_tag": "iv_flat",
+        "delta_iv": 0.004984
+      },
+      "calendar": {
+        "ok": false
+      },
+      "matrix": {
+        "tag": "no_trade",
+        "tags": [
+          "no_trade"
+        ],
+        "reason": "条件不清晰 → 空仓/观望",
+        "false_breakout": true,
+        "buy_vol": false,
+        "sell_vol": false
+      },
+      "cfg": {
+        "action": "annotate",
+        "low_pct": 30.0,
+        "high_pct": 70.0,
+        "vrp_sell_min": 0.03
+      },
+      "note": "研究筛选；卖波仅 annotate，不改 Path-A 入场。",
+      "tag_window": {
+        "n": 1,
+        "counts": {
+          "no_trade": 1
+        }
+      }
+    },
+    {
+      "ok": true,
+      "code": "RB",
+      "product": "螺纹钢期权",
+      "venue": "shfe",
+      "live_trading": false,
+      "asof": "20261028",
+      "bars_n": 4269,
+      "iv_days": 60,
+      "rv": {
+        "ok": true,
+        "rv20": 0.076283,
+        "rv_pct": 16.0,
+        "n_hist": 250
+      },
+      "iv": {
+        "ok": true,
+        "iv": 0.114897,
+        "iv_pct": 10.0,
+        "n_hist": 60,
+        "iv_thin": false,
+        "date": "20261028"
+      },
+      "vrp": 0.038614,
+      "iv_velocity": {
+        "ok": true,
+        "delta_iv": -0.003853,
+        "z": -0.2669,
+        "n": 60
+      },
+      "vol_state": {
+        "score": 13.0,
+        "label": "low",
+        "parts": [
+          16.0,
+          10.0
+        ]
+      },
+      "vol_pricing": {
+        "score": 46.1,
+        "label": "fair",
+        "rich": null
+      },
+      "trend": {
+        "score": -32.0,
+        "label": "short",
+        "side": -1,
+        "path_a_side": -1,
+        "path_a_selected": false,
+        "mom_side": 0,
+        "breakout_side": 0
+      },
+      "momentum": {
+        "ok": true,
+        "side": 0,
+        "r20": -2.28,
+        "r60": -0.556
+      },
+      "breakout": {
+        "side": 0,
+        "date": "2026-10-23",
+        "stale": true,
+        "iv_tag": "iv_flat",
+        "delta_iv": -5.5e-05
+      },
+      "calendar": {
+        "ok": false
+      },
+      "matrix": {
+        "tag": "no_trade",
+        "tags": [
+          "no_trade"
+        ],
+        "reason": "条件不清晰 → 空仓/观望",
+        "false_breakout": true,
+        "buy_vol": false,
+        "sell_vol": false
+      },
+      "cfg": {
+        "action": "annotate",
+        "low_pct": 30.0,
+        "high_pct": 70.0,
+        "vrp_sell_min": 0.03
+      },
+      "note": "研究筛选；卖波仅 annotate，不改 Path-A 入场。",
+      "tag_window": {
+        "n": 1,
+        "counts": {
+          "no_trade": 1
+        }
+      }
+    }
+  ],
+  "tag_distribution": {
+    "CF": {
+      "no_trade": 1
+    },
+    "SR": {
+      "no_trade": 1
+    },
+    "MA": {
+      "no_trade": 1
+    },
+    "TA": {
+      "no_trade": 1
+    },
+    "RU": {
+      "no_trade": 1
+    },
+    "AG": {
+      "no_trade": 1
+    },
+    "RB": {
+      "no_trade": 1
+    }
+  },
+  "note": "波动率引擎 V1 研究台；卖波 soft-annotate；无裸卖跨式/完整对冲。",
+  "desk_board": {
+    "CF": {
+      "盘面结论": "观望",
+      "盘面说明": "空仓标签或假突破嫌疑",
+      "引擎标签": "no_trade",
+      "最终动作": "观望"
+    },
+    "SR": {
+      "盘面结论": "观望",
+      "盘面说明": "空仓标签或假突破嫌疑",
+      "引擎标签": "no_trade",
+      "最终动作": "观望"
+    },
+    "MA": {
+      "盘面结论": "观望",
+      "盘面说明": "空仓标签或假突破嫌疑",
+      "引擎标签": "no_trade",
+      "最终动作": "持有"
+    },
+    "TA": {
+      "盘面结论": "观望",
+      "盘面说明": "空仓标签或假突破嫌疑",
+      "引擎标签": "no_trade",
+      "最终动作": "观望"
+    },
+    "RU": {
+      "盘面结论": "观望",
+      "盘面说明": "空仓标签或假突破嫌疑",
+      "引擎标签": "no_trade",
+      "最终动作": "观望"
+    },
+    "AG": {
+      "盘面结论": "观望",
+      "盘面说明": "空仓标签或假突破嫌疑",
+      "引擎标签": "no_trade",
+      "最终动作": "观望"
+    },
+    "RB": {
+      "盘面结论": "观望",
+      "盘面说明": "空仓标签或假突破嫌疑",
+      "引擎标签": "no_trade",
+      "最终动作": "观望"
+    }
+  },
+  "desk_note": "研究建议，非交易指令。卖波仅标注，不改期货开仓。"
+}

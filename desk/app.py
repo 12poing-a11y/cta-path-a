@@ -35,14 +35,18 @@ from desk.strategies.registry import all_strategies  # noqa: E402
 import importlib  # noqa: E402
 
 import desk.sync_desk as _sync_desk_mod  # noqa: E402
+import desk.vol_engine_panel as _vol_engine_panel_mod  # noqa: E402
 
-# Streamlit may keep a pre-edit sync_desk in sys.modules; reload so new helpers appear.
+# Streamlit may keep a pre-edit module in sys.modules; reload so new helpers appear.
 _sync_desk_mod = importlib.reload(_sync_desk_mod)
+_vol_engine_panel_mod = importlib.reload(_vol_engine_panel_mod)
 clear_streamlit_caches = _sync_desk_mod.clear_streamlit_caches
 git_repo_status = _sync_desk_mod.git_repo_status
 report_mtime_note = _sync_desk_mod.report_mtime_note
 sync_desk = _sync_desk_mod.sync_desk
 book_freshness = getattr(_sync_desk_mod, "book_freshness", None)
+vol_fields_by_code = _vol_engine_panel_mod.vol_fields_by_code
+render_vol_engine_section = _vol_engine_panel_mod.render_vol_engine_section
 if book_freshness is None:
     # Extremely stale module: degrade to l1-only freshness.
     def book_freshness(root, now=None):  # type: ignore[misc]
@@ -453,31 +457,45 @@ def main() -> None:
                     }
                 )
 
-            st.subheader("L1 信号板")
+            st.subheader("L1 信号板（Path-A）")
             sigs = pd.DataFrame(report.get("signals") or [])
             if sigs.empty:
                 st.info("无信号行")
             else:
-                prefer = [
-                    "code",
-                    "name",
-                    "bucket",
-                    "align",
-                    "direction",
-                    "lots_l1",
-                    "lots_raw",
-                    "selected",
-                    "close",
-                    "atr",
-                    "r20",
-                    "r60",
-                    "action",
-                    "seat",
-                ]
-                cols = [c for c in prefer if c in sigs.columns] + [
-                    c for c in sigs.columns if c not in prefer
-                ]
-                st.dataframe(sigs[cols], width="stretch", hide_index=True)
+                from desk.loaders import format_variety_label
+
+                vol_map = vol_fields_by_code(ROOT)
+                display_rows = []
+                for _, row in sigs.iterrows():
+                    code = str(row.get("code") or "").upper()
+                    vf = vol_map.get(code) or {}
+                    display_rows.append(
+                        {
+                            "品种": format_variety_label(
+                                code, str(row.get("name") or ""), root=ROOT
+                            ),
+                            "板块": row.get("bucket"),
+                            "对齐": row.get("align"),
+                            "方向": row.get("direction"),
+                            "手数": row.get("lots_l1"),
+                            "日选": row.get("selected"),
+                            "收盘": row.get("close"),
+                            "ATR": row.get("atr"),
+                            "R20": row.get("r20"),
+                            "R60": row.get("r60"),
+                            "席位": row.get("seat"),
+                            "情绪分档": vf.get("情绪分档") or "—",
+                            "波动状态": vf.get("波动状态") or "—",
+                            "定价": vf.get("定价") or "—",
+                            "引擎标签": vf.get("引擎标签") or "—",
+                            "盘面结论": vf.get("盘面结论") or "—",
+                            "动作": row.get("action"),
+                        }
+                    )
+                st.dataframe(
+                    pd.DataFrame(display_rows), width="stretch", hide_index=True
+                )
+                st.caption("已并入波动引擎分档；无代码列，品种列含合约期+中文名。")
 
     # --- Tab: sentiment sleeve ---
     with tab_sentiment:

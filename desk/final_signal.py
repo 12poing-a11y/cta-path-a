@@ -503,6 +503,63 @@ def _signal_map(report: dict[str, Any] | None) -> dict[str, dict]:
     return out
 
 
+def decision_proxy_from_l1(
+    sig: dict[str, Any] | None,
+    *,
+    held_side: str | None = None,
+) -> dict[str, Any]:
+    """Fast decision crumb for the final-signal board (no HMM / akshare pack).
+
+    Maps L1 多/空 → 偏多/偏空 so 建议开/持有 still resolve. Held-only names
+    without a directed L1 keep the held side so TP/SL alerts still work without
+    forcing 建议平 via fake 观望. Full model vote stays on the 决策 tab.
+    """
+    side = _side((sig or {}).get("direction"))
+    selected = bool((sig or {}).get("selected"))
+    if side == "多":
+        return {
+            "结论": "偏多",
+            "把握": "中" if selected else "低",
+            "_proxy": True,
+            "_proxy_source": "l1",
+        }
+    if side == "空":
+        return {
+            "结论": "偏空",
+            "把握": "中" if selected else "低",
+            "_proxy": True,
+            "_proxy_source": "l1",
+        }
+    if held_side == "多":
+        return {
+            "结论": "偏多",
+            "把握": "低",
+            "_proxy": True,
+            "_proxy_source": "book",
+        }
+    if held_side == "空":
+        return {
+            "结论": "偏空",
+            "把握": "低",
+            "_proxy": True,
+            "_proxy_source": "book",
+        }
+    return {
+        "结论": "观望",
+        "把握": "—",
+        "_proxy": True,
+        "_proxy_source": "flat",
+    }
+
+
+def _load_composite_cached(root: Path) -> dict[str, Any] | None:
+    path = Path(root) / "data" / "desk_composite_latest.json"
+    payload = load_json(path)
+    if isinstance(payload, dict) and payload.get("ok") and payload.get("desk_score") is not None:
+        return payload
+    return None
+
+
 def _name_map(root: Path, report: dict | None = None) -> dict[str, str]:
     names: dict[str, str] = {}
     uni = load_universe(root) or {}
@@ -549,8 +606,13 @@ def build_final_signal_board(
     regime_key: str | None = None,
     decisions: dict[str, dict] | None = None,
     compute_decisions: bool = True,
+    full_decision_packs: bool = False,
 ) -> dict[str, Any]:
-    """Full final-signal board. Primary = held ∪ L1 selected ∪ L1 directed."""
+    """Full final-signal board. Primary = held ∪ L1 selected ∪ L1 directed.
+
+    By default decisions are L1/book proxies (fast). Set ``full_decision_packs=True``
+    to rebuild HMM/seat packs via ``build_decision`` (slow; same as 决策 tab).
+    """
     root = Path(root)
     report = report if report is not None else (load_l1_report(root) or {})
     if book is None:
@@ -587,29 +649,40 @@ def build_final_signal_board(
         for code in sorted(primary):
             if code in decisions:
                 continue
-            try:
-                from desk.decision import build_decision
-                from desk.regime_board import _cached_pack
-
+            pos = positions.get(code) if isinstance(positions.get(code), dict) else None
+            held_side = _side((pos or {}).get("direction")) if pos else None
+            lots = _num((pos or {}).get("lots")) if pos else None
+            if not (held_side in ("多", "空") and (lots or 0) > 0):
+                held_side = None
+            if full_decision_packs:
                 try:
-                    pack = _cached_pack(str(root), code)
-                except Exception:
-                    pack = None
-                decisions[code] = build_decision(
-                    root,
-                    code,
-                    pack=pack,
-                    report=report,
-                    paper=book,
+                    from desk.decision import build_decision
+                    from desk.regime_board import _cached_pack
+
+                    try:
+                        pack = _cached_pack(str(root), code)
+                    except Exception:
+                        pack = None
+                    decisions[code] = build_decision(
+                        root,
+                        code,
+                        pack=pack,
+                        report=report,
+                        paper=book,
+                    )
+                except Exception as exc:  # noqa: BLE001
+                    # Mark unavailable — must not become held→建议平 via fake 观望.
+                    decisions[code] = {
+                        "结论": "观望",
+                        "把握": "低",
+                        "理由": f"决策不可用：{exc}",
+                        "_unavailable": True,
+                    }
+            else:
+                decisions[code] = decision_proxy_from_l1(
+                    sig_map.get(code),
+                    held_side=held_side,
                 )
-            except Exception as exc:  # noqa: BLE001
-                # Mark unavailable — must not become held→建议平 via fake 观望.
-                decisions[code] = {
-                    "结论": "观望",
-                    "把握": "低",
-                    "理由": f"决策不可用：{exc}",
-                    "_unavailable": True,
-                }
 
     if regime_key is None:
         regime_key = infer_desk_regime_key(
@@ -657,13 +730,14 @@ def build_final_signal_board(
     opens = sum(1 for r in primary_rows if r.get("最终动作") == "建议开")
     held_n = sum(1 for r in primary_rows if r.get("_held"))
 
-    composite = None
-    try:
-        from desk.composite_eval import desk_composite_score
+    composite = _load_composite_cached(root)
+    if composite is None:
+        try:
+            from desk.composite_eval import desk_composite_score
 
-        composite = desk_composite_score(root, write=False)
-    except Exception:
-        composite = None
+            composite = desk_composite_score(root, write=False)
+        except Exception:
+            composite = None
 
     return {
         "ok": True,
@@ -673,6 +747,7 @@ def build_final_signal_board(
         "composite": composite,
         "primary": primary_rows,
         "other": other_rows,
+        "decision_mode": "full" if full_decision_packs else "l1_proxy",
         "metrics": {
             "held_n": held_n,
             "alert_n": alerts,
@@ -712,7 +787,7 @@ def render_final_signal_tab(root: Path) -> None:
     st.subheader("最终信号")
     st.caption(FOOTER + " · 纸面行动总表；日信号/情绪/状态/决策为明细。")
 
-    with st.spinner("合并日信号、情绪、决策与模拟仓…"):
+    with st.spinner("合并日信号、情绪与模拟仓（快路径）…"):
         board = build_final_signal_board(root)
 
     metrics = board.get("metrics") or {}
@@ -724,9 +799,11 @@ def render_final_signal_tab(root: Path) -> None:
     c4.metric("建议开", metrics.get("open_n") if metrics.get("open_n") is not None else "—")
 
     sent = board.get("sentiment") or {}
+    mode = board.get("decision_mode") or "l1_proxy"
+    mode_zh = "L1快路径" if mode != "full" else "完整决策包"
     st.caption(
         f"asof={board.get('asof') or '—'} · regime={board.get('regime') or '—'} · "
-        f"情绪 {sent.get('label') or '—'} · live_trading=否"
+        f"情绪 {sent.get('label') or '—'} · 决策={mode_zh} · live_trading=否"
     )
 
     primary = board.get("primary") or []

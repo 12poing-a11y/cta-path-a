@@ -1,0 +1,52 @@
+{
+  "id": "vol_engine_v1",
+  "title": "波动率引擎 V1（知识卡）",
+  "asof": "2026-10-29",
+  "market": "中国商品期货+对应期权（研究/纸面）",
+  "status": "research_desk",
+  "module": "vol_engine.py",
+  "desk_panel": "desk/vol_engine_panel.py",
+  "summary_zh": "高低波是筛选不是策略：四维状态（RV分位/IV分位/VRP/IV速度）+ 规则版策略选择矩阵，叠加 MDS+EHI 情绪分档；与 Path-A/突破/iv_breakout 合并盘面。不做裸卖跨式与完整 Delta-Gamma 对冲，不改 entry_filter=seats。",
+  "sentiment_tiers": {
+    "neutral": "震荡或把握<40 → 情绪当噪声",
+    "aligned": "同向且把握≥40 → 可加强方向研究（非反向主策略）",
+    "extreme_crowd": "同向且把握≥75 → 贵波/高IV不追买波；配合卖波条件则加强卖方标注",
+    "opposed_soft": "反向把握40–60 → 买波降观望",
+    "opposed_hard": "反向把握≥60 → 硬否决追方向/买波（对齐最终信号）"
+  },
+  "architecture": {
+    "layer1_state": ["RV Percentile (20d ann. vs 250d)", "IV Percentile", "VRP=IV-RV20", "IV velocity ΔIV/z"],
+    "layer2_scores": ["vol_state", "vol_pricing", "trend_score(from Path-A/20·60/Donchian)", "sentiment_tier"],
+    "layer3_matrix": {
+      "buy_vol_breakout|buy_call_or_put": "低RV/IV分位+突破确认+IV未充分扩张（可被情绪压制）",
+      "sell_vol_credit_spread": "高IV分位+VRP>阈+IV回落+无强真突破（仅annotate）",
+      "calendar_candidate": "近月IV明显高于远月（SHFE多序列）",
+      "no_trade": "冲突或不清晰或情绪硬/软反向压买波",
+      "research_stub": "偏斜/Gamma占位"
+    }
+  },
+  "codes": ["CF", "SR", "MA", "TA", "RU", "AG", "RB"],
+  "reuse": {
+    "bars": "desk.regime_board.load_local_bars",
+    "iv": "iv_breakout.fetch_day_iv / load_iv_series / CODE_TO_OPTION / classify_breakout_iv",
+    "aux": "vol_factor_combo（辅证，不替换分位体系）"
+  },
+  "desk_merge_priority": [
+    "持仓止盈止损预警",
+    "no_trade/假突破 → 观望",
+    "Path-A日选+同向突破+买波/方向 → 偏多/偏空研究",
+    "仅卖波且无冲突 → 波动率卖方研究（不改期货开仓）"
+  ],
+  "constraints": {
+    "live_trading": false,
+    "entry_filter": "seats（不变）",
+    "sell_vol": "soft annotate only",
+    "not_implemented": ["naked short straddle", "full Delta-Gamma hedge engine", "auto order"]
+  },
+  "artifacts": {
+    "desk_json": "data/vol_engine_latest.json",
+    "oos_json": "lab/research/oos/vol_engine_latest.json",
+    "cli": "python vol_engine.py --codes CF,SR,MA,TA,RU,AG,RB"
+  },
+  "disclaimer": "研究筛选与盘面旁证，非下单指令；VRP 用当前 RV 作代理有已知局限；期权薄样本标 iv_thin。"
+}

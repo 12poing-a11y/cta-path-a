@@ -136,6 +136,128 @@ def _signal_zh(sig: Any) -> str:
     return "观望"
 
 
+def total_board_conclusion(
+    *,
+    align: str,
+    path_a: str,
+    sent: str,
+    vol_conclusion: str,
+    sentiment_conviction: float = 0.0,
+) -> dict[str, Any]:
+    """Merge Path-A对照 + 波动盘面 → one paper conclusion per name."""
+    vol = str(vol_conclusion or "观望").strip() or "观望"
+    pa = str(path_a or "—").strip()
+    se = str(sent or "—").strip()
+    al = str(align or "—").strip()
+
+    # Vol alerts / research take explicit priority when actionable.
+    if vol in ("止盈预警", "止损预警"):
+        return {"结论": vol, "note": "波动/最终信号预警优先"}
+    if vol == "波动率卖方研究":
+        return {"结论": "波动率卖方研究", "note": "卖波标注；方向以观望为主，不改期货开仓"}
+    if vol == "日历价差研究":
+        return {"结论": "日历价差研究", "note": "近远月结构候选"}
+
+    if al == "冲突" and sentiment_conviction >= 60:
+        return {
+            "结论": "观望",
+            "note": "情绪与Path-A冲突且把握高 → 总盘面观望",
+        }
+
+    if vol in ("偏多研究", "偏空研究"):
+        # Conflict with Path-A / sentiment → soften to 观望
+        want = "多" if "偏多" in vol else "空"
+        if pa in ("多", "空") and pa != want:
+            return {"结论": "观望", "note": f"波动{vol}与Path-A{pa}不一致"}
+        if se in ("多", "空") and se != want and sentiment_conviction >= 60:
+            return {"结论": "观望", "note": f"波动{vol}与情绪{se}硬冲突"}
+        return {"结论": vol, "note": "波动方向研究，Path-A/情绪未硬冲突"}
+
+    # Vol 观望：fall back to Path-A + sentiment alignment.
+    if al == "同向" and pa in ("多", "空"):
+        return {
+            "结论": f"偏{pa}研究",
+            "note": "Path-A与情绪同向；波动未给独立方向",
+        }
+    if al == "仅Path-A" and pa in ("多", "空"):
+        return {
+            "结论": f"偏{pa}研究",
+            "note": "仅Path-A有方向；波动观望",
+        }
+    if al == "仅情绪" and se in ("多", "空") and sentiment_conviction >= 60:
+        return {
+            "结论": "观望",
+            "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
+        }
+    if al == "冲突":
+        return {"结论": "观望", "note": "情绪与Path-A冲突"}
+
+    return {"结论": "观望", "note": "Path-A与波动均无清晰方向"}
+
+
+def portfolio_total_verdict(
+    rows: list[dict[str, Any]],
+    *,
+    sentiment_direction: str,
+    sentiment_conviction: float,
+) -> dict[str, Any]:
+    """One book-level line from per-name 总结论."""
+    if not rows:
+        return {
+            "结论": "观望",
+            "note": "无对照品种",
+            "label": "观望",
+        }
+    counts: dict[str, int] = {}
+    for r in rows:
+        c = str(r.get("总结论") or "观望")
+        counts[c] = counts.get(c, 0) + 1
+    long_n = counts.get("偏多研究", 0)
+    short_n = counts.get("偏空研究", 0)
+    sell_n = counts.get("波动率卖方研究", 0)
+    alert_n = counts.get("止盈预警", 0) + counts.get("止损预警", 0)
+    watch_n = counts.get("观望", 0)
+
+    if alert_n:
+        return {
+            "结论": "有预警",
+            "note": f"止盈/止损预警 {alert_n} 个品种优先处理",
+            "label": f"有预警 · {alert_n}",
+            "counts": counts,
+        }
+    if sell_n and sell_n >= max(long_n, short_n, 1):
+        return {
+            "结论": "波动率卖方研究",
+            "note": f"卖方研究 {sell_n}；多{long_n}/空{short_n}；情绪{sentiment_direction}{sentiment_conviction:.0f}%",
+            "label": f"波动率卖方研究 · {sell_n}",
+            "counts": counts,
+        }
+    if long_n > short_n and long_n > 0:
+        return {
+            "结论": "偏多研究",
+            "note": f"总盘面偏多 {long_n} vs 偏空 {short_n}；观望 {watch_n}；情绪{sentiment_direction}",
+            "label": f"偏多研究 · {long_n}",
+            "counts": counts,
+        }
+    if short_n > long_n and short_n > 0:
+        return {
+            "结论": "偏空研究",
+            "note": f"总盘面偏空 {short_n} vs 偏多 {long_n}；观望 {watch_n}；情绪{sentiment_direction}",
+            "label": f"偏空研究 · {short_n}",
+            "counts": counts,
+        }
+    return {
+        "结论": "观望",
+        "note": f"观望 {watch_n}；多{long_n}/空{short_n}/卖波{sell_n}；情绪{sentiment_direction}{sentiment_conviction:.0f}%",
+        "label": "观望",
+        "counts": counts,
+    }
+
+
+# Bump when layout changes — visible in UI so stale Streamlit is obvious.
+SENTIMENT_UI_BUILD = "2026-10-29c · PathA① / 波动② / 总盘面 / 明细③"
+
+
 def render_sentiment_panel(root: Path) -> None:
     import streamlit as st
 
@@ -145,6 +267,7 @@ def render_sentiment_panel(root: Path) -> None:
         "仅纸面对照，不改 Path-A 手数，不下实盘单。"
         "结论直接给多/空/震荡；把握%由 |P3| 与多空候选广度合成。"
     )
+    st.caption(f"界面版本：`{SENTIMENT_UI_BUILD}`（若看不到①②③分区，说明还在跑旧进程）")
     snap = load_sentiment_snapshot(root)
     if not snap:
         st.info("尚无 sentiment 快照。跑完 daily_update.py 后会出现在 data/sentiment_mds/。")
@@ -180,6 +303,8 @@ def render_sentiment_panel(root: Path) -> None:
     st.write(f"**空头候选**：{_zh_list(shorts)}")
 
     path_a = _path_a_sides(root)
+
+    # --- Table 1: Path-A 对照（原四列）---
     compare_rows = []
     for code in sorted(set(longs) | set(shorts) | set(path_a)):
         sent = "多" if code in longs else ("空" if code in shorts else "—")
@@ -194,6 +319,7 @@ def render_sentiment_panel(root: Path) -> None:
             align = "—"
         compare_rows.append(
             {
+                "代码": code,
                 "品种": _variety_label(code),
                 "情绪方向": sent,
                 "Path-A持仓/日选": pa,
@@ -201,12 +327,111 @@ def render_sentiment_panel(root: Path) -> None:
             }
         )
     if compare_rows:
-        st.markdown("**与 Path-A 对照**")
-        st.dataframe(pd.DataFrame(compare_rows), width="stretch", hide_index=True)
+        st.markdown("**① 与 Path-A 对照**")
+        st.dataframe(
+            pd.DataFrame(
+                [
+                    {
+                        "品种": r["品种"],
+                        "情绪方向": r["情绪方向"],
+                        "Path-A持仓/日选": r["Path-A持仓/日选"],
+                        "对照": r["对照"],
+                    }
+                    for r in compare_rows
+                ]
+            ),
+            width="stretch",
+            hide_index=True,
+        )
 
+    # --- Table 2: 波动率引擎 ---
+    vol_map: dict[str, dict] = {}
+    vol_err: str | None = None
+    vol_board: dict[str, Any] = {"ok": False, "rows": []}
+    try:
+        import importlib
+        import sys
+
+        sys.modules.pop("desk.vol_engine_panel", None)
+        import desk.vol_engine_panel as _vep
+
+        _vep = importlib.reload(_vep)
+        st.divider()
+        vol_board = _vep.render_vol_engine_section(
+            root,
+            button_key="vol_engine_refresh_sentiment",
+            heading="**② 波动率引擎 V1**",
+        )
+        vol_map = _vep.vol_fields_by_code(root, board=vol_board)
+    except Exception as exc:  # noqa: BLE001
+        vol_err = f"{type(exc).__name__}: {exc}"
+        st.warning(f"波动率引擎未加载：{vol_err}")
+
+    # --- 总盘面结论（参考 Path-A 对照 + 波动盘面）---
+    conv = float(verdict.get("conviction_pct") or 0)
+    total_rows = []
+    codes_union = sorted(
+        {r["代码"] for r in compare_rows} | set(vol_map.keys())
+    )
+    align_by = {r["代码"]: r for r in compare_rows}
+    for code in codes_union:
+        base = align_by.get(code) or {
+            "品种": _variety_label(code),
+            "情绪方向": "多" if code in longs else ("空" if code in shorts else "—"),
+            "Path-A持仓/日选": path_a.get(code) or "—",
+            "对照": "—",
+        }
+        if base["对照"] == "—" and code not in align_by:
+            se, pa = base["情绪方向"], base["Path-A持仓/日选"]
+            if se in ("多", "空") and pa in ("多", "空"):
+                base["对照"] = "同向" if se == pa else "冲突"
+            elif se in ("多", "空"):
+                base["对照"] = "仅情绪"
+            elif pa in ("多", "空"):
+                base["对照"] = "仅Path-A"
+        vf = vol_map.get(code) or {}
+        vol_c = str(vf.get("盘面结论") or "观望")
+        tot = total_board_conclusion(
+            align=str(base["对照"]),
+            path_a=str(base["Path-A持仓/日选"]),
+            sent=str(base["情绪方向"]),
+            vol_conclusion=vol_c,
+            sentiment_conviction=conv,
+        )
+        total_rows.append(
+            {
+                "品种": base["品种"],
+                "对照": base["对照"],
+                "波动盘面": vol_c,
+                "总结论": tot["结论"],
+                "说明": tot["note"],
+            }
+        )
+
+    book = portfolio_total_verdict(
+        total_rows,
+        sentiment_direction=str(verdict.get("direction") or "—"),
+        sentiment_conviction=conv,
+    )
+    st.markdown("### 总盘面结论")
+    t0, t1, t2 = st.columns(3)
+    t0.metric("总结论", book.get("结论") or "观望")
+    t1.metric("情绪", verdict.get("label") or "—")
+    t2.metric("对照品种数", len(total_rows))
+    st.caption(
+        str(book.get("note") or "")
+        + " · 研究用，非下单指令"
+        + (f" · 引擎异常：{vol_err}" if vol_err else "")
+    )
+    if total_rows:
+        st.markdown("**总盘面明细**（Path-A对照 × 波动盘面）")
+        st.dataframe(pd.DataFrame(total_rows), width="stretch", hide_index=True)
+
+    # --- Table 3: 品种明细（情绪底层，放最后）---
     syms = snap.get("symbols") or []
     if syms:
-        st.markdown("**品种明细**")
+        st.divider()
+        st.markdown("**③ 品种明细**")
         rows = []
         for s in syms:
             if not isinstance(s, dict):
@@ -225,5 +450,13 @@ def render_sentiment_panel(root: Path) -> None:
                 }
             )
         st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+
     with st.expander("原始 JSON"):
-        st.json({**snap, "verdict": verdict})
+        st.json(
+            {
+                **snap,
+                "verdict": verdict,
+                "portfolio_total": book,
+                "total_rows": total_rows,
+            }
+        )

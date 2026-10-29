@@ -257,7 +257,11 @@ def sync_desk(
                     {
                         "step": "git_pull",
                         "planned": True,
-                        "detail": "git fetch origin main && git checkout origin/main -- l1_report.json l1_report_risk15.json archive",
+                        "detail": (
+                            "git fetch origin main && git checkout origin/main -- "
+                            "l1_report*.json archive equity_state historical_backtest* "
+                            "paper_book_latest data/sentiment_mds data/desk_composite_latest"
+                        ),
                     }
                 )
             elif status.get("is_git"):
@@ -308,25 +312,51 @@ def sync_desk(
                     + (fetch["stderr"] or fetch["stdout"] or f"code={fetch['returncode']}")
                 )
             else:
-                checkout = _run(
-                    [
-                        "git",
-                        "checkout",
-                        "origin/main",
-                        "--",
+                # All Paths the daily bot / backtests write on main.
+                report_paths = [
+                    "l1_report.json",
+                    "l1_report_risk15.json",
+                    "archive",
+                    "equity_state.json",
+                    "historical_backtest_latest.json",
+                    "historical_equity_curve.svg",
+                    "paper_book_latest.json",
+                    "data/sentiment_mds",
+                    "data/desk_composite_latest.json",
+                ]
+                existing: list[str] = []
+                for rel in report_paths:
+                    probe = _run(
+                        ["git", "cat-file", "-e", f"origin/main:{rel}"],
+                        root,
+                        timeout=30,
+                    )
+                    if probe.get("ok"):
+                        existing.append(rel)
+                if not existing:
+                    existing = [
                         "l1_report.json",
                         "l1_report_risk15.json",
                         "archive",
-                    ],
+                    ]
+                checkout = _run(
+                    ["git", "checkout", "origin/main", "--", *existing],
                     root,
-                    timeout=60,
+                    timeout=120,
                 )
-                steps.append({"step": "git_checkout_reports", **checkout})
+                steps.append(
+                    {
+                        "step": "git_checkout_reports",
+                        "paths": existing,
+                        **checkout,
+                    }
+                )
                 if checkout["ok"]:
                     pulled = True
                     messages.append(
-                        "已从 origin/main 取回日报（l1_report.json、l1_report_risk15.json、archive）。"
-                        "日常任务只提交到 main，当前功能分支的 git pull 带不回这些文件。"
+                        "已从 origin/main 取回路径："
+                        + "、".join(existing)
+                        + "。日常任务只提交到 main，当前功能分支的 git pull 带不回这些文件。"
                     )
                 else:
                     ok = False

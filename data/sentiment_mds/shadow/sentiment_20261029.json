@@ -1,21 +1,30 @@
 {
   "asof": "20261029",
-  "generated_at": "2026-10-30T15:26:21+08:00",
+  "generated_at": "2026-10-30T22:13:50+08:00",
   "sleeve": "sentiment_mds_paper",
   "live": false,
-  "portfolio_p3": 0.3175,
+  "portfolio_p3": 0.397,
   "stance": "risk_on",
   "longs": [
+    "MA",
+    "EG",
+    "M",
+    "TA",
+    "PP",
     "RB",
     "BU",
     "AU",
     "CU"
   ],
   "shorts": [
+    "EB",
+    "SA",
+    "CF",
     "RU",
-    "AG"
+    "AG",
+    "SR"
   ],
-  "n": 11,
+  "n": 27,
   "symbols": [
     {
       "code": "AU",
@@ -27,7 +36,7 @@
       "signal": 1,
       "weight": 0.08,
       "p3": 1.0,
-      "w_norm": 0.106667
+      "w_norm": 0.070796
     },
     {
       "code": "BU",
@@ -39,7 +48,55 @@
       "signal": 1,
       "weight": 0.06,
       "p3": 0.9887,
-      "w_norm": 0.08
+      "w_norm": 0.053097
+    },
+    {
+      "code": "SA",
+      "mds": 1.0,
+      "ehi": 0.131132,
+      "net": -158794.0,
+      "net_chg": -2065.0,
+      "ret_1d": -0.001021,
+      "signal": -1,
+      "weight": 0.03,
+      "p3": 0.9434,
+      "w_norm": 0.026549
+    },
+    {
+      "code": "V",
+      "mds": -1.0,
+      "ehi": 0.130855,
+      "net": -140760.0,
+      "net_chg": -11377.0,
+      "ret_1d": 0.006076,
+      "signal": 0,
+      "weight": 0.04,
+      "p3": -0.9426,
+      "w_norm": 0.035398
+    },
+    {
+      "code": "PP",
+      "mds": 1.0,
+      "ehi": 0.117137,
+      "net": 76408.0,
+      "net_chg": -574.0,
+      "ret_1d": -0.004065,
+      "signal": 1,
+      "weight": 0.0,
+      "p3": 0.9014,
+      "w_norm": 0.0
+    },
+    {
+      "code": "MA",
+      "mds": 1.0,
+      "ehi": 0.103786,
+      "net": 95707.0,
+      "net_chg": -11553.0,
+      "ret_1d": -0.014723,
+      "signal": 1,
+      "weight": 0.04,
+      "p3": 0.8614,
+      "w_norm": 0.035398
     },
     {
       "code": "SP",
@@ -54,6 +111,42 @@
       "w_norm": 0.0
     },
     {
+      "code": "FG",
+      "mds": -1.0,
+      "ehi": 0.084064,
+      "net": -123407.0,
+      "net_chg": -731.0,
+      "ret_1d": 0.004689,
+      "signal": 0,
+      "weight": 0.03,
+      "p3": -0.8022,
+      "w_norm": 0.026549
+    },
+    {
+      "code": "M",
+      "mds": 1.0,
+      "ehi": 0.078532,
+      "net": 164874.0,
+      "net_chg": -19810.0,
+      "ret_1d": -0.014651,
+      "signal": 1,
+      "weight": 0.0,
+      "p3": 0.7856,
+      "w_norm": 0.0
+    },
+    {
+      "code": "TA",
+      "mds": 1.0,
+      "ehi": 0.077139,
+      "net": 80635.0,
+      "net_chg": -4764.0,
+      "ret_1d": -0.003896,
+      "signal": 1,
+      "weight": 0.04,
+      "p3": 0.7814,
+      "w_norm": 0.035398
+    },
+    {
       "code": "AG",
       "mds": 1.0,
       "ehi": 0.068081,
@@ -63,7 +156,7 @@
       "signal": -1,
       "weight": 0.06,
       "p3": 0.7542,
-      "w_norm": 0.08
+      "w_norm": 0.053097
     },
     {
       "code": "RU",
@@ -75,7 +168,7 @@
       "signal": -1,
       "weight": 0.1,
       "p3": 0.7452,
-      "w_norm": 0.133333
+      "w_norm": 0.088496
     },
     {
       "code": "RB",
@@ -87,7 +180,7 @@
       "signal": 1,
       "weight": 0.08,
       "p3": 0.7438,
-      "w_norm": 0.106667
+      "w_norm": 0.070796
     },
     {
       "code": "SS",
@@ -99,7 +192,19 @@
       "signal": 0,
       "weight": 0.04,
       "p3": -0.7276,
-      "w_norm": 0.053333
+      "w_norm": 0.035398
+    },
+    {
+      "code": "EB",
+      "mds": 1.0,
+      "ehi": 0.055086,
+      "net": -18282.0,
+      "net_chg": -10412.0,
+      "ret_1d": -0.034489,
+      "signal": -1,
+      "weight": 0.03,
+      "p3": 0.7153,
+      "w_norm": 0.026549
     },
     {
       "code": "CU",
@@ -111,7 +216,7 @@
       "signal": 1,
       "weight": 0.12,
       "p3": 0.7014,
-      "w_norm": 0.16
+      "w_norm": 0.106195
     },
     {
       "code": "AL",
@@ -123,7 +228,31 @@
       "signal": 0,
       "weight": 0.08,
       "p3": -0.6793,
-      "w_norm": 0.106667
+      "w_norm": 0.070796
+    },
+    {
+      "code": "CF",
+      "mds": 1.0,
+      "ehi": 0.042887,
+      "net": -28104.0,
+      "net_chg": -208.0,
+      "ret_1d": -0.004912,
+      "signal": -1,
+      "weight": 0.0,
+      "p3": 0.6787,
+      "w_norm": 0.0
+    },
+    {
+      "code": "SR",
+      "mds": 1.0,
+      "ehi": 0.041825,
+      "net": -23815.0,
+      "net_chg": -4802.0,
+      "ret_1d": -0.002084,
+      "signal": -1,
+      "weight": 0.0,
+      "p3": 0.6755,
+      "w_norm": 0.0
     },
     {
       "code": "FU",
@@ -135,19 +264,91 @@
       "signal": 0,
       "weight": 0.08,
       "p3": -0.6643,
-      "w_norm": 0.106667
+      "w_norm": 0.070796
+    },
+    {
+      "code": "P",
+      "mds": -1.0,
+      "ehi": 0.028355,
+      "net": -16774.0,
+      "net_chg": 4743.0,
+      "ret_1d": -0.024783,
+      "signal": 0,
+      "weight": 0.0,
+      "p3": -0.6351,
+      "w_norm": 0.0
+    },
+    {
+      "code": "JD",
+      "mds": -1.0,
+      "ehi": 0.028146,
+      "net": -6991.0,
+      "net_chg": -6392.0,
+      "ret_1d": 0.010775,
+      "signal": 0,
+      "weight": 0.0,
+      "p3": -0.6344,
+      "w_norm": 0.0
+    },
+    {
+      "code": "EG",
+      "mds": 1.0,
+      "ehi": 0.020789,
+      "net": 7374.0,
+      "net_chg": -21346.0,
+      "ret_1d": -0.006086,
+      "signal": 1,
+      "weight": 0.03,
+      "p3": 0.6124,
+      "w_norm": 0.026549
+    },
+    {
+      "code": "JM",
+      "mds": 1.0,
+      "ehi": 0.016917,
+      "net": -7358.0,
+      "net_chg": 1411.0,
+      "ret_1d": 0.002458,
+      "signal": 0,
+      "weight": 0.06,
+      "p3": 0.6008,
+      "w_norm": 0.053097
     },
     {
       "code": "NI",
-      "mds": -1.0,
-      "ehi": 0.003857,
-      "net": -509.0,
-      "net_chg": 154.0,
+      "mds": 1.0,
+      "ehi": 0.015579,
+      "net": -2056.0,
+      "net_chg": -1393.0,
       "ret_1d": -0.002028,
       "signal": 0,
       "weight": 0.05,
-      "p3": -0.5616,
-      "w_norm": 0.066667
+      "p3": 0.5967,
+      "w_norm": 0.044248
+    },
+    {
+      "code": "L",
+      "mds": -1.0,
+      "ehi": 0.015244,
+      "net": 6893.0,
+      "net_chg": -11310.0,
+      "ret_1d": 0.001069,
+      "signal": 0,
+      "weight": 0.0,
+      "p3": -0.5957,
+      "w_norm": 0.0
+    },
+    {
+      "code": "I",
+      "mds": 1.0,
+      "ehi": 0.002181,
+      "net": 1256.0,
+      "net_chg": 14251.0,
+      "ret_1d": 0.014881,
+      "signal": 0,
+      "weight": 0.08,
+      "p3": 0.5565,
+      "w_norm": 0.070796
     }
   ],
   "note": "Paper-only MDS+EHI sleeve from ChatGPT share; does not place live orders.",
@@ -156,5 +357,6 @@
   "seat_dates": [
     "2026-10-28",
     "2026-10-29"
-  ]
+  ],
+  "seat_source": "member_rank ensure_member_days (eastmoney+sina; shfe/czce/dce underlay)"
 }

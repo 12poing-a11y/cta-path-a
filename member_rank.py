@@ -169,7 +169,7 @@ def _shfe_nets(ymd: str) -> dict[str, float]:
 def _czce_nets(ymd: str) -> dict[str, float]:
     year = ymd[:4]
     raw = _get(
-        f"http://www.czce.com.cn/cn/DFSStaticFiles/Future/{year}/{ymd}/FutureDataHolding.txt",
+        f"https://www.czce.com.cn/cn/DFSStaticFiles/Future/{year}/{ymd}/FutureDataHolding.txt",
         _cache_path("czce", ymd),
     )
     if not raw:
@@ -290,7 +290,7 @@ def _czce_text(raw: bytes) -> str | None:
 def _czce_seats(ymd: str) -> dict[str, dict]:
     year = ymd[:4]
     raw = _get(
-        f"http://www.czce.com.cn/cn/DFSStaticFiles/Future/{year}/{ymd}/FutureDataHolding.txt",
+        f"https://www.czce.com.cn/cn/DFSStaticFiles/Future/{year}/{ymd}/FutureDataHolding.txt",
         _cache_path("czce", ymd),
     )
     if not raw:
@@ -785,7 +785,7 @@ def ensure_member_days(
             _cache_path("shfe", ymd),
         )
         czce = _get(
-            f"http://www.czce.com.cn/cn/DFSStaticFiles/Future/{year}/{ymd}/FutureDataHolding.txt",
+            f"https://www.czce.com.cn/cn/DFSStaticFiles/Future/{year}/{ymd}/FutureDataHolding.txt",
             _cache_path("czce", ymd),
         )
         if shfe:

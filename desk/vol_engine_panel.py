@@ -52,19 +52,48 @@ def _report_by_code(snap: dict[str, Any] | None) -> dict[str, dict]:
     return out
 
 
-def _final_action_map(root: Path) -> dict[str, dict]:
-    """Reuse final-signal board for TP/SL alerts (fast path)."""
-    try:
-        from desk.final_signal import build_final_signal_board
-
-        board = build_final_signal_board(root, compute_decisions=True)
-    except Exception:  # noqa: BLE001
-        return {}
+def _final_action_map(root: Path, snap: dict[str, Any] | None = None) -> dict[str, dict]:
+    """TP/SL / 最终动作 — prefer desk_board overlay + paper marks (no nested final board)."""
     out: dict[str, dict] = {}
-    for bucket in ("primary", "other"):
-        for row in board.get(bucket) or []:
-            if isinstance(row, dict) and row.get("代码"):
-                out[str(row["代码"]).upper()] = row
+    snap = snap if isinstance(snap, dict) else load_vol_engine_snapshot(root)
+    overlay = (snap or {}).get("desk_board") or {}
+    if isinstance(overlay, dict):
+        for code, row in overlay.items():
+            if not isinstance(row, dict):
+                continue
+            c = str(code).upper()
+            out[c] = {
+                "代码": c,
+                "最终动作": row.get("最终动作") or "—",
+                "模拟仓": row.get("模拟仓") or "持仓中",
+            }
+
+    # Light paper TP/SL alerts from marks (display only).
+    paper = load_json(Path(root) / "paper_book_latest.json") or {}
+    for code, pos in (paper.get("positions") or {}).items():
+        if not isinstance(pos, dict):
+            continue
+        c = str(code).upper()
+        mark = _num(pos.get("mark"))
+        stop = _num(pos.get("stop"))
+        target = _num(pos.get("target"))
+        direction = str(pos.get("direction") or "")
+        action = None
+        if mark is not None and stop is not None and direction in ("多", "空"):
+            if direction == "多" and mark <= stop:
+                action = "止损预警"
+            elif direction == "空" and mark >= stop:
+                action = "止损预警"
+        if mark is not None and target is not None and direction in ("多", "空"):
+            if direction == "多" and mark >= target:
+                action = "止盈预警"
+            elif direction == "空" and mark <= target:
+                action = "止盈预警"
+        prev = out.get(c) or {"代码": c, "最终动作": "—", "模拟仓": "持仓中"}
+        if action:
+            prev["最终动作"] = action
+        prev["模拟仓"] = prev.get("模拟仓") or "持仓中"
+        out[c] = prev
     return out
 
 
@@ -217,7 +246,7 @@ def build_vol_engine_board(
         if isinstance(row, dict) and row.get("code"):
             names[str(row["code"]).upper()] = str(row.get("name") or "")
 
-    final_map = _final_action_map(root)
+    final_map = _final_action_map(root, snap=snap if isinstance(snap, dict) else None)
     by_code = _report_by_code(snap)
     rows: list[dict[str, Any]] = []
 
@@ -322,9 +351,63 @@ def persist_board_overlay(root: Path, board: dict[str, Any]) -> Path:
     return path
 
 
+def vol_fields_from_snapshot(root: Path) -> dict[str, dict]:
+    """Fast join fields from ``vol_engine_latest.json`` (no board rebuild)."""
+    snap = load_vol_engine_snapshot(root)
+    if not snap:
+        return {}
+    overlay = snap.get("desk_board") if isinstance(snap.get("desk_board"), dict) else {}
+    out: dict[str, dict] = {}
+    for code, pack in _report_by_code(snap).items():
+        ov = overlay.get(code) if isinstance(overlay.get(code), dict) else {}
+        if not ov:
+            # desk_board keys may be bare code strings
+            ov = overlay.get(str(code)) if isinstance(overlay.get(str(code)), dict) else {}
+        sent = pack.get("sentiment") or {}
+        state = pack.get("vol_state") or {}
+        pricing = pack.get("vol_pricing") or {}
+        matrix = pack.get("matrix") or {}
+        bo = pack.get("breakout") or {}
+        bo_side = int(bo.get("side") or 0)
+        if bo.get("stale"):
+            bo_label = "无（非当日）"
+        elif bo_side > 0:
+            bo_label = f"上破/{bo.get('iv_tag') or '—'}"
+        elif bo_side < 0:
+            bo_label = f"下破/{bo.get('iv_tag') or '—'}"
+        else:
+            bo_label = f"无/{bo.get('iv_tag') or '—'}"
+        out[code] = {
+            "情绪分档": sent.get("label") or matrix.get("sentiment_tier") or "—",
+            "波动状态": f"{state.get('label') or '—'}({state.get('score')})",
+            "定价": f"{pricing.get('label') or '—'}({pricing.get('score')})",
+            "引擎标签": (ov.get("引擎标签") if ov else None) or matrix.get("tag") or "—",
+            "盘面结论": (ov.get("盘面结论") if ov else None) or "观望",
+            "突破": bo_label,
+        }
+    # Overlay-only codes (no report pack)
+    for code, ov in (overlay or {}).items():
+        c = str(code).upper()
+        if c in out or not isinstance(ov, dict):
+            continue
+        out[c] = {
+            "情绪分档": "—",
+            "波动状态": "—",
+            "定价": "—",
+            "引擎标签": ov.get("引擎标签") or "—",
+            "盘面结论": ov.get("盘面结论") or "观望",
+            "突破": "—",
+        }
+    return out
+
+
 def vol_fields_by_code(root: Path, board: dict[str, Any] | None = None) -> dict[str, dict]:
     """Map CODE → vol display fields for joining Path-A / sentiment tables."""
     if board is None:
+        # Prefer snapshot overlay — avoid nested final_signal / full board on every join.
+        fast = vol_fields_from_snapshot(root)
+        if fast:
+            return fast
         board = build_vol_engine_board(root, recompute=False)
     out: dict[str, dict] = {}
     for row in board.get("rows") or []:

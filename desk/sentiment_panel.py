@@ -255,7 +255,7 @@ def portfolio_total_verdict(
 
 
 # Bump when layout changes — visible in UI so stale Streamlit is obvious.
-SENTIMENT_UI_BUILD = "2026-10-29c · PathA① / 波动② / 总盘面 / 明细③"
+SENTIMENT_UI_BUILD = "2026-10-30a · vol快照默认 / 刷新才重算"
 
 
 def render_sentiment_panel(root: Path) -> None:
@@ -344,18 +344,13 @@ def render_sentiment_panel(root: Path) -> None:
             hide_index=True,
         )
 
-    # --- Table 2: 波动率引擎 ---
+    # --- Table 2: 波动率引擎（默认读快照；点刷新才重算）---
     vol_map: dict[str, dict] = {}
     vol_err: str | None = None
     vol_board: dict[str, Any] = {"ok": False, "rows": []}
     try:
-        import importlib
-        import sys
+        from desk import vol_engine_panel as _vep
 
-        sys.modules.pop("desk.vol_engine_panel", None)
-        import desk.vol_engine_panel as _vep
-
-        _vep = importlib.reload(_vep)
         st.divider()
         vol_board = _vep.render_vol_engine_section(
             root,

@@ -841,6 +841,28 @@ def main():
                 print("[paper] skip:", paper.get("error"))
         except Exception as exc:
             print(f"[paper] refresh failed: {exc}")
+        # P0: desk prediction log + T+1/3/5 attribution (paper only).
+        try:
+            from prediction_log import write_desk_predictions
+            from prediction_score import score_predictions
+
+            pred = write_desk_predictions(ROOT)
+            if pred.get("ok"):
+                print(f"[pred] wrote n={pred.get('n')} asof={pred.get('asof')}")
+            else:
+                print("[pred] skip write:", pred.get("error"))
+            scored = score_predictions(ROOT)
+            if scored.get("ok"):
+                s = scored.get("summary") or {}
+                print(
+                    f"[pred] score hit_rate={s.get('hit_rate_pct')}% "
+                    f"hits={s.get('hits')} miss={s.get('misses')} "
+                    f"void={s.get('voids')} pending={s.get('pending')}"
+                )
+            else:
+                print("[pred] skip score:", scored.get("error"))
+        except Exception as exc:
+            print(f"[pred] failed: {exc}")
     else:
         print("[paper] skip: quality gate failed")
     # Observation incomplete or quality fail → non-zero so CI does not publish formal.

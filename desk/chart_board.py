@@ -587,26 +587,7 @@ def render_chart_tab(root: Path) -> None:
         events = events_for_codes(root, report, [code])
         event_rows = _event_marker_rows(events, df)
         path_a = _path_a_markers(report, code, df, period=period)
-        # Prefer 60m VP beside daily/weekly: sensitive vs D, smoother equity path vs 15m.
-        try:
-            from minute_data import ensure_minute_for_code
-            from volume_price import analyze_volume_price
-
-            minute_meta = ensure_minute_for_code(root, code, "60", force=False, verify_em=False)
-            if minute_meta.get("bars"):
-                vp = analyze_volume_price(
-                    minute_meta["bars"], period="60", path_a_direction=path_a_dir
-                )
-            else:
-                minute_meta = ensure_minute_for_code(
-                    root, code, "15", force=False, verify_em=False
-                )
-                if minute_meta.get("bars"):
-                    vp = analyze_volume_price(
-                        minute_meta["bars"], period="15", path_a_direction=path_a_dir
-                    )
-        except Exception as exc:  # noqa: BLE001
-            st.caption(f"小周期量价暂不可用：{exc}")
+        # Daily/weekly: skip auto minute fetch (slow). User can switch to 15m/60m for VP.
 
     fig = _candlestick_fig(
         df,

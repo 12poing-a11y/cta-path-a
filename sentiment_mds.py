@@ -138,14 +138,14 @@ def build_snapshot(
         merged = dict(row)
         merged["code"] = code
         px = price_by_code.get(code) or {}
-        if "ret_1d" not in merged and "ret" not in merged:
-            merged["ret_1d"] = px.get("ret_1d") or px.get("ret") or 0.0
-        if "oi" not in merged and "open_interest" not in merged:
+        if merged.get("ret_1d") is None and merged.get("ret") is None:
+            merged["ret_1d"] = px.get("ret_1d") if px.get("ret_1d") is not None else (px.get("ret") or 0.0)
+        if merged.get("oi") is None and merged.get("open_interest") is None:
             if px.get("oi") is not None:
                 merged["oi"] = px.get("oi")
             elif px.get("open_interest") is not None:
                 merged["oi"] = px.get("open_interest")
-        if "volume" not in merged and px.get("volume") is not None:
+        if merged.get("volume") is None and px.get("volume") is not None:
             merged["volume"] = px.get("volume")
         s = score_symbol(merged)
         s["p3"] = round(blend_p3(s["mds"], s["ehi"]), 4)
@@ -182,11 +182,33 @@ def build_snapshot(
     return snap
 
 
-def write_snapshot(snap: dict[str, Any]) -> Path:
+def price_row_from_bars(bars: list[dict[str, Any]]) -> dict[str, Any]:
+    """ret_1d (close/prev close - 1), OI and volume from the last two daily bars."""
+    if len(bars) < 2:
+        return {}
+    b0, b1 = bars[-2], bars[-1]
+    c0, c1 = _f(b0.get("close")), _f(b1.get("close"))
+    oi = b1.get("oi") if b1.get("oi") is not None else b1.get("open_interest")
+    return {
+        "ret_1d": round(c1 / c0 - 1.0, 6) if c0 > 0 else None,
+        "oi": oi,
+        "volume": b1.get("volume"),
+        "bar_date": b1.get("date"),
+        "prev_date": b0.get("date"),
+        "close": c1,
+    }
+
+
+def write_snapshot(snap: dict[str, Any], *, out_dir: Path | None = None, update_latest: bool = True) -> Path:
+    """Write dated snapshot. Shadow runs pass out_dir and update_latest=False."""
     asof = str(snap.get("asof") or "unknown")
-    path = OUT / f"sentiment_{asof}.json"
+    out = out_dir or OUT
+    out.mkdir(parents=True, exist_ok=True)
+    path = out / f"sentiment_{asof}.json"
     path.write_text(json.dumps(snap, ensure_ascii=False, indent=2), encoding="utf-8")
-    latest = OUT / "latest.json"
+    if not update_latest:
+        return path
+    latest = out / "latest.json"
     latest.write_text(json.dumps(snap, ensure_ascii=False, indent=2), encoding="utf-8")
     return path
 

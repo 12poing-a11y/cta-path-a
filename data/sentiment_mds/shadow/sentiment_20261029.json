@@ -1,0 +1,160 @@
+{
+  "asof": "20261029",
+  "generated_at": "2026-10-30T15:26:21+08:00",
+  "sleeve": "sentiment_mds_paper",
+  "live": false,
+  "portfolio_p3": 0.3175,
+  "stance": "risk_on",
+  "longs": [
+    "RB",
+    "BU",
+    "AU",
+    "CU"
+  ],
+  "shorts": [
+    "RU",
+    "AG"
+  ],
+  "n": 11,
+  "symbols": [
+    {
+      "code": "AU",
+      "mds": 1.0,
+      "ehi": 0.209605,
+      "net": 38850.0,
+      "net_chg": -2084.0,
+      "ret_1d": -0.000161,
+      "signal": 1,
+      "weight": 0.08,
+      "p3": 1.0,
+      "w_norm": 0.106667
+    },
+    {
+      "code": "BU",
+      "mds": 1.0,
+      "ehi": 0.146249,
+      "net": 32570.0,
+      "net_chg": 3632.0,
+      "ret_1d": 0.01108,
+      "signal": 1,
+      "weight": 0.06,
+      "p3": 0.9887,
+      "w_norm": 0.08
+    },
+    {
+      "code": "SP",
+      "mds": -1.0,
+      "ehi": 0.098475,
+      "net": -39175.0,
+      "net_chg": -3819.0,
+      "ret_1d": 0.018134,
+      "signal": 0,
+      "weight": 0.0,
+      "p3": -0.8454,
+      "w_norm": 0.0
+    },
+    {
+      "code": "AG",
+      "mds": 1.0,
+      "ehi": 0.068081,
+      "net": -17697.0,
+      "net_chg": -2356.0,
+      "ret_1d": -0.025211,
+      "signal": -1,
+      "weight": 0.06,
+      "p3": 0.7542,
+      "w_norm": 0.08
+    },
+    {
+      "code": "RU",
+      "mds": 1.0,
+      "ehi": 0.06508,
+      "net": -9259.0,
+      "net_chg": -9481.0,
+      "ret_1d": -0.021206,
+      "signal": -1,
+      "weight": 0.1,
+      "p3": 0.7452,
+      "w_norm": 0.133333
+    },
+    {
+      "code": "RB",
+      "mds": 1.0,
+      "ehi": 0.064596,
+      "net": 112998.0,
+      "net_chg": 8049.0,
+      "ret_1d": 0.004272,
+      "signal": 1,
+      "weight": 0.08,
+      "p3": 0.7438,
+      "w_norm": 0.106667
+    },
+    {
+      "code": "SS",
+      "mds": -1.0,
+      "ehi": 0.059188,
+      "net": 6230.0,
+      "net_chg": 131.0,
+      "ret_1d": -0.002234,
+      "signal": 0,
+      "weight": 0.04,
+      "p3": -0.7276,
+      "w_norm": 0.053333
+    },
+    {
+      "code": "CU",
+      "mds": 1.0,
+      "ehi": 0.050458,
+      "net": 9627.0,
+      "net_chg": -2800.0,
+      "ret_1d": -0.004945,
+      "signal": 1,
+      "weight": 0.12,
+      "p3": 0.7014,
+      "w_norm": 0.16
+    },
+    {
+      "code": "AL",
+      "mds": -1.0,
+      "ehi": 0.043113,
+      "net": 10680.0,
+      "net_chg": 2516.0,
+      "ret_1d": -0.009771,
+      "signal": 0,
+      "weight": 0.08,
+      "p3": -0.6793,
+      "w_norm": 0.106667
+    },
+    {
+      "code": "FU",
+      "mds": -1.0,
+      "ehi": 0.038086,
+      "net": -9287.0,
+      "net_chg": -18893.0,
+      "ret_1d": 0.002405,
+      "signal": 0,
+      "weight": 0.08,
+      "p3": -0.6643,
+      "w_norm": 0.106667
+    },
+    {
+      "code": "NI",
+      "mds": -1.0,
+      "ehi": 0.003857,
+      "net": -509.0,
+      "net_chg": 154.0,
+      "ret_1d": -0.002028,
+      "signal": 0,
+      "weight": 0.05,
+      "p3": -0.5616,
+      "w_norm": 0.066667
+    }
+  ],
+  "note": "Paper-only MDS+EHI sleeve from ChatGPT share; does not place live orders.",
+  "shadow": true,
+  "price_source": "market_data.load_free_bars (sina/tencent)",
+  "seat_dates": [
+    "2026-10-28",
+    "2026-10-29"
+  ]
+}

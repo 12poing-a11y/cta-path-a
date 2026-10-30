@@ -1,9 +1,9 @@
-name: CTA Weekly Backtest Sun 20:00 CST
+name: CTA Weekly Backtest Sun 09:00 CST
 
 on:
   schedule:
-    # 北京时间周日 20:00 = UTC 12:00
-    - cron: "0 12 * * 0"
+    # 北京时间周日 09:00 = UTC 01:00
+    - cron: "0 1 * * 0"
   workflow_dispatch:
 
 permissions:

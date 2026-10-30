@@ -1,0 +1,194 @@
+{
+  "generated_at": "2026-10-30T22:30:54+08:00",
+  "start": "2026-09-24",
+  "end": "2026-10-29",
+  "n_days": 20,
+  "ok": 20,
+  "fail": 0,
+  "skip": 0,
+  "log": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/range_log_20260924_20261029.jsonl",
+  "shadow_dir": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow",
+  "note": "Paper MDS+EHI shadow range; does not update latest.json or formal scoring.",
+  "results": [
+    {
+      "day": "2026-09-24",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20260924.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": -0.0212,
+      "stance": "neutral"
+    },
+    {
+      "day": "2026-09-28",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20260928.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.3321,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-09-29",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20260929.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.574,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-09-30",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20260930.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.1858,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-10-08",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261008.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.2966,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-10-09",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261009.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.1015,
+      "stance": "neutral"
+    },
+    {
+      "day": "2026-10-12",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261012.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.0589,
+      "stance": "neutral"
+    },
+    {
+      "day": "2026-10-13",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261013.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": -0.025,
+      "stance": "neutral"
+    },
+    {
+      "day": "2026-10-14",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261014.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.0949,
+      "stance": "neutral"
+    },
+    {
+      "day": "2026-10-15",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261015.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.1336,
+      "stance": "neutral"
+    },
+    {
+      "day": "2026-10-16",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261016.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.1649,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-10-19",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261019.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.2465,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-10-20",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261020.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.2988,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-10-21",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261021.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.182,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-10-22",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261022.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.505,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-10-23",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261023.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.2199,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-10-26",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261026.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.1728,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-10-27",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261027.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": -0.0104,
+      "stance": "neutral"
+    },
+    {
+      "day": "2026-10-28",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261028.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.1414,
+      "stance": "neutral"
+    },
+    {
+      "day": "2026-10-29",
+      "status": "ok",
+      "path": "/workspace/desk/drafts/sentiment-quant-20261030/cta-path-a-local/data/sentiment_mds/shadow/sentiment_20261029.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.397,
+      "stance": "risk_on"
+    }
+  ]
+}

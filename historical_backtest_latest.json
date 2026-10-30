@@ -1,396 +1,11 @@
 {
   "ok": true,
-  "schema_version": "cta-backtest-v10-pathA-optHedge",
-  "batch": "2026一年-pathA-optHedge",
+  "schema_version": "cta-backtest-v8-pathA-atr-rr2",
+  "batch": "2026一年-pathA-rr2",
   "strategy": "path_a_atr_rr2",
-  "mode": "ctf",
-  "data_source": "sina+tencent primary, iFinD fallback",
-  "curve_coverage": {
-    "MA": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "V": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "EG": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 413
-    },
-    "FG": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "TA": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "SA": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "M": {
-      "source": "sina",
-      "contracts": 19,
-      "roll_days": 10,
-      "carry_days": 525
-    },
-    "PP": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 420
-    },
-    "L": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "P": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "RB": {
-      "source": "sina",
-      "contracts": 6,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "EB": {
-      "source": "sina",
-      "contracts": 27,
-      "roll_days": 48,
-      "carry_days": 504
-    },
-    "CF": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "RU": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "JD": {
-      "source": "sina",
-      "contracts": 27,
-      "roll_days": 44,
-      "carry_days": 516
-    },
-    "FU": {
-      "source": "sina",
-      "contracts": 28,
-      "roll_days": 24,
-      "carry_days": 535
-    },
-    "SR": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
-    },
-    "BU": {
-      "source": "sina",
-      "contracts": 28,
-      "roll_days": 80,
-      "carry_days": 613
-    },
-    "SP": {
-      "source": "sina",
-      "contracts": 19,
-      "roll_days": 29,
-      "carry_days": 519
-    },
-    "AG": {
-      "source": "sina",
-      "contracts": 27,
-      "roll_days": 22,
-      "carry_days": 524
-    }
-  },
-  "sources": {
-    "MA": {
-      "sina_symbol": "MA0",
-      "tencent_symbol": "nf_MA0",
-      "sina_n": 2863,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 2863,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "V": {
-      "sina_symbol": "V0",
-      "tencent_symbol": "nf_V0",
-      "sina_n": 4220,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 4220,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "EG": {
-      "sina_symbol": "EG0",
-      "tencent_symbol": "nf_EG0",
-      "sina_n": 1903,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 1903,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "M": {
-      "sina_symbol": "M0",
-      "tencent_symbol": "nf_M0",
-      "sina_n": 5302,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 5302,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "FG": {
-      "sina_symbol": "FG0",
-      "tencent_symbol": "nf_FG0",
-      "sina_n": 3359,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 3359,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "EB": {
-      "sina_symbol": "EB0",
-      "tencent_symbol": "nf_EB0",
-      "sina_n": 1709,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 1709,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "TA": {
-      "sina_symbol": "TA0",
-      "tencent_symbol": "nf_TA0",
-      "sina_n": 4817,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 4817,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "SA": {
-      "sina_symbol": "SA0",
-      "tencent_symbol": "nf_SA0",
-      "sina_n": 1663,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 1663,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "PP": {
-      "sina_symbol": "PP0",
-      "tencent_symbol": "nf_PP0",
-      "sina_n": 3071,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 3071,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "L": {
-      "sina_symbol": "L0",
-      "tencent_symbol": "nf_L0",
-      "sina_n": 4674,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 4674,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "JD": {
-      "sina_symbol": "JD0",
-      "tencent_symbol": "nf_JD0",
-      "sina_n": 3146,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 3146,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "P": {
-      "sina_symbol": "P0",
-      "tencent_symbol": "nf_P0",
-      "sina_n": 4613,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 4613,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "RB": {
-      "sina_symbol": "RB0",
-      "tencent_symbol": "nf_RB0",
-      "sina_n": 4263,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 4263,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "FU": {
-      "sina_symbol": "FU0",
-      "tencent_symbol": "nf_FU0",
-      "sina_n": 5274,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 5274,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "CF": {
-      "sina_symbol": "CF0",
-      "tencent_symbol": "nf_CF0",
-      "sina_n": 5300,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 5300,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "BU": {
-      "sina_symbol": "BU0",
-      "tencent_symbol": "nf_BU0",
-      "sina_n": 3165,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 3165,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "RU": {
-      "sina_symbol": "RU0",
-      "tencent_symbol": "nf_RU0",
-      "sina_n": 5297,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 5297,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "AG": {
-      "sina_symbol": "AG0",
-      "tencent_symbol": "nf_AG0",
-      "sina_n": 3513,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 3513,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "SP": {
-      "sina_symbol": "SP0",
-      "tencent_symbol": "nf_SP0",
-      "sina_n": 1912,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 1912,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    },
-    "SR": {
-      "sina_symbol": "SR0",
-      "tencent_symbol": "nf_SR0",
-      "sina_n": 5043,
-      "tencent_n": 0,
-      "sina_error": "",
-      "tencent_error": "",
-      "source": "sina",
-      "free_n": 5043,
-      "last": "2026-10-20",
-      "ifind": false,
-      "bars": 275
-    }
-  },
-  "reward_rr": 1.5,
-  "stop_atr_mult": 1.2,
+  "data_source": "iFinD 主力连续 ZL",
+  "reward_rr": 2.0,
+  "stop_atr_mult": 1.0,
   "equity_compound": true,
   "max_positions": 3,
   "max_gross_exposure_pct": 50.0,
@@ -398,775 +13,1447 @@
   "max_per_bucket": 1,
   "min_r20_pct": 3.0,
   "min_r60_pct": 5.0,
-  "min_lots": 0,
-  "option_hedge": false,
-  "premium_atr_mult": null,
-  "strike_atr_mult": null,
-  "premium_yuan": 0.0,
-  "hedge_payoff_yuan": 0.0,
-  "hedge_net_yuan": 0.0,
-  "ifind_slot": "primary",
+  "ifind_slot": "backup",
   "universe_n": 20,
   "universe": "MA,V,EG,M,FG,EB,TA,SA,PP,L,JD,P,RB,FU,CF,BU,RU,AG,SP,SR",
-  "start": "2025-11-27",
-  "end": "2026-10-20",
-  "trade_days": 215,
+  "start": "2025-10-30",
+  "end": "2026-10-31",
+  "trade_days": 367,
   "equity_start": 200000.0,
-  "equity_end": 210042.08,
-  "gross_equity_end": 215862.29,
-  "ret_pct": 5.021,
-  "gross_ret_pct": 7.931,
-  "cost_yuan": 5820.2,
-  "max_dd_pct": 4.802,
-  "gross_max_dd_pct": 3.968,
-  "blocks": {},
-  "seat_follows": {},
-  "win_rate": 50.7,
-  "trade_win_rate": 45.57,
-  "avg_win_r": 1.379,
-  "avg_loss_r": -0.993,
-  "realized_rr": 1.388,
-  "expectancy_r": 0.088,
-  "breakeven_win_rate": 40.0,
-  "closed_trades": 79,
+  "equity_end": 229330.36,
+  "ret_pct": 14.665,
+  "max_dd_pct": 6.26,
+  "win_rate": 34.6,
+  "trade_win_rate": 42.04,
+  "closed_trades": 157,
   "exits": {
-    "target": 32,
-    "stop": 42,
-    "signal": 5
+    "target": 64,
+    "stop": 87,
+    "signal": 6
   },
-  "avg_held": 2.13,
+  "avg_held": 1.68,
   "conclusion": "继续L1",
   "errors": {},
   "bars": {
-    "MA": 275,
-    "V": 275,
-    "EG": 275,
-    "M": 275,
-    "FG": 275,
-    "EB": 275,
-    "TA": 275,
-    "SA": 275,
-    "PP": 275,
-    "L": 275,
-    "JD": 275,
-    "P": 275,
-    "RB": 275,
-    "FU": 275,
-    "CF": 275,
-    "BU": 275,
-    "RU": 275,
-    "AG": 275,
-    "SP": 275,
-    "SR": 275
+    "MA": 420,
+    "V": 427,
+    "EG": 427,
+    "M": 427,
+    "FG": 425,
+    "EB": 422,
+    "TA": 427,
+    "SA": 422,
+    "PP": 427,
+    "L": 427,
+    "JD": 426,
+    "P": 420,
+    "RB": 425,
+    "FU": 425,
+    "CF": 425,
+    "BU": 425,
+    "RU": 420,
+    "AG": 328,
+    "SP": 425,
+    "SR": 426
   },
   "final_positions": {
-    "V": {
-      "code": "V",
-      "direction": "多",
-      "lots": 1,
-      "entry": 4847.0,
-      "stop": 4657.228571428572,
-      "target": 5131.657142857142,
-      "atr": 158.14,
-      "r20": 3.59,
-      "r60": 3.59,
-      "bucket": "能化",
-      "reason": "composite_trend"
-    },
     "JD": {
       "code": "JD",
       "direction": "空",
-      "lots": 1,
-      "entry": 3332.0,
-      "stop": 3436.1428571428573,
-      "target": 3175.785714285714,
-      "atr": 86.79,
-      "r20": 4.549,
-      "r60": 4.549,
+      "lots": 2,
+      "entry": 3257.0,
+      "stop": 3332.4285714285716,
+      "target": 3106.1428571428573,
+      "atr": 75.43,
+      "r20": -12.328,
+      "r60": -15.05,
       "bucket": "农产品",
-      "reason": "composite_trend"
+      "reason": "path_a_rr2"
+    },
+    "PP": {
+      "code": "PP",
+      "direction": "多",
+      "lots": 1,
+      "entry": 9299.0,
+      "stop": 9085.785714285714,
+      "target": 9725.42857142857,
+      "atr": 213.21,
+      "r20": 7.74,
+      "r60": 14.506,
+      "bucket": "能化",
+      "reason": "path_a_rr2"
     }
   },
   "equity_curve": [
     {
-      "date": "2025-11-27",
-      "equity": 199936.46,
-      "held": 3,
-      "pnl": -63.53,
-      "dd_pct": 0.032,
-      "gross_pct": 41.32,
+      "date": "2025-10-30",
+      "equity": 200000.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.6,
       "codes": [
-        "M",
-        "MA",
-        "RB"
+        "FG",
+        "JD"
+      ]
+    },
+    {
+      "date": "2025-10-31",
+      "equity": 200210.0,
+      "held": 2,
+      "pnl": 210.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.35,
+      "codes": [
+        "FG",
+        "JD"
+      ]
+    },
+    {
+      "date": "2025-11-01",
+      "equity": 200210.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.35,
+      "codes": [
+        "FG",
+        "JD"
+      ]
+    },
+    {
+      "date": "2025-11-02",
+      "equity": 200210.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.35,
+      "codes": [
+        "FG",
+        "JD"
+      ]
+    },
+    {
+      "date": "2025-11-03",
+      "equity": 199092.86,
+      "held": 2,
+      "pnl": -1117.14,
+      "dd_pct": 0.558,
+      "gross_pct": 37.39,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-04",
+      "equity": 199512.86,
+      "held": 2,
+      "pnl": 420.0,
+      "dd_pct": 0.348,
+      "gross_pct": 36.96,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-05",
+      "equity": 199722.86,
+      "held": 2,
+      "pnl": 210.0,
+      "dd_pct": 0.243,
+      "gross_pct": 37.55,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-06",
+      "equity": 200142.86,
+      "held": 2,
+      "pnl": 420.0,
+      "dd_pct": 0.034,
+      "gross_pct": 37.36,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-07",
+      "equity": 200322.86,
+      "held": 2,
+      "pnl": 180.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.16,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-08",
+      "equity": 200322.86,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.16,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-09",
+      "equity": 200322.86,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.16,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-10",
+      "equity": 200401.43,
+      "held": 2,
+      "pnl": 78.57,
+      "dd_pct": 0.0,
+      "gross_pct": 36.82,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-11",
+      "equity": 200541.43,
+      "held": 2,
+      "pnl": 140.0,
+      "dd_pct": 0.0,
+      "gross_pct": 36.48,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-12",
+      "equity": 199516.43,
+      "held": 1,
+      "pnl": -1025.0,
+      "dd_pct": 0.511,
+      "gross_pct": 21.13,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-13",
+      "equity": 199616.43,
+      "held": 1,
+      "pnl": 100.0,
+      "dd_pct": 0.461,
+      "gross_pct": 21.07,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-14",
+      "equity": 200576.43,
+      "held": 1,
+      "pnl": 960.0,
+      "dd_pct": 0.0,
+      "gross_pct": 20.49,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-15",
+      "equity": 200576.43,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 20.49,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-16",
+      "equity": 200576.43,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 20.49,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-17",
+      "equity": 200896.43,
+      "held": 1,
+      "pnl": 320.0,
+      "dd_pct": 0.0,
+      "gross_pct": 20.2,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-18",
+      "equity": 200876.43,
+      "held": 1,
+      "pnl": -20.0,
+      "dd_pct": 0.01,
+      "gross_pct": 20.21,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-19",
+      "equity": 201216.43,
+      "held": 1,
+      "pnl": 340.0,
+      "dd_pct": 0.0,
+      "gross_pct": 20.01,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-20",
+      "equity": 201156.43,
+      "held": 1,
+      "pnl": -60.0,
+      "dd_pct": 0.03,
+      "gross_pct": 20.04,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-21",
+      "equity": 201396.43,
+      "held": 1,
+      "pnl": 240.0,
+      "dd_pct": 0.0,
+      "gross_pct": 19.9,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-22",
+      "equity": 201396.43,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 19.9,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-23",
+      "equity": 201396.43,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 19.9,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-24",
+      "equity": 200326.43,
+      "held": 1,
+      "pnl": -1070.0,
+      "dd_pct": 0.531,
+      "gross_pct": 40.45,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2025-11-25",
+      "equity": 200246.43,
+      "held": 1,
+      "pnl": -80.0,
+      "dd_pct": 0.571,
+      "gross_pct": 40.51,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2025-11-26",
+      "equity": 198937.86,
+      "held": 1,
+      "pnl": -1308.57,
+      "dd_pct": 1.221,
+      "gross_pct": 12.4,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2025-11-27",
+      "equity": 198897.86,
+      "held": 1,
+      "pnl": -40.0,
+      "dd_pct": 1.241,
+      "gross_pct": 12.42,
+      "codes": [
+        "FU"
       ]
     },
     {
       "date": "2025-11-28",
-      "equity": 199086.39,
-      "held": 2,
-      "pnl": -850.07,
-      "dd_pct": 0.457,
-      "gross_pct": 26.35,
+      "equity": 198480.71,
+      "held": 1,
+      "pnl": -417.14,
+      "dd_pct": 1.448,
+      "gross_pct": 37.8,
       "codes": [
-        "MA",
-        "RB"
+        "FU"
+      ]
+    },
+    {
+      "date": "2025-11-29",
+      "equity": 198480.71,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 1.448,
+      "gross_pct": 37.8,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2025-11-30",
+      "equity": 198480.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.448,
+      "gross_pct": 54.39,
+      "codes": [
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2025-12-01",
-      "equity": 198803.59,
-      "held": 2,
-      "pnl": -282.81,
-      "dd_pct": 0.598,
-      "gross_pct": 26.85,
+      "equity": 198135.0,
+      "held": 1,
+      "pnl": -345.71,
+      "dd_pct": 1.619,
+      "gross_pct": 37.78,
       "codes": [
-        "JD",
-        "MA"
+        "FU"
       ]
     },
     {
       "date": "2025-12-02",
-      "equity": 198853.59,
+      "equity": 198915.0,
       "held": 2,
-      "pnl": 50.0,
-      "dd_pct": 0.573,
-      "gross_pct": 26.82,
+      "pnl": 780.0,
+      "dd_pct": 1.232,
+      "gross_pct": 53.33,
       "codes": [
-        "JD",
-        "MA"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2025-12-03",
-      "equity": 198253.59,
-      "held": 2,
-      "pnl": -600.0,
-      "dd_pct": 0.873,
-      "gross_pct": 26.56,
+      "equity": 199871.43,
+      "held": 1,
+      "pnl": 956.43,
+      "dd_pct": 0.757,
+      "gross_pct": 48.77,
       "codes": [
-        "JD",
-        "MA"
+        "FU"
       ]
     },
     {
       "date": "2025-12-04",
-      "equity": 198193.48,
-      "held": 2,
-      "pnl": -60.11,
-      "dd_pct": 0.903,
-      "gross_pct": 26.49,
+      "equity": 199671.43,
+      "held": 1,
+      "pnl": -200.0,
+      "dd_pct": 0.857,
+      "gross_pct": 48.92,
       "codes": [
-        "JD",
-        "MA"
+        "FU"
       ]
     },
     {
       "date": "2025-12-05",
-      "equity": 198343.48,
-      "held": 2,
-      "pnl": 150.0,
-      "dd_pct": 0.828,
-      "gross_pct": 26.19,
+      "equity": 198248.57,
+      "held": 1,
+      "pnl": -1422.86,
+      "dd_pct": 1.563,
+      "gross_pct": 40.11,
       "codes": [
-        "JD",
-        "MA"
+        "FG"
+      ]
+    },
+    {
+      "date": "2025-12-06",
+      "equity": 198248.57,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 1.563,
+      "gross_pct": 40.11,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2025-12-07",
+      "equity": 198248.57,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 1.563,
+      "gross_pct": 40.11,
+      "codes": [
+        "FG"
       ]
     },
     {
       "date": "2025-12-08",
-      "equity": 198583.48,
+      "equity": 196745.71,
       "held": 2,
-      "pnl": 240.0,
-      "dd_pct": 0.708,
-      "gross_pct": 26.4,
+      "pnl": -1502.86,
+      "dd_pct": 2.309,
+      "gross_pct": 32.93,
       "codes": [
-        "JD",
-        "MA"
+        "EG",
+        "M"
       ]
     },
     {
       "date": "2025-12-09",
-      "equity": 197853.33,
+      "equity": 196995.71,
       "held": 2,
-      "pnl": -730.15,
-      "dd_pct": 1.073,
-      "gross_pct": 25.48,
+      "pnl": 250.0,
+      "dd_pct": 2.185,
+      "gross_pct": 32.76,
       "codes": [
-        "JD",
-        "MA"
+        "EG",
+        "M"
       ]
     },
     {
       "date": "2025-12-10",
-      "equity": 198117.0,
+      "equity": 197175.71,
       "held": 2,
-      "pnl": 263.67,
-      "dd_pct": 0.941,
-      "gross_pct": 39.54,
+      "pnl": 180.0,
+      "dd_pct": 2.096,
+      "gross_pct": 32.64,
       "codes": [
-        "FU",
-        "JD"
+        "EG",
+        "M"
       ]
     },
     {
       "date": "2025-12-11",
-      "equity": 198897.0,
+      "equity": 197834.29,
       "held": 2,
-      "pnl": 780.0,
-      "dd_pct": 0.551,
-      "gross_pct": 38.87,
+      "pnl": 658.57,
+      "dd_pct": 1.769,
+      "gross_pct": 62.22,
       "codes": [
-        "FU",
-        "JD"
+        "FG",
+        "M"
       ]
     },
     {
       "date": "2025-12-12",
-      "equity": 197967.0,
+      "equity": 199734.29,
       "held": 2,
-      "pnl": -930.0,
-      "dd_pct": 1.016,
-      "gross_pct": 39.05,
+      "pnl": 1900.0,
+      "dd_pct": 0.825,
+      "gross_pct": 60.68,
       "codes": [
-        "FU",
-        "JD"
+        "FG",
+        "M"
+      ]
+    },
+    {
+      "date": "2025-12-13",
+      "equity": 199734.29,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.825,
+      "gross_pct": 60.68,
+      "codes": [
+        "FG",
+        "M"
+      ]
+    },
+    {
+      "date": "2025-12-14",
+      "equity": 199734.29,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.825,
+      "gross_pct": 60.68,
+      "codes": [
+        "FG",
+        "M"
       ]
     },
     {
       "date": "2025-12-15",
-      "equity": 197457.0,
+      "equity": 198354.29,
       "held": 2,
-      "pnl": -510.0,
-      "dd_pct": 1.271,
-      "gross_pct": 39.62,
+      "pnl": -1380.0,
+      "dd_pct": 1.511,
+      "gross_pct": 61.8,
       "codes": [
-        "FU",
-        "JD"
+        "FG",
+        "M"
       ]
     },
     {
       "date": "2025-12-16",
-      "equity": 198217.0,
+      "equity": 195842.86,
       "held": 2,
-      "pnl": 760.0,
-      "dd_pct": 0.891,
-      "gross_pct": 38.95,
+      "pnl": -2511.43,
+      "dd_pct": 2.758,
+      "gross_pct": 33.07,
       "codes": [
-        "FU",
-        "JD"
+        "EG",
+        "M"
       ]
     },
     {
       "date": "2025-12-17",
-      "equity": 197827.0,
+      "equity": 195570.0,
       "held": 2,
-      "pnl": -390.0,
-      "dd_pct": 1.086,
-      "gross_pct": 39.21,
+      "pnl": -272.86,
+      "dd_pct": 2.893,
+      "gross_pct": 30.66,
       "codes": [
-        "FU",
-        "JD"
+        "L",
+        "M"
       ]
     },
     {
       "date": "2025-12-18",
-      "equity": 197141.39,
+      "equity": 195355.0,
       "held": 2,
-      "pnl": -685.61,
-      "dd_pct": 1.429,
-      "gross_pct": 54.33,
+      "pnl": -215.0,
+      "dd_pct": 3.0,
+      "gross_pct": 30.64,
       "codes": [
-        "FU",
-        "JD"
+        "L",
+        "M"
       ]
     },
     {
       "date": "2025-12-19",
-      "equity": 198721.39,
+      "equity": 196088.57,
       "held": 2,
-      "pnl": 1580.0,
-      "dd_pct": 0.639,
-      "gross_pct": 53.1,
+      "pnl": 733.57,
+      "dd_pct": 2.636,
+      "gross_pct": 38.84,
       "codes": [
-        "FU",
-        "JD"
+        "M",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-20",
+      "equity": 196088.57,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.636,
+      "gross_pct": 38.84,
+      "codes": [
+        "M",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-21",
+      "equity": 196088.57,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.636,
+      "gross_pct": 38.84,
+      "codes": [
+        "M",
+        "TA"
       ]
     },
     {
       "date": "2025-12-22",
-      "equity": 197321.39,
+      "equity": 197034.29,
       "held": 2,
-      "pnl": -1400.0,
-      "dd_pct": 1.339,
-      "gross_pct": 54.19,
+      "pnl": 945.71,
+      "dd_pct": 2.166,
+      "gross_pct": 29.75,
       "codes": [
-        "FU",
-        "JD"
+        "L",
+        "M"
       ]
     },
     {
       "date": "2025-12-23",
-      "equity": 196838.44,
+      "equity": 196650.0,
       "held": 2,
-      "pnl": -482.95,
-      "dd_pct": 1.581,
-      "gross_pct": 41.84,
+      "pnl": -384.29,
+      "dd_pct": 2.357,
+      "gross_pct": 39.8,
       "codes": [
-        "FU",
-        "JD"
+        "M",
+        "TA"
       ]
     },
     {
       "date": "2025-12-24",
-      "equity": 195448.44,
+      "equity": 196940.0,
       "held": 2,
-      "pnl": -1390.0,
-      "dd_pct": 2.276,
-      "gross_pct": 42.85,
+      "pnl": 290.0,
+      "dd_pct": 2.213,
+      "gross_pct": 39.72,
+      "codes": [
+        "M",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-25",
+      "equity": 197200.0,
+      "held": 2,
+      "pnl": 260.0,
+      "dd_pct": 2.084,
+      "gross_pct": 40.12,
+      "codes": [
+        "M",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-26",
+      "equity": 197437.14,
+      "held": 2,
+      "pnl": 237.14,
+      "dd_pct": 1.966,
+      "gross_pct": 27.5,
+      "codes": [
+        "M",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-27",
+      "equity": 197437.14,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.966,
+      "gross_pct": 27.5,
+      "codes": [
+        "M",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-28",
+      "equity": 197437.14,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.966,
+      "gross_pct": 28.35,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-29",
+      "equity": 197215.71,
+      "held": 2,
+      "pnl": -221.43,
+      "dd_pct": 2.076,
+      "gross_pct": 27.9,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-30",
+      "equity": 197355.71,
+      "held": 2,
+      "pnl": 140.0,
+      "dd_pct": 2.006,
+      "gross_pct": 27.92,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-31",
+      "equity": 197235.71,
+      "held": 2,
+      "pnl": -120.0,
+      "dd_pct": 2.066,
+      "gross_pct": 27.82,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-01",
+      "equity": 197235.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.066,
+      "gross_pct": 27.82,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-02",
+      "equity": 197235.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.066,
+      "gross_pct": 27.82,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-03",
+      "equity": 197235.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.066,
+      "gross_pct": 27.82,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-04",
+      "equity": 197235.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.066,
+      "gross_pct": 27.82,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-05",
+      "equity": 196220.0,
+      "held": 2,
+      "pnl": -1015.71,
+      "dd_pct": 2.57,
+      "gross_pct": 43.35,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-06",
+      "equity": 196580.0,
+      "held": 2,
+      "pnl": 360.0,
+      "dd_pct": 2.392,
+      "gross_pct": 43.62,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-07",
+      "equity": 196434.29,
+      "held": 1,
+      "pnl": -145.71,
+      "dd_pct": 2.464,
+      "gross_pct": 13.11,
+      "codes": [
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-08",
+      "equity": 196051.43,
+      "held": 1,
+      "pnl": -382.86,
+      "dd_pct": 2.654,
+      "gross_pct": 11.86,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-01-09",
+      "equity": 195658.57,
+      "held": 1,
+      "pnl": -392.86,
+      "dd_pct": 2.849,
+      "gross_pct": 11.69,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-01-10",
+      "equity": 195658.57,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.849,
+      "gross_pct": 11.69,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-01-11",
+      "equity": 195658.57,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.849,
+      "gross_pct": 11.69,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-01-12",
+      "equity": 195267.14,
+      "held": 1,
+      "pnl": -391.43,
+      "dd_pct": 3.043,
+      "gross_pct": 11.71,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-01-13",
+      "equity": 194858.57,
+      "held": 1,
+      "pnl": -408.57,
+      "dd_pct": 3.246,
+      "gross_pct": 18.03,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-14",
+      "equity": 195298.57,
+      "held": 1,
+      "pnl": 440.0,
+      "dd_pct": 3.028,
+      "gross_pct": 18.22,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-15",
+      "equity": 195625.0,
+      "held": 1,
+      "pnl": 326.43,
+      "dd_pct": 2.866,
+      "gross_pct": 46.48,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-01-16",
+      "equity": 194073.57,
+      "held": 1,
+      "pnl": -1551.43,
+      "dd_pct": 3.636,
+      "gross_pct": 36.99,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-17",
+      "equity": 194073.57,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 3.636,
+      "gross_pct": 36.99,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-18",
+      "equity": 194073.57,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 3.636,
+      "gross_pct": 36.99,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-19",
+      "equity": 195243.57,
+      "held": 1,
+      "pnl": 1170.0,
+      "dd_pct": 3.055,
+      "gross_pct": 37.36,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-20",
+      "equity": 194323.57,
+      "held": 1,
+      "pnl": -920.0,
+      "dd_pct": 3.512,
+      "gross_pct": 37.07,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-21",
+      "equity": 196082.14,
+      "held": 1,
+      "pnl": 1758.57,
+      "dd_pct": 2.639,
+      "gross_pct": 37.27,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-22",
+      "equity": 198452.14,
+      "held": 1,
+      "pnl": 2370.0,
+      "dd_pct": 1.462,
+      "gross_pct": 38.77,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-23",
+      "equity": 197077.86,
+      "held": 1,
+      "pnl": -1374.29,
+      "dd_pct": 2.144,
+      "gross_pct": 39.11,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-24",
+      "equity": 197077.86,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.144,
+      "gross_pct": 39.11,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-25",
+      "equity": 197077.86,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.144,
+      "gross_pct": 39.11,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-26",
+      "equity": 197017.86,
+      "held": 1,
+      "pnl": -60.0,
+      "dd_pct": 2.174,
+      "gross_pct": 39.09,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-27",
+      "equity": 195567.86,
+      "held": 1,
+      "pnl": -1450.0,
+      "dd_pct": 2.894,
+      "gross_pct": 13.77,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "equity": 196157.86,
+      "held": 1,
+      "pnl": 590.0,
+      "dd_pct": 2.601,
+      "gross_pct": 14.02,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-01-29",
+      "equity": 196855.0,
+      "held": 1,
+      "pnl": 697.14,
+      "dd_pct": 2.255,
+      "gross_pct": 17.67,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-01-30",
+      "equity": 196412.86,
+      "held": 1,
+      "pnl": -442.14,
+      "dd_pct": 2.475,
+      "gross_pct": 17.43,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-01-31",
+      "equity": 196412.86,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.475,
+      "gross_pct": 17.43,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-01",
+      "equity": 196412.86,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.475,
+      "gross_pct": 0.0,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-02",
+      "equity": 196412.86,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.475,
+      "gross_pct": 37.87,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-02-03",
+      "equity": 198642.86,
+      "held": 1,
+      "pnl": 2230.0,
+      "dd_pct": 1.367,
+      "gross_pct": 38.57,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-02-04",
+      "equity": 200355.71,
+      "held": 1,
+      "pnl": 1712.86,
+      "dd_pct": 0.517,
+      "gross_pct": 38.82,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-02-05",
+      "equity": 199475.71,
+      "held": 2,
+      "pnl": -880.0,
+      "dd_pct": 0.954,
+      "gross_pct": 67.53,
+      "codes": [
+        "EB",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-06",
+      "equity": 198575.71,
+      "held": 2,
+      "pnl": -900.0,
+      "dd_pct": 1.401,
+      "gross_pct": 67.65,
+      "codes": [
+        "EB",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-07",
+      "equity": 198575.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.401,
+      "gross_pct": 67.65,
+      "codes": [
+        "EB",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-08",
+      "equity": 198575.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.401,
+      "gross_pct": 67.65,
+      "codes": [
+        "EB",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-09",
+      "equity": 198046.43,
+      "held": 2,
+      "pnl": -529.29,
+      "dd_pct": 1.663,
+      "gross_pct": 43.48,
       "codes": [
         "FU",
         "JD"
       ]
     },
     {
-      "date": "2025-12-25",
-      "equity": 194491.36,
-      "held": 2,
-      "pnl": -957.08,
-      "dd_pct": 2.754,
-      "gross_pct": 39.89,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2025-12-26",
-      "equity": 194311.36,
-      "held": 2,
-      "pnl": -180.0,
-      "dd_pct": 2.844,
-      "gross_pct": 40.02,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2025-12-29",
-      "equity": 194951.36,
-      "held": 2,
-      "pnl": 640.0,
-      "dd_pct": 2.524,
-      "gross_pct": 39.56,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2025-12-30",
-      "equity": 194761.36,
-      "held": 2,
-      "pnl": -190.0,
-      "dd_pct": 2.619,
-      "gross_pct": 39.69,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2025-12-31",
-      "equity": 195091.36,
-      "held": 2,
-      "pnl": 330.0,
-      "dd_pct": 2.454,
-      "gross_pct": 39.46,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-01-05",
-      "equity": 195231.36,
-      "held": 2,
-      "pnl": 140.0,
-      "dd_pct": 2.384,
-      "gross_pct": 39.36,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-01-06",
-      "equity": 194691.36,
-      "held": 2,
-      "pnl": -540.0,
-      "dd_pct": 2.654,
-      "gross_pct": 39.74,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-01-07",
-      "equity": 194891.36,
-      "held": 2,
-      "pnl": 200.0,
-      "dd_pct": 2.554,
-      "gross_pct": 39.6,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-01-08",
-      "equity": 194701.36,
-      "held": 2,
-      "pnl": -190.0,
-      "dd_pct": 2.649,
-      "gross_pct": 39.74,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-01-09",
-      "equity": 194051.36,
-      "held": 2,
-      "pnl": -650.0,
-      "dd_pct": 2.974,
-      "gross_pct": 40.21,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-01-12",
-      "equity": 194611.36,
-      "held": 2,
-      "pnl": 560.0,
-      "dd_pct": 2.694,
-      "gross_pct": 39.8,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-01-13",
-      "equity": 194931.36,
-      "held": 2,
-      "pnl": 320.0,
-      "dd_pct": 2.534,
-      "gross_pct": 39.57,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-01-14",
-      "equity": 193522.55,
-      "held": 2,
-      "pnl": -1408.81,
-      "dd_pct": 3.239,
-      "gross_pct": 40.6,
-      "codes": [
-        "SR",
-        "TA"
-      ]
-    },
-    {
-      "date": "2026-01-15",
-      "equity": 193372.55,
-      "held": 2,
-      "pnl": -150.0,
-      "dd_pct": 3.314,
-      "gross_pct": 40.36,
-      "codes": [
-        "SR",
-        "TA"
-      ]
-    },
-    {
-      "date": "2026-01-16",
-      "equity": 193442.55,
-      "held": 2,
-      "pnl": 70.0,
-      "dd_pct": 3.279,
-      "gross_pct": 40.15,
-      "codes": [
-        "SR",
-        "TA"
-      ]
-    },
-    {
-      "date": "2026-01-19",
-      "equity": 193642.55,
-      "held": 2,
-      "pnl": 200.0,
-      "dd_pct": 3.179,
-      "gross_pct": 40.07,
-      "codes": [
-        "SR",
-        "TA"
-      ]
-    },
-    {
-      "date": "2026-01-20",
-      "equity": 194822.55,
-      "held": 2,
-      "pnl": 1180.0,
-      "dd_pct": 2.589,
-      "gross_pct": 39.81,
-      "codes": [
-        "SR",
-        "TA"
-      ]
-    },
-    {
-      "date": "2026-01-21",
-      "equity": 194894.51,
-      "held": 2,
-      "pnl": 71.95,
-      "dd_pct": 2.553,
-      "gross_pct": 28.8,
-      "codes": [
-        "JD",
-        "TA"
-      ]
-    },
-    {
-      "date": "2026-01-22",
-      "equity": 195017.49,
-      "held": 2,
-      "pnl": 122.98,
-      "dd_pct": 2.491,
-      "gross_pct": 41.97,
-      "codes": [
-        "M",
-        "TA"
-      ]
-    },
-    {
-      "date": "2026-01-23",
-      "equity": 195481.35,
-      "held": 2,
-      "pnl": 463.86,
-      "dd_pct": 2.259,
-      "gross_pct": 42.08,
-      "codes": [
-        "M",
-        "TA"
-      ]
-    },
-    {
-      "date": "2026-01-26",
-      "equity": 195071.35,
-      "held": 2,
-      "pnl": -410.0,
-      "dd_pct": 2.464,
-      "gross_pct": 42.33,
-      "codes": [
-        "M",
-        "TA"
-      ]
-    },
-    {
-      "date": "2026-01-27",
-      "equity": 194426.35,
-      "held": 2,
-      "pnl": -645.0,
-      "dd_pct": 2.787,
-      "gross_pct": 41.08,
-      "codes": [
-        "M",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-01-28",
-      "equity": 194116.35,
-      "held": 2,
-      "pnl": -310.0,
-      "dd_pct": 2.942,
-      "gross_pct": 41.32,
-      "codes": [
-        "M",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-01-29",
-      "equity": 193453.46,
-      "held": 2,
-      "pnl": -662.89,
-      "dd_pct": 3.273,
-      "gross_pct": 43.88,
-      "codes": [
-        "JD",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-01-30",
-      "equity": 194887.6,
-      "held": 2,
-      "pnl": 1434.14,
-      "dd_pct": 2.556,
-      "gross_pct": 56.79,
-      "codes": [
-        "JD",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-02-02",
-      "equity": 194937.6,
-      "held": 2,
-      "pnl": 50.0,
-      "dd_pct": 2.531,
-      "gross_pct": 56.24,
-      "codes": [
-        "JD",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-02-03",
-      "equity": 195947.6,
-      "held": 2,
-      "pnl": 1010.0,
-      "dd_pct": 2.026,
-      "gross_pct": 56.02,
-      "codes": [
-        "JD",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-02-04",
-      "equity": 196947.6,
-      "held": 2,
-      "pnl": 1000.0,
-      "dd_pct": 1.526,
-      "gross_pct": 56.08,
-      "codes": [
-        "JD",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-02-05",
-      "equity": 196022.8,
-      "held": 2,
-      "pnl": -924.8,
-      "dd_pct": 1.989,
-      "gross_pct": 63.04,
-      "codes": [
-        "CF",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-02-06",
-      "equity": 194798.01,
-      "held": 2,
-      "pnl": -1224.79,
-      "dd_pct": 2.601,
-      "gross_pct": 51.96,
-      "codes": [
-        "CF",
-        "FU"
-      ]
-    },
-    {
-      "date": "2026-02-09",
-      "equity": 194428.01,
-      "held": 2,
-      "pnl": -370.0,
-      "dd_pct": 2.786,
-      "gross_pct": 51.86,
-      "codes": [
-        "CF",
-        "FU"
-      ]
-    },
-    {
       "date": "2026-02-10",
-      "equity": 195313.01,
+      "equity": 198516.43,
       "held": 2,
-      "pnl": 885.0,
-      "dd_pct": 2.343,
-      "gross_pct": 52.08,
+      "pnl": 470.0,
+      "dd_pct": 1.43,
+      "gross_pct": 43.66,
       "codes": [
-        "CF",
-        "FU"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-02-11",
-      "equity": 195913.01,
+      "equity": 198343.57,
       "held": 2,
-      "pnl": 600.0,
-      "dd_pct": 2.043,
-      "gross_pct": 52.23,
+      "pnl": -172.86,
+      "dd_pct": 1.516,
+      "gross_pct": 43.89,
       "codes": [
-        "CF",
-        "FU"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-02-12",
-      "equity": 196418.01,
-      "held": 2,
-      "pnl": 505.0,
-      "dd_pct": 1.791,
-      "gross_pct": 52.35,
+      "equity": 198090.71,
+      "held": 1,
+      "pnl": -252.86,
+      "dd_pct": 1.641,
+      "gross_pct": 14.58,
       "codes": [
-        "CF",
         "FU"
       ]
     },
     {
       "date": "2026-02-13",
-      "equity": 195688.01,
+      "equity": 197610.71,
       "held": 2,
-      "pnl": -730.0,
-      "dd_pct": 2.156,
-      "gross_pct": 52.17,
+      "pnl": -480.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
       "codes": [
-        "CF",
-        "FU"
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-14",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-15",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-16",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-17",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-18",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-19",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-20",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-21",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-22",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-23",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-02-24",
-      "equity": 197949.73,
-      "held": 1,
-      "pnl": 2261.71,
-      "dd_pct": 1.025,
-      "gross_pct": 14.86,
+      "equity": 199106.43,
+      "held": 2,
+      "pnl": 1495.71,
+      "dd_pct": 1.137,
+      "gross_pct": 63.79,
       "codes": [
-        "FU"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-02-25",
-      "equity": 197925.22,
+      "equity": 199282.14,
       "held": 2,
-      "pnl": -24.51,
-      "dd_pct": 1.037,
-      "gross_pct": 31.38,
+      "pnl": 175.71,
+      "dd_pct": 1.05,
+      "gross_pct": 63.96,
       "codes": [
         "FU",
         "JD"
@@ -1174,11 +1461,11 @@
     },
     {
       "date": "2026-02-26",
-      "equity": 198075.22,
+      "equity": 198987.86,
       "held": 2,
-      "pnl": 150.0,
-      "dd_pct": 0.962,
-      "gross_pct": 31.43,
+      "pnl": -294.29,
+      "dd_pct": 1.196,
+      "gross_pct": 63.84,
       "codes": [
         "FU",
         "JD"
@@ -1186,11 +1473,35 @@
     },
     {
       "date": "2026-02-27",
-      "equity": 198085.22,
+      "equity": 199565.0,
       "held": 2,
-      "pnl": 10.0,
-      "dd_pct": 0.957,
-      "gross_pct": 31.44,
+      "pnl": 577.14,
+      "dd_pct": 0.909,
+      "gross_pct": 63.94,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-28",
+      "equity": 199565.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.909,
+      "gross_pct": 63.94,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-03-01",
+      "equity": 199565.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.909,
+      "gross_pct": 63.94,
       "codes": [
         "FU",
         "JD"
@@ -1198,608 +1509,862 @@
     },
     {
       "date": "2026-03-02",
-      "equity": 199642.52,
-      "held": 3,
-      "pnl": 1557.31,
-      "dd_pct": 0.179,
-      "gross_pct": 41.71,
+      "equity": 199340.71,
+      "held": 2,
+      "pnl": -224.29,
+      "dd_pct": 1.021,
+      "gross_pct": 96.74,
       "codes": [
-        "M",
-        "RB",
-        "V"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-03-03",
-      "equity": 199528.6,
+      "equity": 200731.43,
       "held": 2,
-      "pnl": -113.93,
-      "dd_pct": 0.236,
-      "gross_pct": 27.78,
+      "pnl": 1390.71,
+      "dd_pct": 0.33,
+      "gross_pct": 49.85,
       "codes": [
-        "RB",
-        "V"
+        "JD",
+        "PP"
       ]
     },
     {
       "date": "2026-03-04",
-      "equity": 200038.74,
+      "equity": 201762.14,
       "held": 2,
-      "pnl": 510.14,
+      "pnl": 1030.71,
       "dd_pct": 0.0,
-      "gross_pct": 53.36,
+      "gross_pct": 70.35,
       "codes": [
-        "CF",
-        "RB"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-03-05",
-      "equity": 200204.13,
-      "held": 3,
-      "pnl": 165.39,
-      "dd_pct": 0.0,
-      "gross_pct": 72.65,
+      "equity": 200407.86,
+      "held": 2,
+      "pnl": -1354.29,
+      "dd_pct": 0.671,
+      "gross_pct": 48.41,
       "codes": [
-        "CF",
-        "FU",
-        "RB"
+        "JD",
+        "TA"
       ]
     },
     {
       "date": "2026-03-06",
-      "equity": 201569.13,
-      "held": 3,
-      "pnl": 1365.0,
-      "dd_pct": 0.0,
-      "gross_pct": 72.97,
+      "equity": 201525.0,
+      "held": 2,
+      "pnl": 1117.14,
+      "dd_pct": 0.118,
+      "gross_pct": 55.74,
       "codes": [
-        "CF",
-        "FU",
-        "RB"
+        "EB",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-03-07",
+      "equity": 201525.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.118,
+      "gross_pct": 55.74,
+      "codes": [
+        "EB",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-03-08",
+      "equity": 201525.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.118,
+      "gross_pct": 55.74,
+      "codes": [
+        "EB",
+        "JD"
       ]
     },
     {
       "date": "2026-03-09",
-      "equity": 204602.22,
-      "held": 3,
-      "pnl": 3033.09,
+      "equity": 205000.71,
+      "held": 1,
+      "pnl": 3475.71,
       "dd_pct": 0.0,
-      "gross_pct": 45.35,
+      "gross_pct": 19.6,
       "codes": [
-        "JD",
-        "RB",
-        "V"
+        "PP"
       ]
     },
     {
       "date": "2026-03-10",
-      "equity": 203834.79,
-      "held": 3,
-      "pnl": -767.43,
-      "dd_pct": 0.375,
-      "gross_pct": 56.29,
+      "equity": 204066.79,
+      "held": 1,
+      "pnl": -933.93,
+      "dd_pct": 0.456,
+      "gross_pct": 15.19,
       "codes": [
-        "EB",
-        "JD",
-        "RB"
+        "TA"
       ]
     },
     {
       "date": "2026-03-11",
-      "equity": 201617.51,
-      "held": 3,
-      "pnl": -2217.29,
-      "dd_pct": 1.459,
-      "gross_pct": 56.86,
+      "equity": 206415.36,
+      "held": 2,
+      "pnl": 2348.57,
+      "dd_pct": 0.0,
+      "gross_pct": 43.22,
       "codes": [
-        "EB",
-        "JD",
-        "RB"
+        "M",
+        "V"
       ]
     },
     {
       "date": "2026-03-12",
-      "equity": 205782.7,
-      "held": 3,
-      "pnl": 4165.19,
-      "dd_pct": 0.0,
-      "gross_pct": 51.3,
+      "equity": 206380.36,
+      "held": 2,
+      "pnl": -35.0,
+      "dd_pct": 0.017,
+      "gross_pct": 43.21,
       "codes": [
-        "BU",
-        "JD",
-        "RB"
+        "M",
+        "V"
       ]
     },
     {
       "date": "2026-03-13",
-      "equity": 206412.7,
-      "held": 3,
-      "pnl": 630.0,
+      "equity": 208943.21,
+      "held": 2,
+      "pnl": 2562.86,
       "dd_pct": 0.0,
-      "gross_pct": 51.66,
+      "gross_pct": 58.61,
       "codes": [
-        "BU",
-        "JD",
-        "RB"
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-14",
+      "equity": 208943.21,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 58.61,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-15",
+      "equity": 208943.21,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 58.61,
+      "codes": [
+        "M",
+        "V"
       ]
     },
     {
       "date": "2026-03-16",
-      "equity": 208533.94,
-      "held": 3,
-      "pnl": 2121.24,
-      "dd_pct": 0.0,
-      "gross_pct": 52.96,
+      "equity": 208142.5,
+      "held": 1,
+      "pnl": -800.71,
+      "dd_pct": 0.383,
+      "gross_pct": 14.05,
       "codes": [
-        "BU",
-        "JD",
-        "RB"
+        "V"
       ]
     },
     {
       "date": "2026-03-17",
-      "equity": 207333.94,
-      "held": 3,
-      "pnl": -1200.0,
-      "dd_pct": 0.575,
-      "gross_pct": 52.76,
+      "equity": 208402.5,
+      "held": 2,
+      "pnl": 260.0,
+      "dd_pct": 0.259,
+      "gross_pct": 43.62,
       "codes": [
-        "BU",
-        "JD",
-        "RB"
+        "M",
+        "V"
       ]
     },
     {
       "date": "2026-03-18",
-      "equity": 207290.43,
+      "equity": 206892.5,
       "held": 2,
-      "pnl": -43.51,
-      "dd_pct": 0.596,
-      "gross_pct": 37.63,
+      "pnl": -1510.0,
+      "dd_pct": 0.981,
+      "gross_pct": 43.21,
       "codes": [
-        "BU",
-        "JD"
+        "M",
+        "V"
       ]
     },
     {
       "date": "2026-03-19",
-      "equity": 209210.43,
+      "equity": 207637.5,
       "held": 2,
-      "pnl": 1920.0,
-      "dd_pct": 0.0,
-      "gross_pct": 38.2,
+      "pnl": 745.0,
+      "dd_pct": 0.625,
+      "gross_pct": 43.41,
       "codes": [
-        "BU",
-        "JD"
+        "M",
+        "V"
       ]
     },
     {
       "date": "2026-03-20",
-      "equity": 207950.43,
+      "equity": 207452.5,
       "held": 2,
-      "pnl": -1260.0,
-      "dd_pct": 0.602,
-      "gross_pct": 37.83,
+      "pnl": -185.0,
+      "dd_pct": 0.713,
+      "gross_pct": 43.36,
       "codes": [
-        "BU",
-        "JD"
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-21",
+      "equity": 207452.5,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.713,
+      "gross_pct": 43.36,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-22",
+      "equity": 207452.5,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.713,
+      "gross_pct": 43.36,
+      "codes": [
+        "M",
+        "V"
       ]
     },
     {
       "date": "2026-03-23",
-      "equity": 210330.43,
-      "held": 2,
-      "pnl": 2380.0,
+      "equity": 209021.07,
+      "held": 1,
+      "pnl": 1568.57,
       "dd_pct": 0.0,
-      "gross_pct": 38.53,
+      "gross_pct": 14.95,
       "codes": [
-        "BU",
-        "JD"
+        "V"
       ]
     },
     {
       "date": "2026-03-24",
-      "equity": 207310.43,
-      "held": 2,
-      "pnl": -3020.0,
-      "dd_pct": 1.436,
-      "gross_pct": 37.63,
+      "equity": 207720.36,
+      "held": 1,
+      "pnl": -1300.71,
+      "dd_pct": 0.622,
+      "gross_pct": 32.75,
       "codes": [
-        "BU",
         "JD"
       ]
     },
     {
       "date": "2026-03-25",
-      "equity": 205465.89,
+      "equity": 207900.36,
       "held": 2,
-      "pnl": -1844.54,
-      "dd_pct": 2.313,
-      "gross_pct": 37.17,
+      "pnl": 180.0,
+      "dd_pct": 0.536,
+      "gross_pct": 46.52,
       "codes": [
-        "FG",
-        "JD"
+        "JD",
+        "V"
       ]
     },
     {
       "date": "2026-03-26",
-      "equity": 207325.89,
+      "equity": 208863.93,
       "held": 2,
-      "pnl": 1860.0,
-      "dd_pct": 1.428,
-      "gross_pct": 36.93,
+      "pnl": 963.57,
+      "dd_pct": 0.075,
+      "gross_pct": 47.16,
       "codes": [
-        "FG",
-        "JD"
+        "JD",
+        "V"
       ]
     },
     {
       "date": "2026-03-27",
-      "equity": 207025.89,
+      "equity": 208488.93,
       "held": 2,
-      "pnl": -300.0,
-      "dd_pct": 1.571,
-      "gross_pct": 37.03,
+      "pnl": -375.0,
+      "dd_pct": 0.255,
+      "gross_pct": 47.06,
       "codes": [
-        "FG",
-        "JD"
+        "JD",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-28",
+      "equity": 208488.93,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.255,
+      "gross_pct": 47.06,
+      "codes": [
+        "JD",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-29",
+      "equity": 208488.93,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.255,
+      "gross_pct": 47.06,
+      "codes": [
+        "JD",
+        "V"
       ]
     },
     {
       "date": "2026-03-30",
-      "equity": 206575.89,
-      "held": 2,
-      "pnl": -450.0,
-      "dd_pct": 1.785,
-      "gross_pct": 36.85,
+      "equity": 207547.5,
+      "held": 1,
+      "pnl": -941.43,
+      "dd_pct": 0.705,
+      "gross_pct": 13.37,
       "codes": [
-        "FG",
-        "JD"
+        "V"
       ]
     },
     {
       "date": "2026-03-31",
-      "equity": 207285.89,
-      "held": 2,
-      "pnl": 710.0,
-      "dd_pct": 1.448,
-      "gross_pct": 36.26,
+      "equity": 207110.36,
+      "held": 1,
+      "pnl": -437.14,
+      "dd_pct": 0.914,
+      "gross_pct": 49.2,
       "codes": [
-        "FG",
-        "JD"
+        "FG"
       ]
     },
     {
       "date": "2026-04-01",
-      "equity": 207136.71,
-      "held": 2,
-      "pnl": -149.18,
-      "dd_pct": 1.518,
-      "gross_pct": 50.38,
+      "equity": 209110.36,
+      "held": 1,
+      "pnl": 2000.0,
+      "dd_pct": 0.0,
+      "gross_pct": 47.77,
       "codes": [
-        "FG",
-        "JD"
+        "FG"
       ]
     },
     {
       "date": "2026-04-02",
-      "equity": 207777.85,
-      "held": 2,
-      "pnl": 641.14,
-      "dd_pct": 1.214,
-      "gross_pct": 50.45,
+      "equity": 208810.36,
+      "held": 1,
+      "pnl": -300.0,
+      "dd_pct": 0.143,
+      "gross_pct": 47.99,
       "codes": [
-        "FG",
-        "JD"
+        "FG"
       ]
     },
     {
       "date": "2026-04-03",
-      "equity": 208677.85,
-      "held": 2,
-      "pnl": 900.0,
-      "dd_pct": 0.786,
-      "gross_pct": 49.7,
+      "equity": 211081.79,
+      "held": 1,
+      "pnl": 2271.43,
+      "dd_pct": 0.0,
+      "gross_pct": 15.94,
       "codes": [
-        "FG",
-        "JD"
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-04",
+      "equity": 211081.79,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 15.94,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-05",
+      "equity": 211081.79,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 15.94,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-06",
+      "equity": 211081.79,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 15.94,
+      "codes": [
+        "MA"
       ]
     },
     {
       "date": "2026-04-07",
-      "equity": 208477.85,
-      "held": 2,
-      "pnl": -200.0,
-      "dd_pct": 0.881,
-      "gross_pct": 49.35,
+      "equity": 212971.79,
+      "held": 1,
+      "pnl": 1890.0,
+      "dd_pct": 0.0,
+      "gross_pct": 16.68,
       "codes": [
-        "FG",
-        "JD"
+        "MA"
       ]
     },
     {
       "date": "2026-04-08",
-      "equity": 208437.85,
-      "held": 2,
-      "pnl": -40.0,
-      "dd_pct": 0.9,
-      "gross_pct": 49.68,
+      "equity": 209484.64,
+      "held": 1,
+      "pnl": -3487.14,
+      "dd_pct": 1.637,
+      "gross_pct": 46.69,
       "codes": [
-        "FG",
-        "JD"
+        "FG"
       ]
     },
     {
       "date": "2026-04-09",
-      "equity": 208677.85,
-      "held": 2,
-      "pnl": 240.0,
-      "dd_pct": 0.786,
-      "gross_pct": 49.44,
+      "equity": 210284.64,
+      "held": 1,
+      "pnl": 800.0,
+      "dd_pct": 1.262,
+      "gross_pct": 46.13,
       "codes": [
-        "FG",
-        "JD"
+        "FG"
       ]
     },
     {
       "date": "2026-04-10",
-      "equity": 209177.85,
+      "equity": 210984.64,
       "held": 2,
-      "pnl": 500.0,
-      "dd_pct": 0.548,
-      "gross_pct": 49.29,
+      "pnl": 700.0,
+      "dd_pct": 0.933,
+      "gross_pct": 82.86,
       "codes": [
-        "FG",
-        "JD"
+        "CF",
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-04-11",
+      "equity": 210984.64,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.933,
+      "gross_pct": 82.86,
+      "codes": [
+        "CF",
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-04-12",
+      "equity": 210984.64,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.933,
+      "gross_pct": 82.86,
+      "codes": [
+        "CF",
+        "FG"
       ]
     },
     {
       "date": "2026-04-13",
-      "equity": 210297.85,
-      "held": 2,
-      "pnl": 1120.0,
-      "dd_pct": 0.015,
-      "gross_pct": 49.33,
+      "equity": 210884.64,
+      "held": 1,
+      "pnl": -100.0,
+      "dd_pct": 0.98,
+      "gross_pct": 45.38,
       "codes": [
-        "FG",
-        "JD"
+        "FG"
       ]
     },
     {
       "date": "2026-04-14",
-      "equity": 209397.85,
-      "held": 2,
-      "pnl": -900.0,
-      "dd_pct": 0.443,
-      "gross_pct": 49.34,
+      "equity": 210284.64,
+      "held": 1,
+      "pnl": -600.0,
+      "dd_pct": 1.262,
+      "gross_pct": 45.8,
       "codes": [
-        "FG",
-        "JD"
+        "FG"
       ]
     },
     {
       "date": "2026-04-15",
-      "equity": 209937.85,
-      "held": 2,
-      "pnl": 540.0,
-      "dd_pct": 0.187,
-      "gross_pct": 49.78,
+      "equity": 209484.64,
+      "held": 1,
+      "pnl": -800.0,
+      "dd_pct": 1.637,
+      "gross_pct": 46.35,
       "codes": [
-        "FG",
-        "JD"
+        "FG"
       ]
     },
     {
       "date": "2026-04-16",
-      "equity": 207491.28,
-      "held": 2,
-      "pnl": -2446.57,
-      "dd_pct": 1.35,
-      "gross_pct": 44.04,
+      "equity": 210984.64,
+      "held": 1,
+      "pnl": 1500.0,
+      "dd_pct": 0.933,
+      "gross_pct": 45.31,
       "codes": [
-        "JD",
-        "V"
+        "FG"
       ]
     },
     {
       "date": "2026-04-17",
-      "equity": 208312.14,
-      "held": 2,
-      "pnl": 820.85,
-      "dd_pct": 0.96,
-      "gross_pct": 44.49,
+      "equity": 207234.64,
+      "held": 1,
+      "pnl": -3750.0,
+      "dd_pct": 2.694,
+      "gross_pct": 38.45,
       "codes": [
-        "JD",
-        "V"
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-04-18",
+      "equity": 207234.64,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.694,
+      "gross_pct": 38.45,
+      "codes": [
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-04-19",
+      "equity": 207234.64,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.694,
+      "gross_pct": 38.45,
+      "codes": [
+        "CF"
       ]
     },
     {
       "date": "2026-04-20",
-      "equity": 207482.14,
-      "held": 2,
-      "pnl": -830.0,
-      "dd_pct": 1.354,
-      "gross_pct": 44.27,
+      "equity": 206411.43,
+      "held": 1,
+      "pnl": -823.21,
+      "dd_pct": 3.08,
+      "gross_pct": 12.08,
       "codes": [
-        "JD",
-        "V"
+        "SA"
       ]
     },
     {
       "date": "2026-04-21",
-      "equity": 207657.14,
+      "equity": 206411.43,
       "held": 2,
-      "pnl": 175.0,
-      "dd_pct": 1.271,
-      "gross_pct": 44.32,
+      "pnl": 0.0,
+      "dd_pct": 3.08,
+      "gross_pct": 50.8,
       "codes": [
-        "JD",
-        "V"
+        "CF",
+        "SA"
       ]
     },
     {
       "date": "2026-04-22",
-      "equity": 208977.14,
+      "equity": 208648.57,
       "held": 2,
-      "pnl": 1320.0,
-      "dd_pct": 0.643,
-      "gross_pct": 44.67,
+      "pnl": 2237.14,
+      "dd_pct": 2.03,
+      "gross_pct": 41.14,
       "codes": [
-        "JD",
-        "V"
+        "M",
+        "SA"
       ]
     },
     {
       "date": "2026-04-23",
-      "equity": 208612.14,
+      "equity": 207765.71,
       "held": 2,
-      "pnl": -365.0,
-      "dd_pct": 0.817,
-      "gross_pct": 44.57,
+      "pnl": -882.86,
+      "dd_pct": 2.444,
+      "gross_pct": 51.26,
       "codes": [
-        "JD",
-        "V"
+        "CF",
+        "SA"
       ]
     },
     {
       "date": "2026-04-24",
-      "equity": 208162.14,
-      "held": 1,
-      "pnl": -450.0,
-      "dd_pct": 1.031,
-      "gross_pct": 32.08,
+      "equity": 207175.71,
+      "held": 2,
+      "pnl": -590.0,
+      "dd_pct": 2.722,
+      "gross_pct": 51.12,
       "codes": [
-        "JD"
+        "CF",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-04-25",
+      "equity": 207175.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.722,
+      "gross_pct": 51.12,
+      "codes": [
+        "CF",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-04-26",
+      "equity": 207175.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.722,
+      "gross_pct": 51.12,
+      "codes": [
+        "CF",
+        "SA"
       ]
     },
     {
       "date": "2026-04-27",
-      "equity": 208472.14,
+      "equity": 208540.71,
       "held": 2,
-      "pnl": 310.0,
-      "dd_pct": 0.884,
-      "gross_pct": 63.11,
+      "pnl": 1365.0,
+      "dd_pct": 2.081,
+      "gross_pct": 51.44,
       "codes": [
-        "FG",
-        "JD"
+        "CF",
+        "SA"
       ]
     },
     {
       "date": "2026-04-28",
-      "equity": 210432.14,
+      "equity": 207910.71,
       "held": 2,
-      "pnl": 1960.0,
-      "dd_pct": 0.0,
-      "gross_pct": 61.68,
+      "pnl": -630.0,
+      "dd_pct": 2.376,
+      "gross_pct": 52.37,
       "codes": [
-        "FG",
-        "JD"
+        "CF",
+        "V"
       ]
     },
     {
       "date": "2026-04-29",
-      "equity": 211472.14,
+      "equity": 207281.43,
       "held": 2,
-      "pnl": 1040.0,
-      "dd_pct": 0.0,
-      "gross_pct": 61.53,
+      "pnl": -629.29,
+      "dd_pct": 2.672,
+      "gross_pct": 81.35,
       "codes": [
-        "FG",
-        "JD"
+        "CF",
+        "FU"
       ]
     },
     {
       "date": "2026-04-30",
-      "equity": 210152.14,
+      "equity": 207281.43,
       "held": 2,
-      "pnl": -1320.0,
-      "dd_pct": 0.624,
-      "gross_pct": 62.49,
+      "pnl": 0.0,
+      "dd_pct": 2.672,
+      "gross_pct": 0.0,
       "codes": [
-        "FG",
-        "JD"
+        "CF",
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "equity": 207281.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.672,
+      "gross_pct": 83.14,
+      "codes": [
+        "CF",
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-05-02",
+      "equity": 207281.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.672,
+      "gross_pct": 83.14,
+      "codes": [
+        "CF",
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-05-03",
+      "equity": 207281.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.672,
+      "gross_pct": 83.14,
+      "codes": [
+        "CF",
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-05-04",
+      "equity": 207281.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.672,
+      "gross_pct": 83.14,
+      "codes": [
+        "CF",
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-05-05",
+      "equity": 207281.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.672,
+      "gross_pct": 83.14,
+      "codes": [
+        "CF",
+        "FU"
       ]
     },
     {
       "date": "2026-05-06",
-      "equity": 211238.58,
-      "held": 2,
-      "pnl": 1086.44,
-      "dd_pct": 0.11,
-      "gross_pct": 58.78,
+      "equity": 208356.43,
+      "held": 1,
+      "pnl": 1075.0,
+      "dd_pct": 2.167,
+      "gross_pct": 43.13,
       "codes": [
-        "FG",
-        "M"
+        "FU"
       ]
     },
     {
       "date": "2026-05-07",
-      "equity": 210198.58,
+      "equity": 204476.43,
       "held": 2,
-      "pnl": -1040.0,
-      "dd_pct": 0.602,
-      "gross_pct": 59.2,
+      "pnl": -3880.0,
+      "dd_pct": 3.989,
+      "gross_pct": 90.07,
       "codes": [
-        "FG",
-        "M"
+        "FU",
+        "RB"
       ]
     },
     {
       "date": "2026-05-08",
-      "equity": 211878.58,
+      "equity": 202716.43,
       "held": 2,
-      "pnl": 1680.0,
-      "dd_pct": 0.0,
-      "gross_pct": 58.22,
+      "pnl": -1760.0,
+      "dd_pct": 4.815,
+      "gross_pct": 90.65,
       "codes": [
-        "FG",
-        "M"
+        "BU",
+        "RB"
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "equity": 202716.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 4.815,
+      "gross_pct": 90.65,
+      "codes": [
+        "BU",
+        "RB"
+      ]
+    },
+    {
+      "date": "2026-05-10",
+      "equity": 202716.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 4.815,
+      "gross_pct": 90.65,
+      "codes": [
+        "BU",
+        "RB"
       ]
     },
     {
       "date": "2026-05-11",
-      "equity": 211698.58,
+      "equity": 204566.43,
       "held": 2,
-      "pnl": -180.0,
-      "dd_pct": 0.085,
-      "gross_pct": 59.04,
+      "pnl": 1850.0,
+      "dd_pct": 3.947,
+      "gross_pct": 90.74,
       "codes": [
-        "FG",
-        "M"
+        "BU",
+        "RB"
       ]
     },
     {
       "date": "2026-05-12",
-      "equity": 212418.58,
+      "equity": 205002.14,
       "held": 2,
-      "pnl": 720.0,
-      "dd_pct": 0.0,
-      "gross_pct": 58.38,
+      "pnl": 435.71,
+      "dd_pct": 3.742,
+      "gross_pct": 39.71,
       "codes": [
-        "FG",
-        "M"
+        "BU",
+        "JD"
       ]
     },
     {
       "date": "2026-05-13",
-      "equity": 212476.06,
+      "equity": 204018.57,
       "held": 2,
-      "pnl": 57.48,
-      "dd_pct": 0.0,
-      "gross_pct": 50.42,
+      "pnl": -983.57,
+      "dd_pct": 4.204,
+      "gross_pct": 39.22,
       "codes": [
-        "FG",
+        "BU",
         "JD"
       ]
     },
     {
       "date": "2026-05-14",
-      "equity": 213355.09,
+      "equity": 204348.57,
       "held": 2,
-      "pnl": 879.03,
-      "dd_pct": 0.0,
-      "gross_pct": 40.84,
+      "pnl": 330.0,
+      "dd_pct": 4.049,
+      "gross_pct": 39.32,
       "codes": [
         "BU",
         "JD"
@@ -1807,87 +2372,131 @@
     },
     {
       "date": "2026-05-15",
-      "equity": 213875.09,
+      "equity": 205384.29,
       "held": 2,
-      "pnl": 520.0,
-      "dd_pct": 0.0,
-      "gross_pct": 40.98,
+      "pnl": 1035.71,
+      "dd_pct": 3.563,
+      "gross_pct": 40.1,
       "codes": [
         "BU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "equity": 205384.29,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 3.563,
+      "gross_pct": 38.63,
+      "codes": [
+        "FG",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-17",
+      "equity": 205384.29,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 3.563,
+      "gross_pct": 38.63,
+      "codes": [
+        "FG",
         "JD"
       ]
     },
     {
       "date": "2026-05-18",
-      "equity": 214945.09,
+      "equity": 204797.86,
       "held": 2,
-      "pnl": 1070.0,
-      "dd_pct": 0.0,
-      "gross_pct": 41.28,
+      "pnl": -586.43,
+      "dd_pct": 3.838,
+      "gross_pct": 38.97,
       "codes": [
-        "BU",
+        "FG",
         "JD"
       ]
     },
     {
       "date": "2026-05-19",
-      "equity": 212662.98,
-      "held": 3,
-      "pnl": -2282.11,
-      "dd_pct": 1.062,
-      "gross_pct": 62.67,
+      "equity": 205097.86,
+      "held": 2,
+      "pnl": 300.0,
+      "dd_pct": 3.697,
+      "gross_pct": 38.4,
       "codes": [
-        "JD",
-        "RB",
-        "V"
+        "FG",
+        "JD"
       ]
     },
     {
       "date": "2026-05-20",
-      "equity": 213747.98,
-      "held": 3,
-      "pnl": 1085.0,
-      "dd_pct": 0.557,
-      "gross_pct": 62.38,
+      "equity": 206937.86,
+      "held": 2,
+      "pnl": 1840.0,
+      "dd_pct": 2.833,
+      "gross_pct": 66.81,
       "codes": [
         "JD",
-        "RB",
         "V"
       ]
     },
     {
       "date": "2026-05-21",
-      "equity": 213897.98,
-      "held": 3,
-      "pnl": 150.0,
-      "dd_pct": 0.487,
-      "gross_pct": 62.02,
+      "equity": 208812.14,
+      "held": 2,
+      "pnl": 1874.29,
+      "dd_pct": 1.953,
+      "gross_pct": 65.54,
       "codes": [
         "JD",
-        "RB",
         "V"
       ]
     },
     {
       "date": "2026-05-22",
-      "equity": 213894.02,
-      "held": 3,
-      "pnl": -3.96,
-      "dd_pct": 0.489,
-      "gross_pct": 62.01,
+      "equity": 209842.14,
+      "held": 2,
+      "pnl": 1030.0,
+      "dd_pct": 1.47,
+      "gross_pct": 65.34,
       "codes": [
         "JD",
-        "RB",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-05-23",
+      "equity": 209842.14,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.47,
+      "gross_pct": 65.34,
+      "codes": [
+        "JD",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "equity": 209842.14,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.47,
+      "gross_pct": 65.34,
+      "codes": [
+        "JD",
         "V"
       ]
     },
     {
       "date": "2026-05-25",
-      "equity": 213868.91,
+      "equity": 207092.14,
       "held": 2,
-      "pnl": -25.12,
-      "dd_pct": 0.501,
-      "gross_pct": 32.18,
+      "pnl": -2750.0,
+      "dd_pct": 2.761,
+      "gross_pct": 66.26,
       "codes": [
         "JD",
         "V"
@@ -1895,11 +2504,11 @@
     },
     {
       "date": "2026-05-26",
-      "equity": 215288.91,
+      "equity": 209252.14,
       "held": 2,
-      "pnl": 1420.0,
-      "dd_pct": 0.0,
-      "gross_pct": 32.35,
+      "pnl": 2160.0,
+      "dd_pct": 1.747,
+      "gross_pct": 65.46,
       "codes": [
         "JD",
         "V"
@@ -1907,11 +2516,11 @@
     },
     {
       "date": "2026-05-27",
-      "equity": 215138.48,
+      "equity": 209432.14,
       "held": 2,
-      "pnl": -150.42,
-      "dd_pct": 0.07,
-      "gross_pct": 32.98,
+      "pnl": 180.0,
+      "dd_pct": 1.662,
+      "gross_pct": 66.22,
       "codes": [
         "JD",
         "V"
@@ -1919,650 +2528,891 @@
     },
     {
       "date": "2026-05-28",
-      "equity": 213385.35,
+      "equity": 207782.14,
       "held": 2,
-      "pnl": -1753.13,
-      "dd_pct": 0.884,
-      "gross_pct": 41.05,
+      "pnl": -1650.0,
+      "dd_pct": 2.437,
+      "gross_pct": 67.22,
       "codes": [
-        "RB",
+        "JD",
         "V"
       ]
     },
     {
       "date": "2026-05-29",
-      "equity": 213629.69,
-      "held": 3,
-      "pnl": 244.33,
-      "dd_pct": 0.771,
-      "gross_pct": 85.19,
+      "equity": 209172.14,
+      "held": 2,
+      "pnl": 1390.0,
+      "dd_pct": 1.784,
+      "gross_pct": 67.15,
       "codes": [
         "JD",
-        "RB",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-05-30",
+      "equity": 209172.14,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.784,
+      "gross_pct": 67.15,
+      "codes": [
+        "JD",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-05-31",
+      "equity": 209172.14,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.784,
+      "gross_pct": 67.15,
+      "codes": [
+        "JD",
         "V"
       ]
     },
     {
       "date": "2026-06-01",
-      "equity": 216885.41,
-      "held": 3,
-      "pnl": 3255.72,
-      "dd_pct": 0.0,
-      "gross_pct": 85.81,
+      "equity": 208635.0,
+      "held": 2,
+      "pnl": -537.14,
+      "dd_pct": 2.036,
+      "gross_pct": 68.91,
       "codes": [
         "JD",
-        "RB",
         "V"
       ]
     },
     {
       "date": "2026-06-02",
-      "equity": 214414.71,
-      "held": 3,
-      "pnl": -2470.7,
-      "dd_pct": 1.139,
-      "gross_pct": 85.71,
+      "equity": 209625.0,
+      "held": 2,
+      "pnl": 990.0,
+      "dd_pct": 1.571,
+      "gross_pct": 68.24,
       "codes": [
         "JD",
-        "RB",
         "V"
       ]
     },
     {
       "date": "2026-06-03",
-      "equity": 213349.71,
-      "held": 3,
-      "pnl": -1065.0,
-      "dd_pct": 1.63,
-      "gross_pct": 85.6,
+      "equity": 209735.0,
+      "held": 2,
+      "pnl": 110.0,
+      "dd_pct": 1.52,
+      "gross_pct": 68.12,
       "codes": [
         "JD",
-        "RB",
         "V"
       ]
     },
     {
       "date": "2026-06-04",
-      "equity": 212789.71,
-      "held": 3,
-      "pnl": -560.0,
-      "dd_pct": 1.888,
-      "gross_pct": 84.98,
+      "equity": 211835.0,
+      "held": 2,
+      "pnl": 2100.0,
+      "dd_pct": 0.534,
+      "gross_pct": 66.09,
       "codes": [
         "JD",
-        "RB",
         "V"
       ]
     },
     {
       "date": "2026-06-05",
-      "equity": 212165.1,
-      "held": 3,
-      "pnl": -624.61,
-      "dd_pct": 2.176,
-      "gross_pct": 85.37,
+      "equity": 212245.71,
+      "held": 2,
+      "pnl": 410.71,
+      "dd_pct": 0.341,
+      "gross_pct": 38.49,
       "codes": [
-        "JD",
-        "RB",
-        "V"
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-06",
+      "equity": 212245.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.341,
+      "gross_pct": 38.49,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-07",
+      "equity": 212245.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.341,
+      "gross_pct": 38.49,
+      "codes": [
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-06-08",
-      "equity": 210858.25,
-      "held": 3,
-      "pnl": -1306.86,
-      "dd_pct": 2.779,
-      "gross_pct": 94.95,
+      "equity": 210272.14,
+      "held": 2,
+      "pnl": -1973.57,
+      "dd_pct": 1.268,
+      "gross_pct": 41.36,
       "codes": [
         "EB",
-        "JD",
-        "RB"
+        "JD"
       ]
     },
     {
       "date": "2026-06-09",
-      "equity": 215393.25,
-      "held": 3,
-      "pnl": 4535.0,
-      "dd_pct": 0.688,
-      "gross_pct": 93.37,
+      "equity": 212914.29,
+      "held": 2,
+      "pnl": 2642.14,
+      "dd_pct": 0.027,
+      "gross_pct": 60.32,
       "codes": [
         "EB",
-        "JD",
-        "RB"
+        "JD"
       ]
     },
     {
       "date": "2026-06-10",
-      "equity": 215563.25,
-      "held": 3,
-      "pnl": 170.0,
-      "dd_pct": 0.61,
-      "gross_pct": 93.22,
+      "equity": 213024.29,
+      "held": 2,
+      "pnl": 110.0,
+      "dd_pct": 0.0,
+      "gross_pct": 60.03,
       "codes": [
         "EB",
-        "JD",
-        "RB"
+        "JD"
       ]
     },
     {
       "date": "2026-06-11",
-      "equity": 212813.25,
-      "held": 3,
-      "pnl": -2750.0,
-      "dd_pct": 1.878,
-      "gross_pct": 93.85,
+      "equity": 210864.29,
+      "held": 2,
+      "pnl": -2160.0,
+      "dd_pct": 1.014,
+      "gross_pct": 61.08,
       "codes": [
         "EB",
-        "JD",
-        "RB"
+        "JD"
       ]
     },
     {
       "date": "2026-06-12",
-      "equity": 214328.25,
-      "held": 3,
-      "pnl": 1515.0,
-      "dd_pct": 1.179,
-      "gross_pct": 93.21,
+      "equity": 212364.29,
+      "held": 2,
+      "pnl": 1500.0,
+      "dd_pct": 0.31,
+      "gross_pct": 59.97,
       "codes": [
         "EB",
-        "JD",
-        "RB"
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-13",
+      "equity": 212364.29,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.31,
+      "gross_pct": 59.97,
+      "codes": [
+        "EB",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-14",
+      "equity": 212364.29,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.31,
+      "gross_pct": 59.97,
+      "codes": [
+        "EB",
+        "JD"
       ]
     },
     {
       "date": "2026-06-15",
-      "equity": 215446.82,
-      "held": 3,
-      "pnl": 1118.57,
-      "dd_pct": 0.663,
-      "gross_pct": 116.85,
+      "equity": 217961.43,
+      "held": 2,
+      "pnl": 5597.14,
+      "dd_pct": 0.0,
+      "gross_pct": 37.07,
       "codes": [
-        "JD",
-        "RB",
-        "V"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-06-16",
-      "equity": 216006.82,
-      "held": 3,
-      "pnl": 560.0,
-      "dd_pct": 0.405,
-      "gross_pct": 115.79,
+      "equity": 218321.43,
+      "held": 2,
+      "pnl": 360.0,
+      "dd_pct": 0.0,
+      "gross_pct": 36.76,
       "codes": [
-        "JD",
-        "RB",
-        "V"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-06-17",
-      "equity": 215615.27,
+      "equity": 219561.43,
       "held": 2,
-      "pnl": -391.55,
-      "dd_pct": 0.586,
-      "gross_pct": 86.23,
+      "pnl": 1240.0,
+      "dd_pct": 0.0,
+      "gross_pct": 35.78,
       "codes": [
-        "JD",
-        "V"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-06-18",
-      "equity": 213121.33,
+      "equity": 219516.43,
       "held": 2,
-      "pnl": -2493.94,
-      "dd_pct": 1.736,
-      "gross_pct": 64.5,
+      "pnl": -45.0,
+      "dd_pct": 0.02,
+      "gross_pct": 34.63,
       "codes": [
-        "JD",
-        "V"
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-19",
+      "equity": 219516.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.02,
+      "gross_pct": 34.63,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-20",
+      "equity": 219516.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.02,
+      "gross_pct": 34.63,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-21",
+      "equity": 219516.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.02,
+      "gross_pct": 34.63,
+      "codes": [
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-06-22",
-      "equity": 213272.5,
-      "held": 2,
-      "pnl": 151.17,
-      "dd_pct": 1.666,
-      "gross_pct": 62.9,
+      "equity": 218405.71,
+      "held": 1,
+      "pnl": -1110.71,
+      "dd_pct": 0.526,
+      "gross_pct": 14.2,
       "codes": [
-        "JD",
-        "V"
+        "FU"
       ]
     },
     {
       "date": "2026-06-23",
-      "equity": 213735.17,
-      "held": 2,
-      "pnl": 462.68,
-      "dd_pct": 1.452,
-      "gross_pct": 32.15,
+      "equity": 219525.71,
+      "held": 1,
+      "pnl": 1120.0,
+      "dd_pct": 0.016,
+      "gross_pct": 13.62,
       "codes": [
-        "JD",
-        "MA"
+        "FU"
       ]
     },
     {
       "date": "2026-06-24",
-      "equity": 214755.17,
-      "held": 2,
-      "pnl": 1020.0,
-      "dd_pct": 0.982,
-      "gross_pct": 32.15,
+      "equity": 219085.71,
+      "held": 1,
+      "pnl": -440.0,
+      "dd_pct": 0.217,
+      "gross_pct": 13.84,
       "codes": [
-        "JD",
-        "MA"
+        "FU"
       ]
     },
     {
       "date": "2026-06-25",
-      "equity": 214475.17,
-      "held": 2,
-      "pnl": -280.0,
-      "dd_pct": 1.111,
-      "gross_pct": 31.78,
+      "equity": 220195.71,
+      "held": 1,
+      "pnl": 1110.0,
+      "dd_pct": 0.0,
+      "gross_pct": 13.27,
       "codes": [
-        "JD",
-        "MA"
+        "FU"
       ]
     },
     {
       "date": "2026-06-26",
-      "equity": 213825.17,
-      "held": 2,
-      "pnl": -650.0,
-      "dd_pct": 1.411,
-      "gross_pct": 31.59,
+      "equity": 219665.71,
+      "held": 1,
+      "pnl": -530.0,
+      "dd_pct": 0.241,
+      "gross_pct": 13.54,
       "codes": [
-        "JD",
-        "MA"
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-06-27",
+      "equity": 219665.71,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.241,
+      "gross_pct": 13.54,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-06-28",
+      "equity": 219665.71,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.241,
+      "gross_pct": 13.54,
+      "codes": [
+        "FU"
       ]
     },
     {
       "date": "2026-06-29",
-      "equity": 214495.17,
-      "held": 2,
-      "pnl": 670.0,
-      "dd_pct": 1.102,
-      "gross_pct": 32.08,
+      "equity": 219615.71,
+      "held": 1,
+      "pnl": -50.0,
+      "dd_pct": 0.263,
+      "gross_pct": 13.57,
       "codes": [
-        "JD",
-        "MA"
+        "FU"
       ]
     },
     {
       "date": "2026-06-30",
-      "equity": 215455.17,
+      "equity": 219855.71,
       "held": 2,
-      "pnl": 960.0,
-      "dd_pct": 0.659,
-      "gross_pct": 32.09,
+      "pnl": 240.0,
+      "dd_pct": 0.154,
+      "gross_pct": 33.84,
       "codes": [
-        "JD",
-        "MA"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-07-01",
-      "equity": 216065.17,
+      "equity": 220155.71,
       "held": 2,
-      "pnl": 610.0,
-      "dd_pct": 0.378,
-      "gross_pct": 31.56,
+      "pnl": 300.0,
+      "dd_pct": 0.018,
+      "gross_pct": 33.51,
       "codes": [
-        "JD",
-        "MA"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-07-02",
-      "equity": 216802.14,
+      "equity": 221215.71,
       "held": 2,
-      "pnl": 736.96,
-      "dd_pct": 0.038,
-      "gross_pct": 31.69,
+      "pnl": 1060.0,
+      "dd_pct": 0.0,
+      "gross_pct": 33.37,
       "codes": [
-        "JD",
-        "MA"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-07-03",
-      "equity": 216812.14,
+      "equity": 220835.71,
       "held": 2,
-      "pnl": 10.0,
-      "dd_pct": 0.034,
-      "gross_pct": 31.97,
+      "pnl": -380.0,
+      "dd_pct": 0.172,
+      "gross_pct": 33.88,
       "codes": [
-        "JD",
-        "MA"
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-07-04",
+      "equity": 220835.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.172,
+      "gross_pct": 33.88,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-07-05",
+      "equity": 220835.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.172,
+      "gross_pct": 40.99,
+      "codes": [
+        "FU",
+        "RB"
       ]
     },
     {
       "date": "2026-07-06",
-      "equity": 218472.14,
+      "equity": 220294.29,
       "held": 2,
-      "pnl": 1660.0,
-      "dd_pct": 0.0,
-      "gross_pct": 32.36,
+      "pnl": -541.43,
+      "dd_pct": 0.417,
+      "gross_pct": 41.29,
       "codes": [
-        "JD",
-        "MA"
+        "FU",
+        "RB"
       ]
     },
     {
       "date": "2026-07-07",
-      "equity": 218085.36,
+      "equity": 220434.29,
       "held": 2,
-      "pnl": -386.77,
-      "dd_pct": 0.177,
-      "gross_pct": 32.66,
+      "pnl": 140.0,
+      "dd_pct": 0.353,
+      "gross_pct": 41.2,
       "codes": [
-        "JD",
-        "MA"
+        "FU",
+        "RB"
       ]
     },
     {
       "date": "2026-07-08",
-      "equity": 217205.36,
+      "equity": 218438.57,
       "held": 2,
-      "pnl": -880.0,
-      "dd_pct": 0.58,
-      "gross_pct": 33.16,
+      "pnl": -1995.71,
+      "dd_pct": 1.255,
+      "gross_pct": 41.36,
       "codes": [
         "JD",
-        "MA"
+        "SA"
       ]
     },
     {
       "date": "2026-07-09",
-      "equity": 216655.36,
+      "equity": 217810.71,
       "held": 2,
-      "pnl": -550.0,
-      "dd_pct": 0.832,
-      "gross_pct": 32.99,
+      "pnl": -627.86,
+      "dd_pct": 1.539,
+      "gross_pct": 41.19,
       "codes": [
         "JD",
-        "MA"
+        "SA"
       ]
     },
     {
       "date": "2026-07-10",
-      "equity": 215919.61,
+      "equity": 218780.71,
       "held": 2,
-      "pnl": -735.75,
-      "dd_pct": 1.168,
-      "gross_pct": 32.97,
+      "pnl": 970.0,
+      "dd_pct": 1.101,
+      "gross_pct": 41.67,
       "codes": [
         "JD",
-        "MA"
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-11",
+      "equity": 218780.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.101,
+      "gross_pct": 41.67,
+      "codes": [
+        "JD",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-12",
+      "equity": 218780.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.101,
+      "gross_pct": 41.67,
+      "codes": [
+        "JD",
+        "SA"
       ]
     },
     {
       "date": "2026-07-13",
-      "equity": 214257.2,
+      "equity": 218660.71,
       "held": 2,
-      "pnl": -1662.41,
-      "dd_pct": 1.929,
-      "gross_pct": 32.88,
+      "pnl": -120.0,
+      "dd_pct": 1.155,
+      "gross_pct": 40.87,
       "codes": [
         "JD",
-        "MA"
+        "SA"
       ]
     },
     {
       "date": "2026-07-14",
-      "equity": 211737.22,
+      "equity": 217870.71,
       "held": 2,
-      "pnl": -2519.98,
-      "dd_pct": 3.083,
-      "gross_pct": 39.24,
+      "pnl": -790.0,
+      "dd_pct": 1.512,
+      "gross_pct": 40.69,
       "codes": [
-        "RB",
+        "JD",
         "SA"
       ]
     },
     {
       "date": "2026-07-15",
-      "equity": 211497.22,
-      "held": 2,
-      "pnl": -240.0,
-      "dd_pct": 3.193,
-      "gross_pct": 39.4,
+      "equity": 218131.43,
+      "held": 1,
+      "pnl": 260.71,
+      "dd_pct": 1.394,
+      "gross_pct": 48.18,
       "codes": [
-        "RB",
         "SA"
       ]
     },
     {
       "date": "2026-07-16",
-      "equity": 211837.22,
-      "held": 2,
-      "pnl": 340.0,
-      "dd_pct": 3.037,
-      "gross_pct": 39.17,
+      "equity": 219831.43,
+      "held": 1,
+      "pnl": 1700.0,
+      "dd_pct": 0.626,
+      "gross_pct": 47.04,
       "codes": [
-        "RB",
         "SA"
       ]
     },
     {
       "date": "2026-07-17",
-      "equity": 211667.96,
-      "held": 2,
-      "pnl": -169.25,
-      "dd_pct": 3.114,
-      "gross_pct": 38.92,
+      "equity": 220960.0,
+      "held": 1,
+      "pnl": 1128.57,
+      "dd_pct": 0.116,
+      "gross_pct": 45.57,
       "codes": [
-        "RB",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-18",
+      "equity": 220960.0,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.116,
+      "gross_pct": 45.57,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-19",
+      "equity": 220960.0,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.116,
+      "gross_pct": 45.57,
+      "codes": [
         "SA"
       ]
     },
     {
       "date": "2026-07-20",
-      "equity": 212007.96,
-      "held": 2,
-      "pnl": 340.0,
-      "dd_pct": 2.959,
-      "gross_pct": 38.7,
+      "equity": 221060.0,
+      "held": 1,
+      "pnl": 100.0,
+      "dd_pct": 0.07,
+      "gross_pct": 45.51,
       "codes": [
-        "RB",
         "SA"
       ]
     },
     {
       "date": "2026-07-21",
-      "equity": 211967.96,
+      "equity": 220760.0,
       "held": 2,
-      "pnl": -40.0,
-      "dd_pct": 2.977,
-      "gross_pct": 38.72,
+      "pnl": -300.0,
+      "dd_pct": 0.206,
+      "gross_pct": 74.23,
       "codes": [
-        "RB",
+        "M",
         "SA"
       ]
     },
     {
       "date": "2026-07-22",
-      "equity": 212127.96,
+      "equity": 220320.0,
       "held": 2,
-      "pnl": 160.0,
-      "dd_pct": 2.904,
-      "gross_pct": 38.62,
+      "pnl": -440.0,
+      "dd_pct": 0.405,
+      "gross_pct": 74.54,
       "codes": [
-        "RB",
+        "M",
         "SA"
       ]
     },
     {
       "date": "2026-07-23",
-      "equity": 212207.96,
+      "equity": 222028.57,
       "held": 2,
-      "pnl": 80.0,
-      "dd_pct": 2.867,
-      "gross_pct": 38.57,
+      "pnl": 1708.57,
+      "dd_pct": 0.0,
+      "gross_pct": 73.95,
       "codes": [
-        "RB",
+        "M",
         "SA"
       ]
     },
     {
       "date": "2026-07-24",
-      "equity": 212503.73,
+      "equity": 223328.57,
       "held": 2,
-      "pnl": 295.76,
-      "dd_pct": 2.732,
-      "gross_pct": 52.87,
+      "pnl": 1300.0,
+      "dd_pct": 0.0,
+      "gross_pct": 73.84,
       "codes": [
-        "RB",
+        "M",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-25",
+      "equity": 223328.57,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 73.84,
+      "codes": [
+        "M",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-26",
+      "equity": 223328.57,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 73.84,
+      "codes": [
+        "M",
         "SA"
       ]
     },
     {
       "date": "2026-07-27",
-      "equity": 212623.73,
+      "equity": 223008.57,
       "held": 2,
-      "pnl": 120.0,
-      "dd_pct": 2.677,
-      "gross_pct": 52.79,
+      "pnl": -320.0,
+      "dd_pct": 0.143,
+      "gross_pct": 72.99,
+      "codes": [
+        "M",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-28",
+      "equity": 224492.86,
+      "held": 1,
+      "pnl": 1484.29,
+      "dd_pct": 0.0,
+      "gross_pct": 43.3,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-29",
+      "equity": 225692.86,
+      "held": 1,
+      "pnl": 1200.0,
+      "dd_pct": 0.0,
+      "gross_pct": 42.54,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-30",
+      "equity": 227535.71,
+      "held": 2,
+      "pnl": 1842.86,
+      "dd_pct": 0.0,
+      "gross_pct": 30.66,
+      "codes": [
+        "SA",
+        "SR"
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "equity": 228075.71,
+      "held": 2,
+      "pnl": 540.0,
+      "dd_pct": 0.0,
+      "gross_pct": 30.35,
+      "codes": [
+        "SA",
+        "SR"
+      ]
+    },
+    {
+      "date": "2026-08-01",
+      "equity": 228075.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 30.35,
+      "codes": [
+        "SA",
+        "SR"
+      ]
+    },
+    {
+      "date": "2026-08-02",
+      "equity": 228075.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 30.35,
+      "codes": [
+        "SA",
+        "SR"
+      ]
+    },
+    {
+      "date": "2026-08-03",
+      "equity": 228355.71,
+      "held": 2,
+      "pnl": 280.0,
+      "dd_pct": 0.0,
+      "gross_pct": 30.19,
+      "codes": [
+        "SA",
+        "SR"
+      ]
+    },
+    {
+      "date": "2026-08-04",
+      "equity": 228182.86,
+      "held": 2,
+      "pnl": -172.86,
+      "dd_pct": 0.076,
+      "gross_pct": 46.53,
+      "codes": [
+        "SA",
+        "SR"
+      ]
+    },
+    {
+      "date": "2026-08-05",
+      "equity": 227041.43,
+      "held": 2,
+      "pnl": -1141.43,
+      "dd_pct": 0.576,
+      "gross_pct": 47.26,
+      "codes": [
+        "SA",
+        "SR"
+      ]
+    },
+    {
+      "date": "2026-08-06",
+      "equity": 226925.71,
+      "held": 1,
+      "pnl": -115.71,
+      "dd_pct": 0.626,
+      "gross_pct": 24.77,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-07",
+      "equity": 226805.71,
+      "held": 1,
+      "pnl": -120.0,
+      "dd_pct": 0.679,
+      "gross_pct": 24.84,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-08",
+      "equity": 226805.71,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.679,
+      "gross_pct": 24.84,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-09",
+      "equity": 226805.71,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.679,
+      "gross_pct": 24.84,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-10",
+      "equity": 226055.71,
+      "held": 2,
+      "pnl": -750.0,
+      "dd_pct": 1.007,
+      "gross_pct": 35.06,
       "codes": [
         "RB",
         "SA"
       ]
     },
     {
-      "date": "2026-07-28",
-      "equity": 213579.17,
-      "held": 3,
-      "pnl": 955.44,
-      "dd_pct": 2.24,
-      "gross_pct": 84.2,
-      "codes": [
-        "M",
-        "MA",
-        "RB"
-      ]
-    },
-    {
-      "date": "2026-07-29",
-      "equity": 213199.17,
-      "held": 3,
-      "pnl": -380.0,
-      "dd_pct": 2.414,
-      "gross_pct": 84.68,
-      "codes": [
-        "M",
-        "MA",
-        "RB"
-      ]
-    },
-    {
-      "date": "2026-07-30",
-      "equity": 213401.05,
-      "held": 2,
-      "pnl": 201.88,
-      "dd_pct": 2.321,
-      "gross_pct": 41.26,
-      "codes": [
-        "M",
-        "MA"
-      ]
-    },
-    {
-      "date": "2026-07-31",
-      "equity": 213731.05,
-      "held": 2,
-      "pnl": 330.0,
-      "dd_pct": 2.17,
-      "gross_pct": 40.99,
-      "codes": [
-        "M",
-        "MA"
-      ]
-    },
-    {
-      "date": "2026-08-03",
-      "equity": 213412.05,
-      "held": 2,
-      "pnl": -319.0,
-      "dd_pct": 2.316,
-      "gross_pct": 35.85,
-      "codes": [
-        "MA",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-08-04",
-      "equity": 213202.05,
-      "held": 2,
-      "pnl": -210.0,
-      "dd_pct": 2.412,
-      "gross_pct": 35.98,
-      "codes": [
-        "MA",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-08-05",
-      "equity": 213603.55,
-      "held": 2,
-      "pnl": 401.5,
-      "dd_pct": 2.228,
-      "gross_pct": 29.93,
-      "codes": [
-        "JD",
-        "MA"
-      ]
-    },
-    {
-      "date": "2026-08-06",
-      "equity": 213223.55,
-      "held": 2,
-      "pnl": -380.0,
-      "dd_pct": 2.402,
-      "gross_pct": 30.16,
-      "codes": [
-        "JD",
-        "MA"
-      ]
-    },
-    {
-      "date": "2026-08-07",
-      "equity": 212903.55,
-      "held": 2,
-      "pnl": -320.0,
-      "dd_pct": 2.549,
-      "gross_pct": 30.36,
-      "codes": [
-        "JD",
-        "MA"
-      ]
-    },
-    {
-      "date": "2026-08-10",
-      "equity": 213183.55,
-      "held": 2,
-      "pnl": 280.0,
-      "dd_pct": 2.421,
-      "gross_pct": 30.19,
-      "codes": [
-        "JD",
-        "MA"
-      ]
-    },
-    {
       "date": "2026-08-11",
-      "equity": 213023.55,
+      "equity": 225314.29,
       "held": 2,
-      "pnl": -160.0,
-      "dd_pct": 2.494,
-      "gross_pct": 30.28,
+      "pnl": -741.43,
+      "dd_pct": 1.332,
+      "gross_pct": 40.24,
       "codes": [
         "JD",
         "MA"
@@ -2570,11 +3420,11 @@
     },
     {
       "date": "2026-08-12",
-      "equity": 212683.55,
+      "equity": 225074.29,
       "held": 2,
-      "pnl": -340.0,
-      "dd_pct": 2.65,
-      "gross_pct": 30.49,
+      "pnl": -240.0,
+      "dd_pct": 1.437,
+      "gross_pct": 40.39,
       "codes": [
         "JD",
         "MA"
@@ -2582,216 +3432,307 @@
     },
     {
       "date": "2026-08-13",
-      "equity": 211993.55,
-      "held": 2,
-      "pnl": -690.0,
-      "dd_pct": 2.965,
-      "gross_pct": 30.92,
+      "equity": 224322.86,
+      "held": 1,
+      "pnl": -751.43,
+      "dd_pct": 1.766,
+      "gross_pct": 23.5,
       "codes": [
-        "JD",
         "MA"
       ]
     },
     {
       "date": "2026-08-14",
-      "equity": 211093.55,
+      "equity": 223445.71,
+      "held": 1,
+      "pnl": -877.14,
+      "dd_pct": 2.15,
+      "gross_pct": 17.35,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-15",
+      "equity": 223445.71,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.15,
+      "gross_pct": 17.35,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-16",
+      "equity": 223445.71,
       "held": 2,
-      "pnl": -900.0,
-      "dd_pct": 3.377,
-      "gross_pct": 31.47,
+      "pnl": 0.0,
+      "dd_pct": 2.15,
+      "gross_pct": 35.06,
+      "codes": [
+        "JD",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-17",
+      "equity": 223605.71,
+      "held": 2,
+      "pnl": 160.0,
+      "dd_pct": 2.08,
+      "gross_pct": 35.66,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2026-08-18",
+      "equity": 224560.71,
+      "held": 2,
+      "pnl": 955.0,
+      "dd_pct": 1.662,
+      "gross_pct": 35.48,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2026-08-19",
+      "equity": 225168.57,
+      "held": 2,
+      "pnl": 607.86,
+      "dd_pct": 1.396,
+      "gross_pct": 35.09,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2026-08-20",
+      "equity": 223438.21,
+      "held": 1,
+      "pnl": -1730.36,
+      "dd_pct": 2.153,
+      "gross_pct": 20.07,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-08-21",
+      "equity": 223668.21,
+      "held": 2,
+      "pnl": 230.0,
+      "dd_pct": 2.053,
+      "gross_pct": 49.02,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-08-22",
+      "equity": 223668.21,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.053,
+      "gross_pct": 49.02,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-08-23",
+      "equity": 223668.21,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.053,
+      "gross_pct": 49.02,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-08-24",
+      "equity": 224108.21,
+      "held": 2,
+      "pnl": 440.0,
+      "dd_pct": 1.86,
+      "gross_pct": 49.12,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-08-25",
+      "equity": 225051.07,
+      "held": 2,
+      "pnl": 942.86,
+      "dd_pct": 1.447,
+      "gross_pct": 41.83,
+      "codes": [
+        "M",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-08-26",
+      "equity": 225319.64,
+      "held": 2,
+      "pnl": 268.57,
+      "dd_pct": 1.33,
+      "gross_pct": 36.67,
+      "codes": [
+        "BU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-08-27",
+      "equity": 225909.64,
+      "held": 2,
+      "pnl": 590.0,
+      "dd_pct": 1.071,
+      "gross_pct": 36.79,
+      "codes": [
+        "BU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-08-28",
+      "equity": 226675.36,
+      "held": 2,
+      "pnl": 765.71,
+      "dd_pct": 0.736,
+      "gross_pct": 29.25,
       "codes": [
         "JD",
         "MA"
       ]
     },
     {
-      "date": "2026-08-17",
-      "equity": 211019.4,
+      "date": "2026-08-29",
+      "equity": 226675.36,
       "held": 2,
-      "pnl": -74.16,
-      "dd_pct": 3.411,
-      "gross_pct": 27.37,
+      "pnl": 0.0,
+      "dd_pct": 0.736,
+      "gross_pct": 29.25,
       "codes": [
-        "FG",
-        "JD"
+        "JD",
+        "MA"
       ]
     },
     {
-      "date": "2026-08-18",
-      "equity": 211649.4,
+      "date": "2026-08-30",
+      "equity": 226675.36,
       "held": 2,
-      "pnl": 630.0,
-      "dd_pct": 3.123,
-      "gross_pct": 26.99,
+      "pnl": 0.0,
+      "dd_pct": 0.736,
+      "gross_pct": 29.25,
       "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-08-19",
-      "equity": 212599.4,
-      "held": 2,
-      "pnl": 950.0,
-      "dd_pct": 2.688,
-      "gross_pct": 26.42,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-08-20",
-      "equity": 211629.4,
-      "held": 2,
-      "pnl": -970.0,
-      "dd_pct": 3.132,
-      "gross_pct": 27.0,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-08-21",
-      "equity": 212289.4,
-      "held": 2,
-      "pnl": 660.0,
-      "dd_pct": 2.83,
-      "gross_pct": 26.61,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-08-24",
-      "equity": 212459.4,
-      "held": 2,
-      "pnl": 170.0,
-      "dd_pct": 2.752,
-      "gross_pct": 26.5,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-08-25",
-      "equity": 212889.4,
-      "held": 2,
-      "pnl": 430.0,
-      "dd_pct": 2.555,
-      "gross_pct": 26.25,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-08-26",
-      "equity": 213059.4,
-      "held": 2,
-      "pnl": 170.0,
-      "dd_pct": 2.478,
-      "gross_pct": 26.15,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-08-27",
-      "equity": 212889.4,
-      "held": 2,
-      "pnl": -170.0,
-      "dd_pct": 2.555,
-      "gross_pct": 26.25,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-08-28",
-      "equity": 212319.4,
-      "held": 2,
-      "pnl": -570.0,
-      "dd_pct": 2.816,
-      "gross_pct": 26.59,
-      "codes": [
-        "FG",
-        "JD"
+        "JD",
+        "MA"
       ]
     },
     {
       "date": "2026-08-31",
-      "equity": 212089.4,
+      "equity": 228032.5,
       "held": 2,
-      "pnl": -230.0,
-      "dd_pct": 2.922,
-      "gross_pct": 26.72,
+      "pnl": 1357.14,
+      "dd_pct": 0.142,
+      "gross_pct": 37.87,
       "codes": [
-        "FG",
+        "BU",
         "JD"
       ]
     },
     {
       "date": "2026-09-01",
-      "equity": 212657.95,
+      "equity": 229082.5,
       "held": 2,
-      "pnl": 568.56,
-      "dd_pct": 2.661,
-      "gross_pct": 39.91,
+      "pnl": 1050.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.97,
       "codes": [
-        "RB",
-        "SA"
+        "BU",
+        "JD"
       ]
     },
     {
       "date": "2026-09-02",
-      "equity": 213577.95,
+      "equity": 230551.07,
       "held": 2,
-      "pnl": 920.0,
-      "dd_pct": 2.24,
-      "gross_pct": 39.31,
+      "pnl": 1468.57,
+      "dd_pct": 0.0,
+      "gross_pct": 30.02,
       "codes": [
-        "RB",
-        "SA"
+        "JD",
+        "MA"
       ]
     },
     {
       "date": "2026-09-03",
-      "equity": 213577.95,
+      "equity": 229791.07,
       "held": 2,
-      "pnl": 0.0,
-      "dd_pct": 2.24,
-      "gross_pct": 39.31,
+      "pnl": -760.0,
+      "dd_pct": 0.33,
+      "gross_pct": 30.23,
       "codes": [
-        "RB",
-        "SA"
+        "JD",
+        "MA"
       ]
     },
     {
       "date": "2026-09-04",
-      "equity": 211965.25,
-      "held": 3,
-      "pnl": -1612.7,
-      "dd_pct": 2.978,
-      "gross_pct": 62.49,
+      "equity": 229921.07,
+      "held": 2,
+      "pnl": 130.0,
+      "dd_pct": 0.273,
+      "gross_pct": 30.31,
       "codes": [
         "JD",
-        "MA",
-        "RB"
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-09-05",
+      "equity": 229921.07,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.273,
+      "gross_pct": 30.31,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-09-06",
+      "equity": 229921.07,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.273,
+      "gross_pct": 30.31,
+      "codes": [
+        "JD",
+        "MA"
       ]
     },
     {
       "date": "2026-09-07",
-      "equity": 211564.86,
+      "equity": 229903.93,
       "held": 2,
-      "pnl": -400.39,
-      "dd_pct": 3.162,
-      "gross_pct": 47.4,
+      "pnl": -17.14,
+      "dd_pct": 0.281,
+      "gross_pct": 43.62,
       "codes": [
         "M",
         "MA"
@@ -2799,11 +3740,11 @@
     },
     {
       "date": "2026-09-08",
-      "equity": 213174.86,
+      "equity": 231339.64,
       "held": 2,
-      "pnl": 1610.0,
-      "dd_pct": 2.425,
-      "gross_pct": 47.8,
+      "pnl": 1435.71,
+      "dd_pct": 0.0,
+      "gross_pct": 44.04,
       "codes": [
         "M",
         "MA"
@@ -2811,11 +3752,11 @@
     },
     {
       "date": "2026-09-09",
-      "equity": 213423.68,
+      "equity": 232059.64,
       "held": 2,
-      "pnl": 248.81,
-      "dd_pct": 2.311,
-      "gross_pct": 48.08,
+      "pnl": 720.0,
+      "dd_pct": 0.0,
+      "gross_pct": 44.22,
       "codes": [
         "M",
         "MA"
@@ -2823,616 +3764,1006 @@
     },
     {
       "date": "2026-09-10",
-      "equity": 213153.68,
+      "equity": 232919.64,
       "held": 2,
-      "pnl": -270.0,
-      "dd_pct": 2.434,
-      "gross_pct": 48.01,
+      "pnl": 860.0,
+      "dd_pct": 0.0,
+      "gross_pct": 74.76,
       "codes": [
-        "M",
-        "MA"
+        "BU",
+        "M"
       ]
     },
     {
       "date": "2026-09-11",
-      "equity": 211450.5,
+      "equity": 234099.64,
       "held": 2,
-      "pnl": -1703.17,
-      "dd_pct": 3.214,
-      "gross_pct": 44.07,
+      "pnl": 1180.0,
+      "dd_pct": 0.0,
+      "gross_pct": 74.89,
       "codes": [
-        "M",
-        "V"
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "equity": 234099.64,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 74.89,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-13",
+      "equity": 234099.64,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 74.89,
+      "codes": [
+        "BU",
+        "M"
       ]
     },
     {
       "date": "2026-09-14",
-      "equity": 210250.5,
+      "equity": 237639.64,
       "held": 2,
-      "pnl": -1200.0,
-      "dd_pct": 3.763,
-      "gross_pct": 43.75,
+      "pnl": 3540.0,
+      "dd_pct": 0.0,
+      "gross_pct": 41.65,
       "codes": [
         "M",
-        "V"
+        "TA"
       ]
     },
     {
       "date": "2026-09-15",
-      "equity": 210211.07,
+      "equity": 238659.64,
       "held": 2,
-      "pnl": -39.43,
-      "dd_pct": 3.781,
-      "gross_pct": 43.73,
+      "pnl": 1020.0,
+      "dd_pct": 0.0,
+      "gross_pct": 41.9,
       "codes": [
         "M",
-        "V"
+        "TA"
       ]
     },
     {
       "date": "2026-09-16",
-      "equity": 212291.07,
+      "equity": 240841.07,
       "held": 2,
-      "pnl": 2080.0,
-      "dd_pct": 2.829,
-      "gross_pct": 44.29,
+      "pnl": 2181.43,
+      "dd_pct": 0.0,
+      "gross_pct": 42.5,
       "codes": [
         "M",
-        "V"
+        "TA"
       ]
     },
     {
       "date": "2026-09-17",
-      "equity": 211746.07,
+      "equity": 240041.79,
       "held": 2,
-      "pnl": -545.0,
-      "dd_pct": 3.079,
-      "gross_pct": 44.14,
+      "pnl": -799.29,
+      "dd_pct": 0.332,
+      "gross_pct": 76.94,
       "codes": [
-        "M",
-        "V"
+        "BU",
+        "M"
       ]
     },
     {
       "date": "2026-09-18",
-      "equity": 209731.07,
-      "held": 2,
-      "pnl": -2015.0,
-      "dd_pct": 4.001,
-      "gross_pct": 43.61,
+      "equity": 238918.93,
+      "held": 1,
+      "pnl": -1122.86,
+      "dd_pct": 0.798,
+      "gross_pct": 48.07,
       "codes": [
-        "M",
-        "V"
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-09-19",
+      "equity": 238918.93,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.798,
+      "gross_pct": 48.07,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-09-20",
+      "equity": 238918.93,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.798,
+      "gross_pct": 48.07,
+      "codes": [
+        "BU"
       ]
     },
     {
       "date": "2026-09-21",
-      "equity": 209771.07,
-      "held": 2,
-      "pnl": 40.0,
-      "dd_pct": 3.983,
-      "gross_pct": 43.62,
+      "equity": 242018.93,
+      "held": 1,
+      "pnl": 3100.0,
+      "dd_pct": 0.0,
+      "gross_pct": 48.73,
       "codes": [
-        "M",
-        "V"
+        "BU"
       ]
     },
     {
       "date": "2026-09-22",
-      "equity": 210381.07,
-      "held": 2,
-      "pnl": 610.0,
-      "dd_pct": 3.703,
-      "gross_pct": 43.78,
+      "equity": 239758.93,
+      "held": 1,
+      "pnl": -2260.0,
+      "dd_pct": 0.934,
+      "gross_pct": 48.25,
       "codes": [
-        "M",
-        "V"
+        "BU"
       ]
     },
     {
       "date": "2026-09-23",
-      "equity": 210206.07,
-      "held": 2,
-      "pnl": -175.0,
-      "dd_pct": 3.784,
-      "gross_pct": 43.73,
+      "equity": 236226.07,
+      "held": 1,
+      "pnl": -3532.86,
+      "dd_pct": 2.394,
+      "gross_pct": 46.55,
       "codes": [
-        "M",
-        "V"
+        "BU"
       ]
     },
     {
       "date": "2026-09-24",
-      "equity": 210786.07,
-      "held": 2,
-      "pnl": 580.0,
-      "dd_pct": 3.518,
-      "gross_pct": 43.89,
+      "equity": 232811.79,
+      "held": 1,
+      "pnl": -3414.29,
+      "dd_pct": 3.804,
+      "gross_pct": 30.18,
       "codes": [
-        "M",
-        "V"
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-09-25",
+      "equity": 232811.79,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 3.804,
+      "gross_pct": 30.18,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-09-26",
+      "equity": 232811.79,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 3.804,
+      "gross_pct": 30.18,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-09-27",
+      "equity": 232811.79,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 3.804,
+      "gross_pct": 30.18,
+      "codes": [
+        "MA"
       ]
     },
     {
       "date": "2026-09-28",
-      "equity": 209401.07,
-      "held": 2,
-      "pnl": -1385.0,
-      "dd_pct": 4.152,
-      "gross_pct": 43.52,
+      "equity": 230477.5,
+      "held": 1,
+      "pnl": -2334.29,
+      "dd_pct": 4.769,
+      "gross_pct": 38.34,
       "codes": [
-        "M",
-        "V"
+        "FU"
       ]
     },
     {
       "date": "2026-09-29",
-      "equity": 209247.22,
+      "equity": 230877.5,
       "held": 2,
-      "pnl": -153.86,
-      "dd_pct": 4.222,
-      "gross_pct": 43.68,
+      "pnl": 400.0,
+      "dd_pct": 4.604,
+      "gross_pct": 86.5,
       "codes": [
-        "M",
-        "V"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-09-30",
-      "equity": 210282.22,
+      "equity": 227438.93,
       "held": 2,
-      "pnl": 1035.0,
-      "dd_pct": 3.749,
-      "gross_pct": 43.96,
+      "pnl": -3438.57,
+      "dd_pct": 6.024,
+      "gross_pct": 87.99,
       "codes": [
-        "M",
-        "V"
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-10-01",
+      "equity": 227438.93,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 6.024,
+      "gross_pct": 87.99,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-10-02",
+      "equity": 227438.93,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 6.024,
+      "gross_pct": 87.99,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-10-03",
+      "equity": 227438.93,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 6.024,
+      "gross_pct": 87.99,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-10-04",
+      "equity": 227438.93,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 6.024,
+      "gross_pct": 87.99,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-10-05",
+      "equity": 227438.93,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 6.024,
+      "gross_pct": 49.0,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-10-06",
+      "equity": 227438.93,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 6.024,
+      "gross_pct": 49.0,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-10-07",
+      "equity": 227438.93,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 6.024,
+      "gross_pct": 49.0,
+      "codes": [
+        "JD"
       ]
     },
     {
       "date": "2026-10-08",
-      "equity": 209742.22,
+      "equity": 226868.93,
       "held": 2,
-      "pnl": -540.0,
-      "dd_pct": 3.996,
-      "gross_pct": 43.81,
+      "pnl": -570.0,
+      "dd_pct": 6.26,
+      "gross_pct": 65.35,
       "codes": [
-        "M",
-        "V"
+        "JD",
+        "MA"
       ]
     },
     {
       "date": "2026-10-09",
-      "equity": 210627.22,
+      "equity": 227881.79,
       "held": 2,
-      "pnl": 885.0,
-      "dd_pct": 3.591,
-      "gross_pct": 44.05,
+      "pnl": 1012.86,
+      "dd_pct": 5.841,
+      "gross_pct": 30.7,
       "codes": [
-        "M",
-        "V"
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-10-10",
+      "equity": 227881.79,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.841,
+      "gross_pct": 30.7,
+      "codes": [
+        "JD",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-10-11",
+      "equity": 227881.79,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.841,
+      "gross_pct": 30.7,
+      "codes": [
+        "JD",
+        "TA"
       ]
     },
     {
       "date": "2026-10-12",
-      "equity": 210027.22,
+      "equity": 228016.07,
       "held": 2,
-      "pnl": -600.0,
-      "dd_pct": 3.865,
-      "gross_pct": 43.89,
+      "pnl": 134.29,
+      "dd_pct": 5.786,
+      "gross_pct": 35.12,
       "codes": [
-        "M",
-        "V"
+        "JD",
+        "L"
       ]
     },
     {
       "date": "2026-10-13",
-      "equity": 209507.22,
+      "equity": 227951.07,
       "held": 2,
-      "pnl": -520.0,
-      "dd_pct": 4.103,
-      "gross_pct": 43.75,
+      "pnl": -65.0,
+      "dd_pct": 5.813,
+      "gross_pct": 35.11,
       "codes": [
-        "M",
-        "V"
+        "JD",
+        "L"
       ]
     },
     {
       "date": "2026-10-14",
-      "equity": 209867.22,
+      "equity": 229546.07,
       "held": 2,
-      "pnl": 360.0,
-      "dd_pct": 3.939,
-      "gross_pct": 43.85,
+      "pnl": 1595.0,
+      "dd_pct": 5.154,
+      "gross_pct": 34.42,
       "codes": [
-        "M",
-        "V"
+        "JD",
+        "L"
       ]
     },
     {
       "date": "2026-10-15",
-      "equity": 208207.22,
+      "equity": 229731.79,
       "held": 2,
-      "pnl": -1660.0,
-      "dd_pct": 4.699,
-      "gross_pct": 43.4,
+      "pnl": 185.71,
+      "dd_pct": 5.077,
+      "gross_pct": 33.65,
       "codes": [
-        "M",
-        "V"
+        "JD",
+        "L"
       ]
     },
     {
       "date": "2026-10-16",
-      "equity": 207982.08,
+      "equity": 228671.07,
       "held": 2,
-      "pnl": -225.13,
-      "dd_pct": 4.802,
-      "gross_pct": 27.7,
+      "pnl": -1060.71,
+      "dd_pct": 5.515,
+      "gross_pct": 49.57,
       "codes": [
         "JD",
-        "V"
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-17",
+      "equity": 228671.07,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.515,
+      "gross_pct": 49.57,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-18",
+      "equity": 228671.07,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.515,
+      "gross_pct": 49.57,
+      "codes": [
+        "JD",
+        "PP"
       ]
     },
     {
       "date": "2026-10-19",
-      "equity": 208512.08,
+      "equity": 229156.07,
       "held": 2,
-      "pnl": 530.0,
-      "dd_pct": 4.559,
-      "gross_pct": 27.6,
+      "pnl": 485.0,
+      "dd_pct": 5.315,
+      "gross_pct": 49.15,
       "codes": [
         "JD",
-        "V"
+        "PP"
       ]
     },
     {
       "date": "2026-10-20",
-      "equity": 210042.08,
+      "equity": 230878.93,
       "held": 2,
-      "pnl": 1530.0,
-      "dd_pct": 3.859,
-      "gross_pct": 27.09,
+      "pnl": 1722.86,
+      "dd_pct": 4.603,
+      "gross_pct": 47.97,
       "codes": [
         "JD",
-        "V"
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-21",
+      "equity": 228585.36,
+      "held": 2,
+      "pnl": -2293.57,
+      "dd_pct": 5.551,
+      "gross_pct": 48.84,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-22",
+      "equity": 229170.36,
+      "held": 2,
+      "pnl": 585.0,
+      "dd_pct": 5.309,
+      "gross_pct": 48.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-23",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 160.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-24",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-25",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-26",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-29",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-30",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-31",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
       ]
     }
   ],
   "equity_curve_weekly": [
     {
-      "date": "2025-11-27",
-      "equity": 199936.46,
-      "held": 3,
-      "pnl": -63.53,
-      "dd_pct": 0.032,
-      "gross_pct": 41.32,
+      "date": "2025-10-30",
+      "equity": 200000.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.6,
       "codes": [
-        "M",
-        "MA",
-        "RB"
+        "FG",
+        "JD"
+      ]
+    },
+    {
+      "date": "2025-11-01",
+      "equity": 200210.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.35,
+      "codes": [
+        "FG",
+        "JD"
+      ]
+    },
+    {
+      "date": "2025-11-07",
+      "equity": 200322.86,
+      "held": 2,
+      "pnl": 180.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.16,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-14",
+      "equity": 200576.43,
+      "held": 1,
+      "pnl": 960.0,
+      "dd_pct": 0.0,
+      "gross_pct": 20.49,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2025-11-21",
+      "equity": 201396.43,
+      "held": 1,
+      "pnl": 240.0,
+      "dd_pct": 0.0,
+      "gross_pct": 19.9,
+      "codes": [
+        "MA"
       ]
     },
     {
       "date": "2025-11-28",
-      "equity": 199086.39,
-      "held": 2,
-      "pnl": -850.07,
-      "dd_pct": 0.457,
-      "gross_pct": 26.35,
+      "equity": 198480.71,
+      "held": 1,
+      "pnl": -417.14,
+      "dd_pct": 1.448,
+      "gross_pct": 37.8,
       "codes": [
-        "MA",
-        "RB"
+        "FU"
       ]
     },
     {
       "date": "2025-12-01",
-      "equity": 198803.59,
+      "equity": 198135.0,
+      "held": 1,
+      "pnl": -345.71,
+      "dd_pct": 1.619,
+      "gross_pct": 37.78,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2025-12-07",
+      "equity": 198248.57,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 1.563,
+      "gross_pct": 40.11,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2025-12-14",
+      "equity": 199734.29,
       "held": 2,
-      "pnl": -282.81,
-      "dd_pct": 0.598,
-      "gross_pct": 26.85,
+      "pnl": 0.0,
+      "dd_pct": 0.825,
+      "gross_pct": 60.68,
+      "codes": [
+        "FG",
+        "M"
+      ]
+    },
+    {
+      "date": "2025-12-21",
+      "equity": 196088.57,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.636,
+      "gross_pct": 38.84,
+      "codes": [
+        "M",
+        "TA"
+      ]
+    },
+    {
+      "date": "2025-12-28",
+      "equity": 197437.14,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.966,
+      "gross_pct": 28.35,
       "codes": [
         "JD",
-        "MA"
+        "TA"
       ]
     },
     {
-      "date": "2025-12-08",
-      "equity": 198583.48,
+      "date": "2026-01-01",
+      "equity": 197235.71,
       "held": 2,
-      "pnl": 240.0,
-      "dd_pct": 0.708,
-      "gross_pct": 26.4,
+      "pnl": 0.0,
+      "dd_pct": 2.066,
+      "gross_pct": 27.82,
       "codes": [
         "JD",
-        "MA"
-      ]
-    },
-    {
-      "date": "2025-12-15",
-      "equity": 197457.0,
-      "held": 2,
-      "pnl": -510.0,
-      "dd_pct": 1.271,
-      "gross_pct": 39.62,
-      "codes": [
-        "FU",
-        "JD"
-      ]
-    },
-    {
-      "date": "2025-12-22",
-      "equity": 197321.39,
-      "held": 2,
-      "pnl": -1400.0,
-      "dd_pct": 1.339,
-      "gross_pct": 54.19,
-      "codes": [
-        "FU",
-        "JD"
-      ]
-    },
-    {
-      "date": "2025-12-29",
-      "equity": 194951.36,
-      "held": 2,
-      "pnl": 640.0,
-      "dd_pct": 2.524,
-      "gross_pct": 39.56,
-      "codes": [
-        "FU",
-        "SR"
-      ]
-    },
-    {
-      "date": "2026-01-05",
-      "equity": 195231.36,
-      "held": 2,
-      "pnl": 140.0,
-      "dd_pct": 2.384,
-      "gross_pct": 39.36,
-      "codes": [
-        "FU",
-        "SR"
+        "TA"
       ]
     },
     {
       "date": "2026-01-07",
-      "equity": 194891.36,
-      "held": 2,
-      "pnl": 200.0,
-      "dd_pct": 2.554,
-      "gross_pct": 39.6,
+      "equity": 196434.29,
+      "held": 1,
+      "pnl": -145.71,
+      "dd_pct": 2.464,
+      "gross_pct": 13.11,
       "codes": [
-        "FU",
-        "SR"
+        "TA"
       ]
     },
     {
       "date": "2026-01-14",
-      "equity": 193522.55,
-      "held": 2,
-      "pnl": -1408.81,
-      "dd_pct": 3.239,
-      "gross_pct": 40.6,
+      "equity": 195298.57,
+      "held": 1,
+      "pnl": 440.0,
+      "dd_pct": 3.028,
+      "gross_pct": 18.22,
       "codes": [
-        "SR",
-        "TA"
+        "EB"
       ]
     },
     {
       "date": "2026-01-21",
-      "equity": 194894.51,
-      "held": 2,
-      "pnl": 71.95,
-      "dd_pct": 2.553,
-      "gross_pct": 28.8,
+      "equity": 196082.14,
+      "held": 1,
+      "pnl": 1758.57,
+      "dd_pct": 2.639,
+      "gross_pct": 37.27,
       "codes": [
-        "JD",
-        "TA"
+        "EB"
       ]
     },
     {
       "date": "2026-01-28",
-      "equity": 194116.35,
+      "equity": 196157.86,
+      "held": 1,
+      "pnl": 590.0,
+      "dd_pct": 2.601,
+      "gross_pct": 14.02,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-02-01",
+      "equity": 196412.86,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 2.475,
+      "gross_pct": 0.0,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-07",
+      "equity": 198575.71,
       "held": 2,
-      "pnl": -310.0,
-      "dd_pct": 2.942,
-      "gross_pct": 41.32,
+      "pnl": 0.0,
+      "dd_pct": 1.401,
+      "gross_pct": 67.65,
+      "codes": [
+        "EB",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-14",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-21",
+      "equity": 197610.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 1.88,
+      "gross_pct": 63.73,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-28",
+      "equity": 199565.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.909,
+      "gross_pct": 63.94,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-03-01",
+      "equity": 199565.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.909,
+      "gross_pct": 63.94,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-03-07",
+      "equity": 201525.0,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.118,
+      "gross_pct": 55.74,
+      "codes": [
+        "EB",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-03-14",
+      "equity": 208943.21,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 58.61,
       "codes": [
         "M",
         "V"
       ]
     },
     {
-      "date": "2026-02-02",
-      "equity": 194937.6,
+      "date": "2026-03-21",
+      "equity": 207452.5,
       "held": 2,
-      "pnl": 50.0,
-      "dd_pct": 2.531,
-      "gross_pct": 56.24,
+      "pnl": 0.0,
+      "dd_pct": 0.713,
+      "gross_pct": 43.36,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-28",
+      "equity": 208488.93,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.255,
+      "gross_pct": 47.06,
       "codes": [
         "JD",
         "V"
       ]
     },
     {
-      "date": "2026-02-09",
-      "equity": 194428.01,
+      "date": "2026-04-01",
+      "equity": 209110.36,
+      "held": 1,
+      "pnl": 2000.0,
+      "dd_pct": 0.0,
+      "gross_pct": 47.77,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-04-07",
+      "equity": 212971.79,
+      "held": 1,
+      "pnl": 1890.0,
+      "dd_pct": 0.0,
+      "gross_pct": 16.68,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-14",
+      "equity": 210284.64,
+      "held": 1,
+      "pnl": -600.0,
+      "dd_pct": 1.262,
+      "gross_pct": 45.8,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-04-21",
+      "equity": 206411.43,
       "held": 2,
-      "pnl": -370.0,
-      "dd_pct": 2.786,
-      "gross_pct": 51.86,
+      "pnl": 0.0,
+      "dd_pct": 3.08,
+      "gross_pct": 50.8,
+      "codes": [
+        "CF",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-04-28",
+      "equity": 207910.71,
+      "held": 2,
+      "pnl": -630.0,
+      "dd_pct": 2.376,
+      "gross_pct": 52.37,
+      "codes": [
+        "CF",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "equity": 207281.43,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 2.672,
+      "gross_pct": 83.14,
       "codes": [
         "CF",
         "FU"
       ]
     },
     {
-      "date": "2026-02-24",
-      "equity": 197949.73,
-      "held": 1,
-      "pnl": 2261.71,
-      "dd_pct": 1.025,
-      "gross_pct": 14.86,
+      "date": "2026-05-07",
+      "equity": 204476.43,
+      "held": 2,
+      "pnl": -3880.0,
+      "dd_pct": 3.989,
+      "gross_pct": 90.07,
       "codes": [
-        "FU"
-      ]
-    },
-    {
-      "date": "2026-03-02",
-      "equity": 199642.52,
-      "held": 3,
-      "pnl": 1557.31,
-      "dd_pct": 0.179,
-      "gross_pct": 41.71,
-      "codes": [
-        "M",
-        "RB",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-03-09",
-      "equity": 204602.22,
-      "held": 3,
-      "pnl": 3033.09,
-      "dd_pct": 0.0,
-      "gross_pct": 45.35,
-      "codes": [
-        "JD",
-        "RB",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-03-16",
-      "equity": 208533.94,
-      "held": 3,
-      "pnl": 2121.24,
-      "dd_pct": 0.0,
-      "gross_pct": 52.96,
-      "codes": [
-        "BU",
-        "JD",
+        "FU",
         "RB"
       ]
     },
     {
-      "date": "2026-03-23",
-      "equity": 210330.43,
-      "held": 2,
-      "pnl": 2380.0,
-      "dd_pct": 0.0,
-      "gross_pct": 38.53,
-      "codes": [
-        "BU",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-03-30",
-      "equity": 206575.89,
-      "held": 2,
-      "pnl": -450.0,
-      "dd_pct": 1.785,
-      "gross_pct": 36.85,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-04-01",
-      "equity": 207136.71,
-      "held": 2,
-      "pnl": -149.18,
-      "dd_pct": 1.518,
-      "gross_pct": 50.38,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-04-07",
-      "equity": 208477.85,
-      "held": 2,
-      "pnl": -200.0,
-      "dd_pct": 0.881,
-      "gross_pct": 49.35,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-04-14",
-      "equity": 209397.85,
-      "held": 2,
-      "pnl": -900.0,
-      "dd_pct": 0.443,
-      "gross_pct": 49.34,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-04-21",
-      "equity": 207657.14,
-      "held": 2,
-      "pnl": 175.0,
-      "dd_pct": 1.271,
-      "gross_pct": 44.32,
-      "codes": [
-        "JD",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-04-28",
-      "equity": 210432.14,
-      "held": 2,
-      "pnl": 1960.0,
-      "dd_pct": 0.0,
-      "gross_pct": 61.68,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-05-06",
-      "equity": 211238.58,
-      "held": 2,
-      "pnl": 1086.44,
-      "dd_pct": 0.11,
-      "gross_pct": 58.78,
-      "codes": [
-        "FG",
-        "M"
-      ]
-    },
-    {
-      "date": "2026-05-07",
-      "equity": 210198.58,
-      "held": 2,
-      "pnl": -1040.0,
-      "dd_pct": 0.602,
-      "gross_pct": 59.2,
-      "codes": [
-        "FG",
-        "M"
-      ]
-    },
-    {
       "date": "2026-05-14",
-      "equity": 213355.09,
+      "equity": 204348.57,
       "held": 2,
-      "pnl": 879.03,
-      "dd_pct": 0.0,
-      "gross_pct": 40.84,
+      "pnl": 330.0,
+      "dd_pct": 4.049,
+      "gross_pct": 39.32,
       "codes": [
         "BU",
         "JD"
@@ -3440,232 +4771,223 @@
     },
     {
       "date": "2026-05-21",
-      "equity": 213897.98,
-      "held": 3,
-      "pnl": 150.0,
-      "dd_pct": 0.487,
-      "gross_pct": 62.02,
+      "equity": 208812.14,
+      "held": 2,
+      "pnl": 1874.29,
+      "dd_pct": 1.953,
+      "gross_pct": 65.54,
       "codes": [
         "JD",
-        "RB",
         "V"
       ]
     },
     {
       "date": "2026-05-28",
-      "equity": 213385.35,
+      "equity": 207782.14,
       "held": 2,
-      "pnl": -1753.13,
-      "dd_pct": 0.884,
-      "gross_pct": 41.05,
+      "pnl": -1650.0,
+      "dd_pct": 2.437,
+      "gross_pct": 67.22,
       "codes": [
-        "RB",
+        "JD",
         "V"
       ]
     },
     {
       "date": "2026-06-01",
-      "equity": 216885.41,
-      "held": 3,
-      "pnl": 3255.72,
-      "dd_pct": 0.0,
-      "gross_pct": 85.81,
+      "equity": 208635.0,
+      "held": 2,
+      "pnl": -537.14,
+      "dd_pct": 2.036,
+      "gross_pct": 68.91,
       "codes": [
         "JD",
-        "RB",
         "V"
       ]
     },
     {
-      "date": "2026-06-08",
-      "equity": 210858.25,
-      "held": 3,
-      "pnl": -1306.86,
-      "dd_pct": 2.779,
-      "gross_pct": 94.95,
+      "date": "2026-06-07",
+      "equity": 212245.71,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.341,
+      "gross_pct": 38.49,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-14",
+      "equity": 212364.29,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.31,
+      "gross_pct": 59.97,
       "codes": [
         "EB",
-        "JD",
-        "RB"
+        "JD"
       ]
     },
     {
-      "date": "2026-06-15",
-      "equity": 215446.82,
-      "held": 3,
-      "pnl": 1118.57,
-      "dd_pct": 0.663,
-      "gross_pct": 116.85,
-      "codes": [
-        "JD",
-        "RB",
-        "V"
-      ]
-    },
-    {
-      "date": "2026-06-22",
-      "equity": 213272.5,
+      "date": "2026-06-21",
+      "equity": 219516.43,
       "held": 2,
-      "pnl": 151.17,
-      "dd_pct": 1.666,
-      "gross_pct": 62.9,
+      "pnl": 0.0,
+      "dd_pct": 0.02,
+      "gross_pct": 34.63,
       "codes": [
-        "JD",
-        "V"
+        "FU",
+        "JD"
       ]
     },
     {
-      "date": "2026-06-29",
-      "equity": 214495.17,
-      "held": 2,
-      "pnl": 670.0,
-      "dd_pct": 1.102,
-      "gross_pct": 32.08,
+      "date": "2026-06-28",
+      "equity": 219665.71,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 0.241,
+      "gross_pct": 13.54,
       "codes": [
-        "JD",
-        "MA"
+        "FU"
       ]
     },
     {
       "date": "2026-07-01",
-      "equity": 216065.17,
+      "equity": 220155.71,
       "held": 2,
-      "pnl": 610.0,
-      "dd_pct": 0.378,
-      "gross_pct": 31.56,
+      "pnl": 300.0,
+      "dd_pct": 0.018,
+      "gross_pct": 33.51,
       "codes": [
-        "JD",
-        "MA"
+        "FU",
+        "JD"
       ]
     },
     {
       "date": "2026-07-07",
-      "equity": 218085.36,
+      "equity": 220434.29,
       "held": 2,
-      "pnl": -386.77,
-      "dd_pct": 0.177,
-      "gross_pct": 32.66,
+      "pnl": 140.0,
+      "dd_pct": 0.353,
+      "gross_pct": 41.2,
       "codes": [
-        "JD",
-        "MA"
+        "FU",
+        "RB"
       ]
     },
     {
       "date": "2026-07-14",
-      "equity": 211737.22,
+      "equity": 217870.71,
       "held": 2,
-      "pnl": -2519.98,
-      "dd_pct": 3.083,
-      "gross_pct": 39.24,
+      "pnl": -790.0,
+      "dd_pct": 1.512,
+      "gross_pct": 40.69,
       "codes": [
-        "RB",
+        "JD",
         "SA"
       ]
     },
     {
       "date": "2026-07-21",
-      "equity": 211967.96,
+      "equity": 220760.0,
       "held": 2,
-      "pnl": -40.0,
-      "dd_pct": 2.977,
-      "gross_pct": 38.72,
+      "pnl": -300.0,
+      "dd_pct": 0.206,
+      "gross_pct": 74.23,
       "codes": [
-        "RB",
+        "M",
         "SA"
       ]
     },
     {
       "date": "2026-07-28",
-      "equity": 213579.17,
-      "held": 3,
-      "pnl": 955.44,
-      "dd_pct": 2.24,
-      "gross_pct": 84.2,
+      "equity": 224492.86,
+      "held": 1,
+      "pnl": 1484.29,
+      "dd_pct": 0.0,
+      "gross_pct": 43.3,
       "codes": [
-        "M",
-        "MA",
-        "RB"
+        "SA"
       ]
     },
     {
-      "date": "2026-08-03",
-      "equity": 213412.05,
+      "date": "2026-08-01",
+      "equity": 228075.71,
       "held": 2,
-      "pnl": -319.0,
-      "dd_pct": 2.316,
-      "gross_pct": 35.85,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 30.35,
       "codes": [
-        "MA",
+        "SA",
         "SR"
       ]
     },
     {
       "date": "2026-08-07",
-      "equity": 212903.55,
-      "held": 2,
-      "pnl": -320.0,
-      "dd_pct": 2.549,
-      "gross_pct": 30.36,
+      "equity": 226805.71,
+      "held": 1,
+      "pnl": -120.0,
+      "dd_pct": 0.679,
+      "gross_pct": 24.84,
       "codes": [
-        "JD",
-        "MA"
-      ]
-    },
-    {
-      "date": "2026-08-14",
-      "equity": 211093.55,
-      "held": 2,
-      "pnl": -900.0,
-      "dd_pct": 3.377,
-      "gross_pct": 31.47,
-      "codes": [
-        "JD",
-        "MA"
-      ]
-    },
-    {
-      "date": "2026-08-21",
-      "equity": 212289.4,
-      "held": 2,
-      "pnl": 660.0,
-      "dd_pct": 2.83,
-      "gross_pct": 26.61,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-08-28",
-      "equity": 212319.4,
-      "held": 2,
-      "pnl": -570.0,
-      "dd_pct": 2.816,
-      "gross_pct": 26.59,
-      "codes": [
-        "FG",
-        "JD"
-      ]
-    },
-    {
-      "date": "2026-09-01",
-      "equity": 212657.95,
-      "held": 2,
-      "pnl": 568.56,
-      "dd_pct": 2.661,
-      "gross_pct": 39.91,
-      "codes": [
-        "RB",
         "SA"
       ]
     },
     {
-      "date": "2026-09-07",
-      "equity": 211564.86,
+      "date": "2026-08-14",
+      "equity": 223445.71,
+      "held": 1,
+      "pnl": -877.14,
+      "dd_pct": 2.15,
+      "gross_pct": 17.35,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-21",
+      "equity": 223668.21,
       "held": 2,
-      "pnl": -400.39,
-      "dd_pct": 3.162,
-      "gross_pct": 47.4,
+      "pnl": 230.0,
+      "dd_pct": 2.053,
+      "gross_pct": 49.02,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-08-28",
+      "equity": 226675.36,
+      "held": 2,
+      "pnl": 765.71,
+      "dd_pct": 0.736,
+      "gross_pct": 29.25,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-09-01",
+      "equity": 229082.5,
+      "held": 2,
+      "pnl": 1050.0,
+      "dd_pct": 0.0,
+      "gross_pct": 37.97,
+      "codes": [
+        "BU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "equity": 229903.93,
+      "held": 2,
+      "pnl": -17.14,
+      "dd_pct": 0.281,
+      "gross_pct": 43.62,
       "codes": [
         "M",
         "MA"
@@ -3673,440 +4995,393 @@
     },
     {
       "date": "2026-09-14",
-      "equity": 210250.5,
+      "equity": 237639.64,
       "held": 2,
-      "pnl": -1200.0,
-      "dd_pct": 3.763,
-      "gross_pct": 43.75,
+      "pnl": 3540.0,
+      "dd_pct": 0.0,
+      "gross_pct": 41.65,
       "codes": [
         "M",
-        "V"
+        "TA"
       ]
     },
     {
       "date": "2026-09-21",
-      "equity": 209771.07,
-      "held": 2,
-      "pnl": 40.0,
-      "dd_pct": 3.983,
-      "gross_pct": 43.62,
+      "equity": 242018.93,
+      "held": 1,
+      "pnl": 3100.0,
+      "dd_pct": 0.0,
+      "gross_pct": 48.73,
       "codes": [
-        "M",
-        "V"
+        "BU"
       ]
     },
     {
       "date": "2026-09-28",
-      "equity": 209401.07,
-      "held": 2,
-      "pnl": -1385.0,
-      "dd_pct": 4.152,
-      "gross_pct": 43.52,
+      "equity": 230477.5,
+      "held": 1,
+      "pnl": -2334.29,
+      "dd_pct": 4.769,
+      "gross_pct": 38.34,
       "codes": [
-        "M",
-        "V"
+        "FU"
       ]
     },
     {
-      "date": "2026-10-08",
-      "equity": 209742.22,
+      "date": "2026-10-01",
+      "equity": 227438.93,
       "held": 2,
-      "pnl": -540.0,
-      "dd_pct": 3.996,
-      "gross_pct": 43.81,
+      "pnl": 0.0,
+      "dd_pct": 6.024,
+      "gross_pct": 87.99,
       "codes": [
-        "M",
-        "V"
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-10-07",
+      "equity": 227438.93,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 6.024,
+      "gross_pct": 49.0,
+      "codes": [
+        "JD"
       ]
     },
     {
       "date": "2026-10-14",
-      "equity": 209867.22,
+      "equity": 229546.07,
       "held": 2,
-      "pnl": 360.0,
-      "dd_pct": 3.939,
-      "gross_pct": 43.85,
+      "pnl": 1595.0,
+      "dd_pct": 5.154,
+      "gross_pct": 34.42,
       "codes": [
-        "M",
-        "V"
+        "JD",
+        "L"
       ]
     },
     {
-      "date": "2026-10-20",
-      "equity": 210042.08,
+      "date": "2026-10-21",
+      "equity": 228585.36,
       "held": 2,
-      "pnl": 1530.0,
-      "dd_pct": 3.859,
-      "gross_pct": 27.09,
+      "pnl": -2293.57,
+      "dd_pct": 5.551,
+      "gross_pct": 48.84,
       "codes": [
         "JD",
-        "V"
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-31",
+      "equity": 229330.36,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 5.243,
+      "gross_pct": 49.79,
+      "codes": [
+        "JD",
+        "PP"
       ]
     }
   ],
   "day_pnls_tail": [
     {
-      "date": "2026-09-15",
-      "pnl": -39.43,
-      "equity": 210211.07
-    },
-    {
-      "date": "2026-09-16",
-      "pnl": 2080.0,
-      "equity": 212291.07
-    },
-    {
-      "date": "2026-09-17",
-      "pnl": -545.0,
-      "equity": 211746.07
-    },
-    {
-      "date": "2026-09-18",
-      "pnl": -2015.0,
-      "equity": 209731.07
-    },
-    {
-      "date": "2026-09-21",
-      "pnl": 40.0,
-      "equity": 209771.07
-    },
-    {
-      "date": "2026-09-22",
-      "pnl": 610.0,
-      "equity": 210381.07
-    },
-    {
-      "date": "2026-09-23",
-      "pnl": -175.0,
-      "equity": 210206.07
-    },
-    {
-      "date": "2026-09-24",
-      "pnl": 580.0,
-      "equity": 210786.07
-    },
-    {
-      "date": "2026-09-28",
-      "pnl": -1385.0,
-      "equity": 209401.07
-    },
-    {
-      "date": "2026-09-29",
-      "pnl": -153.86,
-      "equity": 209247.22
-    },
-    {
-      "date": "2026-09-30",
-      "pnl": 1035.0,
-      "equity": 210282.22
-    },
-    {
-      "date": "2026-10-08",
-      "pnl": -540.0,
-      "equity": 209742.22
-    },
-    {
-      "date": "2026-10-09",
-      "pnl": 885.0,
-      "equity": 210627.22
-    },
-    {
       "date": "2026-10-12",
-      "pnl": -600.0,
-      "equity": 210027.22
+      "pnl": 134.29,
+      "equity": 228016.07
     },
     {
       "date": "2026-10-13",
-      "pnl": -520.0,
-      "equity": 209507.22
+      "pnl": -65.0,
+      "equity": 227951.07
     },
     {
       "date": "2026-10-14",
-      "pnl": 360.0,
-      "equity": 209867.22
+      "pnl": 1595.0,
+      "equity": 229546.07
     },
     {
       "date": "2026-10-15",
-      "pnl": -1660.0,
-      "equity": 208207.22
+      "pnl": 185.71,
+      "equity": 229731.79
     },
     {
       "date": "2026-10-16",
-      "pnl": -225.13,
-      "equity": 207982.08
+      "pnl": -1060.71,
+      "equity": 228671.07
+    },
+    {
+      "date": "2026-10-17",
+      "pnl": 0.0,
+      "equity": 228671.07
+    },
+    {
+      "date": "2026-10-18",
+      "pnl": 0.0,
+      "equity": 228671.07
     },
     {
       "date": "2026-10-19",
-      "pnl": 530.0,
-      "equity": 208512.08
+      "pnl": 485.0,
+      "equity": 229156.07
     },
     {
       "date": "2026-10-20",
-      "pnl": 1530.0,
-      "equity": 210042.08
+      "pnl": 1722.86,
+      "equity": 230878.93
+    },
+    {
+      "date": "2026-10-21",
+      "pnl": -2293.57,
+      "equity": 228585.36
+    },
+    {
+      "date": "2026-10-22",
+      "pnl": 585.0,
+      "equity": 229170.36
+    },
+    {
+      "date": "2026-10-23",
+      "pnl": 160.0,
+      "equity": 229330.36
+    },
+    {
+      "date": "2026-10-24",
+      "pnl": 0.0,
+      "equity": 229330.36
+    },
+    {
+      "date": "2026-10-25",
+      "pnl": 0.0,
+      "equity": 229330.36
+    },
+    {
+      "date": "2026-10-26",
+      "pnl": 0.0,
+      "equity": 229330.36
+    },
+    {
+      "date": "2026-10-27",
+      "pnl": 0.0,
+      "equity": 229330.36
+    },
+    {
+      "date": "2026-10-28",
+      "pnl": 0.0,
+      "equity": 229330.36
+    },
+    {
+      "date": "2026-10-29",
+      "pnl": 0.0,
+      "equity": 229330.36
+    },
+    {
+      "date": "2026-10-30",
+      "pnl": 0.0,
+      "equity": 229330.36
+    },
+    {
+      "date": "2026-10-31",
+      "pnl": 0.0,
+      "equity": 229330.36
     }
   ],
   "closed_pnls_tail": [
     {
-      "date": "2026-06-08",
-      "code": "V",
+      "date": "2026-08-28",
+      "code": "BU",
       "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
+      "R": 2.0
     },
     {
-      "date": "2026-06-15",
-      "code": "EB",
-      "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-06-17",
-      "code": "RB",
-      "reason": "signal",
-      "R": 0.23,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-06-18",
-      "code": "JD",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-06-22",
-      "code": "JD",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-06-23",
-      "code": "V",
-      "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-02",
-      "code": "JD",
-      "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-07",
-      "code": "JD",
-      "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-10",
-      "code": "JD",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-13",
-      "code": "JD",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-14",
+      "date": "2026-08-31",
       "code": "MA",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-14",
-      "code": "JD",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-17",
-      "code": "RB",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-17",
-      "code": "SA",
       "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
+      "R": 2.0
     },
     {
-      "date": "2026-07-24",
-      "code": "RB",
+      "date": "2026-09-02",
+      "code": "BU",
       "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-28",
-      "code": "SA",
-      "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-07-30",
-      "code": "RB",
-      "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-08-03",
-      "code": "M",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-08-05",
-      "code": "SR",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-08-17",
-      "code": "MA",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-09-01",
-      "code": "JD",
-      "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-09-01",
-      "code": "FG",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-09-04",
-      "code": "SA",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-09-07",
-      "code": "RB",
-      "reason": "signal",
-      "R": 0.53,
-      "opt_payoff": 0.0,
-      "opt_premium": null
+      "R": 2.0
     },
     {
       "date": "2026-09-07",
       "code": "JD",
       "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
+      "R": -1.0
     },
     {
-      "date": "2026-09-09",
+      "date": "2026-09-08",
       "code": "MA",
       "reason": "target",
-      "R": 1.5,
-      "opt_payoff": 0.0,
-      "opt_premium": null
+      "R": 2.0
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-10",
       "code": "MA",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
+      "reason": "target",
+      "R": 2.0
     },
     {
-      "date": "2026-09-15",
-      "code": "V",
-      "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
-    },
-    {
-      "date": "2026-09-29",
+      "date": "2026-09-14",
       "code": "M",
       "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
+      "R": -1.0
+    },
+    {
+      "date": "2026-09-14",
+      "code": "BU",
+      "reason": "target",
+      "R": 2.0
+    },
+    {
+      "date": "2026-09-16",
+      "code": "M",
+      "reason": "target",
+      "R": 2.0
+    },
+    {
+      "date": "2026-09-16",
+      "code": "TA",
+      "reason": "target",
+      "R": 2.0
+    },
+    {
+      "date": "2026-09-17",
+      "code": "TA",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-09-18",
+      "code": "M",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-09-23",
+      "code": "BU",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-09-24",
+      "code": "BU",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-09-28",
+      "code": "MA",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-09-30",
+      "code": "FU",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-10-05",
+      "code": "FU",
+      "reason": "signal",
+      "R": 0.0
+    },
+    {
+      "date": "2026-10-09",
+      "code": "JD",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-10-09",
+      "code": "MA",
+      "reason": "target",
+      "R": 2.0
+    },
+    {
+      "date": "2026-10-12",
+      "code": "JD",
+      "reason": "target",
+      "R": 2.0
+    },
+    {
+      "date": "2026-10-12",
+      "code": "TA",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-10-14",
+      "code": "JD",
+      "reason": "target",
+      "R": 2.0
+    },
+    {
+      "date": "2026-10-14",
+      "code": "L",
+      "reason": "target",
+      "R": 2.0
+    },
+    {
+      "date": "2026-10-15",
+      "code": "JD",
+      "reason": "target",
+      "R": 2.0
+    },
+    {
+      "date": "2026-10-15",
+      "code": "L",
+      "reason": "stop",
+      "R": -1.0
     },
     {
       "date": "2026-10-16",
-      "code": "M",
+      "code": "JD",
       "reason": "stop",
-      "R": -1.0,
-      "opt_payoff": 0.0,
-      "opt_premium": null
+      "R": -1.0
+    },
+    {
+      "date": "2026-10-16",
+      "code": "L",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-10-20",
+      "code": "JD",
+      "reason": "target",
+      "R": 2.0
+    },
+    {
+      "date": "2026-10-21",
+      "code": "PP",
+      "reason": "stop",
+      "R": -1.0
+    },
+    {
+      "date": "2026-10-21",
+      "code": "JD",
+      "reason": "stop",
+      "R": -1.0
     }
   ],
-  "ifind_calls": 0,
-  "summary": "PathA ctf 2025-11-27→2026-10-20 净权益 210042（+5.02%）毛权益 215862（+7.93%）成本 5820，净MaxDD 4.80% 毛MaxDD 3.97%，成交79笔，结论 继续L1",
-  "entry_filter": "ctf",
-  "ifind_call_log": [],
-  "entry_exit_rules": {
-    "open": "r20/r60同向且|r20|≥min_r20、|r60|≥min_r60（ctf模式改用composite_trend）；经entry_filter/席位等过滤；再经组合帽（TopN、名义暴露、组合风险、板块上限）；止损=stop_atr_mult×ATR，止盈=reward_rr×止损距。",
-    "close": "同根K线先止损(stop)后止盈(target)；趋势不再同向或composite_trend翻号则以signal在收盘价平仓。",
-    "exit_codes": {
-      "target": "触及止盈",
-      "stop": "触及止损",
-      "signal": "趋势/信号失效平仓"
-    },
-    "params": {
-      "reward_rr": 1.5,
-      "stop_atr_mult": 1.2,
-      "min_r20": 3.0,
-      "min_r60": 5.0,
-      "max_positions": 3,
-      "mode": "ctf"
-    }
-  }
+  "summary": "PathA+ATR止盈止损2:1 2025-10-30→2026-10-31 权益 229330（+14.67%），MaxDD 6.26%，日胜率 34.6%（367日），成交157笔/止盈64/止损87/信号平6，均持仓 1.7，结论 继续L1"
 }

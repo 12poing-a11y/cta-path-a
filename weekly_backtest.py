@@ -50,6 +50,23 @@ def _sign(direction: str) -> int:
 
 
 def run(days: int = 7) -> dict:
+    # GitHub weekly: densify seat ranks (esp. DCE/EM) so desk charts are readable.
+    try:
+        from member_rank import backfill_member_lookback
+
+        bf = backfill_member_lookback(
+            lookback_calendar_days=max(14, int(days) + 7),
+            dce=True,
+            coverage=True,
+        )
+        print(
+            f"[weekly] member backfill days={bf.get('days')} "
+            f"dce={bf.get('dce')} em={bf.get('eastmoney')} "
+            f"cov_ok={bf.get('coverage_ok')}"
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[weekly] member backfill soft-fail: {exc}")
+
     reps = _load_reports()
     if len(reps) < 2:
         now = datetime.now(TZ)
@@ -122,10 +139,44 @@ def run(days: int = 7) -> dict:
 
     start = reps[0].get("asof")
     end = reps[-1].get("asof")
+
+    # Align with paper_book / historical when present (same ledger family).
+    ledger_note = "weekly_from_l1_reports"
+    paper_eq = None
+    hist_eq = None
+    try:
+        from paper_book import load_paper_positions
+
+        pb = load_paper_positions(ROOT)
+        if pb.get("ok") and pb.get("equity") is not None:
+            paper_eq = float(pb["equity"])
+    except Exception:
+        paper_eq = None
+    try:
+        hist_path = ROOT / "historical_backtest_latest.json"
+        if hist_path.exists():
+            hist = json.loads(hist_path.read_text(encoding="utf-8"))
+            if hist.get("ok") and hist.get("equity_end") is not None:
+                hist_eq = float(hist["equity_end"])
+    except Exception:
+        hist_eq = None
+
+    equity_aligned = equity
+    ret_aligned = ret_pct
+    if paper_eq is not None:
+        equity_aligned = paper_eq
+        ret_aligned = (paper_eq / EQUITY0 - 1) * 100
+        ledger_note = "aligned_paper_book_equity"
+    elif hist_eq is not None:
+        equity_aligned = hist_eq
+        ret_aligned = (hist_eq / EQUITY0 - 1) * 100
+        ledger_note = "aligned_historical_equity_end"
+
     summary = (
-        f"{start}->{end} 纸面权益 {equity:.0f}（{ret_pct:+.2f}%），"
+        f"{start}->{end} 纸面权益 {equity_aligned:.0f}（{ret_aligned:+.2f}%），"
         f"MaxDD {max_dd:.2f}%，日胜率 {win_rate:.1f}%（样本{len(day_rets)}），"
         f"均持仓品种 {avg_held:.1f}，规则违约 {violations}。"
+        f" 口径={ledger_note}；周滚动日PnL权益={equity:.0f}。"
     )
     out = {
         "ok": True,
@@ -133,14 +184,19 @@ def run(days: int = 7) -> dict:
         "start": start,
         "end": end,
         "trade_days": len(day_rets),
-        "equity_end": round(equity, 2),
-        "ret_pct": round(ret_pct, 3),
+        "equity_end": round(equity_aligned, 2),
+        "equity_weekly_roll": round(equity, 2),
+        "ret_pct": round(ret_aligned, 3),
         "max_dd_pct": round(max_dd, 3),
         "win_rate": round(win_rate, 2) if win_rate is not None else None,
         "avg_held": round(avg_held, 2),
         "violations": violations,
         "conclusion": conclusion,
         "summary": summary,
+        "ledger": ledger_note,
+        "paper_equity": paper_eq,
+        "historical_equity_end": hist_eq,
+        "live_trading": False,
         "detail": json.dumps({"day_pnls": day_rets}, ensure_ascii=False),
     }
     path = ROOT / "weekly_backtest_latest.json"

@@ -12,7 +12,8 @@ permissions:
 jobs:
   weekly:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Member backfill (DCE/EM lookback) + paper PnL.
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -21,9 +22,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
 
-      - name: Run backtest
+      - name: Unit tests before weekly formal
+        run: python -m pytest tests/ -q --tb=short
+
+      - name: Run weekly (PnL + seat backfill)
         env:
           IFIND_ACTIVE_SLOT: primary
         run: python weekly_backtest.py
@@ -38,20 +44,29 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cta-weekly-${{ github.run_id }}
-          path: weekly_backtest_latest.json
+          path: |
+            weekly_backtest_latest.json
+            .cache/member/dce-*.json
+            .cache/member/em-*.json
+            .cache/member/shfe-*.txt
+            .cache/member/czce-*.txt
           if-no-files-found: warn
 
-      - name: Commit backtest snapshot
+      - name: Commit backtest + member cache
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         continue-on-error: true
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
+          mkdir -p .cache/member
           git add weekly_backtest_latest.json equity_state.json archive/*.json || true
+          # Densified seats for local git pull (esp. DCE/EM gaps).
+          git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
+          git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true
           if git diff --cached --quiet; then
             echo "no changes"
             exit 0
           fi
-          git commit -m "chore(cta): weekly backtest $(date -u +%Y%m%d)"
+          git commit -m "chore(cta): weekly backtest + seat backfill $(date -u +%Y%m%d)"
           git pull --rebase --autostash origin "${{ github.ref_name }}" || true
           git push origin "HEAD:${{ github.ref_name }}"

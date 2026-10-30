@@ -9,3 +9,26 @@ weekly_backtest_latest.json
 # keep archive in git optionally; ignore local noise
 *.conflict.*
 .cache/
+# Seat ranks: exchange txt + Eastmoney/Sina/DCE JSON (CI commits; local git pull).
+!.cache/member/
+.cache/member/*
+!.cache/member/dce-*.json
+!.cache/member/em-*.json
+!.cache/member/shfe-*.txt
+!.cache/member/czce-*.txt
+# Minute bars (15m / 60m) for chart board after pull.
+!.cache/akshare/
+.cache/akshare/*
+!.cache/akshare/minute/
+.cache/akshare/minute/*
+!.cache/akshare/minute/*.json
+# Sina daily stays ignored; CI force-adds only continuous {CODE}0.json (see daily.yml).
+# Lab regenerable bars/panels (keep scripts/config/research small JSON).
+lab/data/bars/continuous/*.json
+lab/data/factors/*.jsonl
+lab/data/factors/*_meta.json
+# Local Streamlit / scratch
+streamlit-desk.*
+_art_opt/
+_art_opt.zip
+_bt_*.json

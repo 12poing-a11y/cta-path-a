@@ -1,0 +1,11 @@
+{
+  "asof": null,
+  "note": "每日收盘后填入各指数合成信号或单因子；然后可用 equity_timing.pack_day / 研究台择时页展示。",
+  "predict_rule": "asof 日收盘信号 → 预测 asof+1 开盘到 asof+2 开盘",
+  "targets": {
+    "SH50": {"composite": null, "categories": {}},
+    "HS300": {"composite": null, "categories": {}},
+    "ZZ500": {"composite": null, "categories": {}},
+    "ZZ1000": {"composite": null, "categories": {}}
+  }
+}

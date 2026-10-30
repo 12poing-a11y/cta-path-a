@@ -1,0 +1,36 @@
+{
+  "id": "equity_index_timing",
+  "name": "股指估值/多因子择时信号",
+  "asof_note": "数据说明（用户提供）",
+  "targets": [
+    {"code": "SH50", "name": "上证50指数"},
+    {"code": "HS300", "name": "沪深300指数"},
+    {"code": "ZZ500", "name": "中证500指数"},
+    {"code": "ZZ1000", "name": "中证1000指数"}
+  ],
+  "horizon": {
+    "compute": "每日收盘后",
+    "predict": "t+1 开盘 → t+2 开盘",
+    "example": "更新日期 10月20日 的信号，预测周期为 10月21日开盘到 10月22日开盘"
+  },
+  "factor_levels": [-1, -0.5, 0, 0.5, 1],
+  "aggregation": {
+    "category_signal": "类别内单因子信号算术平均",
+    "composite_signal": "全部单因子信号算术平均",
+    "range": [-1, 1],
+    "interpretation": "越小越空，越大越多"
+  },
+  "weight_buckets": [
+    {"signal_low": -1.0, "signal_high": -0.3, "weight": -1.0, "label": "-100%", "inclusive": "left_open_right_closed"},
+    {"signal_low": -0.3, "signal_high": -0.1, "weight": -0.5, "label": "-50%", "inclusive": "left_open_right_closed"},
+    {"signal_low": -0.1, "signal_high": 0.1, "weight": 0.0, "label": "0%", "inclusive": "left_open_right_closed"},
+    {"signal_low": 0.1, "signal_high": 0.3, "weight": 0.5, "label": "50%", "inclusive": "left_open_right_closed"},
+    {"signal_low": 0.3, "signal_high": 1.0, "weight": 1.0, "label": "100%", "inclusive": "left_open_right_closed"}
+  ],
+  "style": {
+    "win_rate": "40%-50%",
+    "payoff_ratio": ">2",
+    "note": "低胜率高赔率"
+  },
+  "disclaimer": "研究跟踪用，非下单指令；与商品 Path-A 品种池分离。"
+}

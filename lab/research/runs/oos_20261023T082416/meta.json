@@ -1,0 +1,26 @@
+{
+  "plan": "A",
+  "created_at": "2026-10-23T08:24:16.413611+00:00",
+  "root": "D:/AI/cta-path-a",
+  "oos_split": {
+    "schema": "cta-lab-oos-v1",
+    "calendar": "CN_futures_approx",
+    "in_sample": {
+      "start": "2015-01-01",
+      "end": "2021-12-31",
+      "use": "factor definition, IC screening, weight templates only"
+    },
+    "out_of_sample": {
+      "start": "2022-01-01",
+      "end": null,
+      "use": "frozen evaluation vs Path-A; no retuning on this window"
+    },
+    "embargo_days": 5,
+    "note": "end=null 表示用数据最新交易日。调参禁止偷看 OOS。"
+  },
+  "panel_sha16": "ad2ccaccd585ac18",
+  "bars_manifest_sha16": "1b2ce32d429c9dec",
+  "factors_registry_sha16": "b5a4b3839eae86dd",
+  "script": "run_oos_vs_path_a.py",
+  "cost_bps_one_way": 3.0
+}

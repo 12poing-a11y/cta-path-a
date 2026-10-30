@@ -1,0 +1,16 @@
+{
+  "schema": "cta-lab-oos-v1",
+  "calendar": "CN_futures_approx",
+  "in_sample": {
+    "start": "2015-01-01",
+    "end": "2021-12-31",
+    "use": "factor definition, IC screening, weight templates only"
+  },
+  "out_of_sample": {
+    "start": "2022-01-01",
+    "end": null,
+    "use": "frozen evaluation vs Path-A; no retuning on this window"
+  },
+  "embargo_days": 5,
+  "note": "end=null 表示用数据最新交易日。调参禁止偷看 OOS。"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "dzqh_ts_sharp",
+  "name": "东证·RuleBasedTSSharp-combine",
+  "description": "规则型时序多空信号，样本内筛选后夏普加权组合。",
+  "curve_file": "external/strategies/dzqh_ts_sharp.json",
+  "tags": [
+    "external",
+    "dzqh",
+    "commodity",
+    "timeseries",
+    "validation_archive",
+    "unstable_source"
+  ],
+  "placeholder": false,
+  "desk_active": false,
+  "archive_reason": "不能长期稳定自动获取（依赖用户粘贴东证周报 KPI）；退出研究台展示，保留供后期对照验证。",
+  "archived_at": "2026-10-23"
+}

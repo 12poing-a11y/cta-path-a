@@ -1,0 +1,19 @@
+{
+  "id": "lab_plan_a_v1",
+  "name": "Plan A 日频因子池",
+  "asof": "2026-10-27",
+  "source": "path_a_universe + observe_sleeve_metals",
+  "path_a_codes": [
+    "MA", "V", "EG", "M", "FG", "EB", "TA", "SA", "PP", "L",
+    "JD", "P", "RB", "FU", "CF", "BU", "RU", "AG", "SP", "SR",
+    "AU", "CU", "AL", "NI", "I", "JM", "SS"
+  ],
+  "observe_sleeve": ["AU", "CU", "AL", "NI", "I", "JM", "SS"],
+  "watchlist_expand": [
+    "J", "HC", "ZN", "SN", "AO",
+    "SC", "LU", "PG", "LH", "C", "CS", "Y", "OI", "RM", "AP",
+    "CJ", "UR", "SF", "SM", "PF", "PX", "SH", "BR"
+  ],
+  "excluded_from_factors_until_data": ["IF", "IH", "IC", "IM", "T", "TF", "TL"],
+  "note": "path_a_codes 含观察袖套有色/黑色（AU/CU/AL/NI/I/JM/SS），与 universe.json sleeve=observe 对齐；同 Path-A 栈进日报与模拟仓。其余 watchlist 有连续日线后再纳入。股指国债另册。"
+}

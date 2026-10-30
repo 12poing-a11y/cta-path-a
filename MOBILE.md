@@ -28,7 +28,7 @@ Notion Integration 需连接「CTA日信号台账 / CTA回测报告」。
 
 ## 之后手机怎么用
 
-1. **自动**：工作日约 15:30（北京时间）跑日报；周日约 20:00 周回测  
+1. **自动**：工作日约 15:30（北京时间）跑日报；周日约 09:00 周回测  
 2. **手动**：GitHub App → `cta-path-a` → Actions → 选 workflow → **Run workflow**  
 3. **看结果**：Actions 日志 / Artifacts；或仓库 `archive/`；或 Notion；或 https://12poing-a11y.github.io/（需同步 data）
 

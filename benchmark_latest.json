@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "asof": "2026-10-20",
+  "asof": "2026-10-21",
   "contract": "主力连续",
   "data_source": "sina+tencent primary, iFinD fills gaps",
   "rules": {
@@ -13,51 +13,39 @@
   },
   "window": {
     "benchmark": {
-      "start": "2025-11-27",
-      "end": "2026-10-20",
+      "start": "2025-11-28",
+      "end": "2026-10-21",
       "trade_days": 215,
-      "equity_end": 195163.38,
-      "ret_pct": -2.418,
+      "equity_end": 195133.38,
+      "ret_pct": -2.433,
       "max_dd_pct": 6.72,
       "pnl_by_sleeve": {
         "slow": -3276.6,
-        "fast": -3799.31,
+        "fast": -3829.31,
         "carry": 2239.29
       },
       "days_with_sleeve": {
         "slow": 161,
-        "fast": 12,
+        "fast": 13,
         "carry": 9
       },
-      "cost_yuan": 3051.62
+      "cost_yuan": 3081.62
     },
     "path_a_base": {
-      "start": "2025-11-27",
-      "end": "2026-10-20",
+      "start": "2025-11-28",
+      "end": "2026-10-21",
       "trade_days": 215,
-      "ret_pct": 8.936,
-      "max_dd_pct": 5.029,
-      "gross_ret_pct": 11.855,
-      "cost_yuan": 5837.92,
-      "closed_trades": 71
+      "ret_pct": 8.457,
+      "max_dd_pct": 5.015,
+      "gross_ret_pct": 11.6,
+      "cost_yuan": 6286.43,
+      "closed_trades": 74
     },
-    "daily_pnl_corr": 0.21,
+    "daily_pnl_corr": 0.205,
     "beats_base_on_net_and_drawdown": false
   },
   "equity_start": 200000.0,
   "equity_curve": [
-    {
-      "date": "2025-11-27",
-      "equity": 200000.0,
-      "pnl": 0.0,
-      "dd_pct": 0.0,
-      "held": 0,
-      "sleeve_pnl": {
-        "slow": 0.0,
-        "fast": 0.0,
-        "carry": 0.0
-      }
-    },
     {
       "date": "2025-11-28",
       "equity": 200000.0,
@@ -2625,21 +2613,21 @@
         "fast": 0.0,
         "carry": 0.0
       }
+    },
+    {
+      "date": "2026-10-21",
+      "equity": 195133.38,
+      "pnl": -30.0,
+      "dd_pct": 5.227,
+      "held": 1,
+      "sleeve_pnl": {
+        "slow": 0.0,
+        "fast": -30.0,
+        "carry": 0.0
+      }
     }
   ],
   "equity_curve_weekly": [
-    {
-      "date": "2025-11-27",
-      "equity": 200000.0,
-      "pnl": 0.0,
-      "dd_pct": 0.0,
-      "held": 0,
-      "sleeve_pnl": {
-        "slow": 0.0,
-        "fast": 0.0,
-        "carry": 0.0
-      }
-    },
     {
       "date": "2025-11-28",
       "equity": 200000.0,
@@ -3253,316 +3241,316 @@
       }
     },
     {
-      "date": "2026-10-20",
-      "equity": 195163.38,
-      "pnl": 0.0,
-      "dd_pct": 5.212,
-      "held": 0,
+      "date": "2026-10-21",
+      "equity": 195133.38,
+      "pnl": -30.0,
+      "dd_pct": 5.227,
+      "held": 1,
       "sleeve_pnl": {
         "slow": 0.0,
-        "fast": 0.0,
+        "fast": -30.0,
         "carry": 0.0
       }
     }
   ],
   "full_after_250_warmup": {
     "start": "2007-12-31",
-    "end": "2026-10-20",
-    "trade_days": 4573,
-    "equity_end": 86715.67,
-    "ret_pct": -56.642,
+    "end": "2026-10-21",
+    "trade_days": 4574,
+    "equity_end": 86685.67,
+    "ret_pct": -56.657,
     "max_dd_pct": 60.708,
     "pnl_by_sleeve": {
       "slow": -101372.35,
-      "fast": -8725.1,
+      "fast": -8755.1,
       "carry": -3186.88
     },
     "days_with_sleeve": {
       "slow": 2635,
-      "fast": 804,
+      "fast": 805,
       "carry": 16
     },
-    "cost_yuan": 44739.33
+    "cost_yuan": 44769.33
   },
   "sources": {
     "MA": {
       "sina_symbol": "MA0",
       "tencent_symbol": "nf_MA0",
-      "sina_n": 2863,
+      "sina_n": 2864,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 2863,
-      "last": "2026-10-20",
+      "free_n": 2864,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 2863,
+      "bars": 2864,
       "contract": "主力连续"
     },
     "V": {
       "sina_symbol": "V0",
       "tencent_symbol": "nf_V0",
-      "sina_n": 4220,
+      "sina_n": 4221,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 4220,
-      "last": "2026-10-20",
+      "free_n": 4221,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 4220,
+      "bars": 4221,
       "contract": "主力连续"
     },
     "EG": {
       "sina_symbol": "EG0",
       "tencent_symbol": "nf_EG0",
-      "sina_n": 1903,
+      "sina_n": 1904,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 1903,
-      "last": "2026-10-20",
+      "free_n": 1904,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 1903,
+      "bars": 1904,
       "contract": "主力连续"
     },
     "M": {
       "sina_symbol": "M0",
       "tencent_symbol": "nf_M0",
-      "sina_n": 5302,
+      "sina_n": 5303,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 5302,
-      "last": "2026-10-20",
+      "free_n": 5303,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 5302,
+      "bars": 5303,
       "contract": "主力连续"
     },
     "FG": {
       "sina_symbol": "FG0",
       "tencent_symbol": "nf_FG0",
-      "sina_n": 3359,
+      "sina_n": 3360,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 3359,
-      "last": "2026-10-20",
+      "free_n": 3360,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 3359,
+      "bars": 3360,
       "contract": "主力连续"
     },
     "EB": {
       "sina_symbol": "EB0",
       "tencent_symbol": "nf_EB0",
-      "sina_n": 1709,
+      "sina_n": 1710,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 1709,
-      "last": "2026-10-20",
+      "free_n": 1710,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 1709,
+      "bars": 1710,
       "contract": "主力连续"
     },
     "TA": {
       "sina_symbol": "TA0",
       "tencent_symbol": "nf_TA0",
-      "sina_n": 4817,
+      "sina_n": 4818,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 4817,
-      "last": "2026-10-20",
+      "free_n": 4818,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 4817,
+      "bars": 4818,
       "contract": "主力连续"
     },
     "SA": {
       "sina_symbol": "SA0",
       "tencent_symbol": "nf_SA0",
-      "sina_n": 1663,
+      "sina_n": 1664,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 1663,
-      "last": "2026-10-20",
+      "free_n": 1664,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 1663,
+      "bars": 1664,
       "contract": "主力连续"
     },
     "PP": {
       "sina_symbol": "PP0",
       "tencent_symbol": "nf_PP0",
-      "sina_n": 3071,
+      "sina_n": 3072,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 3071,
-      "last": "2026-10-20",
+      "free_n": 3072,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 3071,
+      "bars": 3072,
       "contract": "主力连续"
     },
     "L": {
       "sina_symbol": "L0",
       "tencent_symbol": "nf_L0",
-      "sina_n": 4674,
+      "sina_n": 4675,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 4674,
-      "last": "2026-10-20",
+      "free_n": 4675,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 4674,
+      "bars": 4675,
       "contract": "主力连续"
     },
     "JD": {
       "sina_symbol": "JD0",
       "tencent_symbol": "nf_JD0",
-      "sina_n": 3146,
+      "sina_n": 3147,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 3146,
-      "last": "2026-10-20",
+      "free_n": 3147,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 3146,
+      "bars": 3147,
       "contract": "主力连续"
     },
     "P": {
       "sina_symbol": "P0",
       "tencent_symbol": "nf_P0",
-      "sina_n": 4613,
+      "sina_n": 4614,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 4613,
-      "last": "2026-10-20",
+      "free_n": 4614,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 4613,
+      "bars": 4614,
       "contract": "主力连续"
     },
     "RB": {
       "sina_symbol": "RB0",
       "tencent_symbol": "nf_RB0",
-      "sina_n": 4263,
+      "sina_n": 4264,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 4263,
-      "last": "2026-10-20",
+      "free_n": 4264,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 4263,
+      "bars": 4264,
       "contract": "主力连续"
     },
     "FU": {
       "sina_symbol": "FU0",
       "tencent_symbol": "nf_FU0",
-      "sina_n": 5274,
+      "sina_n": 5275,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 5274,
-      "last": "2026-10-20",
+      "free_n": 5275,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 5274,
+      "bars": 5275,
       "contract": "主力连续"
     },
     "CF": {
       "sina_symbol": "CF0",
       "tencent_symbol": "nf_CF0",
-      "sina_n": 5300,
+      "sina_n": 5301,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 5300,
-      "last": "2026-10-20",
+      "free_n": 5301,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 5300,
+      "bars": 5301,
       "contract": "主力连续"
     },
     "BU": {
       "sina_symbol": "BU0",
       "tencent_symbol": "nf_BU0",
-      "sina_n": 3165,
+      "sina_n": 3166,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 3165,
-      "last": "2026-10-20",
+      "free_n": 3166,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 3165,
+      "bars": 3166,
       "contract": "主力连续"
     },
     "RU": {
       "sina_symbol": "RU0",
       "tencent_symbol": "nf_RU0",
-      "sina_n": 5297,
+      "sina_n": 5298,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 5297,
-      "last": "2026-10-20",
+      "free_n": 5298,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 5297,
+      "bars": 5298,
       "contract": "主力连续"
     },
     "AG": {
       "sina_symbol": "AG0",
       "tencent_symbol": "nf_AG0",
-      "sina_n": 3513,
+      "sina_n": 3514,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 3513,
-      "last": "2026-10-20",
+      "free_n": 3514,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 3513,
+      "bars": 3514,
       "contract": "主力连续"
     },
     "SP": {
       "sina_symbol": "SP0",
       "tencent_symbol": "nf_SP0",
-      "sina_n": 1912,
+      "sina_n": 1913,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 1912,
-      "last": "2026-10-20",
+      "free_n": 1913,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 1912,
+      "bars": 1913,
       "contract": "主力连续"
     },
     "SR": {
       "sina_symbol": "SR0",
       "tencent_symbol": "nf_SR0",
-      "sina_n": 5043,
+      "sina_n": 5044,
       "tencent_n": 0,
       "sina_error": "",
       "tencent_error": "",
       "source": "sina",
-      "free_n": 5043,
-      "last": "2026-10-20",
+      "free_n": 5044,
+      "last": "2026-10-21",
       "ifind": false,
-      "bars": 5043,
+      "bars": 5044,
       "contract": "主力连续"
     }
   },
@@ -3571,124 +3559,130 @@
       "source": "sina",
       "contracts": 7,
       "roll_days": 8,
-      "carry_days": 423
-    },
-    "MA": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
+      "carry_days": 424
     },
     "EG": {
       "source": "sina",
       "contracts": 7,
       "roll_days": 8,
-      "carry_days": 413
+      "carry_days": 414
+    },
+    "MA": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 8,
+      "carry_days": 424
     },
     "FG": {
       "source": "sina",
       "contracts": 7,
       "roll_days": 8,
-      "carry_days": 423
+      "carry_days": 424
     },
     "TA": {
       "source": "sina",
       "contracts": 7,
       "roll_days": 8,
-      "carry_days": 423
+      "carry_days": 424
     },
     "SA": {
       "source": "sina",
       "contracts": 7,
       "roll_days": 8,
-      "carry_days": 423
-    },
-    "PP": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 420
+      "carry_days": 424
     },
     "M": {
       "source": "sina",
       "contracts": 19,
       "roll_days": 10,
-      "carry_days": 525
+      "carry_days": 526
+    },
+    "PP": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 8,
+      "carry_days": 421
     },
     "L": {
       "source": "sina",
       "contracts": 7,
       "roll_days": 8,
-      "carry_days": 423
+      "carry_days": 424
     },
     "P": {
       "source": "sina",
       "contracts": 7,
       "roll_days": 8,
-      "carry_days": 423
+      "carry_days": 424
     },
     "RB": {
       "source": "sina",
       "contracts": 6,
       "roll_days": 8,
-      "carry_days": 423
+      "carry_days": 424
     },
     "EB": {
       "source": "sina",
       "contracts": 27,
       "roll_days": 48,
-      "carry_days": 504
+      "carry_days": 505
     },
     "CF": {
       "source": "sina",
       "contracts": 7,
       "roll_days": 8,
-      "carry_days": 423
+      "carry_days": 424
     },
     "RU": {
       "source": "sina",
       "contracts": 7,
       "roll_days": 8,
-      "carry_days": 423
+      "carry_days": 424
     },
     "JD": {
       "source": "sina",
       "contracts": 27,
       "roll_days": 44,
-      "carry_days": 516
+      "carry_days": 517
     },
     "FU": {
       "source": "sina",
       "contracts": 28,
       "roll_days": 24,
-      "carry_days": 535
-    },
-    "SR": {
-      "source": "sina",
-      "contracts": 7,
-      "roll_days": 8,
-      "carry_days": 423
+      "carry_days": 536
     },
     "BU": {
       "source": "sina",
       "contracts": 28,
       "roll_days": 80,
-      "carry_days": 613
+      "carry_days": 614
+    },
+    "SR": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 8,
+      "carry_days": 424
     },
     "SP": {
       "source": "sina",
       "contracts": 19,
       "roll_days": 29,
-      "carry_days": 519
+      "carry_days": 520
     },
     "AG": {
       "source": "sina",
       "contracts": 27,
       "roll_days": 22,
-      "carry_days": 524
+      "carry_days": 525
     }
   },
-  "final_positions": {},
+  "final_positions": {
+    "FG": {
+      "slow": 0,
+      "fast": -1,
+      "carry": 0
+    }
+  },
   "errors": {},
   "ifind_calls": 0,
   "ifind_call_log": []

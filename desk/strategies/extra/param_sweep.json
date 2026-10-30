@@ -1,0 +1,7 @@
+{
+  "id": "param_sweep",
+  "name": "路径A 扫参最优",
+  "description": "stop×RR（可选动量门槛）批量纸面扫参；曲线/KPI 来自 param_sweep_latest.json",
+  "curve_file": "param_sweep_latest.json",
+  "tags": ["path_a", "param_sweep", "grid"]
+}

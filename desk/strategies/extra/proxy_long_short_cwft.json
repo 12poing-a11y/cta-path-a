@@ -1,0 +1,12 @@
+{
+  "id": "proxy_long_short_cwft",
+  "name": "本地代理·Long/Short CWFT",
+  "description": "本地代理·Long/Short CWFT：东证 CWFT/期限结构思路的本地近似，用近远月升贴水 + 动量代理 C/F/T；仓单 W 缺数据时置 0。",
+  "curve_file": "external/strategies/proxy_long_short_cwft.json",
+  "tags": [
+    "proxy",
+    "dzqh_inspired",
+    "commodity",
+    "long_short_cwft"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "plan": "A",
+  "is_end": "2021-12-31",
+  "oos_start": "2022-01-01",
+  "oos_rows": 23199,
+  "hits": 11424,
+  "miss": 11438,
+  "flat": 337,
+  "hit_rate_pct": 49.97,
+  "metric": "sign(mom_20) vs next-day close return (smoke only)",
+  "disclaimer": "冒烟指标，非策略夏普/净收益承诺；正式 OOS 净值另开 runs。"
+}

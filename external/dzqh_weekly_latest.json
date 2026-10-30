@@ -1,0 +1,199 @@
+{
+  "source": "东证衍生品研究院《金工策略周报》跟踪摘录（用户粘贴）",
+  "desk_active": false,
+  "validation_archive": true,
+  "archive_note": "不能长期稳定自动获取 → 已退出研究台策略库/评分栏；数据保留在 external/strategies 与 external/archive，供后期对照验证本地代理与 Path-A。",
+  "asof": "2026-10-16",
+  "disclaimer": "外部研报 KPI，非本仓库回测；不可作为下单指令。模型基于历史数据，环境变化可能导致失效。",
+  "market_note": "10/09–10/16 CCI −1.91%；截面商品因子总体仍偏强，关注资金拥挤与回调风险。",
+  "menu_map": {
+    "多因子截面策略/基于普通线性复合": [
+      "dzqh_cwft"
+    ],
+    "多因子截面策略/基于另类复合": [
+      "dzqh_frontnext_st",
+      "dzqh_long_short_trend",
+      "dzqh_long_short_cwft"
+    ],
+    "多因子截面策略/基于非线性复合": [
+      "dzqh_cs_xgboost"
+    ],
+    "时序策略": [
+      "dzqh_ts_sharp",
+      "dzqh_ts_xgb"
+    ],
+    "估值与期现/套利信号": [
+      "dzqh_val_timing",
+      "dzqh_xasset_arb_roll",
+      "dzqh_basis_roll_timing"
+    ],
+    "CTA配置": [
+      "dzqh_cta_alloc",
+      "dzqh_cs_ew"
+    ]
+  },
+  "strategies": [
+    {
+      "id": "dzqh_t_daily",
+      "name": "东证·十年期国债日频择时",
+      "family": "treasury",
+      "menu": "国债期货量化策略",
+      "description": "基差 / 风险资产 / 会员持仓等多维规则日频择时（研报跟踪）。样本外自 2021-01-01；本仓库不作完整复刻。",
+      "tags": [
+        "external",
+        "dzqh",
+        "treasury",
+        "timing"
+      ],
+      "ret_ann_pct": 2.75,
+      "sharpe": 1.27,
+      "max_dd_pct": 1.91,
+      "calmar": null,
+      "ret_since_publish_ann_pct": 2.18,
+      "sharpe_since_publish": 1.46,
+      "max_dd_since_publish_pct": 0.67,
+      "publish_start": "2025-11-01",
+      "sample_out_start": "2021-01-01",
+      "leverage": 1.0
+    },
+    {
+      "id": "dzqh_cwft",
+      "name": "东证·CWFT组合",
+      "family": "commodity_cs",
+      "menu": "多因子截面策略/基于普通线性复合",
+      "description": "导航：多因子截面 → 普通线性复合 → CWFT。Carry/Warrant/Futures-spot/Trend 大类内等权，大类间 5:2:2:1。本地有 proxy_cwft 近似。",
+      "tags": [
+        "external",
+        "dzqh",
+        "commodity",
+        "cwft",
+        "cs_linear"
+      ],
+      "ret_ann_pct": 11.2,
+      "sharpe": 1.85,
+      "calmar": 1.28,
+      "max_dd_pct": 8.81,
+      "week_ret_pct": 1.72,
+      "ytd_ret_pct": 21.77
+    },
+    {
+      "id": "dzqh_frontnext_st",
+      "name": "东证·C_frontnext&ShortTrend组合",
+      "family": "commodity_cs",
+      "menu": "多因子截面策略/基于另类复合",
+      "description": "导航：多因子截面 → 另类复合。近远月价差为主、短趋势为副。本地有 proxy_frontnext_st。",
+      "tags": [
+        "external",
+        "dzqh",
+        "commodity",
+        "term_structure",
+        "cs_alt"
+      ],
+      "ret_ann_pct": 12.3,
+      "sharpe": 1.75,
+      "calmar": 1.82,
+      "max_dd_pct": 6.72,
+      "week_ret_pct": 0.5,
+      "ytd_ret_pct": 15.44
+    },
+    {
+      "id": "dzqh_long_short_cwft",
+      "name": "东证·LongCWFT&ShortCWFT",
+      "family": "commodity_cs",
+      "menu": "多因子截面策略/基于另类复合",
+      "description": "长周期 CWFT 为主、短周期 CWFT 为副。本地有 proxy_long_short_cwft。",
+      "tags": [
+        "external",
+        "dzqh",
+        "commodity",
+        "cwft",
+        "cs_alt"
+      ],
+      "ret_ann_pct": 14.4,
+      "sharpe": 1.53,
+      "calmar": 1.1,
+      "max_dd_pct": 13.07,
+      "week_ret_pct": 0.13,
+      "ytd_ret_pct": 26.12
+    },
+    {
+      "id": "dzqh_cs_xgboost",
+      "name": "东证·CS XGBoost组合",
+      "family": "commodity_cs_ml",
+      "menu": "多因子截面策略/基于非线性复合",
+      "description": "导航：多因子截面 → 非线性复合 → CS XGBoost。2009–2019 训练；本仓库无因子库，仅跟踪 KPI。",
+      "tags": [
+        "external",
+        "dzqh",
+        "commodity",
+        "ml",
+        "cs_nonlinear"
+      ],
+      "ret_ann_pct": 4.1,
+      "sharpe": 0.67,
+      "calmar": 0.17,
+      "max_dd_pct": 23.47,
+      "week_ret_pct": -0.47,
+      "ytd_ret_pct": -7.87
+    },
+    {
+      "id": "dzqh_ts_sharp",
+      "name": "东证·RuleBasedTSSharp-combine",
+      "family": "commodity_ts",
+      "menu": "时序策略",
+      "description": "规则型时序多空信号，样本内筛选后夏普加权组合。",
+      "tags": [
+        "external",
+        "dzqh",
+        "commodity",
+        "timeseries"
+      ],
+      "ret_ann_pct": 11.6,
+      "sharpe": 1.53,
+      "calmar": 1.4,
+      "max_dd_pct": 8.26,
+      "week_ret_pct": 0.35,
+      "ytd_ret_pct": 7.03
+    },
+    {
+      "id": "dzqh_ts_xgb",
+      "name": "东证·RuleBasedTSXGB-combine",
+      "family": "commodity_ts_ml",
+      "menu": "时序策略",
+      "description": "规则型时序多空信号的 XGB 组合。本仓库无其训练管线，仅跟踪 KPI。",
+      "tags": [
+        "external",
+        "dzqh",
+        "commodity",
+        "ml",
+        "timeseries"
+      ],
+      "ret_ann_pct": 11.5,
+      "sharpe": 2.02,
+      "calmar": 2.31,
+      "max_dd_pct": 4.95,
+      "week_ret_pct": -0.6,
+      "ytd_ret_pct": 6.43
+    },
+    {
+      "id": "dzqh_cs_ew",
+      "name": "东证·CSstrategies,EWcombine",
+      "family": "commodity_cs",
+      "menu": "CTA配置",
+      "description": "截面策略周度收益等权复合（配置层常用基准）。",
+      "tags": [
+        "external",
+        "dzqh",
+        "commodity",
+        "combine",
+        "cta_alloc"
+      ],
+      "ret_ann_pct": 13.8,
+      "sharpe": 1.88,
+      "calmar": 1.87,
+      "max_dd_pct": 7.38,
+      "week_ret_pct": 0.43,
+      "ytd_ret_pct": 18.47
+    }
+  ]
+}

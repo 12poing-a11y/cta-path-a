@@ -1,0 +1,7 @@
+{
+  "id": "my_custom",
+  "name": "自定义策略示例",
+  "description": "复制为 *.json 并指向含 equity_curve 的引擎产物",
+  "curve_file": "archive/backtest_20261020.json",
+  "tags": ["extra", "example"]
+}

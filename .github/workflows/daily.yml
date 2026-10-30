@@ -12,7 +12,7 @@ permissions:
 jobs:
   daily:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
@@ -21,9 +21,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
 
-      - name: Fetch signals
+      - name: Unit tests before formal daily
+        run: python -m pytest tests/ -q --tb=short
+
+      - name: Fetch signals + seats + minute 15/60
         env:
           IFIND_AUTH_TOKEN: ${{ secrets.IFIND_AUTH_TOKEN }}
           IFIND_AUTH_TOKEN_BACKUP: ${{ secrets.IFIND_AUTH_TOKEN_BACKUP }}
@@ -32,31 +37,68 @@ jobs:
         run: python daily_update.py
 
       - name: Sync Notion
+        if: success()
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           IFIND_ACTIVE_SLOT: primary
-        run: python notion_sync.py signals
+        run: |
+          python notion_sync.py signals
+          # signals already pushes trades; explicit trades keeps ledger if signals skipped
+          python notion_sync.py trades
 
       - name: Upload artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cta-daily-${{ github.run_id }}
           path: |
             l1_report_risk15.json
+            l1_report_quality_failed.json
+            data/sentiment_mds/
             archive/
+            .cache/member/dce-*.json
+            .cache/member/em-*.json
+            .cache/member/shfe-*.txt
+            .cache/member/czce-*.txt
+            .cache/akshare/minute/*.json
+            .cache/sina/
           if-no-files-found: warn
 
-      - name: Commit archive (optional)
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      - name: Commit archive + full cache
+        if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         continue-on-error: true
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
-          git add archive/*.json l1_report_risk15.json l1_report.json || true
+          mkdir -p .cache/member .cache/akshare/minute data/sentiment_mds
+          git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
+          git add data/sentiment_mds/*.json || true
+          git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
+          git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true
+          git add -f .cache/akshare/minute/*.json || true
+          # Continuous daily only: stem is letters + trailing 0 (RB0, AG0), not month (RB2601).
+          python - <<'PY'
+          import re
+          import subprocess
+          from pathlib import Path
+          pat = re.compile(r"^[A-Za-z]+0\.json$")
+          paths = []
+          for day in Path(".cache/sina").glob("*"):
+              if not day.is_dir():
+                  continue
+              for p in day.glob("*.json"):
+                  if pat.match(p.name):
+                      paths.append(str(p))
+          if paths:
+              subprocess.check_call(["git", "add", "-f", *paths])
+              print(f"staged {len(paths)} sina continuous files")
+          else:
+              print("no sina continuous CODE0.json to stage")
+          PY
           if git diff --cached --quiet; then
             echo "no changes"
             exit 0
           fi
-          git commit -m "chore(cta): daily $(date -u +%Y%m%d)"
+          git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+CODE0+sentiment"
           git pull --rebase --autostash origin "${{ github.ref_name }}" || true
           git push origin "HEAD:${{ github.ref_name }}"

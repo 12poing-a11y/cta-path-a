@@ -1,0 +1,91 @@
+{
+  "ok": true,
+  "asof": "2026-10-27T13:26:20.435094+00:00",
+  "cfg": {
+    "enabled": true,
+    "action": "observe",
+    "disagree_frac": 0.2,
+    "note": "席位确认之后：lab IS冻结合成截面分位与拟开仓方向严重逆向（最低/最高20%）→决策观望；缺面板或截面过稀放行。不改 entry_filter=seats，也不改 ATR。"
+  },
+  "panel_date": "2026-10-22",
+  "n_codes": 20,
+  "reason": null,
+  "members": [
+    {
+      "factor": "mom_20",
+      "sign": -1.0,
+      "weight": 0.079175
+    },
+    {
+      "factor": "mom_60",
+      "sign": -1.0,
+      "weight": 0.316104
+    },
+    {
+      "factor": "vol_ratio_sl",
+      "sign": 1.0,
+      "weight": 0.12937
+    },
+    {
+      "factor": "carry_gap_pct",
+      "sign": 1.0,
+      "weight": 0.098895
+    },
+    {
+      "factor": "skew_60",
+      "sign": -1.0,
+      "weight": 0.30983
+    },
+    {
+      "factor": "mom_vol_20",
+      "sign": -1.0,
+      "weight": 0.066627
+    }
+  ],
+  "scores": {
+    "AG": 0.688698,
+    "BU": 0.288275,
+    "CF": -0.124466,
+    "EB": -0.736382,
+    "EG": 1.133287,
+    "FG": 0.469817,
+    "FU": -1.26375,
+    "JD": 1.381682,
+    "L": -0.358807,
+    "M": 0.306763,
+    "MA": -0.028945,
+    "P": 0.446704,
+    "PP": -0.390605,
+    "RB": 0.057027,
+    "RU": -1.095581,
+    "SA": 0.574148,
+    "SP": -0.033145,
+    "SR": -0.307756,
+    "TA": -0.47479,
+    "V": -0.532173
+  },
+  "percentiles": {
+    "FU": 0.0,
+    "RU": 0.0526,
+    "EB": 0.1053,
+    "V": 0.1579,
+    "TA": 0.2105,
+    "PP": 0.2632,
+    "L": 0.3158,
+    "SR": 0.3684,
+    "CF": 0.4211,
+    "SP": 0.4737,
+    "MA": 0.5263,
+    "RB": 0.5789,
+    "BU": 0.6316,
+    "M": 0.6842,
+    "P": 0.7368,
+    "FG": 0.7895,
+    "SA": 0.8421,
+    "AG": 0.8947,
+    "EG": 0.9474,
+    "JD": 1.0
+  },
+  "entry_filter_unchanged": "seats",
+  "note": "IS-frozen composite soft edge; disagree → observe/block; missing → pass."
+}

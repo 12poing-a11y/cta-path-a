@@ -1,0 +1,18 @@
+{
+  "id": "dzqh_t_daily",
+  "name": "东证·十年期国债日频择时",
+  "description": "基差 / 风险资产 / 会员持仓等多维规则日频择时（研报跟踪）。样本外自 2021-01-01；本仓库不作完整复刻。",
+  "curve_file": "external/strategies/dzqh_t_daily.json",
+  "tags": [
+    "external",
+    "dzqh",
+    "treasury",
+    "timing",
+    "validation_archive",
+    "unstable_source"
+  ],
+  "placeholder": false,
+  "desk_active": false,
+  "archive_reason": "不能长期稳定自动获取（依赖用户粘贴东证周报 KPI）；退出研究台展示，保留供后期对照验证。",
+  "archived_at": "2026-10-23"
+}

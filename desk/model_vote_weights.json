@@ -1,0 +1,28 @@
+{
+  "schema": "cta-desk-model-vote-v1",
+  "note": "综合投票乘数。趋势R2=HMM×R2联合OOS的C路径主轴；HMM按A门控OOS失败降权（N=4/PF≈0.17 vs C N=37/PF≈2.42）。不改 entry_filter=seats。",
+  "source": "Notion归档 2026-10-17 HMM×R2 联合OOS；C=R2 ex-SC 2019_fixed",
+  "multipliers": {
+    "趋势R2": 2.0,
+    "动量20/60": 1.5,
+    "席位资金": 1.2,
+    "升贴水": 0.8,
+    "波动突破": 0.8,
+    "震荡均值回归": 0.5,
+    "HMM三状态": 0.25
+  },
+  "trend_r2": {
+    "window": 60,
+    "r2_min": 0.2,
+    "note": "log(close)~time OLS；R²≥r2_min 取斜率符号，否则震荡。perturb_R2±20% 对照阈 0.16–0.24 不改默认。"
+  },
+  "composite_layer_weights": {
+    "方向三桶": 1.2,
+    "趋势R2": 1.8,
+    "HMM": 0.25,
+    "模型投票": 1.5,
+    "决策卡": 1.3,
+    "股指择时": 0.8,
+    "策略库均分": 0.7
+  }
+}

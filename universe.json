@@ -2,19 +2,16 @@
   "equity": 200000,
   "risk_pct": 1.5,
   "l1_mult": 1.0,
-  "notes": "Path-A 20/60同向；动量门槛3%/5%；止损1.2×ATR、止盈1.5R（止盈距离1.8×ATR）。2025-11-27至2026-10-20 该档净收益+10.09%、净回撤4.86%（原1×ATR/2R为+6.22%/5.04%）。日报 entry_filter=seats：信号先过 20/60，再按席位级联确认——跟随中信、国泰君安、华泰、永安、东证；其次摩根大通、摩根士丹利、瑞银、高盛；再次与东方财富、平安、方正中期、徽商、中信建投反向；单边不开反向单。2025-11-27至2026-10-20 seats 净收益+6.22%、净回撤5.04%（同窗 base +6.77%/5.50%）。排名中信建投计入中建投，东证期货计入东证融汇；大商所无会员排名时放行。回测列毛收益、净收益、1跳滑点和2026-09-02客户手续费。",
+  "notes": "Path-A 20/60同向；动量门槛3%/5%；止损1.2×ATR、止盈1.5R（止盈距离1.8×ATR）。2025-11-27至2026-10-20 该档净收益+10.09%、净回撤4.86%（原1×ATR/2R为+6.22%/5.04%）。日报 entry_filter=seats：信号先过 20/60，再按席位级联确认——跟随中信、国泰君安、华泰、永安、东证；其次摩根大通、摩根士丹利、瑞银、高盛；再次与东方财富、平安、方正中期、徽商、中信建投反向；单边不开反向单。观察袖套 AU/CU/AL/NI/JM/SS/I 同栈进日报与模拟仓，手数不足时抬到 observe.min_lots=1（不改 20 万执行权益）。排名中信建投计入中建投，东证期货计入东证融汇；大商所无会员排名时放行。回测列毛收益、净收益、1跳滑点和2026-09-02客户手续费。",
   "selection": {
-    "rule": "Path-A入场 + 席位级联确认 + ATR止损1.2R/止盈1.5R；板块去重+Top3+名义/风险帽",
+    "rule": "Path-A入场 + 席位级联确认 + 升贴水极端旁路(≥1%禁开逆向) + ATR止损1.2R/止盈1.5R；板块去重+Top3+名义/风险帽；观察袖套金属同栈可进模拟仓",
     "strategy": "path_a_atr_rr1_5",
     "reward_rr": 1.5,
     "stop_atr_mult": 1.2,
     "asof": "2026-10-20",
     "source": "新浪 InnerFuturesNewService {CODE}0 优先，腾讯 kline 补缺，不足或缺失时 iFinD ZL",
     "excluded": [
-      "CU",
-      "AU",
       "SC",
-      "NI",
       "SN",
       "IF",
       "IH",
@@ -245,6 +242,90 @@
       "tick": 1,
       "fee_yuan": 10,
       "fee_rate": 0
+    },
+    {
+      "code": "AU",
+      "name": "沪金",
+      "ticker": "AUZL.SHF",
+      "bucket": "有色",
+      "mult": 1000,
+      "vol_rank": 21,
+      "tick": 0.02,
+      "fee_yuan": 10,
+      "fee_rate": 0,
+      "sleeve": "observe"
+    },
+    {
+      "code": "CU",
+      "name": "沪铜",
+      "ticker": "CUZL.SHF",
+      "bucket": "有色",
+      "mult": 5,
+      "vol_rank": 22,
+      "tick": 10,
+      "fee_yuan": 0,
+      "fee_rate": 0.00005,
+      "sleeve": "observe"
+    },
+    {
+      "code": "AL",
+      "name": "沪铝",
+      "ticker": "ALZL.SHF",
+      "bucket": "有色",
+      "mult": 5,
+      "vol_rank": 23,
+      "tick": 5,
+      "fee_yuan": 15,
+      "fee_rate": 0,
+      "sleeve": "observe"
+    },
+    {
+      "code": "NI",
+      "name": "沪镍",
+      "ticker": "NIZL.SHF",
+      "bucket": "有色",
+      "mult": 1,
+      "vol_rank": 24,
+      "tick": 10,
+      "fee_yuan": 3,
+      "fee_rate": 0,
+      "sleeve": "observe"
+    },
+    {
+      "code": "I",
+      "name": "铁矿石",
+      "ticker": "IZL.DCE",
+      "bucket": "黑色",
+      "mult": 100,
+      "vol_rank": 25,
+      "tick": 0.5,
+      "fee_yuan": 0,
+      "fee_rate": 0.0001,
+      "sleeve": "observe"
+    },
+    {
+      "code": "JM",
+      "name": "焦煤",
+      "ticker": "JMZL.DCE",
+      "bucket": "黑色",
+      "mult": 60,
+      "vol_rank": 26,
+      "tick": 0.5,
+      "fee_yuan": 0,
+      "fee_rate": 0.0001,
+      "sleeve": "observe"
+    },
+    {
+      "code": "SS",
+      "name": "不锈钢",
+      "ticker": "SSZL.SHF",
+      "bucket": "黑色",
+      "mult": 5,
+      "vol_rank": 27,
+      "tick": 5,
+      "fee_yuan": 0,
+      "fee_rate": 0.0001,
+      "sleeve": "observe"
     }
   ],
   "max_positions": 3,
@@ -255,14 +336,38 @@
   "min_r60_pct": 5,
   "equity_compound": true,
   "entry_filter": "seats",
+  "carry_bypass": {
+    "enabled": true,
+    "extreme_gap_pct": 1.0,
+    "action": "block",
+    "scale": 0.5,
+    "note": "席位确认之后的软旁路：近次月升贴水 |gap|≥1% 时，升水禁开多、贴水禁开空；缺数据不拦。不替换 entry_filter=seats，也不改 ATR 止损止盈。"
+  },
+  "vol_bypass": {
+    "enabled": true,
+    "action": "observe",
+    "expand_ratio": 1.6,
+    "compress_ratio": 0.7,
+    "short_n": 5,
+    "mid_n": 20,
+    "long_n": 60,
+    "note": "多维波动率旁路：短5/中20/长60，短÷长≥1.6→决策观望（action=observe）。入场硬拦(action=block)经 OOS 验证不适用（见 lab/research/oos/vol_bypass_validate_latest.json）。不改 seats/ATR。"
+  },
+  "lab_edge_bypass": {
+    "enabled": true,
+    "action": "observe",
+    "disagree_frac": 0.2,
+    "note": "席位确认之后：lab IS冻结合成截面分位与拟开仓方向严重逆向（最低/最高20%）→决策观望；缺面板或截面过稀放行。不改 entry_filter=seats，也不改 ATR。"
+  },
   "observe": {
     "equity": 1000000,
     "min_lots": 1,
+    "symbols": ["AU", "CU", "AL", "NI", "I", "JM", "SS"],
     "option_hedge": {
       "enabled": true,
       "premium_atr_mult": 0.6,
       "strike_atr_mult": 0.0,
-      "note": "纸面观察：权益100万、至少1手。2025-11-27→2026-10-20 对照：期货裸仓 +8.88%/DD15.0%；行权1ATR+权利金2×ATR -73%；ATM+2×ATR -64%；行权1ATR+0.6×ATR -32%；ATM+0.6×ATR +8.26%/DD9.5%（对冲净约-1.9万）。观察默认改为 ATM、权利金0.6×ATR。不改日报20万执行盘。"
+      "note": "纸面观察：权益100万、至少1手。sleeve=observe 的有色/黑色同 Path-A 栈进日报与模拟仓，手数不足抬到 min_lots。不改 20 万执行权益基数。"
     }
   },
   "slippage_ticks": 1,

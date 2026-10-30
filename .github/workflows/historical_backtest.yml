@@ -3,7 +3,7 @@ name: CTA Historical Backtest
 on:
   workflow_dispatch:
   schedule:
-    # 北京时间周日 21:00 = UTC 13:00（周回测后一小时）
+    # 北京时间周日 21:00 = UTC 13:00（周回测已改到周日 09:00）
     - cron: "0 13 * * 0"
 
 permissions:

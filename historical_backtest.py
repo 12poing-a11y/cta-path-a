@@ -116,12 +116,36 @@ def pack_sha256(series: dict) -> str:
 _LAST_PACK: dict = {}
 
 
-def write_input_snapshot(out: dict, argv: list[str], root: Path | None = None) -> dict:
-    """Persist the bars used by the last simulate() and return {path, sha256, ...}."""
+def _stable_sha256(obj) -> str:
     import hashlib
 
+    blob = json.dumps(obj, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8")
+    return hashlib.sha256(blob).hexdigest()
+
+
+def _carry_subset(curves: dict) -> dict:
+    """Extract carry maps from curves; empty dict when mode did not load carry."""
+    out = {}
+    for c, cv in sorted((curves or {}).items()):
+        if isinstance(cv, dict) and isinstance(cv.get("carry"), dict):
+            out[c] = cv["carry"]
+    return out
+
+
+def write_input_snapshot(out: dict, argv: list[str], root: Path | None = None) -> dict:
+    """Persist bars + post-lag member/seats + post-lag carry from last simulate()."""
     root = root or ROOT
     series = _LAST_PACK.get("series") or {}
+    member = _LAST_PACK.get("member") or {}
+    carry = _LAST_PACK.get("carry") or {}
+    empty_why = []
+    if not member:
+        empty_why.append("member/seats empty (mode did not load seats/member, or no rows after lag)")
+    if not carry:
+        empty_why.append("carry empty (mode did not load curves, or no carry after lag)")
+    note = "bars + post-lag member/seats + post-lag carry as fed to simulate"
+    if empty_why:
+        note += "; " + "; ".join(empty_why)
     snap = {
         "argv": list(argv),
         "start": out.get("start"),
@@ -132,17 +156,26 @@ def write_input_snapshot(out: dict, argv: list[str], root: Path | None = None) -
         "sources": _LAST_PACK.get("sources"),
         "errors": _LAST_PACK.get("errors"),
         "bars": {k: v.get("hist") for k, v in sorted(series.items())},
-        "note": "seat/carry inputs are fetched live and not included; 待核",
+        "member": member,
+        "carry": carry,
+        "note": note,
     }
     blob = json.dumps(snap, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8")
-    sha = hashlib.sha256(blob).hexdigest()
+    sha = _stable_sha256(snap)
     d = root / "archive" / "snapshots"
     d.mkdir(parents=True, exist_ok=True)
     tag = str(out.get("end") or "na").replace("-", "")
     f = d / f"bt_input_{tag}_{sha[:12]}.json"
     f.write_bytes(blob)
-    return {"path": str(f.relative_to(root)), "sha256": sha, "bars_sha256": pack_sha256(series),
-            "symbols": len(series)}
+    return {
+        "path": str(f.relative_to(root)),
+        "sha256": sha,
+        "bars_sha256": pack_sha256(series),
+        "member_sha256": _stable_sha256(member),
+        "seats_sha256": _stable_sha256(member),
+        "carry_sha256": _stable_sha256(carry),
+        "symbols": len(series),
+    }
 
 
 def _load_cfg():
@@ -675,7 +708,7 @@ def simulate(
     else:
         series, errors, sources = pack
     _LAST_PACK.clear()
-    _LAST_PACK.update({"series": series, "sources": sources, "errors": errors})
+    _LAST_PACK.update({"series": series, "sources": sources, "errors": errors, "member": {}, "carry": {}})
 
     date_hits = Counter()
     for s in series.values():
@@ -723,6 +756,9 @@ def simulate(
         member = lag_member(load_member_changes(member_dates, [c for c in series]), member_dates, lag)
     elif mode in ("seats", "roll"):
         member = lag_member(load_member_seats(member_dates, [c for c in series]), member_dates, lag)
+    # Snapshot inputs must match what the backtest actually consumes (post-lag).
+    _LAST_PACK["member"] = member
+    _LAST_PACK["carry"] = _carry_subset(curves)
     seat_follows: dict[str, int] = {}
     sleeve_counts: dict[str, int] = {}
     bypass_counts: dict[str, int] = {}

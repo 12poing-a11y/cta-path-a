@@ -127,8 +127,72 @@ def test_compare_does_not_rewrite_universe(tmp_path):
 
 def test_input_snapshot_sha(tmp_path):
     hb._LAST_PACK.clear()
-    hb._LAST_PACK.update({"series": _pack()[0], "sources": {}, "errors": {}})
-    info = hb.write_input_snapshot({"end": "2025-06-30"}, ["--x"], root=tmp_path)
+    member = {"AA": {"2025-01-03": {"asof": "2025-01-02", "inst": 1.0}}}
+    carry = {"AA": {"2025-01-03": {"asof": "2025-01-02", "gap": 0.1}}}
+    hb._LAST_PACK.update({
+        "series": _pack()[0],
+        "sources": {},
+        "errors": {},
+        "member": member,
+        "carry": carry,
+    })
+    info = hb.write_input_snapshot(
+        {"end": "2025-06-30", "availability_lag": 1}, ["--x"], root=tmp_path
+    )
     blob = (tmp_path / info["path"]).read_bytes()
+    snap = json.loads(blob)
     assert hashlib.sha256(blob).hexdigest() == info["sha256"]
     assert info["symbols"] == 3
+    assert snap["member"] == member
+    assert snap["carry"] == carry
+    assert "not included" not in snap["note"]
+    assert "post-lag" in snap["note"]
+    assert info["member_sha256"] == info["seats_sha256"]
+    assert info["member_sha256"] == hashlib.sha256(
+        json.dumps(member, ensure_ascii=False, sort_keys=True, default=str).encode()
+    ).hexdigest()
+    assert info["carry_sha256"] == hashlib.sha256(
+        json.dumps(carry, ensure_ascii=False, sort_keys=True, default=str).encode()
+    ).hexdigest()
+
+
+def test_input_snapshot_empty_member_carry_note(tmp_path):
+    hb._LAST_PACK.clear()
+    hb._LAST_PACK.update({"series": _pack()[0], "sources": {}, "errors": {}, "member": {}, "carry": {}})
+    info = hb.write_input_snapshot({"end": "2025-06-30"}, ["--x"], root=tmp_path)
+    snap = json.loads((tmp_path / info["path"]).read_bytes())
+    assert snap["member"] == {}
+    assert snap["carry"] == {}
+    assert "member/seats empty" in snap["note"]
+    assert "carry empty" in snap["note"]
+    assert info["member_sha256"] == info["seats_sha256"]
+
+
+def test_input_snapshot_from_simulate_is_lagged(monkeypatch, tmp_path):
+    out, _ = _run(monkeypatch, "seats")
+    assert out.get("availability_lag") == 1
+    assert isinstance(hb._LAST_PACK.get("member"), dict)
+    assert isinstance(hb._LAST_PACK.get("carry"), dict)
+    info = hb.write_input_snapshot(out, ["--test"], root=tmp_path)
+    snap = json.loads((tmp_path / info["path"]).read_bytes())
+    assert "member" in snap and "carry" in snap
+    assert hashlib.sha256((tmp_path / info["path"]).read_bytes()).hexdigest() == info["sha256"]
+    # seats mode loads lagged member; carry stays empty (no curves)
+    assert snap["member"], "expected lagged seats in snapshot"
+    assert snap["carry"] == {}
+    for _code, book in snap["member"].items():
+        for d, row in book.items():
+            if isinstance(row, dict) and "asof" in row:
+                assert row["asof"] < d, f"unlagged seat row for {d}: {row}"
+
+
+def test_input_snapshot_carry_mode_is_lagged(monkeypatch, tmp_path):
+    out, _ = _run(monkeypatch, "carry")
+    assert out.get("availability_lag") == 1
+    info = hb.write_input_snapshot(out, ["--test"], root=tmp_path)
+    snap = json.loads((tmp_path / info["path"]).read_bytes())
+    assert snap["carry"], "expected lagged carry in snapshot"
+    for _code, book in snap["carry"].items():
+        for d, row in book.items():
+            if isinstance(row, dict) and "asof" in row:
+                assert row["asof"] < d, f"unlagged carry row for {d}: {row}"

@@ -25,6 +25,7 @@ from desk.loaders import (  # noqa: E402
     strategy_kpis,
 )
 from desk.chart_board import render_chart_tab  # noqa: E402
+from desk.freshness import render_freshness_header  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
@@ -263,6 +264,7 @@ def main() -> None:
 
     # --- Tab 1: compare ---
     with tab_compare:
+        render_freshness_header(ROOT, "概览对比")
         curves = {}
         kpi_rows = []
         grey_notes = []
@@ -357,6 +359,7 @@ def main() -> None:
 
     # --- Tab 2: daily signals ---
     with tab_signals:
+        render_freshness_header(ROOT, "日信号")
         report = load_l1_report(ROOT)
         if not report:
             st.error("缺少 l1_report.json，请先运行 daily_update.py")
@@ -436,10 +439,12 @@ def main() -> None:
 
     # --- Tab: TV-style chart ---
     with tab_chart:
+        render_freshness_header(ROOT, "图表")
         render_chart_tab(ROOT)
 
     # --- Tab: options ---
     with tab_opts:
+        render_freshness_header(ROOT, "期权机会")
         st.subheader("保护期权纸面机会")
         st.caption(DISCLAIMER)
         opp = build_opportunities(
@@ -492,12 +497,15 @@ def main() -> None:
         st.markdown(f"> **免责声明**：{DISCLAIMER}")
 
     with tab_seats:
+        render_freshness_header(ROOT, "席位板块")
         render_seat_sector(ROOT)
 
     with tab_regime:
+        render_freshness_header(ROOT, "状态评分")
         render_regime_tab(ROOT)
 
     with tab_decision:
+        render_freshness_header(ROOT, "决策")
         render_decision_tab(ROOT)
 
 

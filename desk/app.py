@@ -468,6 +468,10 @@ def main() -> None:
                 f"asof={opp.attrs.get('asof')} · premium_atr_mult={prem_m} · strike_atr_mult={strike_m}"
             )
 
+        from desk.hv_panel import render_hv_panel
+
+        render_hv_panel(ROOT, prem_m)
+
         st.subheader("叠加后回测")
         hedge_curves = {}
         for label, sid in (("路径A", "path_a"), ("路径A+保护期权", "path_a_opt_hedge")):

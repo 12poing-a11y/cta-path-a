@@ -83,7 +83,7 @@ def compare_frame(root: Path, base: Path | None = None) -> dict:
 def render_premarket_card(root: Path) -> None:
     import streamlit as st
 
-    st.subheader("晨报对照（盘前结论 vs 15:30 信号）")
+    st.subheader("晨报对照（盘前结论 vs 15:30 信号）· 描述性对照，不计分")
     res = compare_frame(root)
     if res["df"].empty:
         st.info(

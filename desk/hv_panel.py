@@ -32,7 +32,10 @@ def _closes(root: Path) -> dict[str, pd.Series]:
     return out
 
 
-def hv_stats(close: pd.Series, lookback: int = LOOKBACK) -> dict:
+def hv_stats(close: pd.Series, lookback: int = LOOKBACK, asof: str | None = None) -> dict:
+    """No look-ahead: only bars dated <= asof are used (rolling windows + percentile)."""
+    if asof is not None:
+        close = close[close.index.astype(str) <= str(asof)]
     lr = np.log(close).diff().dropna()
     if len(lr) < 61:
         return {}
@@ -64,7 +67,8 @@ def hv_frame(root: Path, premium_atr_mult: float = 1.0) -> pd.DataFrame:
     rows = []
     for s in rep.get("signals") or []:
         code = str(s.get("code") or "").upper()
-        st = hv_stats(closes[code]) if code in closes else {}
+        bar = str(s.get("bar_date") or "") or None
+        st = hv_stats(closes[code], asof=bar) if code in closes else {}
         if not st:
             continue
         atr, close = s.get("atr"), s.get("close")
@@ -89,7 +93,7 @@ def hv_frame(root: Path, premium_atr_mult: float = 1.0) -> pd.DataFrame:
 def render_hv_panel(root: Path, premium_atr_mult: float) -> None:
     import streamlit as st
 
-    st.subheader("已实现波动率 HV20/HV60 分位（不含 IV）")
+    st.subheader("已实现波动率 HV20/HV60 分位（不含 IV）· 证据等级 E1")
     df = hv_frame(root, premium_atr_mult)
     if df.empty:
         st.info("本地无 sina 连续日线或 l1_report，HV 面板跳过。")

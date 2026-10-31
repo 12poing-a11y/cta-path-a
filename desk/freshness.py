@@ -48,6 +48,30 @@ def _l1(root: Path) -> dict:
         return {}
 
 
+def published_at(root: Path) -> tuple[str | None, str]:
+    """When the market/desk could actually know l1_report (P0-03): commit time on
+    origin/main (Actions publish), else updated_at field, else local file mtime."""
+    import subprocess
+
+    root = Path(root)
+    try:
+        out = subprocess.run(
+            ["git", "log", "-1", "--format=%cI", "origin/main", "--", "l1_report.json"],
+            cwd=root, capture_output=True, text=True, timeout=10,
+        ).stdout.strip()
+        if out:
+            return datetime.fromisoformat(out).astimezone(TZ).strftime("%Y-%m-%d %H:%M"), "Actions 提交时间(origin/main)"
+    except Exception:
+        pass
+    rep = _l1(root)
+    if rep.get("updated_at"):
+        return str(rep["updated_at"]), "l1_report.updated_at"
+    p = root / "l1_report.json"
+    if p.is_file():
+        return datetime.fromtimestamp(p.stat().st_mtime, TZ).strftime("%Y-%m-%d %H:%M"), "本地文件 mtime"
+    return None, "无"
+
+
 def desk_freshness(root: Path, now: datetime | None = None) -> dict:
     now = (now or datetime.now(TZ)).astimezone(TZ)
     rep = _l1(root)
@@ -73,8 +97,11 @@ def desk_freshness(root: Path, now: datetime | None = None) -> dict:
         if night_n
         else "不含夜盘"
     )
+    pub, pub_src = published_at(root)
     return {
         "data_asof": asof or None,
+        "known_at": pub,
+        "known_at_src": pub_src,
         "includes_night": False,
         "night_codes_n": night_n,
         "expected_day_ymd": cut["day_ymd"],
@@ -92,7 +119,8 @@ def render_freshness_header(root: Path, page: str) -> dict:
 
     f = desk_freshness(root)
     line = (
-        f"**{page}** · 数据截止 data_asof **{f['data_asof'] or '—'}** 15:00 日盘 · "
+        f"**{page}** · 市场可知 **{f['known_at'] or '—'} (UTC+8)**（{f['known_at_src']}）· "
+        f"数据所属 data_asof {f['data_asof'] or '—'} 15:00 日盘 · "
         f"含夜盘：**否** · {f['night_note']} · 校验于 {f['checked_at']}"
     )
     if f["stale"]:

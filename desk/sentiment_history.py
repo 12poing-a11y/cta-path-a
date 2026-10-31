@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
-LABEL = "影子·不计分"
+LABEL = "E1·影子·不计分"
 
 
 def load_shadow_snapshots(root: Path) -> list[dict]:

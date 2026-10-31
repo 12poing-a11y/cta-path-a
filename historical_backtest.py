@@ -116,6 +116,35 @@ def pack_sha256(series: dict) -> str:
 _LAST_PACK: dict = {}
 
 
+def write_input_snapshot(out: dict, argv: list[str], root: Path | None = None) -> dict:
+    """Persist the bars used by the last simulate() and return {path, sha256, ...}."""
+    import hashlib
+
+    root = root or ROOT
+    series = _LAST_PACK.get("series") or {}
+    snap = {
+        "argv": list(argv),
+        "start": out.get("start"),
+        "end": out.get("end"),
+        "availability_lag": out.get("availability_lag"),
+        "fill_price": out.get("fill_price"),
+        "entry_filter": out.get("entry_filter"),
+        "sources": _LAST_PACK.get("sources"),
+        "errors": _LAST_PACK.get("errors"),
+        "bars": {k: v.get("hist") for k, v in sorted(series.items())},
+        "note": "seat/carry inputs are fetched live and not included; 待核",
+    }
+    blob = json.dumps(snap, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8")
+    sha = hashlib.sha256(blob).hexdigest()
+    d = root / "archive" / "snapshots"
+    d.mkdir(parents=True, exist_ok=True)
+    tag = str(out.get("end") or "na").replace("-", "")
+    f = d / f"bt_input_{tag}_{sha[:12]}.json"
+    f.write_bytes(blob)
+    return {"path": str(f.relative_to(root)), "sha256": sha, "bars_sha256": pack_sha256(series),
+            "symbols": len(series)}
+
+
 def _load_cfg():
     cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
     observe = cfg.get("observe") or {}
@@ -1593,6 +1622,10 @@ def main():
             return out
     except Exception as exc:  # noqa: BLE001
         print(f"[bt] quality check soft-fail: {exc}")
+    try:
+        out["input_snapshot"] = write_input_snapshot(out, sys.argv[1:])
+    except Exception as exc:  # noqa: BLE001
+        print(f"[bt] input snapshot soft-fail: {exc}")
     path = ROOT / "historical_backtest_latest.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     arch = ROOT / "archive"

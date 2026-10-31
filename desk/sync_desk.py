@@ -124,7 +124,7 @@ def report_mtime_note(root: Path, now: datetime | None = None) -> dict:
     asof = str(payload.get("asof") or "") or None
     today = now.strftime("%Y%m%d")
     asof_ymd = _norm_ymd(asof)
-    # After 15:30 CST on a weekday, today's Actions run should exist; before that, yesterday is fine.
+    # After 15:30 CST today's Actions run is *scheduled*; it may land hours late (10/30: 22:28) -> flag 待核, not '应已有'.
     after_cutoff = (now.hour, now.minute) >= (15, 30)
     expect = today if after_cutoff else None
     stale = False
@@ -139,7 +139,8 @@ def report_mtime_note(root: Path, now: datetime | None = None) -> dict:
         note = (
             f"本地 l1_report.json 可能偏旧：mtime {mtime_s}"
             + (f" · asof {asof}" if asof else "")
-            + "。15:30 后若 Actions 已跑完，点「同步日报」拉取。"
+            + "。待核：Actions 预定 15:30，实际常延迟（10/30 至 22:28 才完成），"
+            + "asof 早于今日不代表今日数据已到；可点「同步日报」重试拉取。数据只含日盘，不含夜盘。"
         )
     else:
         note = (

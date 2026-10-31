@@ -25,6 +25,7 @@ from desk.loaders import (  # noqa: E402
     strategy_kpis,
 )
 from desk.chart_board import render_chart_tab  # noqa: E402
+from desk.freshness import render_freshness_header  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
@@ -257,12 +258,13 @@ def main() -> None:
         st.divider()
         _render_sync_panel()
 
-    tab_compare, tab_signals, tab_chart, tab_opts, tab_seats, tab_regime, tab_decision = st.tabs(
-        ["概览对比", "日信号", "图表", "期权机会", "席位板块", "状态评分", "决策"]
+    tab_compare, tab_signals, tab_chart, tab_opts, tab_seats, tab_regime, tab_decision, tab_shadow = st.tabs(
+        ["概览对比", "日信号", "图表", "期权机会", "席位板块", "状态评分", "决策", "E1·情绪影子·不计分"]
     )
 
     # --- Tab 1: compare ---
     with tab_compare:
+        render_freshness_header(ROOT, "概览对比")
         curves = {}
         kpi_rows = []
         grey_notes = []
@@ -357,6 +359,7 @@ def main() -> None:
 
     # --- Tab 2: daily signals ---
     with tab_signals:
+        render_freshness_header(ROOT, "日信号")
         report = load_l1_report(ROOT)
         if not report:
             st.error("缺少 l1_report.json，请先运行 daily_update.py")
@@ -378,6 +381,10 @@ def main() -> None:
             from desk.sentiment_panel import render_sentiment_panel
 
             render_sentiment_panel(ROOT)
+
+            from desk.premarket_compare import render_premarket_card
+
+            render_premarket_card(ROOT)
 
             port = report.get("portfolio") or {}
             st.subheader("组合帽摘要")
@@ -436,10 +443,12 @@ def main() -> None:
 
     # --- Tab: TV-style chart ---
     with tab_chart:
+        render_freshness_header(ROOT, "图表")
         render_chart_tab(ROOT)
 
     # --- Tab: options ---
     with tab_opts:
+        render_freshness_header(ROOT, "期权机会")
         st.subheader("保护期权纸面机会")
         st.caption(DISCLAIMER)
         opp = build_opportunities(
@@ -458,6 +467,10 @@ def main() -> None:
             st.caption(
                 f"asof={opp.attrs.get('asof')} · premium_atr_mult={prem_m} · strike_atr_mult={strike_m}"
             )
+
+        from desk.hv_panel import render_hv_panel
+
+        render_hv_panel(ROOT, prem_m)
 
         st.subheader("叠加后回测")
         hedge_curves = {}
@@ -492,13 +505,22 @@ def main() -> None:
         st.markdown(f"> **免责声明**：{DISCLAIMER}")
 
     with tab_seats:
+        render_freshness_header(ROOT, "席位板块")
         render_seat_sector(ROOT)
 
     with tab_regime:
+        render_freshness_header(ROOT, "状态评分")
         render_regime_tab(ROOT)
 
     with tab_decision:
+        render_freshness_header(ROOT, "决策")
         render_decision_tab(ROOT)
+
+    with tab_shadow:
+        render_freshness_header(ROOT, "E1·情绪影子·不计分")
+        from desk.sentiment_history import render_sentiment_history_tab
+
+        render_sentiment_history_tab(ROOT)
 
 
 if __name__ == "__main__":

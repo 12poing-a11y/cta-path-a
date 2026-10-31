@@ -1380,11 +1380,18 @@ def _choose(rows: list[dict]) -> str:
     return best["mode"] if best else "base"
 
 
-def _write_entry_filter(mode: str) -> None:
-    path = ROOT / "universe.json"
-    cfg = json.loads(path.read_text(encoding="utf-8"))
-    cfg["entry_filter"] = mode
-    path.write_text(json.dumps(cfg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+def _write_entry_filter(mode: str, root: Path | None = None) -> Path:
+    """Record the --compare pick as a recommendation; never rewrite universe.json."""
+    root = root or ROOT
+    d = root / "output"
+    d.mkdir(exist_ok=True)
+    path = d / "entry_filter_recommendation.json"
+    path.write_text(
+        json.dumps({"entry_filter": mode, "note": "recommendation only; universe.json unchanged"},
+                   ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return path
 
 
 def main():

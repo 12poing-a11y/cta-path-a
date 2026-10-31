@@ -43,6 +43,79 @@ BATCH_LABEL = "2026一年-pathA-optHedge"
 CUTOFF_DAYS = 420
 
 
+
+# --- P0 lookahead guards -----------------------------------------------------
+# Seat rankings / basis are published after the T close (seats ~16:00-17:00),
+# so a T-close entry may only use data dated <= previous trading day.
+DEFAULT_AVAILABILITY_LAG = 1
+FILL_PRICES = ("close", "next_open")
+
+
+def lag_by_trade_dates(book: dict | None, dates: list[str], lag: int) -> dict:
+    """Return {d: book[dates[k-lag]]} so the value visible on d is lag sessions old."""
+    book = book or {}
+    lag = max(0, int(lag))
+    if lag == 0:
+        return dict(book)
+    out = {}
+    for k, d in enumerate(dates):
+        if k - lag < 0:
+            continue
+        v = book.get(dates[k - lag])
+        if v is not None:
+            out[d] = v
+    return out
+
+
+def lag_member(member: dict, dates: list[str], lag: int) -> dict:
+    return {c: lag_by_trade_dates(b, dates, lag) for c, b in (member or {}).items()}
+
+
+def lag_curves_carry(curves: dict, dates: list[str], lag: int) -> dict:
+    """Copy curves with carry shifted by lag sessions (does not mutate the cache)."""
+    out = {}
+    for c, cv in (curves or {}).items():
+        if isinstance(cv, dict):
+            cv2 = dict(cv)
+            if isinstance(cv.get("carry"), dict):
+                cv2["carry"] = lag_by_trade_dates(cv["carry"], dates, lag)
+            out[c] = cv2
+        else:
+            out[c] = cv
+    return out
+
+
+def next_open_fill(c: dict, hist: list[dict], i: int) -> dict | None:
+    """Move a T-close candidate to the T+1 open; stop/target keep their distance."""
+    if i + 1 >= len(hist):
+        return None
+    nb = hist[i + 1]
+    px = nb.get("open")
+    if px is None:
+        return None
+    shift = float(px) - float(c["entry"])
+    c2 = dict(c)
+    c2["entry"] = float(px)
+    c2["stop"] = float(c["stop"]) + shift
+    c2["target"] = float(c["target"]) + shift
+    c2["entry_date"] = nb["date"]
+    c2["mark_from"] = float(px)
+    return c2
+
+
+def pack_sha256(series: dict) -> str:
+    import hashlib
+
+    blob = json.dumps(
+        {k: v.get("hist") for k, v in sorted((series or {}).items())},
+        ensure_ascii=False, sort_keys=True, default=str,
+    )
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+_LAST_PACK: dict = {}
+
+
 def _load_cfg():
     cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
     observe = cfg.get("observe") or {}
@@ -89,7 +162,28 @@ def _load_cfg():
         "entry_filter": cfg.get("entry_filter") or "base",
         "carry_bypass": carry_bypass_cfg(cfg.get("carry_bypass")),
         "vol_bypass": vol_bypass_cfg(cfg.get("vol_bypass")),
+        "availability_lag": _cli_int("--lag", int((cfg.get("backtest") or {}).get("availability_lag_days", DEFAULT_AVAILABILITY_LAG))),
+        "fill_price": _cli_str("--fill", str((cfg.get("backtest") or {}).get("fill_price", "close"))),
     }
+
+
+def _cli_val(flag: str):
+    for k, a in enumerate(sys.argv):
+        if a == flag and k + 1 < len(sys.argv):
+            return sys.argv[k + 1]
+        if a.startswith(flag + "="):
+            return a.split("=", 1)[1]
+    return None
+
+
+def _cli_int(flag: str, default: int) -> int:
+    v = _cli_val(flag)
+    return int(v) if v is not None else int(default)
+
+
+def _cli_str(flag: str, default: str) -> str:
+    v = _cli_val(flag)
+    return v if v is not None else default
 
 
 def _answer_text(res: dict) -> str:
@@ -236,6 +330,7 @@ def _row_to_bar(row: dict) -> dict | None:
         "high": high,
         "low": low,
         "close": close,
+        "open": open_ if open_ is not None and not _looks_like_yyyymmdd(open_) and low <= open_ <= high else None,
         "volume": _to_float(row.get("volume")),
     }
 
@@ -539,13 +634,19 @@ def simulate(
     pack=None,
     carry_bypass=None,
     vol_bypass=None,
+    availability_lag=DEFAULT_AVAILABILITY_LAG,
+    fill_price="close",
 ):
+    if fill_price not in FILL_PRICES:
+        raise ValueError(f"fill_price must be one of {FILL_PRICES}")
     bypass = carry_bypass_cfg(carry_bypass)
     vbypass = vol_bypass_cfg(vol_bypass)
     if pack is None:
         series, errors, sources = _fetch_pack(symbols)
     else:
         series, errors, sources = pack
+    _LAST_PACK.clear()
+    _LAST_PACK.update({"series": series, "sources": sources, "errors": errors})
 
     date_hits = Counter()
     for s in series.values():
@@ -585,11 +686,14 @@ def simulate(
     curves = {}
     if mode == "roll" or mode not in ("base", "seats", "ctf") or bypass.get("enabled"):
         curves = load_curves([u["code"] for u in symbols])
+        curves = lag_curves_carry(curves, dates, availability_lag)
     member = {}
+    lag = max(0, int(availability_lag))
+    member_dates = dates[max(0, WARMUP - lag):]
     if mode == "member":
-        member = load_member_changes(trade_dates, [c for c in series])
+        member = lag_member(load_member_changes(member_dates, [c for c in series]), member_dates, lag)
     elif mode in ("seats", "roll"):
-        member = load_member_seats(trade_dates, [c for c in series])
+        member = lag_member(load_member_seats(member_dates, [c for c in series]), member_dates, lag)
     seat_follows: dict[str, int] = {}
     sleeve_counts: dict[str, int] = {}
     bypass_counts: dict[str, int] = {}
@@ -640,7 +744,7 @@ def simulate(
             if prev_d is not None:
                 i0 = idx[code].get(prev_d)
                 if i0 is not None:
-                    prev_close = hist[i0]["close"]
+                    prev_close = p.pop("mark_from", None) or hist[i0]["close"]
                     exit_px = px if reason else bar["close"]
                     price_pnl += (exit_px - prev_close) * mult * p["lots"] * sign
             if reason:
@@ -833,12 +937,16 @@ def simulate(
                 bucket = str(c.get("bucket") or "_")
                 if max_per_bucket > 0 and open_buckets.get(bucket, 0) >= int(max_per_bucket):
                     continue
+                if fill_price == "next_open":
+                    c = next_open_fill(c, series[c["code"]]["hist"], idx[c["code"]][d])
+                    if c is None:
+                        continue
                 row = {
                     "code": c["code"],
                     "direction": c["direction"],
                     "lots": int(c["lots"]),
                     "entry": float(c["entry"]),
-                    "entry_date": d,
+                    "entry_date": c.get("entry_date") or d,
                     "stop": float(c["stop"]),
                     "target": float(c["target"]),
                     "atr": c.get("atr"),
@@ -847,6 +955,8 @@ def simulate(
                     "bucket": c.get("bucket"),
                     "reason": c.get("reason"),
                 }
+                if c.get("mark_from") is not None:
+                    row["mark_from"] = c["mark_from"]
                 if option_hedge:
                     atr_v = float(c.get("atr") or 0)
                     row = attach_hedge_to_position(
@@ -950,12 +1060,16 @@ def simulate(
                     bucket = str(c.get("bucket") or "_")
                     if max_per_bucket > 0 and open_buckets.get(bucket, 0) >= int(max_per_bucket):
                         continue
+                    if fill_price == "next_open":
+                        c = next_open_fill(c, series[c["code"]]["hist"], idx[c["code"]][d])
+                        if c is None:
+                            continue
                     pos[c["code"]] = {
                         "code": c["code"],
                         "direction": c["direction"],
                         "lots": int(c["lots"]),
                         "entry": float(c["entry"]),
-                        "entry_date": d,
+                        "entry_date": c.get("entry_date") or d,
                         "stop": float(c["stop"]),
                         "target": float(c["target"]),
                         "atr": c.get("atr"),
@@ -964,6 +1078,8 @@ def simulate(
                         "bucket": c.get("bucket"),
                         "reason": "roll_carry",
                     }
+                    if c.get("mark_from") is not None:
+                        pos[c["code"]]["mark_from"] = c["mark_from"]
                     day_cost += fill_cost(series[c["code"]]["meta"], c["entry"], c["lots"])
                     open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
 
@@ -1064,6 +1180,8 @@ def simulate(
         "gross_max_dd_pct": round(gross_max_dd, 3),
         "blocks": block_counts,
         "carry_bypass": bypass,
+        "availability_lag": int(availability_lag),
+        "fill_price": fill_price,
         "carry_bypass_counts": bypass_counts,
         "vol_bypass": vbypass,
         "vol_bypass_counts": vol_bypass_counts,
@@ -1165,6 +1283,8 @@ def _simulate_cfg(
         pack=pack,
         carry_bypass=p.get("carry_bypass"),
         vol_bypass=p.get("vol_bypass"),
+        availability_lag=int(p.get("availability_lag", DEFAULT_AVAILABILITY_LAG)),
+        fill_price=str(p.get("fill_price") or "close"),
     )
 
 

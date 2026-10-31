@@ -258,8 +258,8 @@ def main() -> None:
         st.divider()
         _render_sync_panel()
 
-    tab_compare, tab_signals, tab_chart, tab_opts, tab_seats, tab_regime, tab_decision = st.tabs(
-        ["概览对比", "日信号", "图表", "期权机会", "席位板块", "状态评分", "决策"]
+    tab_compare, tab_signals, tab_chart, tab_opts, tab_seats, tab_regime, tab_decision, tab_shadow = st.tabs(
+        ["概览对比", "日信号", "图表", "期权机会", "席位板块", "状态评分", "决策", "情绪影子·不计分"]
     )
 
     # --- Tab 1: compare ---
@@ -507,6 +507,12 @@ def main() -> None:
     with tab_decision:
         render_freshness_header(ROOT, "决策")
         render_decision_tab(ROOT)
+
+    with tab_shadow:
+        render_freshness_header(ROOT, "情绪影子·不计分")
+        from desk.sentiment_history import render_sentiment_history_tab
+
+        render_sentiment_history_tab(ROOT)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,12 @@
+{
+  "id": "sleeve_donchian",
+  "name": "纸面·唐奇安突破",
+  "description": "纸面互补：20日唐奇安突破（先验高低，防同日偷看）；等权活跃腿；次日收盘收益；单边成本 bp。",
+  "curve_file": "external/strategies/sleeve_donchian.json",
+  "tags": [
+    "paper_sleeve",
+    "donchian",
+    "trend",
+    "complementary"
+  ]
+}

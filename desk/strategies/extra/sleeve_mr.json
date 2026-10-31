@@ -1,0 +1,12 @@
+{
+  "id": "sleeve_mr",
+  "name": "纸面·震荡均值回归",
+  "description": "纸面互补：|r20|/|r60| 偏弱时对 z-score 极值反向；等权活跃腿；不下单实盘。",
+  "curve_file": "external/strategies/sleeve_mr.json",
+  "tags": [
+    "paper_sleeve",
+    "mean_reversion",
+    "chop",
+    "complementary"
+  ]
+}

@@ -382,6 +382,10 @@ def main() -> None:
 
             render_sentiment_panel(ROOT)
 
+            from desk.premarket_compare import render_premarket_card
+
+            render_premarket_card(ROOT)
+
             port = report.get("portfolio") or {}
             st.subheader("组合帽摘要")
             m1, m2, m3, m4 = st.columns(4)

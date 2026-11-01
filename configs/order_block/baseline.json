@@ -1,0 +1,41 @@
+{
+  "track": "order_block_shadow",
+  "status": "runnable",
+  "live_trading": false,
+  "formal_path_a": {
+    "role": "untouched_reference",
+    "stop_atr_mult": 1.2,
+    "reward_rr": 1.5,
+    "config": "execution_rules.json",
+    "note": "Reference only. This runner does not read or write execution_rules.json, universe.json, or any formal latest artifact."
+  },
+  "structure": {
+    "swing_left": 2,
+    "swing_right": 2,
+    "ob_search_window": 10,
+    "max_retests": 1,
+    "invalidate_on": "close",
+    "zone_price": "wick"
+  },
+  "execution": {
+    "fill": "next_open",
+    "stop_mode": "zone_boundary",
+    "same_bar_conflict": "stop_first",
+    "one_position_at_a_time": true
+  },
+  "risk": {
+    "shadow_reward_rr": 1.5,
+    "atr_buffer_k": 0,
+    "atr_module": "not_wired",
+    "note": "Target is shadow_reward_rr times the distance from the next open to the zone boundary. It is a shadow experiment, not the formal ATR×1.2 stop."
+  },
+  "costs": {
+    "slippage_bps": 0,
+    "commission_bps_per_side": 0,
+    "note": "Zero cost is a diagnostic baseline. It is not a promotion gate."
+  },
+  "filters": {
+    "trend": false,
+    "momentum": false
+  }
+}

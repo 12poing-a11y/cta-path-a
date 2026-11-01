@@ -1,0 +1,12 @@
+{
+  "track": "order_block_shadow",
+  "status": "stub",
+  "live_trading": false,
+  "extends": "baseline",
+  "risk": {
+    "stop_mode": "zone_boundary_plus_atr",
+    "atr_buffer_k": 0.25,
+    "atr_module": "not_wired",
+    "note": "Not runnable. An ATR buffer around the zone is a later experiment. Formal Path-A remains ATR×1.2 and RR 1.5 in execution_rules.json."
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "track": "order_block_shadow",
+  "status": "stub",
+  "live_trading": false,
+  "extends": "baseline",
+  "filters": {
+    "trend": true,
+    "momentum": false
+  },
+  "note": "Not runnable. Trend stays outside order-block detection until an ablation hook is implemented. Running this file exits before any write."
+}

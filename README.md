@@ -51,7 +51,7 @@
 | Workflow | Cron (UTC) | 北京时间 |
 |----------|------------|----------|
 | `CTA Daily 15:30 CST` | `30 7 * * 1-5` | 工作日 15:30 |
-| `CTA Weekly Backtest` | `0 1 * * 0` | 周日 09:00 |
+| `CTA Weekly Backtest` | `0 1 * * 6` | 周六 09:00 |
 | `CTA Historical Backtest` | `0 13 * * 0` + 手动 | 周日 21:00 / 随时 Run |
 
 手机：GitHub App → **Actions** → **Run workflow**。

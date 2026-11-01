@@ -27,6 +27,9 @@ weekly_backtest_latest.json
 lab/data/bars/continuous/*.json
 lab/data/factors/*.jsonl
 lab/data/factors/*_meta.json
+# Order-block shadow runs are regenerated locally and must not replace formal latest.
+data/order_block/shadow/*
+!data/order_block/shadow/.gitkeep
 # Local Streamlit / scratch
 streamlit-desk.*
 _art_opt/

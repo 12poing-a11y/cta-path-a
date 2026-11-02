@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "asof": "2026-11-02",
-  "asof_ymd": "20261102",
+  "asof": "2026-11-03",
+  "asof_ymd": "20261103",
   "source": "paper_book",
   "seed": "paper_book_latest",
   "parent_backtest_end": "2026-10-20",
@@ -64,37 +64,7 @@
       "equity_delta": 1680.0
     }
   },
-  "closed_today": [
-    {
-      "trade_id": "平仓|FG|2026-11-02|2026-10-27",
-      "event": "平仓",
-      "code": "FG",
-      "date": "2026-11-02",
-      "entry_date": "2026-10-27",
-      "exit_date": "2026-11-02",
-      "direction": "空",
-      "lots": 2,
-      "entry": 844.0,
-      "exit": 878.0,
-      "mark": 878.0,
-      "mult": 20.0,
-      "stop": 865.768,
-      "target": 811.348,
-      "atr": 16.5,
-      "stop_atr_mult": 1.2,
-      "reward_rr": 1.5,
-      "entry_reason": "daily_selected",
-      "strategy": "Path-A 日信号组合入选",
-      "tp_sl_scheme": "止损=1.2×ATR；止盈=RR×1.5（止损距）；ATR=16.5；止损价=865.8；止盈价=811.3",
-      "reason": "signal",
-      "R": -1.561925762587282,
-      "equity_delta": -1360.0,
-      "equity_after": 198640.0,
-      "r20": -5.3611,
-      "r60": -0.5747,
-      "bucket": "能化"
-    }
-  ],
+  "closed_today": [],
   "opened_today": [],
   "trade_ledger": [
     {
@@ -228,10 +198,10 @@
     }
   ],
   "opened_n": 0,
-  "closed_n": 1,
+  "closed_n": 0,
   "held_n": 3,
   "ledger_n": 5,
   "notes": "纸面模拟仓：以回测期末持仓为种子，按最新 l1_report 做信号平仓/组合入选开仓；trade_ledger 含入场/出场/止盈止损/策略/权益增减（平仓为已实现，持仓中为浮动）；equity 为平仓累计后账面，equity_floating 为未平仓浮动盈亏。不改写 historical_backtest KPI。与 Notion 持仓中、决策页账面同源。",
-  "l1_asof": "20261102",
+  "l1_asof": "20261103",
   "updated_from_l1": true
 }

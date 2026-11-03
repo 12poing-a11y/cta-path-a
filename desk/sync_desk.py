@@ -3,7 +3,8 @@
 
 Actions at 15:30 CST commit l1_report / archive, full member ranks,
 sina continuous CODE0, and 15m/60m minute caches. The desk only reads
-local disk; this helper git-pulls (and optionally re-runs daily_update.py).
+local disk; this helper fetches all chart data caches from origin/main
+(and optionally re-runs daily_update.py).
 No orders are placed.
 """
 from __future__ import annotations
@@ -258,7 +259,7 @@ def sync_desk(
                     {
                         "step": "git_pull",
                         "planned": True,
-                        "detail": "git fetch origin main && git checkout origin/main -- l1_report.json l1_report_risk15.json archive",
+                        "detail": "git fetch origin main && git checkout origin/main -- l1_report.json l1_report_risk15.json archive .cache/sina .cache/akshare/minute",
                     }
                 )
             elif status.get("is_git"):
@@ -318,6 +319,8 @@ def sync_desk(
                         "l1_report.json",
                         "l1_report_risk15.json",
                         "archive",
+                        ".cache/sina",
+                        ".cache/akshare/minute",
                     ],
                     root,
                     timeout=60,
@@ -326,8 +329,8 @@ def sync_desk(
                 if checkout["ok"]:
                     pulled = True
                     messages.append(
-                        "已从 origin/main 取回日报（l1_report.json、l1_report_risk15.json、archive）。"
-                        "日常任务只提交到 main，当前功能分支的 git pull 带不回这些文件。"
+                        "已从 origin/main 取回日报与图表数据（l1_report.json、l1_report_risk15.json、archive、.cache/sina、.cache/akshare/minute）。"
+                        "日线连续合约与 15m/60m 分钟线缓存现一并同步；当前功能分支的普通 git pull 不会自动带回 main 的这些文件。"
                     )
                 else:
                     ok = False

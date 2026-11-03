@@ -36,6 +36,7 @@ from desk.seat_board import (
     exchange_of,
     member_dates,
     regime_bucket_scores,
+    seat_calendar_dates,
     universe_rows,
 )
 
@@ -936,19 +937,19 @@ def _inst_dir(net: float | None) -> str | None:
 
 
 def joint_skip_reason(root: Path, code: str, report: dict | None = None) -> str | None:
-    """Why this symbol cannot form 动量机构同向; None if member files exist."""
+    """Why this symbol cannot form 动量机构同向; None if native or EM seats exist."""
     code = str(code or "").upper()
     exchange = _exchange_for(root, code, report)
     if exchange not in ("CZCE", "SHFE", "DCE"):
         return f"{code} 交易所 {exchange or '未知'}，无机构净持仓序列，无法形成「动量机构同向」。"
-    if not member_dates(root, exchange):
-        if exchange == "DCE":
-            return (
-                f"{code} 属大商所，本地无 dce-*.json（akshare 缓存），"
-                "无法形成「动量机构同向」。"
-            )
-        return f"{code} 本地 .cache/member 无 {exchange} 文件，无法形成「动量机构同向」。"
-    return None
+    if seat_calendar_dates(root, exchange):
+        return None
+    if exchange == "DCE":
+        return (
+            f"{code} 属大商所，本地无 dce-*.json / em-*.json，"
+            "无法形成「动量机构同向」。"
+        )
+    return f"{code} 本地 .cache/member 无 {exchange} 或 em-*.json，无法形成「动量机构同向」。"
 
 
 def joint_momentum_institution_events(

@@ -146,6 +146,7 @@ def build_full_assessment(
         "决策卡": 1.3,
         "股指择时": 0.8,
         "策略库均分": 0.7,
+        "情绪MDS": 1.0,
     }
     try:
         from desk.regime_board import load_vote_weights
@@ -208,6 +209,28 @@ def build_full_assessment(
             "权重": (layer_w["策略库均分"] if lib["n_scored"] else 0.0),
         },
     ]
+
+    # Sentiment MDS+EHI paper sleeve (does not size Path-A lots).
+    try:
+        from desk.sentiment_panel import (
+            load_sentiment_snapshot,
+            sentiment_score_from_p3,
+            stance_to_direction,
+        )
+
+        sent = load_sentiment_snapshot(root) or {}
+        sent_score = sentiment_score_from_p3(sent.get("portfolio_p3"))
+        sent_dir = stance_to_direction(sent.get("stance")) if sent else "样本不足"
+        layers.append(
+            {
+                "层": "情绪MDS",
+                "方向": sent_dir,
+                "分": sent_score,
+                "权重": (float(layer_w.get("情绪MDS") or 0.0) if sent else 0.0),
+            }
+        )
+    except Exception:
+        layers.append({"层": "情绪MDS", "方向": "样本不足", "分": None, "权重": 0.0})
 
     # Normalize HMM/decision labels to 多/空/震荡
     for row in layers:
@@ -282,6 +305,130 @@ def build_full_assessment(
     }
 
 
+def _book_mark_score(root: Path) -> dict[str, Any]:
+    """0–100 from paper mark vs base; missing → empty."""
+    from desk.equity_book import load_book_equity
+
+    book = load_book_equity(root)
+    if not book.get("ok") or book.get("equity") is None:
+        return {"score": None, "book": book}
+    base = float(book.get("equity") or 0)
+    mark = float(book.get("equity_mark") or base)
+    if base <= 0:
+        return {"score": None, "book": book}
+    ret_pct = (mark / base - 1.0) * 100.0
+    # ~±5% floating maps around 50±100 → clip
+    score = round(max(0.0, min(100.0, 50.0 + ret_pct * 20.0)), 1)
+    return {"score": score, "book": book, "ret_pct": round(ret_pct, 4)}
+
+
+def _selected_strength_score(root: Path) -> dict[str, Any]:
+    report = load_json(root / "l1_report_risk15.json") or load_json(root / "l1_report.json") or {}
+    selected = list((report.get("portfolio") or {}).get("selected") or [])
+    n = len(selected)
+    # 0 → 40, 1 → 55, 2 → 70, 3+ → 85
+    score = round(40.0 + min(n, 3) * 15.0, 1)
+    return {"score": score, "selected": selected, "n": n, "asof": report.get("asof")}
+
+
+def desk_composite_score(
+    root: Path,
+    *,
+    full_score: float | None = None,
+    write: bool = True,
+) -> dict[str, Any]:
+    """Desk-level 0–100: full_score 0.55 + book mark 0.20 + Path-A selected 0.25."""
+    w_full, w_book, w_sel = 0.55, 0.20, 0.25
+    book_pack = _book_mark_score(root)
+    sel_pack = _selected_strength_score(root)
+    fs = full_score
+    if fs is None:
+        # Lightweight global full_score: library mean + sentiment when assessment not passed.
+        lib = strategy_library_stats(root)
+        fs = lib.get("mean_score")
+        try:
+            from desk.sentiment_panel import load_sentiment_snapshot, sentiment_score_from_p3
+
+            sent = load_sentiment_snapshot(root) or {}
+            ss = sentiment_score_from_p3(sent.get("portfolio_p3"))
+            if fs is not None and ss is not None:
+                fs = round(0.7 * float(fs) + 0.3 * float(ss), 1)
+            elif ss is not None:
+                fs = ss
+        except Exception:
+            pass
+    parts: list[tuple[str, float, float]] = []
+    if fs is not None:
+        parts.append(("全面统计分", w_full, float(fs)))
+    if book_pack.get("score") is not None:
+        parts.append(("账本盯市", w_book, float(book_pack["score"])))
+    if sel_pack.get("score") is not None:
+        parts.append(("Path-A日选", w_sel, float(sel_pack["score"])))
+    if not parts:
+        out = {
+            "ok": False,
+            "desk_score": None,
+            "parts": [],
+            "note": "缺少评分输入",
+            "live_trading": False,
+        }
+    else:
+        wsum = sum(w for _, w, _ in parts)
+        desk = round(sum(w * v for _, w, v in parts) / wsum, 1)
+        out = {
+            "ok": True,
+            "desk_score": desk,
+            "parts": [{"名": n, "权重": w, "分": v} for n, w, v in parts],
+            "weights": {"full_score": w_full, "book_mark": w_book, "selected": w_sel},
+            "full_score": fs,
+            "book": book_pack.get("book"),
+            "book_score": book_pack.get("score"),
+            "selected": sel_pack,
+            "live_trading": False,
+            "note": "研究桌面综合分；纸面，不下单。情绪已计入全面统计分分层投票。",
+        }
+    if write and out.get("ok"):
+        dest = root / "data" / "desk_composite_latest.json"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        import json
+        from datetime import datetime, timezone
+
+        payload = dict(out)
+        payload["generated_at"] = datetime.now(timezone.utc).astimezone().isoformat(
+            timespec="seconds"
+        )
+        dest.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        out["path"] = str(dest.relative_to(root))
+    return out
+
+
+def render_desk_composite_banner(root: Path, *, full_score: float | None = None) -> dict[str, Any]:
+    """Top banner for 状态评分 / 决策: desk composite + parts."""
+    pack = desk_composite_score(root, full_score=full_score, write=True)
+    st.markdown("**桌面综合分**")
+    st.caption(
+        "全面统计分（含情绪MDS层）×0.55 + 账本盯市×0.20 + Path-A 日选强度×0.25。"
+        "纸面研究指数，不是下单指令。"
+    )
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("综合分", pack.get("desk_score") if pack.get("ok") else "—")
+    parts = {p["名"]: p["分"] for p in (pack.get("parts") or [])}
+    c2.metric("全面统计分", parts.get("全面统计分", pack.get("full_score")))
+    c3.metric("账本盯市分", parts.get("账本盯市", "—"))
+    c4.metric("日选强度分", parts.get("Path-A日选", "—"))
+    book = pack.get("book") or {}
+    if book.get("equity_mark") is not None:
+        st.caption(
+            f"账本 asof={book.get('asof') or '—'} · 记账 {book.get('equity'):,.0f} · "
+            f"浮动 {book.get('equity_floating'):+,.0f} · 盯市 {book.get('equity_mark'):,.0f}"
+            if book.get("equity") is not None
+            else f"盯市 {book.get('equity_mark')}"
+        )
+    if pack.get("parts"):
+        st.dataframe(pd.DataFrame(pack["parts"]), width="stretch", hide_index=True)
+    return pack
+
+
 def _equity_brief(eq: dict[str, Any]) -> tuple[str, str] | None:
     """Return (metric_value, caption). None when no index signal is on file."""
     if not eq.get("n_filled"):
@@ -312,10 +459,11 @@ def render_full_assessment(
 ) -> None:
     st.markdown("**综合评估**")
     st.caption(
-        "合并方向三桶、HMM、模型投票、决策卡、股指择时与策略库评分板，"
+        "合并方向三桶、HMM、模型投票、决策卡、股指择时、策略库评分板与情绪MDS，"
         "得到研究用综合方向与 0–100 全面统计分；不是下单指令。"
         "决策卡已含升贴水旁路与多维波动旁路（高波扩张时可降观望）。"
         "因子实验室 Gate 只读展示，不计入本页投票、不改开仓。"
+        "页顶「桌面综合分」已含本全面统计分与账本/日选。"
     )
     eq = assessment.get("equity") or {}
     brief = _equity_brief(eq)

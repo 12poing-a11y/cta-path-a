@@ -28,42 +28,50 @@ from desk.chart_board import render_chart_tab  # noqa: E402
 from desk.freshness import render_freshness_header  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
+from desk.final_signal import DETAIL_CAPTION, render_final_signal_tab  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
 from desk.scoreboard import scoreboard_rows  # noqa: E402
 from desk.seat_board import render_seat_sector  # noqa: E402
 from desk.strategies.registry import all_strategies  # noqa: E402
-import importlib  # noqa: E402
+from desk.sync_desk import (  # noqa: E402
+    book_freshness,
+    clear_streamlit_caches,
+    git_repo_status,
+    report_mtime_note,
+    sync_desk,
+)
+from desk.vol_engine_panel import vol_fields_by_code  # noqa: E402
 
-import desk.sync_desk as _sync_desk_mod  # noqa: E402
-
-# Streamlit may keep a pre-edit sync_desk in sys.modules; reload so new helpers appear.
-_sync_desk_mod = importlib.reload(_sync_desk_mod)
-clear_streamlit_caches = _sync_desk_mod.clear_streamlit_caches
-git_repo_status = _sync_desk_mod.git_repo_status
-report_mtime_note = _sync_desk_mod.report_mtime_note
-sync_desk = _sync_desk_mod.sync_desk
-book_freshness = getattr(_sync_desk_mod, "book_freshness", None)
-if book_freshness is None:
-    # Extremely stale module: degrade to l1-only freshness.
-    def book_freshness(root, now=None):  # type: ignore[misc]
-        l1 = report_mtime_note(root, now=now)
-        lines = [f"日信号 asof={l1.get('asof') or '—'}（请重启 Streamlit 以加载完整新鲜度）"]
-        return {
-            "stale": bool(l1.get("stale")),
-            "aligned": False,
-            "book_behind": False,
-            "book_missing": True,
-            "l1_asof": l1.get("asof"),
-            "paper_asof": None,
-            "backtest_end": None,
-            "equity_asof": None,
-            "equity_mtime": None,
-            "paper_held": None,
-            "backtest_held": None,
-            "l1": l1,
-            "note": l1.get("note") or lines[0],
-            "lines": lines,
-        }
+# Default overlay: Path-A + three local proxies.
+DEFAULT_COMPARE_IDS = (
+    "path_a",
+    "proxy_cwft",
+    "proxy_frontnext_st",
+    "proxy_long_short_cwft",
+)
+# Suggested cut/park: hide from sidebar compare (files stay on disk for research).
+PARKED_COMPARE_IDS = frozenset(
+    {
+        "sleeve_mr",
+        "sleeve_donchian",
+        "sleeve_xs_mom",
+        "path_a_opt_hedge",
+        "param_sweep",
+        "benchmark",
+    }
+)
+DESK_PAGES = (
+    "最终信号",
+    "概览对比",
+    "日信号",
+    "情绪",
+    "E1·情绪影子·不计分",
+    "图表",
+    "期权机会",
+    "席位板块",
+    "状态评分",
+    "决策",
+)
 
 st.set_page_config(page_title="CTA Path-A Desk", layout="wide", initial_sidebar_state="expanded")
 
@@ -71,6 +79,11 @@ st.set_page_config(page_title="CTA Path-A Desk", layout="wide", initial_sidebar_
 @st.cache_data(show_spinner=False)
 def _cached_status():
     return registry_status_table(ROOT)
+
+
+@st.cache_data(show_spinner=False)
+def _cached_scoreboard():
+    return scoreboard_rows(ROOT)
 
 
 @st.cache_data(show_spinner=False)
@@ -130,7 +143,11 @@ def _render_sync_panel() -> None:
             "git pull 不可用时，勾选「刷新本地缓存」可跑 daily_update.py，"
             "从免费源重建日报与 member/sina 缓存。"
         )
-    pull_git = st.checkbox("同步 main 日报 + 图表行情缓存（日线 CODE0 / 15m / 60m）", value=True, key="desk_sync_git")
+    pull_git = st.checkbox(
+        "同步 main 日报 + 图表行情缓存（日线 CODE0 / 15m / 60m）",
+        value=True,
+        key="desk_sync_git",
+    )
     refresh_cache = st.checkbox(
         "刷新本地缓存（daily_update.py，较慢/需网络）",
         value=False,
@@ -188,28 +205,38 @@ def main() -> None:
 
     specs = all_strategies(ROOT)
     avail_map = {s.id: strategy_availability(s, ROOT) for s in specs}
-    scored_ids = {row["id"] for row in scoreboard_rows(ROOT)}
+    scored_ids = {row["id"] for row in _cached_scoreboard()}
     specs = [s for s in specs if s.id in scored_ids]
+    show_parked = False
 
     # --- sidebar ---
     with st.sidebar:
         st.header("策略选择")
+        show_parked = st.checkbox(
+            "显示已下架对照（mr/唐奇安/截面动量/期权叠加/扫参/benchmark）",
+            value=False,
+            key="desk_show_parked",
+        )
         labels = []
         id_by_label = {}
         default_sel = []
         for s in specs:
+            if s.id in PARKED_COMPARE_IDS and not show_parked:
+                continue
             avail = avail_map[s.id]
             mark = " ·曲线" if avail == "ready" else " ·KPI"
             label = f"{s.name}{mark}"
             labels.append(label)
             id_by_label[label] = s.id
-            if avail == "ready" and s.id in ("path_a", "proxy_cwft", "benchmark"):
-                default_sel.append(label)
-            elif avail == "ready" and s.id.startswith("proxy_") and len(default_sel) < 4:
+            if avail == "ready" and s.id in DEFAULT_COMPARE_IDS:
                 default_sel.append(label)
 
         chosen_labels = st.multiselect("叠加对比", labels, default=default_sel)
         chosen_ids = [id_by_label[x] for x in chosen_labels]
+        st.caption(
+            "默认：Path-A + 三个本地 proxy。"
+            + ("已显示下架项。" if show_parked else "弱/负效用对照已下架，勾选上方可临时查看。")
+        )
 
         st.divider()
         normalize = st.checkbox("归一化到 100", value=True)
@@ -258,12 +285,22 @@ def main() -> None:
         st.divider()
         _render_sync_panel()
 
-    tab_compare, tab_signals, tab_chart, tab_opts, tab_seats, tab_regime, tab_decision, tab_shadow = st.tabs(
-        ["概览对比", "日信号", "图表", "期权机会", "席位板块", "状态评分", "决策", "E1·情绪影子·不计分"]
+    # Radio nav: only the active page runs (st.tabs would execute every panel).
+    page = st.radio(
+        "页面",
+        list(DESK_PAGES),
+        horizontal=True,
+        key="desk_active_page",
+        label_visibility="collapsed",
     )
+    st.caption("仅渲染当前页以加速刷新 · 预测归因后台仍积累、UI 已搁置")
+
+    if page == "最终信号":
+        render_freshness_header(ROOT, "最终信号")
+        render_final_signal_tab(ROOT)
 
     # --- Tab 1: compare ---
-    with tab_compare:
+    if page == "概览对比":
         render_freshness_header(ROOT, "概览对比")
         curves = {}
         kpi_rows = []
@@ -358,17 +395,43 @@ def main() -> None:
                     st.json(k["pnl_by_sleeve"])
 
     # --- Tab 2: daily signals ---
-    with tab_signals:
+    if page == "日信号":
         render_freshness_header(ROOT, "日信号")
+        st.caption(DETAIL_CAPTION)
         report = load_l1_report(ROOT)
         if not report:
             st.error("缺少 l1_report.json，请先运行 daily_update.py")
         else:
+            from desk.equity_book import load_book_equity
+            from desk.premarket_compare import render_premarket_card
+
+            book_eq = load_book_equity(ROOT, report)
+            render_premarket_card(ROOT)
             c1, c2, c3, c4 = st.columns(4)
             c1.metric("asof", report.get("asof"))
-            c2.metric("权益", f"{report.get('equity'):,.0f}" if report.get("equity") is not None else "—")
+            if book_eq.get("ok") and book_eq.get("equity_mark") is not None:
+                c2.metric(
+                    "盯市权益",
+                    f"{book_eq['equity_mark']:,.0f}",
+                    delta=(
+                        f"浮动 {book_eq['equity_floating']:+,.0f}"
+                        if book_eq.get("equity_floating") is not None
+                        else None
+                    ),
+                )
+            else:
+                c2.metric(
+                    "权益",
+                    f"{report.get('equity'):,.0f}" if report.get("equity") is not None else "—",
+                )
             c3.metric("入场过滤", report.get("entry_filter"))
             c4.metric("数据源", str(report.get("data_source") or "")[:24])
+            if book_eq.get("ok") and book_eq.get("equity") is not None:
+                st.caption(
+                    f"记账对齐 paper_book（{book_eq.get('source')} asof {book_eq.get('asof') or '—'}）："
+                    f"已实现 {book_eq['equity']:,.0f} · 浮动 {book_eq.get('equity_floating') or 0:+,.0f} · "
+                    f"盯市 {book_eq['equity_mark']:,.0f}；手数按已实现权益计风险，浮动仅展示。"
+                )
             q = report.get("quality") or {}
             if report.get("quality_ok") is False:
                 st.error(
@@ -377,14 +440,7 @@ def main() -> None:
                 )
             elif report.get("quality_ok"):
                 st.caption(f"质量门禁通过（checked={q.get('checked')}）· live_trading=否")
-
-            from desk.sentiment_panel import render_sentiment_panel
-
-            render_sentiment_panel(ROOT)
-
-            from desk.premarket_compare import render_premarket_card
-
-            render_premarket_card(ROOT)
+            st.info("情绪多空结论、把握%与中文品种表已挪到顶部「情绪」页（不再嵌在本页）。")
 
             port = report.get("portfolio") or {}
             st.subheader("组合帽摘要")
@@ -415,39 +471,73 @@ def main() -> None:
                     }
                 )
 
-            st.subheader("L1 信号板")
+            st.subheader("L1 信号板（Path-A）")
             sigs = pd.DataFrame(report.get("signals") or [])
             if sigs.empty:
                 st.info("无信号行")
             else:
-                prefer = [
-                    "code",
-                    "name",
-                    "bucket",
-                    "align",
-                    "direction",
-                    "lots_l1",
-                    "lots_raw",
-                    "selected",
-                    "close",
-                    "atr",
-                    "r20",
-                    "r60",
-                    "action",
-                    "seat",
-                ]
-                cols = [c for c in prefer if c in sigs.columns] + [
-                    c for c in sigs.columns if c not in prefer
-                ]
-                st.dataframe(sigs[cols], width="stretch", hide_index=True)
+                from desk.loaders import format_variety_label
+
+                # Snapshot-only join (no nested final_signal / full vol rebuild).
+                vol_map = vol_fields_by_code(ROOT)
+                display_rows = []
+                for _, row in sigs.iterrows():
+                    code = str(row.get("code") or "").upper()
+                    vf = vol_map.get(code) or {}
+                    display_rows.append(
+                        {
+                            "品种": format_variety_label(
+                                code, str(row.get("name") or ""), root=ROOT
+                            ),
+                            "板块": row.get("bucket"),
+                            "对齐": row.get("align"),
+                            "方向": row.get("direction"),
+                            "手数": row.get("lots_l1"),
+                            "日选": row.get("selected"),
+                            "收盘": row.get("close"),
+                            "ATR": row.get("atr"),
+                            "R20": row.get("r20"),
+                            "R60": row.get("r60"),
+                            "席位": row.get("seat"),
+                            "情绪分档": vf.get("情绪分档") or "—",
+                            "波动状态": vf.get("波动状态") or "—",
+                            "定价": vf.get("定价") or "—",
+                            "引擎标签": vf.get("引擎标签") or "—",
+                            "盘面结论": vf.get("盘面结论") or "—",
+                            "动作": row.get("action"),
+                        }
+                    )
+                st.dataframe(
+                    pd.DataFrame(display_rows), width="stretch", hide_index=True
+                )
+                st.caption(
+                    "波动列读 data/vol_engine_latest.json 快照；"
+                    "重算请到「情绪」页点刷新引擎。品种列=期号+中文。"
+                )
+
+    # --- Tab: sentiment sleeve ---
+    if page == "情绪":
+        render_freshness_header(ROOT, "情绪")
+        st.caption(DETAIL_CAPTION)
+        from desk.sentiment_panel import render_sentiment_panel
+
+        render_sentiment_panel(ROOT)
+
+    if page == "E1·情绪影子·不计分":
+        render_freshness_header(ROOT, "E1·情绪影子·不计分")
+        from desk.sentiment_history import render_sentiment_history_tab
+
+        render_sentiment_history_tab(ROOT)
+
+    # 预测归因：后台 daily_update 仍写 lab/research/predictions/；UI 已搁置。
 
     # --- Tab: TV-style chart ---
-    with tab_chart:
+    if page == "图表":
         render_freshness_header(ROOT, "图表")
         render_chart_tab(ROOT)
 
     # --- Tab: options ---
-    with tab_opts:
+    if page == "期权机会":
         render_freshness_header(ROOT, "期权机会")
         st.subheader("保护期权纸面机会")
         st.caption(DISCLAIMER)
@@ -504,23 +594,19 @@ def main() -> None:
 
         st.markdown(f"> **免责声明**：{DISCLAIMER}")
 
-    with tab_seats:
+    if page == "席位板块":
         render_freshness_header(ROOT, "席位板块")
         render_seat_sector(ROOT)
 
-    with tab_regime:
+    if page == "状态评分":
         render_freshness_header(ROOT, "状态评分")
+        st.caption(DETAIL_CAPTION)
         render_regime_tab(ROOT)
 
-    with tab_decision:
+    if page == "决策":
         render_freshness_header(ROOT, "决策")
+        st.caption(DETAIL_CAPTION)
         render_decision_tab(ROOT)
-
-    with tab_shadow:
-        render_freshness_header(ROOT, "E1·情绪影子·不计分")
-        from desk.sentiment_history import render_sentiment_history_tab
-
-        render_sentiment_history_tab(ROOT)
 
 
 if __name__ == "__main__":

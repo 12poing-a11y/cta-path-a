@@ -426,6 +426,23 @@ def _candlestick_fig(
     return fig
 
 
+def last_bar_timestamp(bars: list[dict] | None) -> str:
+    """Newest bar clock. Prefer ``datetime``; fall back to the calendar ``date``."""
+    return max(
+        (str(row.get("datetime") or row.get("date") or "") for row in (bars or [])),
+        default="",
+    )
+
+
+def format_last_daily_bar_caption(daily: pd.DataFrame) -> str:
+    """Daily/weekly/monthly caption: last cached bar, plus a reminder to sync."""
+    last = str(daily["date"].iloc[-1]) if not daily.empty else "—"
+    return (
+        f"本地图表数据最后一根K线：{last} · 数据文件来自本地缓存；"
+        "先在侧边栏「同步日报」同步 main 行情缓存。"
+    )
+
+
 def render_chart_tab(root: Path) -> None:
     st.subheader("图表")
     st.caption(
@@ -506,10 +523,7 @@ def render_chart_tab(root: Path) -> None:
             root, code, period, force=force_min, verify_em=False
         )
         bars = minute_meta.get("bars") or []
-        last_bar_at = max(
-            (str(row.get("datetime") or row.get("date") or "") for row in bars),
-            default="",
-        )
+        last_bar_at = last_bar_timestamp(bars)
         st.caption(
             f"当前 {format_variety_label(code, meta.get('name') or '', contract=minute_meta.get('symbol'), root=root)} · "
             f"源 {minute_meta.get('source') or '—'} · 最后一根K线 {last_bar_at or '—'} · "
@@ -586,34 +600,14 @@ def render_chart_tab(root: Path) -> None:
             return
         daily = _bars_frame(bars)
         daily = _resample_ohlcv(daily, period)
-        last_daily_bar = str(daily["date"].iloc[-1]) if not daily.empty else "—"
-        st.caption(f"本地图表数据最后一根K线：{last_daily_bar} · 数据文件来自本地缓存；先在侧边栏「同步日报」同步 main 行情缓存。")
+        st.caption(format_last_daily_bar_caption(daily))
         df = _indicator_frames(daily)
         if win_n and len(df) > win_n:
             df = df.tail(win_n).reset_index(drop=True)
         events = events_for_codes(root, report, [code])
         event_rows = _event_marker_rows(events, df)
         path_a = _path_a_markers(report, code, df, period=period)
-        # Prefer 60m VP beside daily/weekly: sensitive vs D, smoother equity path vs 15m.
-        try:
-            from minute_data import ensure_minute_for_code
-            from volume_price import analyze_volume_price
-
-            minute_meta = ensure_minute_for_code(root, code, "60", force=False, verify_em=False)
-            if minute_meta.get("bars"):
-                vp = analyze_volume_price(
-                    minute_meta["bars"], period="60", path_a_direction=path_a_dir
-                )
-            else:
-                minute_meta = ensure_minute_for_code(
-                    root, code, "15", force=False, verify_em=False
-                )
-                if minute_meta.get("bars"):
-                    vp = analyze_volume_price(
-                        minute_meta["bars"], period="15", path_a_direction=path_a_dir
-                    )
-        except Exception as exc:  # noqa: BLE001
-            st.caption(f"小周期量价暂不可用：{exc}")
+        # Daily/weekly: skip auto minute fetch (slow). User can switch to 15m/60m for VP.
 
     fig = _candlestick_fig(
         df,

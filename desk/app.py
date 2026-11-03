@@ -130,7 +130,7 @@ def _render_sync_panel() -> None:
             "git pull 不可用时，勾选「刷新本地缓存」可跑 daily_update.py，"
             "从免费源重建日报与 member/sina 缓存。"
         )
-    pull_git = st.checkbox("同步 main 日报（fetch + 取出报告文件）", value=True, key="desk_sync_git")
+    pull_git = st.checkbox("同步 main 日报 + 图表行情缓存（日线 CODE0 / 15m / 60m）", value=True, key="desk_sync_git")
     refresh_cache = st.checkbox(
         "刷新本地缓存（daily_update.py，较慢/需网络）",
         value=False,

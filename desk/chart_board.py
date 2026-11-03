@@ -506,9 +506,14 @@ def render_chart_tab(root: Path) -> None:
             root, code, period, force=force_min, verify_em=False
         )
         bars = minute_meta.get("bars") or []
+        last_bar_at = max(
+            (str(row.get("datetime") or row.get("date") or "") for row in bars),
+            default="",
+        )
         st.caption(
             f"当前 {format_variety_label(code, meta.get('name') or '', contract=minute_meta.get('symbol'), root=root)} · "
-            f"源 {minute_meta.get('source') or '—'} · asof {asof or '—'} · {minute_meta.get('note') or ''}"
+            f"源 {minute_meta.get('source') or '—'} · 最后一根K线 {last_bar_at or '—'} · "
+            f"日报 asof {asof or '—'} · {minute_meta.get('note') or ''}"
         )
         if not bars:
             st.info("暂无 15m/60m 数据。点「刷新分钟线」；新浪失败时自动改东财备选。")
@@ -581,6 +586,8 @@ def render_chart_tab(root: Path) -> None:
             return
         daily = _bars_frame(bars)
         daily = _resample_ohlcv(daily, period)
+        last_daily_bar = str(daily["date"].iloc[-1]) if not daily.empty else "—"
+        st.caption(f"本地图表数据最后一根K线：{last_daily_bar} · 数据文件来自本地缓存；先在侧边栏「同步日报」同步 main 行情缓存。")
         df = _indicator_frames(daily)
         if win_n and len(df) > win_n:
             df = df.tail(win_n).reset_index(drop=True)

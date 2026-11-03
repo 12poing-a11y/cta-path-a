@@ -15,6 +15,7 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
+from desk.chart_captions import format_last_daily_bar_caption, last_bar_timestamp
 from desk.loaders import format_variety_label, load_json, variety_select_labels
 from desk.regime_board import events_for_codes, load_local_bars
 from desk.seat_board import EX_ZH, GREEN, INK, PAPER, RED, GRID, universe_rows
@@ -424,23 +425,6 @@ def _candlestick_fig(
     fig.update_yaxes(gridcolor=GRID, linecolor="#cccccc", title_text="量", row=2, col=1)
     fig.update_xaxes(autorange=True)
     return fig
-
-
-def last_bar_timestamp(bars: list[dict] | None) -> str:
-    """Newest bar clock. Prefer ``datetime``; fall back to the calendar ``date``."""
-    return max(
-        (str(row.get("datetime") or row.get("date") or "") for row in (bars or [])),
-        default="",
-    )
-
-
-def format_last_daily_bar_caption(daily: pd.DataFrame) -> str:
-    """Daily/weekly/monthly caption: last cached bar, plus a reminder to sync."""
-    last = str(daily["date"].iloc[-1]) if not daily.empty else "—"
-    return (
-        f"本地图表数据最后一根K线：{last} · 数据文件来自本地缓存；"
-        "先在侧边栏「同步日报」同步 main 行情缓存。"
-    )
 
 
 def render_chart_tab(root: Path) -> None:

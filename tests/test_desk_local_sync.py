@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from desk.chart_board import format_last_daily_bar_caption, last_bar_timestamp
+from desk.chart_captions import format_last_daily_bar_caption, last_bar_timestamp
 from desk.equity_book import load_book_equity
 from desk.sentiment_panel import load_sentiment_snapshot
 from desk.sync_desk import sync_desk

@@ -9,8 +9,8 @@
   "stop_atr_mult": 1.2,
   "reward_rr": 1.5,
   "equity": 198640.0,
-  "equity_floating": 2795.0,
-  "equity_mark": 201435.0,
+  "equity_floating": -445.0,
+  "equity_mark": 198195.0,
   "positions": {
     "V": {
       "code": "V",
@@ -19,15 +19,15 @@
       "entry": 4847.0,
       "stop": 4657.228571428572,
       "target": 5131.657142857142,
-      "atr": 119.29,
-      "r20": 11.0203,
-      "r60": 18.2813,
+      "atr": 125.57,
+      "r20": 7.1429,
+      "r60": 16.603,
       "bucket": "能化",
       "reason": "composite_trend",
       "entry_date": "2026-10-20",
       "mult": 5.0,
-      "mark": 5299.0,
-      "equity_delta": 2260.0
+      "mark": 5190.0,
+      "equity_delta": 1715.0
     },
     "EB": {
       "code": "EB",
@@ -36,15 +36,15 @@
       "entry": 10672.0,
       "stop": 10168.252,
       "target": 11427.622,
-      "atr": 383.71,
-      "r20": 8.6341,
-      "r60": 24.5438,
+      "atr": 406.43,
+      "r20": 0.8974,
+      "r60": 19.7033,
       "bucket": "能化",
       "reason": "daily_selected",
       "entry_date": "2026-10-22",
       "mult": 5.0,
-      "mark": 10443.0,
-      "equity_delta": -1145.0
+      "mark": 10006.0,
+      "equity_delta": -3330.0
     },
     "MA": {
       "code": "MA",
@@ -53,15 +53,15 @@
       "entry": 3389.0,
       "stop": 3227.168,
       "target": 3631.748,
-      "atr": 126.43,
-      "r20": 20.9453,
-      "r60": 35.8671,
+      "atr": 132.57,
+      "r20": 18.7267,
+      "r60": 35.1581,
       "bucket": "能化",
       "reason": "daily_selected",
       "entry_date": "2026-10-26",
       "mult": 10.0,
-      "mark": 3557.0,
-      "equity_delta": 1680.0
+      "mark": 3506.0,
+      "equity_delta": 1170.0
     }
   },
   "closed_today": [],

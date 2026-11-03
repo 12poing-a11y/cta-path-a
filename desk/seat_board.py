@@ -510,22 +510,24 @@ def _em_dates(root: Path) -> list[str]:
     return out
 
 
+def seat_calendar_dates(root: Path, exchange: str) -> list[str]:
+    """Dates with usable seat snapshots: native prints ∪ Eastmoney underlay.
+
+    DCE also unions SHFE/CZCE calendar days so em-*.json can fill sparse dce-*.json.
+    """
+    ymds = set(member_dates(root, exchange)) | set(_em_dates(root))
+    if exchange == "DCE":
+        ymds |= set(member_dates(root, "SHFE")) | set(member_dates(root, "CZCE"))
+    return sorted(ymds)
+
+
 def load_group_frame(root: Path, code: str, exchange: str, end_ymd: str, n_back: int) -> pd.DataFrame:
     """Build net-position series for the chart.
 
     DCE previously only walked ``dce-*.json`` dates (often 2–3 days). Use the
     denser SHFE/CZCE/EM calendar so Eastmoney underlay fills the gaps.
     """
-    if exchange == "DCE":
-        dates = sorted(
-            set(member_dates(root, "DCE"))
-            | set(member_dates(root, "SHFE"))
-            | set(member_dates(root, "CZCE"))
-            | set(_em_dates(root))
-        )
-        dates = [d for d in dates if d <= end_ymd]
-    else:
-        dates = [d for d in member_dates(root, exchange) if d <= end_ymd]
+    dates = [d for d in seat_calendar_dates(root, exchange) if d <= end_ymd]
     if n_back > 0:
         dates = dates[-n_back:]
     rows = []

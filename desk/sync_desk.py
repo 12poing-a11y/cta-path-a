@@ -3,8 +3,7 @@
 
 Actions at 15:30 CST commit l1_report / archive, full member ranks,
 sina continuous CODE0, and 15m/60m minute caches. The desk only reads
-local disk; this helper fetches all chart data caches from origin/main
-(and optionally re-runs daily_update.py).
+local disk; this helper git-pulls (and optionally re-runs daily_update.py).
 No orders are placed.
 """
 from __future__ import annotations
@@ -125,7 +124,7 @@ def report_mtime_note(root: Path, now: datetime | None = None) -> dict:
     asof = str(payload.get("asof") or "") or None
     today = now.strftime("%Y%m%d")
     asof_ymd = _norm_ymd(asof)
-    # After 15:30 CST today's Actions run is *scheduled*; it may land hours late (10/30: 22:28) -> flag 待核, not '应已有'.
+    # After 15:30 CST on a weekday, today's Actions run should exist; before that, yesterday is fine.
     after_cutoff = (now.hour, now.minute) >= (15, 30)
     expect = today if after_cutoff else None
     stale = False
@@ -140,8 +139,7 @@ def report_mtime_note(root: Path, now: datetime | None = None) -> dict:
         note = (
             f"本地 l1_report.json 可能偏旧：mtime {mtime_s}"
             + (f" · asof {asof}" if asof else "")
-            + "。待核：Actions 预定 15:30，实际常延迟（10/30 至 22:28 才完成），"
-            + "asof 早于今日不代表今日数据已到；可点「同步日报」重试拉取。数据只含日盘，不含夜盘。"
+            + "。15:30 后若 Actions 已跑完，点「同步日报」拉取。"
         )
     else:
         note = (
@@ -259,7 +257,13 @@ def sync_desk(
                     {
                         "step": "git_pull",
                         "planned": True,
-                        "detail": "git fetch origin main && git checkout origin/main -- l1_report.json l1_report_risk15.json archive .cache/sina .cache/akshare/minute",
+                        "detail": (
+                            "git fetch origin main && git checkout origin/main -- "
+                            "l1_report*.json archive equity_state historical_backtest* "
+                            "paper_book_latest data/sentiment_mds data/desk_composite_latest "
+                            ".cache/member .cache/akshare/minute .cache/sina "
+                            "lab/research/predictions"
+                        ),
                     }
                 )
             elif status.get("is_git"):
@@ -310,27 +314,55 @@ def sync_desk(
                     + (fetch["stderr"] or fetch["stdout"] or f"code={fetch['returncode']}")
                 )
             else:
-                checkout = _run(
-                    [
-                        "git",
-                        "checkout",
-                        "origin/main",
-                        "--",
+                # All Paths the daily bot / backtests write on main.
+                report_paths = [
+                    "l1_report.json",
+                    "l1_report_risk15.json",
+                    "archive",
+                    "equity_state.json",
+                    "historical_backtest_latest.json",
+                    "historical_equity_curve.svg",
+                    "paper_book_latest.json",
+                    "data/sentiment_mds",
+                    "data/desk_composite_latest.json",
+                    ".cache/member",
+                    ".cache/akshare/minute",
+                    ".cache/sina",
+                    "lab/research/predictions",
+                ]
+                existing: list[str] = []
+                for rel in report_paths:
+                    probe = _run(
+                        ["git", "cat-file", "-e", f"origin/main:{rel}"],
+                        root,
+                        timeout=30,
+                    )
+                    if probe.get("ok"):
+                        existing.append(rel)
+                if not existing:
+                    existing = [
                         "l1_report.json",
                         "l1_report_risk15.json",
                         "archive",
-                        ".cache/sina",
-                        ".cache/akshare/minute",
-                    ],
+                    ]
+                checkout = _run(
+                    ["git", "checkout", "origin/main", "--", *existing],
                     root,
-                    timeout=60,
+                    timeout=120,
                 )
-                steps.append({"step": "git_checkout_reports", **checkout})
+                steps.append(
+                    {
+                        "step": "git_checkout_reports",
+                        "paths": existing,
+                        **checkout,
+                    }
+                )
                 if checkout["ok"]:
                     pulled = True
                     messages.append(
-                        "已从 origin/main 取回日报与图表数据（l1_report.json、l1_report_risk15.json、archive、.cache/sina、.cache/akshare/minute）。"
-                        "日线连续合约与 15m/60m 分钟线缓存现一并同步；当前功能分支的普通 git pull 不会自动带回 main 的这些文件。"
+                        "已从 origin/main 取回路径："
+                        + "、".join(existing)
+                        + "。日常任务只提交到 main，当前功能分支的 git pull 带不回这些文件。"
                     )
                 else:
                     ok = False

@@ -673,7 +673,7 @@ def main():
     # Paper-only MDS+EHI sentiment sleeve (ChatGPT share); never sizes Path-A lots.
     sentiment_meta: dict = {"ok": False}
     try:
-        from sentiment_mds import build_snapshot, write_snapshot
+        from sentiment_mds import OUT as _SENT_OUT, build_snapshot, write_snapshot
 
         seat_rows = []
         seats_book = {}
@@ -695,7 +695,11 @@ def main():
                 }
             )
         snap_sent = build_snapshot(seat_rows, asof=asof_ymd)
-        sent_path = write_snapshot(snap_sent)
+        # 磊定 2026-11-02：日更只写影子，禁止改正式 latest.json
+        snap_sent["shadow"] = True
+        sent_path = write_snapshot(
+            snap_sent, out_dir=_SENT_OUT / "shadow", update_latest=False
+        )
         sentiment_meta = {
             "ok": True,
             "path": str(sent_path.name),
@@ -704,10 +708,12 @@ def main():
             "longs": snap_sent.get("longs"),
             "shorts": snap_sent.get("shorts"),
             "live": False,
+            "shadow": True,
         }
         print(
-            f"[sentiment] paper MDS+EHI stance={snap_sent.get('stance')} "
-            f"p3={snap_sent.get('portfolio_p3')} n={snap_sent.get('n')}"
+            f"[sentiment] shadow MDS+EHI stance={snap_sent.get('stance')} "
+            f"p3={snap_sent.get('portfolio_p3')} n={snap_sent.get('n')} "
+            f"path={sent_path.name} (update_latest=False)"
         )
     except Exception as exc:  # noqa: BLE001
         print(f"[sentiment] soft-fail: {exc}")

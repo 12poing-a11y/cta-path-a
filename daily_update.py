@@ -445,7 +445,14 @@ def main():
 
     # Observation sample: all 20 must have seats — exchange → 东财 → 新浪.
     # Short lookback densifies DCE/EM so 席位页 is not stuck on 2–3 sparse days.
-    seat_days = sorted({s.get("bar_date") for s in snaps if s.get("bar_date")})
+    from market_data import latest_expected_session_date
+
+    seat_date_cap = latest_expected_session_date().isoformat()
+    seat_days = sorted({
+        str(s.get("bar_date"))
+        for s in snaps
+        if s.get("bar_date") and str(s.get("bar_date")) <= seat_date_cap
+    })
     if seat_days:
         try:
             from member_rank import backfill_member_lookback

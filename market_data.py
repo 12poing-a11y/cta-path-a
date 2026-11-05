@@ -58,6 +58,24 @@ def _f(value) -> float | None:
         return None
 
 
+def valid_bar_asof(bar: dict, max_date: date) -> bool:
+    """True only for dated, plausible OHLC bars no later than max_date."""
+    try:
+        day = date.fromisoformat(str(bar.get("date") or "")[:10])
+        high = float(bar.get("high"))
+        low = float(bar.get("low"))
+        close = float(bar.get("close"))
+    except (TypeError, ValueError):
+        return False
+    return day <= max_date and low > 0 and close > 0 and low <= close <= high and high / low <= 5
+
+
+def filter_bars_asof(bars: list[dict], max_date: date | None = None) -> list[dict]:
+    """Drop future-dated and malformed OHLC bars using the closed-session cap."""
+    cap = max_date or latest_expected_session_date()
+    return [bar for bar in bars if valid_bar_asof(bar, cap)]
+
+
 def _bar(d: str, open_, high, low, close, volume=None, oi=None, settle=None) -> dict | None:
     d = _iso_date(d)
     if not d or close is None or close <= 0:
@@ -229,10 +247,15 @@ def save_chart_history(code: str, bars: list[dict], root: Path | None = None) ->
     path = root / ".cache" / "history" / f"{code}0.json"
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
+        cap = latest_expected_session_date().isoformat()
+        valid_bars = [row for row in bars if str(row.get("date") or "") <= cap]
         prior = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else []
         if not isinstance(prior, list):
             prior = []
-        merged = merge_bars(bars, prior)
+        # Purge previously persisted future-dated rows instead of carrying them
+        # forward forever when the cache is refreshed.
+        prior = [row for row in prior if isinstance(row, dict) and str(row.get("date") or "") <= cap]
+        merged = merge_bars(valid_bars, prior)
         path.write_text(json.dumps(merged, ensure_ascii=False), encoding="utf-8")
         return path
     except (OSError, json.JSONDecodeError):

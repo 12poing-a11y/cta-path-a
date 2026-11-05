@@ -385,7 +385,9 @@ def _row_to_bar(row: dict) -> dict | None:
         return None
     if high < low:
         high, low = low, high
-    if high / max(low, 1e-9) > 5:
+    if low <= 0 or close <= 0 or not (low <= close <= high):
+        return None
+    if high / low > 5:
         return None
     return {
         "date": d,
@@ -397,12 +399,18 @@ def _row_to_bar(row: dict) -> dict | None:
     }
 
 
-def _parse_zl_history(ans: str) -> list[dict]:
+def _parse_zl_history(ans: str, *, max_date: date | None = None) -> list[dict]:
+    """Parse iFinD history and reject dates beyond the latest closed CN session."""
+    if max_date is None:
+        from market_data import latest_expected_session_date
+
+        max_date = latest_expected_session_date()
+    max_iso = max_date.isoformat()
     bars = {}
     for table in _parse_md_tables(ans):
         for row in table:
             bar = _row_to_bar(row)
-            if bar:
+            if bar and bar["date"] <= max_iso:
                 bars[bar["date"]] = bar
     # fallback regex for date + 3 numbers (legacy)
     if len(bars) < 10:
@@ -414,9 +422,11 @@ def _parse_zl_history(ans: str) -> list[dict]:
             if not m:
                 continue
             d = _norm_date(m.group(1))
+            if not d or d > max_iso:
+                continue
             nums = [_to_float(m.group(i)) for i in (2, 3, 4)]
             nums = [n for n in nums if n is not None and not _looks_like_yyyymmdd(n) and 50 <= abs(n) <= 200_000]
-            if not d or len(nums) < 1:
+            if len(nums) < 1:
                 continue
             if len(nums) >= 3:
                 high, low, cl = nums[0], nums[1], nums[2]
@@ -424,10 +434,36 @@ def _parse_zl_history(ans: str) -> list[dict]:
                 high = low = cl = nums[0]
             if high < low:
                 high, low = low, high
+            if low <= 0 or cl <= 0 or not (low <= cl <= high) or high / low > 5:
+                continue
             bars[d] = {"date": d, "high": high, "low": low, "close": cl, "volume": None}
     cutoff = (date.today() - timedelta(days=CUTOFF_DAYS)).isoformat()
-    out = [bars[k] for k in sorted(bars) if k >= cutoff]
-    return out
+    from market_data import filter_bars_asof
+
+    return filter_bars_asof(
+        [bars[k] for k in sorted(bars) if cutoff <= k <= max_iso],
+        max_date=max_date,
+    )
+
+
+def _fetch_ifind_recent_history(u: dict, expected: date) -> list[dict]:
+    """One bounded iFinD request to fill a recent gap; never refetch a full year."""
+    ticker = u.get("ticker") or ""
+    name = u.get("name") or ticker
+    start = (expected - timedelta(days=20)).isoformat()
+    q = (
+        f"证券代码{ticker}（{name}主力连续）从{start}到{expected.isoformat()}的交易日行情，"
+        "只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。"
+        "按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    )
+    try:
+        ans = _answer_text(call("future", "future_quotes", {"query": q}))
+    except Exception as exc:
+        print(f"    {ticker} recent-gap fetch failed: {exc}")
+        return []
+    rows = _parse_zl_history(ans, max_date=expected)
+    floor = (expected - timedelta(days=20)).isoformat()
+    return [row for row in rows if floor <= row["date"] <= expected.isoformat()]
 
 
 def _fetch_ifind_history(u: dict, n: int = LOOKBACK_DAYS):
@@ -502,13 +538,31 @@ def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
     free, meta = load_free_bars(code)
     need = max(80, WARMUP + 20)
     expected = latest_expected_session_date()
-    meta["expected_session_date"] = expected.isoformat()
-    if series_sufficient(free, need, expected_date=expected):
-        bars = free
-        meta["ifind"] = False
+    expected_iso = expected.isoformat()
+    meta["expected_session_date"] = expected_iso
+    # Defensive filter: even a poisoned local/free cache must not move the
+    # strategy or seat calendar into the future.
+    free = [bar for bar in free if str(bar.get("date") or "") <= expected_iso]
+    meta["free_n"] = len(free)
+    meta["last"] = free[-1]["date"] if free else None
+
+    if series_sufficient(free, need):
+        if free and free[-1]["date"] < expected_iso:
+            # Enough history for indicators: fetch only the recent missing window
+            # once, rather than five overlapping historical chunks.
+            ifind = _fetch_ifind_recent_history(u, expected)
+            bars = merge_bars(free, ifind)
+            meta["ifind"] = bool(ifind)
+            meta["ifind_n"] = len(ifind)
+            if ifind:
+                meta["source"] = (meta.get("source") + "+ifind") if meta.get("source") else "ifind"
+                chart_cache = save_chart_history(code, bars)
+                meta["chart_cache"] = str(chart_cache.relative_to(ROOT)) if chart_cache else None
+        else:
+            bars = free
+            meta["ifind"] = False
     else:
-        # Spend an iFinD call only when free history is short, invalid, or
-        # missing the latest weekday session that should already be closed.
+        # Full historical fallback is reserved for genuinely insufficient history.
         ifind = _fetch_ifind_history(u, n)
         bars = merge_bars(free, ifind)
         meta["ifind_n"] = len(ifind)
@@ -516,6 +570,8 @@ def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
         meta["source"] = (meta.get("source") + "+ifind") if meta.get("source") else "ifind"
         chart_cache = save_chart_history(code, bars)
         meta["chart_cache"] = str(chart_cache.relative_to(ROOT)) if chart_cache else None
+    # Apply the same upper bound after merging, including any existing cache rows.
+    bars = [bar for bar in bars if str(bar.get("date") or "") <= expected_iso]
     bars = trim_bars(bars, CUTOFF_DAYS)
     meta["bars"] = len(bars)
     meta["last"] = bars[-1]["date"] if bars else None

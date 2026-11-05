@@ -62,6 +62,32 @@ def test_save_chart_history_merges_without_dropping_prior_bars(tmp_path: Path):
     assert saved[-1]["close"] == 102
 
 
+def test_save_chart_history_purges_previously_cached_future_rows(tmp_path: Path, monkeypatch):
+    import market_data
+
+    monkeypatch.setattr(
+        market_data,
+        "latest_expected_session_date",
+        lambda: date(2026, 11, 5),
+    )
+    path = tmp_path / ".cache" / "history" / "SA0.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        json.dumps([
+            {"date": "2026-11-04", "close": 980, "high": 990, "low": 970},
+            {"date": "2026-11-30", "close": 989, "high": 989, "low": 989},
+        ]),
+        encoding="utf-8",
+    )
+    market_data.save_chart_history(
+        "SA",
+        [{"date": "2026-11-05", "close": 985, "high": 990, "low": 980}],
+        root=tmp_path,
+    )
+    saved = json.loads(path.read_text(encoding="utf-8"))
+    assert [row["date"] for row in saved] == ["2026-11-04", "2026-11-05"]
+
+
 
 def test_ifind_parser_rejects_future_rows_and_invalid_ohlc():
     answer = """| 日期 | 开盘价 | 最高价 | 最低价 | 收盘价 | 成交量 |

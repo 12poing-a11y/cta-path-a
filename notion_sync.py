@@ -182,39 +182,79 @@ def _prop_date_start(props: dict, key: str) -> str:
     return str(raw.get("start") or "")[:10]
 
 
-def _signal_pages_for_date(date: str) -> dict[str, list[dict]]:
-    """Map root code → Notion pages on that calendar day."""
+def _signal_pages_for_date(date: str) -> dict[tuple[str, str], list[dict]]:
+    """Map (root code, key slot) → Notion pages for one calendar day."""
     pages = _query_db(
         SIGNALS_DB,
         {"property": "日期", "date": {"equals": date}},
     )
-    by_code: dict[str, list[dict]] = {}
+    by_key: dict[tuple[str, str], list[dict]] = {}
     for page in pages:
         props = page.get("properties") or {}
         code = _prop_select_name(props, "品种").upper()
-        if not code:
-            continue
-        by_code.setdefault(code, []).append(page)
-    return by_code
+        slot = _prop_select_name(props, "Key槽") or "primary"
+        if code:
+            by_key.setdefault((code, slot), []).append(page)
+    return by_key
+
+
+def _signal_universe() -> list[dict]:
+    cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
+    return cfg.get("symbols") or []
+
+
+def _verify_signal_pages(date: str, expected_codes: set[str], key_slot: str) -> dict:
+    pages = _query_db(
+        SIGNALS_DB,
+        {"property": "日期", "date": {"equals": date}},
+    )
+    counts: dict[str, int] = {}
+    for page in pages:
+        props = page.get("properties") or {}
+        code = _prop_select_name(props, "品种").upper()
+        slot = _prop_select_name(props, "Key槽") or "primary"
+        if slot == key_slot and code:
+            counts[code] = counts.get(code, 0) + 1
+    duplicates = {code: count for code, count in counts.items() if count > 1}
+    missing = sorted(expected_codes - set(counts))
+    unexpected = sorted(set(counts) - expected_codes)
+    total = sum(counts.values())
+    duplicate_rows = sum(count - 1 for count in duplicates.values())
+    duplicate_rate = duplicate_rows / max(total, 1)
+    result = {
+        "date": date,
+        "key_slot": key_slot,
+        "expected_count": len(expected_codes),
+        "actual_count": total,
+        "duplicates": duplicates,
+        "missing": missing,
+        "unexpected": unexpected,
+        "duplicate_rows": duplicate_rows,
+        "duplicate_rate": round(duplicate_rate, 6),
+        "ok": not duplicates and not missing and not unexpected and total == len(expected_codes),
+    }
+    print("[notion] verify:", json.dumps(result, ensure_ascii=False))
+    return result
 
 
 def dedupe_signal_pages(*, on_or_after: str | None = None) -> dict[str, int]:
-    """Archive extra rows sharing the same 日期+品种; keep the newest edit."""
+    """Archive extra rows sharing the same 日期+品种+Key槽; keep the newest edit."""
     filt = None
     if on_or_after:
         filt = {"property": "日期", "date": {"on_or_after": on_or_after}}
     pages = _query_db(SIGNALS_DB, filt)
-    groups: dict[tuple[str, str], list[dict]] = {}
+    groups: dict[tuple[str, str, str], list[dict]] = {}
     for page in pages:
         props = page.get("properties") or {}
         day = _prop_date_start(props, "日期")
         code = _prop_select_name(props, "品种").upper()
+        slot = _prop_select_name(props, "Key槽") or "primary"
         if not day or not code:
             continue
-        groups.setdefault((day, code), []).append(page)
+        groups.setdefault((day, code, slot), []).append(page)
     archived = 0
     kept = 0
-    for (_day, _code), plist in groups.items():
+    for (_day, _code, _slot), plist in groups.items():
         if len(plist) <= 1:
             kept += len(plist)
             continue
@@ -231,25 +271,42 @@ def dedupe_signal_pages(*, on_or_after: str | None = None) -> dict[str, int]:
 
 
 def sync_signals(report_path: Path | None = None):
-    """Upsert one row per 日期+品种; archive duplicates instead of stacking."""
+    """Idempotent upsert by 日期+品种+Key槽; refuse bad reports before any write."""
     path = report_path or (ROOT / "l1_report_risk15.json")
     report = json.loads(path.read_text(encoding="utf-8"))
     if report.get("skipped"):
         print("[notion] skipped:", report.get("skipped"))
         return 0
     asof = str(report.get("asof") or "")
-    date = f"{asof[:4]}-{asof[4:6]}-{asof[6:8]}" if len(asof) == 8 else asof
+    if len(asof) != 8 or not asof.isdigit():
+        raise RuntimeError(f"[notion] invalid report asof: {asof!r}")
+    date = f"{asof[:4]}-{asof[4:6]}-{asof[6:8]}"
+    signals = report.get("signals") or []
+    from research_quality import validate_signals
+
+    quality = validate_signals(signals, asof=asof, universe=_signal_universe())
+    if not quality.get("ok"):
+        raise RuntimeError(
+            "[notion] quality gate blocked sync: "
+            + json.dumps(quality, ensure_ascii=False)[:2500]
+        )
+
     key_slot = (os.environ.get("IFIND_ACTIVE_SLOT") or "primary").strip() or "primary"
-    by_code = _signal_pages_for_date(date)
+    if key_slot not in ("primary", "backup"):
+        raise RuntimeError(f"[notion] invalid key slot: {key_slot}")
+    by_key = _signal_pages_for_date(date)
     created = updated = archived = 0
-    for s in report.get("signals") or []:
+    expected_codes: set[str] = set()
+    for s in signals:
         code = str(s.get("code") or "?").upper()
+        if code == "?":
+            raise RuntimeError("[notion] signal row missing code")
+        expected_codes.add(code)
         label = _variety_label(code)
         props = {
             "Name": _title(f"{date} {label}"),
             "日期": _date(date),
-            # SELECT stays short root codes (CF/SR/...) for stable filtering.
-            "品种": _select(code if code != "?" else None),
+            "品种": _select(code),
             "方向": _select(s.get("direction") or "空仓"),
             "手数": _num(s.get("lots_l1") or 0),
             "收盘": _num(s.get("close")),
@@ -260,9 +317,9 @@ def sync_signals(report_path: Path | None = None):
             "对齐": _select(s.get("align") or "冲突/不足"),
             "动作": _rich(_safe_action(s.get("action") or s.get("error") or "")),
             "备注": _rich(label),
-            "Key槽": _select(key_slot if key_slot in ("primary", "backup") else "primary"),
+            "Key槽": _select(key_slot),
         }
-        pages = by_code.pop(code, []) if code != "?" else []
+        pages = by_key.pop((code, key_slot), [])
         pages.sort(
             key=lambda p: p.get("last_edited_time") or p.get("created_time") or "",
             reverse=True,
@@ -270,24 +327,59 @@ def sync_signals(report_path: Path | None = None):
         if not pages:
             _create_page(SIGNALS_DB, props)
             created += 1
-            print(f"[notion] signal create {label}")
+            print(f"[notion] signal create {label} [{key_slot}]")
         else:
             _update_page(pages[0]["id"], props)
             updated += 1
-            print(f"[notion] signal update {label}")
+            print(f"[notion] signal update {label} [{key_slot}]")
             for extra in pages[1:]:
                 _archive_page(extra["id"])
                 archived += 1
+
+    # A second idempotent cleanup catches duplicates created by an earlier interrupted run.
+    cleanup = dedupe_signal_pages(on_or_after=date)
+    archived += cleanup.get("archived", 0)
+    verified = _verify_signal_pages(date, expected_codes, key_slot)
+    if not verified.get("ok"):
+        raise RuntimeError("[notion] post-write verification failed: " + json.dumps(verified, ensure_ascii=False))
+
     print(
         f"[notion] signals date={date} created={created} updated={updated} "
-        f"archived_dupes={archived}"
+        f"archived_dupes={archived} rows={verified['actual_count']} duplicate_rate={verified['duplicate_rate']}"
     )
-    # Keep 建平仓流水 table aligned with paper_book trade_ledger after daily signals.
     try:
         sync_trades()
     except Exception as exc:
         print("[notion] trades sync after signals failed:", str(exc)[:300])
     return 0
+
+
+def verify_signals(report_path: Path | None = None) -> dict:
+    """Daily post-sync verification; no writes to the formal signal ledger."""
+    path = report_path or (ROOT / "l1_report_risk15.json")
+    report = json.loads(path.read_text(encoding="utf-8"))
+    asof = str(report.get("asof") or "")
+    if len(asof) != 8 or not asof.isdigit():
+        raise RuntimeError(f"[notion] invalid report asof: {asof!r}")
+    from research_quality import validate_signals
+
+    quality = validate_signals(
+        report.get("signals") or [], asof=asof, universe=_signal_universe()
+    )
+    date = f"{asof[:4]}-{asof[4:6]}-{asof[6:8]}"
+    key_slot = (os.environ.get("IFIND_ACTIVE_SLOT") or "primary").strip() or "primary"
+    expected_codes = {
+        str(row.get("code") or "").upper()
+        for row in (report.get("signals") or [])
+        if isinstance(row, dict) and row.get("code")
+    }
+    notion = _verify_signal_pages(date, expected_codes, key_slot)
+    result = {"ok": bool(quality.get("ok") and notion.get("ok")), "quality": quality, "notion": notion}
+    out = ROOT / "notion_daily_quality.json"
+    out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    if not result["ok"]:
+        raise RuntimeError("[notion] daily verification failed; see notion_daily_quality.json")
+    return result
 
 
 def sync_backtest(path: Path | None = None):
@@ -958,6 +1050,9 @@ if __name__ == "__main__":
     if mode in ("dedupe", "dedupe_signals"):
         since = sys.argv[2] if len(sys.argv) > 2 else "2026-10-01"
         dedupe_signal_pages(on_or_after=since)
+        raise SystemExit(0)
+    if mode in ("verify", "verify_signals"):
+        verify_signals()
         raise SystemExit(0)
     raise SystemExit(sync_signals())
 

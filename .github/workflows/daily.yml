@@ -108,7 +108,7 @@ jobs:
           import re
           import subprocess
           from pathlib import Path
-          pat = re.compile(r"^[A-Za-z]+0\\.json$")
+          pat = re.compile(r"^[A-Za-z]+0\.json$")
           paths = [str(p) for p in Path(".cache/history").glob("*.json") if pat.match(p.name)]
           if paths:
               subprocess.check_call(["git", "add", "-f", *paths])

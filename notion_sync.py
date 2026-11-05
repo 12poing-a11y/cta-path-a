@@ -291,7 +291,7 @@ def sync_signals(report_path: Path | None = None):
             + json.dumps(quality, ensure_ascii=False)[:2500]
         )
 
-    key_slot = (os.environ.get("IFIND_ACTIVE_SLOT") or "primary").strip() or "primary"
+    key_slot = (str(report.get("ifind_slot") or os.environ.get("IFIND_ACTIVE_SLOT") or "primary")).strip() or "primary"
     if key_slot not in ("primary", "backup"):
         raise RuntimeError(f"[notion] invalid key slot: {key_slot}")
     by_key = _signal_pages_for_date(date)
@@ -367,7 +367,7 @@ def verify_signals(report_path: Path | None = None) -> dict:
         report.get("signals") or [], asof=asof, universe=_signal_universe()
     )
     date = f"{asof[:4]}-{asof[4:6]}-{asof[6:8]}"
-    key_slot = (os.environ.get("IFIND_ACTIVE_SLOT") or "primary").strip() or "primary"
+    key_slot = (str(report.get("ifind_slot") or os.environ.get("IFIND_ACTIVE_SLOT") or "primary")).strip() or "primary"
     expected_codes = {
         str(row.get("code") or "").upper()
         for row in (report.get("signals") or [])

@@ -70,6 +70,7 @@ jobs:
             .cache/member/czce-*.txt
             .cache/akshare/minute/*.json
             .cache/sina/
+            .cache/history/
           if-no-files-found: warn
 
       - name: Commit archive + full cache
@@ -77,7 +78,7 @@ jobs:
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
-          mkdir -p .cache/member .cache/akshare/minute data/sentiment_mds
+          mkdir -p .cache/member .cache/akshare/minute .cache/history data/sentiment_mds
           git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
           git add data/sentiment_mds/*.json || true
           git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
@@ -101,6 +102,19 @@ jobs:
               print(f"staged {len(paths)} sina continuous files")
           else:
               print("no sina continuous CODE0.json to stage")
+          PY
+          # Persist merged CODE0 daily history (free source + iFinD gap-fill) for chart sync.
+          python - <<'PY'
+          import re
+          import subprocess
+          from pathlib import Path
+          pat = re.compile(r"^[A-Za-z]+0\.json$")
+          paths = [str(p) for p in Path(".cache/history").glob("*.json") if pat.match(p.name)]
+          if paths:
+              subprocess.check_call(["git", "add", "-f", *paths])
+              print(f"staged {len(paths)} merged chart history files")
+          else:
+              print("no merged chart history files to stage")
           PY
           if git diff --cached --quiet; then
             echo "no changes"

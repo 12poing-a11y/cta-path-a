@@ -649,7 +649,7 @@ def main():
     asof_ymd = now.strftime("%Y%m%d")
     from research_quality import validate_signals
 
-    quality = validate_signals(signals, asof=asof_ymd)
+    quality = validate_signals(signals, asof=asof_ymd, universe=UNIVERSE)
     if not quality.get("ok"):
         print(
             f"[cta] QUALITY GATE FAIL bad={quality.get('bad_codes')} "

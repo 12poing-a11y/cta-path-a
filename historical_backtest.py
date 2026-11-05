@@ -385,7 +385,9 @@ def _row_to_bar(row: dict) -> dict | None:
         return None
     if high < low:
         high, low = low, high
-    if high / max(low, 1e-9) > 5:
+    if low <= 0 or close <= 0 or not (low <= close <= high):
+        return None
+    if high / low > 5:
         return None
     return {
         "date": d,
@@ -414,7 +416,7 @@ def _parse_zl_history(ans: str, *, max_date: date | None = None) -> list[dict]:
     if len(bars) < 10:
         for line in ans.splitlines():
             m = re.search(
-                r"(20\\d{6}|20\\d{2}-\\d{1,2}-\\d{1,2}).{0,80}?(\\d+\\.?\\d*).{0,40}?(\\d+\\.?\\d*).{0,40}?(\\d+\\.?\\d*)",
+                r"(20\d{6}|20\d{2}-\d{1,2}-\d{1,2}).{0,80}?(\d+\.?\d*).{0,40}?(\d+\.?\d*).{0,40}?(\d+\.?\d*)",
                 line,
             )
             if not m:

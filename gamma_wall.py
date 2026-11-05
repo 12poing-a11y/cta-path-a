@@ -75,7 +75,15 @@ def assess_data_quality(option_rows, matching_rows, gamma_rows, futures_date, as
     """Fail closed on stale underlying, thin strike coverage or weak IV/OI coverage."""
     total = len(matching_rows)
     valid = len(gamma_rows)
-    coverage = valid / total if total else 0.0
+    valid_contracts = 0
+    for row in matching_rows:
+        oi = _num(row.get("空盘量"))
+        if oi is None: oi = _num(row.get("持仓量"))
+        iv = _num(row.get("隐含波动率"))
+        if iv is not None and iv > 3: iv /= 100.0
+        if oi is not None and oi > 0 and iv is not None and 0.005 <= iv <= 5:
+            valid_contracts += 1
+    coverage = valid_contracts / total if total else 0.0
     issues = []
     if futures_date != asof: issues.append(f"期货行情日期不一致：{futures_date or '缺失'} != {asof}")
     if total == 0: issues.append("期权表中没有匹配的目标系列")
@@ -83,7 +91,7 @@ def assess_data_quality(option_rows, matching_rows, gamma_rows, futures_date, as
     if total and coverage < 0.60: issues.append(f"有效行权价覆盖率低于60%：{coverage:.1%}")
     status = "PASS" if not issues else "REJECT"
     return {"status":status,"issues":issues,"option_rows_total":len(option_rows),
-        "matching_contracts":total,"valid_strikes":valid,"valid_contract_coverage":round(coverage,4),
+        "matching_contracts":total,"valid_strikes":valid,"valid_contracts":valid_contracts,"valid_contract_coverage":round(coverage,4),
         "underlying_date":futures_date,"option_date":asof,"dealer_sign_known":False}
 
 

@@ -7,8 +7,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from market_data import latest_expected_session_date, save_chart_history, series_sufficient
-from historical_backtest import _parse_zl_history
+from market_data import latest_expected_session_date, save_chart_history, series_sufficient, filter_bars_asof
 
 
 TZ = ZoneInfo("Asia/Shanghai")
@@ -89,19 +88,17 @@ def test_save_chart_history_purges_previously_cached_future_rows(tmp_path: Path,
 
 
 
-def test_ifind_parser_rejects_future_rows_and_invalid_ohlc():
-    answer = """| 日期 | 开盘价 | 最高价 | 最低价 | 收盘价 | 成交量 |
-|---|---:|---:|---:|---:|---:|
-| 2026-11-04 | 980 | 990 | 970 | 985 | 1200 |
-| 2026-11-30 | 989 | 989 | 989 | 989 | |
-| 2026-11-03 | 980 | 990 | 970 | 995 | 800 |
-"""
-    rows = _parse_zl_history(answer, max_date=date(2026, 11, 5))
-    assert [row["date"] for row in rows] == ["2026-11-04"]
-    assert rows[0]["close"] == 985
+
+def test_filter_bars_asof_rejects_future_and_invalid_ohlc():
+    rows = [
+        {"date": "2026-11-04", "high": 990, "low": 970, "close": 985},
+        {"date": "2026-11-30", "high": 989, "low": 989, "close": 989},
+        {"date": "2026-11-03", "high": 990, "low": 970, "close": 995},
+    ]
+    assert filter_bars_asof(rows, max_date=date(2026, 11, 5)) == [rows[0]]
 
 
-def test_ifind_parser_caps_future_dates_by_default(monkeypatch):
+def test_filter_bars_asof_caps_future_dates_by_default(monkeypatch):
     import market_data
 
     monkeypatch.setattr(
@@ -109,10 +106,8 @@ def test_ifind_parser_caps_future_dates_by_default(monkeypatch):
         "latest_expected_session_date",
         lambda: date(2026, 11, 5),
     )
-    answer = """| 日期 | 开盘价 | 最高价 | 最低价 | 收盘价 |
-|---|---:|---:|---:|---:|
-| 2026-11-04 | 980 | 990 | 970 | 985 |
-| 2026-11-30 | 989 | 989 | 989 | 989 |
-"""
-    rows = _parse_zl_history(answer)
-    assert [row["date"] for row in rows] == ["2026-11-04"]
+    rows = [
+        {"date": "2026-11-04", "high": 990, "low": 970, "close": 985},
+        {"date": "2026-11-30", "high": 989, "low": 989, "close": 989},
+    ]
+    assert filter_bars_asof(rows) == [rows[0]]

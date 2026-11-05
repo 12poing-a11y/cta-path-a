@@ -229,10 +229,15 @@ def save_chart_history(code: str, bars: list[dict], root: Path | None = None) ->
     path = root / ".cache" / "history" / f"{code}0.json"
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
+        cap = latest_expected_session_date().isoformat()
+        valid_bars = [row for row in bars if str(row.get("date") or "") <= cap]
         prior = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else []
         if not isinstance(prior, list):
             prior = []
-        merged = merge_bars(bars, prior)
+        # Purge previously persisted future-dated rows instead of carrying them
+        # forward forever when the cache is refreshed.
+        prior = [row for row in prior if isinstance(row, dict) and str(row.get("date") or "") <= cap]
+        merged = merge_bars(valid_bars, prior)
         path.write_text(json.dumps(merged, ensure_ascii=False), encoding="utf-8")
         return path
     except (OSError, json.JSONDecodeError):

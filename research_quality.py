@@ -110,6 +110,8 @@ def validate_signals(
                 numeric[key] = float(row[key])
             except (TypeError, ValueError):
                 failures.append(f"{code}:invalid_{key}")
+        if len(numeric) != 5:
+            continue
         if any(not math.isfinite(value) for value in numeric.values()):
             failures.append(f"{code}:non_finite_numeric")
             continue

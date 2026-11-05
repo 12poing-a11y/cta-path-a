@@ -79,7 +79,12 @@ def validate_signals(
     universe: list[dict[str, Any]] | None = None,
     max_bad_ratio: float = 0.0,
 ) -> dict[str, Any]:
-    """Strict pre-publication gate for required fields, prices, ATR and contract metadata."""
+    """Strict pre-publication gate for required fields, prices, ATR and contract metadata.
+
+Tick alignment is enforced for executable contract prices. Continuous main-contract
+series are synthetic roll-adjusted/stitched series and must be checked for numeric
+and range sanity, not exchange tick alignment.
+"""
     import math
 
     failures: list[str] = []
@@ -137,7 +142,10 @@ def validate_signals(
                 failures.append(f"{code}:universe_multiplier_invalid")
             try:
                 tick = float(cfg.get("tick") or 0)
-                if tick > 0 and close > 0:
+                price_basis = str(row.get("price_basis") or "contract").strip().lower()
+                if price_basis not in {"contract", "continuous"}:
+                    failures.append(f"{code}:invalid_price_basis")
+                elif price_basis == "contract" and tick > 0 and close > 0:
                     ticks = close / tick
                     if abs(ticks - round(ticks)) > 1e-5:
                         failures.append(f"{code}:price_off_tick")

@@ -438,7 +438,12 @@ def _parse_zl_history(ans: str, *, max_date: date | None = None) -> list[dict]:
                 continue
             bars[d] = {"date": d, "high": high, "low": low, "close": cl, "volume": None}
     cutoff = (date.today() - timedelta(days=CUTOFF_DAYS)).isoformat()
-    return [bars[k] for k in sorted(bars) if cutoff <= k <= max_iso]
+    from market_data import filter_bars_asof
+
+    return filter_bars_asof(
+        [bars[k] for k in sorted(bars) if cutoff <= k <= max_iso],
+        max_date=max_date,
+    )
 
 
 def _fetch_ifind_recent_history(u: dict, expected: date) -> list[dict]:

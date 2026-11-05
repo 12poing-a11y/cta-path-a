@@ -29,21 +29,24 @@ def test_expired_rejected():
 
 
 def test_quality_rejects_stale_underlying():
-    quality = assess_data_quality([{}] * 10, [{}] * 10, [{}] * 6, "2026-11-04", "2026-11-05")
+    valid = [{"空盘量": 10, "隐含波动率": 20} for _ in range(8)]
+    quality = assess_data_quality(valid, valid, [{}] * 6, "2026-11-04", "2026-11-05")
     assert quality["status"] == "REJECT"
     assert any("日期不一致" in x for x in quality["issues"])
 
 
 def test_quality_rejects_thin_chain():
-    quality = assess_data_quality([{}] * 8, [{}] * 8, [{}] * 3, "2026-11-05", "2026-11-05")
+    matching = [{"空盘量": 10, "隐含波动率": 20} for _ in range(8)]
+    quality = assess_data_quality(matching, matching, [{}] * 3, "2026-11-05", "2026-11-05")
     assert quality["status"] == "REJECT"
     assert quality["valid_strikes"] == 3
 
 
 def test_quality_passes_sufficient_chain():
-    quality = assess_data_quality([{}] * 10, [{}] * 10, [{}] * 8, "2026-11-05", "2026-11-05")
+    matching = [{"空盘量": 10, "隐含波动率": 20} for _ in range(10)]
+    quality = assess_data_quality(matching, matching, [{}] * 8, "2026-11-05", "2026-11-05")
     assert quality["status"] == "PASS"
-    assert quality["valid_contract_coverage"] == 0.8
+    assert quality["valid_contract_coverage"] == 1.0
 
 
 def test_history_ignores_unvalidated_snapshots(tmp_path):

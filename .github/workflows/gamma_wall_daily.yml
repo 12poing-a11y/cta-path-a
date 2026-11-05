@@ -1,0 +1,62 @@
+name: Gamma Wall daily collection
+
+on:
+  schedule:
+    # 16:35 China time, after the CZCE day session (08:35 UTC), weekdays.
+    - cron: "35 8 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gamma-wall-daily
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install free data dependencies
+        run: pip install -r requirements.txt
+      - name: Collect validated snapshots
+        env:
+          CF_EXPIRY: ${{ vars.GAMMA_CF2701_EXPIRY }}
+          SR_EXPIRY: ${{ vars.GAMMA_SR2701_EXPIRY }}
+        run: |
+          set -euo pipefail
+          ASOF="$(TZ=Asia/Shanghai date +%F)"
+          RAN=0
+          if [[ -n "$CF_EXPIRY" ]]; then
+            python gamma_wall.py --contract CF2701 --expiry "$CF_EXPIRY" --date "$ASOF"
+            RAN=1
+          else
+            echo "::notice::Skip CF2701: set repository variable GAMMA_CF2701_EXPIRY after verifying CZCE option last trading day."
+          fi
+          if [[ -n "$SR_EXPIRY" ]]; then
+            python gamma_wall.py --contract SR2701 --expiry "$SR_EXPIRY" --date "$ASOF"
+            RAN=1
+          else
+            echo "::notice::Skip SR2701: set repository variable GAMMA_SR2701_EXPIRY after verifying CZCE option last trading day."
+          fi
+          if [[ "$RAN" -eq 0 ]]; then
+            echo "No expiry variables configured; no snapshot was generated."
+          fi
+      - name: Persist validated daily snapshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/gamma_wall/
+          if git diff --cached --quiet; then
+            echo "No new validated Gamma Wall snapshots to commit."
+          else
+            git commit -m "data(gamma): daily validated wall snapshots"
+            git push
+          fi

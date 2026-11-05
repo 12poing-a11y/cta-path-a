@@ -487,9 +487,11 @@ def render_chart_tab(root: Path) -> None:
 
     asof = (report or {}).get("asof")
     path_a_dir = None
+    signal_bar_date = None
     for sig in (report or {}).get("signals") or []:
         if str(sig.get("code") or "").upper() == code:
             path_a_dir = str(sig.get("direction") or "")
+            signal_bar_date = _iso_ymd(str(sig.get("bar_date") or asof or ""))
             break
 
     x_col = "date"
@@ -583,6 +585,15 @@ def render_chart_tab(root: Path) -> None:
             st.info("本地无连续合约日线（.cache/sina 下 CODE0.json）。先同步或刷新本地缓存。")
             return
         daily = _bars_frame(bars)
+        last_daily_date = str(daily["date"].iloc[-1]) if not daily.empty else ""
+        expected_daily_date = signal_bar_date or _iso_ymd(str(asof or ""))
+        if expected_daily_date and last_daily_date and last_daily_date < expected_daily_date:
+            st.warning(
+                f"日线缓存落后：当前品种日报 bar_date={expected_daily_date}，"
+                f"本地连续合约最后一根K线={last_daily_date}。"
+                "图表不会用单一收盘价伪造OHLC；请先同步 main 的行情缓存，"
+                "若仍落后则检查行情源是否已发布当日连续合约日线。"
+            )
         daily = _resample_ohlcv(daily, period)
         st.caption(format_last_daily_bar_caption(daily))
         df = _indicator_frames(daily)

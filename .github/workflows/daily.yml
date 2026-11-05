@@ -6,6 +6,11 @@ on:
     - cron: "30 7 * * 1-5"
   workflow_dispatch:
 
+# Serialize scheduled and manually dispatched runs so query-then-upsert cannot race.
+concurrency:
+  group: cta-daily-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -45,6 +50,8 @@ jobs:
           python notion_sync.py signals
           # signals already pushes trades; explicit trades keeps ledger if signals skipped
           python notion_sync.py trades
+          # Verify row count, duplicate rate, required data and contract metadata after sync.
+          python notion_sync.py verify
 
       - name: Upload artifacts
         if: always()

@@ -91,12 +91,16 @@ def fetch_snapshot(contract, *, expiry, trade_date=None, rate=0.02, root=None):
         frame = _fetch_czce_day(product, asof)
         option_rows = frame.to_dict("records")
         op.write_text(json.dumps(option_rows, ensure_ascii=False, default=str), encoding="utf-8")
-    if fp.exists(): fut_rows = json.loads(fp.read_text(encoding="utf-8"))
-    else:
-        frame = _fetch_underlying(contract)
-        fut_rows = frame.to_dict("records")
-        fp.write_text(json.dumps(fut_rows, ensure_ascii=False, default=str), encoding="utf-8")
+    fut_rows = json.loads(fp.read_text(encoding="utf-8")) if fp.exists() else []
     frow = next((r for r in reversed(fut_rows) if str(r.get("date",""))[:10] == asof), None)
+    if frow is None:
+        frame = _fetch_underlying(contract)
+        fresh_rows = frame.to_dict("records")
+        by_date = {str(r.get("date",""))[:10]: r for r in fut_rows}
+        by_date.update({str(r.get("date",""))[:10]: r for r in fresh_rows})
+        fut_rows = [by_date[k] for k in sorted(by_date) if k]
+        fp.write_text(json.dumps(fut_rows, ensure_ascii=False, default=str), encoding="utf-8")
+        frow = next((r for r in reversed(fut_rows) if str(r.get("date",""))[:10] == asof), None)
     if frow is None: raise RuntimeError(f"新浪未返回 {contract} 在 {asof} 的单合约日线；禁止用主连价格替代")
     futures_price = _num(frow.get("settle")) or _num(frow.get("close"))
     if futures_price is None or futures_price <= 0: raise RuntimeError("目标期货结算价/收盘价缺失")

@@ -84,3 +84,40 @@ def test_strict_gate_rejects_price_off_tick_and_absurd_atr():
     assert not q["ok"]
     assert "CF:price_off_tick" in q["failures"]
     assert "CF:atr_vs_close" in q["failures"]
+
+
+
+def test_continuous_series_is_not_rejected_by_contract_tick_alignment():
+    universe = [{"code": "P", "mult": 10, "tick": 2}]
+    row = {
+        "code": "P", "close": 8975, "atr": 182.64, "r20": -0.06325,
+        "r60": -0.034842, "bar_date": "20261104", "mult": 10,
+        "price_basis": "continuous",
+    }
+    q = validate_signals([row], asof="20261105", universe=universe)
+    assert q["ok"] is True
+    assert "P:price_off_tick" not in q["failures"]
+
+
+def test_executable_contract_price_still_enforces_exchange_tick():
+    universe = [{"code": "P", "mult": 10, "tick": 2}]
+    row = {
+        "code": "P", "close": 8975, "atr": 182.64, "r20": -0.06325,
+        "r60": -0.034842, "bar_date": "20261104", "mult": 10,
+        "price_basis": "contract",
+    }
+    q = validate_signals([row], asof="20261105", universe=universe)
+    assert q["ok"] is False
+    assert "P:price_off_tick" in q["failures"]
+
+
+def test_unknown_price_basis_fails_closed():
+    universe = [{"code": "P", "mult": 10, "tick": 2}]
+    row = {
+        "code": "P", "close": 8975, "atr": 182.64, "r20": -0.06325,
+        "r60": -0.034842, "bar_date": "20261104", "mult": 10,
+        "price_basis": "adjusted_guess",
+    }
+    q = validate_signals([row], asof="20261105", universe=universe)
+    assert q["ok"] is False
+    assert "P:invalid_price_basis" in q["failures"]

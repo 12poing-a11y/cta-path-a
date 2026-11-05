@@ -274,6 +274,9 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
         "lots_raw": lots,
         "min_lots_bumped": min_lots_bumped,
         "data_source": snap.get("source"),
+        # daily_update derives signals from Sina/Tencent main continuous series,
+        # not an executable delivery-month contract quote.
+        "price_basis": "continuous",
         "bar_date": snap.get("bar_date"),
         "lots_l1": lots,
         "lots_full": lots,

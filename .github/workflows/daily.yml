@@ -61,6 +61,7 @@ jobs:
           path: |
             l1_report_risk15.json
             l1_report_quality_failed.json
+            notion_daily_quality.json
             data/sentiment_mds/
             archive/
             .cache/member/dce-*.json

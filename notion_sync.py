@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import time
 from pathlib import Path
 
 import requests
@@ -237,6 +238,39 @@ def _verify_signal_pages(date: str, expected_codes: set[str], key_slot: str) -> 
     return result
 
 
+_SIGNAL_VERIFY_RETRY_DELAYS = (1, 2, 4, 8)
+
+
+def _verify_signal_pages_with_retry(
+    date: str,
+    expected_codes: set[str],
+    key_slot: str,
+    *,
+    retry_delays: tuple[int, ...] = _SIGNAL_VERIFY_RETRY_DELAYS,
+) -> dict:
+    """Re-query briefly when Notion's database index has not exposed fresh writes yet.
+
+    This does not relax the completeness/uniqueness gate: the final result must
+    still contain exactly the expected codes, once each, in the requested slot.
+    """
+    result = {}
+    for attempt in range(len(retry_delays) + 1):
+        result = _verify_signal_pages(date, expected_codes, key_slot)
+        if result.get("ok"):
+            if attempt:
+                print(f"[notion] verify recovered after retry={attempt}")
+            return result
+        if attempt >= len(retry_delays):
+            break
+        delay = retry_delays[attempt]
+        print(
+            f"[notion] verify not ready attempt={attempt + 1}/"
+            f"{len(retry_delays) + 1}; retry_in={delay}s"
+        )
+        time.sleep(delay)
+    return result
+
+
 def dedupe_signal_pages(*, on_or_after: str | None = None) -> dict[str, int]:
     """Archive extra rows sharing the same 日期+品种+Key槽; keep the newest edit."""
     filt = None
@@ -339,7 +373,7 @@ def sync_signals(report_path: Path | None = None):
     # A second idempotent cleanup catches duplicates created by an earlier interrupted run.
     cleanup = dedupe_signal_pages(on_or_after=date)
     archived += cleanup.get("archived", 0)
-    verified = _verify_signal_pages(date, expected_codes, key_slot)
+    verified = _verify_signal_pages_with_retry(date, expected_codes, key_slot)
     if not verified.get("ok"):
         raise RuntimeError("[notion] post-write verification failed: " + json.dumps(verified, ensure_ascii=False))
 
@@ -373,7 +407,7 @@ def verify_signals(report_path: Path | None = None) -> dict:
         for row in (report.get("signals") or [])
         if isinstance(row, dict) and row.get("code")
     }
-    notion = _verify_signal_pages(date, expected_codes, key_slot)
+    notion = _verify_signal_pages_with_retry(date, expected_codes, key_slot)
     result = {"ok": bool(quality.get("ok") and notion.get("ok")), "quality": quality, "notion": notion}
     out = ROOT / "notion_daily_quality.json"
     out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")

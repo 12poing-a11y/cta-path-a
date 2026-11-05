@@ -58,6 +58,24 @@ def _f(value) -> float | None:
         return None
 
 
+def valid_bar_asof(bar: dict, max_date: date) -> bool:
+    """True only for dated, plausible OHLC bars no later than max_date."""
+    try:
+        day = date.fromisoformat(str(bar.get("date") or "")[:10])
+        high = float(bar.get("high"))
+        low = float(bar.get("low"))
+        close = float(bar.get("close"))
+    except (TypeError, ValueError):
+        return False
+    return day <= max_date and low > 0 and close > 0 and low <= close <= high and high / low <= 5
+
+
+def filter_bars_asof(bars: list[dict], max_date: date | None = None) -> list[dict]:
+    """Drop future-dated and malformed OHLC bars using the closed-session cap."""
+    cap = max_date or latest_expected_session_date()
+    return [bar for bar in bars if valid_bar_asof(bar, cap)]
+
+
 def _bar(d: str, open_, high, low, close, volume=None, oi=None, settle=None) -> dict | None:
     d = _iso_date(d)
     if not d or close is None or close <= 0:

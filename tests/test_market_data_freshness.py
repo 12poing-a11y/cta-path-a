@@ -7,7 +7,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from market_data import latest_expected_session_date, save_chart_history, series_sufficient
+from market_data import latest_expected_session_date, save_chart_history, series_sufficient\nfrom historical_backtest import _parse_zl_history
 
 
 TZ = ZoneInfo("Asia/Shanghai")
@@ -59,3 +59,31 @@ def test_save_chart_history_merges_without_dropping_prior_bars(tmp_path: Path):
     saved = json.loads(path.read_text(encoding="utf-8"))
     assert [row["date"] for row in saved] == ["2026-11-04", "2026-11-05"]
     assert saved[-1]["close"] == 102
+
+\n\ndef test_ifind_parser_rejects_future_rows_and_invalid_ohlc():
+    answer = """| 日期 | 开盘价 | 最高价 | 最低价 | 收盘价 | 成交量 |
+|---|---:|---:|---:|---:|---:|
+| 2026-11-04 | 980 | 990 | 970 | 985 | 1200 |
+| 2026-11-30 | 989 | 989 | 989 | 989 | |
+| 2026-11-03 | 980 | 990 | 970 | 995 | 800 |
+"""
+    rows = _parse_zl_history(answer, max_date=date(2026, 11, 5))
+    assert [row["date"] for row in rows] == ["2026-11-04"]
+    assert rows[0]["close"] == 985
+
+
+def test_ifind_parser_caps_future_dates_by_default(monkeypatch):
+    import market_data
+
+    monkeypatch.setattr(
+        market_data,
+        "latest_expected_session_date",
+        lambda: date(2026, 11, 5),
+    )
+    answer = """| 日期 | 开盘价 | 最高价 | 最低价 | 收盘价 |
+|---|---:|---:|---:|---:|
+| 2026-11-04 | 980 | 990 | 970 | 985 |
+| 2026-11-30 | 989 | 989 | 989 | 989 |
+"""
+    rows = _parse_zl_history(answer)
+    assert [row["date"] for row in rows] == ["2026-11-04"]

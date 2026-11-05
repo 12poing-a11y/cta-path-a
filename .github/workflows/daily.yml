@@ -88,7 +88,7 @@ jobs:
           import re
           import subprocess
           from pathlib import Path
-          pat = re.compile(r"^[A-Za-z]+0\.json$")
+          pat = re.compile(r"^[A-Za-z]+0\\.json$")
           paths = []
           for day in Path(".cache/sina").glob("*"):
               if not day.is_dir():
@@ -107,9 +107,9 @@ jobs:
             exit 0
           fi
           git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+CODE0+sentiment"
-          # The workflow creates fresh cache/report files. If main advanced while
-          # this job was running, prefer this run's generated outputs on same-path
-          # conflicts, then fail loudly if rebase or push still cannot complete.
+          # Fresh cache/report generation can leave other tracked files modified.
+          # Autostash those residual changes so they cannot block the rebase.
+          # Rebase generated outputs with priority on same-path conflicts.
           git fetch origin "${{ github.ref_name }}"
-          git rebase -X theirs "origin/${{ github.ref_name }}"
+          git rebase --autostash -X theirs "origin/${{ github.ref_name }}"
           git push origin "HEAD:${{ github.ref_name }}"

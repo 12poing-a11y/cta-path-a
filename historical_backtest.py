@@ -489,22 +489,37 @@ def _fetch_ifind_history(u: dict, n: int = LOOKBACK_DAYS):
 
 def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
     """Sina + Tencent first. iFinD fills missing dates when that set is short or stale."""
-    from market_data import load_free_bars, merge_bars, series_sufficient, trim_bars
+    from market_data import (
+        latest_expected_session_date,
+        load_free_bars,
+        merge_bars,
+        save_chart_history,
+        series_sufficient,
+        trim_bars,
+    )
 
     code = u.get("code") or ""
     free, meta = load_free_bars(code)
     need = max(80, WARMUP + 20)
-    if series_sufficient(free, need):
+    expected = latest_expected_session_date()
+    meta["expected_session_date"] = expected.isoformat()
+    if series_sufficient(free, need, expected_date=expected):
         bars = free
         meta["ifind"] = False
     else:
+        # Spend an iFinD call only when free history is short, invalid, or
+        # missing the latest weekday session that should already be closed.
         ifind = _fetch_ifind_history(u, n)
         bars = merge_bars(free, ifind)
         meta["ifind_n"] = len(ifind)
         meta["ifind"] = True
         meta["source"] = (meta.get("source") + "+ifind") if meta.get("source") else "ifind"
+        chart_cache = save_chart_history(code, bars)
+        meta["chart_cache"] = str(chart_cache.relative_to(ROOT)) if chart_cache else None
     bars = trim_bars(bars, CUTOFF_DAYS)
     meta["bars"] = len(bars)
+    meta["last"] = bars[-1]["date"] if bars else None
+    meta["fresh_for_expected_session"] = bool(bars and bars[-1]["date"] >= expected.isoformat())
     print(
         f"  source={meta.get('source')} sina={meta.get('sina_n')} "
         f"tencent={meta.get('tencent_n')} ifind={meta.get('ifind')} bars={len(bars)} "

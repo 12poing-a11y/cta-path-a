@@ -74,7 +74,6 @@ jobs:
 
       - name: Commit archive + full cache
         if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        continue-on-error: true
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
@@ -108,5 +107,9 @@ jobs:
             exit 0
           fi
           git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+CODE0+sentiment"
-          git pull --rebase --autostash origin "${{ github.ref_name }}" || true
+          # The workflow creates fresh cache/report files. If main advanced while
+          # this job was running, prefer this run's generated outputs on same-path
+          # conflicts, then fail loudly if rebase or push still cannot complete.
+          git fetch origin "${{ github.ref_name }}"
+          git rebase -X theirs "origin/${{ github.ref_name }}"
           git push origin "HEAD:${{ github.ref_name }}"

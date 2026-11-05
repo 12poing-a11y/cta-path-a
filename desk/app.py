@@ -27,6 +27,7 @@ from desk.loaders import (  # noqa: E402
 from desk.chart_board import render_chart_tab  # noqa: E402
 from desk.freshness import render_freshness_header  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
+from desk.gamma_panel import render_gamma_panel  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
 from desk.final_signal import DETAIL_CAPTION, render_final_signal_tab  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
@@ -68,6 +69,7 @@ DESK_PAGES = (
     "E1·情绪影子·不计分",
     "图表",
     "期权机会",
+    "Gamma 结构",
     "席位板块",
     "状态评分",
     "决策",
@@ -593,6 +595,10 @@ def main() -> None:
             st.info("未找到 path_a_opt_hedge 回测产物。")
 
         st.markdown(f"> **免责声明**：{DISCLAIMER}")
+
+    if page == "Gamma 结构":
+        render_freshness_header(ROOT, "Gamma 结构")
+        render_gamma_panel(ROOT)
 
     if page == "席位板块":
         render_freshness_header(ROOT, "席位板块")

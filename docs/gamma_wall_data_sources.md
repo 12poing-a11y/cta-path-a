@@ -26,7 +26,16 @@
 - OI 不含持仓方身份，V1 不发布真实 Dealer Net GEX，也不伪造 Gamma Flip。净 GEX 只能作为明确假设情景。
 - 历史快照从部署日起累积，不虚构历史墙位。回填需按真实交易日逐日请求。
 
-## 本地调用
+## 研究台调用
+
+1. 本地拉取仓库最新 main。
+2. 安装依赖：`pip install -r requirements.txt`（研究台本身还需项目原有 Streamlit/Plotly 运行环境）。
+3. 启动：`streamlit run desk/app.py`。
+4. 页面顶部选择「Gamma 结构」，选择 CF2701 或 SR2701，填入经核实的期权到期/最后交易日，点击「拉取并计算当日 Gamma 快照」。
+5. 后续交易日重复点击；系统按交易日落盘，迁移图会逐日积累。
+
+## 本地命令行调用
+
 
 ~~~bash
 python gamma_wall.py --contract CF2701 --expiry YYYY-MM-DD

@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import json
-from datetime import date, timedelta
+from datetime import date, datetime, time, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 
 ROOT = Path(__file__).resolve().parent
+TZ_SHANGHAI = ZoneInfo("Asia/Shanghai")
 _MEM: dict[str, list] = {}
 _FREE: dict[str, tuple] = {}
 
@@ -203,7 +205,46 @@ def merge_bars(primary: list[dict], secondary: list[dict]) -> list[dict]:
     return [by[k] for k in sorted(by)]
 
 
-def series_sufficient(bars: list[dict], min_bars: int, max_stale_days: int = 12) -> bool:
+def latest_expected_session_date(now: datetime | None = None) -> date:
+    """Latest weekday day-session date expected to be closed (15:00 Asia/Shanghai).
+
+    Weekday-only calendar: exchange holidays are not modelled. On holidays the
+    fallback may be attempted, but the actual last bar is retained and reported.
+    """
+    local = (now or datetime.now(TZ_SHANGHAI)).astimezone(TZ_SHANGHAI)
+    day = local.date()
+    if local.weekday() >= 5 or local.time() < time(15, 0):
+        day -= timedelta(days=1)
+    while day.weekday() >= 5:
+        day -= timedelta(days=1)
+    return day
+
+
+def save_chart_history(code: str, bars: list[dict], root: Path | None = None) -> Path | None:
+    """Persist merged free+iFinD daily history for the local chart reader."""
+    code = str(code or "").upper()
+    if not code or not bars:
+        return None
+    root = Path(root or ROOT)
+    path = root / ".cache" / "history" / f"{code}0.json"
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        prior = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else []
+        if not isinstance(prior, list):
+            prior = []
+        merged = merge_bars(bars, prior)
+        path.write_text(json.dumps(merged, ensure_ascii=False), encoding="utf-8")
+        return path
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def series_sufficient(
+    bars: list[dict],
+    min_bars: int,
+    max_stale_days: int = 12,
+    expected_date: date | str | None = None,
+) -> bool:
     if len(bars) < min_bars:
         return False
     last = bars[-1]
@@ -215,6 +256,13 @@ def series_sufficient(bars: list[dict], min_bars: int, max_stale_days: int = 12)
         return False
     if (date.today() - last_d).days > max_stale_days:
         return False
+    if expected_date is not None:
+        try:
+            expected = expected_date if isinstance(expected_date, date) else date.fromisoformat(str(expected_date)[:10])
+        except ValueError:
+            return False
+        if last_d < expected:
+            return False
     for bar in bars[-min_bars:]:
         if bar.get("close") is None or bar.get("high") is None or bar.get("low") is None:
             return False

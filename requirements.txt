@@ -1,3 +1,4 @@
 requests>=2.31.0
 akshare>=1.14.0
 tqsdk>=3.5.0
+pandas>=2.0

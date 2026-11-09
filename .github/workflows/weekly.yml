@@ -1,9 +1,9 @@
-name: CTA Weekly Backtest Sun 09:00 CST
+name: CTA Weekly Backtest Sat 09:00 CST
 
 on:
   schedule:
-    # 北京时间周日 09:00 = UTC 01:00
-    - cron: "0 1 * * 0"
+    # 北京时间周六 09:00 = UTC 01:00
+    - cron: "0 1 * * 6"
   workflow_dispatch:
 
 permissions:
@@ -11,13 +11,13 @@ permissions:
 
 jobs:
   weekly:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Member backfill (DCE/EM lookback) + paper PnL.
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -41,7 +41,7 @@ jobs:
         run: python notion_sync.py backtest
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cta-weekly-${{ github.run_id }}
           path: |

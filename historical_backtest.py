@@ -43,6 +43,141 @@ BATCH_LABEL = "2026一年-pathA-optHedge"
 CUTOFF_DAYS = 420
 
 
+
+# --- P0 lookahead guards -----------------------------------------------------
+# Seat rankings / basis are published after the T close (seats ~16:00-17:00),
+# so a T-close entry may only use data dated <= previous trading day.
+DEFAULT_AVAILABILITY_LAG = 1
+FILL_PRICES = ("close", "next_open")
+
+
+def lag_by_trade_dates(book: dict | None, dates: list[str], lag: int) -> dict:
+    """Return {d: book[dates[k-lag]]} so the value visible on d is lag sessions old."""
+    book = book or {}
+    lag = max(0, int(lag))
+    if lag == 0:
+        return dict(book)
+    out = {}
+    for k, d in enumerate(dates):
+        if k - lag < 0:
+            continue
+        v = book.get(dates[k - lag])
+        if v is not None:
+            out[d] = v
+    return out
+
+
+def lag_member(member: dict, dates: list[str], lag: int) -> dict:
+    return {c: lag_by_trade_dates(b, dates, lag) for c, b in (member or {}).items()}
+
+
+def lag_curves_carry(curves: dict, dates: list[str], lag: int) -> dict:
+    """Copy curves with carry shifted by lag sessions (does not mutate the cache)."""
+    out = {}
+    for c, cv in (curves or {}).items():
+        if isinstance(cv, dict):
+            cv2 = dict(cv)
+            if isinstance(cv.get("carry"), dict):
+                cv2["carry"] = lag_by_trade_dates(cv["carry"], dates, lag)
+            out[c] = cv2
+        else:
+            out[c] = cv
+    return out
+
+
+def next_open_fill(c: dict, hist: list[dict], i: int) -> dict | None:
+    """Move a T-close candidate to the T+1 open; stop/target keep their distance."""
+    if i + 1 >= len(hist):
+        return None
+    nb = hist[i + 1]
+    px = nb.get("open")
+    if px is None:
+        return None
+    shift = float(px) - float(c["entry"])
+    c2 = dict(c)
+    c2["entry"] = float(px)
+    c2["stop"] = float(c["stop"]) + shift
+    c2["target"] = float(c["target"]) + shift
+    c2["entry_date"] = nb["date"]
+    c2["mark_from"] = float(px)
+    return c2
+
+
+def pack_sha256(series: dict) -> str:
+    import hashlib
+
+    blob = json.dumps(
+        {k: v.get("hist") for k, v in sorted((series or {}).items())},
+        ensure_ascii=False, sort_keys=True, default=str,
+    )
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+_LAST_PACK: dict = {}
+
+
+def _stable_sha256(obj) -> str:
+    import hashlib
+
+    blob = json.dumps(obj, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8")
+    return hashlib.sha256(blob).hexdigest()
+
+
+def _carry_subset(curves: dict) -> dict:
+    """Extract carry maps from curves; empty dict when mode did not load carry."""
+    out = {}
+    for c, cv in sorted((curves or {}).items()):
+        if isinstance(cv, dict) and isinstance(cv.get("carry"), dict):
+            out[c] = cv["carry"]
+    return out
+
+
+def write_input_snapshot(out: dict, argv: list[str], root: Path | None = None) -> dict:
+    """Persist bars + post-lag member/seats + post-lag carry from last simulate()."""
+    root = root or ROOT
+    series = _LAST_PACK.get("series") or {}
+    member = _LAST_PACK.get("member") or {}
+    carry = _LAST_PACK.get("carry") or {}
+    empty_why = []
+    if not member:
+        empty_why.append("member/seats empty (mode did not load seats/member, or no rows after lag)")
+    if not carry:
+        empty_why.append("carry empty (mode did not load curves, or no carry after lag)")
+    note = "bars + post-lag member/seats + post-lag carry as fed to simulate"
+    if empty_why:
+        note += "; " + "; ".join(empty_why)
+    snap = {
+        "argv": list(argv),
+        "start": out.get("start"),
+        "end": out.get("end"),
+        "availability_lag": out.get("availability_lag"),
+        "fill_price": out.get("fill_price"),
+        "entry_filter": out.get("entry_filter"),
+        "sources": _LAST_PACK.get("sources"),
+        "errors": _LAST_PACK.get("errors"),
+        "bars": {k: v.get("hist") for k, v in sorted(series.items())},
+        "member": member,
+        "carry": carry,
+        "note": note,
+    }
+    blob = json.dumps(snap, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8")
+    sha = _stable_sha256(snap)
+    d = root / "archive" / "snapshots"
+    d.mkdir(parents=True, exist_ok=True)
+    tag = str(out.get("end") or "na").replace("-", "")
+    f = d / f"bt_input_{tag}_{sha[:12]}.json"
+    f.write_bytes(blob)
+    return {
+        "path": str(f.relative_to(root)),
+        "sha256": sha,
+        "bars_sha256": pack_sha256(series),
+        "member_sha256": _stable_sha256(member),
+        "seats_sha256": _stable_sha256(member),
+        "carry_sha256": _stable_sha256(carry),
+        "symbols": len(series),
+    }
+
+
 def _load_cfg():
     cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
     observe = cfg.get("observe") or {}
@@ -89,7 +224,28 @@ def _load_cfg():
         "entry_filter": cfg.get("entry_filter") or "base",
         "carry_bypass": carry_bypass_cfg(cfg.get("carry_bypass")),
         "vol_bypass": vol_bypass_cfg(cfg.get("vol_bypass")),
+        "availability_lag": _cli_int("--lag", int((cfg.get("backtest") or {}).get("availability_lag_days", DEFAULT_AVAILABILITY_LAG))),
+        "fill_price": _cli_str("--fill", str((cfg.get("backtest") or {}).get("fill_price", "close"))),
     }
+
+
+def _cli_val(flag: str):
+    for k, a in enumerate(sys.argv):
+        if a == flag and k + 1 < len(sys.argv):
+            return sys.argv[k + 1]
+        if a.startswith(flag + "="):
+            return a.split("=", 1)[1]
+    return None
+
+
+def _cli_int(flag: str, default: int) -> int:
+    v = _cli_val(flag)
+    return int(v) if v is not None else int(default)
+
+
+def _cli_str(flag: str, default: str) -> str:
+    v = _cli_val(flag)
+    return v if v is not None else default
 
 
 def _answer_text(res: dict) -> str:
@@ -229,23 +385,32 @@ def _row_to_bar(row: dict) -> dict | None:
         return None
     if high < low:
         high, low = low, high
-    if high / max(low, 1e-9) > 5:
+    if low <= 0 or close <= 0 or not (low <= close <= high):
+        return None
+    if high / low > 5:
         return None
     return {
         "date": d,
         "high": high,
         "low": low,
         "close": close,
+        "open": open_ if open_ is not None and not _looks_like_yyyymmdd(open_) and low <= open_ <= high else None,
         "volume": _to_float(row.get("volume")),
     }
 
 
-def _parse_zl_history(ans: str) -> list[dict]:
+def _parse_zl_history(ans: str, *, max_date: date | None = None) -> list[dict]:
+    """Parse iFinD history and reject dates beyond the latest closed CN session."""
+    if max_date is None:
+        from market_data import latest_expected_session_date
+
+        max_date = latest_expected_session_date()
+    max_iso = max_date.isoformat()
     bars = {}
     for table in _parse_md_tables(ans):
         for row in table:
             bar = _row_to_bar(row)
-            if bar:
+            if bar and bar["date"] <= max_iso:
                 bars[bar["date"]] = bar
     # fallback regex for date + 3 numbers (legacy)
     if len(bars) < 10:
@@ -257,9 +422,11 @@ def _parse_zl_history(ans: str) -> list[dict]:
             if not m:
                 continue
             d = _norm_date(m.group(1))
+            if not d or d > max_iso:
+                continue
             nums = [_to_float(m.group(i)) for i in (2, 3, 4)]
             nums = [n for n in nums if n is not None and not _looks_like_yyyymmdd(n) and 50 <= abs(n) <= 200_000]
-            if not d or len(nums) < 1:
+            if len(nums) < 1:
                 continue
             if len(nums) >= 3:
                 high, low, cl = nums[0], nums[1], nums[2]
@@ -267,10 +434,36 @@ def _parse_zl_history(ans: str) -> list[dict]:
                 high = low = cl = nums[0]
             if high < low:
                 high, low = low, high
+            if low <= 0 or cl <= 0 or not (low <= cl <= high) or high / low > 5:
+                continue
             bars[d] = {"date": d, "high": high, "low": low, "close": cl, "volume": None}
     cutoff = (date.today() - timedelta(days=CUTOFF_DAYS)).isoformat()
-    out = [bars[k] for k in sorted(bars) if k >= cutoff]
-    return out
+    from market_data import filter_bars_asof
+
+    return filter_bars_asof(
+        [bars[k] for k in sorted(bars) if cutoff <= k <= max_iso],
+        max_date=max_date,
+    )
+
+
+def _fetch_ifind_recent_history(u: dict, expected: date) -> list[dict]:
+    """One bounded iFinD request to fill a recent gap; never refetch a full year."""
+    ticker = u.get("ticker") or ""
+    name = u.get("name") or ticker
+    start = (expected - timedelta(days=20)).isoformat()
+    q = (
+        f"证券代码{ticker}（{name}主力连续）从{start}到{expected.isoformat()}的交易日行情，"
+        "只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。"
+        "按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    )
+    try:
+        ans = _answer_text(call("future", "future_quotes", {"query": q}))
+    except Exception as exc:
+        print(f"    {ticker} recent-gap fetch failed: {exc}")
+        return []
+    rows = _parse_zl_history(ans, max_date=expected)
+    floor = (expected - timedelta(days=20)).isoformat()
+    return [row for row in rows if floor <= row["date"] <= expected.isoformat()]
 
 
 def _fetch_ifind_history(u: dict, n: int = LOOKBACK_DAYS):
@@ -332,22 +525,57 @@ def _fetch_ifind_history(u: dict, n: int = LOOKBACK_DAYS):
 
 def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
     """Sina + Tencent first. iFinD fills missing dates when that set is short or stale."""
-    from market_data import load_free_bars, merge_bars, series_sufficient, trim_bars
+    from market_data import (
+        latest_expected_session_date,
+        load_free_bars,
+        merge_bars,
+        save_chart_history,
+        series_sufficient,
+        trim_bars,
+    )
 
     code = u.get("code") or ""
     free, meta = load_free_bars(code)
     need = max(80, WARMUP + 20)
+    expected = latest_expected_session_date()
+    expected_iso = expected.isoformat()
+    meta["expected_session_date"] = expected_iso
+    # Defensive filter: even a poisoned local/free cache must not move the
+    # strategy or seat calendar into the future.
+    free = [bar for bar in free if str(bar.get("date") or "") <= expected_iso]
+    meta["free_n"] = len(free)
+    meta["last"] = free[-1]["date"] if free else None
+
     if series_sufficient(free, need):
-        bars = free
-        meta["ifind"] = False
+        if free and free[-1]["date"] < expected_iso:
+            # Enough history for indicators: fetch only the recent missing window
+            # once, rather than five overlapping historical chunks.
+            ifind = _fetch_ifind_recent_history(u, expected)
+            bars = merge_bars(free, ifind)
+            meta["ifind"] = bool(ifind)
+            meta["ifind_n"] = len(ifind)
+            if ifind:
+                meta["source"] = (meta.get("source") + "+ifind") if meta.get("source") else "ifind"
+                chart_cache = save_chart_history(code, bars)
+                meta["chart_cache"] = str(chart_cache.relative_to(ROOT)) if chart_cache else None
+        else:
+            bars = free
+            meta["ifind"] = False
     else:
+        # Full historical fallback is reserved for genuinely insufficient history.
         ifind = _fetch_ifind_history(u, n)
         bars = merge_bars(free, ifind)
         meta["ifind_n"] = len(ifind)
         meta["ifind"] = True
         meta["source"] = (meta.get("source") + "+ifind") if meta.get("source") else "ifind"
+        chart_cache = save_chart_history(code, bars)
+        meta["chart_cache"] = str(chart_cache.relative_to(ROOT)) if chart_cache else None
+    # Apply the same upper bound after merging, including any existing cache rows.
+    bars = [bar for bar in bars if str(bar.get("date") or "") <= expected_iso]
     bars = trim_bars(bars, CUTOFF_DAYS)
     meta["bars"] = len(bars)
+    meta["last"] = bars[-1]["date"] if bars else None
+    meta["fresh_for_expected_session"] = bool(bars and bars[-1]["date"] >= expected.isoformat())
     print(
         f"  source={meta.get('source')} sina={meta.get('sina_n')} "
         f"tencent={meta.get('tencent_n')} ifind={meta.get('ifind')} bars={len(bars)} "
@@ -539,13 +767,19 @@ def simulate(
     pack=None,
     carry_bypass=None,
     vol_bypass=None,
+    availability_lag=DEFAULT_AVAILABILITY_LAG,
+    fill_price="close",
 ):
+    if fill_price not in FILL_PRICES:
+        raise ValueError(f"fill_price must be one of {FILL_PRICES}")
     bypass = carry_bypass_cfg(carry_bypass)
     vbypass = vol_bypass_cfg(vol_bypass)
     if pack is None:
         series, errors, sources = _fetch_pack(symbols)
     else:
         series, errors, sources = pack
+    _LAST_PACK.clear()
+    _LAST_PACK.update({"series": series, "sources": sources, "errors": errors, "member": {}, "carry": {}})
 
     date_hits = Counter()
     for s in series.values():
@@ -585,11 +819,17 @@ def simulate(
     curves = {}
     if mode == "roll" or mode not in ("base", "seats", "ctf") or bypass.get("enabled"):
         curves = load_curves([u["code"] for u in symbols])
+        curves = lag_curves_carry(curves, dates, availability_lag)
     member = {}
+    lag = max(0, int(availability_lag))
+    member_dates = dates[max(0, WARMUP - lag):]
     if mode == "member":
-        member = load_member_changes(trade_dates, [c for c in series])
+        member = lag_member(load_member_changes(member_dates, [c for c in series]), member_dates, lag)
     elif mode in ("seats", "roll"):
-        member = load_member_seats(trade_dates, [c for c in series])
+        member = lag_member(load_member_seats(member_dates, [c for c in series]), member_dates, lag)
+    # Snapshot inputs must match what the backtest actually consumes (post-lag).
+    _LAST_PACK["member"] = member
+    _LAST_PACK["carry"] = _carry_subset(curves)
     seat_follows: dict[str, int] = {}
     sleeve_counts: dict[str, int] = {}
     bypass_counts: dict[str, int] = {}
@@ -640,7 +880,7 @@ def simulate(
             if prev_d is not None:
                 i0 = idx[code].get(prev_d)
                 if i0 is not None:
-                    prev_close = hist[i0]["close"]
+                    prev_close = p.pop("mark_from", None) or hist[i0]["close"]
                     exit_px = px if reason else bar["close"]
                     price_pnl += (exit_px - prev_close) * mult * p["lots"] * sign
             if reason:
@@ -833,12 +1073,16 @@ def simulate(
                 bucket = str(c.get("bucket") or "_")
                 if max_per_bucket > 0 and open_buckets.get(bucket, 0) >= int(max_per_bucket):
                     continue
+                if fill_price == "next_open":
+                    c = next_open_fill(c, series[c["code"]]["hist"], idx[c["code"]][d])
+                    if c is None:
+                        continue
                 row = {
                     "code": c["code"],
                     "direction": c["direction"],
                     "lots": int(c["lots"]),
                     "entry": float(c["entry"]),
-                    "entry_date": d,
+                    "entry_date": c.get("entry_date") or d,
                     "stop": float(c["stop"]),
                     "target": float(c["target"]),
                     "atr": c.get("atr"),
@@ -847,6 +1091,8 @@ def simulate(
                     "bucket": c.get("bucket"),
                     "reason": c.get("reason"),
                 }
+                if c.get("mark_from") is not None:
+                    row["mark_from"] = c["mark_from"]
                 if option_hedge:
                     atr_v = float(c.get("atr") or 0)
                     row = attach_hedge_to_position(
@@ -950,12 +1196,16 @@ def simulate(
                     bucket = str(c.get("bucket") or "_")
                     if max_per_bucket > 0 and open_buckets.get(bucket, 0) >= int(max_per_bucket):
                         continue
+                    if fill_price == "next_open":
+                        c = next_open_fill(c, series[c["code"]]["hist"], idx[c["code"]][d])
+                        if c is None:
+                            continue
                     pos[c["code"]] = {
                         "code": c["code"],
                         "direction": c["direction"],
                         "lots": int(c["lots"]),
                         "entry": float(c["entry"]),
-                        "entry_date": d,
+                        "entry_date": c.get("entry_date") or d,
                         "stop": float(c["stop"]),
                         "target": float(c["target"]),
                         "atr": c.get("atr"),
@@ -964,6 +1214,8 @@ def simulate(
                         "bucket": c.get("bucket"),
                         "reason": "roll_carry",
                     }
+                    if c.get("mark_from") is not None:
+                        pos[c["code"]]["mark_from"] = c["mark_from"]
                     day_cost += fill_cost(series[c["code"]]["meta"], c["entry"], c["lots"])
                     open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
 
@@ -1064,6 +1316,8 @@ def simulate(
         "gross_max_dd_pct": round(gross_max_dd, 3),
         "blocks": block_counts,
         "carry_bypass": bypass,
+        "availability_lag": int(availability_lag),
+        "fill_price": fill_price,
         "carry_bypass_counts": bypass_counts,
         "vol_bypass": vbypass,
         "vol_bypass_counts": vol_bypass_counts,
@@ -1165,6 +1419,8 @@ def _simulate_cfg(
         pack=pack,
         carry_bypass=p.get("carry_bypass"),
         vol_bypass=p.get("vol_bypass"),
+        availability_lag=int(p.get("availability_lag", DEFAULT_AVAILABILITY_LAG)),
+        fill_price=str(p.get("fill_price") or "close"),
     )
 
 
@@ -1231,11 +1487,18 @@ def _choose(rows: list[dict]) -> str:
     return best["mode"] if best else "base"
 
 
-def _write_entry_filter(mode: str) -> None:
-    path = ROOT / "universe.json"
-    cfg = json.loads(path.read_text(encoding="utf-8"))
-    cfg["entry_filter"] = mode
-    path.write_text(json.dumps(cfg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+def _write_entry_filter(mode: str, root: Path | None = None) -> Path:
+    """Record the --compare pick as a recommendation; never rewrite universe.json."""
+    root = root or ROOT
+    d = root / "output"
+    d.mkdir(exist_ok=True)
+    path = d / "entry_filter_recommendation.json"
+    path.write_text(
+        json.dumps({"entry_filter": mode, "note": "recommendation only; universe.json unchanged"},
+                   ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return path
 
 
 def main():
@@ -1473,6 +1736,10 @@ def main():
             return out
     except Exception as exc:  # noqa: BLE001
         print(f"[bt] quality check soft-fail: {exc}")
+    try:
+        out["input_snapshot"] = write_input_snapshot(out, sys.argv[1:])
+    except Exception as exc:  # noqa: BLE001
+        print(f"[bt] input snapshot soft-fail: {exc}")
     path = ROOT / "historical_backtest_latest.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     arch = ROOT / "archive"

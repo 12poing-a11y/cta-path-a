@@ -76,36 +76,112 @@ def validate_signals(
     signals: list[dict[str, Any]],
     *,
     asof: str | None = None,
-    max_bad_ratio: float = 0.15,
+    universe: list[dict[str, Any]] | None = None,
+    max_bad_ratio: float = 0.0,
 ) -> dict[str, Any]:
-    """Gate a daily signal list. Fail hard if too many ATR/date anomalies."""
-    bad: list[str] = []
-    checked = 0
-    for row in signals:
-        if not isinstance(row, dict):
+    """Strict pre-publication gate for required fields, prices, ATR and contract metadata.
+
+Tick alignment is enforced for executable contract prices. Continuous main-contract
+series are synthetic roll-adjusted/stitched series and must be checked for numeric
+and range sanity, not exchange tick alignment.
+"""
+    import math
+
+    failures: list[str] = []
+    rows = [row for row in signals if isinstance(row, dict)]
+    expected = {
+        str(item.get("code") or "").upper(): item
+        for item in (universe or [])
+        if isinstance(item, dict) and item.get("code")
+    }
+    seen: set[str] = set()
+    counts: dict[str, int] = {}
+    optional_missing: dict[str, list[str]] = {}
+    for row in rows:
+        code = str(row.get("code") or "?").upper()
+        counts[code] = counts.get(code, 0) + 1
+        if code in seen:
+            failures.append(f"{code}:duplicate_code")
+        seen.add(code)
+        required = ("close", "atr", "r20", "r60", "bar_date", "mult")
+        missing = [key for key in required if row.get(key) is None or row.get(key) == ""]
+        if missing:
+            failures.extend(f"{code}:missing_{key}" for key in missing)
             continue
-        if row.get("close") is None and row.get("atr") is None:
+
+        numeric: dict[str, float] = {}
+        for key in ("close", "atr", "r20", "r60", "mult"):
+            try:
+                numeric[key] = float(row[key])
+            except (TypeError, ValueError):
+                failures.append(f"{code}:invalid_{key}")
+        if len(numeric) != 5:
             continue
-        checked += 1
-        bad.extend(validate_signal_row(row, asof=asof))
-    n = max(checked, 1)
-    ratio = len({b.split(":")[0] for b in bad}) / n
-    # Count unique codes with failures
-    bad_codes = sorted({b.split(":")[0] for b in bad})
-    ok = len(bad_codes) / n <= float(max_bad_ratio) and not any(
-        "bar_date_future" in b or "bar_date_weekend" in b for b in bad
-    )
-    # Any future/weekend bar is hard fail
-    hard = [b for b in bad if "bar_date_future" in b or "bar_date_weekend" in b]
-    if hard:
-        ok = False
+        if any(not math.isfinite(value) for value in numeric.values()):
+            failures.append(f"{code}:non_finite_numeric")
+            continue
+
+        close = numeric["close"]
+        atr = numeric["atr"]
+        if close <= 0 or close > 1_000_000:
+            failures.append(f"{code}:price_out_of_range")
+        if atr <= 0:
+            failures.append(f"{code}:atr_non_positive")
+        elif close > 0 and atr >= close * 0.25:
+            failures.append(f"{code}:atr_vs_close")
+
+        cfg = expected.get(code)
+        if expected and cfg is None:
+            failures.append(f"{code}:not_in_universe")
+        elif cfg is not None:
+            try:
+                expected_mult = float(cfg.get("mult"))
+                if not math.isclose(numeric["mult"], expected_mult, rel_tol=0.0, abs_tol=1e-9):
+                    failures.append(f"{code}:multiplier_mismatch")
+            except (TypeError, ValueError):
+                failures.append(f"{code}:universe_multiplier_invalid")
+            try:
+                tick = float(cfg.get("tick") or 0)
+                price_basis = str(row.get("price_basis") or "contract").strip().lower()
+                if price_basis not in {"contract", "continuous"}:
+                    failures.append(f"{code}:invalid_price_basis")
+                elif price_basis == "contract" and tick > 0 and close > 0:
+                    ticks = close / tick
+                    if abs(ticks - round(ticks)) > 1e-5:
+                        failures.append(f"{code}:price_off_tick")
+            except (TypeError, ValueError):
+                failures.append(f"{code}:universe_tick_invalid")
+
+        ok, reason = validate_bar_date(str(row.get("bar_date")), asof=asof)
+        if not ok:
+            failures.append(f"{code}:{reason}")
+
+        absent_optional = [
+            key for key in ("volume", "oi", "ret_1d")
+            if row.get(key) is None
+        ]
+        if absent_optional:
+            optional_missing[code] = absent_optional
+
+    if expected:
+        missing_codes = sorted(set(expected) - seen)
+        extra_codes = sorted(seen - set(expected))
+        failures.extend(f"{code}:missing_symbol" for code in missing_codes)
+        failures.extend(f"{code}:unexpected_symbol" for code in extra_codes)
+
+    checked = len(rows)
+    bad_codes = sorted({item.split(":")[0] for item in failures})
+    bad_ratio = len(bad_codes) / max(checked, 1)
+    ok = not failures and bad_ratio <= float(max_bad_ratio)
     return {
         "ok": ok,
         "checked": checked,
+        "expected": len(expected) if expected else None,
         "bad_n": len(bad_codes),
         "bad_codes": bad_codes,
-        "failures": bad[:80],
-        "bad_ratio": round(ratio, 4),
+        "failures": failures[:200],
+        "bad_ratio": round(bad_ratio, 4),
+        "optional_missing": optional_missing,
         "asof": asof,
     }
 

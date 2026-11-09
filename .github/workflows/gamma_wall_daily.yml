@@ -55,7 +55,8 @@ jobs:
             fi
           done
           if [[ "$RAN" -eq 0 ]]; then
-            echo "No expiry variables configured; no snapshot was generated."
+            echo "::error title=Gamma Wall collected nothing::No GAMMA_*_EXPIRY repository Variables are set, so zero snapshots were generated. Set e.g. GAMMA_CF2701_EXPIRY=YYYY-MM-DD (verified CZCE option last trading day) under Settings > Secrets and variables > Actions > Variables. Failing so green != empty."
+            exit 1
           fi
       - name: Persist validated daily snapshots
         run: |

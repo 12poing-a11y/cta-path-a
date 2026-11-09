@@ -832,12 +832,29 @@ def main():
         except Exception as exc:
             print(f"[paper] refresh failed: {exc}")
         try:
-            from desk.tech_score_panel import write_tech_score_snapshot
+            from desk.tech_score import write_tech_score_snapshot
 
             tech = write_tech_score_snapshot(ROOT)
             print(f"[tech] asof={tech.get('asof')} n={tech.get('n')} → {tech.get('path')}")
         except Exception as exc:
-            print(f"[tech] refresh failed: {exc}")
+            # Soft-fail (paper publish already done) but make it loud in GHA.
+            msg = f"[tech] refresh failed: {exc}"
+            print(msg)
+            print(f"::warning title=tech_score refresh failed::{exc}")
+            print(msg, file=sys.stderr)
+        try:
+            # Keep desk_composite_latest.json aligned with today's L1 report (final signal
+            # marks it 过期 otherwise). Soft: needs desk deps (requirements-desk.txt).
+            from desk.composite_eval import desk_composite_score
+
+            comp = desk_composite_score(ROOT, write=True)
+            print(
+                f"[composite] ok={comp.get('ok')} score={comp.get('desk_score')} "
+                f"asof={comp.get('asof')}"
+            )
+        except Exception as exc:
+            print(f"[composite] refresh failed: {exc}")
+            print(f"::warning title=desk composite refresh failed::{exc}")
     else:
         print("[paper] skip: quality gate failed")
     # Observation incomplete or quality fail → non-zero so CI does not publish formal.

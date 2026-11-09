@@ -28,6 +28,8 @@ jobs:
       - name: Install
         run: |
           pip install -r requirements.txt
+          # Desk tests/modules import streamlit/plotly (same as ci.yml).
+          pip install -r requirements-desk.txt
           pip install pytest
 
       - name: Unit tests before formal daily
@@ -84,7 +86,7 @@ jobs:
           git config user.email "cta-bot@users.noreply.github.com"
           mkdir -p .cache/member .cache/akshare/minute .cache/history data/sentiment_mds
           git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
-          git add data/sentiment_mds/*.json data/tech_score_latest.json || true
+          git add data/sentiment_mds/*.json data/tech_score_latest.json data/desk_composite_latest.json || true
           git add data/gamma_wall/ || true
           git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
           git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true

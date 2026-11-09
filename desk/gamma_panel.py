@@ -280,6 +280,11 @@ def render_gamma_panel(root: Path) -> None:
             _render_snapshot(demo_gamma_snapshot(contract=contract), title="示意结构")
 
     history = load_history(contract, root=root)
+    _n_valid = len(history or [])
+    st.caption(
+        f"累积有效快照 {_n_valid} 个交易日 / 所选窗口 {window} 日"
+        + ("（已满足）" if _n_valid >= window else f"（还差 {window - _n_valid} 日；每日需配置 GAMMA_*_EXPIRY Variables 才会自动累积）")
+    )
     if not history:
         st.info(
             "尚无历史快照。首次拉取后开始累积墙位迁移；不使用虚构数据回填。"

@@ -464,6 +464,7 @@ def render_chart_tab(root: Path) -> None:
         choice = st.selectbox("品种", labels, key="chart_sym", on_change=_push_seat_sym)
     meta = symbols[labels.index(choice)]
     code = meta["code"]
+    st.session_state["chart_code"] = code
     with c_period:
         period_label = st.selectbox(
             "周期",
@@ -645,3 +646,8 @@ def render_chart_tab(root: Path) -> None:
         st.caption(f"窗口内事件标记 {len(event_rows)} 条（动量/席位/基差等，悬停看细节）。")
     else:
         st.caption("窗口内暂无事件标记。")
+
+    from desk.chart_flow import render_chart_flow_section
+
+    st.divider()
+    render_chart_flow_section(root, code)

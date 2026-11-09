@@ -304,11 +304,16 @@ def _read_bars(path: Path) -> list[dict]:
 
 
 def load_local_bars(root: Path, code: str) -> tuple[list[dict], str]:
-    """Best local continuous series. Prefers newest last bar, then length.
+    """Best local continuous series for charts.
 
-    Does not open a network connection — refresh via daily_update / git pull.
+    Drops future-dated / malformed OHLC first so a poisoned sina cache cannot
+    jump past the latest closed session. Prefers series that reach that session,
+    then last date, then length. Offline only — refresh via daily_update / sync.
     """
+    from market_data import filter_bars_asof, latest_expected_session_date
+
     code = str(code or "").upper()
+    expected = latest_expected_session_date().isoformat()
     sina = root / ".cache" / "sina"
     paths: list[Path] = []
     if sina.is_dir():
@@ -321,17 +326,18 @@ def load_local_bars(root: Path, code: str) -> tuple[list[dict], str]:
     source = ""
     best_key = ""
     for path in paths:
-        bars = _read_bars(path)
+        bars = filter_bars_asof(_read_bars(path))
         if not bars:
             continue
         stamp = path.parent.name
         last = str((bars[-1] or {}).get("date") or "")
-        # Newest session first; tie-break on length then folder stamp.
-        key = f"{last}-{len(bars):08d}-{stamp}"
+        reaches = "1" if last >= expected else "0"
+        # Prefer expected-session coverage, then newest valid last bar, then length.
+        key = f"{reaches}-{last}-{len(bars):08d}-{stamp}"
         if key > best_key:
             best = bars
             best_key = key
-            source = f".cache/sina/{stamp}/{path.name}" if "sina" in path.parts else str(path.name)
+            source = f".cache/sina/{stamp}/{path.name}" if "sina" in path.parts else str(path.relative_to(root)).replace("\\", "/")
     return best, source
 
 

@@ -39,6 +39,10 @@ jobs:
           IFIND_AUTH_TOKEN_BACKUP: ${{ secrets.IFIND_AUTH_TOKEN_BACKUP }}
           IFIND_ACTIVE_SLOT: primary
           IFIND_USER_AGENT: github-actions
+          # Optional gap-fill for exact-contract bars (Gamma / tech). Soft-skip if unset.
+          FUYAO_API_KEY: ${{ secrets.FUYAO_API_KEY }}
+          TQ_USER: ${{ secrets.TQ_USER }}
+          TQ_PASS: ${{ secrets.TQ_PASS }}
         run: python daily_update.py
 
       - name: Sync Notion
@@ -80,7 +84,8 @@ jobs:
           git config user.email "cta-bot@users.noreply.github.com"
           mkdir -p .cache/member .cache/akshare/minute .cache/history data/sentiment_mds
           git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
-          git add data/sentiment_mds/*.json || true
+          git add data/sentiment_mds/*.json data/tech_score_latest.json || true
+          git add data/gamma_wall/ || true
           git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
           git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true
           git add -f .cache/akshare/minute/*.json || true

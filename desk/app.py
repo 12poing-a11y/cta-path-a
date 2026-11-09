@@ -25,6 +25,7 @@ from desk.loaders import (  # noqa: E402
     strategy_kpis,
 )
 from desk.chart_board import render_chart_tab  # noqa: E402
+from desk.curve_lag import curve_end_date, curve_lag  # noqa: E402
 from desk.freshness import render_freshness_header  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
 from desk.gamma_panel import render_gamma_panel  # noqa: E402
@@ -34,6 +35,8 @@ from desk.regime_board import render_regime_tab  # noqa: E402
 from desk.scoreboard import scoreboard_rows  # noqa: E402
 from desk.seat_board import render_seat_sector  # noqa: E402
 from desk.strategies.registry import all_strategies  # noqa: E402
+from desk.tech_score_panel import render_tech_score_panel  # noqa: E402
+from market_data import latest_expected_session_date  # noqa: E402
 from desk.sync_desk import (  # noqa: E402
     book_freshness,
     clear_streamlit_caches,
@@ -61,18 +64,21 @@ PARKED_COMPARE_IDS = frozenset(
         "benchmark",
     }
 )
+# Nav order: P&L / drawdown reference first, then structure / sentiment / options.
 DESK_PAGES = (
     "最终信号",
     "概览对比",
+    "技术分析",
+    "决策",
+    "图表",
     "日信号",
+    "状态评分",
+    "席位板块",
     "情绪",
     "E1·情绪影子·不计分",
-    "图表",
     "期权机会",
+    "套利观察",
     "Gamma 结构",
-    "席位板块",
-    "状态评分",
-    "决策",
 )
 
 st.set_page_config(page_title="CTA Path-A Desk", layout="wide", initial_sidebar_state="expanded")
@@ -146,7 +152,7 @@ def _render_sync_panel() -> None:
             "从免费源重建日报与 member/sina 缓存。"
         )
     pull_git = st.checkbox(
-        "同步 main 日报 + 图表行情缓存（日线 CODE0 / 15m / 60m）",
+        "同步 main 日报 + 图表行情缓存（日线 CODE0 / history / 15m / 60m）",
         value=True,
         key="desk_sync_git",
     )
@@ -295,11 +301,18 @@ def main() -> None:
         key="desk_active_page",
         label_visibility="collapsed",
     )
-    st.caption("仅渲染当前页以加速刷新 · 预测归因后台仍积累、UI 已搁置")
+    st.caption(
+        "导航优先：最终信号 → 概览(盈亏/回撤) → 技术打分 → 决策/图表；"
+        "情绪与期权结构靠后。仅渲染当前页。"
+    )
 
     if page == "最终信号":
         render_freshness_header(ROOT, "最终信号")
         render_final_signal_tab(ROOT)
+
+    if page == "技术分析":
+        render_freshness_header(ROOT, "技术分析")
+        render_tech_score_panel(ROOT)
 
     # --- Tab 1: compare ---
     if page == "概览对比":
@@ -307,22 +320,50 @@ def main() -> None:
         curves = {}
         kpi_rows = []
         grey_notes = []
+        health_rows = []
+        expected = latest_expected_session_date().isoformat()
         for sid in chosen_ids:
             spec = next(s for s in specs if s.id == sid)
             avail = avail_map[sid]
             payload = _cached_payload(sid)
             kpis = strategy_kpis(spec, ROOT)
+            curve_end = None
+            lag = None
+            if payload:
+                curve_end = str(kpis.get("end") or payload.get("end") or "")[:10] or None
+                if not curve_end:
+                    df0 = equity_curve_df(payload)
+                    if not df0.empty:
+                        curve_end = str(df0["date"].max().date())
+                if curve_end:
+                    try:
+                        lag = (
+                            pd.Timestamp(expected) - pd.Timestamp(curve_end)
+                        ).days
+                    except (TypeError, ValueError):
+                        lag = None
+            stale = bool(lag is not None and lag > 5)
+            health_rows.append(
+                {
+                    "策略": spec.name,
+                    "曲线截止": curve_end or "—",
+                    "期望会话": expected,
+                    "滞后日": lag if lag is not None else "—",
+                    "健康": "过期" if stale else ("就绪" if avail == "ready" else _status_label(avail)),
+                }
+            )
             row = {
                 "策略": spec.name,
                 "状态": _status_label(avail),
-                "年化/收益%": kpis.get("ret_ann_pct", kpis.get("ret_pct")),
-                "夏普": kpis.get("sharpe"),
-                "Calmar": kpis.get("calmar"),
-                "近一周%": kpis.get("week_ret_pct"),
+                "曲线截止": curve_end or "—",
+                "年化%": kpis.get("ret_ann_pct"),
                 "区间收益%": kpis.get("ret_pct"),
                 "最大回撤%": kpis.get("max_dd_pct"),
                 "毛收益%": kpis.get("gross_ret_pct"),
                 "毛回撤%": kpis.get("gross_max_dd_pct"),
+                "夏普": kpis.get("sharpe"),
+                "Calmar": kpis.get("calmar"),
+                "近一周%": kpis.get("week_ret_pct"),
                 "期末权益": kpis.get("equity_end"),
                 "成本(元)": kpis.get("cost_yuan"),
                 "来源": kpis.get("source") or str(spec.curve_path or "—"),
@@ -338,9 +379,14 @@ def main() -> None:
                             eq_col = c
                             break
                 if not df.empty and eq_col in df.columns:
-                    # Key by strategy id so display names never collide in align_curves.
                     one = df.rename(columns={eq_col: "equity"}) if eq_col != "equity" else df
-                    curves[spec.name or sid] = one.copy()
+                    label = f"{spec.name}·滞后" if stale else (spec.name or sid)
+                    curves[label] = one.copy()
+                    if stale:
+                        grey_notes.append(
+                            f"{spec.name}：曲线滞后 {lag} 日（截止 {curve_end}），"
+                            "请跑 python proxy_cta.py 或同步日报"
+                        )
             elif avail == "kpi_only":
                 grey_notes.append(f"{spec.name}：KPI 跟踪（无曲线属正常，看上表数字）")
             elif avail == "placeholder":
@@ -348,9 +394,14 @@ def main() -> None:
             elif avail == "missing":
                 grey_notes.append(f"{spec.name}：缺少 `{spec.curve_path}`")
 
+        if health_rows:
+            st.subheader("策略健康（盈亏/回撤参考）")
+            st.caption("滞后>5 个交易日视为过期；叠加图仍可画但会标注「·滞后」。")
+            st.dataframe(pd.DataFrame(health_rows), width="stretch", hide_index=True)
+
         if kpi_rows:
             st.subheader("窗口 KPI / 跟踪数字")
-            st.caption("有曲线与仅 KPI 都在此表；外部跟踪本来就没有权益曲线。")
+            st.caption("优先看区间收益%与最大回撤%；毛收益有字段才填。")
             st.dataframe(pd.DataFrame(kpi_rows), width="stretch", hide_index=True)
 
         if grey_notes:
@@ -522,8 +573,11 @@ def main() -> None:
         render_freshness_header(ROOT, "情绪")
         st.caption(DETAIL_CAPTION)
         from desk.sentiment_panel import render_sentiment_panel
+        from desk.behav_finance_panel import render_behav_finance_panel
 
         render_sentiment_panel(ROOT)
+        st.divider()
+        render_behav_finance_panel(ROOT)
 
     if page == "E1·情绪影子·不计分":
         render_freshness_header(ROOT, "E1·情绪影子·不计分")
@@ -537,6 +591,12 @@ def main() -> None:
     if page == "图表":
         render_freshness_header(ROOT, "图表")
         render_chart_tab(ROOT)
+
+    if page == "套利观察":
+        render_freshness_header(ROOT, "套利观察")
+        from desk.arb_panel import render_arb_panel
+
+        render_arb_panel(ROOT)
 
     # --- Tab: options ---
     if page == "期权机会":
@@ -566,10 +626,75 @@ def main() -> None:
 
         st.subheader("叠加后回测")
         hedge_curves = {}
+        lag_rows = []
+        expected_s = latest_expected_session_date().isoformat()
         for label, sid in (("路径A", "path_a"), ("路径A+保护期权", "path_a_opt_hedge")):
-            curve = equity_curve_df(_cached_payload(sid))
+            payload_h = _cached_payload(sid)
+            curve = equity_curve_df(payload_h)
+            info = curve_lag(curve_end_date(payload_h), expected_s)
+            lag_rows.append(
+                {
+                    "曲线": label,
+                    "曲线截止": info["curve_end"] or "—",
+                    "期望会话": expected_s,
+                    "滞后(日历日)": info["lag_days"] if info["lag_days"] is not None else "—",
+                    "滞后(工作日)": info["lag_busdays"] if info["lag_busdays"] is not None else "—",
+                    "来源": (payload_h or {}).get("_desk_source") or "—",
+                    "状态": "滞后" if info["stale"] else ("最新" if info["curve_end"] else "无曲线"),
+                }
+            )
             if not curve.empty:
                 hedge_curves[label] = curve
+        st.dataframe(pd.DataFrame(lag_rows), width="stretch", hide_index=True)
+        if any(r["状态"] == "滞后" for r in lag_rows):
+            st.warning(
+                "叠加曲线截止日早于期望会话日：图上只画已有真实回测日，不会补造未来/缺失日线。"
+                "可下方刷新模拟仓或重跑历史回测（需本机数据源/iFinD；也可用 Actions 日更后「同步日报」）。"
+            )
+        with st.expander("刷新叠加曲线（模拟仓 / 历史回测）", expanded=False):
+            bcol1, bcol2 = st.columns(2)
+            if bcol1.button("刷新模拟仓 paper_book", key="opt_refresh_paper"):
+                with st.spinner("刷新 paper_book…"):
+                    try:
+                        from paper_book import refresh_paper_book
+
+                        paper_r = refresh_paper_book(ROOT)
+                    except Exception as exc:
+                        paper_r = {"ok": False, "error": str(exc)}
+                if paper_r.get("ok"):
+                    clear_streamlit_caches()
+                    st.success(f"模拟仓 asof={paper_r.get('asof')}（仅更新持仓，不改回测曲线）")
+                    st.rerun()
+                else:
+                    st.error(f"模拟仓刷新失败：{paper_r.get('error')}")
+            if bcol2.button("重跑历史回测（耗时）", key="opt_refresh_bt"):
+                import subprocess
+
+                with st.spinner("python historical_backtest.py（最长约 15 分钟）…"):
+                    try:
+                        proc = subprocess.run(
+                            [sys.executable, "historical_backtest.py"],
+                            cwd=str(ROOT),
+                            capture_output=True,
+                            text=True,
+                            timeout=900,
+                        )
+                        ok_bt = proc.returncode == 0
+                        tail = (proc.stdout or proc.stderr or "")[-1200:]
+                    except Exception as exc:
+                        ok_bt, tail = False, str(exc)
+                if ok_bt:
+                    clear_streamlit_caches()
+                    st.success("历史回测已重跑，刷新曲线。")
+                    st.rerun()
+                else:
+                    st.error("历史回测失败或超时，曲线未更新。")
+                    st.code(tail or "(无输出)")
+            st.caption(
+                "命令行：`python paper_book.py`、`python historical_backtest.py`。"
+                "保护期权曲线优先读 `_art_opt/historical_backtest_latest.json`；"
+                "缺则回退主回测且 option_hedge=true。"
+            )
         if hedge_curves:
             aligned_h = align_curves(hedge_curves, normalize=True)
             st.plotly_chart(

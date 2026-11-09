@@ -471,7 +471,7 @@ def main():
             )
         except Exception as exc:  # noqa: BLE001
             print(f"  [observe] member lookback soft-fail: {exc}")
-            stats = ensure_member_days(seat_days, dce=True)
+            stats = ensure_member_days(seat_days, dce=True, public_first=True)
             print(
                 f"  [observe] member ensure days={stats['days']} "
                 f"shfe={stats['shfe']} czce={stats['czce']} "
@@ -687,18 +687,30 @@ def main():
 
         seat_rows = []
         seats_book = {}
-        if seat_days:
-            seats_book = load_member_seats(seat_days[-1:], [u["code"] for u in UNIVERSE])
         day_key = seat_days[-1] if seat_days else None
+        prev_key = seat_days[-2] if len(seat_days) >= 2 else None
+        if day_key:
+            load_days = [prev_key, day_key] if prev_key else [day_key]
+            try:
+                ensure_member_days(load_days, dce=True, public_first=True)
+            except Exception as densify_exc:  # noqa: BLE001
+                print(f"[sentiment] seat densify soft-fail: {densify_exc}")
+            seats_book = load_member_seats(load_days, [u["code"] for u in UNIVERSE])
         for sig in signals:
             code = str(sig.get("code") or "").upper()
-            book = (seats_book.get(code) or {}).get(day_key) if day_key else None
-            net = float((book or {}).get("inst") or 0.0) if book else 0.0
+            book = seats_book.get(code) or {}
+            day_row = book.get(day_key) if day_key else None
+            net = float((day_row or {}).get("inst") or 0.0) if day_row else 0.0
+            if prev_key and prev_key in book:
+                prev_net = float((book.get(prev_key) or {}).get("inst") or 0.0)
+                net_chg = net - prev_net
+            else:
+                net_chg = 0.0
             seat_rows.append(
                 {
                     "code": code,
                     "net": net,
-                    "net_chg": net,
+                    "net_chg": net_chg,
                     "ret_1d": sig.get("ret_1d"),
                     "oi": sig.get("oi"),
                     "volume": sig.get("volume"),
@@ -819,6 +831,13 @@ def main():
                 print("[paper] skip:", paper.get("error"))
         except Exception as exc:
             print(f"[paper] refresh failed: {exc}")
+        try:
+            from desk.tech_score_panel import write_tech_score_snapshot
+
+            tech = write_tech_score_snapshot(ROOT)
+            print(f"[tech] asof={tech.get('asof')} n={tech.get('n')} → {tech.get('path')}")
+        except Exception as exc:
+            print(f"[tech] refresh failed: {exc}")
     else:
         print("[paper] skip: quality gate failed")
     # Observation incomplete or quality fail → non-zero so CI does not publish formal.

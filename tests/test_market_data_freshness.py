@@ -111,3 +111,39 @@ def test_filter_bars_asof_caps_future_dates_by_default(monkeypatch):
         {"date": "2026-11-30", "high": 989, "low": 989, "close": 989},
     ]
     assert filter_bars_asof(rows) == [rows[0]]
+
+
+def test_load_local_bars_ignores_future_sina_and_prefers_history(tmp_path: Path, monkeypatch):
+    import market_data
+    from desk.regime_board import load_local_bars
+
+    monkeypatch.setattr(
+        market_data,
+        "latest_expected_session_date",
+        lambda: date(2026, 11, 5),
+    )
+    sina_day = tmp_path / ".cache" / "sina" / "2026-11-06"
+    sina_day.mkdir(parents=True)
+    (sina_day / "RB0.json").write_text(
+        json.dumps(
+            [
+                {"date": "2026-11-04", "open": 100, "high": 101, "low": 99, "close": 100},
+                {"date": "2026-11-30", "open": 110, "high": 111, "low": 109, "close": 110},
+            ]
+        ),
+        encoding="utf-8",
+    )
+    hist = tmp_path / ".cache" / "history"
+    hist.mkdir(parents=True)
+    (hist / "RB0.json").write_text(
+        json.dumps(
+            [
+                {"date": "2026-11-04", "open": 100, "high": 101, "low": 99, "close": 100},
+                {"date": "2026-11-05", "open": 101, "high": 102, "low": 100, "close": 101},
+            ]
+        ),
+        encoding="utf-8",
+    )
+    bars, source = load_local_bars(tmp_path, "RB")
+    assert [b["date"] for b in bars] == ["2026-11-04", "2026-11-05"]
+    assert "history" in source

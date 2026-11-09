@@ -28,24 +28,32 @@ jobs:
         run: pip install -r requirements.txt
       - name: Collect validated snapshots
         env:
-          CF_EXPIRY: ${{ vars.GAMMA_CF2701_EXPIRY }}
-          SR_EXPIRY: ${{ vars.GAMMA_SR2701_EXPIRY }}
+          GAMMA_CF2701_EXPIRY: ${{ vars.GAMMA_CF2701_EXPIRY }}
+          GAMMA_SR2701_EXPIRY: ${{ vars.GAMMA_SR2701_EXPIRY }}
+          GAMMA_MA2701_EXPIRY: ${{ vars.GAMMA_MA2701_EXPIRY }}
+          GAMMA_TA2701_EXPIRY: ${{ vars.GAMMA_TA2701_EXPIRY }}
+          GAMMA_SA2701_EXPIRY: ${{ vars.GAMMA_SA2701_EXPIRY }}
+          GAMMA_RM2701_EXPIRY: ${{ vars.GAMMA_RM2701_EXPIRY }}
+          GAMMA_OI2701_EXPIRY: ${{ vars.GAMMA_OI2701_EXPIRY }}
+          GAMMA_FG2701_EXPIRY: ${{ vars.GAMMA_FG2701_EXPIRY }}
+          # Exact-contract futures gap-fill (optional; AkShare/Sina remains primary).
+          FUYAO_API_KEY: ${{ secrets.FUYAO_API_KEY }}
+          TQ_USER: ${{ secrets.TQ_USER }}
+          TQ_PASS: ${{ secrets.TQ_PASS }}
         run: |
           set -euo pipefail
           ASOF="$(TZ=Asia/Shanghai date +%F)"
           RAN=0
-          if [[ -n "$CF_EXPIRY" ]]; then
-            python gamma_wall.py --contract CF2701 --expiry "$CF_EXPIRY" --date "$ASOF"
-            RAN=1
-          else
-            echo "::notice::Skip CF2701: set repository variable GAMMA_CF2701_EXPIRY after verifying CZCE option last trading day."
-          fi
-          if [[ -n "$SR_EXPIRY" ]]; then
-            python gamma_wall.py --contract SR2701 --expiry "$SR_EXPIRY" --date "$ASOF"
-            RAN=1
-          else
-            echo "::notice::Skip SR2701: set repository variable GAMMA_SR2701_EXPIRY after verifying CZCE option last trading day."
-          fi
+          for CONTRACT in CF2701 SR2701 MA2701 TA2701 SA2701 RM2701 OI2701 FG2701; do
+            VAR="GAMMA_${CONTRACT}_EXPIRY"
+            EXPIRY="${!VAR:-}"
+            if [[ -n "$EXPIRY" ]]; then
+              python gamma_wall.py --contract "$CONTRACT" --expiry "$EXPIRY" --date "$ASOF"
+              RAN=1
+            else
+              echo "::notice::Skip ${CONTRACT}: set repository variable ${VAR} after verifying CZCE option last trading day."
+            fi
+          done
           if [[ "$RAN" -eq 0 ]]; then
             echo "No expiry variables configured; no snapshot was generated."
           fi

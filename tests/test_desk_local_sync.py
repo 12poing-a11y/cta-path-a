@@ -35,7 +35,7 @@ def test_radio_pages_keep_local_nav():
     # Radio nav, not the thinner main-tab shell.
     app = (ROOT / "desk" / "app.py").read_text(encoding="utf-8")
     assert 'st.radio(\n        "页面"' in app
-    assert "同步 main 日报 + 图表行情缓存（日线 CODE0 / 15m / 60m）" in app
+    assert "同步 main 日报 + 图表行情缓存（日线 CODE0 / history / 15m / 60m）" in app
 
 
 def test_sentiment_panel_prefers_shadow(tmp_path: Path):
@@ -73,10 +73,12 @@ def test_sync_desk_checks_out_chart_caches():
     # Planned step and the real checkout list both name the chart caches.
     assert text.count(".cache/sina") >= 2
     assert text.count(".cache/akshare/minute") >= 2
+    assert text.count(".cache/history") >= 2
     planned = sync_desk(ROOT, pull_git=True, refresh_cache=False, dry_run=True)
     detail = " ".join(str(step.get("detail") or "") for step in planned["steps"])
     assert ".cache/sina" in detail
     assert ".cache/akshare/minute" in detail
+    assert ".cache/history" in detail
     assert planned["ok"] is True
 
 

@@ -2,9 +2,12 @@
 
 ## 数据源与费用
 1. 免费主源：AkShare 郑商所日频期权接口 option_hist_czce，按交易日拉取品种全量期权行情，本地筛选目标系列。
-2. 免费标的价格：AkShare 新浪单合约日线 futures_zh_daily_sina(symbol="CF2701")。禁止用 CF0 主连或前一日价格替代。
-3. 当前版本不调用 iFinD / Wind / Tushare，不读取付费 API Secrets。
-4. OI 或 IV 缺失不插值、不借用其他日期字段；该快照拒绝入库。
+2. 免费标的价格：AkShare 新浪单合约日线（如 CF2701）。缺日依次用同花顺扶摇（`CF701.CZC`）、天勤 TqSdk（`CZCE.CF701`）精确合约补洞。禁止用主连或前一日价格替代。
+3. 观察品种：仅对**有期权链且能取到 OI+IV** 的品种出图；无期权自然跳过。当前引擎主源仍为郑商所日频期权表。
+4. **扶摇期权能力结论（2026-11-09 实测）**：品种/合约目录与期权日 K（OHLC/量/额）可用；**日 K 与合约详情不含隐含波动率 IV、不含持仓量 OI/空盘量**。因此扶摇**不能**替代 Gamma 计算所需的完整期权链。扶摇仅作期货单合约缺日补洞。
+5. **天勤 TqSdk（2026-11-09 实测）**：快期账号可取期货日线+OI；期权链有 OI，IV 由 `OPTION_IMPV` 本地反算（非交易所结算 IV）。Gamma 正式快照仍优先 AkShare 郑商所结算 IV；天勤作标的缺日补洞与期权链备份研究源。凭据：`TQ_USER`/`TQ_PASS` 或 `.env.tqsdk`（gitignore）。
+6. **GitHub Actions**：不把 `FUYAO_API_KEY` / `TQ_*` 作为日更硬依赖；无 Key 时跳过对应补洞、不失败。Gamma 日采继续走 AkShare 郑商所期权表；未配置 `GAMMA_*_EXPIRY` 的品种跳过。
+7. OI 或 IV 缺失不插值、不借用其他日期字段；该快照拒绝入库。
 
 ## 数据质量闸门
 - 标的行情日期必须与期权快照日期一致。
@@ -26,9 +29,8 @@
 工作流：.github/workflows/gamma_wall_daily.yml
 - 工作日北京时间 16:35（UTC 08:35）运行，支持手动触发。
 - 在 GitHub 仓库 Settings → Secrets and variables → Actions → Variables 中设置：
-  - GAMMA_CF2701_EXPIRY：CF2701 对应期权系列最后交易/到期日，YYYY-MM-DD。
-  - GAMMA_SR2701_EXPIRY：SR2701 对应期权系列最后交易/到期日，YYYY-MM-DD。
-- 两个日期必须按郑商所当前有效合约规则及交易日历人工核实；未配置的品种会跳过并显示 notice，不会猜日期。
+  - `GAMMA_<合约>_EXPIRY`：例如 `GAMMA_CF2701_EXPIRY`、`GAMMA_MA2701_EXPIRY`，值为该期权系列最后交易/到期日 YYYY-MM-DD。
+- 覆盖 CF/SR/MA/TA/SA/RM/OI/FG 的 2701 合约；日期须按郑商所规则人工核实；未配置的品种跳过并 notice，不猜日期。
 - 采集成功且通过质量闸门后才提交快照。接口失败或校验失败时工作流报错，不提交伪数据。
 - 首次启用建议手动运行一次，检查免费接口字段、交易日与覆盖率。
 

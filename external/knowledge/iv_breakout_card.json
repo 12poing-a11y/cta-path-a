@@ -1,0 +1,28 @@
+{
+  "id": "iv_breakout_confirm",
+  "title": "期权隐含波动率确认期货真/假突破（知识卡）",
+  "asof": "2026-10-29",
+  "market": "中国商品期货+对应期权（研究/纸面）",
+  "status": "research_validate",
+  "module": "iv_breakout.py",
+  "summary_zh": "唐奇安式收盘突破叠加热门近月隐含波动率日变化：IV扩张标真突破候选，IV走平/回落标假突破嫌疑；用持有N日是否仍在突破侧验证。不改 Path-A 入场。",
+  "data": {
+    "shfe": "akshare.option_vol_shfe → 合约系列隐含波动率（成交量最大近月）",
+    "czce": "akshare.option_hist_czce → 成交量加权隐含波动率",
+    "cache": ".cache/akshare/option_iv/{CODE}/{YYYYMMDD}.json"
+  },
+  "rules": {
+    "breakout": "close > prior_window_high 或 < prior_window_low（默认窗20）",
+    "true_candidate": "ΔIV ≥ delta_iv_min（默认0.005）",
+    "false_suspect": "ΔIV ≤ -delta_iv_min",
+    "iv_flat": "其余",
+    "hold_check": "hold_days 后收盘仍在突破侧（默认5）"
+  },
+  "desk": {
+    "default_action": "annotate",
+    "observe": "可选：假突破嫌疑时决策软降观望",
+    "live_trading": false
+  },
+  "validation_report": "lab/research/oos/iv_breakout_validate_latest.json",
+  "disclaimer": "研究旁证，非下单指令；期权薄、事件日 IV 跳升易误判。"
+}

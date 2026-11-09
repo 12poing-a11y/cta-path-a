@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "files": 2,
+  "updated_score_slots": 20,
+  "summary": {
+    "n_predictions": 42,
+    "counts": {
+      "无法判断": 102
+    },
+    "by_horizon": {
+      "1": {
+        "无法判断": 34
+      },
+      "3": {
+        "无法判断": 34
+      },
+      "5": {
+        "无法判断": 34
+      }
+    },
+    "hits": 0,
+    "misses": 0,
+    "voids": 102,
+    "pending": 24,
+    "hit_rate": null,
+    "hit_rate_pct": null
+  },
+  "generated_at": "2026-10-30T13:48:31.149024+00:00",
+  "live_trading": false,
+  "note": "纸面归因；命中=方向与到期收益同号。观望→无法判断。"
+}

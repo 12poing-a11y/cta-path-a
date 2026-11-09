@@ -261,7 +261,7 @@ def sync_desk(
                             "git fetch origin main && git checkout origin/main -- "
                             "l1_report*.json archive equity_state historical_backtest* "
                             "paper_book_latest data/sentiment_mds data/desk_composite_latest "
-                            ".cache/member .cache/akshare/minute .cache/sina "
+                            ".cache/member .cache/akshare/minute .cache/sina .cache/history "
                             "lab/research/predictions"
                         ),
                     }
@@ -328,6 +328,7 @@ def sync_desk(
                     ".cache/member",
                     ".cache/akshare/minute",
                     ".cache/sina",
+                    ".cache/history",
                     "lab/research/predictions",
                 ]
                 existing: list[str] = []

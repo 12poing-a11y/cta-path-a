@@ -560,6 +560,108 @@ def _load_composite_cached(root: Path) -> dict[str, Any] | None:
     return None
 
 
+def _ymd(value: Any) -> str | None:
+    """Normalise YYYYMMDD / YYYY-MM-DD[...] to YYYY-MM-DD; else None."""
+    s = str(value or "").strip()
+    if not s:
+        return None
+    digits = s[:10].replace("-", "")
+    if len(digits) == 8 and digits.isdigit():
+        return f"{digits[:4]}-{digits[4:6]}-{digits[6:8]}"
+    return None
+
+
+def composite_asof(composite: dict[str, Any] | None) -> str | None:
+    """Data date of a composite payload (L1-derived first, then book, then top-level)."""
+    if not isinstance(composite, dict):
+        return None
+    sel = composite.get("selected")
+    book = composite.get("book")
+    for cand in (
+        composite.get("asof"),
+        sel.get("asof") if isinstance(sel, dict) else None,
+        book.get("asof") if isinstance(book, dict) else None,
+    ):
+        d = _ymd(cand)
+        if d:
+            return d
+    return None
+
+
+def composite_freshness(
+    composite: dict[str, Any] | None,
+    l1_asof: Any,
+) -> dict[str, Any]:
+    """Compare composite asof to L1 report asof. Any mismatch → expired (过期).
+
+    Falls back to ``generated_at`` only when no data asof is stored: that is
+    fresh iff generated on/after the L1 asof day. Expired composites must not
+    feed an action or be displayed as a live score.
+    """
+    l1 = _ymd(l1_asof)
+    out: dict[str, Any] = {"expired": True, "asof": None, "l1_asof": l1, "reason": ""}
+    if not isinstance(composite, dict):
+        out["reason"] = "无综合分快照"
+        return out
+    if l1 is None:
+        out["reason"] = "L1 报告无 asof"
+        return out
+    asof = composite_asof(composite)
+    if asof is not None:
+        out["asof"] = asof
+        if asof == l1:
+            out.update(expired=False, reason="")
+        else:
+            out["reason"] = f"综合分 asof={asof} ≠ L1 asof={l1}"
+        return out
+    gen = _ymd(composite.get("generated_at"))
+    out["asof"] = gen
+    if gen is not None and gen >= l1:
+        out.update(expired=False, reason="")
+    else:
+        out["reason"] = f"综合分生成 {gen or '未知'} 早于 L1 asof={l1}"
+    return out
+
+
+def resolve_composite(
+    root: Path,
+    l1_asof: Any,
+) -> dict[str, Any] | None:
+    """Return composite dict with ``expired`` / ``stale_reason``; score hidden when expired.
+
+    Tries the cached snapshot first; if stale, attempts a read-only recompute
+    (``write=False``) so the board is not stuck on an old file. If still stale
+    or unavailable, the cached payload is kept but flagged expired and
+    ``desk_score`` is set to ``None`` (not used for any action/metric).
+    """
+    cached = _load_composite_cached(root)
+    fresh = composite_freshness(cached, l1_asof)
+    if cached is not None and not fresh["expired"]:
+        return {**cached, "expired": False, "stale_reason": ""}
+    recomputed: dict[str, Any] | None = None
+    try:
+        from desk.composite_eval import desk_composite_score
+
+        recomputed = desk_composite_score(root, write=False)
+    except Exception:
+        recomputed = None
+    if isinstance(recomputed, dict) and recomputed.get("ok") and recomputed.get("desk_score") is not None:
+        rf = composite_freshness(recomputed, l1_asof)
+        if not rf["expired"]:
+            return {**recomputed, "expired": False, "stale_reason": "", "recomputed": True}
+        fresh = rf if cached is None else fresh
+        if cached is None:
+            cached = recomputed
+    if cached is None:
+        return None
+    expired = dict(cached)
+    expired["expired"] = True
+    expired["stale_reason"] = fresh.get("reason") or "综合分过期"
+    expired["stale_score"] = expired.get("desk_score")
+    expired["desk_score"] = None
+    return expired
+
+
 def _name_map(root: Path, report: dict | None = None) -> dict[str, str]:
     names: dict[str, str] = {}
     uni = load_universe(root) or {}
@@ -730,14 +832,8 @@ def build_final_signal_board(
     opens = sum(1 for r in primary_rows if r.get("最终动作") == "建议开")
     held_n = sum(1 for r in primary_rows if r.get("_held"))
 
-    composite = _load_composite_cached(root)
-    if composite is None:
-        try:
-            from desk.composite_eval import desk_composite_score
-
-            composite = desk_composite_score(root, write=False)
-        except Exception:
-            composite = None
+    composite = resolve_composite(root, report.get("asof"))
+    composite_expired = bool((composite or {}).get("expired"))
 
     return {
         "ok": True,
@@ -753,6 +849,8 @@ def build_final_signal_board(
             "alert_n": alerts,
             "open_n": opens,
             "desk_score": (composite or {}).get("desk_score"),
+            "composite_expired": composite_expired,
+            "composite_stale_reason": (composite or {}).get("stale_reason") or "",
         },
         "asof": book.get("end") or book.get("asof") or report.get("asof"),
     }
@@ -793,7 +891,10 @@ def render_final_signal_tab(root: Path) -> None:
     metrics = board.get("metrics") or {}
     c1, c2, c3, c4 = st.columns(4)
     score = metrics.get("desk_score")
-    c1.metric("综合分", f"{score:.1f}" if isinstance(score, (int, float)) else "—")
+    if metrics.get("composite_expired"):
+        c1.metric("综合分", "过期")
+    else:
+        c1.metric("综合分", f"{score:.1f}" if isinstance(score, (int, float)) else "—")
     c2.metric("持仓数", metrics.get("held_n") if metrics.get("held_n") is not None else "—")
     c3.metric("预警数", metrics.get("alert_n") if metrics.get("alert_n") is not None else "—")
     c4.metric("建议开", metrics.get("open_n") if metrics.get("open_n") is not None else "—")
@@ -805,6 +906,13 @@ def render_final_signal_tab(root: Path) -> None:
         f"asof={board.get('asof') or '—'} · regime={board.get('regime') or '—'} · "
         f"情绪 {sent.get('label') or '—'} · 决策={mode_zh} · live_trading=否"
     )
+
+    if metrics.get("composite_expired"):
+        st.warning(
+            "综合分过期，未用于任何行动："
+            + (metrics.get("composite_stale_reason") or "与 L1 asof 不一致")
+            + "（日更会刷新 data/desk_composite_latest.json）"
+        )
 
     primary = board.get("primary") or []
     if not primary:

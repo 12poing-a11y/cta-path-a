@@ -55,3 +55,8 @@ python gamma_wall.py --contract CF2701 --expiry YYYY-MM-DD --date YYYY-MM-DD
 python gamma_wall.py --contract SR2701 --expiry YYYY-MM-DD
 python -m pytest tests/test_gamma_wall.py -q
 ```
+
+
+## 日更空跑保护
+
+gamma_wall_daily.yml 在没有任何 GAMMA_<合约>_EXPIRY Repository Variable 时会 **失败**（::error::），避免绿色=空跑。到期日必须由使用者按郑商所规则核实后填写到 Settings → Secrets and variables → Actions → Variables；仓库和代理不会替你猜日期。桌面 Gamma 页会显示「累积有效快照 N / 窗口」。

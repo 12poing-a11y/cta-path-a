@@ -384,6 +384,7 @@ def desk_composite_score(
             "book": book_pack.get("book"),
             "book_score": book_pack.get("score"),
             "selected": sel_pack,
+            "asof": sel_pack.get("asof"),
             "live_trading": False,
             "note": "研究桌面综合分；纸面，不下单。情绪已计入全面统计分分层投票。",
         }

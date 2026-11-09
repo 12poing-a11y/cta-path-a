@@ -126,6 +126,7 @@ GitHub Actions（工作日 **15:30 北京时间**）批量拉取并提交：
 1. 数据：`external/dzqh_weekly_latest.json`、`external/strategies/dzqh_*.json`、`external/archive/`（见该目录 README）  
 2. 刷新归档：`python external/materialize_dzqh.py`（只写归档，不激活研究台）  
 3. 本地可复现近似仍上台：`python proxy_cta.py` → 「本地代理·CWFT」等  
+   同次运行为每个代理单独落盘模拟持仓（`final_positions` / `trade_log`，与净值曲线同一套每日多空 Top3/Bottom3 选腿；**研究模拟、非实盘、不写入 `paper_book_latest.json`**），研究台「概览对比」→「本地代理·模拟持仓」查看。
 
 国债日频择时同属归档 KPI，不扩品种池进 T/TF/TL。
 

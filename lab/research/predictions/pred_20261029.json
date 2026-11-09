@@ -1,28 +1,28 @@
 {
   "ok": true,
   "asof": "20261029",
-  "generated_at": "2026-10-29T16:00:15.975054+00:00",
+  "generated_at": "2026-11-09T15:36:10.562719+00:00",
   "model_tag": "desk_total_board_v1",
   "live_trading": false,
-  "n": 22,
+  "n": 17,
   "portfolio": {
-    "结论": "偏多研究",
-    "note": "总盘面偏多 3 vs 偏空 2；观望 17；情绪多",
-    "label": "偏多研究 · 3",
+    "结论": "观望",
+    "note": "观望 15；多1/空1/卖波0；情绪多57%",
+    "label": "观望",
     "counts": {
-      "观望": 17,
-      "偏多研究": 3,
-      "偏空研究": 2
+      "观望": 15,
+      "偏空研究": 1,
+      "偏多研究": 1
     }
   },
   "sentiment": {
     "direction": "多",
-    "conviction_pct": 61.7,
-    "label": "多 · 把握 62%",
-    "p3": 0.316,
-    "n_long": 13,
-    "n_short": 3,
-    "breadth": 0.625
+    "conviction_pct": 56.9,
+    "label": "多 · 把握 57%",
+    "p3": 0.397,
+    "n_long": 9,
+    "n_short": 6,
+    "breadth": 0.2
   },
   "predictions": [
     {
@@ -32,63 +32,12 @@
       "code": "AG",
       "direction": "观望",
       "conclusion": "观望",
-      "conviction_pct": 61.7,
+      "conviction_pct": 56.9,
       "note": "Path-A与波动均无清晰方向",
       "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
       "sources": {
         "path_a": "—",
-        "sentiment": "—",
-        "align": "—",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 13608.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.620650+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.620650+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.620650+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.620650+00:00"
-    },
-    {
-      "id": "PRED-20261029-AL",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "AL",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "多",
+        "sentiment": "空",
         "align": "仅情绪",
         "vol": "观望"
       },
@@ -100,32 +49,23 @@
       "entry_close": null,
       "scores": {
         "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.620859+00:00"
+          "status": "pending",
+          "horizon_days": 1
         },
         "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.620859+00:00"
+          "status": "pending",
+          "horizon_days": 3
         },
         "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.620859+00:00"
+          "status": "pending",
+          "horizon_days": 5
         }
       },
       "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
+      "git_sha": "4aa6704",
       "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.620859+00:00"
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
     },
     {
       "id": "PRED-20261029-AU",
@@ -134,8 +74,8 @@
       "code": "AU",
       "direction": "观望",
       "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
       "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
       "sources": {
         "path_a": "—",
@@ -151,32 +91,23 @@
       "entry_close": null,
       "scores": {
         "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.620942+00:00"
+          "status": "pending",
+          "horizon_days": 1
         },
         "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.620942+00:00"
+          "status": "pending",
+          "horizon_days": 3
         },
         "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.620942+00:00"
+          "status": "pending",
+          "horizon_days": 5
         }
       },
       "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
+      "git_sha": "4aa6704",
       "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.620942+00:00"
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
     },
     {
       "id": "PRED-20261029-BU",
@@ -185,8 +116,8 @@
       "code": "BU",
       "direction": "观望",
       "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
       "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
       "sources": {
         "path_a": "—",
@@ -199,35 +130,26 @@
         3,
         5
       ],
-      "entry_close": 4533.0,
+      "entry_close": null,
       "scores": {
         "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.624822+00:00"
+          "status": "pending",
+          "horizon_days": 1
         },
         "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.624822+00:00"
+          "status": "pending",
+          "horizon_days": 3
         },
         "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.624822+00:00"
+          "status": "pending",
+          "horizon_days": 5
         }
       },
       "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
+      "git_sha": "4aa6704",
       "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.624822+00:00"
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
     },
     {
       "id": "PRED-20261029-CF",
@@ -236,8 +158,8 @@
       "code": "CF",
       "direction": "观望",
       "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
       "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
       "sources": {
         "path_a": "—",
@@ -250,35 +172,26 @@
         3,
         5
       ],
-      "entry_close": 15780.0,
+      "entry_close": null,
       "scores": {
         "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.631419+00:00"
+          "status": "pending",
+          "horizon_days": 1
         },
         "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.631419+00:00"
+          "status": "pending",
+          "horizon_days": 3
         },
         "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.631419+00:00"
+          "status": "pending",
+          "horizon_days": 5
         }
       },
       "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
+      "git_sha": "4aa6704",
       "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.631419+00:00"
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
     },
     {
       "id": "PRED-20261029-CU",
@@ -287,8 +200,8 @@
       "code": "CU",
       "direction": "观望",
       "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
       "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
       "sources": {
         "path_a": "—",
@@ -304,47 +217,38 @@
       "entry_close": null,
       "scores": {
         "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.631668+00:00"
+          "status": "pending",
+          "horizon_days": 1
         },
         "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.631668+00:00"
+          "status": "pending",
+          "horizon_days": 3
         },
         "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.631668+00:00"
+          "status": "pending",
+          "horizon_days": 5
         }
       },
       "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
+      "git_sha": "4aa6704",
       "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.631668+00:00"
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
     },
     {
       "id": "PRED-20261029-EB",
       "asof": "20261029",
       "asof_iso": "2026-10-29",
       "code": "EB",
-      "direction": "多",
-      "conclusion": "偏多研究",
-      "conviction_pct": 61.7,
-      "note": "仅Path-A有方向；波动观望",
-      "falsify": "预测方向多被证伪：；或到期收益符号相反",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
       "sources": {
-        "path_a": "多",
-        "sentiment": "—",
-        "align": "仅Path-A",
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
         "vol": "观望"
       },
       "horizons": [
@@ -352,32 +256,26 @@
         3,
         5
       ],
-      "entry_close": 10672.0,
+      "entry_close": null,
       "scores": {
         "1": {
           "status": "pending",
-          "horizon_days": 1,
-          "entry_date": "2026-10-22",
-          "entry_close": 10672.0
+          "horizon_days": 1
         },
         "3": {
           "status": "pending",
-          "horizon_days": 3,
-          "entry_date": "2026-10-22",
-          "entry_close": 10672.0
+          "horizon_days": 3
         },
         "5": {
           "status": "pending",
-          "horizon_days": 5,
-          "entry_date": "2026-10-22",
-          "entry_close": 10672.0
+          "horizon_days": 5
         }
       },
       "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
+      "git_sha": "4aa6704",
       "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-29T16:00:15.877653+00:00"
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
     },
     {
       "id": "PRED-20261029-EG",
@@ -386,611 +284,8 @@
       "code": "EG",
       "direction": "观望",
       "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "多",
-        "align": "仅情绪",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 4769.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.637977+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.637977+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.637977+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.637977+00:00"
-    },
-    {
-      "id": "PRED-20261029-FG",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "FG",
-      "direction": "空",
-      "conclusion": "偏空研究",
-      "conviction_pct": 61.7,
-      "note": "仅Path-A有方向；波动观望",
-      "falsify": "预测方向空被证伪：；或到期收益符号相反",
-      "sources": {
-        "path_a": "空",
-        "sentiment": "—",
-        "align": "仅Path-A",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 836.0,
-      "scores": {
-        "1": {
-          "status": "pending",
-          "horizon_days": 1,
-          "entry_date": "2026-10-23",
-          "entry_close": 836.0
-        },
-        "3": {
-          "status": "pending",
-          "horizon_days": 3,
-          "entry_date": "2026-10-23",
-          "entry_close": 836.0
-        },
-        "5": {
-          "status": "pending",
-          "horizon_days": 5,
-          "entry_date": "2026-10-23",
-          "entry_close": 836.0
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-29T16:00:15.877653+00:00"
-    },
-    {
-      "id": "PRED-20261029-FU",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "FU",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "多",
-        "align": "仅情绪",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 4911.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.652230+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.652230+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.652230+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.652230+00:00"
-    },
-    {
-      "id": "PRED-20261029-L",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "L",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "多",
-        "align": "仅情绪",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 8725.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.658474+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.658474+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.658474+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.658474+00:00"
-    },
-    {
-      "id": "PRED-20261029-M",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "M",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "多",
-        "align": "仅情绪",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 3249.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.665166+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.665166+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.665166+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.665166+00:00"
-    },
-    {
-      "id": "PRED-20261029-MA",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "MA",
-      "direction": "多",
-      "conclusion": "偏多研究",
-      "conviction_pct": 61.7,
-      "note": "Path-A与情绪同向；波动未给独立方向",
-      "falsify": "预测方向多被证伪：；或到期收益符号相反",
-      "sources": {
-        "path_a": "多",
-        "sentiment": "多",
-        "align": "同向",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 3191.0,
-      "scores": {
-        "1": {
-          "status": "pending",
-          "horizon_days": 1,
-          "entry_date": "2026-10-22",
-          "entry_close": 3191.0
-        },
-        "3": {
-          "status": "pending",
-          "horizon_days": 3,
-          "entry_date": "2026-10-22",
-          "entry_close": 3191.0
-        },
-        "5": {
-          "status": "pending",
-          "horizon_days": 5,
-          "entry_date": "2026-10-22",
-          "entry_close": 3191.0
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-29T16:00:15.877653+00:00"
-    },
-    {
-      "id": "PRED-20261029-PP",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "PP",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "多",
-        "align": "仅情绪",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 9376.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.675544+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.675544+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.675544+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.675544+00:00"
-    },
-    {
-      "id": "PRED-20261029-RB",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "RB",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "多",
-        "align": "仅情绪",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 3059.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.680701+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.680701+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.680701+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.680701+00:00"
-    },
-    {
-      "id": "PRED-20261029-RU",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "RU",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
+      "conviction_pct": 56.9,
       "note": "Path-A与波动均无清晰方向",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "—",
-        "align": "—",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 19530.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.687772+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.687772+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.687772+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.687772+00:00"
-    },
-    {
-      "id": "PRED-20261029-SA",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "SA",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "空",
-        "align": "仅情绪",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 935.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.689983+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.689983+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.689983+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.689983+00:00"
-    },
-    {
-      "id": "PRED-20261029-SP",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "SP",
-      "direction": "空",
-      "conclusion": "偏空研究",
-      "conviction_pct": 61.7,
-      "note": "Path-A与情绪同向；波动未给独立方向",
-      "falsify": "预测方向空被证伪：；或到期收益符号相反",
-      "sources": {
-        "path_a": "空",
-        "sentiment": "空",
-        "align": "同向",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 4632.0,
-      "scores": {
-        "1": {
-          "status": "pending",
-          "horizon_days": 1,
-          "entry_date": "2026-10-22",
-          "entry_close": 4632.0
-        },
-        "3": {
-          "status": "pending",
-          "horizon_days": 3,
-          "entry_date": "2026-10-22",
-          "entry_close": 4632.0
-        },
-        "5": {
-          "status": "pending",
-          "horizon_days": 5,
-          "entry_date": "2026-10-22",
-          "entry_close": 4632.0
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-29T16:00:15.877653+00:00"
-    },
-    {
-      "id": "PRED-20261029-SR",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "SR",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "Path-A与波动均无清晰方向",
-      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
-      "sources": {
-        "path_a": "—",
-        "sentiment": "—",
-        "align": "—",
-        "vol": "观望"
-      },
-      "horizons": [
-        1,
-        3,
-        5
-      ],
-      "entry_close": 5383.0,
-      "scores": {
-        "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.701200+00:00"
-        },
-        "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.701200+00:00"
-        },
-        "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.701200+00:00"
-        }
-      },
-      "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
-      "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.701200+00:00"
-    },
-    {
-      "id": "PRED-20261029-SS",
-      "asof": "20261029",
-      "asof_iso": "2026-10-29",
-      "code": "SS",
-      "direction": "观望",
-      "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
       "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
       "sources": {
         "path_a": "—",
@@ -1006,42 +301,33 @@
       "entry_close": null,
       "scores": {
         "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.701439+00:00"
+          "status": "pending",
+          "horizon_days": 1
         },
         "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.701439+00:00"
+          "status": "pending",
+          "horizon_days": 3
         },
         "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.701439+00:00"
+          "status": "pending",
+          "horizon_days": 5
         }
       },
       "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
+      "git_sha": "4aa6704",
       "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.701439+00:00"
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
     },
     {
-      "id": "PRED-20261029-TA",
+      "id": "PRED-20261029-M",
       "asof": "20261029",
       "asof_iso": "2026-10-29",
-      "code": "TA",
+      "code": "M",
       "direction": "观望",
       "conclusion": "观望",
-      "conviction_pct": 61.7,
-      "note": "仅情绪有方向、无Path-A确认 → 不单独开仓",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
       "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
       "sources": {
         "path_a": "—",
@@ -1054,35 +340,362 @@
         3,
         5
       ],
-      "entry_close": 6458.0,
+      "entry_close": null,
       "scores": {
         "1": {
-          "status": "scored",
-          "horizon_days": 1,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.707212+00:00"
+          "status": "pending",
+          "horizon_days": 1
         },
         "3": {
-          "status": "scored",
-          "horizon_days": 3,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.707212+00:00"
+          "status": "pending",
+          "horizon_days": 3
         },
         "5": {
-          "status": "scored",
-          "horizon_days": 5,
-          "class": "无法判断",
-          "reason": "观望无方向",
-          "scored_at": "2026-10-30T13:46:23.707212+00:00"
+          "status": "pending",
+          "horizon_days": 5
         }
       },
       "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
+      "git_sha": "4aa6704",
       "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-30T13:46:23.707212+00:00"
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
+    },
+    {
+      "id": "PRED-20261029-MA",
+      "asof": "20261029",
+      "asof_iso": "2026-10-29",
+      "code": "MA",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "多",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "4aa6704",
+      "live_trading": false,
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
+    },
+    {
+      "id": "PRED-20261029-P",
+      "asof": "20261029",
+      "asof_iso": "2026-10-29",
+      "code": "P",
+      "direction": "空",
+      "conclusion": "偏空研究",
+      "conviction_pct": 56.9,
+      "note": "仅Path-A有方向；波动观望",
+      "falsify": "预测方向空被证伪：；或到期收益符号相反",
+      "sources": {
+        "path_a": "空",
+        "sentiment": "—",
+        "align": "仅Path-A",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "4aa6704",
+      "live_trading": false,
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
+    },
+    {
+      "id": "PRED-20261029-PP",
+      "asof": "20261029",
+      "asof_iso": "2026-10-29",
+      "code": "PP",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "多",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "4aa6704",
+      "live_trading": false,
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
+    },
+    {
+      "id": "PRED-20261029-RB",
+      "asof": "20261029",
+      "asof_iso": "2026-10-29",
+      "code": "RB",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "多",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "4aa6704",
+      "live_trading": false,
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
+    },
+    {
+      "id": "PRED-20261029-RU",
+      "asof": "20261029",
+      "asof_iso": "2026-10-29",
+      "code": "RU",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "4aa6704",
+      "live_trading": false,
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
+    },
+    {
+      "id": "PRED-20261029-SA",
+      "asof": "20261029",
+      "asof_iso": "2026-10-29",
+      "code": "SA",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "4aa6704",
+      "live_trading": false,
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
+    },
+    {
+      "id": "PRED-20261029-SR",
+      "asof": "20261029",
+      "asof_iso": "2026-10-29",
+      "code": "SR",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "4aa6704",
+      "live_trading": false,
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
+    },
+    {
+      "id": "PRED-20261029-TA",
+      "asof": "20261029",
+      "asof_iso": "2026-10-29",
+      "code": "TA",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 56.9,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "多",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "4aa6704",
+      "live_trading": false,
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
     },
     {
       "id": "PRED-20261029-V",
@@ -1091,7 +704,7 @@
       "code": "V",
       "direction": "多",
       "conclusion": "偏多研究",
-      "conviction_pct": 61.7,
+      "conviction_pct": 56.9,
       "note": "仅Path-A有方向；波动观望",
       "falsify": "预测方向多被证伪：；或到期收益符号相反",
       "sources": {
@@ -1105,57 +718,27 @@
         3,
         5
       ],
-      "entry_close": 5016.0,
+      "entry_close": null,
       "scores": {
         "1": {
           "status": "pending",
-          "horizon_days": 1,
-          "entry_date": "2026-10-22",
-          "entry_close": 5016.0
+          "horizon_days": 1
         },
         "3": {
           "status": "pending",
-          "horizon_days": 3,
-          "entry_date": "2026-10-22",
-          "entry_close": 5016.0
+          "horizon_days": 3
         },
         "5": {
           "status": "pending",
-          "horizon_days": 5,
-          "entry_date": "2026-10-22",
-          "entry_close": 5016.0
+          "horizon_days": 5
         }
       },
       "model_tag": "desk_total_board_v1",
-      "git_sha": "1d17a65",
+      "git_sha": "4aa6704",
       "live_trading": false,
-      "created_at": "2026-10-29T16:00:15.877653+00:00",
-      "updated_at": "2026-10-29T16:00:15.877653+00:00"
+      "created_at": "2026-11-09T15:36:10.561642+00:00",
+      "updated_at": "2026-11-09T15:36:10.561642+00:00"
     }
   ],
-  "note": "纸面预测日志；不改 Path-A 入场。到期由 prediction_score 归因。",
-  "scored_at": "2026-10-30T13:48:31.053773+00:00",
-  "summary": {
-    "n_predictions": 22,
-    "counts": {
-      "无法判断": 51
-    },
-    "by_horizon": {
-      "1": {
-        "无法判断": 17
-      },
-      "3": {
-        "无法判断": 17
-      },
-      "5": {
-        "无法判断": 17
-      }
-    },
-    "hits": 0,
-    "misses": 0,
-    "voids": 51,
-    "pending": 15,
-    "hit_rate": null,
-    "hit_rate_pct": null
-  }
+  "note": "纸面预测日志；不改 Path-A 入场。到期由 prediction_score 归因。"
 }

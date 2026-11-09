@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "asof": "2026-11-06",
-  "asof_ymd": "20261106",
+  "asof": "2026-11-09",
+  "asof_ymd": "20261109",
   "source": "paper_book",
   "seed": "paper_book_latest",
   "parent_backtest_end": "2026-10-20",
@@ -9,8 +9,8 @@
   "stop_atr_mult": 1.2,
   "reward_rr": 1.5,
   "equity": 192655.0,
-  "equity_floating": 640.0,
-  "equity_mark": 193295.0,
+  "equity_floating": 1810.0,
+  "equity_mark": 194465.0,
   "positions": {
     "V": {
       "code": "V",
@@ -19,15 +19,15 @@
       "entry": 4847.0,
       "stop": 4657.228571428572,
       "target": 5131.657142857142,
-      "atr": 96.5,
-      "r20": 2.4084,
-      "r60": 10.6539,
+      "atr": 125.86,
+      "r20": 0.5506,
+      "r60": 9.4076,
       "bucket": "能化",
       "reason": "composite_trend",
       "entry_date": "2026-10-20",
       "mult": 5.0,
-      "mark": 4975.0,
-      "equity_delta": 640.0
+      "mark": 4931.0,
+      "equity_delta": 420.0
     },
     "P": {
       "code": "P",
@@ -36,16 +36,16 @@
       "entry": 8722.0,
       "stop": 8950.768,
       "target": 8378.848,
-      "atr": 190.64,
-      "r20": -9.551,
-      "r60": -7.0645,
+      "atr": 190.5,
+      "r20": -11.3693,
+      "r60": -11.1675,
       "bucket": "农产品",
       "sleeve": null,
       "reason": "daily_selected",
       "entry_date": "2026-11-06",
       "mult": 10.0,
-      "mark": 8722.0,
-      "equity_delta": 0.0
+      "mark": 8583.0,
+      "equity_delta": 1390.0
     }
   },
   "closed_today": [],
@@ -273,6 +273,6 @@
   "held_n": 2,
   "ledger_n": 8,
   "notes": "纸面模拟仓：以回测期末持仓为种子，按最新 l1_report 做信号平仓/组合入选开仓；trade_ledger 含入场/出场/止盈止损/策略/权益增减（平仓为已实现，持仓中为浮动）；equity 为平仓累计后账面，equity_floating 为未平仓浮动盈亏。不改写 historical_backtest KPI。与 Notion 持仓中、决策页账面同源。",
-  "l1_asof": "20261106",
+  "l1_asof": "20261109",
   "updated_from_l1": true
 }

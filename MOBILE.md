@@ -10,15 +10,17 @@
 
 | Name | 值 |
 |------|-----|
-| `IFIND_AUTH_TOKEN` | primary iFinD MCP Key（新 Key） |
-| `IFIND_AUTH_TOKEN_BACKUP` | backup Key（旧 Key，可选） |
-| `NOTION_TOKEN` | Notion Integration Secret（可选，用于写台账） |
+| `IFIND_AUTH_TOKEN` | primary iFinD MCP Key（免费源不足时补日线） |
+| `IFIND_AUTH_TOKEN_BACKUP` | backup Key（可选） |
+| `NOTION_TOKEN` | Notion Integration Secret（可选，写台账） |
+| `FUYAO_API_KEY` | 可选：扶摇合约日线补洞（无则跳过） |
+| `TQ_USER` / `TQ_PASS` | 可选：天勤补洞（无则跳过） |
 
 Workflows 已设 `IFIND_ACTIVE_SLOT=primary`（日报 Fetch / 历史回测等）。一般**不必**再加这个 Secret。
 
 Notion Integration 需连接「CTA日信号台账 / CTA回测报告」。
 
-当前仓库若 Secrets 为空，定时任务会失败。
+`IFIND_AUTH_TOKEN` 为空时，依赖 iFinD 补缺的任务可能失败；扶摇/天勤为软依赖，缺省不拖垮日更。
 
 ## 仓位规则（路径A）
 

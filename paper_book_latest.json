@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "asof": "2026-11-09",
-  "asof_ymd": "20261109",
+  "asof": "2026-11-10",
+  "asof_ymd": "20261110",
   "source": "paper_book",
   "seed": "paper_book_latest",
   "parent_backtest_end": "2026-10-20",
@@ -273,6 +273,6 @@
   "held_n": 2,
   "ledger_n": 8,
   "notes": "纸面模拟仓：以回测期末持仓为种子，按最新 l1_report 做信号平仓/组合入选开仓；trade_ledger 含入场/出场/止盈止损/策略/权益增减（平仓为已实现，持仓中为浮动）；equity 为平仓累计后账面，equity_floating 为未平仓浮动盈亏。不改写 historical_backtest KPI。与 Notion 持仓中、决策页账面同源。",
-  "l1_asof": "20261109",
+  "l1_asof": "20261110",
   "updated_from_l1": true
 }

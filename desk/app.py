@@ -25,6 +25,7 @@ from desk.loaders import (  # noqa: E402
     strategy_kpis,
 )
 from desk.chart_board import render_chart_tab  # noqa: E402
+from desk.curve_lag import curve_end_date, curve_lag  # noqa: E402
 from desk.freshness import render_freshness_header  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
 from desk.gamma_panel import render_gamma_panel  # noqa: E402
@@ -625,10 +626,75 @@ def main() -> None:
 
         st.subheader("叠加后回测")
         hedge_curves = {}
+        lag_rows = []
+        expected_s = latest_expected_session_date().isoformat()
         for label, sid in (("路径A", "path_a"), ("路径A+保护期权", "path_a_opt_hedge")):
-            curve = equity_curve_df(_cached_payload(sid))
+            payload_h = _cached_payload(sid)
+            curve = equity_curve_df(payload_h)
+            info = curve_lag(curve_end_date(payload_h), expected_s)
+            lag_rows.append(
+                {
+                    "曲线": label,
+                    "曲线截止": info["curve_end"] or "—",
+                    "期望会话": expected_s,
+                    "滞后(日历日)": info["lag_days"] if info["lag_days"] is not None else "—",
+                    "滞后(工作日)": info["lag_busdays"] if info["lag_busdays"] is not None else "—",
+                    "来源": (payload_h or {}).get("_desk_source") or "—",
+                    "状态": "滞后" if info["stale"] else ("最新" if info["curve_end"] else "无曲线"),
+                }
+            )
             if not curve.empty:
                 hedge_curves[label] = curve
+        st.dataframe(pd.DataFrame(lag_rows), width="stretch", hide_index=True)
+        if any(r["状态"] == "滞后" for r in lag_rows):
+            st.warning(
+                "叠加曲线截止日早于期望会话日：图上只画已有真实回测日，不会补造未来/缺失日线。"
+                "可下方刷新模拟仓或重跑历史回测（需本机数据源/iFinD；也可用 Actions 日更后「同步日报」）。"
+            )
+        with st.expander("刷新叠加曲线（模拟仓 / 历史回测）", expanded=False):
+            bcol1, bcol2 = st.columns(2)
+            if bcol1.button("刷新模拟仓 paper_book", key="opt_refresh_paper"):
+                with st.spinner("刷新 paper_book…"):
+                    try:
+                        from paper_book import refresh_paper_book
+
+                        paper_r = refresh_paper_book(ROOT)
+                    except Exception as exc:
+                        paper_r = {"ok": False, "error": str(exc)}
+                if paper_r.get("ok"):
+                    clear_streamlit_caches()
+                    st.success(f"模拟仓 asof={paper_r.get('asof')}（仅更新持仓，不改回测曲线）")
+                    st.rerun()
+                else:
+                    st.error(f"模拟仓刷新失败：{paper_r.get('error')}")
+            if bcol2.button("重跑历史回测（耗时）", key="opt_refresh_bt"):
+                import subprocess
+
+                with st.spinner("python historical_backtest.py（最长约 15 分钟）…"):
+                    try:
+                        proc = subprocess.run(
+                            [sys.executable, "historical_backtest.py"],
+                            cwd=str(ROOT),
+                            capture_output=True,
+                            text=True,
+                            timeout=900,
+                        )
+                        ok_bt = proc.returncode == 0
+                        tail = (proc.stdout or proc.stderr or "")[-1200:]
+                    except Exception as exc:
+                        ok_bt, tail = False, str(exc)
+                if ok_bt:
+                    clear_streamlit_caches()
+                    st.success("历史回测已重跑，刷新曲线。")
+                    st.rerun()
+                else:
+                    st.error("历史回测失败或超时，曲线未更新。")
+                    st.code(tail or "(无输出)")
+            st.caption(
+                "命令行：`python paper_book.py`、`python historical_backtest.py`。"
+                "保护期权曲线优先读 `_art_opt/historical_backtest_latest.json`；"
+                "缺则回退主回测且 option_hedge=true。"
+            )
         if hedge_curves:
             aligned_h = align_curves(hedge_curves, normalize=True)
             st.plotly_chart(

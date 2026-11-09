@@ -12,6 +12,21 @@ from desk.regime_board import load_local_bars
 from desk.seat_board import load_group_frame, universe_rows
 
 
+VP_LOOKBACKS = [20, 40, 60, 120, 250]
+VP_DEFAULT_LOOKBACK = 60
+SEAT_CAPTION = (
+    "席位口径：「机构」= 前20名中信期货/国泰君安/华泰/永安/东证(融汇)的净持仓合计；"
+    "不是散户/家人（散户代理为东方财富/平安/方正中期/徽商/中信建投，见 member_rank._HOLDER）。"
+)
+
+
+def vp_title(lookback: int, n_bars: int) -> str:
+    used = min(lookback, n_bars) if n_bars else lookback
+    if n_bars and n_bars < lookback:
+        return f"近{lookback}日成交量分布（价轴·实际仅{used}日）"
+    return f"近{lookback}日成交量分布（价轴）"
+
+
 def volume_profile(bars: list[dict], *, bins: int = 24, lookback: int = 60) -> pd.DataFrame:
     """Approximate volume-at-price from daily typical price × volume."""
     if not bars:
@@ -75,10 +90,17 @@ def render_chart_flow_section(root: Path, code: str) -> None:
         "期货无标准股票筹码峰：用近窗日线典型价×成交量做 VP 直方图；"
         "资金流向用机构席位净持仓变动近似，非股票主力资金口径。"
     )
+    st.caption(SEAT_CAPTION)
+    lookback = st.selectbox(
+        "VP 回看窗口（交易日）",
+        VP_LOOKBACKS,
+        index=VP_LOOKBACKS.index(VP_DEFAULT_LOOKBACK),
+        key=f"vp_lookback_{code}",
+    )
     bars, src = load_local_bars(root, code)
     c1, c2 = st.columns(2)
     with c1:
-        vp = volume_profile(bars or [])
+        vp = volume_profile(bars or [], lookback=int(lookback))
         if vp.empty:
             st.info(f"量价分布不足（源 {src or '无'}）")
         else:
@@ -102,7 +124,7 @@ def render_chart_flow_section(root: Path, code: str) -> None:
             fig.update_layout(
                 height=360,
                 margin=dict(t=24, b=24, l=48, r=16),
-                title="近60日成交量分布（价轴）",
+                title=vp_title(int(lookback), len(bars or [])),
                 xaxis_title="成交量",
                 yaxis_title="价格",
             )

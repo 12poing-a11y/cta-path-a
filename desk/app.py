@@ -31,6 +31,7 @@ from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backte
 from desk.gamma_panel import render_gamma_panel  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
 from desk.final_signal import DETAIL_CAPTION, render_final_signal_tab  # noqa: E402
+from desk.proxy_positions import render_proxy_positions  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
 from desk.scoreboard import scoreboard_rows  # noqa: E402
 from desk.seat_board import render_seat_sector  # noqa: E402
@@ -408,6 +409,11 @@ def main() -> None:
             with st.expander("无曲线说明（可折叠）", expanded=False):
                 for n in grey_notes:
                     st.caption(n)
+
+        try:
+            render_proxy_positions(st, ROOT)
+        except Exception as exc:  # soft-fail: never break overview
+            st.caption(f"本地代理模拟持仓暂不可用：{exc}")
 
         if curves:
             aligned = align_curves(

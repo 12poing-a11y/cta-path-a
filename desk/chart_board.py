@@ -15,6 +15,7 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
+from desk.chart_captions import format_last_daily_bar_caption, last_bar_timestamp
 from desk.loaders import format_variety_label, load_json, variety_select_labels
 from desk.regime_board import events_for_codes, load_local_bars
 from desk.seat_board import EX_ZH, GREEN, INK, PAPER, RED, GRID, universe_rows
@@ -463,6 +464,7 @@ def render_chart_tab(root: Path) -> None:
         choice = st.selectbox("品种", labels, key="chart_sym", on_change=_push_seat_sym)
     meta = symbols[labels.index(choice)]
     code = meta["code"]
+    st.session_state["chart_code"] = code
     with c_period:
         period_label = st.selectbox(
             "周期",
@@ -486,9 +488,11 @@ def render_chart_tab(root: Path) -> None:
 
     asof = (report or {}).get("asof")
     path_a_dir = None
+    signal_bar_date = None
     for sig in (report or {}).get("signals") or []:
         if str(sig.get("code") or "").upper() == code:
             path_a_dir = str(sig.get("direction") or "")
+            signal_bar_date = _iso_ymd(str(sig.get("bar_date") or asof or ""))
             break
 
     x_col = "date"
@@ -506,9 +510,11 @@ def render_chart_tab(root: Path) -> None:
             root, code, period, force=force_min, verify_em=False
         )
         bars = minute_meta.get("bars") or []
+        last_bar_at = last_bar_timestamp(bars)
         st.caption(
             f"当前 {format_variety_label(code, meta.get('name') or '', contract=minute_meta.get('symbol'), root=root)} · "
-            f"源 {minute_meta.get('source') or '—'} · asof {asof or '—'} · {minute_meta.get('note') or ''}"
+            f"源 {minute_meta.get('source') or '—'} · 最后一根K线 {last_bar_at or '—'} · "
+            f"日报 asof {asof or '—'} · {minute_meta.get('note') or ''}"
         )
         if not bars:
             st.info("暂无 15m/60m 数据。点「刷新分钟线」；新浪失败时自动改东财备选。")
@@ -580,7 +586,17 @@ def render_chart_tab(root: Path) -> None:
             st.info("本地无连续合约日线（.cache/sina 下 CODE0.json）。先同步或刷新本地缓存。")
             return
         daily = _bars_frame(bars)
+        last_daily_date = str(daily["date"].iloc[-1]) if not daily.empty else ""
+        expected_daily_date = signal_bar_date or _iso_ymd(str(asof or ""))
+        if expected_daily_date and last_daily_date and last_daily_date < expected_daily_date:
+            st.warning(
+                f"日线缓存落后：当前品种日报 bar_date={expected_daily_date}，"
+                f"本地连续合约最后一根K线={last_daily_date}。"
+                "图表不会用单一收盘价伪造OHLC；请先同步 main 的行情缓存，"
+                "若仍落后则检查行情源是否已发布当日连续合约日线。"
+            )
         daily = _resample_ohlcv(daily, period)
+        st.caption(format_last_daily_bar_caption(daily))
         df = _indicator_frames(daily)
         if win_n and len(df) > win_n:
             df = df.tail(win_n).reset_index(drop=True)
@@ -630,3 +646,8 @@ def render_chart_tab(root: Path) -> None:
         st.caption(f"窗口内事件标记 {len(event_rows)} 条（动量/席位/基差等，悬停看细节）。")
     else:
         st.caption("窗口内暂无事件标记。")
+
+    from desk.chart_flow import render_chart_flow_section
+
+    st.divider()
+    render_chart_flow_section(root, code)

@@ -33,6 +33,7 @@ from desk.seat_board import (
     cached_snapshot,
     ensure_dce_latest,
     member_dates,
+    seat_calendar_dates,
 )
 
 FOOTER = "研究结论，不是交易指令。"
@@ -139,13 +140,13 @@ def institution_status(root: Path, code: str, report: dict | None) -> dict[str, 
     """Latest institution-group net. Missing stays missing; zero stays zero."""
     code = str(code or "").upper()
     exchange = _exchange_for(root, code, report)
-    if exchange == "DCE" and not member_dates(root, "DCE"):
+    if exchange == "DCE" and not member_dates(root, "DCE") and not seat_calendar_dates(root, "DCE"):
         # One-shot warm-up: daily job used to skip DCE fetch entirely.
         ensure_dce_latest(root)
     skip = joint_skip_reason(root, code, report)
     if skip:
         if exchange == "DCE":
-            cause = "大商所本地无 dce-*.json 缓存，机构净持仓缺失"
+            cause = "大商所本地无 dce-*.json / em-*.json，机构净持仓缺失"
         else:
             cause = "本地没有可用的会员排名，机构净持仓缺失"
         return {
@@ -156,7 +157,7 @@ def institution_status(root: Path, code: str, report: dict | None) -> dict[str, 
             "note": skip,
             "cause": cause,
         }
-    dates = member_dates(root, exchange)
+    dates = seat_calendar_dates(root, exchange)
     ymd = dates[-1] if dates else ""
     snap = cached_snapshot(str(root), code, exchange, ymd) if ymd else {"ok": False}
     net = _num(snap.get("inst_net")) if snap.get("ok") else None

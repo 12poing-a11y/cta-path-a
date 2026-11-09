@@ -274,6 +274,9 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
         "lots_raw": lots,
         "min_lots_bumped": min_lots_bumped,
         "data_source": snap.get("source"),
+        # daily_update derives signals from Sina/Tencent main continuous series,
+        # not an executable delivery-month contract quote.
+        "price_basis": "continuous",
         "bar_date": snap.get("bar_date"),
         "lots_l1": lots,
         "lots_full": lots,
@@ -442,7 +445,14 @@ def main():
 
     # Observation sample: all 20 must have seats — exchange → 东财 → 新浪.
     # Short lookback densifies DCE/EM so 席位页 is not stuck on 2–3 sparse days.
-    seat_days = sorted({s.get("bar_date") for s in snaps if s.get("bar_date")})
+    from market_data import latest_expected_session_date
+
+    seat_date_cap = latest_expected_session_date().isoformat()
+    seat_days = sorted({
+        str(s.get("bar_date"))
+        for s in snaps
+        if s.get("bar_date") and str(s.get("bar_date")) <= seat_date_cap
+    })
     if seat_days:
         try:
             from member_rank import backfill_member_lookback
@@ -461,7 +471,7 @@ def main():
             )
         except Exception as exc:  # noqa: BLE001
             print(f"  [observe] member lookback soft-fail: {exc}")
-            stats = ensure_member_days(seat_days, dce=True)
+            stats = ensure_member_days(seat_days, dce=True, public_first=True)
             print(
                 f"  [observe] member ensure days={stats['days']} "
                 f"shfe={stats['shfe']} czce={stats['czce']} "
@@ -649,7 +659,7 @@ def main():
     asof_ymd = now.strftime("%Y%m%d")
     from research_quality import validate_signals
 
-    quality = validate_signals(signals, asof=asof_ymd)
+    quality = validate_signals(signals, asof=asof_ymd, universe=UNIVERSE)
     if not quality.get("ok"):
         print(
             f"[cta] QUALITY GATE FAIL bad={quality.get('bad_codes')} "
@@ -673,29 +683,45 @@ def main():
     # Paper-only MDS+EHI sentiment sleeve (ChatGPT share); never sizes Path-A lots.
     sentiment_meta: dict = {"ok": False}
     try:
-        from sentiment_mds import build_snapshot, write_snapshot
+        from sentiment_mds import OUT as _SENT_OUT, build_snapshot, write_snapshot
 
         seat_rows = []
         seats_book = {}
-        if seat_days:
-            seats_book = load_member_seats(seat_days[-1:], [u["code"] for u in UNIVERSE])
         day_key = seat_days[-1] if seat_days else None
+        prev_key = seat_days[-2] if len(seat_days) >= 2 else None
+        if day_key:
+            load_days = [prev_key, day_key] if prev_key else [day_key]
+            try:
+                ensure_member_days(load_days, dce=True, public_first=True)
+            except Exception as densify_exc:  # noqa: BLE001
+                print(f"[sentiment] seat densify soft-fail: {densify_exc}")
+            seats_book = load_member_seats(load_days, [u["code"] for u in UNIVERSE])
         for sig in signals:
             code = str(sig.get("code") or "").upper()
-            book = (seats_book.get(code) or {}).get(day_key) if day_key else None
-            net = float((book or {}).get("inst") or 0.0) if book else 0.0
+            book = seats_book.get(code) or {}
+            day_row = book.get(day_key) if day_key else None
+            net = float((day_row or {}).get("inst") or 0.0) if day_row else 0.0
+            if prev_key and prev_key in book:
+                prev_net = float((book.get(prev_key) or {}).get("inst") or 0.0)
+                net_chg = net - prev_net
+            else:
+                net_chg = 0.0
             seat_rows.append(
                 {
                     "code": code,
                     "net": net,
-                    "net_chg": net,
+                    "net_chg": net_chg,
                     "ret_1d": sig.get("ret_1d"),
                     "oi": sig.get("oi"),
                     "volume": sig.get("volume"),
                 }
             )
         snap_sent = build_snapshot(seat_rows, asof=asof_ymd)
-        sent_path = write_snapshot(snap_sent)
+        # 磊定 2026-11-02：日更只写影子，禁止改正式 latest.json
+        snap_sent["shadow"] = True
+        sent_path = write_snapshot(
+            snap_sent, out_dir=_SENT_OUT / "shadow", update_latest=False
+        )
         sentiment_meta = {
             "ok": True,
             "path": str(sent_path.name),
@@ -704,10 +730,12 @@ def main():
             "longs": snap_sent.get("longs"),
             "shorts": snap_sent.get("shorts"),
             "live": False,
+            "shadow": True,
         }
         print(
-            f"[sentiment] paper MDS+EHI stance={snap_sent.get('stance')} "
-            f"p3={snap_sent.get('portfolio_p3')} n={snap_sent.get('n')}"
+            f"[sentiment] shadow MDS+EHI stance={snap_sent.get('stance')} "
+            f"p3={snap_sent.get('portfolio_p3')} n={snap_sent.get('n')} "
+            f"path={sent_path.name} (update_latest=False)"
         )
     except Exception as exc:  # noqa: BLE001
         print(f"[sentiment] soft-fail: {exc}")
@@ -799,70 +827,17 @@ def main():
                     f"[paper] asof={paper.get('asof')} held={paper.get('held_n')} "
                     f"opened={paper.get('opened_n')} closed={paper.get('closed_n')}"
                 )
-                # Sync accounting equity into formal report + equity_state (realized only for sizing).
-                eq_real = float(paper.get("equity") or report.get("equity") or EQUITY_BASE)
-                eq_float = float(paper.get("equity_floating") or 0.0)
-                eq_mark = float(paper.get("equity_mark") or (eq_real + eq_float))
-                report["equity"] = round(eq_real, 2)
-                report["equity_live"] = round(eq_real, 2)
-                report["equity_floating"] = round(eq_float, 2)
-                report["equity_mark"] = round(eq_mark, 2)
-                report["equity_source"] = "paper_book"
-                report["paper_asof"] = paper.get("asof")
-                if isinstance(report.get("portfolio"), dict):
-                    report["portfolio"]["sizing_equity"] = round(eq_real, 2)
-                state_out = {
-                    "equity_base": EQUITY_BASE,
-                    "equity": round(eq_real, 2),
-                    "peak": round(max(float(state.get("peak") or EQUITY_BASE), eq_real), 2),
-                    "asof": str(paper.get("asof") or report.get("asof")),
-                    "source": "paper_book",
-                    "equity_floating": round(eq_float, 2),
-                    "equity_mark": round(eq_mark, 2),
-                }
-                EQUITY_STATE_PATH.write_text(
-                    json.dumps(state_out, ensure_ascii=False, indent=2),
-                    encoding="utf-8",
-                )
-                report["equity_state"] = {
-                    "asof": state_out.get("asof"),
-                    "source": state_out.get("source"),
-                    "peak": state_out.get("peak"),
-                }
-                blob = json.dumps(report, ensure_ascii=False, indent=2)
-                (ROOT / "l1_report_risk15.json").write_text(blob, encoding="utf-8")
-                (ROOT / "l1_report.json").write_text(blob, encoding="utf-8")
-                (arch / f"l1_report_{report['asof']}.json").write_text(blob, encoding="utf-8")
-                print(
-                    f"[equity] synced paper equity={eq_real:.0f} "
-                    f"float={eq_float:.0f} mark={eq_mark:.0f}"
-                )
             else:
                 print("[paper] skip:", paper.get("error"))
         except Exception as exc:
             print(f"[paper] refresh failed: {exc}")
-        # P0: desk prediction log + T+1/3/5 attribution (paper only).
         try:
-            from prediction_log import write_desk_predictions
-            from prediction_score import score_predictions
+            from desk.tech_score_panel import write_tech_score_snapshot
 
-            pred = write_desk_predictions(ROOT)
-            if pred.get("ok"):
-                print(f"[pred] wrote n={pred.get('n')} asof={pred.get('asof')}")
-            else:
-                print("[pred] skip write:", pred.get("error"))
-            scored = score_predictions(ROOT)
-            if scored.get("ok"):
-                s = scored.get("summary") or {}
-                print(
-                    f"[pred] score hit_rate={s.get('hit_rate_pct')}% "
-                    f"hits={s.get('hits')} miss={s.get('misses')} "
-                    f"void={s.get('voids')} pending={s.get('pending')}"
-                )
-            else:
-                print("[pred] skip score:", scored.get("error"))
+            tech = write_tech_score_snapshot(ROOT)
+            print(f"[tech] asof={tech.get('asof')} n={tech.get('n')} → {tech.get('path')}")
         except Exception as exc:
-            print(f"[pred] failed: {exc}")
+            print(f"[tech] refresh failed: {exc}")
     else:
         print("[paper] skip: quality gate failed")
     # Observation incomplete or quality fail → non-zero so CI does not publish formal.

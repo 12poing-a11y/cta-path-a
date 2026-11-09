@@ -25,13 +25,17 @@ from desk.loaders import (  # noqa: E402
     strategy_kpis,
 )
 from desk.chart_board import render_chart_tab  # noqa: E402
+from desk.freshness import render_freshness_header  # noqa: E402
 from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
+from desk.gamma_panel import render_gamma_panel  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
 from desk.final_signal import DETAIL_CAPTION, render_final_signal_tab  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
 from desk.scoreboard import scoreboard_rows  # noqa: E402
 from desk.seat_board import render_seat_sector  # noqa: E402
 from desk.strategies.registry import all_strategies  # noqa: E402
+from desk.tech_score_panel import render_tech_score_panel  # noqa: E402
+from market_data import latest_expected_session_date  # noqa: E402
 from desk.sync_desk import (  # noqa: E402
     book_freshness,
     clear_streamlit_caches,
@@ -59,16 +63,21 @@ PARKED_COMPARE_IDS = frozenset(
         "benchmark",
     }
 )
+# Nav order: P&L / drawdown reference first, then structure / sentiment / options.
 DESK_PAGES = (
     "最终信号",
     "概览对比",
-    "日信号",
-    "情绪",
-    "图表",
-    "期权机会",
-    "席位板块",
-    "状态评分",
+    "技术分析",
     "决策",
+    "图表",
+    "日信号",
+    "状态评分",
+    "席位板块",
+    "情绪",
+    "E1·情绪影子·不计分",
+    "期权机会",
+    "套利观察",
+    "Gamma 结构",
 )
 
 st.set_page_config(page_title="CTA Path-A Desk", layout="wide", initial_sidebar_state="expanded")
@@ -141,7 +150,11 @@ def _render_sync_panel() -> None:
             "git pull 不可用时，勾选「刷新本地缓存」可跑 daily_update.py，"
             "从免费源重建日报与 member/sina 缓存。"
         )
-    pull_git = st.checkbox("同步 main 日报（fetch + 取出报告文件）", value=True, key="desk_sync_git")
+    pull_git = st.checkbox(
+        "同步 main 日报 + 图表行情缓存（日线 CODE0 / history / 15m / 60m）",
+        value=True,
+        key="desk_sync_git",
+    )
     refresh_cache = st.checkbox(
         "刷新本地缓存（daily_update.py，较慢/需网络）",
         value=False,
@@ -287,32 +300,69 @@ def main() -> None:
         key="desk_active_page",
         label_visibility="collapsed",
     )
-    st.caption("仅渲染当前页以加速刷新 · 预测归因后台仍积累、UI 已搁置")
+    st.caption(
+        "导航优先：最终信号 → 概览(盈亏/回撤) → 技术打分 → 决策/图表；"
+        "情绪与期权结构靠后。仅渲染当前页。"
+    )
 
     if page == "最终信号":
+        render_freshness_header(ROOT, "最终信号")
         render_final_signal_tab(ROOT)
+
+    if page == "技术分析":
+        render_freshness_header(ROOT, "技术分析")
+        render_tech_score_panel(ROOT)
 
     # --- Tab 1: compare ---
     if page == "概览对比":
+        render_freshness_header(ROOT, "概览对比")
         curves = {}
         kpi_rows = []
         grey_notes = []
+        health_rows = []
+        expected = latest_expected_session_date().isoformat()
         for sid in chosen_ids:
             spec = next(s for s in specs if s.id == sid)
             avail = avail_map[sid]
             payload = _cached_payload(sid)
             kpis = strategy_kpis(spec, ROOT)
+            curve_end = None
+            lag = None
+            if payload:
+                curve_end = str(kpis.get("end") or payload.get("end") or "")[:10] or None
+                if not curve_end:
+                    df0 = equity_curve_df(payload)
+                    if not df0.empty:
+                        curve_end = str(df0["date"].max().date())
+                if curve_end:
+                    try:
+                        lag = (
+                            pd.Timestamp(expected) - pd.Timestamp(curve_end)
+                        ).days
+                    except (TypeError, ValueError):
+                        lag = None
+            stale = bool(lag is not None and lag > 5)
+            health_rows.append(
+                {
+                    "策略": spec.name,
+                    "曲线截止": curve_end or "—",
+                    "期望会话": expected,
+                    "滞后日": lag if lag is not None else "—",
+                    "健康": "过期" if stale else ("就绪" if avail == "ready" else _status_label(avail)),
+                }
+            )
             row = {
                 "策略": spec.name,
                 "状态": _status_label(avail),
-                "年化/收益%": kpis.get("ret_ann_pct", kpis.get("ret_pct")),
-                "夏普": kpis.get("sharpe"),
-                "Calmar": kpis.get("calmar"),
-                "近一周%": kpis.get("week_ret_pct"),
+                "曲线截止": curve_end or "—",
+                "年化%": kpis.get("ret_ann_pct"),
                 "区间收益%": kpis.get("ret_pct"),
                 "最大回撤%": kpis.get("max_dd_pct"),
                 "毛收益%": kpis.get("gross_ret_pct"),
                 "毛回撤%": kpis.get("gross_max_dd_pct"),
+                "夏普": kpis.get("sharpe"),
+                "Calmar": kpis.get("calmar"),
+                "近一周%": kpis.get("week_ret_pct"),
                 "期末权益": kpis.get("equity_end"),
                 "成本(元)": kpis.get("cost_yuan"),
                 "来源": kpis.get("source") or str(spec.curve_path or "—"),
@@ -328,9 +378,14 @@ def main() -> None:
                             eq_col = c
                             break
                 if not df.empty and eq_col in df.columns:
-                    # Key by strategy id so display names never collide in align_curves.
                     one = df.rename(columns={eq_col: "equity"}) if eq_col != "equity" else df
-                    curves[spec.name or sid] = one.copy()
+                    label = f"{spec.name}·滞后" if stale else (spec.name or sid)
+                    curves[label] = one.copy()
+                    if stale:
+                        grey_notes.append(
+                            f"{spec.name}：曲线滞后 {lag} 日（截止 {curve_end}），"
+                            "请跑 python proxy_cta.py 或同步日报"
+                        )
             elif avail == "kpi_only":
                 grey_notes.append(f"{spec.name}：KPI 跟踪（无曲线属正常，看上表数字）")
             elif avail == "placeholder":
@@ -338,9 +393,14 @@ def main() -> None:
             elif avail == "missing":
                 grey_notes.append(f"{spec.name}：缺少 `{spec.curve_path}`")
 
+        if health_rows:
+            st.subheader("策略健康（盈亏/回撤参考）")
+            st.caption("滞后>5 个交易日视为过期；叠加图仍可画但会标注「·滞后」。")
+            st.dataframe(pd.DataFrame(health_rows), width="stretch", hide_index=True)
+
         if kpi_rows:
             st.subheader("窗口 KPI / 跟踪数字")
-            st.caption("有曲线与仅 KPI 都在此表；外部跟踪本来就没有权益曲线。")
+            st.caption("优先看区间收益%与最大回撤%；毛收益有字段才填。")
             st.dataframe(pd.DataFrame(kpi_rows), width="stretch", hide_index=True)
 
         if grey_notes:
@@ -388,14 +448,17 @@ def main() -> None:
 
     # --- Tab 2: daily signals ---
     if page == "日信号":
+        render_freshness_header(ROOT, "日信号")
         st.caption(DETAIL_CAPTION)
         report = load_l1_report(ROOT)
         if not report:
             st.error("缺少 l1_report.json，请先运行 daily_update.py")
         else:
             from desk.equity_book import load_book_equity
+            from desk.premarket_compare import render_premarket_card
 
             book_eq = load_book_equity(ROOT, report)
+            render_premarket_card(ROOT)
             c1, c2, c3, c4 = st.columns(4)
             c1.metric("asof", report.get("asof"))
             if book_eq.get("ok") and book_eq.get("equity_mark") is not None:
@@ -506,19 +569,37 @@ def main() -> None:
 
     # --- Tab: sentiment sleeve ---
     if page == "情绪":
+        render_freshness_header(ROOT, "情绪")
         st.caption(DETAIL_CAPTION)
         from desk.sentiment_panel import render_sentiment_panel
+        from desk.behav_finance_panel import render_behav_finance_panel
 
         render_sentiment_panel(ROOT)
+        st.divider()
+        render_behav_finance_panel(ROOT)
+
+    if page == "E1·情绪影子·不计分":
+        render_freshness_header(ROOT, "E1·情绪影子·不计分")
+        from desk.sentiment_history import render_sentiment_history_tab
+
+        render_sentiment_history_tab(ROOT)
 
     # 预测归因：后台 daily_update 仍写 lab/research/predictions/；UI 已搁置。
 
     # --- Tab: TV-style chart ---
     if page == "图表":
+        render_freshness_header(ROOT, "图表")
         render_chart_tab(ROOT)
+
+    if page == "套利观察":
+        render_freshness_header(ROOT, "套利观察")
+        from desk.arb_panel import render_arb_panel
+
+        render_arb_panel(ROOT)
 
     # --- Tab: options ---
     if page == "期权机会":
+        render_freshness_header(ROOT, "期权机会")
         st.subheader("保护期权纸面机会")
         st.caption(DISCLAIMER)
         opp = build_opportunities(
@@ -537,6 +618,10 @@ def main() -> None:
             st.caption(
                 f"asof={opp.attrs.get('asof')} · premium_atr_mult={prem_m} · strike_atr_mult={strike_m}"
             )
+
+        from desk.hv_panel import render_hv_panel
+
+        render_hv_panel(ROOT, prem_m)
 
         st.subheader("叠加后回测")
         hedge_curves = {}
@@ -570,14 +655,21 @@ def main() -> None:
 
         st.markdown(f"> **免责声明**：{DISCLAIMER}")
 
+    if page == "Gamma 结构":
+        render_freshness_header(ROOT, "Gamma 结构")
+        render_gamma_panel(ROOT)
+
     if page == "席位板块":
+        render_freshness_header(ROOT, "席位板块")
         render_seat_sector(ROOT)
 
     if page == "状态评分":
+        render_freshness_header(ROOT, "状态评分")
         st.caption(DETAIL_CAPTION)
         render_regime_tab(ROOT)
 
     if page == "决策":
+        render_freshness_header(ROOT, "决策")
         st.caption(DETAIL_CAPTION)
         render_decision_tab(ROOT)
 

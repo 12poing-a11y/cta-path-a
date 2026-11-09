@@ -260,7 +260,9 @@ def sync_desk(
                         "detail": (
                             "git fetch origin main && git checkout origin/main -- "
                             "l1_report*.json archive equity_state historical_backtest* "
-                            "paper_book_latest data/sentiment_mds data/desk_composite_latest"
+                            "paper_book_latest data/sentiment_mds data/desk_composite_latest "
+                            ".cache/member .cache/akshare/minute .cache/sina .cache/history "
+                            "lab/research/predictions"
                         ),
                     }
                 )
@@ -323,6 +325,11 @@ def sync_desk(
                     "paper_book_latest.json",
                     "data/sentiment_mds",
                     "data/desk_composite_latest.json",
+                    ".cache/member",
+                    ".cache/akshare/minute",
+                    ".cache/sina",
+                    ".cache/history",
+                    "lab/research/predictions",
                 ]
                 existing: list[str] = []
                 for rel in report_paths:

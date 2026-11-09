@@ -21,11 +21,35 @@ def sentiment_score_from_p3(p3: float | None) -> float | None:
     return round(max(0.0, min(100.0, (x + 1.0) / 2.0 * 100.0)), 1)
 
 
-def load_sentiment_snapshot(root: Path) -> dict[str, Any] | None:
-    latest = root / "data" / "sentiment_mds" / "latest.json"
-    if not latest.is_file():
+def _newest_shadow(root: Path) -> Path | None:
+    """Prefer dated shadow snaps; filename order = asof chronological."""
+    shadow_dir = root / "data" / "sentiment_mds" / "shadow"
+    if not shadow_dir.is_dir():
         return None
-    return load_json(latest)
+    files = sorted(shadow_dir.glob("sentiment_*.json"))
+    return files[-1] if files else None
+
+
+def load_sentiment_snapshot(root: Path) -> dict[str, Any] | None:
+    # 磊定 2026-11-02：优先最新影子；无影子再回退正式 latest（仍不计分）
+    shadow_path = _newest_shadow(root)
+    formal_latest = root / "data" / "sentiment_mds" / "latest.json"
+    path = shadow_path if shadow_path is not None else (
+        formal_latest if formal_latest.is_file() else None
+    )
+    if path is None:
+        return None
+    snap = load_json(path)
+    if snap is None:
+        return None
+    if shadow_path is not None and path == shadow_path:
+        snap = dict(snap)
+        snap.setdefault("shadow", True)
+        snap["_source_path"] = str(path.name)
+    else:
+        snap = dict(snap)
+        snap["_source_path"] = str(path.name)
+    return snap
 
 
 def stance_to_direction(stance: str | None) -> str:
@@ -255,7 +279,7 @@ def portfolio_total_verdict(
 
 
 # Bump when layout changes — visible in UI so stale Streamlit is obvious.
-SENTIMENT_UI_BUILD = "2026-10-30a · vol快照默认 / 刷新才重算"
+SENTIMENT_UI_BUILD = "2026-11-02a · 优先影子快照 / vol快照默认"
 
 
 def render_sentiment_panel(root: Path) -> None:
@@ -270,8 +294,14 @@ def render_sentiment_panel(root: Path) -> None:
     st.caption(f"界面版本：`{SENTIMENT_UI_BUILD}`（若看不到①②③分区，说明还在跑旧进程）")
     snap = load_sentiment_snapshot(root)
     if not snap:
-        st.info("尚无 sentiment 快照。跑完 daily_update.py 后会出现在 data/sentiment_mds/。")
+        st.info("尚无 sentiment 快照。跑完 daily_update.py 后会出现在 data/sentiment_mds/shadow/（或 latest）。")
         return
+    src = snap.get("_source_path") or "—"
+    if snap.get("shadow") or str(src).startswith("sentiment_"):
+        st.caption(f"数据源：影子·不计分 · {src}")
+        st.info("影子·不计分 / live=否（日信号同步只写 shadow，不改正式 latest.json）")
+    else:
+        st.caption(f"数据源：正式 latest（回退）· {src}")
 
     verdict = sentiment_verdict(snap)
     score = sentiment_score_from_p3(snap.get("portfolio_p3"))

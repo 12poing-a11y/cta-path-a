@@ -1,5 +1,9 @@
 mcp_config.json
 skill_env_config.json
+.env
+.env.*
+!.env.example
+.env.fuyao
 __pycache__/
 *.pyc
 .venv/

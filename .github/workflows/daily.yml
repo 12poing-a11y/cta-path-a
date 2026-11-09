@@ -6,17 +6,22 @@ on:
     - cron: "30 7 * * 1-5"
   workflow_dispatch:
 
+# Serialize scheduled and manually dispatched runs so query-then-upsert cannot race.
+concurrency:
+  group: cta-daily-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
 jobs:
   daily:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -34,6 +39,10 @@ jobs:
           IFIND_AUTH_TOKEN_BACKUP: ${{ secrets.IFIND_AUTH_TOKEN_BACKUP }}
           IFIND_ACTIVE_SLOT: primary
           IFIND_USER_AGENT: github-actions
+          # Optional gap-fill for exact-contract bars (Gamma / tech). Soft-skip if unset.
+          FUYAO_API_KEY: ${{ secrets.FUYAO_API_KEY }}
+          TQ_USER: ${{ secrets.TQ_USER }}
+          TQ_PASS: ${{ secrets.TQ_PASS }}
         run: python daily_update.py
 
       - name: Sync Notion
@@ -45,15 +54,18 @@ jobs:
           python notion_sync.py signals
           # signals already pushes trades; explicit trades keeps ledger if signals skipped
           python notion_sync.py trades
+          # Verify row count, duplicate rate, required data and contract metadata after sync.
+          python notion_sync.py verify
 
       - name: Upload artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cta-daily-${{ github.run_id }}
           path: |
             l1_report_risk15.json
             l1_report_quality_failed.json
+            notion_daily_quality.json
             data/sentiment_mds/
             archive/
             .cache/member/dce-*.json
@@ -62,17 +74,18 @@ jobs:
             .cache/member/czce-*.txt
             .cache/akshare/minute/*.json
             .cache/sina/
+            .cache/history/
           if-no-files-found: warn
 
       - name: Commit archive + full cache
         if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        continue-on-error: true
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
-          mkdir -p .cache/member .cache/akshare/minute data/sentiment_mds
+          mkdir -p .cache/member .cache/akshare/minute .cache/history data/sentiment_mds
           git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
-          git add data/sentiment_mds/*.json || true
+          git add data/sentiment_mds/*.json data/tech_score_latest.json || true
+          git add data/gamma_wall/ || true
           git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
           git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true
           git add -f .cache/akshare/minute/*.json || true
@@ -95,10 +108,27 @@ jobs:
           else:
               print("no sina continuous CODE0.json to stage")
           PY
+          # Persist merged CODE0 daily history (free source + iFinD gap-fill) for chart sync.
+          python - <<'PY'
+          import re
+          import subprocess
+          from pathlib import Path
+          pat = re.compile(r"^[A-Za-z]+0\.json$")
+          paths = [str(p) for p in Path(".cache/history").glob("*.json") if pat.match(p.name)]
+          if paths:
+              subprocess.check_call(["git", "add", "-f", *paths])
+              print(f"staged {len(paths)} merged chart history files")
+          else:
+              print("no merged chart history files to stage")
+          PY
           if git diff --cached --quiet; then
             echo "no changes"
             exit 0
           fi
           git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+CODE0+sentiment"
-          git pull --rebase --autostash origin "${{ github.ref_name }}" || true
+          # Fresh cache/report generation can leave other tracked files modified.
+          # Autostash those residual changes so they cannot block the rebase.
+          # Rebase generated outputs with priority on same-path conflicts.
+          git fetch origin "${{ github.ref_name }}"
+          git rebase --autostash -X theirs "origin/${{ github.ref_name }}"
           git push origin "HEAD:${{ github.ref_name }}"

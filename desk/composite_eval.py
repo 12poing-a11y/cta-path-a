@@ -402,14 +402,9 @@ def desk_composite_score(
     return out
 
 
-def render_desk_composite_banner(
-    root: Path,
-    *,
-    full_score: float | None = None,
-    write: bool = False,
-) -> dict[str, Any]:
+def render_desk_composite_banner(root: Path, *, full_score: float | None = None) -> dict[str, Any]:
     """Top banner for 状态评分 / 决策: desk composite + parts."""
-    pack = desk_composite_score(root, full_score=full_score, write=write)
+    pack = desk_composite_score(root, full_score=full_score, write=True)
     st.markdown("**桌面综合分**")
     st.caption(
         "全面统计分（含情绪MDS层）×0.55 + 账本盯市×0.20 + Path-A 日选强度×0.25。"

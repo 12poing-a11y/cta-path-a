@@ -1,52 +1,70 @@
 # -*- coding: utf-8 -*-
-"""Path-A weekly paper PnL from local daily reports / signal ledger."""
+"""Path-A weekly KPI from the same simulate engine as historical_backtest.
+
+Paper only. Headline equity/ret/dd come from historical_simulate (next_open + costs).
+paper_book equity is a side note only — never overlays ret_pct.
+"""
 from __future__ import annotations
 
 import json
-from datetime import datetime, timedelta
+import sys
+from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 TZ = ZoneInfo("Asia/Shanghai")
-def _cfg():
-    cfg = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
-    equity = float(cfg.get("equity", 200_000))
-    mult = {s["code"]: s["mult"] for s in cfg.get("symbols", [])}
-    return equity, mult
 
 
-EQUITY0, MULT = _cfg()
+def _paper_book_equity() -> float | None:
+    try:
+        from paper_book import load_paper_positions
+
+        pb = load_paper_positions(ROOT)
+        if pb.get("ok") and pb.get("equity") is not None:
+            return float(pb["equity"])
+    except Exception:
+        return None
+    return None
 
 
-def _load_reports():
-    """Prefer archived daily snapshots if present; else current report only."""
-    archive = ROOT / "archive"
-    reports = []
-    if archive.exists():
-        for p in sorted(archive.glob("l1_report_*.json")):
-            try:
-                reports.append(json.loads(p.read_text(encoding="utf-8")))
-            except Exception:
-                pass
-    cur = ROOT / "l1_report_risk15.json"
-    if cur.exists():
-        reports.append(json.loads(cur.read_text(encoding="utf-8")))
-    # dedupe by asof
-    by = {}
-    for r in reports:
-        asof = str(r.get("asof") or "")
-        if asof:
-            by[asof] = r
-    return [by[k] for k in sorted(by)]
-
-
-def _sign(direction: str) -> int:
-    if direction == "多":
-        return 1
-    if direction == "空":
-        return -1
-    return 0
+def _slice_curve_kpis(curve: list[dict], days: int) -> dict:
+    """Window KPIs from equity_curve tail (last `days` steps of equity change)."""
+    if not curve:
+        return {
+            "window_start": None,
+            "window_end": None,
+            "window_trade_days": 0,
+            "window_equity_start": None,
+            "window_equity_end": None,
+            "window_ret_pct": None,
+            "window_max_dd_pct": None,
+        }
+    n = max(1, int(days))
+    # Need n+1 points to cover n day-to-day moves; take last n+1 if available.
+    win = curve[-(n + 1) :] if len(curve) > n else list(curve)
+    eq0 = float(win[0]["equity"])
+    peak = eq0
+    max_dd = 0.0
+    for row in win:
+        eq = float(row["equity"])
+        peak = max(peak, eq)
+        if peak > 0:
+            max_dd = max(max_dd, (peak - eq) / peak * 100.0)
+    eq1 = float(win[-1]["equity"])
+    ret = (eq1 / eq0 - 1.0) * 100.0 if eq0 else 0.0
+    return {
+        "window_start": win[0].get("date"),
+        "window_end": win[-1].get("date"),
+        "window_trade_days": max(0, len(win) - 1),
+        "window_equity_start": round(eq0, 2),
+        "window_equity_end": round(eq1, 2),
+        "window_ret_pct": round(ret, 3),
+        "window_max_dd_pct": round(max_dd, 3),
+    }
 
 
 def run(days: int = 7) -> dict:
@@ -67,140 +85,126 @@ def run(days: int = 7) -> dict:
     except Exception as exc:  # noqa: BLE001
         print(f"[weekly] member backfill soft-fail: {exc}")
 
-    reps = _load_reports()
-    if len(reps) < 2:
+    import historical_backtest as hb
+
+    p = hb._load_cfg()
+    mode = p.get("entry_filter") or "seats"
+    if mode not in ("base", "p0", "carry", "oi", "member", "climax", "seats", "roll", "ctf"):
+        mode = "seats"
+
+    try:
+        sim = hb._simulate_cfg(p, mode)
+    except Exception as exc:  # noqa: BLE001
         now = datetime.now(TZ)
-        return {
-            "ok": True,
+        out = {
+            "ok": False,
             "insufficient": True,
+            "engine": "historical_simulate",
             "asof": now.strftime("%Y-%m-%d"),
-            "trade_days": len(reps),
-            "equity_end": EQUITY0,
+            "trade_days": 0,
+            "equity_end": float(p["equity0"]),
             "ret_pct": 0.0,
             "max_dd_pct": 0.0,
             "win_rate": None,
             "avg_held": 0.0,
             "violations": 0,
             "conclusion": "继续L1",
-            "summary": f"样本不足（仅{len(reps)}个交易日快照）。需≥2日收盘才能估算纸面PnL。",
-            "detail": json.dumps({"asofs": [r.get("asof") for r in reps]}, ensure_ascii=False),
+            "summary": f"周度模拟失败：{exc}",
+            "fill_price": p.get("fill_price"),
+            "live_trading": False,
+            "detail": json.dumps({"error": str(exc)}, ensure_ascii=False),
         }
+        (ROOT / "weekly_backtest_latest.json").write_text(
+            json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        print(json.dumps(out, ensure_ascii=False, indent=2))
+        return out
 
-    # use last N reports
-    reps = reps[-(days + 1) :]
-    equity = EQUITY0
-    peak = equity
-    max_dd = 0.0
-    day_rets = []
-    held_counts = []
-    violations = 0
+    if not sim.get("ok"):
+        now = datetime.now(TZ)
+        out = {
+            "ok": False,
+            "insufficient": True,
+            "engine": "historical_simulate",
+            "asof": now.strftime("%Y-%m-%d"),
+            "trade_days": 0,
+            "equity_end": float(p["equity0"]),
+            "ret_pct": 0.0,
+            "max_dd_pct": 0.0,
+            "win_rate": None,
+            "avg_held": 0.0,
+            "violations": 0,
+            "conclusion": "继续L1",
+            "summary": "周度模拟未成功（sim.ok=false）。",
+            "fill_price": sim.get("fill_price") or p.get("fill_price"),
+            "live_trading": False,
+            "detail": json.dumps({"sim": {k: sim.get(k) for k in ("errors", "summary")}}, ensure_ascii=False),
+        }
+        (ROOT / "weekly_backtest_latest.json").write_text(
+            json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        print(json.dumps(out, ensure_ascii=False, indent=2))
+        return out
 
-    # positions from day i applied to move i -> i+1
-    for i in range(len(reps) - 1):
-        a, b = reps[i], reps[i + 1]
-        sig_a = {s["code"]: s for s in a.get("signals", []) if "code" in s}
-        sig_b = {s["code"]: s for s in b.get("signals", []) if "code" in s}
-        pnl = 0.0
-        held = 0
-        for code, s in sig_a.items():
-            lots = int(s.get("lots_l1") or 0)
-            direction = s.get("direction") or "空仓"
-            # rule check
-            align = s.get("align")
-            if lots > 0 and align != "同向":
-                violations += 1
-            if lots <= 0:
-                continue
-            held += 1
-            if code not in sig_b or sig_b[code].get("close") is None or s.get("close") is None:
-                continue
-            px0, px1 = float(s["close"]), float(sig_b[code]["close"])
-            pnl += (px1 - px0) * MULT.get(code, 10) * lots * _sign(direction)
-        equity += pnl
-        day_rets.append(pnl)
-        held_counts.append(held)
-        peak = max(peak, equity)
-        dd = (peak - equity) / peak * 100 if peak else 0
-        max_dd = max(max_dd, dd)
+    curve = sim.get("equity_curve") or []
+    win = _slice_curve_kpis(curve, days)
+    paper_eq = _paper_book_equity()
 
-    wins = sum(1 for x in day_rets if x > 0)
-    win_rate = (wins / len(day_rets) * 100) if day_rets else None
-    ret_pct = (equity / EQUITY0 - 1) * 100
-    avg_held = sum(held_counts) / len(held_counts) if held_counts else 0
-
-    if max_dd >= 20:
-        conclusion = "暂停"
-    elif max_dd >= 12 or ret_pct <= -5:
-        conclusion = "减仓观察"
-    elif abs(ret_pct) < 0.5 and len(day_rets) >= 5:
-        conclusion = "参数微调"
-    else:
-        conclusion = "继续L1"
-
-    start = reps[0].get("asof")
-    end = reps[-1].get("asof")
-
-    # Align with paper_book / historical when present (same ledger family).
-    ledger_note = "weekly_from_l1_reports"
-    paper_eq = None
-    hist_eq = None
-    try:
-        from paper_book import load_paper_positions
-
-        pb = load_paper_positions(ROOT)
-        if pb.get("ok") and pb.get("equity") is not None:
-            paper_eq = float(pb["equity"])
-    except Exception:
-        paper_eq = None
-    try:
-        hist_path = ROOT / "historical_backtest_latest.json"
-        if hist_path.exists():
-            hist = json.loads(hist_path.read_text(encoding="utf-8"))
-            if hist.get("ok") and hist.get("equity_end") is not None:
-                hist_eq = float(hist["equity_end"])
-    except Exception:
-        hist_eq = None
-
-    equity_aligned = equity
-    ret_aligned = ret_pct
-    if paper_eq is not None:
-        equity_aligned = paper_eq
-        ret_aligned = (paper_eq / EQUITY0 - 1) * 100
-        ledger_note = "aligned_paper_book_equity"
-    elif hist_eq is not None:
-        equity_aligned = hist_eq
-        ret_aligned = (hist_eq / EQUITY0 - 1) * 100
-        ledger_note = "aligned_historical_equity_end"
+    # Headline KPIs = full simulate (same口径 as historical); window_* = recent slice.
+    equity_end = float(sim.get("equity_end") or p["equity0"])
+    ret_pct = float(sim.get("ret_pct") or 0.0)
+    max_dd = float(sim.get("max_dd_pct") or 0.0)
+    conclusion = sim.get("conclusion") or "继续L1"
 
     summary = (
-        f"{start}->{end} 纸面权益 {equity_aligned:.0f}（{ret_aligned:+.2f}%），"
-        f"MaxDD {max_dd:.2f}%，日胜率 {win_rate:.1f}%（样本{len(day_rets)}），"
-        f"均持仓品种 {avg_held:.1f}，规则违约 {violations}。"
-        f" 口径={ledger_note}；周滚动日PnL权益={equity:.0f}。"
+        f"{sim.get('start')}->{sim.get('end')} 模拟权益 {equity_end:.0f}（{ret_pct:+.2f}%），"
+        f"MaxDD {max_dd:.2f}%，成交{sim.get('closed_trades')}笔，"
+        f"fill={sim.get('fill_price')}，近{days}日窗 "
+        f"{win.get('window_ret_pct')}% / dd {win.get('window_max_dd_pct')}%。"
+        f" 引擎=historical_simulate；paper_book权益旁注={paper_eq}。"
     )
     out = {
         "ok": True,
         "insufficient": False,
-        "start": start,
-        "end": end,
-        "trade_days": len(day_rets),
-        "equity_end": round(equity_aligned, 2),
-        "equity_weekly_roll": round(equity, 2),
-        "ret_pct": round(ret_aligned, 3),
+        "engine": "historical_simulate",
+        "schema_version": sim.get("schema_version"),
+        "live_trading": False,
+        "start": sim.get("start"),
+        "end": sim.get("end"),
+        "trade_days": sim.get("trade_days"),
+        "equity_end": round(equity_end, 2),
+        "ret_pct": round(ret_pct, 3),
         "max_dd_pct": round(max_dd, 3),
-        "win_rate": round(win_rate, 2) if win_rate is not None else None,
-        "avg_held": round(avg_held, 2),
-        "violations": violations,
+        "gross_ret_pct": sim.get("gross_ret_pct"),
+        "gross_max_dd_pct": sim.get("gross_max_dd_pct"),
+        "cost_yuan": sim.get("cost_yuan"),
+        "win_rate": sim.get("win_rate"),
+        "trade_win_rate": sim.get("trade_win_rate"),
+        "avg_held": sim.get("avg_held"),
+        "closed_trades": sim.get("closed_trades"),
+        "violations": 0,
         "conclusion": conclusion,
         "summary": summary,
-        "ledger": ledger_note,
-        "paper_equity": paper_eq,
-        "historical_equity_end": hist_eq,
-        "live_trading": False,
-        "detail": json.dumps({"day_pnls": day_rets}, ensure_ascii=False),
+        "fill_price": sim.get("fill_price"),
+        "slippage_ticks": sim.get("slippage_ticks"),
+        "availability_lag": sim.get("availability_lag"),
+        "git_sha": sim.get("git_sha"),
+        "universe_sha256": sim.get("universe_sha256"),
+        "execution_rules_sha256": sim.get("execution_rules_sha256"),
+        "ledger": "historical_simulate",
+        "paper_book_equity": paper_eq,
+        **win,
+        "detail": json.dumps(
+            {
+                "mode": sim.get("mode"),
+                "exits": sim.get("exits"),
+                "window_days": days,
+            },
+            ensure_ascii=False,
+        ),
     }
     path = ROOT / "weekly_backtest_latest.json"
-    path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(out, ensure_ascii=False, indent=2))
     return out
 

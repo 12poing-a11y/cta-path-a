@@ -111,6 +111,15 @@ def test_no_lookahead_fill_next_open(monkeypatch):
     assert out["fill_price"] == "next_open" and out_c["fill_price"] == "close"
 
 
+def test_default_fill_price_is_next_open(monkeypatch):
+    out, _ = _run(monkeypatch, "base")
+    assert out["fill_price"] == "next_open"
+    assert out.get("schema_version") == hb.SCHEMA_VERSION
+    assert out.get("slippage_ticks") is not None
+    assert "universe_sha256" in out
+    assert "execution_rules_sha256" in out
+
+
 def test_next_open_fill_keeps_stop_distance():
     hist = [{"date": "d0", "open": 9, "close": 10}, {"date": "d1", "open": 12, "close": 11}]
     c = hb.next_open_fill({"entry": 10.0, "stop": 8.0, "target": 14.0}, hist, 0)

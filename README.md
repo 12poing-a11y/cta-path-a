@@ -23,8 +23,9 @@
 4. **参数**：`universe.json`（Equity ¥20万 / 风险% / `max_positions` / `max_gross_exposure_pct`）  
 5. **入场**：现行 `entry_filter=seats`（机构 → 外资 → 家人对面；席位只确认/拦住 20/60，不开反向）  
 6. **执行**：`execution_rules.json` + `universe.json → selection`（止损 **1.2×ATR** / 止盈 **1.5R**）
+7. **正式回测成交**：T 日收盘算信号，**T+1 开盘成交**（`fill_price=next_open`）；席位/升贴水可用性滞后 1 个交易日。周度 KPI 与历史回测共用同一 `simulate` 引擎（含止损止盈与成本）。
 
-对照窗（约 2025-11 → 2026-10）：base 净收益约 +6.7%、净回撤约 5.5%；seats 约 +6.2% / 5.0%。回测含每边 1 跳滑点与申万公示手续费（毛/净并列）。
+正式 KPI 以 `historical_backtest_latest.json`（`schema_version=cta-backtest-v11-next-open`）为准。当前 seats / next_open 样本（约 2025-12-17→2026-11-10）：净约 **+2.25%**、净回撤约 **5.57%**、成本约 5880（毛约 +5.19%）。旧对照窗数字（**收盘成交 close**）：base 净约 +6.7%/回撤约 5.5%，seats 约 +6.2%/5.0%；`universe.notes` 另记 close 口径约 +10.09%/4.86%——**仅历史对照，不作正式成绩**。成本：每边 1 跳滑点 + 申万公示手续费（毛/净并列）。
 
 旁路（不改 ATR、不切 `entry_filter`）：升贴水极端、多维波动观望、实验室 Gate / 软信号。详见下文与 `lab/README.md`。
 

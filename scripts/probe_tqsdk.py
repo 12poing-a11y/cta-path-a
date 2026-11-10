@@ -44,31 +44,32 @@ def main() -> int:
     if main_bars:
         print("  last :", json.dumps(main_bars[-1], ensure_ascii=False))
 
-    print("\n[期权链] CF2701 (OI + OPTION_IMPV) …")
-    snap = fetch_option_chain_snapshot("CF2701", root=ROOT, max_options=40)
-    rows = snap.get("rows") or []
-    with_oi = sum(1 for r in rows if (r.get("持仓量") or 0) > 0)
-    with_iv = sum(1 for r in rows if r.get("隐含波动率") is not None)
-    print(
-        f"  asof={snap.get('asof')}  und={snap.get('underlying_symbol')}  "
-        f"last={snap.get('underlying_last')}  rows={len(rows)}  "
-        f"OI>0={with_oi}  IV={with_iv}"
-    )
-    if snap.get("notes"):
-        print("  notes:", "; ".join(str(n) for n in snap["notes"][:8]))
-    for r in rows[:3]:
+    for und in ("CF2701", "P2701"):
+        print(f"\n[期权链] {und} (OI + OPTION_IMPV) …")
+        snap = fetch_option_chain_snapshot(und, root=ROOT, max_options=40)
+        rows = snap.get("rows") or []
+        with_oi = sum(1 for r in rows if (r.get("持仓量") or 0) > 0)
+        with_iv = sum(1 for r in rows if r.get("隐含波动率") is not None)
         print(
-            "  sample:",
-            r.get("合约代码"),
-            "side=",
-            r.get("期权类型"),
-            "K=",
-            r.get("行权价"),
-            "OI=",
-            r.get("持仓量"),
-            "IV%=",
-            r.get("隐含波动率"),
+            f"  asof={snap.get('asof')}  und={snap.get('underlying_symbol')}  "
+            f"last={snap.get('underlying_last')}  rows={len(rows)}  "
+            f"OI>0={with_oi}  IV={with_iv}"
         )
+        if snap.get("notes"):
+            print("  notes:", "; ".join(str(n) for n in snap["notes"][:8]))
+        for r in rows[:3]:
+            print(
+                "  sample:",
+                r.get("合约代码"),
+                "side=",
+                r.get("期权类型"),
+                "K=",
+                r.get("行权价"),
+                "OI=",
+                r.get("持仓量"),
+                "IV%=",
+                r.get("隐含波动率"),
+            )
     return 0 if bars else 1
 
 

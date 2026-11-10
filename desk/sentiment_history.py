@@ -14,6 +14,13 @@ import pandas as pd
 
 LABEL = "E1·影子·不计分"
 
+# stance → short Chinese description (display only)
+STANCE_DESC: dict[str, str] = {
+    "risk_on": "偏多/风险偏好（影子组合偏多头暴露）",
+    "risk_off": "偏空/避险（影子组合偏空头或防守）",
+    "neutral": "中性（多空接近或信号弱，不作方向押注）",
+}
+
 
 def load_shadow_snapshots(root: Path) -> list[dict]:
     d = Path(root) / "data" / "sentiment_mds" / "shadow"
@@ -139,13 +146,19 @@ def stance_summary(df: pd.DataFrame) -> pd.DataFrame:
     if d.empty:
         return pd.DataFrame()
     g = d.groupby("stance")["次日等权%"]
-    return pd.DataFrame(
+    out = pd.DataFrame(
         {
             "天数": g.size(),
             "次日等权均值%": g.mean().round(3),
             "次日上涨占比%": (g.apply(lambda x: (x > 0).mean()) * 100).round(1),
         }
     ).reset_index()
+    out.insert(1, "类别说明", out["stance"].map(lambda s: STANCE_DESC.get(str(s), "—")))
+    # Near→far risk preference order for reading
+    order = {"risk_on": 0, "neutral": 1, "risk_off": 2}
+    out["_ord"] = out["stance"].map(lambda s: order.get(str(s), 9))
+    out = out.sort_values("_ord", kind="stable").drop(columns="_ord").reset_index(drop=True)
+    return out
 
 
 def render_sentiment_history_tab(root: Path) -> None:
@@ -187,9 +200,16 @@ def render_sentiment_history_tab(root: Path) -> None:
     summ = stance_summary(df)
     if not summ.empty:
         st.markdown("**按 stance 分组的次日等权收益**（观察，不计分）")
+        st.caption(
+            " · ".join(f"{k}={v}" for k, v in STANCE_DESC.items())
+        )
         st.dataframe(summ, width="stretch", hide_index=True)
-    st.dataframe(df.drop(columns=["live"]), width="stretch", hide_index=True)
+    # Near (latest asof) on top → far (oldest) at bottom
+    hist = df.drop(columns=["live"]).copy()
+    hist = hist.sort_values("asof", ascending=False, kind="stable").reset_index(drop=True)
+    st.dataframe(hist, width="stretch", hide_index=True)
     st.caption(
+        "明细表按 asof 从近到远上下排列。"
         "次日收益 = .cache/history 优先，否则 sina 连续合约收盘对收盘；"
         "最后一天无次日数据为空。影子组合 = Σ signal·w_norm·次日收益 / Σ w_norm。"
     )

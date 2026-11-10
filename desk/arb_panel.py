@@ -53,6 +53,30 @@ DISCLAIMER = "研究观察，不构成交易建议；不下单、不自动开平
 _FLAG = "★ 潜在机会"
 
 
+def _code_name_map(root: Path) -> dict[str, str]:
+    uni = load_universe(root) or {}
+    out: dict[str, str] = {}
+    for s in uni.get("symbols") or []:
+        if isinstance(s, dict) and s.get("code"):
+            out[str(s["code"]).upper()] = str(s.get("name") or "").strip()
+    return out
+
+
+def zh_front_label(code: str, names: dict[str, str] | None = None, *, root: Path | None = None) -> str:
+    """Chinese name first, then contract/code — e.g. ``棉花 CF2701`` / ``甲醇 MA``."""
+    c = str(code or "").upper()
+    name = ""
+    if names and c in names:
+        name = names[c]
+    head = format_variety_label(c, "", root=root)  # contract period or bare code
+    if name:
+        # Avoid "棉花 棉花CF" if format somehow already embeds name
+        if name in head:
+            return head
+        return f"{name} {head}".strip()
+    return head or c
+
+
 def calendar_side_hint(z: float | None) -> str:
     """跨期方向提示（仅观察）。Z=升贴水(近-次近)相对60日的偏离。"""
     if z is None:
@@ -117,13 +141,15 @@ def top_opportunities(cal: pd.DataFrame, cross: pd.DataFrame, n: int = 5) -> pd.
 
 
 def calendar_arb_rows(root: Path, codes: list[str]) -> pd.DataFrame:
+    names = _code_name_map(root)
     rows = []
     for code in codes:
+        label = zh_front_label(code, names, root=root)
         gaps = load_carry_gaps(root, code)
         if not gaps or len(gaps) < 10:
             rows.append(
                 {
-                    "品种": format_variety_label(code, "", root=root),
+                    "品种": label,
                     "近次月升贴水%": None,
                     "Z(60)": None,
                     "观察": "缺近远月",
@@ -139,7 +165,7 @@ def calendar_arb_rows(root: Path, codes: list[str]) -> pd.DataFrame:
         src = str((gaps[-1] or {}).get("source") or "—")
         rows.append(
             {
-                "品种": format_variety_label(code, "", root=root),
+                "品种": label,
                 "近次月升贴水%": round(last * 100, 3),
                 "Z(60)": None if z is None else round(z, 2),
                 "观察": _signal_from_z(z),
@@ -166,6 +192,7 @@ def _close_map(bars: list[dict]) -> dict[str, float]:
 
 def cross_arb_rows(root: Path) -> pd.DataFrame:
     uni = load_universe(root) or {}
+    names = _code_name_map(root)
     have = {
         str(s.get("code") or "").upper()
         for s in (uni.get("symbols") or [])
@@ -176,6 +203,9 @@ def cross_arb_rows(root: Path) -> pd.DataFrame:
     for a, b, bucket in CROSS_PAIRS:
         if a not in have or b not in have:
             continue
+        la = zh_front_label(a, names, root=root)
+        lb = zh_front_label(b, names, root=root)
+        pair = f"{la}/{lb}"
         for code in (a, b):
             if code not in cache:
                 bars, _ = load_local_bars(root, code)
@@ -186,7 +216,7 @@ def cross_arb_rows(root: Path) -> pd.DataFrame:
             rows.append(
                 {
                     "板块": bucket,
-                    "配对": f"{a}/{b}",
+                    "配对": pair,
                     "价比": None,
                     "Z(60)": None,
                     "观察": "样本不足",
@@ -201,11 +231,11 @@ def cross_arb_rows(root: Path) -> pd.DataFrame:
         rows.append(
             {
                 "板块": bucket,
-                "配对": f"{a}/{b}",
+                "配对": pair,
                 "价比": round(last, 4),
                 "Z(60)": None if z is None else round(z, 2),
                 "观察": _signal_from_z(z),
-                "方向提示": cross_side_hint(z, a, b),
+                "方向提示": cross_side_hint(z, la, lb),
                 "样本日": len(ratio),
             }
         )

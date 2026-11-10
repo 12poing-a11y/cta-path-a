@@ -17,6 +17,9 @@
   "equity": 200000,
   "equity_compound": true,
   "entry_filter": "seats",
+  "fill_price": "next_open",
+  "availability_lag_days": 1,
+  "fill_note": "正式回测：T日收盘计算信号与止损止盈距离，T+1开盘成交（next_open）；席位/升贴水滞后1个交易日。持仓后用日线高低检验 ATR 止损/止盈（同根先止损）。盘中更严控需分钟线影子，不替代 next_open 入场口径。纸面 book 入场时点另议，未在本文件强制。",
   "carry_bypass": {
     "enabled": true,
     "extreme_gap_pct": 1.0,
@@ -40,7 +43,7 @@
     "disagree_frac": 0.2,
     "note": "席位之后：lab IS合成截面分位与方向严重逆向→决策观望；缺面板放行。不改 entry_filter。"
   },
-  "summary_zh": "止损 1.2×ATR14；止盈 1.5R（止盈距离 1.8×ATR）；动量门槛 |r20|≥3%、|r60|≥5%；席位确认后升贴水旁路(|gap|≥1%禁开逆向)+多维波动旁路(短/长≥1.6决策观望)+lab边逆向观望；Top3+板块1；名义≤50%；组合ATR风险≤8%。纸面不下单。",
+  "summary_zh": "止损 1.2×ATR14；止盈 1.5R（止盈距离 1.8×ATR）；动量门槛 |r20|≥3%、|r60|≥5%；正式回测 T+1 开盘成交；席位确认后升贴水旁路(|gap|≥1%禁开逆向)+多维波动旁路(短/长≥1.6决策观望)+lab边逆向观望；Top3+板块1；名义≤50%；组合ATR风险≤8%。纸面不下单。",
   "archived_params": [
     {
       "label": "旧主方案 1×ATR / 2R",

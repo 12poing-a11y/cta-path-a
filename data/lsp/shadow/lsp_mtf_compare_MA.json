@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "symbol": "MA",
+  "live_trading": false,
+  "n_daily": 2878,
+  "n_60m": 1023,
+  "variants": [
+    {
+      "variant": "daily_lsp",
+      "label": "纯日线 LSP",
+      "summary": {
+        "n": 233,
+        "win_rate": 0.3391,
+        "avg_r": -0.1524,
+        "sum_r": -35.5,
+        "stops": 154,
+        "targets": 79
+      },
+      "n_signals": 371,
+      "path": "data\\lsp\\shadow\\lsp_shadow_MA_daily_2878bars.json"
+    },
+    {
+      "variant": "m60_lsp",
+      "label": "纯60m LSP",
+      "summary": {
+        "n": 64,
+        "win_rate": 0.3281,
+        "avg_r": -0.1797,
+        "sum_r": -11.5,
+        "stops": 43,
+        "targets": 21
+      },
+      "n_signals": 99,
+      "path": "data\\lsp\\shadow\\lsp_shadow_MA_60_1023bars.json"
+    },
+    {
+      "variant": "daily_sma20_x_60m",
+      "label": "日线SMA20过滤 × 60m入场",
+      "summary": {
+        "n": 25,
+        "win_rate": 0.28,
+        "avg_r": -0.3,
+        "sum_r": -7.5,
+        "stops": 18,
+        "targets": 7
+      },
+      "n_signals": 41,
+      "n_raw_signals": 99,
+      "n_rejected": 58
+    },
+    {
+      "variant": "path_a_align_x_60m",
+      "label": "日线20/60同向过滤 × 60m入场",
+      "summary": {
+        "n": 17,
+        "win_rate": 0.2353,
+        "avg_r": -0.4118,
+        "sum_r": -7.0,
+        "stops": 13,
+        "targets": 4
+      },
+      "n_signals": 28,
+      "n_raw_signals": 99,
+      "n_rejected": 71
+    }
+  ],
+  "mtf_pack_meta": {
+    "n_raw": 99,
+    "n_kept": 41,
+    "n_rejected": 58
+  },
+  "disclaimer": "纸面对照：日线定方向、60m找扫荡收回入场；零成本控制；不改 paper_book / entry_filter。"
+}

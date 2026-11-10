@@ -14,14 +14,19 @@ from desk.strategies.registry import REPO_ROOT, get_strategy
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from option_compare import CODE_TO_SINA, compare_protective  # noqa: E402
+from option_compare import (  # noqa: E402
+    CODE_TO_SINA,
+    EXCHANGE_LISTED_NO_SINA,
+    compare_protective,
+)
 from option_hedge import option_premium, option_strike  # noqa: E402
 
 
 DISCLAIMER = (
-    "合成 ATR 权利金对照新浪商品期权近月链（有上市品种才比）；"
-    "无链或拉失败时对照列为空。仅研究观察，不构成交易建议。"
+    "合成 ATR 权利金对照上市期权：优先新浪商品期权页，失败/无映射则回退天勤 TqSdk 链；"
+    "都没有时对照列为空。仅研究观察，不构成交易建议。"
     "候选仓与决策页/Notion 同源：paper_book_latest（回退 final_positions）。"
+    "棕榈油P：新浪无「棕榈油期权」页，走天勤 DCE.p2701 期权链。"
 )
 
 
@@ -154,24 +159,37 @@ def build_opportunities(
         if name_risk <= 0 and risk_budget > 0:
             name_risk = risk_budget
         prem_risk_ratio = (premium / name_risk) if name_risk > 0 else None
+        code_u = str(s.get("code") or "").upper()
         cmp = compare_protective(
-            str(s.get("code") or ""),
+            code_u,
             direction=direction,
             strike=strike,
             lots=lots,
             mult=mult,
             synth_premium=premium,
+            root=root,
         )
+        note = cmp.get("note") or ""
+        listed_sym = cmp.get("option_symbol")
+        if not listed_sym:
+            if cmp.get("source") == "tqsdk":
+                listed_sym = ""
+            elif code_u in EXCHANGE_LISTED_NO_SINA:
+                listed_sym = "交易所已上市·待天勤"
+                note = note or EXCHANGE_LISTED_NO_SINA[code_u]
+            elif code_u not in CODE_TO_SINA:
+                listed_sym = "—"
+            else:
+                listed_sym = ""
         rows.append(
             {
-                "品种": s.get("code"),
+                "品种": code_u,
                 "名称": s.get("name"),
                 "期货方向": direction,
                 "建议期权": opt_type,
                 "估算行权价": round(strike, 4) if strike is not None else None,
                 "估算权利金(元)": round(premium, 2),
-                "实盘期权": cmp.get("option_symbol")
-                or ("—" if str(s.get("code") or "").upper() not in CODE_TO_SINA else ""),
+                "实盘期权": listed_sym,
                 "实盘行权价": round(cmp["listed_strike"], 4)
                 if cmp.get("listed_strike") is not None
                 else None,
@@ -181,7 +199,7 @@ def build_opportunities(
                 "合成/实盘": round(cmp["synth_over_listed"], 2)
                 if cmp.get("synth_over_listed") is not None
                 else None,
-                "对照说明": cmp.get("note") or "",
+                "对照说明": note,
                 "ATR": round(atr, 4),
                 "手数": lots,
                 "收盘": entry,

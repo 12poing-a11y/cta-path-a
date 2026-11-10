@@ -16,7 +16,15 @@ def test_side_hints():
     assert calendar_side_hint(-2.0) == "近便宜·观察买近卖远"
     assert calendar_side_hint(0.3) == "—"
     assert cross_side_hint(1.8, "RB", "I") == "A/B偏高·观察卖RB买I"
-    assert cross_side_hint(-1.8, "RB", "I") == "A/B偏低·观察买RB卖I"
+    assert cross_side_hint(-1.8, "螺纹钢 RB", "铁矿石 I") == "A/B偏低·观察买螺纹钢 RB卖铁矿石 I"
+
+
+def test_zh_front_label():
+    from desk.arb_panel import zh_front_label
+
+    assert zh_front_label("CF", {"CF": "棉花"}) == "棉花 CF"
+    assert zh_front_label("MA", {"MA": "甲醇"}) == "甲醇 MA"
+    assert zh_front_label("XX", {}) == "XX"
 
 
 def test_rank_and_top():

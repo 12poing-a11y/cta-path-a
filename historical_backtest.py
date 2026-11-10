@@ -2,9 +2,11 @@
 """Path-A ~1y paper backtest. Sina/Tencent daily bars, iFinD if those are short."""
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import re
+import subprocess
 import sys
 from collections import Counter
 from datetime import date, timedelta
@@ -20,6 +22,7 @@ from path_a_filters import (  # noqa: E402
     carry_gap_pct,
     entry_block,
     fill_cost,
+    load_slippage_ticks,
     seat_decision,
 )
 from public_curve import curve_coverage, load_curves  # noqa: E402
@@ -39,16 +42,38 @@ from wyckoff_pullback import apply_stop_target  # noqa: E402
 
 LOOKBACK_DAYS = 260
 WARMUP = 60
-BATCH_LABEL = "2026一年-pathA-optHedge"
+BATCH_LABEL = "2026一年-pathA-nextOpen"
 CUTOFF_DAYS = 420
-
-
+SCHEMA_VERSION = "cta-backtest-v11-next-open"
+DEFAULT_FILL_PRICE = "next_open"
 
 # --- P0 lookahead guards -----------------------------------------------------
 # Seat rankings / basis are published after the T close (seats ~16:00-17:00),
-# so a T-close entry may only use data dated <= previous trading day.
+# so signal on T close fills at T+1 open; lag=1 keeps seats/basis causal.
 DEFAULT_AVAILABILITY_LAG = 1
 FILL_PRICES = ("close", "next_open")
+
+
+def _git_sha(root: Path | None = None) -> str | None:
+    root = root or ROOT
+    try:
+        out = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"],
+            cwd=str(root),
+            stderr=subprocess.DEVNULL,
+            text=True,
+            timeout=5,
+        )
+        return out.strip() or None
+    except Exception:
+        return None
+
+
+def _file_sha256(path: Path) -> str | None:
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except Exception:
+        return None
 
 
 def lag_by_trade_dates(book: dict | None, dates: list[str], lag: int) -> dict:
@@ -152,6 +177,12 @@ def write_input_snapshot(out: dict, argv: list[str], root: Path | None = None) -
         "end": out.get("end"),
         "availability_lag": out.get("availability_lag"),
         "fill_price": out.get("fill_price"),
+        "slippage_ticks": out.get("slippage_ticks"),
+        "git_sha": out.get("git_sha") or _git_sha(root),
+        "universe_sha256": out.get("universe_sha256") or _file_sha256(root / "universe.json"),
+        "execution_rules_sha256": out.get("execution_rules_sha256")
+        or _file_sha256(root / "execution_rules.json"),
+        "schema_version": out.get("schema_version") or SCHEMA_VERSION,
         "entry_filter": out.get("entry_filter"),
         "sources": _LAST_PACK.get("sources"),
         "errors": _LAST_PACK.get("errors"),
@@ -224,8 +255,17 @@ def _load_cfg():
         "entry_filter": cfg.get("entry_filter") or "base",
         "carry_bypass": carry_bypass_cfg(cfg.get("carry_bypass")),
         "vol_bypass": vol_bypass_cfg(cfg.get("vol_bypass")),
-        "availability_lag": _cli_int("--lag", int((cfg.get("backtest") or {}).get("availability_lag_days", DEFAULT_AVAILABILITY_LAG))),
-        "fill_price": _cli_str("--fill", str((cfg.get("backtest") or {}).get("fill_price", "close"))),
+        "availability_lag": _cli_int(
+            "--lag",
+            int((cfg.get("backtest") or {}).get("availability_lag_days", DEFAULT_AVAILABILITY_LAG)),
+        ),
+        "fill_price": _cli_str(
+            "--fill",
+            str((cfg.get("backtest") or {}).get("fill_price", DEFAULT_FILL_PRICE)),
+        ),
+        "slippage_ticks": float(
+            (cfg.get("slippage_ticks") if cfg.get("slippage_ticks") is not None else load_slippage_ticks(ROOT))
+        ),
     }
 
 
@@ -768,10 +808,14 @@ def simulate(
     carry_bypass=None,
     vol_bypass=None,
     availability_lag=DEFAULT_AVAILABILITY_LAG,
-    fill_price="close",
+    fill_price=DEFAULT_FILL_PRICE,
+    slippage_ticks=None,
 ):
     if fill_price not in FILL_PRICES:
         raise ValueError(f"fill_price must be one of {FILL_PRICES}")
+    if slippage_ticks is None:
+        slippage_ticks = load_slippage_ticks(ROOT)
+    slippage_ticks = float(slippage_ticks)
     bypass = carry_bypass_cfg(carry_bypass)
     vbypass = vol_bypass_cfg(vol_bypass)
     if pack is None:
@@ -884,7 +928,7 @@ def simulate(
                     exit_px = px if reason else bar["close"]
                     price_pnl += (exit_px - prev_close) * mult * p["lots"] * sign
             if reason:
-                day_cost += fill_cost(series[code]["meta"], px, p["lots"])
+                day_cost += fill_cost(series[code]["meta"], px, p["lots"], slippage_ticks=slippage_ticks)
                 opt_pnl = 0.0
                 if option_hedge and p.get("opt_strike") is not None:
                     opt_pnl = option_payoff(
@@ -1106,7 +1150,9 @@ def simulate(
                     day_cost += prem
                     premium_total += prem
                 pos[c["code"]] = row
-                day_cost += fill_cost(series[c["code"]]["meta"], c["entry"], c["lots"])
+                day_cost += fill_cost(
+                    series[c["code"]]["meta"], c["entry"], c["lots"], slippage_ticks=slippage_ticks
+                )
                 open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
 
             # Idle slots earn short-end roll: long backwardation, short contango.
@@ -1216,7 +1262,9 @@ def simulate(
                     }
                     if c.get("mark_from") is not None:
                         pos[c["code"]]["mark_from"] = c["mark_from"]
-                    day_cost += fill_cost(series[c["code"]]["meta"], c["entry"], c["lots"])
+                    day_cost += fill_cost(
+                    series[c["code"]]["meta"], c["entry"], c["lots"], slippage_ticks=slippage_ticks
+                )
                     open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
 
         pnl = price_pnl - day_cost
@@ -1277,9 +1325,9 @@ def simulate(
     hedge_net = hedge_payoff_total - premium_total
     return {
         "ok": True,
-        "schema_version": "cta-backtest-v10-pathA-optHedge",
+        "schema_version": SCHEMA_VERSION,
         "batch": BATCH_LABEL,
-        "strategy": "path_a_atr_rr2_opt_hedge" if option_hedge else "path_a_atr_rr2",
+        "strategy": "path_a_atr_rr1_5_opt_hedge" if option_hedge else "path_a_atr_rr1_5",
         "mode": mode,
         "data_source": "sina+tencent primary, iFinD fallback",
         "curve_coverage": curve_coverage(curves),
@@ -1318,6 +1366,10 @@ def simulate(
         "carry_bypass": bypass,
         "availability_lag": int(availability_lag),
         "fill_price": fill_price,
+        "slippage_ticks": slippage_ticks,
+        "git_sha": _git_sha(ROOT),
+        "universe_sha256": _file_sha256(ROOT / "universe.json"),
+        "execution_rules_sha256": _file_sha256(ROOT / "execution_rules.json"),
         "carry_bypass_counts": bypass_counts,
         "vol_bypass": vbypass,
         "vol_bypass_counts": vol_bypass_counts,
@@ -1347,7 +1399,8 @@ def simulate(
                 "r20/r60同向且|r20|≥min_r20、|r60|≥min_r60（ctf模式改用composite_trend）；"
                 "经entry_filter/席位等过滤；升贴水极端旁路（carry_bypass）可禁开或减仓；"
                 "再经组合帽（TopN、名义暴露、组合风险、板块上限）；"
-                "止损=stop_atr_mult×ATR，止盈=reward_rr×止损距。"
+                "止损=stop_atr_mult×ATR，止盈=reward_rr×止损距；"
+                f"正式成交={fill_price}（next_open=T日信号、T+1开盘入场并平移止损止盈）。"
             ),
             "close": (
                 "同根K线先止损(stop)后止盈(target)；"
@@ -1420,7 +1473,8 @@ def _simulate_cfg(
         carry_bypass=p.get("carry_bypass"),
         vol_bypass=p.get("vol_bypass"),
         availability_lag=int(p.get("availability_lag", DEFAULT_AVAILABILITY_LAG)),
-        fill_price=str(p.get("fill_price") or "close"),
+        fill_price=str(p.get("fill_price") or DEFAULT_FILL_PRICE),
+        slippage_ticks=p.get("slippage_ticks"),
     )
 
 
@@ -1740,20 +1794,29 @@ def main():
         out["input_snapshot"] = write_input_snapshot(out, sys.argv[1:])
     except Exception as exc:  # noqa: BLE001
         print(f"[bt] input snapshot soft-fail: {exc}")
-    path = ROOT / "historical_backtest_latest.json"
+    # Observe / option-hedge runs must not overwrite the formal Path-A artifact.
+    if "--observe" in sys.argv or bool(out.get("option_hedge")):
+        art = ROOT / "_art_opt"
+        art.mkdir(parents=True, exist_ok=True)
+        path = art / "historical_backtest_latest.json"
+        chart = art / "historical_equity_curve.svg"
+        title_prefix = "PathA+OptHedge" if out.get("option_hedge") else "PathA-observe"
+    else:
+        path = ROOT / "historical_backtest_latest.json"
+        chart = ROOT / "historical_equity_curve.svg"
+        title_prefix = "PathA"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     arch = ROOT / "archive"
     arch.mkdir(exist_ok=True)
-    if out.get("end"):
+    if out.get("end") and path.parent == ROOT:
         (arch / f"backtest_{out['end'].replace('-', '')}.json").write_text(
             path.read_text(encoding="utf-8"), encoding="utf-8"
         )
-    chart = ROOT / "historical_equity_curve.svg"
     if out.get("ok") and out.get("equity_curve"):
         _write_equity_svg(
             out["equity_curve"],
             chart,
-            f"PathA ATR RR2 {out.get('start')}→{out.get('end')}",
+            f"{title_prefix} {out.get('start')}→{out.get('end')}",
         )
         print(f"[bt] chart {chart}")
     print(out.get("summary") or out.get("error"))

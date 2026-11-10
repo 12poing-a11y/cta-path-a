@@ -31,6 +31,7 @@ from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backte
 from desk.gamma_panel import render_gamma_panel  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
 from desk.final_signal import DETAIL_CAPTION, render_final_signal_tab  # noqa: E402
+from desk.ablation_panel import render_ablation_panel  # noqa: E402
 from desk.proxy_positions import render_proxy_positions  # noqa: E402
 from desk.regime_board import render_regime_tab  # noqa: E402
 from desk.scoreboard import scoreboard_rows  # noqa: E402
@@ -415,6 +416,11 @@ def main() -> None:
         except Exception as exc:  # soft-fail: never break overview
             st.caption(f"本地代理模拟持仓暂不可用：{exc}")
 
+        try:
+            render_ablation_panel(st, ROOT)
+        except Exception as exc:  # soft-fail: never break overview
+            st.caption(f"策略消融与资金组合面板暂不可用：{exc}")
+
         if curves:
             aligned = align_curves(
                 curves,
@@ -673,13 +679,21 @@ def main() -> None:
                     st.rerun()
                 else:
                     st.error(f"模拟仓刷新失败：{paper_r.get('error')}")
-            if bcol2.button("重跑历史回测（耗时）", key="opt_refresh_bt"):
+            if bcol2.button("重跑保护期权回测（耗时）", key="opt_refresh_bt"):
                 import subprocess
 
-                with st.spinner("python historical_backtest.py（最长约 15 分钟）…"):
+                with st.spinner(
+                    "python historical_backtest.py --observe --fill next_open → _art_opt/ …"
+                ):
                     try:
                         proc = subprocess.run(
-                            [sys.executable, "historical_backtest.py"],
+                            [
+                                sys.executable,
+                                "historical_backtest.py",
+                                "--observe",
+                                "--fill",
+                                "next_open",
+                            ],
                             cwd=str(ROOT),
                             capture_output=True,
                             text=True,
@@ -691,15 +705,16 @@ def main() -> None:
                         ok_bt, tail = False, str(exc)
                 if ok_bt:
                     clear_streamlit_caches()
-                    st.success("历史回测已重跑，刷新曲线。")
+                    st.success("保护期权回测已写入 `_art_opt/`，曲线已刷新。")
                     st.rerun()
                 else:
-                    st.error("历史回测失败或超时，曲线未更新。")
+                    st.error("保护期权回测失败或超时，曲线未更新。")
                     st.code(tail or "(无输出)")
             st.caption(
-                "命令行：`python paper_book.py`、`python historical_backtest.py`。"
-                "保护期权曲线优先读 `_art_opt/historical_backtest_latest.json`；"
-                "缺则回退主回测且 option_hedge=true。"
+                "命令行：`python paper_book.py`；"
+                "保护期权：`python historical_backtest.py --observe --fill next_open`"
+                "（写入 `_art_opt/`，不覆盖正式 Path-A）。"
+                "正式 Path-A：`python historical_backtest.py --fill next_open`。"
             )
         if hedge_curves:
             aligned_h = align_curves(hedge_curves, normalize=True)

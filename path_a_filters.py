@@ -2,12 +2,36 @@
 """P0 measurement gates and P1 entry filters. Exits stay on ATR and trend flip."""
 from __future__ import annotations
 
+import json
+from pathlib import Path
 
-def fill_cost(meta: dict, price, lots, slippage_ticks: float = 1.0) -> float:
-    """One fill: 1 tick of slippage plus the posted per-side fee."""
+
+def load_slippage_ticks(root: Path | None = None) -> float:
+    """SSOT: universe.slippage_ticks, else research_cost.path_a_fill.slippage_ticks, else 1.0."""
+    root = root or Path(__file__).resolve().parent
+    try:
+        uni = json.loads((root / "universe.json").read_text(encoding="utf-8"))
+        if uni.get("slippage_ticks") is not None:
+            return float(uni["slippage_ticks"])
+    except Exception:
+        pass
+    try:
+        cost = json.loads((root / "research_cost.json").read_text(encoding="utf-8"))
+        ticks = (cost.get("path_a_fill") or {}).get("slippage_ticks")
+        if ticks is not None:
+            return float(ticks)
+    except Exception:
+        pass
+    return 1.0
+
+
+def fill_cost(meta: dict, price, lots, slippage_ticks: float | None = None) -> float:
+    """One fill: slippage_ticks × tick × mult × lots plus the posted per-side fee."""
     lots = abs(int(lots or 0))
     if lots <= 0 or price is None:
         return 0.0
+    if slippage_ticks is None:
+        slippage_ticks = load_slippage_ticks()
     mult = float(meta.get("mult") or 0)
     tick = float(meta.get("tick") or 0)
     slip = abs(float(slippage_ticks)) * tick * mult * lots

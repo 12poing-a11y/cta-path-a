@@ -1,0 +1,13 @@
+{
+  "id": "proxy_observe_f_short_mom",
+  "name": "观察袖套·F+短动量",
+  "description": "观察袖套·F+短动量：观察袖套（非主仓）：多空 CWFT 消融格「仅期现F+短端动量」冻结版 ablate={C,LONG_MOM}；样本内网格冒尖，须影子跟踪，建议≤权益10%，不加 Path-A 成本/席位/ATR。不构成交易建议。",
+  "curve_file": "external/strategies/proxy_observe_f_short_mom.json",
+  "tags": [
+    "proxy",
+    "observe_sleeve",
+    "commodity",
+    "f_short_mom",
+    "paper_only"
+  ]
+}

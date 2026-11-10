@@ -26,7 +26,7 @@ jobs:
           IFIND_AUTH_TOKEN_BACKUP: ${{ secrets.IFIND_AUTH_TOKEN_BACKUP }}
           IFIND_ACTIVE_SLOT: primary
           IFIND_USER_AGENT: github-actions
-        run: python historical_backtest.py
+        run: python historical_backtest.py --fill next_open
       - name: Sync Notion (legacy weekly row + annual DBs)
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}

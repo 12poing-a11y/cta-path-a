@@ -1,0 +1,28 @@
+{
+  "track": "lsp_shadow",
+  "live_trading": false,
+  "description": "LSP v1 pierce-and-reclaim of causal volume-profile value area; daily + 60m first.",
+  "params": {
+    "lookback": 48,
+    "bins": 24,
+    "value_area_frac": 0.7,
+    "pierce_buffer_frac": 0.0,
+    "max_signals": 500
+  },
+  "risk": {
+    "shadow_reward_rr": 1.5
+  },
+  "costs": {
+    "slippage_bps": 0,
+    "commission_bps_per_side": 0
+  },
+  "execution": {
+    "one_position_at_a_time": true
+  },
+  "timeframes": ["daily", "60"],
+  "notes": [
+    "Profile at bar i uses only bars [i-lookback, i).",
+    "No 1m/5m MSS or Delta/OI filters in v1.",
+    "Does not touch paper_book / entry_filter / Path-A."
+  ]
+}

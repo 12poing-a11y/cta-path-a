@@ -4,882 +4,906 @@
   "proxy_of": "cwft",
   "family": "commodity_proxy",
   "track_source": "local proxy_cta.py (Path-A universe)",
-  "start": "2025-12-16",
-  "end": "2026-11-09",
+  "start": "2025-12-17",
+  "end": "2026-11-10",
   "equity_start": 200000.0,
-  "equity_end": 230742.52,
-  "ret_pct": 15.371,
-  "ret_ann_pct": 19.192,
+  "equity_end": 228796.45,
+  "ret_pct": 14.398,
+  "ret_ann_pct": 17.712,
   "max_dd_pct": 17.958,
-  "sharpe": 0.883,
-  "calmar": 1.069,
+  "sharpe": 0.824,
+  "calmar": 0.986,
   "equity_curve": [
     {
-      "date": "2025-12-16",
+      "date": "2025-12-17",
       "equity": 200000.0
     },
     {
-      "date": "2025-12-17",
-      "equity": 199122.0
-    },
-    {
       "date": "2025-12-18",
-      "equity": 200391.94
+      "equity": 201275.54
     },
     {
       "date": "2025-12-19",
-      "equity": 204062.13
+      "equity": 204961.91
     },
     {
       "date": "2025-12-22",
-      "equity": 204503.85
+      "equity": 205405.58
     },
     {
       "date": "2025-12-23",
-      "equity": 205323.0
+      "equity": 206228.34
     },
     {
       "date": "2025-12-24",
-      "equity": 204422.21
+      "equity": 205323.58
     },
     {
       "date": "2025-12-25",
-      "equity": 204796.1
+      "equity": 205699.12
     },
     {
       "date": "2025-12-26",
-      "equity": 204670.74
+      "equity": 205573.2
     },
     {
       "date": "2025-12-29",
-      "equity": 203104.86
+      "equity": 204000.42
     },
     {
       "date": "2025-12-30",
-      "equity": 201000.64
+      "equity": 201886.93
     },
     {
       "date": "2025-12-31",
-      "equity": 204088.47
+      "equity": 204988.37
     },
     {
       "date": "2026-01-05",
-      "equity": 205085.12
+      "equity": 205989.42
     },
     {
       "date": "2026-01-06",
-      "equity": 202601.9
+      "equity": 203495.24
     },
     {
       "date": "2026-01-07",
-      "equity": 202727.27
+      "equity": 203621.17
     },
     {
       "date": "2026-01-08",
-      "equity": 204653.21
+      "equity": 205555.6
     },
     {
       "date": "2026-01-09",
-      "equity": 209273.8
+      "equity": 210196.56
     },
     {
       "date": "2026-01-12",
-      "equity": 210480.01
+      "equity": 211408.1
     },
     {
       "date": "2026-01-13",
-      "equity": 213480.59
+      "equity": 214421.9
     },
     {
       "date": "2026-01-14",
-      "equity": 215512.31
+      "equity": 216462.58
     },
     {
       "date": "2026-01-15",
-      "equity": 215071.2
+      "equity": 216019.53
     },
     {
       "date": "2026-01-16",
-      "equity": 216819.54
+      "equity": 217775.58
     },
     {
       "date": "2026-01-19",
-      "equity": 218495.78
+      "equity": 219459.2
     },
     {
       "date": "2026-01-20",
-      "equity": 219425.28
+      "equity": 220392.81
     },
     {
       "date": "2026-01-21",
-      "equity": 218162.51
+      "equity": 219124.46
     },
     {
       "date": "2026-01-22",
-      "equity": 218172.02
+      "equity": 219134.02
     },
     {
       "date": "2026-01-23",
-      "equity": 220979.84
+      "equity": 221954.22
     },
     {
       "date": "2026-01-26",
-      "equity": 223719.64
+      "equity": 224706.1
     },
     {
       "date": "2026-01-27",
-      "equity": 224157.46
+      "equity": 225145.85
     },
     {
       "date": "2026-01-28",
-      "equity": 225789.39
+      "equity": 226784.97
     },
     {
       "date": "2026-01-29",
-      "equity": 221190.08
+      "equity": 222165.39
     },
     {
       "date": "2026-01-30",
-      "equity": 216948.73
+      "equity": 217905.33
     },
     {
       "date": "2026-02-02",
-      "equity": 212312.25
+      "equity": 213248.41
     },
     {
       "date": "2026-02-03",
-      "equity": 212899.23
+      "equity": 213837.98
     },
     {
       "date": "2026-02-04",
-      "equity": 209340.1
+      "equity": 210263.15
     },
     {
       "date": "2026-02-05",
-      "equity": 207497.28
+      "equity": 208412.21
     },
     {
       "date": "2026-02-06",
-      "equity": 207539.0
+      "equity": 208454.11
     },
     {
       "date": "2026-02-09",
-      "equity": 208183.05
+      "equity": 209101.0
     },
     {
       "date": "2026-02-10",
-      "equity": 209551.04
+      "equity": 210475.03
     },
     {
       "date": "2026-02-11",
-      "equity": 209881.46
+      "equity": 210806.9
     },
     {
       "date": "2026-02-12",
-      "equity": 209566.42
+      "equity": 210490.47
     },
     {
       "date": "2026-02-13",
-      "equity": 213638.07
+      "equity": 214580.07
     },
     {
       "date": "2026-02-24",
-      "equity": 214169.74
+      "equity": 215114.09
     },
     {
       "date": "2026-02-25",
-      "equity": 214550.92
+      "equity": 215496.96
     },
     {
       "date": "2026-02-26",
-      "equity": 214774.7
+      "equity": 215721.72
     },
     {
       "date": "2026-02-27",
-      "equity": 216170.84
+      "equity": 217124.01
     },
     {
       "date": "2026-03-02",
-      "equity": 214811.94
+      "equity": 215759.12
     },
     {
       "date": "2026-03-03",
-      "equity": 215857.19
+      "equity": 216808.98
     },
     {
       "date": "2026-03-04",
-      "equity": 213507.89
+      "equity": 214449.32
     },
     {
       "date": "2026-03-05",
-      "equity": 215632.63
+      "equity": 216583.43
     },
     {
       "date": "2026-03-06",
-      "equity": 222922.53
+      "equity": 223905.48
     },
     {
       "date": "2026-03-09",
-      "equity": 219811.71
+      "equity": 220780.93
     },
     {
       "date": "2026-03-10",
-      "equity": 221471.79
+      "equity": 222448.34
     },
     {
       "date": "2026-03-11",
-      "equity": 226174.81
+      "equity": 227172.1
     },
     {
       "date": "2026-03-12",
-      "equity": 226515.13
+      "equity": 227513.92
     },
     {
       "date": "2026-03-13",
-      "equity": 229768.44
+      "equity": 230781.57
     },
     {
       "date": "2026-03-16",
-      "equity": 228841.47
+      "equity": 229850.52
     },
     {
       "date": "2026-03-17",
-      "equity": 230978.42
+      "equity": 231996.89
     },
     {
       "date": "2026-03-18",
-      "equity": 239834.92
+      "equity": 240892.44
     },
     {
       "date": "2026-03-19",
-      "equity": 237075.08
+      "equity": 238120.43
     },
     {
       "date": "2026-03-20",
-      "equity": 238931.2
+      "equity": 239984.73
     },
     {
       "date": "2026-03-23",
-      "equity": 232356.97
+      "equity": 233381.52
     },
     {
       "date": "2026-03-24",
-      "equity": 229501.02
+      "equity": 230512.97
     },
     {
       "date": "2026-03-25",
-      "equity": 233597.29
+      "equity": 234627.31
     },
     {
       "date": "2026-03-26",
-      "equity": 236226.53
+      "equity": 237268.14
     },
     {
       "date": "2026-03-27",
-      "equity": 237815.98
+      "equity": 238864.6
     },
     {
       "date": "2026-03-30",
-      "equity": 238470.83
+      "equity": 239522.33
     },
     {
       "date": "2026-03-31",
-      "equity": 232660.59
+      "equity": 233686.47
     },
     {
       "date": "2026-04-01",
-      "equity": 238656.57
+      "equity": 239708.89
     },
     {
       "date": "2026-04-02",
-      "equity": 244052.57
+      "equity": 245128.69
     },
     {
       "date": "2026-04-03",
-      "equity": 249669.0
+      "equity": 250769.88
     },
     {
       "date": "2026-04-07",
-      "equity": 235188.94
+      "equity": 236225.98
     },
     {
       "date": "2026-04-08",
-      "equity": 237110.19
+      "equity": 238155.69
     },
     {
       "date": "2026-04-09",
-      "equity": 235399.08
+      "equity": 236437.04
     },
     {
       "date": "2026-04-10",
-      "equity": 237682.63
+      "equity": 238730.66
     },
     {
       "date": "2026-04-13",
-      "equity": 229144.6
+      "equity": 230154.98
     },
     {
       "date": "2026-04-14",
-      "equity": 228608.09
+      "equity": 229616.11
     },
     {
       "date": "2026-04-15",
-      "equity": 220106.24
+      "equity": 221076.77
     },
     {
       "date": "2026-04-16",
-      "equity": 220553.11
+      "equity": 221525.61
     },
     {
       "date": "2026-04-17",
-      "equity": 217218.4
+      "equity": 218176.2
     },
     {
       "date": "2026-04-20",
-      "equity": 217464.98
+      "equity": 218423.86
     },
     {
       "date": "2026-04-21",
-      "equity": 216887.39
+      "equity": 217843.72
     },
     {
       "date": "2026-04-22",
-      "equity": 218263.73
+      "equity": 219226.13
     },
     {
       "date": "2026-04-23",
-      "equity": 219144.12
+      "equity": 220110.4
     },
     {
       "date": "2026-04-24",
-      "equity": 219929.88
+      "equity": 220899.63
     },
     {
       "date": "2026-04-27",
-      "equity": 223479.6
+      "equity": 224465.01
     },
     {
       "date": "2026-04-28",
-      "equity": 224200.7
+      "equity": 225189.28
     },
     {
       "date": "2026-04-29",
-      "equity": 223944.64
+      "equity": 224932.09
     },
     {
       "date": "2026-04-30",
-      "equity": 222549.49
+      "equity": 223530.79
     },
     {
       "date": "2026-05-06",
-      "equity": 218015.16
+      "equity": 218976.47
     },
     {
       "date": "2026-05-07",
-      "equity": 219496.51
+      "equity": 220464.35
     },
     {
       "date": "2026-05-08",
-      "equity": 221167.8
+      "equity": 222143.01
     },
     {
       "date": "2026-05-11",
-      "equity": 223750.98
+      "equity": 224737.58
     },
     {
       "date": "2026-05-12",
-      "equity": 221445.55
+      "equity": 222421.98
     },
     {
       "date": "2026-05-13",
-      "equity": 219776.48
+      "equity": 220745.55
     },
     {
       "date": "2026-05-14",
-      "equity": 222397.25
+      "equity": 223377.88
     },
     {
       "date": "2026-05-15",
-      "equity": 224348.77
+      "equity": 225338.0
     },
     {
       "date": "2026-05-18",
-      "equity": 224089.89
+      "equity": 225077.99
     },
     {
       "date": "2026-05-19",
-      "equity": 225299.45
+      "equity": 226292.88
     },
     {
       "date": "2026-05-20",
-      "equity": 224364.69
+      "equity": 225353.99
     },
     {
       "date": "2026-05-21",
-      "equity": 224315.36
+      "equity": 225304.44
     },
     {
       "date": "2026-05-22",
-      "equity": 218319.37
+      "equity": 219282.02
     },
     {
       "date": "2026-05-25",
-      "equity": 220075.97
+      "equity": 221046.37
     },
     {
       "date": "2026-05-26",
-      "equity": 219962.01
+      "equity": 220931.9
     },
     {
       "date": "2026-05-27",
-      "equity": 220370.69
+      "equity": 221342.39
     },
     {
       "date": "2026-05-28",
-      "equity": 218513.11
+      "equity": 219476.61
     },
     {
       "date": "2026-05-29",
-      "equity": 218712.69
+      "equity": 219677.08
     },
     {
       "date": "2026-06-01",
-      "equity": 220461.13
+      "equity": 221433.22
     },
     {
       "date": "2026-06-02",
-      "equity": 220430.75
+      "equity": 221402.71
     },
     {
       "date": "2026-06-03",
-      "equity": 218318.14
+      "equity": 219280.78
     },
     {
       "date": "2026-06-04",
-      "equity": 219313.76
+      "equity": 220280.8
     },
     {
       "date": "2026-06-05",
-      "equity": 222305.41
+      "equity": 223285.64
     },
     {
       "date": "2026-06-08",
-      "equity": 222002.54
+      "equity": 222981.43
     },
     {
       "date": "2026-06-09",
-      "equity": 221418.37
+      "equity": 222394.68
     },
     {
       "date": "2026-06-10",
-      "equity": 222869.07
+      "equity": 223851.78
     },
     {
       "date": "2026-06-11",
-      "equity": 222706.69
+      "equity": 223688.68
     },
     {
       "date": "2026-06-12",
-      "equity": 216099.77
+      "equity": 217052.63
     },
     {
       "date": "2026-06-15",
-      "equity": 214261.09
+      "equity": 215205.84
     },
     {
       "date": "2026-06-16",
-      "equity": 212915.57
+      "equity": 213854.39
     },
     {
       "date": "2026-06-17",
-      "equity": 212860.09
+      "equity": 213798.67
     },
     {
       "date": "2026-06-18",
-      "equity": 210828.67
+      "equity": 211758.29
     },
     {
       "date": "2026-06-22",
-      "equity": 210177.73
+      "equity": 211104.48
     },
     {
       "date": "2026-06-23",
-      "equity": 209768.07
+      "equity": 210693.02
     },
     {
       "date": "2026-06-24",
-      "equity": 207119.27
+      "equity": 208032.53
     },
     {
       "date": "2026-06-25",
-      "equity": 207493.84
+      "equity": 208408.75
     },
     {
       "date": "2026-06-26",
-      "equity": 208323.09
+      "equity": 209241.67
     },
     {
       "date": "2026-06-29",
-      "equity": 208223.46
+      "equity": 209141.59
     },
     {
       "date": "2026-06-30",
-      "equity": 207661.28
+      "equity": 208576.93
     },
     {
       "date": "2026-07-01",
-      "equity": 204833.44
+      "equity": 205736.63
     },
     {
       "date": "2026-07-02",
-      "equity": 206598.09
+      "equity": 207509.06
     },
     {
       "date": "2026-07-03",
-      "equity": 205945.42
+      "equity": 206853.51
     },
     {
       "date": "2026-07-06",
-      "equity": 208601.56
+      "equity": 209521.35
     },
     {
       "date": "2026-07-07",
-      "equity": 209003.49
+      "equity": 209925.06
     },
     {
       "date": "2026-07-08",
-      "equity": 208859.35
+      "equity": 209780.29
     },
     {
       "date": "2026-07-09",
-      "equity": 207902.31
+      "equity": 208819.03
     },
     {
       "date": "2026-07-10",
-      "equity": 211015.9
+      "equity": 211946.34
     },
     {
       "date": "2026-07-13",
-      "equity": 216329.06
+      "equity": 217282.94
     },
     {
       "date": "2026-07-14",
-      "equity": 217155.95
+      "equity": 218113.47
     },
     {
       "date": "2026-07-15",
-      "equity": 217848.34
+      "equity": 218808.91
     },
     {
       "date": "2026-07-16",
-      "equity": 219440.43
+      "equity": 220408.02
     },
     {
       "date": "2026-07-17",
-      "equity": 223086.6
+      "equity": 224070.27
     },
     {
       "date": "2026-07-20",
-      "equity": 220973.79
+      "equity": 221948.14
     },
     {
       "date": "2026-07-21",
-      "equity": 221571.81
+      "equity": 222548.8
     },
     {
       "date": "2026-07-22",
-      "equity": 224415.24
+      "equity": 225404.77
     },
     {
       "date": "2026-07-23",
-      "equity": 225254.99
+      "equity": 226248.22
     },
     {
       "date": "2026-07-24",
-      "equity": 223493.86
+      "equity": 224479.32
     },
     {
       "date": "2026-07-27",
-      "equity": 224254.54
+      "equity": 225243.36
     },
     {
       "date": "2026-07-28",
-      "equity": 227617.4
+      "equity": 228621.05
     },
     {
       "date": "2026-07-29",
-      "equity": 231071.63
+      "equity": 232090.5
     },
     {
       "date": "2026-07-30",
-      "equity": 229244.62
+      "equity": 230255.45
     },
     {
       "date": "2026-07-31",
-      "equity": 230515.37
+      "equity": 231531.79
     },
     {
       "date": "2026-08-03",
-      "equity": 228580.55
+      "equity": 229588.44
     },
     {
       "date": "2026-08-04",
-      "equity": 224216.02
+      "equity": 225204.67
     },
     {
       "date": "2026-08-05",
-      "equity": 220662.95
+      "equity": 221635.94
     },
     {
       "date": "2026-08-06",
-      "equity": 223342.15
+      "equity": 224326.95
     },
     {
       "date": "2026-08-07",
-      "equity": 222071.79
+      "equity": 223050.98
     },
     {
       "date": "2026-08-10",
-      "equity": 221582.91
+      "equity": 222559.95
     },
     {
       "date": "2026-08-11",
-      "equity": 223013.59
+      "equity": 223996.93
     },
     {
       "date": "2026-08-12",
-      "equity": 224155.01
+      "equity": 225143.39
     },
     {
       "date": "2026-08-13",
-      "equity": 223783.27
+      "equity": 224770.01
     },
     {
       "date": "2026-08-14",
-      "equity": 222460.98
+      "equity": 223441.89
     },
     {
       "date": "2026-08-17",
-      "equity": 218914.61
+      "equity": 219879.88
     },
     {
       "date": "2026-08-18",
-      "equity": 221509.6
+      "equity": 222486.31
     },
     {
       "date": "2026-08-19",
-      "equity": 219914.19
+      "equity": 220883.87
     },
     {
       "date": "2026-08-20",
-      "equity": 219400.73
+      "equity": 220368.15
     },
     {
       "date": "2026-08-21",
-      "equity": 218870.16
+      "equity": 219835.24
     },
     {
       "date": "2026-08-24",
-      "equity": 219278.16
+      "equity": 220245.04
     },
     {
       "date": "2026-08-25",
-      "equity": 216936.35
+      "equity": 217892.9
     },
     {
       "date": "2026-08-26",
-      "equity": 216336.28
+      "equity": 217290.19
     },
     {
       "date": "2026-08-27",
-      "equity": 214505.68
+      "equity": 215451.52
     },
     {
       "date": "2026-08-28",
-      "equity": 218786.91
+      "equity": 219751.62
     },
     {
       "date": "2026-08-31",
-      "equity": 219196.52
+      "equity": 220163.03
     },
     {
       "date": "2026-09-01",
-      "equity": 224162.55
+      "equity": 225150.96
     },
     {
       "date": "2026-09-02",
-      "equity": 222498.77
+      "equity": 223479.85
     },
     {
       "date": "2026-09-03",
-      "equity": 222424.85
+      "equity": 223405.6
     },
     {
       "date": "2026-09-04",
-      "equity": 222142.2
+      "equity": 223121.7
     },
     {
       "date": "2026-09-07",
-      "equity": 225427.05
+      "equity": 226421.04
     },
     {
       "date": "2026-09-08",
-      "equity": 226456.3
+      "equity": 227454.82
     },
     {
       "date": "2026-09-09",
-      "equity": 228218.4
+      "equity": 229224.7
     },
     {
       "date": "2026-09-10",
-      "equity": 222597.33
+      "equity": 223578.84
     },
     {
       "date": "2026-09-11",
-      "equity": 227571.9
+      "equity": 228575.35
     },
     {
       "date": "2026-09-14",
-      "equity": 231870.26
+      "equity": 232892.66
     },
     {
       "date": "2026-09-15",
-      "equity": 232275.72
+      "equity": 233299.91
     },
     {
       "date": "2026-09-16",
-      "equity": 230891.75
+      "equity": 231909.83
     },
     {
       "date": "2026-09-17",
-      "equity": 229348.06
+      "equity": 230359.34
     },
     {
       "date": "2026-09-18",
-      "equity": 228180.29
+      "equity": 229186.42
     },
     {
       "date": "2026-09-21",
-      "equity": 222448.76
+      "equity": 223429.62
     },
     {
       "date": "2026-09-22",
-      "equity": 218826.06
+      "equity": 219790.95
     },
     {
       "date": "2026-09-23",
-      "equity": 225860.07
+      "equity": 226855.97
     },
     {
       "date": "2026-09-24",
-      "equity": 225536.41
+      "equity": 226530.88
     },
     {
       "date": "2026-09-28",
-      "equity": 227272.42
+      "equity": 228274.54
     },
     {
       "date": "2026-09-29",
-      "equity": 225748.27
+      "equity": 226743.67
     },
     {
       "date": "2026-09-30",
-      "equity": 241514.48
+      "equity": 242579.41
     },
     {
       "date": "2026-10-08",
-      "equity": 238088.98
+      "equity": 239138.8
     },
     {
       "date": "2026-10-09",
-      "equity": 232840.65
+      "equity": 233867.33
     },
     {
       "date": "2026-10-12",
-      "equity": 235084.42
+      "equity": 236120.99
     },
     {
       "date": "2026-10-13",
-      "equity": 232551.1
+      "equity": 233576.5
     },
     {
       "date": "2026-10-14",
-      "equity": 233711.25
+      "equity": 234741.76
     },
     {
       "date": "2026-10-15",
-      "equity": 232203.44
+      "equity": 233227.31
     },
     {
       "date": "2026-10-16",
-      "equity": 231810.61
+      "equity": 232832.75
     },
     {
       "date": "2026-10-19",
-      "equity": 233305.93
+      "equity": 234334.66
     },
     {
       "date": "2026-10-20",
-      "equity": 230850.8
+      "equity": 231868.71
     },
     {
       "date": "2026-10-21",
-      "equity": 232859.77
+      "equity": 233886.53
     },
     {
       "date": "2026-10-22",
-      "equity": 234487.72
+      "equity": 235521.66
     },
     {
       "date": "2026-10-23",
-      "equity": 239265.38
+      "equity": 238966.93
+    },
+    {
+      "date": "2026-10-24",
+      "equity": 238966.93
+    },
+    {
+      "date": "2026-10-25",
+      "equity": 241074.01
     },
     {
       "date": "2026-10-26",
-      "equity": 241734.54
+      "equity": 243561.82
     },
     {
       "date": "2026-10-27",
-      "equity": 241797.91
+      "equity": 243625.68
     },
     {
       "date": "2026-10-28",
-      "equity": 241988.61
+      "equity": 243817.82
     },
     {
       "date": "2026-10-29",
-      "equity": 242492.36
+      "equity": 244325.38
     },
     {
       "date": "2026-10-30",
-      "equity": 241362.66
+      "equity": 243870.17
+    },
+    {
+      "date": "2026-10-31",
+      "equity": 243870.17
+    },
+    {
+      "date": "2026-11-01",
+      "equity": 244310.83
     },
     {
       "date": "2026-11-02",
-      "equity": 239573.78
+      "equity": 242500.09
     },
     {
       "date": "2026-11-03",
-      "equity": 236553.46
+      "equity": 239442.88
     },
     {
       "date": "2026-11-04",
-      "equity": 229521.13
+      "equity": 232324.66
     },
     {
       "date": "2026-11-05",
-      "equity": 232924.36
+      "equity": 235769.46
     },
     {
       "date": "2026-11-06",
-      "equity": 230742.52
+      "equity": 235564.75
+    },
+    {
+      "date": "2026-11-07",
+      "equity": 235564.75
+    },
+    {
+      "date": "2026-11-08",
+      "equity": 230983.92
     },
     {
       "date": "2026-11-09",
-      "equity": 230742.52
+      "equity": 228796.45
+    },
+    {
+      "date": "2026-11-10",
+      "equity": 228796.45
     }
   ],
-  "positions_asof": "2026-11-09",
+  "positions_asof": "2026-11-10",
   "positions_kind": "research_simulated_not_live",
   "positions_disclaimer": "研究模拟持仓·非实盘·与 Path-A paper_book 分离；由本地代理等权多空规则在最后一根日线收盘后推出（下一交易日目标仓），不构成交易建议。",
   "final_positions": [
@@ -888,565 +912,367 @@
       "name": "甲醇",
       "direction": "long",
       "weight": 0.166667,
-      "notional_yuan": 38457.09,
-      "lots_equiv": 1.204,
-      "entry_date": "2026-10-22",
-      "entry_price": 3191.0,
-      "last_price": 3194.0,
-      "unrealized_pct": 0.094,
-      "score_z": 2.087
+      "notional_yuan": 38132.74,
+      "lots_equiv": 1.245,
+      "entry_date": "2026-11-09",
+      "entry_price": 3194.0,
+      "last_price": 3064.0,
+      "unrealized_pct": -4.07,
+      "score_z": 2.489
     },
     {
       "code": "PP",
       "name": "聚丙烯",
       "direction": "long",
       "weight": 0.166667,
-      "notional_yuan": 38457.09,
-      "lots_equiv": 0.823,
+      "notional_yuan": 38132.74,
+      "lots_equiv": 0.856,
       "entry_date": "2026-10-15",
       "entry_price": 9387.0,
-      "last_price": 9341.0,
-      "unrealized_pct": -0.49,
-      "score_z": 1.775
+      "last_price": 8912.0,
+      "unrealized_pct": -5.06,
+      "score_z": 1.561
     },
     {
-      "code": "JD",
-      "name": "鸡蛋",
+      "code": "FU",
+      "name": "燃油",
       "direction": "long",
       "weight": 0.166667,
-      "notional_yuan": 38457.09,
-      "lots_equiv": 1.118,
-      "entry_date": "2026-11-09",
-      "entry_price": 3441.0,
-      "last_price": 3441.0,
+      "notional_yuan": 38132.74,
+      "lots_equiv": 0.957,
+      "entry_date": "2026-11-10",
+      "entry_price": 3985.0,
+      "last_price": 3985.0,
       "unrealized_pct": 0.0,
-      "score_z": 1.087
+      "score_z": 1.403
     },
     {
-      "code": "SP",
-      "name": "纸浆",
+      "code": "EB",
+      "name": "苯乙烯",
       "direction": "short",
       "weight": -0.166667,
-      "notional_yuan": 38457.09,
-      "lots_equiv": 0.831,
-      "entry_date": "2026-11-09",
-      "entry_price": 4630.0,
-      "last_price": 4630.0,
+      "notional_yuan": 38132.74,
+      "lots_equiv": 0.881,
+      "entry_date": "2026-11-10",
+      "entry_price": 8654.0,
+      "last_price": 8654.0,
       "unrealized_pct": 0.0,
-      "score_z": -1.033
-    },
-    {
-      "code": "FG",
-      "name": "玻璃",
-      "direction": "short",
-      "weight": -0.166667,
-      "notional_yuan": 38457.09,
-      "lots_equiv": 2.165,
-      "entry_date": "2025-12-17",
-      "entry_price": 1038.0,
-      "last_price": 888.0,
-      "unrealized_pct": 14.451,
-      "score_z": -1.273
+      "score_z": -1.409
     },
     {
       "code": "P",
       "name": "棕榈油",
       "direction": "short",
       "weight": -0.166667,
-      "notional_yuan": 38457.09,
-      "lots_equiv": 0.448,
-      "entry_date": "2026-09-23",
-      "entry_price": 9718.0,
-      "last_price": 8583.0,
-      "unrealized_pct": 11.679,
-      "score_z": -1.701
+      "notional_yuan": 38132.74,
+      "lots_equiv": 0.437,
+      "entry_date": "2026-11-09",
+      "entry_price": 8583.0,
+      "last_price": 8729.0,
+      "unrealized_pct": -1.701,
+      "score_z": -1.702
+    },
+    {
+      "code": "AG",
+      "name": "沪银",
+      "direction": "short",
+      "weight": -0.166667,
+      "notional_yuan": 38132.74,
+      "lots_equiv": 0.2,
+      "entry_date": "2026-11-10",
+      "entry_price": 12723.0,
+      "last_price": 12723.0,
+      "unrealized_pct": 0.0,
+      "score_z": -2.794
     }
   ],
   "trade_log": [
     {
-      "date": "2026-08-10",
-      "code": "BU",
-      "action": "close",
-      "direction": "long",
-      "price": 4020.0,
-      "entry_date": "2026-08-04",
-      "pnl_pct": -2.852
-    },
-    {
-      "date": "2026-08-10",
-      "code": "JD",
-      "action": "open",
-      "direction": "long",
-      "price": 3904.0,
-      "entry_date": "2026-08-10",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-08-13",
-      "code": "JD",
-      "action": "close",
-      "direction": "long",
-      "price": 3909.0,
-      "entry_date": "2026-08-10",
-      "pnl_pct": 0.128
-    },
-    {
-      "date": "2026-08-13",
-      "code": "L",
-      "action": "open",
-      "direction": "long",
-      "price": 7879.0,
-      "entry_date": "2026-08-13",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-08-14",
-      "code": "L",
-      "action": "close",
-      "direction": "long",
-      "price": 7932.0,
-      "entry_date": "2026-08-13",
-      "pnl_pct": 0.673
-    },
-    {
-      "date": "2026-08-14",
-      "code": "JD",
-      "action": "open",
-      "direction": "long",
-      "price": 3957.0,
-      "entry_date": "2026-08-14",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-08-17",
-      "code": "JD",
-      "action": "close",
-      "direction": "long",
-      "price": 3929.0,
-      "entry_date": "2026-08-14",
-      "pnl_pct": -0.708
-    },
-    {
-      "date": "2026-08-17",
-      "code": "L",
-      "action": "open",
-      "direction": "long",
-      "price": 8091.0,
-      "entry_date": "2026-08-17",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-08-18",
-      "code": "L",
-      "action": "close",
-      "direction": "long",
-      "price": 7789.0,
-      "entry_date": "2026-08-17",
-      "pnl_pct": -3.733
-    },
-    {
-      "date": "2026-08-18",
-      "code": "FU",
-      "action": "open",
-      "direction": "long",
-      "price": 3749.0,
-      "entry_date": "2026-08-18",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-08-19",
-      "code": "PP",
-      "action": "close",
-      "direction": "long",
-      "price": 8010.0,
-      "entry_date": "2026-07-30",
-      "pnl_pct": -4.232
-    },
-    {
-      "date": "2026-08-19",
-      "code": "JD",
-      "action": "open",
-      "direction": "long",
-      "price": 3813.0,
-      "entry_date": "2026-08-19",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-08-27",
-      "code": "JD",
-      "action": "close",
-      "direction": "long",
-      "price": 3770.0,
-      "entry_date": "2026-08-19",
-      "pnl_pct": -1.128
-    },
-    {
-      "date": "2026-08-27",
-      "code": "PP",
-      "action": "open",
-      "direction": "long",
-      "price": 7851.0,
-      "entry_date": "2026-08-27",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-08-28",
-      "code": "RU",
-      "action": "close",
-      "direction": "short",
-      "price": 18940.0,
-      "entry_date": "2026-07-29",
-      "pnl_pct": -15.699
-    },
-    {
-      "date": "2026-08-28",
-      "code": "P",
-      "action": "open",
-      "direction": "short",
-      "price": 10171.0,
-      "entry_date": "2026-08-28",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-08-31",
-      "code": "PP",
-      "action": "close",
-      "direction": "long",
-      "price": 8366.0,
-      "entry_date": "2026-08-27",
-      "pnl_pct": 6.56
-    },
-    {
-      "date": "2026-08-31",
-      "code": "P",
-      "action": "close",
-      "direction": "short",
-      "price": 10283.0,
-      "entry_date": "2026-08-28",
-      "pnl_pct": -1.101
-    },
-    {
-      "date": "2026-08-31",
-      "code": "MA",
-      "action": "open",
-      "direction": "long",
-      "price": 2983.0,
-      "entry_date": "2026-08-31",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-08-31",
-      "code": "SR",
-      "action": "open",
-      "direction": "short",
-      "price": 5403.0,
-      "entry_date": "2026-08-31",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-01",
-      "code": "FU",
-      "action": "close",
-      "direction": "long",
-      "price": 3788.0,
-      "entry_date": "2026-08-18",
-      "pnl_pct": 1.04
-    },
-    {
-      "date": "2026-09-01",
-      "code": "PP",
-      "action": "open",
-      "direction": "long",
-      "price": 8360.0,
-      "entry_date": "2026-09-01",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-03",
-      "code": "SR",
-      "action": "close",
-      "direction": "short",
-      "price": 5433.0,
-      "entry_date": "2026-08-31",
-      "pnl_pct": -0.555
-    },
-    {
-      "date": "2026-09-03",
-      "code": "P",
-      "action": "open",
-      "direction": "short",
-      "price": 10217.0,
-      "entry_date": "2026-09-03",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-09",
-      "code": "P",
-      "action": "close",
-      "direction": "short",
-      "price": 10307.0,
-      "entry_date": "2026-09-03",
-      "pnl_pct": -0.881
-    },
-    {
-      "date": "2026-09-09",
-      "code": "SR",
-      "action": "open",
-      "direction": "short",
-      "price": 5485.0,
-      "entry_date": "2026-09-09",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-11",
-      "code": "PP",
-      "action": "close",
-      "direction": "long",
-      "price": 8882.0,
-      "entry_date": "2026-09-01",
-      "pnl_pct": 6.244
-    },
-    {
-      "date": "2026-09-11",
-      "code": "FU",
-      "action": "open",
-      "direction": "long",
-      "price": 4289.0,
-      "entry_date": "2026-09-11",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-14",
-      "code": "MA",
-      "action": "close",
-      "direction": "long",
-      "price": 3016.0,
-      "entry_date": "2026-08-31",
-      "pnl_pct": 1.106
-    },
-    {
-      "date": "2026-09-14",
-      "code": "SR",
-      "action": "close",
-      "direction": "short",
-      "price": 5387.0,
-      "entry_date": "2026-09-09",
-      "pnl_pct": 1.787
-    },
-    {
-      "date": "2026-09-14",
-      "code": "TA",
-      "action": "open",
-      "direction": "long",
-      "price": 6352.0,
-      "entry_date": "2026-09-14",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-14",
-      "code": "P",
-      "action": "open",
-      "direction": "short",
-      "price": 10025.0,
-      "entry_date": "2026-09-14",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-15",
-      "code": "TA",
-      "action": "close",
-      "direction": "long",
-      "price": 6460.0,
-      "entry_date": "2026-09-14",
-      "pnl_pct": 1.7
-    },
-    {
-      "date": "2026-09-15",
-      "code": "P",
-      "action": "close",
-      "direction": "short",
-      "price": 9992.0,
-      "entry_date": "2026-09-14",
-      "pnl_pct": 0.329
-    },
-    {
-      "date": "2026-09-15",
-      "code": "MA",
-      "action": "open",
-      "direction": "long",
-      "price": 3016.0,
-      "entry_date": "2026-09-15",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-15",
-      "code": "V",
-      "action": "open",
-      "direction": "short",
-      "price": 4847.0,
-      "entry_date": "2026-09-15",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-18",
-      "code": "MA",
-      "action": "close",
-      "direction": "long",
-      "price": 2952.0,
-      "entry_date": "2026-09-15",
-      "pnl_pct": -2.122
-    },
-    {
-      "date": "2026-09-18",
-      "code": "BU",
-      "action": "open",
-      "direction": "long",
-      "price": 5291.0,
-      "entry_date": "2026-09-18",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-23",
+      "date": "2026-10-25",
       "code": "V",
       "action": "close",
-      "direction": "short",
-      "price": 4770.0,
-      "entry_date": "2026-09-15",
-      "pnl_pct": 1.589
+      "direction": "long",
+      "price": 5115.0,
+      "entry_date": "2026-10-24",
+      "pnl_pct": 0.0
     },
     {
-      "date": "2026-09-23",
-      "code": "P",
+      "date": "2026-10-25",
+      "code": "L",
       "action": "open",
-      "direction": "short",
-      "price": 9718.0,
-      "entry_date": "2026-09-23",
+      "direction": "long",
+      "price": 8841.0,
+      "entry_date": "2026-10-25",
       "pnl_pct": null
     },
     {
-      "date": "2026-09-28",
-      "code": "EG",
-      "action": "close",
-      "direction": "long",
-      "price": 5280.0,
-      "entry_date": "2026-07-15",
-      "pnl_pct": 13.548
-    },
-    {
-      "date": "2026-09-28",
-      "code": "MA",
-      "action": "open",
-      "direction": "long",
-      "price": 2941.0,
-      "entry_date": "2026-09-28",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-09-30",
-      "code": "MA",
-      "action": "close",
-      "direction": "long",
-      "price": 2972.0,
-      "entry_date": "2026-09-28",
-      "pnl_pct": 1.054
-    },
-    {
-      "date": "2026-09-30",
-      "code": "EB",
-      "action": "open",
-      "direction": "long",
-      "price": 9892.0,
-      "entry_date": "2026-09-30",
-      "pnl_pct": null
-    },
-    {
-      "date": "2026-10-08",
+      "date": "2026-10-26",
       "code": "EB",
       "action": "close",
       "direction": "long",
-      "price": 10692.0,
-      "entry_date": "2026-09-30",
-      "pnl_pct": 8.087
+      "price": 10538.0,
+      "entry_date": "2026-10-24",
+      "pnl_pct": -2.381
     },
     {
-      "date": "2026-10-08",
-      "code": "MA",
+      "date": "2026-10-26",
+      "code": "AG",
+      "action": "close",
+      "direction": "short",
+      "price": 13040.0,
+      "entry_date": "2026-10-24",
+      "pnl_pct": 0.519
+    },
+    {
+      "date": "2026-10-26",
+      "code": "JD",
+      "action": "close",
+      "direction": "short",
+      "price": 3305.0,
+      "entry_date": "2026-10-24",
+      "pnl_pct": -0.091
+    },
+    {
+      "date": "2026-10-26",
+      "code": "L",
+      "action": "close",
+      "direction": "long",
+      "price": 9149.0,
+      "entry_date": "2026-10-25",
+      "pnl_pct": 3.484
+    },
+    {
+      "date": "2026-10-26",
+      "code": "FU",
       "action": "open",
       "direction": "long",
-      "price": 3200.0,
-      "entry_date": "2026-10-08",
+      "price": 5295.0,
+      "entry_date": "2026-10-26",
       "pnl_pct": null
     },
     {
-      "date": "2026-10-15",
+      "date": "2026-10-26",
+      "code": "MA",
+      "action": "open",
+      "direction": "long",
+      "price": 3389.0,
+      "entry_date": "2026-10-26",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-10-26",
+      "code": "SA",
+      "action": "open",
+      "direction": "short",
+      "price": 966.0,
+      "entry_date": "2026-10-26",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-10-26",
+      "code": "P",
+      "action": "open",
+      "direction": "short",
+      "price": 9517.0,
+      "entry_date": "2026-10-26",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-10-31",
+      "code": "FG",
+      "action": "close",
+      "direction": "short",
+      "price": 865.0,
+      "entry_date": "2025-12-18",
+      "pnl_pct": 18.55
+    },
+    {
+      "date": "2026-10-31",
+      "code": "FU",
+      "action": "close",
+      "direction": "long",
+      "price": null,
+      "entry_date": "2026-10-26",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-10-31",
       "code": "MA",
       "action": "close",
       "direction": "long",
-      "price": 3170.0,
-      "entry_date": "2026-10-08",
-      "pnl_pct": -0.938
-    },
-    {
-      "date": "2026-10-15",
-      "code": "PP",
-      "action": "open",
-      "direction": "long",
-      "price": 9387.0,
-      "entry_date": "2026-10-15",
+      "price": null,
+      "entry_date": "2026-10-26",
       "pnl_pct": null
     },
     {
-      "date": "2026-10-16",
+      "date": "2026-10-31",
+      "code": "SA",
+      "action": "close",
+      "direction": "short",
+      "price": 966.0,
+      "entry_date": "2026-10-26",
+      "pnl_pct": 0.0
+    },
+    {
+      "date": "2026-10-31",
+      "code": "P",
+      "action": "close",
+      "direction": "short",
+      "price": null,
+      "entry_date": "2026-10-26",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-10-31",
+      "code": "L",
+      "action": "open",
+      "direction": "long",
+      "price": 9558.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-10-31",
+      "code": "BU",
+      "action": "open",
+      "direction": "long",
+      "price": 5284.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-10-31",
+      "code": "NI",
+      "action": "open",
+      "direction": "short",
+      "price": 117190.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-10-31",
+      "code": "JD",
+      "action": "open",
+      "direction": "short",
+      "price": 3478.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-10-31",
+      "code": "AG",
+      "action": "open",
+      "direction": "short",
+      "price": 12093.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-01",
       "code": "BU",
       "action": "close",
       "direction": "long",
-      "price": 4443.0,
-      "entry_date": "2026-09-18",
-      "pnl_pct": -16.027
+      "price": 5284.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": 0.0
     },
     {
-      "date": "2026-10-16",
-      "code": "MA",
+      "date": "2026-11-01",
+      "code": "EB",
       "action": "open",
       "direction": "long",
-      "price": 3192.0,
-      "entry_date": "2026-10-16",
+      "price": 10404.0,
+      "entry_date": "2026-11-01",
       "pnl_pct": null
     },
     {
-      "date": "2026-10-21",
-      "code": "MA",
+      "date": "2026-11-02",
+      "code": "L",
       "action": "close",
       "direction": "long",
-      "price": 3130.0,
-      "entry_date": "2026-10-16",
-      "pnl_pct": -1.942
+      "price": 9596.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": 0.398
     },
     {
-      "date": "2026-10-21",
-      "code": "JM",
+      "date": "2026-11-02",
+      "code": "NI",
+      "action": "close",
+      "direction": "short",
+      "price": 116830.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": 0.307
+    },
+    {
+      "date": "2026-11-02",
+      "code": "JD",
+      "action": "close",
+      "direction": "short",
+      "price": 3564.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": -2.473
+    },
+    {
+      "date": "2026-11-02",
+      "code": "AG",
+      "action": "close",
+      "direction": "short",
+      "price": 11885.0,
+      "entry_date": "2026-10-31",
+      "pnl_pct": 1.72
+    },
+    {
+      "date": "2026-11-02",
+      "code": "EB",
+      "action": "close",
+      "direction": "long",
+      "price": 10443.0,
+      "entry_date": "2026-11-01",
+      "pnl_pct": 0.375
+    },
+    {
+      "date": "2026-11-02",
+      "code": "MA",
       "action": "open",
       "direction": "long",
-      "price": 1410.0,
-      "entry_date": "2026-10-21",
+      "price": 3557.0,
+      "entry_date": "2026-11-02",
       "pnl_pct": null
     },
     {
-      "date": "2026-10-22",
-      "code": "JM",
-      "action": "close",
-      "direction": "long",
-      "price": 1384.5,
-      "entry_date": "2026-10-21",
-      "pnl_pct": -1.809
-    },
-    {
-      "date": "2026-10-22",
-      "code": "MA",
+      "date": "2026-11-02",
+      "code": "FU",
       "action": "open",
       "direction": "long",
-      "price": 3191.0,
-      "entry_date": "2026-10-22",
+      "price": 5232.0,
+      "entry_date": "2026-11-02",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-02",
+      "code": "FG",
+      "action": "open",
+      "direction": "short",
+      "price": 878.0,
+      "entry_date": "2026-11-02",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-02",
+      "code": "SA",
+      "action": "open",
+      "direction": "short",
+      "price": 975.0,
+      "entry_date": "2026-11-02",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-02",
+      "code": "P",
+      "action": "open",
+      "direction": "short",
+      "price": 9298.0,
+      "entry_date": "2026-11-02",
       "pnl_pct": null
     },
     {
@@ -1455,8 +1281,8 @@
       "action": "close",
       "direction": "long",
       "price": 5081.0,
-      "entry_date": "2026-09-11",
-      "pnl_pct": 18.466
+      "entry_date": "2026-11-02",
+      "pnl_pct": -2.886
     },
     {
       "date": "2026-11-03",
@@ -1468,12 +1294,93 @@
       "pnl_pct": null
     },
     {
-      "date": "2026-11-09",
+      "date": "2026-11-07",
+      "code": "MA",
+      "action": "close",
+      "direction": "long",
+      "price": null,
+      "entry_date": "2026-11-02",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-07",
+      "code": "FG",
+      "action": "close",
+      "direction": "short",
+      "price": 882.0,
+      "entry_date": "2026-11-02",
+      "pnl_pct": -0.456
+    },
+    {
+      "date": "2026-11-07",
       "code": "SA",
       "action": "close",
       "direction": "short",
+      "price": 961.0,
+      "entry_date": "2026-11-02",
+      "pnl_pct": 1.436
+    },
+    {
+      "date": "2026-11-07",
+      "code": "P",
+      "action": "close",
+      "direction": "short",
       "price": null,
-      "entry_date": "2026-06-11",
+      "entry_date": "2026-11-02",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-07",
+      "code": "V",
+      "action": "open",
+      "direction": "long",
+      "price": 4975.0,
+      "entry_date": "2026-11-07",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-07",
+      "code": "M",
+      "action": "open",
+      "direction": "short",
+      "price": 3079.0,
+      "entry_date": "2026-11-07",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-07",
+      "code": "AU",
+      "action": "open",
+      "direction": "short",
+      "price": 869.86,
+      "entry_date": "2026-11-07",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-07",
+      "code": "AG",
+      "action": "open",
+      "direction": "short",
+      "price": 12367.0,
+      "entry_date": "2026-11-07",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-08",
+      "code": "V",
+      "action": "close",
+      "direction": "long",
+      "price": 4975.0,
+      "entry_date": "2026-11-07",
+      "pnl_pct": 0.0
+    },
+    {
+      "date": "2026-11-08",
+      "code": "BU",
+      "action": "open",
+      "direction": "long",
+      "price": 4570.0,
+      "entry_date": "2026-11-08",
       "pnl_pct": null
     },
     {
@@ -1481,8 +1388,53 @@
       "code": "L",
       "action": "close",
       "direction": "long",
-      "price": null,
+      "price": 8584.0,
       "entry_date": "2026-11-03",
+      "pnl_pct": -10.115
+    },
+    {
+      "date": "2026-11-09",
+      "code": "M",
+      "action": "close",
+      "direction": "short",
+      "price": 3075.0,
+      "entry_date": "2026-11-07",
+      "pnl_pct": 0.13
+    },
+    {
+      "date": "2026-11-09",
+      "code": "AU",
+      "action": "close",
+      "direction": "short",
+      "price": 882.76,
+      "entry_date": "2026-11-07",
+      "pnl_pct": -1.483
+    },
+    {
+      "date": "2026-11-09",
+      "code": "AG",
+      "action": "close",
+      "direction": "short",
+      "price": 12632.0,
+      "entry_date": "2026-11-07",
+      "pnl_pct": -2.143
+    },
+    {
+      "date": "2026-11-09",
+      "code": "BU",
+      "action": "close",
+      "direction": "long",
+      "price": 4421.0,
+      "entry_date": "2026-11-08",
+      "pnl_pct": -3.26
+    },
+    {
+      "date": "2026-11-09",
+      "code": "MA",
+      "action": "open",
+      "direction": "long",
+      "price": 3194.0,
+      "entry_date": "2026-11-09",
       "pnl_pct": null
     },
     {
@@ -1496,15 +1448,87 @@
     },
     {
       "date": "2026-11-09",
-      "code": "SP",
+      "code": "FG",
       "action": "open",
       "direction": "short",
-      "price": 4630.0,
+      "price": 888.0,
       "entry_date": "2026-11-09",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-09",
+      "code": "SA",
+      "action": "open",
+      "direction": "short",
+      "price": 972.0,
+      "entry_date": "2026-11-09",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-09",
+      "code": "P",
+      "action": "open",
+      "direction": "short",
+      "price": 8583.0,
+      "entry_date": "2026-11-09",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-10",
+      "code": "JD",
+      "action": "close",
+      "direction": "long",
+      "price": 3488.0,
+      "entry_date": "2026-11-09",
+      "pnl_pct": 1.366
+    },
+    {
+      "date": "2026-11-10",
+      "code": "FG",
+      "action": "close",
+      "direction": "short",
+      "price": 875.0,
+      "entry_date": "2026-11-09",
+      "pnl_pct": 1.464
+    },
+    {
+      "date": "2026-11-10",
+      "code": "SA",
+      "action": "close",
+      "direction": "short",
+      "price": 954.0,
+      "entry_date": "2026-11-09",
+      "pnl_pct": 1.852
+    },
+    {
+      "date": "2026-11-10",
+      "code": "FU",
+      "action": "open",
+      "direction": "long",
+      "price": 3985.0,
+      "entry_date": "2026-11-10",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-10",
+      "code": "EB",
+      "action": "open",
+      "direction": "short",
+      "price": 8654.0,
+      "entry_date": "2026-11-10",
+      "pnl_pct": null
+    },
+    {
+      "date": "2026-11-10",
+      "code": "AG",
+      "action": "open",
+      "direction": "short",
+      "price": 12723.0,
+      "entry_date": "2026-11-10",
       "pnl_pct": null
     }
   ],
-  "summary": "proxy proxy_cwft ret=15.37% ann≈19.19% dd=17.96% sharpe=0.8828946004999118",
+  "summary": "proxy proxy_cwft ret=14.40% ann≈17.71% dd=17.96% sharpe=0.8237333322464226",
   "name": "本地代理·CWFT",
   "description": "本地代理·CWFT：东证 CWFT/期限结构思路的本地近似，用近远月升贴水 + 动量代理 C/F/T；仓单 W 缺数据时置 0。"
 }

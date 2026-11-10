@@ -30,9 +30,9 @@
 - 工作日北京时间 16:35（UTC 08:35）运行，支持手动触发。
 - 在 GitHub 仓库 Settings → Secrets and variables → Actions → Variables 中设置：
   - `GAMMA_<合约>_EXPIRY`：例如 `GAMMA_CF2701_EXPIRY`、`GAMMA_MA2701_EXPIRY`，值为该期权系列最后交易/到期日 YYYY-MM-DD。
-- 覆盖 CF/SR/MA/TA/SA/RM/OI/FG 的 2701 合约；日期须按郑商所规则人工核实；未配置的品种跳过并 notice，不猜日期。
-- 采集成功且通过质量闸门后才提交快照。接口失败或校验失败时工作流报错，不提交伪数据。
-- 首次启用建议手动运行一次，检查免费接口字段、交易日与覆盖率。
+- 覆盖 CF/SR/MA/TA/SA/RM/OI/FG 的 2701 合约；优先用 Variables 中的到期日；未配置时回退到该合约目录下最新 PASS 快照的 `expiry`（须仍晚于 asof）。
+- 采集由 `scripts/gamma_wall_daily_collect.py` 执行：至少一个合约成功才算绿；全跳过/全失败则 error（避免空跑当成功）。
+- 首次启用建议手动运行一次，并在 Variables 写入核实后的 `GAMMA_*_EXPIRY`。
 
 ## 调用量估算
 - 每个品种每个新交易日：期权接口约 1 次，标的期货日线在缓存无该交易日时请求，通常 1 次。
@@ -59,4 +59,4 @@ python -m pytest tests/test_gamma_wall.py -q
 
 ## 日更空跑保护
 
-gamma_wall_daily.yml 在没有任何 GAMMA_<合约>_EXPIRY Repository Variable 时会 **失败**（::error::），避免绿色=空跑。到期日必须由使用者按郑商所规则核实后填写到 Settings → Secrets and variables → Actions → Variables；仓库和代理不会替你猜日期。桌面 Gamma 页会显示「累积有效快照 N / 窗口」。
+gamma_wall_daily.yml 在「无 Variables 且无可用快照到期日、因而 0 个成功快照」时会 **失败**（::error::），避免绿色=空跑。推荐仍在 Settings → Variables 填写核实后的 `GAMMA_*_EXPIRY`；缺省时可回退仓库内 PASS 快照到期日。桌面 Gamma 页会显示「累积有效快照 N / 窗口」。

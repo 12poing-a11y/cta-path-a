@@ -43,21 +43,8 @@ jobs:
         run: |
           set -euo pipefail
           ASOF="$(TZ=Asia/Shanghai date +%F)"
-          RAN=0
-          for CONTRACT in CF2701 SR2701 MA2701 TA2701 SA2701 RM2701 OI2701 FG2701; do
-            VAR="GAMMA_${CONTRACT}_EXPIRY"
-            EXPIRY="${!VAR:-}"
-            if [[ -n "$EXPIRY" ]]; then
-              python gamma_wall.py --contract "$CONTRACT" --expiry "$EXPIRY" --date "$ASOF"
-              RAN=1
-            else
-              echo "::notice::Skip ${CONTRACT}: set repository variable ${VAR} after verifying CZCE option last trading day."
-            fi
-          done
-          if [[ "$RAN" -eq 0 ]]; then
-            echo "::error title=Gamma Wall collected nothing::No GAMMA_*_EXPIRY repository Variables are set, so zero snapshots were generated. Set e.g. GAMMA_CF2701_EXPIRY=YYYY-MM-DD (verified CZCE option last trading day) under Settings > Secrets and variables > Actions > Variables. Failing so green != empty."
-            exit 1
-          fi
+          # Expiry: env GAMMA_<CONTRACT>_EXPIRY, else latest PASS snapshot expiry in repo.
+          python scripts/gamma_wall_daily_collect.py --date "$ASOF"
       - name: Persist validated daily snapshots
         run: |
           git config user.name "github-actions[bot]"

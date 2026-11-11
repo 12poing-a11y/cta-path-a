@@ -65,8 +65,19 @@ POSITIONS_DISCLAIMER = (
 TRADE_LOG_MAX = 60
 
 
-def _score_day(series: dict, idx: dict, curves: dict, d: str, mode: str) -> dict[str, float]:
-    """Raw factor score per code on date ``d`` (only codes with >=60 bars of history)."""
+def _score_day(
+    series: dict,
+    idx: dict,
+    curves: dict,
+    d: str,
+    mode: str,
+    ablate: frozenset[str] | set[str] | None = None,
+) -> dict[str, float]:
+    """Raw factor score per code on date ``d`` (only codes with >=60 bars of history).
+
+    ``ablate`` zeros named factor blocks (C/F/T/ST/LONG_MOM/SHORT_MOM) for research grids.
+    """
+    off = frozenset(ablate or ())
     scores: dict[str, float] = {}
     for code, pack in series.items():
         i = idx[code].get(d)
@@ -80,11 +91,15 @@ def _score_day(series: dict, idx: dict, curves: dict, d: str, mode: str) -> dict
             continue
         gap = _carry_gap((curves.get(code) or {}).get("carry", {}).get(d))
         # Factor building blocks (local proxies).
-        c_score = 0.0 if gap is None else -gap  # 贴水(负gap)偏多
-        t_score = 0.5 * r20 + 0.5 * r60
-        st_score = r5 if r5 is not None else 0.0
-        f_score = c_score  # futures-spot proxy = same carry gap when spot missing
+        c_raw = 0.0 if gap is None else -gap  # 贴水(负gap)偏多
+        c_score = 0.0 if "C" in off else c_raw
+        t_score = 0.0 if "T" in off else (0.5 * r20 + 0.5 * r60)
+        st_score = 0.0 if "ST" in off else (r5 if r5 is not None else 0.0)
+        # F uses the same carry-gap proxy when spot is missing; ablate independently of C.
+        f_score = 0.0 if "F" in off else c_raw
         w_score = 0.0  # warrant unavailable → neutral
+        long_mom = 0.0 if "LONG_MOM" in off else (0.3 * r20 + 0.7 * r60)
+        short_mom = 0.0 if "SHORT_MOM" in off else (0.7 * r20 + 0.3 * (r5 or 0.0))
         if mode == "cwft":
             # 5:2:2:1 on C,W,F,T
             raw = 5 * c_score + 2 * w_score + 2 * f_score + 1 * t_score
@@ -92,8 +107,8 @@ def _score_day(series: dict, idx: dict, curves: dict, d: str, mode: str) -> dict
             # Main carry, short-trend as secondary (subtract when opposite).
             raw = 3.0 * c_score + 1.0 * st_score
         elif mode == "long_short_cwft":
-            long_c = 5 * c_score + 2 * f_score + 1 * (0.3 * r20 + 0.7 * r60)
-            short_c = 5 * c_score + 2 * f_score + 1 * (0.7 * r20 + 0.3 * (r5 or 0.0))
+            long_c = 5 * c_score + 2 * f_score + 1 * long_mom
+            short_c = 5 * c_score + 2 * f_score + 1 * short_mom
             raw = 0.7 * long_c + 0.3 * short_c
         else:
             raw = t_score
@@ -164,11 +179,13 @@ def _simulate_cs(
     mode: str,
     equity0: float = 200_000.0,
     top_n: int = 3,
+    ablate: frozenset[str] | set[str] | None = None,
 ) -> dict:
     """Cross-section long top_n / short bottom_n, equal weight, daily rebalance.
 
     Holdings are derived from the *same* daily picks as the equity curve:
     ``final_positions`` (asof last scored bar) and ``trade_log`` (open/close events).
+    ``ablate`` is forwarded to ``_score_day`` and echoed on the payload when non-empty.
     """
     dates = sorted({bar["date"] for pack in series.values() for bar in pack["hist"]})
     # Align index maps
@@ -193,7 +210,7 @@ def _simulate_cs(
     if len(dates) > start_i:
         curve.append({"date": dates[start_i], "equity": equity0})
     for d in dates[start_i + 1 :]:
-        scores = _score_day(series, idx, curves, d, mode)
+        scores = _score_day(series, idx, curves, d, mode, ablate=ablate)
         if len(scores) < top_n * 2:
             curve.append({"date": d, "equity": round(equity, 2)})
             continue
@@ -280,7 +297,7 @@ def _simulate_cs(
         ann = ret_pct
         sharpe = None
     calmar = (ann / dd) if dd > 0 else None
-    return {
+    out = {
         "ok": True,
         "strategy": name,
         "proxy_of": mode,
@@ -306,6 +323,9 @@ def _simulate_cs(
             f"dd={dd:.2f}% sharpe={sharpe}"
         ),
     }
+    if ablate:
+        out["ablate"] = sorted(ablate)
+    return out
 
 
 def main() -> None:

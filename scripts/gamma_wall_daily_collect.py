@@ -5,7 +5,10 @@ Resolves expiry in order:
 1. env ``GAMMA_<CONTRACT>_EXPIRY``
 2. latest PASS snapshot under ``data/gamma_wall/<CONTRACT>/`` if still after asof
 
-Fails only when zero contracts produce a successful snapshot (green != empty).
+Fails only when zero contracts produce a successful snapshot *and* the misses are
+real errors (missing expiry config / quality FAIL). Empty CZCE day tables or
+pre-settle futures gaps are treated as data-not-ready and exit 0 so scheduled
+runs stay green when AkShare has not published yet — re-dispatch after settle.
 """
 from __future__ import annotations
 
@@ -26,6 +29,17 @@ from gamma_wall import OBSERVE_MONTH, supported_contracts  # noqa: E402
 
 TZ = ZoneInfo("Asia/Shanghai")
 CONTRACTS = supported_contracts(OBSERVE_MONTH)
+
+# AkShare/CZCE lag markers — not config bugs; collect later the same day.
+_NOT_READY_MARKERS = (
+    "无返回行",
+    "日盘未收/未结算前",
+)
+
+
+def is_data_not_ready(exc: BaseException) -> bool:
+    msg = str(exc)
+    return any(m in msg for m in _NOT_READY_MARKERS)
 
 
 def _asof(explicit: str | None) -> str:
@@ -100,6 +114,7 @@ def main() -> int:
     ok_n = 0
     fail_n = 0
     skip_n = 0
+    not_ready_n = 0
     for contract in contracts:
         expiry, src = resolve_expiry(contract, asof, root=ROOT)
         if not expiry:
@@ -118,17 +133,31 @@ def main() -> int:
             )
             ok_n += 1
         except Exception as exc:  # noqa: BLE001 — surface per-contract soft then tally
-            print(f"::warning::{contract} failed: {exc}")
-            fail_n += 1
-    print(f"[gamma] summary ok={ok_n} fail={fail_n} skip={skip_n}")
-    if ok_n == 0:
+            if is_data_not_ready(exc):
+                print(f"::notice::{contract} data not ready: {exc}")
+                not_ready_n += 1
+            else:
+                print(f"::warning::{contract} failed: {exc}")
+                fail_n += 1
+    print(
+        f"[gamma] summary ok={ok_n} fail={fail_n} "
+        f"not_ready={not_ready_n} skip={skip_n}"
+    )
+    if ok_n > 0:
+        return 0
+    if fail_n == 0 and not_ready_n > 0:
         print(
-            "::error title=Gamma Wall collected nothing::"
-            "No validated snapshots. Set repository Variables GAMMA_<CONTRACT>_EXPIRY "
-            "(YYYY-MM-DD) or ensure data/gamma_wall has PASS snapshots with future expiry."
+            "::notice title=Gamma Wall deferred::"
+            f"No validated snapshots for {asof}; CZCE/futures day tables not "
+            "published yet. Re-run after settle (no config change needed)."
         )
-        return 1
-    return 0
+        return 0
+    print(
+        "::error title=Gamma Wall collected nothing::"
+        "No validated snapshots. Set repository Variables GAMMA_<CONTRACT>_EXPIRY "
+        "(YYYY-MM-DD) or ensure data/gamma_wall has PASS snapshots with future expiry."
+    )
+    return 1
 
 
 if __name__ == "__main__":

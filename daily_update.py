@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import math
 import sys
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -477,15 +477,47 @@ def main():
                 f"shfe={stats['shfe']} czce={stats['czce']} "
                 f"dce={stats['dce']} em={stats.get('eastmoney', 0)}"
             )
-        cov = ensure_universe_member_coverage(seat_days[-1], [u["code"] for u in UNIVERSE])
+        codes = [u["code"] for u in UNIVERSE]
+        requested = seat_days[-1]
+        cov = ensure_universe_member_coverage(requested, codes)
         observe_coverage["seats_ok"] = cov.get("ok") or []
         observe_coverage["seats_missing"] = cov.get("missing") or []
         observe_coverage["seat_fill"] = cov.get("filled") or {}
         observe_coverage["seat_ymd"] = cov.get("ymd")
+        observe_coverage["seats_requested"] = requested
+        observe_coverage["seats_deferred"] = False
         print(
             f"  [observe] seats {cov.get('n_ok')}/{cov.get('n_codes')} "
             f"missing={cov.get('missing')} filled={cov.get('filled')}"
         )
+        # 15:30 CST daily often runs before CZCE/Sina publish today's seat books.
+        # Snap bar_dates are usually a single day — walk prior weekdays for a complete book.
+        if observe_coverage["seats_missing"]:
+            try:
+                cursor = date.fromisoformat(str(requested)[:10])
+            except ValueError:
+                cursor = None
+            tried = {str(requested)[:10]}
+            for _ in range(8):
+                if cursor is None:
+                    break
+                cursor -= timedelta(days=1)
+                if cursor.weekday() >= 5:
+                    continue
+                prior = cursor.isoformat()
+                if prior in tried:
+                    continue
+                tried.add(prior)
+                prior_cov = ensure_universe_member_coverage(prior, codes)
+                if prior_cov.get("complete"):
+                    observe_coverage["seats_deferred"] = True
+                    observe_coverage["seats_used"] = prior
+                    print(
+                        f"::notice::seats asof {requested} incomplete "
+                        f"missing={observe_coverage['seats_missing']}; "
+                        f"prior {prior} complete — defer observe gate"
+                    )
+                    break
     else:
         observe_coverage["seats_missing"] = [u["code"] for u in UNIVERSE]
 
@@ -510,10 +542,19 @@ def main():
             sig["seat"] = label
             if reason and not sig.get("block"):
                 sig["block"] = reason
-    observe_coverage["complete"] = (
-        not observe_coverage["bars_missing"] and not observe_coverage["seats_missing"]
+    seats_ready = (
+        not observe_coverage["seats_missing"] or observe_coverage.get("seats_deferred")
     )
-    if not observe_coverage["complete"]:
+    observe_coverage["complete"] = (
+        not observe_coverage["bars_missing"] and bool(seats_ready)
+    )
+    if observe_coverage.get("seats_deferred"):
+        print(
+            f"[cta] OBSERVE SEATS DEFERRED requested={observe_coverage.get('seats_requested')} "
+            f"used={observe_coverage.get('seats_used')} "
+            f"missing_today={observe_coverage['seats_missing']}"
+        )
+    elif not observe_coverage["complete"]:
         print(
             f"[cta] OBSERVE INCOMPLETE bars_missing={observe_coverage['bars_missing']} "
             f"seats_missing={observe_coverage['seats_missing']}"

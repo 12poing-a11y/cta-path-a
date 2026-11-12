@@ -2,7 +2,7 @@
   "ok": true,
   "live_trading": false,
   "entry_filter_unchanged": "seats",
-  "generated_at": "2026-11-12T18:56:15+08:00",
+  "generated_at": "2026-11-12T16:54:06+00:00",
   "codes": [
     "CF",
     "SR",
@@ -433,7 +433,7 @@
       "live_trading": false,
       "asof": "20261112",
       "bars_n": 5313,
-      "iv_days": 60,
+      "iv_days": 8,
       "rv": {
         "ok": true,
         "rv20": 0.205952,
@@ -442,29 +442,29 @@
       },
       "iv": {
         "ok": true,
-        "iv": 0.261631,
-        "iv_pct": 76.67,
-        "n_hist": 60,
-        "iv_thin": false,
-        "date": "20261112"
+        "iv": 0.251074,
+        "iv_pct": 62.5,
+        "n_hist": 8,
+        "iv_thin": true,
+        "date": "20261102"
       },
-      "vrp": 0.055679,
+      "vrp": 0.045122,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": 0.006593,
-        "z": 0.659,
-        "n": 60
+        "delta_iv": -0.001554,
+        "z": -0.2606,
+        "n": 8
       },
       "vol_state": {
-        "score": 66.1,
+        "score": 59.0,
         "label": "mid",
         "parts": [
           55.6,
-          76.67
+          62.5
         ]
       },
       "vol_pricing": {
-        "score": 86.5,
+        "score": 75.1,
         "label": "rich",
         "rich": true
       },
@@ -496,8 +496,8 @@
         "side": 0,
         "date": "2026-11-06",
         "stale": true,
-        "iv_tag": "iv_flat",
-        "delta_iv": 0.0032
+        "iv_tag": "iv_missing",
+        "delta_iv": null
       },
       "calendar": {
         "ok": false
@@ -505,10 +505,11 @@
       "matrix": {
         "tag": "no_trade",
         "tags": [
-          "no_trade"
+          "no_trade",
+          "research_stub"
         ],
-        "reason": "条件不清晰 → 空仓/观望",
-        "false_breakout": true,
+        "reason": "仅余研究占位 → 空仓/观望；IV样本偏薄；偏斜/Gamma对冲仅占位",
+        "false_breakout": false,
         "buy_vol": false,
         "sell_vol": false,
         "sentiment_tier": "neutral",
@@ -536,7 +537,7 @@
       "live_trading": false,
       "asof": "20261112",
       "bars_n": 3530,
-      "iv_days": 59,
+      "iv_days": 37,
       "rv": {
         "ok": true,
         "rv20": 0.42683,
@@ -546,28 +547,28 @@
       "iv": {
         "ok": true,
         "iv": 0.447734,
-        "iv_pct": 50.85,
-        "n_hist": 59,
+        "iv_pct": 59.46,
+        "n_hist": 37,
         "iv_thin": false,
         "date": "20261112"
       },
       "vrp": 0.020904,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": -0.024131,
-        "z": -0.8742,
-        "n": 59
+        "delta_iv": 0.002587,
+        "z": -0.0208,
+        "n": 37
       },
       "vol_state": {
-        "score": 45.6,
+        "score": 49.9,
         "label": "mid",
         "parts": [
           40.4,
-          50.85
+          59.46
         ]
       },
       "vol_pricing": {
-        "score": 59.1,
+        "score": 63.4,
         "label": "fair",
         "rich": null
       },
@@ -599,8 +600,8 @@
         "side": 0,
         "date": "2026-11-02",
         "stale": true,
-        "iv_tag": "true_candidate",
-        "delta_iv": 0.078411
+        "iv_tag": "iv_missing",
+        "delta_iv": null
       },
       "calendar": {
         "ok": false
@@ -639,7 +640,7 @@
       "live_trading": false,
       "asof": "20261112",
       "bars_n": 4280,
-      "iv_days": 60,
+      "iv_days": 49,
       "rv": {
         "ok": true,
         "rv20": 0.079834,
@@ -649,28 +650,28 @@
       "iv": {
         "ok": true,
         "iv": 0.117619,
-        "iv_pct": 23.33,
-        "n_hist": 60,
+        "iv_pct": 14.29,
+        "n_hist": 49,
         "iv_thin": false,
         "date": "20261112"
       },
       "vrp": 0.037785,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": 0.004615,
-        "z": 1.4645,
-        "n": 60
+        "delta_iv": -0.001131,
+        "z": -0.0469,
+        "n": 49
       },
       "vol_state": {
-        "score": 21.5,
+        "score": 16.9,
         "label": "low",
         "parts": [
           19.6,
-          23.33
+          14.29
         ]
       },
       "vol_pricing": {
-        "score": 52.4,
+        "score": 47.9,
         "label": "fair",
         "rich": null
       },
@@ -702,8 +703,8 @@
         "side": 0,
         "date": "2026-11-03",
         "stale": true,
-        "iv_tag": "iv_flat",
-        "delta_iv": 0.001195
+        "iv_tag": "iv_missing",
+        "delta_iv": null
       },
       "calendar": {
         "ok": false
@@ -714,7 +715,7 @@
           "no_trade"
         ],
         "reason": "条件不清晰 → 空仓/观望",
-        "false_breakout": true,
+        "false_breakout": false,
         "buy_vol": false,
         "sell_vol": false,
         "sentiment_tier": "neutral",

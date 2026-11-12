@@ -1568,14 +1568,14 @@
     }
   ],
   "path_a_formal_ref": {
-    "ret_pct": 2.254,
-    "max_dd_pct": 5.57,
-    "closed_trades": 78,
+    "ret_pct": 18.22,
+    "max_dd_pct": 6.694,
+    "closed_trades": 97,
     "label": "path_a_formal",
-    "min_r20_pct": 3.0,
-    "min_r60_pct": 5.0,
-    "stop_atr_mult": 1.2,
-    "reward_rr": 1.5
+    "min_r20_pct": 4.0,
+    "min_r60_pct": 6.0,
+    "stop_atr_mult": 0.8,
+    "reward_rr": 2.0
   },
   "readout": "SuperTrend observe sleeve beside Path-A. Does not replace mom_4_6 formal until it beats ret/DD with enough trades."
 }

@@ -35,15 +35,27 @@
       ]
     },
     "SHFE": {
-      "ok": false,
-      "n_products": 0,
-      "error": "JSONDecodeError:Expecting value: line 1 column 1 (char 0)",
-      "codes": []
+      "ok": true,
+      "n_products": 11,
+      "error": null,
+      "codes": [
+        "AG",
+        "AL",
+        "AU",
+        "BU",
+        "CU",
+        "FU",
+        "NI",
+        "RB",
+        "RU",
+        "SP",
+        "SS"
+      ]
     },
     "DCE": {
       "ok": false,
       "n_products": 0,
-      "error": "JSONDecodeError:Expecting value: line 1 column 1 (char 0)",
+      "error": "DceBlockedError:API Error: 大连商品交易所网站（dce.com.cn）对程序访问启用了反爬虫验证，请求被拒绝（HTTP 412），大商所相关接口暂时无法获取数据。大商所合约的成交持仓排名可改用 ak.futures_hold_pos_sina(symbol=\"多单持仓\", contract=\"M2701\", date=\"20261104\")，按单个合约查询。 (Status code: 412)",
       "codes": []
     }
   },
@@ -231,7 +243,95 @@
       "exchange": "CZCE",
       "source": "exchange.czce",
       "date": "2026-11-12"
+    },
+    "CU": {
+      "code": "CU",
+      "receipt": 1644.0,
+      "change": -76.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "AL": {
+      "code": "AL",
+      "receipt": 272.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "NI": {
+      "code": "NI",
+      "receipt": 66405.0,
+      "change": 697.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "RU": {
+      "code": "RU",
+      "receipt": 3970.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "SP": {
+      "code": "SP",
+      "receipt": 18900.0,
+      "change": 900.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "FU": {
+      "code": "FU",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "BU": {
+      "code": "BU",
+      "receipt": 66560.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "AU": {
+      "code": "AU",
+      "receipt": 118404.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "AG": {
+      "code": "AG",
+      "receipt": 1080852.0,
+      "change": -5070.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "RB": {
+      "code": "RB",
+      "receipt": 22800.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
+    },
+    "SS": {
+      "code": "SS",
+      "receipt": 5573.0,
+      "change": -58.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-12"
     }
   },
-  "fetched_at": "2026-11-12 18:12:57"
+  "fetched_at": "2026-11-12 16:23:24"
 }

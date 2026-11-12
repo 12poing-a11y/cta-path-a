@@ -60,9 +60,63 @@ def _max_dd(equity: list[float]) -> float:
 
 POSITIONS_DISCLAIMER = (
     "研究模拟持仓·非实盘·与 Path-A paper_book 分离；"
-    "由本地代理等权多空规则在最后一根日线收盘后推出（下一交易日目标仓），不构成交易建议。"
+    "由本地代理等权多空规则在最后一根日线收盘后推出（下一交易日目标仓）；"
+    "含 Path-A 同款日频 ATR 止损/止盈（同根先止损，研究模拟），不构成交易建议。"
 )
 TRADE_LOG_MAX = 60
+_DEFAULT_STOP_ATR_MULT = 1.2
+_DEFAULT_REWARD_RR = 1.5
+
+
+def _load_stop_params() -> tuple[float, float]:
+    """Path-A SSOT from execution_rules.json; soft-default if missing."""
+    try:
+        data = json.loads((ROOT / "execution_rules.json").read_text(encoding="utf-8"))
+        stop_m = float(data.get("stop_atr_mult") or _DEFAULT_STOP_ATR_MULT)
+        rr = float(data.get("reward_rr") or _DEFAULT_REWARD_RR)
+        return stop_m, rr
+    except (OSError, json.JSONDecodeError, TypeError, ValueError):
+        return _DEFAULT_STOP_ATR_MULT, _DEFAULT_REWARD_RR
+
+
+def _ohlc(bar: dict) -> dict:
+    """Fill high/low from close when synthetic bars only carry close."""
+    c = float(bar["close"])
+    h = bar.get("high")
+    l = bar.get("low")
+    try:
+        high = float(h) if h is not None else c
+    except (TypeError, ValueError):
+        high = c
+    try:
+        low = float(l) if l is not None else c
+    except (TypeError, ValueError):
+        low = c
+    return {"high": high, "low": low, "close": c}
+
+
+def _atr14(hist: list[dict], i: int) -> float | None:
+    if i < 14:
+        return None
+    trs: list[float] = []
+    for j in range(i - 13, i + 1):
+        b = _ohlc(hist[j])
+        pc = float(hist[j - 1]["close"])
+        trs.append(max(b["high"] - b["low"], abs(b["high"] - pc), abs(b["low"] - pc)))
+    return sum(trs) / len(trs) if trs else None
+
+
+def _stop_target(
+    direction: str, entry: float, atr: float, *, stop_atr_mult: float, reward_rr: float
+) -> tuple[float, float]:
+    dist = stop_atr_mult * atr
+    if direction == "long":
+        return entry - dist, entry + reward_rr * dist
+    return entry + dist, entry - reward_rr * dist
+
+
+def _dir_zh(direction: str) -> str:
+    return "多" if direction == "long" else "空"
 
 
 def _score_day(
@@ -156,6 +210,9 @@ def _pos_row(
     except (TypeError, ValueError):
         mult = None
     lots_equiv = round(notional / (last_px * mult), 3) if (mult and last_px) else None
+    stop = held.get("stop")
+    target = held.get("target")
+    atr = held.get("atr")
     return {
         "code": code,
         "name": meta.get("name"),
@@ -168,6 +225,9 @@ def _pos_row(
         "last_price": last_px,
         "unrealized_pct": _signed_pct(held.get("entry_px"), last_px, direction),
         "score_z": round(z, 3) if z is not None else None,
+        "stop": round(float(stop), 4) if stop is not None else None,
+        "target": round(float(target), 4) if target is not None else None,
+        "atr": round(float(atr), 4) if atr is not None else None,
     }
 
 
@@ -180,15 +240,27 @@ def _simulate_cs(
     equity0: float = 200_000.0,
     top_n: int = 3,
     ablate: frozenset[str] | set[str] | None = None,
+    stop_atr_mult: float | None = None,
+    reward_rr: float | None = None,
 ) -> dict:
     """Cross-section long top_n / short bottom_n, equal weight, daily rebalance.
 
-    Holdings are derived from the *same* daily picks as the equity curve:
-    ``final_positions`` (asof last scored bar) and ``trade_log`` (open/close events).
-    ``ablate`` is forwarded to ``_score_day`` and echoed on the payload when non-empty.
+    Exits: Path-A ATR stop/target on daily OHLC (stop before target), then
+    cross-section ranking flips (``signal``). Equity follows overnight legs
+    mark-to-market (exit price when stopped).
     """
+    from wyckoff_pullback import apply_stop_target
+
+    if stop_atr_mult is None or reward_rr is None:
+        ssot_m, ssot_rr = _load_stop_params()
+        if stop_atr_mult is None:
+            stop_atr_mult = ssot_m
+        if reward_rr is None:
+            reward_rr = ssot_rr
+    stop_atr_mult = float(stop_atr_mult)
+    reward_rr = float(reward_rr)
+
     dates = sorted({bar["date"] for pack in series.values() for bar in pack["hist"]})
-    # Align index maps
     idx = {
         code: {bar["date"]: i for i, bar in enumerate(pack["hist"])}
         for code, pack in series.items()
@@ -196,9 +268,10 @@ def _simulate_cs(
     equity = equity0
     curve: list[dict] = []
     rets_day: list[float] = []
-    # code -> {direction, entry_date, entry_px}; reset when a leg flips side or drops out.
+    # code -> {direction, entry_date, entry_px, mark_px, stop, target, atr}
     held: dict[str, dict] = {}
     trade_log: list[dict] = []
+    exit_counts = {"stop": 0, "target": 0, "signal": 0}
     pos_asof: str | None = None
     pos_z: dict[str, float] = {}
 
@@ -206,61 +279,143 @@ def _simulate_cs(
         i = idx[code].get(d)
         return series[code]["hist"][i]["close"] if i is not None else None
 
+    def _bar(code: str, d: str) -> dict | None:
+        i = idx[code].get(d)
+        if i is None:
+            return None
+        return _ohlc(series[code]["hist"][i])
+
+    def _signed_ret(entry_or_mark, px, direction: str) -> float | None:
+        if not entry_or_mark or not px:
+            return None
+        raw = px / entry_or_mark - 1.0
+        return raw if direction == "long" else -raw
+
+    def _close_leg(code: str, d: str, px, reason: str) -> float | None:
+        h = held.pop(code)
+        pnl = _signed_pct(h["entry_px"], px, h["direction"])
+        trade_log.append(
+            {
+                "date": d,
+                "code": code,
+                "action": "close",
+                "direction": h["direction"],
+                "price": px,
+                "entry_date": h["entry_date"],
+                "pnl_pct": pnl,
+                "reason": reason,
+            }
+        )
+        exit_counts[reason] = exit_counts.get(reason, 0) + 1
+        return _signed_ret(h.get("mark_px") or h["entry_px"], px, h["direction"])
+
     start_i = 60
     if len(dates) > start_i:
         curve.append({"date": dates[start_i], "equity": equity0})
     for d in dates[start_i + 1 :]:
+        day_rets: list[float] = []
+
+        # 1) ATR risk on overnight holdings (today's OHLC).
+        for code in list(held):
+            bar = _bar(code, d)
+            h = held[code]
+            if bar is None or h.get("stop") is None or h.get("target") is None:
+                continue
+            reason, px = apply_stop_target(
+                _dir_zh(h["direction"]),
+                float(h["entry_px"]),
+                float(h["stop"]),
+                float(h["target"]),
+                bar,
+            )
+            if reason:
+                r = _close_leg(code, d, px, reason)
+                if r is not None:
+                    day_rets.append(r)
+
         scores = _score_day(series, idx, curves, d, mode, ablate=ablate)
         if len(scores) < top_n * 2:
+            # Mark remaining overnight legs to close; no new book.
+            for code in list(held):
+                px = _px(code, d)
+                h = held[code]
+                r = _signed_ret(h.get("mark_px") or h["entry_px"], px, h["direction"])
+                if r is not None:
+                    day_rets.append(r)
+                if px is not None:
+                    h["mark_px"] = px
+            if day_rets:
+                day_ret = sum(day_rets) / len(day_rets)
+                equity *= 1.0 + day_ret
+                rets_day.append(day_ret)
             curve.append({"date": d, "equity": round(equity, 2)})
             continue
+
         longs, shorts, z = _pick_legs(scores, top_n)
         target = {c: "long" for c in longs} | {c: "short" for c in shorts}
-        # Holdings bookkeeping; entry = close of pick day (matches close[t]→close[t+1] curve).
+
+        # 2) Ranking / signal exits.
         for code in list(held):
             h = held[code]
-            if target.get(code) != h["direction"]:
-                px = _px(code, d)
-                trade_log.append(
-                    {
-                        "date": d, "code": code, "action": "close",
-                        "direction": h["direction"], "price": px,
-                        "entry_date": h["entry_date"],
-                        "pnl_pct": _signed_pct(h["entry_px"], px, h["direction"]),
-                    }
-                )
-                del held[code]
+            if target.get(code) == h["direction"]:
+                continue
+            px = _px(code, d)
+            r = _close_leg(code, d, px, "signal")
+            if r is not None:
+                day_rets.append(r)
+
+        # 3) Mark survivors to today's close.
+        for code, h in held.items():
+            px = _px(code, d)
+            r = _signed_ret(h.get("mark_px") or h["entry_px"], px, h["direction"])
+            if r is not None:
+                day_rets.append(r)
+            if px is not None:
+                h["mark_px"] = px
+
+        # 4) Open new legs at close with ATR stop/target.
         for code, direction in target.items():
             if code in held:
                 continue
             px = _px(code, d)
-            held[code] = {"direction": direction, "entry_date": d, "entry_px": px}
+            if not px:
+                continue
+            i = idx[code].get(d)
+            atr = _atr14(series[code]["hist"], i) if i is not None else None
+            stop = target_px = None
+            if atr is not None and atr > 0:
+                stop, target_px = _stop_target(
+                    direction, float(px), float(atr),
+                    stop_atr_mult=stop_atr_mult, reward_rr=reward_rr,
+                )
+            held[code] = {
+                "direction": direction,
+                "entry_date": d,
+                "entry_px": px,
+                "mark_px": px,
+                "stop": stop,
+                "target": target_px,
+                "atr": atr,
+            }
             trade_log.append(
                 {
-                    "date": d, "code": code, "action": "open", "direction": direction,
-                    "price": px, "entry_date": d, "pnl_pct": None,
+                    "date": d,
+                    "code": code,
+                    "action": "open",
+                    "direction": direction,
+                    "price": px,
+                    "entry_date": d,
+                    "pnl_pct": None,
+                    "reason": None,
+                    "stop": round(float(stop), 4) if stop is not None else None,
+                    "target": round(float(target_px), 4) if target_px is not None else None,
                 }
             )
+
         pos_asof = d
         pos_z = z
-        day_ret = 0.0
-        n_legs = 0
-        for code in longs + shorts:
-            i = idx[code].get(d)
-            hist = series[code]["hist"]
-            if i is None or i + 1 >= len(hist):
-                continue
-            # Next-day open-to-close approx: close[t+1]/close[t]
-            px0 = hist[i]["close"]
-            px1 = hist[i + 1]["close"]
-            if not px0:
-                continue
-            r = (px1 / px0) - 1.0
-            day_ret += r if code in longs else -r
-            n_legs += 1
-        if n_legs:
-            day_ret /= n_legs
-            # Half gross exposure each side ≈ 1x combined notional / n_legs already averaged
+        if day_rets:
+            day_ret = sum(day_rets) / len(day_rets)
             equity *= 1.0 + day_ret
             rets_day.append(day_ret)
         curve.append({"date": d, "equity": round(equity, 2)})
@@ -286,7 +441,6 @@ def _simulate_cs(
     eq = [c["equity"] for c in curve]
     ret_pct = (eq[-1] / eq[0] - 1.0) * 100.0
     dd = _max_dd(eq)
-    # Annualize with 252d if we have daily rets
     if rets_day:
         mu = sum(rets_day) / len(rets_day)
         var = sum((r - mu) ** 2 for r in rets_day) / max(1, len(rets_day) - 1)
@@ -312,6 +466,9 @@ def _simulate_cs(
         "max_dd_pct": round(dd, 3),
         "sharpe": round(sharpe, 3) if sharpe is not None else None,
         "calmar": round(calmar, 3) if calmar is not None else None,
+        "stop_atr_mult": stop_atr_mult,
+        "reward_rr": reward_rr,
+        "exit_counts": dict(exit_counts),
         "equity_curve": curve,
         "positions_asof": pos_asof,
         "positions_kind": "research_simulated_not_live",
@@ -320,7 +477,8 @@ def _simulate_cs(
         "trade_log": trade_log[-TRADE_LOG_MAX:],
         "summary": (
             f"proxy {name} ret={ret_pct:.2f}% ann≈{ann:.2f}% "
-            f"dd={dd:.2f}% sharpe={sharpe}"
+            f"dd={dd:.2f}% sharpe={sharpe} "
+            f"exits={exit_counts}"
         ),
     }
     if ablate:

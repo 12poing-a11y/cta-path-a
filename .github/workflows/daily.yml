@@ -77,6 +77,7 @@ jobs:
             .cache/akshare/minute/*.json
             .cache/sina/
             .cache/history/
+            .cache/warehouse/
           if-no-files-found: warn
 
       - name: Commit archive + full cache
@@ -84,13 +85,15 @@ jobs:
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
-          mkdir -p .cache/member .cache/akshare/minute .cache/history data/sentiment_mds
+          mkdir -p .cache/member .cache/akshare/minute .cache/history .cache/warehouse data/sentiment_mds
           git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
           git add data/sentiment_mds/*.json data/tech_score_latest.json data/desk_composite_latest.json || true
           git add data/gamma_wall/ || true
           git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
           git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true
           git add -f .cache/akshare/minute/*.json || true
+          # 仓单：交易所日报 + 东财库存旁路；缺则不同步，不编造。
+          git add -f .cache/warehouse/em-inventory-*.json .cache/warehouse/ex-day-*.json .cache/warehouse/latest.json || true
           # Continuous daily only: stem is letters + trailing 0 (RB0, AG0), not month (RB2601).
           python - <<'PY'
           import re

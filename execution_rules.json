@@ -3,23 +3,23 @@
   "asof": "2026-10-20",
   "source": "universe.json → selection",
   "paper_only": true,
-  "stop_atr_mult": 1.2,
-  "reward_rr": 1.5,
-  "stop_distance_atr": 1.2,
-  "target_distance_atr": 1.8,
-  "min_r20_pct": 3.0,
-  "min_r60_pct": 5.0,
+  "stop_atr_mult": 0.8,
+  "reward_rr": 2.0,
+  "stop_distance_atr": 0.8,
+  "target_distance_atr": 1.6,
+  "min_r20_pct": 4.0,
+  "min_r60_pct": 6.0,
   "max_positions": 3,
   "max_per_bucket": 1,
   "max_gross_exposure_pct": 50,
   "max_portfolio_risk_pct": 8,
-  "risk_pct": 1.5,
+  "risk_pct": 2.0,
   "equity": 200000,
   "equity_compound": true,
   "entry_filter": "seats",
   "fill_price": "next_open",
   "availability_lag_days": 1,
-  "fill_note": "正式回测：T日收盘计算信号与止损止盈距离，T+1开盘成交（next_open）；席位/升贴水滞后1个交易日。持仓后用日线高低检验 ATR 止损/止盈（同根先止损）。盘中更严控需分钟线影子，不替代 next_open 入场口径。纸面 book 入场时点另议，未在本文件强制。",
+  "fill_note": "正式回测：T日收盘计算信号与止损止盈距离，T+1开盘成交（next_open）；席位/升贴水滞后1个交易日。持仓后优先用当日15分钟线按时间顺序触及止盈/止损即平（单根15m内仍先止损后止盈）；无分钟缓存则回退日线OHLC。未触及则收盘信号/趋势失效平仓。持仓须展示平仓条件（止损价/止盈价+规则）。",
   "carry_bypass": {
     "enabled": true,
     "extreme_gap_pct": 1.0,
@@ -43,13 +43,36 @@
     "disagree_frac": 0.2,
     "note": "席位之后：lab IS合成截面分位与方向严重逆向→决策观望；缺面板放行。不改 entry_filter。"
   },
-  "summary_zh": "止损 1.2×ATR14；止盈 1.5R（止盈距离 1.8×ATR）；动量门槛 |r20|≥3%、|r60|≥5%；正式回测 T+1 开盘成交；席位确认后升贴水旁路(|gap|≥1%禁开逆向)+多维波动旁路(短/长≥1.6决策观望)+lab边逆向观望；Top3+板块1；名义≤50%；组合ATR风险≤8%。纸面不下单。",
+  "summary_zh": "止损 0.8×ATR14；止盈 2R（止盈距离 1.6×ATR）；单笔风险 risk_pct=2%；动量门槛 |r20|≥4%、|r60|≥6%；正式回测 T+1 开盘成交；席位确认后升贴水旁路(|gap|≥1%禁开逆向)+多维波动旁路(短/长≥1.6决策观望)+lab边逆向观望；Top3+板块1；名义≤50%；组合ATR风险≤8%。纸面不下单。策略晋级依据 archive/shadow_strategy_opt_t1_20261111.json（mom_4_6）。",
   "archived_params": [
     {
-      "label": "旧主方案 1×ATR / 2R",
+      "label": "前正式动量 3%/5% + 0.8×ATR/2R risk2",
+      "min_r20_pct": 3.0,
+      "min_r60_pct": 5.0,
+      "stop_atr_mult": 0.8,
+      "reward_rr": 2.0,
+      "risk_pct": 2.0,
+      "note": "s08_r2_risk2；同窗净约+7.40%/DD7.55%。已被 mom_4_6（4%/6%）替换。"
+    },
+    {
+      "label": "前正式 1.0×ATR / 1.5R risk1.5",
+      "stop_atr_mult": 1.0,
+      "reward_rr": 1.5,
+      "risk_pct": 1.5,
+      "note": "shadow_lift 晋级版；同窗净约+7.19%/DD8.34%。"
+    },
+    {
+      "label": "前正式 1.2×ATR / 1.5R",
+      "stop_atr_mult": 1.2,
+      "reward_rr": 1.5,
+      "note": "T+1 seats 早期正式；同窗净约+1.82%/DD5.66%。"
+    },
+    {
+      "label": "对照 1×ATR / 2R risk1.5",
       "stop_atr_mult": 1.0,
       "reward_rr": 2.0,
-      "note": "已归档对照；蒸馏卡前文若仍写 1×ATR/2R 仅作历史，执行以本文件与 universe.selection 为准。"
+      "risk_pct": 1.5,
+      "note": "T+1 seats 同窗净约+7.05%/DD8.00%。"
     }
   ],
   "desk_paths": {

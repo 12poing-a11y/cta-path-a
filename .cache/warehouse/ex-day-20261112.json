@@ -1,0 +1,237 @@
+{
+  "ok": true,
+  "ymd": "20261112",
+  "date": "2026-11-12",
+  "role": "primary",
+  "exchanges": {
+    "CZCE": {
+      "ok": true,
+      "n_products": 23,
+      "error": null,
+      "codes": [
+        "CF",
+        "CJ",
+        "CY",
+        "FG",
+        "JR",
+        "LR",
+        "MA",
+        "OI",
+        "PF",
+        "PL",
+        "PM",
+        "PR",
+        "PX",
+        "RI",
+        "RM",
+        "RS",
+        "SA",
+        "SF",
+        "SH",
+        "SM",
+        "SR",
+        "TA",
+        "UR"
+      ]
+    },
+    "SHFE": {
+      "ok": false,
+      "n_products": 0,
+      "error": "JSONDecodeError:Expecting value: line 1 column 1 (char 0)",
+      "codes": []
+    },
+    "DCE": {
+      "ok": false,
+      "n_products": 0,
+      "error": "JSONDecodeError:Expecting value: line 1 column 1 (char 0)",
+      "codes": []
+    }
+  },
+  "by_code": {
+    "SR": {
+      "code": "SR",
+      "receipt": 19824.0,
+      "change": -189.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "CF": {
+      "code": "CF",
+      "receipt": 6311.0,
+      "change": -7.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "CY": {
+      "code": "CY",
+      "receipt": 7.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "RM": {
+      "code": "RM",
+      "receipt": 2232.0,
+      "change": -1106.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "OI": {
+      "code": "OI",
+      "receipt": 30.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "RS": {
+      "code": "RS",
+      "receipt": 27.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "PM": {
+      "code": "PM",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "RI": {
+      "code": "RI",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "LR": {
+      "code": "LR",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "JR": {
+      "code": "JR",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "CJ": {
+      "code": "CJ",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "TA": {
+      "code": "TA",
+      "receipt": 22379.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "MA": {
+      "code": "MA",
+      "receipt": 4711.0,
+      "change": -300.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "FG": {
+      "code": "FG",
+      "receipt": 1641.0,
+      "change": -10.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "SF": {
+      "code": "SF",
+      "receipt": 5418.0,
+      "change": 824.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "SM": {
+      "code": "SM",
+      "receipt": 16843.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "UR": {
+      "code": "UR",
+      "receipt": 3348.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "SA": {
+      "code": "SA",
+      "receipt": 2831.0,
+      "change": -150.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "PF": {
+      "code": "PF",
+      "receipt": 1562.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "PX": {
+      "code": "PX",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "SH": {
+      "code": "SH",
+      "receipt": 111.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "PR": {
+      "code": "PR",
+      "receipt": 541.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    },
+    "PL": {
+      "code": "PL",
+      "receipt": 365.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-12"
+    }
+  },
+  "fetched_at": "2026-11-12 18:12:57"
+}

@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "label": "shadow_1xATR_2R_next_open_seats",
+  "note": "对照：旧主方案止损1×ATR/止盈2R + 正式T+1 next_open；不覆盖 formal latest",
+  "shadow_1_2": {
+    "stop_atr_mult": 1.0,
+    "reward_rr": 2.0,
+    "fill_price": "next_open",
+    "start": "2025-12-18",
+    "end": "2026-11-11",
+    "trade_days": 222,
+    "universe_n": 27,
+    "ret_pct": 7.055,
+    "gross_ret_pct": 10.481,
+    "max_dd_pct": 8.001,
+    "gross_max_dd_pct": 6.97,
+    "closed_trades": 84,
+    "exits": {
+      "target": 29,
+      "stop": 45,
+      "signal": 10
+    },
+    "trade_win_rate": 41.67,
+    "breakeven_win_rate": 33.33,
+    "expectancy_r": 0.167,
+    "avg_held": 1.58,
+    "minute_stop_exits": 14,
+    "conclusion": "继续L1",
+    "summary": "PathA seats 2025-12-18→2026-11-11 净权益 214110（+7.05%）毛权益 220962（+10.48%）成本 6852，净MaxDD 8.00% 毛MaxDD 6.97%，成交84笔，结论 继续L1"
+  },
+  "formal_1_2atr_1_5r": {
+    "stop_atr_mult": 1.2,
+    "reward_rr": 1.5,
+    "fill_price": "next_open",
+    "start": "2025-12-18",
+    "end": "2026-11-11",
+    "trade_days": 222,
+    "universe_n": 27,
+    "ret_pct": 1.819,
+    "gross_ret_pct": 5.003,
+    "max_dd_pct": 5.663,
+    "gross_max_dd_pct": 5.23,
+    "closed_trades": 84,
+    "exits": {
+      "target": 32,
+      "stop": 43,
+      "signal": 9
+    },
+    "trade_win_rate": 42.86,
+    "breakeven_win_rate": 40.0,
+    "expectancy_r": 0.052,
+    "avg_held": 1.64,
+    "minute_stop_exits": 17,
+    "conclusion": "继续L1",
+    "summary": "PathA seats 2025-12-18→2026-11-11 净权益 203638（+1.82%）毛权益 210006（+5.00%）成本 6368，净MaxDD 5.66% 毛MaxDD 5.23%，成交84笔，结论 继续L1"
+  }
+}

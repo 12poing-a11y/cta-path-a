@@ -54,8 +54,8 @@ def _exec_params() -> dict[str, float]:
     cfg = _load(UNI_PATH) or {}
     sel = cfg.get("selection") if isinstance(cfg.get("selection"), dict) else {}
     return {
-        "stop_atr_mult": float(sel.get("stop_atr_mult") or cfg.get("stop_atr_mult") or 1.2),
-        "reward_rr": float(sel.get("reward_rr") or cfg.get("reward_rr") or 1.5),
+        "stop_atr_mult": float(sel.get("stop_atr_mult") or cfg.get("stop_atr_mult") or 0.8),
+        "reward_rr": float(sel.get("reward_rr") or cfg.get("reward_rr") or 2.0),
     }
 
 
@@ -74,8 +74,8 @@ def tp_sl_scheme(
 ) -> str:
     """Human-readable 止盈止损方案 for Notion / desk."""
     bits: list[str] = []
-    sm = stop_atr_mult if stop_atr_mult is not None else 1.2
-    rr = reward_rr if reward_rr is not None else 1.5
+    sm = stop_atr_mult if stop_atr_mult is not None else 0.8
+    rr = reward_rr if reward_rr is not None else 2.0
     bits.append(f"止损={sm:g}×ATR")
     bits.append(f"止盈=RR×{rr:g}（止损距）")
     if atr not in (None, ""):
@@ -94,6 +94,62 @@ def tp_sl_scheme(
         except (TypeError, ValueError):
             pass
     return "；".join(bits)
+
+
+def exit_condition_text(
+    pos: dict | None = None,
+    *,
+    stop_atr_mult: float | None = None,
+    reward_rr: float | None = None,
+) -> str:
+    """Full 平仓条件 line for holdings tables."""
+    pos = pos or {}
+    scheme = tp_sl_scheme(
+        stop=pos.get("stop"),
+        target=pos.get("target"),
+        atr=pos.get("atr"),
+        stop_atr_mult=stop_atr_mult
+        if stop_atr_mult is not None
+        else pos.get("stop_atr_mult"),
+        reward_rr=reward_rr if reward_rr is not None else pos.get("reward_rr"),
+    )
+    return (
+        f"平仓条件：{scheme}；盘中15m触及即平；否则收盘信号/趋势失效平仓。"
+    )
+
+
+def _intraday_stop_exit(
+    pos: dict, *, root: Path, asof_iso: str
+) -> tuple[str | None, float | None]:
+    """Check cached 15m bars for stop/target touch on asof day."""
+    try:
+        from minute_data import load_minute_bars_on_date
+        from wyckoff_pullback import apply_stop_target_intraday
+    except Exception:  # noqa: BLE001
+        return None, None
+    stop, target = pos.get("stop"), pos.get("target")
+    entry = pos.get("entry")
+    direction = str(pos.get("direction") or "")
+    if stop is None or target is None or entry is None or direction not in ("多", "空"):
+        return None, None
+    try:
+        bars = load_minute_bars_on_date(
+            root, str(pos.get("code") or ""), asof_iso, period="15"
+        )
+    except Exception:  # noqa: BLE001
+        return None, None
+    if not bars:
+        return None, None
+    from wyckoff_pullback import minute_bars_aligned_with_entry
+
+    if not minute_bars_aligned_with_entry(float(entry), bars):
+        return None, None
+    reason, px = apply_stop_target_intraday(
+        direction, float(entry), float(stop), float(target), bars
+    )
+    if reason in ("stop", "target") and px is not None:
+        return reason, float(px)
+    return None, None
 
 
 def _realized_r(pos: dict, exit_px: Any) -> float | None:
@@ -259,6 +315,11 @@ def _detail_row(
             stop_atr_mult=params.get("stop_atr_mult"),
             reward_rr=params.get("reward_rr"),
         ),
+        "exit_condition": exit_condition_text(
+            pos,
+            stop_atr_mult=params.get("stop_atr_mult"),
+            reward_rr=params.get("reward_rr"),
+        ),
         "reason": exit_reason if event == "平仓" else None,
         "R": r_mult,
         "equity_delta": None if equity_delta is None else round(float(equity_delta), 2),
@@ -362,7 +423,7 @@ def _open_from_signal(sig: dict, *, stop_atr_mult: float, reward_rr: float) -> d
         target = close - reward_rr * stop_dist
     sleeve = str(sig.get("sleeve") or "").strip() or None
     reason = "daily_selected_observe" if sleeve == "observe" else "daily_selected"
-    return {
+    opened = {
         "code": str(sig.get("code") or "").upper(),
         "direction": direction,
         "lots": lots,
@@ -370,6 +431,8 @@ def _open_from_signal(sig: dict, *, stop_atr_mult: float, reward_rr: float) -> d
         "stop": stop,
         "target": target,
         "atr": atr,
+        "stop_atr_mult": stop_atr_mult,
+        "reward_rr": reward_rr,
         "r20": sig.get("r20"),
         "r60": sig.get("r60"),
         "bucket": sig.get("bucket"),
@@ -377,6 +440,10 @@ def _open_from_signal(sig: dict, *, stop_atr_mult: float, reward_rr: float) -> d
         "reason": reason,
         "entry_date": _ymd(sig.get("bar_date") or ""),
     }
+    opened["exit_condition"] = exit_condition_text(
+        opened, stop_atr_mult=stop_atr_mult, reward_rr=reward_rr
+    )
+    return opened
 
 
 def refresh_paper_book(
@@ -447,10 +514,20 @@ def refresh_paper_book(
         pos["code"] = code
         if not pos.get("mult"):
             pos["mult"] = mults.get(code)
+        pos["stop_atr_mult"] = pos.get("stop_atr_mult", params["stop_atr_mult"])
+        pos["reward_rr"] = pos.get("reward_rr", params["reward_rr"])
+        pos["exit_condition"] = exit_condition_text(
+            pos,
+            stop_atr_mult=params["stop_atr_mult"],
+            reward_rr=params["reward_rr"],
+        )
         sig = sigs.get(code)
-        reason = _should_exit(pos, sig)
+        # 1) Intraday stop/target on asof 15m (before signal exit).
+        reason, exit_px = _intraday_stop_exit(pos, root=root, asof_iso=asof_iso)
+        if reason is None:
+            reason = _should_exit(pos, sig)
+            exit_px = (sig or {}).get("close") if reason else None
         if reason:
-            exit_px = (sig or {}).get("close")
             detail = _detail_row(
                 event="平仓",
                 code=code,
@@ -486,6 +563,11 @@ def refresh_paper_book(
             )
             if pos.get("equity_delta") is not None:
                 pos["equity_delta"] = round(float(pos["equity_delta"]), 2)
+            pos["exit_condition"] = exit_condition_text(
+                pos,
+                stop_atr_mult=params["stop_atr_mult"],
+                reward_rr=params["reward_rr"],
+            )
         kept[code] = pos
 
     opened = 0
@@ -544,6 +626,8 @@ def refresh_paper_book(
         "ledger_n": len(ledger),
         "notes": (
             "纸面模拟仓：以回测期末持仓为种子，按最新 l1_report 做信号平仓/组合入选开仓；"
+            "持仓先按当日15m触及止盈止损平仓，否则按收盘信号/趋势失效平仓；"
+            "每条持仓含 exit_condition（平仓条件）；"
             "trade_ledger 含入场/出场/止盈止损/策略/权益增减（平仓为已实现，持仓中为浮动）；"
             "equity 为平仓累计后账面，equity_floating 为未平仓浮动盈亏。"
             "不改写 historical_backtest KPI。与 Notion 持仓中、决策页账面同源。"

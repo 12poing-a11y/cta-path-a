@@ -26,6 +26,12 @@ weekly_backtest_latest.json
 !.cache/akshare/minute/
 .cache/akshare/minute/*
 !.cache/akshare/minute/*.json
+# Warehouse: exchange day prints + EM inventory bypass (CI commits; local sync).
+!.cache/warehouse/
+.cache/warehouse/*
+!.cache/warehouse/em-inventory-*.json
+!.cache/warehouse/ex-day-*.json
+!.cache/warehouse/latest.json
 # Sina daily stays ignored; CI force-adds only continuous {CODE}0.json (see daily.yml).
 # Lab regenerable bars/panels (keep scripts/config/research small JSON).
 lab/data/bars/continuous/*.json

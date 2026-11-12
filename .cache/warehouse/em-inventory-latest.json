@@ -1,0 +1,311 @@
+{
+  "ok": true,
+  "asof": "2026-11-12",
+  "source": "eastmoney.futures_inventory_em",
+  "role": "bypass",
+  "universe_n": 27,
+  "ok_n": 27,
+  "ok_codes": [
+    "MA",
+    "V",
+    "EG",
+    "M",
+    "FG",
+    "EB",
+    "TA",
+    "SA",
+    "PP",
+    "L",
+    "JD",
+    "P",
+    "RB",
+    "FU",
+    "CF",
+    "BU",
+    "RU",
+    "AG",
+    "SP",
+    "SR",
+    "AU",
+    "CU",
+    "AL",
+    "NI",
+    "I",
+    "JM",
+    "SS"
+  ],
+  "missing": {},
+  "latest": [
+    {
+      "code": "MA",
+      "em_symbol": "甲醇",
+      "date": "2026-11-12",
+      "inventory": 4711.0,
+      "change": -300.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "V",
+      "em_symbol": "PVC",
+      "date": "2026-11-12",
+      "inventory": 109717.0,
+      "change": -528.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "EG",
+      "em_symbol": "乙二醇",
+      "date": "2026-11-12",
+      "inventory": 3332.0,
+      "change": 0.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "M",
+      "em_symbol": "豆粕",
+      "date": "2026-11-12",
+      "inventory": 51845.0,
+      "change": -107.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "FG",
+      "em_symbol": "玻璃",
+      "date": "2026-11-12",
+      "inventory": 1641.0,
+      "change": -10.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "EB",
+      "em_symbol": "苯乙烯",
+      "date": "2026-10-30",
+      "inventory": 0.0,
+      "change": -2430.0,
+      "n": 31,
+      "start": "2026-07-22",
+      "end": "2026-10-30"
+    },
+    {
+      "code": "TA",
+      "em_symbol": "PTA",
+      "date": "2026-11-12",
+      "inventory": 22379.0,
+      "change": 0.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "SA",
+      "em_symbol": "纯碱",
+      "date": "2026-11-12",
+      "inventory": 2831.0,
+      "change": -150.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "PP",
+      "em_symbol": "聚丙烯",
+      "date": "2026-11-12",
+      "inventory": 25892.0,
+      "change": 169.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "L",
+      "em_symbol": "塑料",
+      "date": "2026-11-12",
+      "inventory": 4208.0,
+      "change": -600.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "JD",
+      "em_symbol": "鸡蛋",
+      "date": "2026-09-30",
+      "inventory": 0.0,
+      "change": -204.0,
+      "n": 13,
+      "start": "2026-06-22",
+      "end": "2026-09-30"
+    },
+    {
+      "code": "P",
+      "em_symbol": "棕榈",
+      "date": "2026-11-12",
+      "inventory": 2223.0,
+      "change": 0.0,
+      "n": 61,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "RB",
+      "em_symbol": "螺纹钢",
+      "date": "2026-11-12",
+      "inventory": 30218.0,
+      "change": -2713.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "FU",
+      "em_symbol": "燃油",
+      "date": "2025-12-31",
+      "inventory": 201390.0,
+      "change": 0.0,
+      "n": 67,
+      "start": "2025-09-22",
+      "end": "2025-12-31"
+    },
+    {
+      "code": "CF",
+      "em_symbol": "郑棉",
+      "date": "2026-11-12",
+      "inventory": 6311.0,
+      "change": -7.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "BU",
+      "em_symbol": "沥青",
+      "date": "2026-11-12",
+      "inventory": 0.0,
+      "change": 0.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "RU",
+      "em_symbol": "橡胶",
+      "date": "2026-11-12",
+      "inventory": 144040.0,
+      "change": -1590.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "AG",
+      "em_symbol": "沪银",
+      "date": "2026-11-12",
+      "inventory": 1324163.0,
+      "change": -2883.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "SP",
+      "em_symbol": "纸浆",
+      "date": "2026-11-12",
+      "inventory": 423521.0,
+      "change": 3973.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "SR",
+      "em_symbol": "白糖",
+      "date": "2026-11-12",
+      "inventory": 19824.0,
+      "change": -189.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "AU",
+      "em_symbol": "沪金",
+      "date": "2026-11-12",
+      "inventory": 118404.0,
+      "change": 0.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "CU",
+      "em_symbol": "沪铜",
+      "date": "2026-11-12",
+      "inventory": 2444.0,
+      "change": -76.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "AL",
+      "em_symbol": "沪铝",
+      "date": "2026-11-12",
+      "inventory": 46509.0,
+      "change": -1031.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "NI",
+      "em_symbol": "镍",
+      "date": "2026-11-12",
+      "inventory": 88422.0,
+      "change": 667.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "I",
+      "em_symbol": "铁矿石",
+      "date": "2026-11-12",
+      "inventory": 3300.0,
+      "change": -100.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "JM",
+      "em_symbol": "焦煤",
+      "date": "2026-11-12",
+      "inventory": 900.0,
+      "change": 900.0,
+      "n": 44,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "SS",
+      "em_symbol": "不锈钢",
+      "date": "2026-11-12",
+      "inventory": 54958.0,
+      "change": -58.0,
+      "n": 67,
+      "start": "2026-08-04",
+      "end": "2026-11-12"
+    }
+  ],
+  "fetched_at": "2026-11-12 18:13:10"
+}

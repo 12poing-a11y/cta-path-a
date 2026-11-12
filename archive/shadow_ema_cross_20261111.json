@@ -1,0 +1,120 @@
+{
+  "ok": true,
+  "asof": "2026-11-11",
+  "label": "shadow_ema_cross",
+  "pine": {
+    "fast": 10,
+    "slow": 20,
+    "entry": "crossover(ema10,ema20)=long; crossunder=short",
+    "window": "last 365 calendar days (data-limited)"
+  },
+  "rows": [
+    {
+      "ok": true,
+      "strategy": "ema_cross_flip",
+      "fast": 10,
+      "slow": 20,
+      "fill_price": "next_open",
+      "window_days": 365,
+      "start": "2025-11-11",
+      "end": "2026-11-11",
+      "trade_days": 249,
+      "universe_n": 2,
+      "equity_start": 200000.0,
+      "equity_end": 194330.0,
+      "ret_pct": -2.835,
+      "max_dd_pct": 4.911,
+      "closed_trades": 16,
+      "symbols_traded_n": 1,
+      "symbols_traded": [
+        "SR"
+      ],
+      "exits": {
+        "flip": 15,
+        "eod": 1
+      },
+      "signals": {
+        "long": 12,
+        "short": 13
+      },
+      "trade_win_rate": 25.0,
+      "expectancy_r": -0.437,
+      "max_lose_streak": 5,
+      "trades_by_code": {
+        "SR": 16
+      },
+      "risk_pct": 1.0,
+      "stop_atr_mult_sizing": 1.5,
+      "note": "Pine 无硬止损；此处 1.5×ATR 仅用于手数，出场=反向交叉",
+      "scope": "CF_SR"
+    },
+    {
+      "ok": true,
+      "strategy": "ema_cross_flip",
+      "fast": 10,
+      "slow": 20,
+      "fill_price": "next_open",
+      "window_days": 365,
+      "start": "2025-11-11",
+      "end": "2026-11-11",
+      "trade_days": 249,
+      "universe_n": 27,
+      "equity_start": 200000.0,
+      "equity_end": 192849.45,
+      "ret_pct": -3.575,
+      "max_dd_pct": 11.566,
+      "closed_trades": 36,
+      "symbols_traded_n": 8,
+      "symbols_traded": [
+        "FG",
+        "I",
+        "M",
+        "P",
+        "RB",
+        "SA",
+        "SP",
+        "SR"
+      ],
+      "exits": {
+        "flip": 33,
+        "eod": 3
+      },
+      "signals": {
+        "long": 147,
+        "short": 152
+      },
+      "trade_win_rate": 33.33,
+      "expectancy_r": 0.012,
+      "max_lose_streak": 5,
+      "trades_by_code": {
+        "SR": 2,
+        "SP": 2,
+        "I": 3,
+        "SA": 1,
+        "RB": 9,
+        "FG": 12,
+        "P": 1,
+        "M": 6
+      },
+      "risk_pct": 1.0,
+      "stop_atr_mult_sizing": 1.5,
+      "note": "Pine 无硬止损；此处 1.5×ATR 仅用于手数，出场=反向交叉",
+      "scope": "full_universe"
+    }
+  ],
+  "refs": {
+    "path_a_mom_4_6": {
+      "ret_pct": 18.22,
+      "max_dd_pct": 6.694,
+      "closed_trades": 97,
+      "trade_win_rate": 42.27
+    },
+    "supertrend": {
+      "ret_pct": 15.997,
+      "max_dd_pct": 1.941,
+      "closed_trades": 24,
+      "trade_win_rate": 83.33
+    }
+  },
+  "readout": "EMA10/20 flip is a fast always-in sleeve; expect more trades and whipsaw vs SuperTrend. Compare fee-adjusted ret/DD/win-rate under next_open caps."
+}

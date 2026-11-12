@@ -173,6 +173,97 @@ def _save_cache(path: Path, symbol: str, period: str, bars: list[dict]) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
 
 
+def _iter_minute_cache_paths(root: Path, code: str, period: str) -> list[Path]:
+    folder = root / ".cache" / "akshare" / "minute"
+    if not folder.is_dir():
+        return []
+    code = str(code or "").upper()
+    period = str(period or "15")
+    paths: list[Path] = []
+    for pat in (f"{code}*_{period}_sina.json", f"{code}*_{period}_em.json"):
+        paths.extend(folder.glob(pat))
+    out: list[Path] = []
+    for path in paths:
+        stem = path.name.upper()
+        rest = stem[len(code) :]
+        if rest and rest[0].isalpha():
+            continue
+        out.append(path)
+    return out
+
+
+def load_minute_bars_series(
+    root: Path,
+    code: str,
+    period: str = "60",
+    *,
+    asof: str | None = None,
+) -> list[dict]:
+    """Merge cached minute bars for ``code`` up to ``asof`` date (inclusive).
+
+    Prefers continuous ``{CODE}0`` timestamps when overlapping month files collide.
+    """
+    root = Path(root)
+    code = str(code or "").upper()
+    period = str(period or "60")
+    if not code or period not in PERIODS:
+        return []
+    asof_iso = None
+    if asof:
+        raw = str(asof).replace("-", "")[:8]
+        if len(raw) == 8 and raw.isdigit():
+            asof_iso = f"{raw[:4]}-{raw[4:6]}-{raw[6:8]}"
+        else:
+            asof_iso = str(asof)[:10]
+    by_dt: dict[str, dict] = {}
+    # Prefer CODE0 continuous when present: load month files first, then CODE0 overwrite.
+    paths = sorted(
+        _iter_minute_cache_paths(root, code, period),
+        key=lambda p: (0 if p.stem.upper().startswith(f"{code}0_") else 1, p.name),
+    )
+    for path in paths:
+        rows = _load_cache(path, ttl=0) or []
+        is_cont = path.stem.upper().startswith(f"{code}0_")
+        for bar in rows:
+            if not isinstance(bar, dict):
+                continue
+            dt = str(bar.get("datetime") or bar.get("date") or "")
+            if len(dt) < 10:
+                continue
+            if asof_iso and dt[:10] > asof_iso:
+                continue
+            key = dt[:16] if len(dt) >= 16 else dt[:10]
+            if key in by_dt and not is_cont:
+                continue
+            by_dt[key] = bar
+    return [by_dt[k] for k in sorted(by_dt)]
+
+
+def load_minute_bars_on_date(
+    root: Path,
+    code: str,
+    day: str,
+    period: str = "15",
+) -> list[dict]:
+    """Return cached 15m/60m bars for ``code`` on calendar day (no network).
+
+    Merges all ``{CODE}*_15_sina.json`` / continuous ``{CODE}0`` caches that
+    match the variety. ``ttl=0`` so backtests can read CI-pulled caches.
+    """
+    root = Path(root)
+    code = str(code or "").upper()
+    day = str(day or "").replace("-", "")[:8]
+    if len(day) == 8 and day.isdigit():
+        day_iso = f"{day[:4]}-{day[4:6]}-{day[6:8]}"
+    else:
+        day_iso = str(day or "")[:10]
+    period = str(period or "15")
+    if not code or len(day_iso) != 10 or period not in PERIODS:
+        return []
+    rows = load_minute_bars_series(root, code, period, asof=day_iso)
+    return [b for b in rows if str(b.get("datetime") or b.get("date") or "")[:10] == day_iso]
+
+
 def fetch_minute_bars_sina(
     symbol: str,
     period: str = "15",

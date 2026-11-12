@@ -38,14 +38,19 @@ from position_rules import (  # noqa: E402
     compound_equity,
     risk_budget_yuan,
 )
-from wyckoff_pullback import apply_stop_target  # noqa: E402
+from wyckoff_pullback import (  # noqa: E402
+    apply_stop_target,
+    apply_stop_target_intraday,
+    minute_bars_aligned_with_entry,
+)
 
 LOOKBACK_DAYS = 260
 WARMUP = 60
 BATCH_LABEL = "2026一年-pathA-nextOpen"
 CUTOFF_DAYS = 420
-SCHEMA_VERSION = "cta-backtest-v11-next-open"
+SCHEMA_VERSION = "cta-backtest-v12-intraday-exits"
 DEFAULT_FILL_PRICE = "next_open"
+EXIT_MINUTE_PERIOD = "15"
 
 # --- P0 lookahead guards -----------------------------------------------------
 # Seat rankings / basis are published after the T close (seats ~16:00-17:00),
@@ -878,6 +883,12 @@ def simulate(
     sleeve_counts: dict[str, int] = {}
     bypass_counts: dict[str, int] = {}
     vol_bypass_counts: dict[str, int] = {}
+    minute_exit_n = 0
+    daily_exit_fallback_n = 0
+    try:
+        from minute_data import load_minute_bars_on_date
+    except Exception:  # noqa: BLE001
+        load_minute_bars_on_date = None  # type: ignore[assignment]
     for di, d in enumerate(trade_dates):
         price_pnl = 0.0
         day_cost = 0.0
@@ -892,9 +903,41 @@ def simulate(
             bar = hist[i1]
             mult = series[code]["meta"]["mult"]
             sign = 1 if p["direction"] == "多" else -1
-            reason, px = apply_stop_target(
-                p["direction"], p["entry"], p["stop"], p["target"], bar
-            )
+            # Prefer 15m first-touch; fall back to daily OHLC when cache misses.
+            # On entry day, ignore minute bars before ~day-session open (next_open fill).
+            reason, px = None, bar["close"]
+            used_minute = False
+            if load_minute_bars_on_date is not None:
+                try:
+                    m_bars = load_minute_bars_on_date(
+                        ROOT, code, d, period=EXIT_MINUTE_PERIOD
+                    )
+                except Exception:  # noqa: BLE001
+                    m_bars = []
+                if m_bars and str(p.get("entry_date") or "")[:10] == str(d)[:10]:
+                    cutoff = f"{str(d)[:10]} 09:00:00"
+                    m_bars = [
+                        b
+                        for b in m_bars
+                        if str(b.get("datetime") or b.get("date") or "") >= cutoff
+                    ]
+                # Month-contract minute vs continuous entry → reject (false stops).
+                if m_bars and not minute_bars_aligned_with_entry(p["entry"], m_bars):
+                    m_bars = []
+                if m_bars:
+                    m_reason, m_px = apply_stop_target_intraday(
+                        p["direction"], p["entry"], p["stop"], p["target"], m_bars
+                    )
+                    used_minute = True
+                    if m_reason:
+                        reason, px = m_reason, m_px
+            if not used_minute:
+                reason, px = apply_stop_target(
+                    p["direction"], p["entry"], p["stop"], p["target"], bar
+                )
+                daily_exit_fallback_n += 1
+            elif reason in ("stop", "target"):
+                minute_exit_n += 1
             # trend flip exit (Path-A conflict / opposite, or composite-trend sign flip)
             if reason is None and p.get("reason") == "roll_carry":
                 pair = ((curves.get(code) or {}).get("carry") or {}).get(d)
@@ -1366,6 +1409,10 @@ def simulate(
         "carry_bypass": bypass,
         "availability_lag": int(availability_lag),
         "fill_price": fill_price,
+        "exit_check": "minute_15",
+        "exit_minute_period": EXIT_MINUTE_PERIOD,
+        "minute_stop_exits": minute_exit_n,
+        "daily_exit_fallback_checks": daily_exit_fallback_n,
         "slippage_ticks": slippage_ticks,
         "git_sha": _git_sha(ROOT),
         "universe_sha256": _file_sha256(ROOT / "universe.json"),
@@ -1403,12 +1450,13 @@ def simulate(
                 f"正式成交={fill_price}（next_open=T日信号、T+1开盘入场并平移止损止盈）。"
             ),
             "close": (
-                "同根K线先止损(stop)后止盈(target)；"
-                "趋势不再同向或composite_trend翻号则以signal在收盘价平仓。"
+                "持仓期优先用当日15分钟线按时间顺序触及止盈/止损即平"
+                "（单根15m内仍先止损后止盈）；无分钟缓存则回退日线OHLC；"
+                "未触及则趋势不再同向或composite_trend翻号以signal在收盘价平仓。"
             ),
             "exit_codes": {
-                "target": "触及止盈",
-                "stop": "触及止损",
+                "target": "盘中触及止盈",
+                "stop": "盘中触及止损",
                 "signal": "趋势/信号失效平仓",
             },
             "params": {
@@ -1418,6 +1466,8 @@ def simulate(
                 "min_r60": min_r60,
                 "max_positions": max_positions,
                 "mode": mode,
+                "exit_check": "minute_15",
+                "fill_price": fill_price,
             },
         },
 

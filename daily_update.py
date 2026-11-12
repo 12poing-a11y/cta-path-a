@@ -884,6 +884,30 @@ def main():
             print(f"::warning title=tech_score refresh failed::{exc}")
             print(msg, file=sys.stderr)
         try:
+            # SuperTrend observe sleeve (shadow + proxy 模拟仓); does not touch Path-A.
+            from scripts.shadow_supertrend import write_proxy_supertrend
+
+            st_meta = write_proxy_supertrend(ROOT)
+            print(
+                f"[st-proxy] ret={st_meta.get('ret_pct')}% held={st_meta.get('held_n')} "
+                f"→ {st_meta.get('proxy')}"
+            )
+        except Exception as exc:
+            print(f"[st-proxy] refresh failed: {exc}")
+            print(f"::warning title=supertrend proxy refresh failed::{exc}")
+        try:
+            # 仓单：交易所日报主源 + 东财库存旁路；软失败，不编造。
+            from warehouse_receipt import refresh_warehouse
+
+            wh = refresh_warehouse(ROOT)
+            print(
+                f"[warehouse] primary={wh.get('primary_n')} bypass={wh.get('bypass_n')} "
+                f"missing={wh.get('missing_n')} ex={wh.get('exchange_ymd')}"
+            )
+        except Exception as exc:
+            print(f"[warehouse] refresh failed: {exc}")
+            print(f"::warning title=warehouse refresh failed::{exc}")
+        try:
             # Keep desk_composite_latest.json aligned with today's L1 report (final signal
             # marks it 过期 otherwise). Soft: needs desk deps (requirements-desk.txt).
             from desk.composite_eval import desk_composite_score

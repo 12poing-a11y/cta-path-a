@@ -1,0 +1,12 @@
+{
+  "id": "proxy_supertrend",
+  "name": "本地代理·SuperTrend观察",
+  "description": "TradingView SuperTrend（ATR10×3，Wilder）翻转观察袖套：Path-A 样本偏少时用于影子对照；不改正式 seats 开仓。",
+  "curve_file": "external/strategies/proxy_supertrend.json",
+  "tags": [
+    "proxy",
+    "supertrend",
+    "observe",
+    "shadow"
+  ]
+}

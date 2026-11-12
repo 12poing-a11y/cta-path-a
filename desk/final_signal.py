@@ -463,6 +463,30 @@ def build_final_signal_row(
         sent_label = str(sentiment.get("label") or sentiment.get("direction") or "—")
 
     variety = format_variety_label(code, name, root=root)
+    exit_cond = None
+    if isinstance(pos, dict):
+        exit_cond = pos.get("exit_condition")
+    if not exit_cond and (stop is not None or target is not None):
+        try:
+            from paper_book import exit_condition_text
+
+            exit_cond = exit_condition_text(
+                {
+                    "stop": stop,
+                    "target": target,
+                    "atr": (pos or {}).get("atr") if isinstance(pos, dict) else None,
+                    "stop_atr_mult": (pos or {}).get("stop_atr_mult")
+                    if isinstance(pos, dict)
+                    else None,
+                    "reward_rr": (pos or {}).get("reward_rr")
+                    if isinstance(pos, dict)
+                    else None,
+                },
+                stop_atr_mult=(rules or {}).get("stop_atr_mult"),
+                reward_rr=(rules or {}).get("reward_rr"),
+            )
+        except Exception:  # noqa: BLE001
+            exit_cond = None
     return {
         "代码": code,
         "品种": variety,
@@ -473,6 +497,7 @@ def build_final_signal_row(
         "入场": entry,
         "止损": stop,
         "止盈": target,
+        "平仓条件": exit_cond or "—",
         "浮动盈亏": floating,
         "L1日选": l1_label,
         "决策": conclusion,
@@ -866,6 +891,7 @@ def _display_frame(rows: list[dict]) -> pd.DataFrame:
         "入场",
         "止损",
         "止盈",
+        "平仓条件",
         "浮动盈亏",
         "L1日选",
         "决策",

@@ -4,8 +4,8 @@
   "live_trading": false,
   "formal_path_a": {
     "role": "untouched_reference",
-    "stop_atr_mult": 1.2,
-    "reward_rr": 1.5,
+    "stop_atr_mult": 0.8,
+    "reward_rr": 2.0,
     "config": "execution_rules.json",
     "note": "Reference only. This runner does not read or write execution_rules.json, universe.json, or any formal latest artifact."
   },
@@ -27,7 +27,7 @@
     "shadow_reward_rr": 1.5,
     "atr_buffer_k": 0,
     "atr_module": "not_wired",
-    "note": "Target is shadow_reward_rr times the distance from the next open to the zone boundary. It is a shadow experiment, not the formal ATR×1.2 stop."
+    "note": "Target is shadow_reward_rr times the distance from the next open to the zone boundary. It is a shadow experiment, not the formal ATR×0.8 stop."
   },
   "costs": {
     "slippage_bps": 0,

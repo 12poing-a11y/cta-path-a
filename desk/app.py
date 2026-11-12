@@ -430,6 +430,10 @@ def main() -> None:
                 equity_col="equity",
             )
             y_title = "归一化=100" if normalize else "权益"
+            st.caption(
+                "Path-A 曲线口径：入场 T+1 开盘（next_open）；"
+                "止盈/止损按盘中 15 分钟线触及即平（缺分钟回退日线）。"
+            )
             st.plotly_chart(
                 equity_overlay_fig(aligned, title="多策略净值叠加（仅有曲线者）", y_title=y_title),
                 width="stretch",

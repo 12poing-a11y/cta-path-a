@@ -1,0 +1,212 @@
+{
+  "ok": true,
+  "asof": "2026-11-11",
+  "label": "shadow_supertrend",
+  "pine": {
+    "atr_period": 10,
+    "multiplier": 3.0,
+    "src": "hl2",
+    "atr_method": "wilder/RMA (changeATR=true)",
+    "entry": "buySignal / sellSignal flip",
+    "window": "last 365 calendar days"
+  },
+  "rows": [
+    {
+      "ok": true,
+      "strategy": "supertrend_flip",
+      "atr_period": 10,
+      "multiplier": 3.0,
+      "fill_price": "next_open",
+      "window_days": 365,
+      "start": "2025-11-11",
+      "end": "2026-11-11",
+      "trade_days": 249,
+      "universe_n": 2,
+      "equity_start": 200000.0,
+      "equity_end": 211665.59,
+      "ret_pct": 5.833,
+      "max_dd_pct": 0.901,
+      "closed_trades": 6,
+      "symbols_traded_n": 1,
+      "symbols_traded": [
+        "SR"
+      ],
+      "exits": {
+        "flip": 5,
+        "eod": 1
+      },
+      "signals": {
+        "sell": 7,
+        "buy": 5
+      },
+      "trade_win_rate": 100.0,
+      "expectancy_r": 1.336,
+      "max_lose_streak": 0,
+      "trades_by_code": {
+        "SR": 6
+      },
+      "risk_pct": 1.0,
+      "stop_on_band": true,
+      "scope": "CF_SR",
+      "mode": "band_stop"
+    },
+    {
+      "ok": true,
+      "strategy": "supertrend_flip",
+      "atr_period": 10,
+      "multiplier": 3.0,
+      "fill_price": "next_open",
+      "window_days": 365,
+      "start": "2025-11-11",
+      "end": "2026-11-11",
+      "trade_days": 249,
+      "universe_n": 2,
+      "equity_start": 200000.0,
+      "equity_end": 211665.59,
+      "ret_pct": 5.833,
+      "max_dd_pct": 0.901,
+      "closed_trades": 6,
+      "symbols_traded_n": 1,
+      "symbols_traded": [
+        "SR"
+      ],
+      "exits": {
+        "flip": 5,
+        "eod": 1
+      },
+      "signals": {
+        "sell": 7,
+        "buy": 5
+      },
+      "trade_win_rate": 100.0,
+      "expectancy_r": 1.336,
+      "max_lose_streak": 0,
+      "trades_by_code": {
+        "SR": 6
+      },
+      "risk_pct": 1.0,
+      "stop_on_band": false,
+      "scope": "CF_SR",
+      "mode": "flip_only"
+    },
+    {
+      "ok": true,
+      "strategy": "supertrend_flip",
+      "atr_period": 10,
+      "multiplier": 3.0,
+      "fill_price": "next_open",
+      "window_days": 365,
+      "start": "2025-11-11",
+      "end": "2026-11-11",
+      "trade_days": 249,
+      "universe_n": 27,
+      "equity_start": 200000.0,
+      "equity_end": 231993.73,
+      "ret_pct": 15.997,
+      "max_dd_pct": 1.941,
+      "closed_trades": 24,
+      "symbols_traded_n": 8,
+      "symbols_traded": [
+        "FG",
+        "FU",
+        "JD",
+        "L",
+        "RB",
+        "SR",
+        "SS",
+        "V"
+      ],
+      "exits": {
+        "flip": 21,
+        "eod": 3
+      },
+      "signals": {
+        "sell": 96,
+        "buy": 85
+      },
+      "trade_win_rate": 83.33,
+      "expectancy_r": 0.828,
+      "max_lose_streak": 3,
+      "trades_by_code": {
+        "SS": 2,
+        "SR": 4,
+        "FU": 1,
+        "JD": 3,
+        "RB": 6,
+        "L": 1,
+        "FG": 3,
+        "V": 4
+      },
+      "risk_pct": 1.0,
+      "stop_on_band": true,
+      "scope": "full_universe",
+      "mode": "band_stop"
+    },
+    {
+      "ok": true,
+      "strategy": "supertrend_flip",
+      "atr_period": 10,
+      "multiplier": 3.0,
+      "fill_price": "next_open",
+      "window_days": 365,
+      "start": "2025-11-11",
+      "end": "2026-11-11",
+      "trade_days": 249,
+      "universe_n": 27,
+      "equity_start": 200000.0,
+      "equity_end": 231993.73,
+      "ret_pct": 15.997,
+      "max_dd_pct": 1.941,
+      "closed_trades": 24,
+      "symbols_traded_n": 8,
+      "symbols_traded": [
+        "FG",
+        "FU",
+        "JD",
+        "L",
+        "RB",
+        "SR",
+        "SS",
+        "V"
+      ],
+      "exits": {
+        "flip": 21,
+        "eod": 3
+      },
+      "signals": {
+        "sell": 96,
+        "buy": 85
+      },
+      "trade_win_rate": 83.33,
+      "expectancy_r": 0.828,
+      "max_lose_streak": 3,
+      "trades_by_code": {
+        "SS": 2,
+        "SR": 4,
+        "FU": 1,
+        "JD": 3,
+        "RB": 6,
+        "L": 1,
+        "FG": 3,
+        "V": 4
+      },
+      "risk_pct": 1.0,
+      "stop_on_band": false,
+      "scope": "full_universe",
+      "mode": "flip_only"
+    }
+  ],
+  "path_a_formal_ref": {
+    "ret_pct": 18.22,
+    "max_dd_pct": 6.694,
+    "closed_trades": 97,
+    "trade_win_rate": 42.27,
+    "exits": {
+      "target": 39,
+      "stop": 53,
+      "signal": 5
+    },
+    "label": "path_a_mom_4_6_formal"
+  },
+  "readout": "SuperTrend is always-in / flip CTA. Under next_open + portfolio caps it is a baseline trend sleeve, not a Path-A replacement until it beats mom_4_6 on ret/DD."
+}

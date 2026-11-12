@@ -1,0 +1,353 @@
+{
+  "ok": true,
+  "code": "PP",
+  "em_symbol": "聚丙烯",
+  "source": "eastmoney.futures_inventory_em",
+  "rows": [
+    {
+      "date": "2026-08-04",
+      "inventory": 25226.0,
+      "change": null
+    },
+    {
+      "date": "2026-08-05",
+      "inventory": 25226.0,
+      "change": 0.0
+    },
+    {
+      "date": "2026-08-06",
+      "inventory": 26326.0,
+      "change": 1100.0
+    },
+    {
+      "date": "2026-08-07",
+      "inventory": 26326.0,
+      "change": 0.0
+    },
+    {
+      "date": "2026-08-10",
+      "inventory": 25679.0,
+      "change": -647.0
+    },
+    {
+      "date": "2026-08-11",
+      "inventory": 26379.0,
+      "change": 700.0
+    },
+    {
+      "date": "2026-08-12",
+      "inventory": 26879.0,
+      "change": 500.0
+    },
+    {
+      "date": "2026-08-13",
+      "inventory": 27054.0,
+      "change": 175.0
+    },
+    {
+      "date": "2026-08-14",
+      "inventory": 27129.0,
+      "change": 75.0
+    },
+    {
+      "date": "2026-08-17",
+      "inventory": 27129.0,
+      "change": 0.0
+    },
+    {
+      "date": "2026-08-18",
+      "inventory": 27129.0,
+      "change": 0.0
+    },
+    {
+      "date": "2026-08-19",
+      "inventory": 27129.0,
+      "change": 0.0
+    },
+    {
+      "date": "2026-08-20",
+      "inventory": 26094.0,
+      "change": -1035.0
+    },
+    {
+      "date": "2026-08-21",
+      "inventory": 27696.0,
+      "change": 1602.0
+    },
+    {
+      "date": "2026-08-24",
+      "inventory": 28800.0,
+      "change": 1104.0
+    },
+    {
+      "date": "2026-08-25",
+      "inventory": 29132.0,
+      "change": 332.0
+    },
+    {
+      "date": "2026-08-26",
+      "inventory": 28730.0,
+      "change": -402.0
+    },
+    {
+      "date": "2026-08-27",
+      "inventory": 28417.0,
+      "change": -313.0
+    },
+    {
+      "date": "2026-08-28",
+      "inventory": 28280.0,
+      "change": -137.0
+    },
+    {
+      "date": "2026-08-31",
+      "inventory": 28906.0,
+      "change": 626.0
+    },
+    {
+      "date": "2026-09-01",
+      "inventory": 28906.0,
+      "change": 0.0
+    },
+    {
+      "date": "2026-09-02",
+      "inventory": 28391.0,
+      "change": -515.0
+    },
+    {
+      "date": "2026-09-03",
+      "inventory": 28327.0,
+      "change": -64.0
+    },
+    {
+      "date": "2026-09-04",
+      "inventory": 28025.0,
+      "change": -302.0
+    },
+    {
+      "date": "2026-09-07",
+      "inventory": 27793.0,
+      "change": -232.0
+    },
+    {
+      "date": "2026-09-08",
+      "inventory": 27133.0,
+      "change": -660.0
+    },
+    {
+      "date": "2026-09-09",
+      "inventory": 27069.0,
+      "change": -64.0
+    },
+    {
+      "date": "2026-09-10",
+      "inventory": 28116.0,
+      "change": 1047.0
+    },
+    {
+      "date": "2026-09-11",
+      "inventory": 32089.0,
+      "change": 3973.0
+    },
+    {
+      "date": "2026-09-14",
+      "inventory": 31891.0,
+      "change": -198.0
+    },
+    {
+      "date": "2026-09-15",
+      "inventory": 31434.0,
+      "change": -457.0
+    },
+    {
+      "date": "2026-09-16",
+      "inventory": 31182.0,
+      "change": -252.0
+    },
+    {
+      "date": "2026-09-17",
+      "inventory": 30995.0,
+      "change": -187.0
+    },
+    {
+      "date": "2026-09-18",
+      "inventory": 30328.0,
+      "change": -667.0
+    },
+    {
+      "date": "2026-09-21",
+      "inventory": 28403.0,
+      "change": -1925.0
+    },
+    {
+      "date": "2026-09-22",
+      "inventory": 27847.0,
+      "change": -556.0
+    },
+    {
+      "date": "2026-09-23",
+      "inventory": 27421.0,
+      "change": -426.0
+    },
+    {
+      "date": "2026-09-24",
+      "inventory": 26734.0,
+      "change": -687.0
+    },
+    {
+      "date": "2026-09-28",
+      "inventory": 26149.0,
+      "change": -585.0
+    },
+    {
+      "date": "2026-09-29",
+      "inventory": 26954.0,
+      "change": 805.0
+    },
+    {
+      "date": "2026-09-30",
+      "inventory": 26922.0,
+      "change": -32.0
+    },
+    {
+      "date": "2026-10-08",
+      "inventory": 26857.0,
+      "change": -65.0
+    },
+    {
+      "date": "2026-10-09",
+      "inventory": 27965.0,
+      "change": 1108.0
+    },
+    {
+      "date": "2026-10-12",
+      "inventory": 27624.0,
+      "change": -341.0
+    },
+    {
+      "date": "2026-10-13",
+      "inventory": 26615.0,
+      "change": -1009.0
+    },
+    {
+      "date": "2026-10-14",
+      "inventory": 25434.0,
+      "change": -1181.0
+    },
+    {
+      "date": "2026-10-15",
+      "inventory": 25384.0,
+      "change": -50.0
+    },
+    {
+      "date": "2026-10-16",
+      "inventory": 26304.0,
+      "change": 920.0
+    },
+    {
+      "date": "2026-10-19",
+      "inventory": 26390.0,
+      "change": 86.0
+    },
+    {
+      "date": "2026-10-20",
+      "inventory": 27370.0,
+      "change": 980.0
+    },
+    {
+      "date": "2026-10-21",
+      "inventory": 27570.0,
+      "change": 200.0
+    },
+    {
+      "date": "2026-10-22",
+      "inventory": 27450.0,
+      "change": -120.0
+    },
+    {
+      "date": "2026-10-23",
+      "inventory": 27450.0,
+      "change": 0.0
+    },
+    {
+      "date": "2026-10-26",
+      "inventory": 27450.0,
+      "change": 0.0
+    },
+    {
+      "date": "2026-10-27",
+      "inventory": 27278.0,
+      "change": -172.0
+    },
+    {
+      "date": "2026-10-28",
+      "inventory": 26945.0,
+      "change": -333.0
+    },
+    {
+      "date": "2026-10-29",
+      "inventory": 26568.0,
+      "change": -377.0
+    },
+    {
+      "date": "2026-10-30",
+      "inventory": 28058.0,
+      "change": 1490.0
+    },
+    {
+      "date": "2026-11-02",
+      "inventory": 26437.0,
+      "change": -1621.0
+    },
+    {
+      "date": "2026-11-03",
+      "inventory": 25800.0,
+      "change": -637.0
+    },
+    {
+      "date": "2026-11-04",
+      "inventory": 24618.0,
+      "change": -1182.0
+    },
+    {
+      "date": "2026-11-05",
+      "inventory": 24894.0,
+      "change": 276.0
+    },
+    {
+      "date": "2026-11-06",
+      "inventory": 25456.0,
+      "change": 562.0
+    },
+    {
+      "date": "2026-11-09",
+      "inventory": 25158.0,
+      "change": -298.0
+    },
+    {
+      "date": "2026-11-10",
+      "inventory": 25283.0,
+      "change": 125.0
+    },
+    {
+      "date": "2026-11-11",
+      "inventory": 25723.0,
+      "change": 440.0
+    },
+    {
+      "date": "2026-11-12",
+      "inventory": 25892.0,
+      "change": 169.0
+    }
+  ],
+  "error": null,
+  "n": 67,
+  "start": "2026-08-04",
+  "end": "2026-11-12",
+  "last": {
+    "date": "2026-11-12",
+    "inventory": 25892.0,
+    "change": 169.0
+  },
+  "fetched_at": "2026-11-12 18:13:01"
+}

@@ -1,18 +1,18 @@
 {
   "equity": 200000,
-  "risk_pct": 1.5,
+  "risk_pct": 2.0,
   "l1_mult": 1.0,
-  "notes": "Path-A 20/60同向；动量门槛3%/5%；止损1.2×ATR、止盈1.5R（止盈距离1.8×ATR）。正式回测成交=下一交易日开盘(next_open)，席位/升贴水可用性滞后1个交易日；成本=每边1跳滑点+2026-09-02客户手续费。旧口径对照（收盘成交 close）：2025-11-27→2026-10-20 净收益约+10.09%、净回撤约4.86%（原1×ATR/2R约+6.22%/5.04%）——仅作历史对照，不以 close 数字作正式 KPI。日报 entry_filter=seats：信号先过 20/60，再按席位级联确认——跟随中信、国泰君安、华泰、永安、东证；其次摩根大通、摩根士丹利、瑞银、高盛；再次与东方财富、平安、方正中期、徽商、中信建投反向；单边不开反向单。观察袖套 AU/CU/AL/NI/JM/SS/I 同栈进日报与模拟仓，手数不足时抬到 observe.min_lots=1（不改 20 万执行权益）。排名中信建投计入中建投，东证期货计入东证融汇；大商所无会员排名时放行。",
+  "notes": "Path-A 20/60同向；动量门槛4%/6%；止损0.8×ATR、止盈2R（止盈距离1.6×ATR）；单笔风险2%。正式回测成交=下一交易日开盘(next_open)，席位/升贴水可用性滞后1个交易日；成本=每边1跳滑点+2026-09-02客户手续费。策略层晋级：shadow_strategy_opt_t1_20261111 选 mom_4_6（净约+18.22%/DD6.69%），替换前正式动量3%/5%（同窗约+7.40%）。旧 close 口径数字仅作历史对照，不以 close 作正式 KPI。日报 entry_filter=seats：信号先过 20/60，再按席位级联确认——跟随中信、国泰君安、华泰、永安、东证；其次摩根大通、摩根士丹利、瑞银、高盛；再次与东方财富、平安、方正中期、徽商、中信建投反向；单边不开反向单。观察袖套 AU/CU/AL/NI/JM/SS/I 同栈进日报与模拟仓，手数不足时抬到 observe.min_lots=1（不改 20 万执行权益）。排名中信建投计入中建投，东证期货计入东证融汇；大商所无会员排名时放行。",
   "backtest": {
     "fill_price": "next_open",
     "availability_lag_days": 1,
     "note": "T日收盘后算信号；T+1开盘成交；席位/升贴水按上一交易日可见。"
   },
   "selection": {
-    "rule": "Path-A入场 + 席位级联确认 + 升贴水极端旁路(≥1%禁开逆向) + ATR止损1.2R/止盈1.5R；板块去重+Top3+名义/风险帽；观察袖套金属同栈可进模拟仓",
-    "strategy": "path_a_atr_rr1_5",
-    "reward_rr": 1.5,
-    "stop_atr_mult": 1.2,
+    "rule": "Path-A入场(|r20|≥4%、|r60|≥6%同向) + 席位级联确认 + 升贴水极端旁路(≥1%禁开逆向) + ATR止损0.8×ATR/止盈2R；单笔风险2%；板块去重+Top3+名义/风险帽；观察袖套金属同栈可进模拟仓",
+    "strategy": "path_a_atr_rr2",
+    "reward_rr": 2.0,
+    "stop_atr_mult": 0.8,
     "asof": "2026-10-20",
     "source": "新浪 InnerFuturesNewService {CODE}0 优先，腾讯 kline 补缺，不足或缺失时 iFinD ZL",
     "excluded": [
@@ -337,8 +337,8 @@
   "max_gross_exposure_pct": 50,
   "max_portfolio_risk_pct": 8,
   "max_per_bucket": 1,
-  "min_r20_pct": 3,
-  "min_r60_pct": 5,
+  "min_r20_pct": 4,
+  "min_r60_pct": 6,
   "equity_compound": true,
   "entry_filter": "seats",
   "carry_bypass": {

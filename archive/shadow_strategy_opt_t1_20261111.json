@@ -1,0 +1,323 @@
+{
+  "ok": true,
+  "asof": "2026-11-11",
+  "label": "shadow_strategy_opt_t1",
+  "note": "Path-A non-ATR strategy ablation under next_open; formal stop0.8/rr2/risk2",
+  "baseline": {
+    "label": "baseline",
+    "ret_pct": 7.396,
+    "max_dd_pct": 7.551,
+    "expectancy_r": 0.231,
+    "min_r20": 3.0,
+    "min_r60": 5.0,
+    "closed_trades": 99
+  },
+  "gates": {
+    "ret_pp_min": 1.0,
+    "max_dd_pct_max": 10.0,
+    "expectancy_ge_baseline": true
+  },
+  "rows": [
+    {
+      "label": "baseline",
+      "mode": "seats",
+      "stop_atr_mult": 0.8,
+      "reward_rr": 2.0,
+      "risk_pct": 2.0,
+      "min_r20": 3.0,
+      "min_r60": 5.0,
+      "carry_bypass": {
+        "enabled": true,
+        "extreme_gap_pct": 1.0,
+        "action": "block",
+        "scale": 0.5
+      },
+      "fill_price": "next_open",
+      "ret_pct": 7.396,
+      "gross_ret_pct": 11.159,
+      "max_dd_pct": 7.551,
+      "closed_trades": 99,
+      "exits": {
+        "target": 39,
+        "stop": 55,
+        "signal": 5
+      },
+      "trade_win_rate": 41.41,
+      "expectancy_r": 0.231,
+      "sleeve_counts": {
+        "path_a_rr2": 99
+      },
+      "minute_stop_exits": 19,
+      "summary": "PathA seats 2025-12-18→2026-11-11 净权益 214792（+7.40%）毛权益 222318（+11.16%）成本 7526，净MaxDD 7.55% 毛MaxDD 6.40%，成交99笔，结论 继续L1"
+    },
+    {
+      "label": "mom_2_4",
+      "mode": "seats",
+      "stop_atr_mult": 0.8,
+      "reward_rr": 2.0,
+      "risk_pct": 2.0,
+      "min_r20": 2.0,
+      "min_r60": 4.0,
+      "carry_bypass": {
+        "enabled": true,
+        "extreme_gap_pct": 1.0,
+        "action": "block",
+        "scale": 0.5
+      },
+      "fill_price": "next_open",
+      "ret_pct": 1.096,
+      "gross_ret_pct": 5.224,
+      "max_dd_pct": 7.44,
+      "closed_trades": 108,
+      "exits": {
+        "target": 43,
+        "stop": 60,
+        "signal": 5
+      },
+      "trade_win_rate": 42.59,
+      "expectancy_r": 0.245,
+      "sleeve_counts": {
+        "path_a_rr2": 108
+      },
+      "minute_stop_exits": 19,
+      "summary": "PathA seats 2025-12-18→2026-11-11 净权益 202192（+1.10%）毛权益 210448（+5.22%）成本 8256，净MaxDD 7.44% 毛MaxDD 6.15%，成交108笔，结论 继续L1"
+    },
+    {
+      "label": "mom_4_6",
+      "mode": "seats",
+      "stop_atr_mult": 0.8,
+      "reward_rr": 2.0,
+      "risk_pct": 2.0,
+      "min_r20": 4.0,
+      "min_r60": 6.0,
+      "carry_bypass": {
+        "enabled": true,
+        "extreme_gap_pct": 1.0,
+        "action": "block",
+        "scale": 0.5
+      },
+      "fill_price": "next_open",
+      "ret_pct": 18.22,
+      "gross_ret_pct": 22.299,
+      "max_dd_pct": 6.694,
+      "closed_trades": 97,
+      "exits": {
+        "target": 39,
+        "stop": 53,
+        "signal": 5
+      },
+      "trade_win_rate": 42.27,
+      "expectancy_r": 0.255,
+      "sleeve_counts": {
+        "path_a_rr2": 97
+      },
+      "minute_stop_exits": 16,
+      "summary": "PathA seats 2025-12-18→2026-11-11 净权益 236440（+18.22%）毛权益 244598（+22.30%）成本 8158，净MaxDD 6.69% 毛MaxDD 6.44%，成交97笔，结论 继续L1"
+    },
+    {
+      "label": "mom_5_8",
+      "mode": "seats",
+      "stop_atr_mult": 0.8,
+      "reward_rr": 2.0,
+      "risk_pct": 2.0,
+      "min_r20": 5.0,
+      "min_r60": 8.0,
+      "carry_bypass": {
+        "enabled": true,
+        "extreme_gap_pct": 1.0,
+        "action": "block",
+        "scale": 0.5
+      },
+      "fill_price": "next_open",
+      "ret_pct": 6.03,
+      "gross_ret_pct": 9.774,
+      "max_dd_pct": 6.166,
+      "closed_trades": 93,
+      "exits": {
+        "target": 35,
+        "stop": 55,
+        "signal": 3
+      },
+      "trade_win_rate": 39.78,
+      "expectancy_r": 0.167,
+      "sleeve_counts": {
+        "path_a_rr2": 93
+      },
+      "minute_stop_exits": 18,
+      "summary": "PathA seats 2025-12-18→2026-11-11 净权益 212060（+6.03%）毛权益 219548（+9.77%）成本 7487，净MaxDD 6.17% 毛MaxDD 5.65%，成交93笔，结论 继续L1"
+    },
+    {
+      "label": "carry_gap_0_5",
+      "mode": "seats",
+      "stop_atr_mult": 0.8,
+      "reward_rr": 2.0,
+      "risk_pct": 2.0,
+      "min_r20": 3.0,
+      "min_r60": 5.0,
+      "carry_bypass": {
+        "enabled": true,
+        "extreme_gap_pct": 0.5,
+        "action": "block",
+        "scale": 0.5
+      },
+      "fill_price": "next_open",
+      "ret_pct": 9.258,
+      "gross_ret_pct": 12.773,
+      "max_dd_pct": 9.675,
+      "closed_trades": 94,
+      "exits": {
+        "target": 36,
+        "stop": 55,
+        "signal": 3
+      },
+      "trade_win_rate": 41.49,
+      "expectancy_r": 0.192,
+      "sleeve_counts": {
+        "path_a_rr2": 94
+      },
+      "minute_stop_exits": 15,
+      "summary": "PathA seats 2025-12-18→2026-11-11 净权益 218517（+9.26%）毛权益 225546（+12.77%）成本 7029，净MaxDD 9.68% 毛MaxDD 8.68%，成交94笔，结论 继续L1"
+    },
+    {
+      "label": "carry_gap_1_5",
+      "mode": "seats",
+      "stop_atr_mult": 0.8,
+      "reward_rr": 2.0,
+      "risk_pct": 2.0,
+      "min_r20": 3.0,
+      "min_r60": 5.0,
+      "carry_bypass": {
+        "enabled": true,
+        "extreme_gap_pct": 1.5,
+        "action": "block",
+        "scale": 0.5
+      },
+      "fill_price": "next_open",
+      "ret_pct": -3.514,
+      "gross_ret_pct": 0.474,
+      "max_dd_pct": 10.667,
+      "closed_trades": 108,
+      "exits": {
+        "target": 38,
+        "stop": 64,
+        "signal": 6
+      },
+      "trade_win_rate": 37.04,
+      "expectancy_r": 0.108,
+      "sleeve_counts": {
+        "path_a_rr2": 108
+      },
+      "minute_stop_exits": 24,
+      "summary": "PathA seats 2025-12-18→2026-11-11 净权益 192972（-3.51%）毛权益 200948（+0.47%）成本 7976，净MaxDD 10.67% 毛MaxDD 9.42%，成交108笔，结论 继续L1"
+    },
+    {
+      "label": "carry_scale",
+      "mode": "seats",
+      "stop_atr_mult": 0.8,
+      "reward_rr": 2.0,
+      "risk_pct": 2.0,
+      "min_r20": 3.0,
+      "min_r60": 5.0,
+      "carry_bypass": {
+        "enabled": true,
+        "extreme_gap_pct": 1.0,
+        "action": "scale",
+        "scale": 0.5
+      },
+      "fill_price": "next_open",
+      "ret_pct": 3.53,
+      "gross_ret_pct": 7.604,
+      "max_dd_pct": 9.919,
+      "closed_trades": 108,
+      "exits": {
+        "target": 43,
+        "stop": 60,
+        "signal": 5
+      },
+      "trade_win_rate": 41.67,
+      "expectancy_r": 0.232,
+      "sleeve_counts": {
+        "path_a_rr2": 108
+      },
+      "minute_stop_exits": 23,
+      "summary": "PathA seats 2025-12-18→2026-11-11 净权益 207059（+3.53%）毛权益 215208（+7.60%）成本 8149，净MaxDD 9.92% 毛MaxDD 8.64%，成交108笔，结论 继续L1"
+    },
+    {
+      "label": "roll",
+      "mode": "roll",
+      "stop_atr_mult": 0.8,
+      "reward_rr": 2.0,
+      "risk_pct": 2.0,
+      "min_r20": 3.0,
+      "min_r60": 5.0,
+      "carry_bypass": {
+        "enabled": true,
+        "extreme_gap_pct": 1.0,
+        "action": "block",
+        "scale": 0.5
+      },
+      "fill_price": "next_open",
+      "ret_pct": 0.176,
+      "gross_ret_pct": 5.322,
+      "max_dd_pct": 8.186,
+      "closed_trades": 145,
+      "exits": {
+        "target": 50,
+        "stop": 90,
+        "signal": 5
+      },
+      "trade_win_rate": 35.86,
+      "expectancy_r": 0.069,
+      "sleeve_counts": {
+        "path_a_rr2": 85,
+        "roll_carry": 60
+      },
+      "minute_stop_exits": 30,
+      "summary": "PathA roll 2025-12-18→2026-11-11 净权益 200351（+0.18%）毛权益 210645（+5.32%）成本 10293，净MaxDD 8.19% 毛MaxDD 6.88%，成交145笔，结论 继续L1"
+    }
+  ],
+  "ranked_labels": [
+    "mom_4_6",
+    "carry_gap_0_5",
+    "baseline",
+    "mom_5_8",
+    "carry_scale",
+    "mom_2_4",
+    "roll",
+    "carry_gap_1_5"
+  ],
+  "passing_labels": [
+    "mom_4_6"
+  ],
+  "promote_candidate": {
+    "label": "mom_4_6",
+    "mode": "seats",
+    "min_r20": 4.0,
+    "min_r60": 6.0,
+    "carry_bypass": {
+      "enabled": true,
+      "extreme_gap_pct": 1.0,
+      "action": "block",
+      "scale": 0.5
+    },
+    "ret_pct": 18.22,
+    "max_dd_pct": 6.694,
+    "expectancy_r": 0.255
+  },
+  "promoted": true,
+  "proxy_f_short_mom_shadow": {
+    "source": "data\\ablation\\strategy_indicator_ablation_latest.json",
+    "strategy_name": "本地代理·Long/Short CWFT",
+    "variant": "no_c_long_mom",
+    "variant_label": "仅期现F+短端动量",
+    "ret_pct": 27.486,
+    "max_dd_pct": 15.461,
+    "note": "非 Path-A；影子对照，未并入 paper_book / entry_filter"
+  },
+  "promoted_label": "mom_4_6",
+  "formal_after": {
+    "min_r20_pct": 4.0,
+    "min_r60_pct": 6.0,
+    "note": "updated execution_rules + universe"
+  }
+}

@@ -12,13 +12,20 @@ from typing import Any
 
 import pandas as pd
 
-PROXY_IDS = ("proxy_cwft", "proxy_long_short_cwft", "proxy_frontnext_st")
+PROXY_IDS = (
+    "proxy_cwft",
+    "proxy_long_short_cwft",
+    "proxy_frontnext_st",
+    "proxy_supertrend",
+)
 DISCLAIMER = (
     "研究模拟持仓 · 非实盘 · 与 Path-A paper_book 分离。"
-    "由本地代理（proxy_cta.py）在最后一根日线收盘后按同一等权多空规则推出，"
-    "用于跟踪对照，不构成交易建议。"
+    "本地代理（proxy_cta.py / SuperTrend 观察袖套）在最后一根日线收盘后推出；"
+    "日频 ATR 止损/止盈参数来自 execution_rules.json（同根先止损），"
+    "SuperTrend 为 ATR10×3 翻转影子对照；用于跟踪，不构成交易建议。"
 )
 _DIR_LABEL = {"long": "多", "short": "空"}
+_REASON_LABEL = {"stop": "止损", "target": "止盈", "signal": "信号"}
 
 
 def load_proxy_positions(root: Path, proxy_ids: tuple[str, ...] = PROXY_IDS) -> list[dict[str, Any]]:
@@ -42,6 +49,9 @@ def load_proxy_positions(root: Path, proxy_ids: tuple[str, ...] = PROXY_IDS) -> 
             continue
         rec["name"] = str(data.get("name") or sid)
         rec["curve_end"] = data.get("end")
+        rec["stop_atr_mult"] = data.get("stop_atr_mult")
+        rec["reward_rr"] = data.get("reward_rr")
+        rec["exit_counts"] = data.get("exit_counts") if isinstance(data.get("exit_counts"), dict) else {}
         positions = data.get("final_positions")
         if not isinstance(positions, list):
             rec["status"] = "no_positions"
@@ -81,6 +91,9 @@ def positions_df(positions: list[dict[str, Any]]) -> pd.DataFrame:
                 "入场日": p.get("entry_date"),
                 "入场价": p.get("entry_price"),
                 "最新价": p.get("last_price"),
+                "止损": _num(p.get("stop"), 2),
+                "止盈": _num(p.get("target"), 2),
+                "ATR": _num(p.get("atr"), 2),
                 "浮盈亏%": _num(p.get("unrealized_pct"), 2),
                 "打分z": _num(p.get("score_z"), 2),
             }
@@ -92,11 +105,13 @@ def trade_log_df(log: list[dict[str, Any]], limit: int = 20) -> pd.DataFrame:
     rows = []
     for t in reversed(log[-limit:]):
         d = str(t.get("direction") or "")
+        reason = t.get("reason")
         rows.append(
             {
                 "日期": t.get("date"),
                 "品种": t.get("code"),
                 "动作": "开仓" if t.get("action") == "open" else "平仓",
+                "原因": _REASON_LABEL.get(str(reason), "—" if not reason else str(reason)),
                 "方向": _DIR_LABEL.get(d, d or "—"),
                 "价格": t.get("price"),
                 "入场日": t.get("entry_date"),
@@ -115,8 +130,21 @@ def render_proxy_positions(st, root: Path) -> None:
             if rec["status"] in ("missing", "no_positions"):
                 st.caption(rec["note"])
                 continue
+            stop_m = rec.get("stop_atr_mult")
+            rr = rec.get("reward_rr")
+            exits = rec.get("exit_counts") or {}
+            atr_note = ""
+            if stop_m is not None and rr is not None:
+                atr_note = f" · 止损 {stop_m}×ATR / 止盈 {rr}R"
+            exit_note = ""
+            if exits:
+                exit_note = (
+                    f" · 平仓 stop={exits.get('stop', 0)} "
+                    f"target={exits.get('target', 0)} signal={exits.get('signal', 0)}"
+                )
             st.caption(
-                f"持仓截止 {rec['asof'] or '—'}（下一交易日目标仓）· 曲线截止 {rec['curve_end'] or '—'}"
+                f"持仓截止 {rec['asof'] or '—'}（下一交易日目标仓）· "
+                f"曲线截止 {rec['curve_end'] or '—'}{atr_note}{exit_note}"
             )
             if rec["positions"]:
                 st.dataframe(positions_df(rec["positions"]), width="stretch", hide_index=True)

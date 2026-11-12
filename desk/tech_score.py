@@ -123,6 +123,59 @@ def _vol_txt(closes: pd.Series, sig: dict[str, Any]) -> str:
     return f"HV20={hv20:.1f}% ·分位{pct:.0f}"
 
 
+def _path_a_side(sig: dict[str, Any] | None) -> str:
+    """Path-A day signal direction from L1 report row."""
+    if not sig:
+        return "—"
+    d = str(sig.get("direction") or "").strip()
+    if d in ("多", "空"):
+        return d
+    return "—"
+
+
+def _supertrend_observe(bars: list[dict]) -> dict[str, Any]:
+    """Latest SuperTrend stance for indicator watch (ATR10×3, Wilder)."""
+    from supertrend import supertrend_series
+
+    if not bars or len(bars) < 30:
+        return {"side": "—", "text": "样本不足", "flip": ""}
+    st_rows = supertrend_series(bars, atr_period=10, multiplier=3.0, use_wilder_atr=True)
+    last = None
+    for row in reversed(st_rows):
+        if row:
+            last = row
+            break
+    if not last:
+        return {"side": "—", "text": "未就绪", "flip": ""}
+    trend = int(last.get("trend") or 0)
+    side = "多" if trend == 1 else ("空" if trend == -1 else "—")
+    flip = ""
+    if last.get("buy"):
+        flip = " ·今日翻多"
+    elif last.get("sell"):
+        flip = " ·今日翻空"
+    band = last.get("band")
+    try:
+        band_txt = f" 轨={float(band):.0f}" if band is not None else ""
+    except (TypeError, ValueError):
+        band_txt = ""
+    return {
+        "side": side,
+        "text": f"ST{side}{band_txt}{flip}" if side in ("多", "空") else "—",
+        "flip": flip,
+    }
+
+
+def _sync_label(st_side: str, pa_side: str) -> str:
+    if st_side in ("多", "空") and pa_side in ("多", "空"):
+        return "同向" if st_side == pa_side else "冲突"
+    if st_side in ("多", "空"):
+        return "仅ST"
+    if pa_side in ("多", "空"):
+        return "仅Path-A"
+    return "—"
+
+
 def _score_row(
     root: Path,
     code: str,
@@ -134,6 +187,9 @@ def _score_row(
     sig = sig or {}
     df = _ohlc_frame(bars)
     closes = df.set_index("date")["close"] if not df.empty else pd.Series(dtype=float)
+    st_obs = _supertrend_observe(bars)
+    pa_side = _path_a_side(sig)
+    sync = _sync_label(str(st_obs.get("side") or "—"), pa_side)
 
     if len(closes) < 60:
         return {
@@ -145,6 +201,9 @@ def _score_row(
             "枢轴点": "—",
             "基差": _basis_txt(root, code, sig),
             "波动率": _vol_txt(closes, sig) if len(closes) >= 61 else "样本不足",
+            "SuperTrend": st_obs.get("text") or "—",
+            "Path-A": pa_side,
+            "ST↔Path-A": sync,
             "合并信号": "震荡",
             "评分": 3,
         }
@@ -197,6 +256,9 @@ def _score_row(
         "枢轴点": f"P={pivot:.0f} 价在{pivot_bias}",
         "基差": basis_txt,
         "波动率": vol_txt,
+        "SuperTrend": st_obs.get("text") or "—",
+        "Path-A": pa_side,
+        "ST↔Path-A": sync,
         "合并信号": merge,
         "评分": score,
     }

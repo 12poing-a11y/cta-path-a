@@ -31,7 +31,15 @@ def _series(n_days: int = 90, n_codes: int = 8):
         px, hist = 100.0, []
         for i in range(n_days):
             px *= 1.0 + (k - n_codes / 2) * 0.001
-            hist.append({"date": (d0 + timedelta(days=i)).isoformat(), "close": px})
+            hist.append(
+                {
+                    "date": (d0 + timedelta(days=i)).isoformat(),
+                    "open": px,
+                    "high": px * 1.0005,
+                    "low": px * 0.9995,
+                    "close": px,
+                }
+            )
         series[f"C{k}"] = {"hist": hist, "meta": {"name": f"N{k}", "mult": 10}}
     return series
 

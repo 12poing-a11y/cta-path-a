@@ -456,40 +456,57 @@ def _em_product_snapshot(root: Path, code: str, ymd: str) -> dict | None:
     return _dce_snapshot(payload, code)
 
 
-def _snapshot_uncached(root: Path, code: str, exchange: str, ymd: str) -> dict:
-    snap = None
+def _exchange_snapshot(root: Path, code: str, exchange: str, ymd: str) -> dict | None:
+    """Native exchange print (CZCE/SHFE txt, DCE json). Soft underlay only."""
     if exchange == "DCE":
         path = root / ".cache" / "member" / f"dce-{ymd}.json"
-        if path.is_file():
-            try:
-                payload = json.loads(path.read_text(encoding="utf-8"))
-            except (OSError, json.JSONDecodeError, UnicodeError):
-                payload = None
-            if isinstance(payload, dict):
-                snap = _dce_snapshot(payload, code)
-    else:
-        prefix = {"CZCE": "czce", "SHFE": "shfe"}.get(exchange)
-        if not prefix:
-            return {"ok": False}
-        path = root / ".cache" / "member" / f"{prefix}-{ymd}.txt"
-        if path.is_file():
-            if exchange == "CZCE":
-                text = _read_text(path)
-                if text:
-                    snap = _czce_snapshot(text, code)
-            else:
-                try:
-                    payload = json.loads(path.read_text(encoding="utf-8"))
-                except (OSError, json.JSONDecodeError):
-                    payload = None
-                if isinstance(payload, dict):
-                    snap = _shfe_snapshot(payload, code)
-    if not snap:
-        snap = _em_product_snapshot(root, code, ymd)
+        if not path.is_file():
+            return None
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError, UnicodeError):
+            return None
+        return _dce_snapshot(payload, code) if isinstance(payload, dict) else None
+    prefix = {"CZCE": "czce", "SHFE": "shfe"}.get(exchange)
+    if not prefix:
+        return None
+    path = root / ".cache" / "member" / f"{prefix}-{ymd}.txt"
+    if not path.is_file():
+        return None
+    if exchange == "CZCE":
+        text = _read_text(path)
+        return _czce_snapshot(text, code) if text else None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return _shfe_snapshot(payload, code) if isinstance(payload, dict) else None
+
+
+def _snapshot_uncached(root: Path, code: str, exchange: str, ymd: str) -> dict:
+    """Public-first seat snapshot (align with member_rank).
+
+    Eastmoney/Sina ``em-*.json`` is primary — exchange product tables often omit
+    foreign seats still in the contract top-20 (e.g. CF 高盛净多≈9008 on 2026-11-12
+    appears in EM CF2701 but not in CZCE 品种：棉花CF aggregate). Fall back to
+    exchange print only when EM is missing/thin.
+    """
+    if exchange not in ("DCE", "CZCE", "SHFE"):
+        return {"ok": False}
+    em = _em_product_snapshot(root, code, ymd)
+    native = _exchange_snapshot(root, code, exchange, ymd)
+    snap = em or native
     if not snap:
         return {"ok": False}
+    snap = dict(snap)
     snap["date"] = _iso(ymd)
     snap["ymd"] = ymd
+    snap["seat_source"] = "eastmoney" if em else "exchange"
+    if em and native and float(em.get("foreign_net") or 0) != float(native.get("foreign_net") or 0):
+        snap["seat_note"] = (
+            f"东财主力合约外资净={em.get('foreign_net')}；"
+            f"交易所品种表外资净={native.get('foreign_net')}（已采用东财）。"
+        )
     return snap
 
 
@@ -1194,7 +1211,13 @@ def render_seat_sector(root: Path) -> None:
                 st.caption(f"{label} · {contract} · 持仓 {_fmt_lots(last)} 手 · 变动 {_fmt_chg(chg)} 手")
     with right:
         if snap.get("ok"):
-            st.caption(f"当日合约/品种：{snap.get('contract')} · 排名行数 {snap.get('n')} · 单位：手")
+            src = "东财/新浪" if snap.get("seat_source") == "eastmoney" else "交易所打印"
+            st.caption(
+                f"当日合约/品种：{snap.get('contract')} · 排名行数 {snap.get('n')} · "
+                f"来源 {src} · 单位：手"
+            )
+            if snap.get("seat_note"):
+                st.caption(str(snap["seat_note"]))
             from desk.charts import PLOTLY_TIME_CONFIG
 
             st.plotly_chart(long_short_fig(snap), width="stretch", config=PLOTLY_TIME_CONFIG)

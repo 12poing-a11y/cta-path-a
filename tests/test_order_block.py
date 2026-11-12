@@ -412,8 +412,8 @@ def test_baseline_config_is_runnable_and_stubs_are_not(tmp_path):
     cfg = load_run_config(ROOT / "configs" / "order_block" / "baseline.json")
     params = params_from_config(cfg)
     assert params.swing_right == 2
-    assert cfg["formal_path_a"]["stop_atr_mult"] == 1.2
-    assert cfg["formal_path_a"]["reward_rr"] == 1.5
+    assert cfg["formal_path_a"]["stop_atr_mult"] == 0.8
+    assert cfg["formal_path_a"]["reward_rr"] == 2.0
     assert cfg["live_trading"] is False
     for name in ("trend_filter.json", "risk_management.json"):
         stub = json.loads((ROOT / "configs" / "order_block" / name).read_text(encoding="utf-8"))
@@ -433,8 +433,8 @@ def test_runner_writes_shadow_output_and_leaves_formal_files(tmp_path):
     }
     assert "execution_rules.json" in before
     rules = json.loads(before["execution_rules.json"])
-    assert rules["stop_atr_mult"] == 1.2
-    assert rules["reward_rr"] == 1.5
+    assert rules["stop_atr_mult"] == 0.8
+    assert rules["reward_rr"] == 2.0
 
     payload = run_shadow(
         _ohlc(LONG_ROWS + [(18, 19, 15, 18), (18, 30, 17, 28)]),

@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "asof": "2026-11-11",
-  "asof_ymd": "20261111",
+  "asof": "2026-11-12",
+  "asof_ymd": "20261112",
   "source": "paper_book",
   "seed": "paper_book_latest",
   "parent_backtest_end": "2026-10-20",
@@ -9,8 +9,8 @@
   "stop_atr_mult": 1.2,
   "reward_rr": 1.5,
   "equity": 192620.0,
-  "equity_floating": -1320.0,
-  "equity_mark": 191300.0,
+  "equity_floating": -2750.0,
+  "equity_mark": 189870.0,
   "positions": {
     "P": {
       "code": "P",
@@ -19,16 +19,16 @@
       "entry": 8722.0,
       "stop": 8950.768,
       "target": 8378.848,
-      "atr": 206.14,
-      "r20": -9.0311,
-      "r60": -9.1338,
+      "atr": 209.64,
+      "r20": -4.7533,
+      "r60": -7.1613,
       "bucket": "农产品",
       "sleeve": null,
       "reason": "daily_selected",
       "entry_date": "2026-11-06",
       "mult": 10.0,
-      "mark": 8854.0,
-      "equity_delta": -1320.0
+      "mark": 8997.0,
+      "equity_delta": -2750.0
     }
   },
   "closed_today": [],
@@ -285,6 +285,6 @@
   "held_n": 1,
   "ledger_n": 9,
   "notes": "纸面模拟仓：以回测期末持仓为种子，按最新 l1_report 做信号平仓/组合入选开仓；trade_ledger 含入场/出场/止盈止损/策略/权益增减（平仓为已实现，持仓中为浮动）；equity 为平仓累计后账面，equity_floating 为未平仓浮动盈亏。不改写 historical_backtest KPI。与 Notion 持仓中、决策页账面同源。",
-  "l1_asof": "20261111",
+  "l1_asof": "20261112",
   "updated_from_l1": true
 }

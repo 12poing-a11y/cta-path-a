@@ -4,11 +4,38 @@
 
 NPD is an independent, research-only event-study module for Zhengzhou cotton (CF) with ICE cotton as a later cross-market extension. It measures whether the market's subsequent price path agrees with a timestamped, signed fundamental/news event. It does not modify Path-A entries, position sizing, or paper-book accounting.
 
+Desk integration is **entry-day shadow reminder only** (`E1·NPD影子·不计分`).
+
+## China watchlist (六类)
+
+Only these Chinese categories are treated as the core CN focus set:
+
+| category | 含义 |
+|---|---|
+| `CN_RESERVE` | 国储棉轮入、轮出的公告和成交结果 |
+| `CN_SLIDING_QUOTA` | 棉花进口滑准税配额的发放 |
+| `CN_CASDE` | 农业农村部每月《农产品供需形势分析》（CASDE） |
+| `CN_NBS_OUTPUT` | 国家统计局棉花产量公告 |
+| `CN_XJ_TARGET_PRICE` | 新疆棉目标价格等政策公告 |
+| `CN_CUSTOMS_IMPORT` | 海关棉花进口月度数据 |
+
+USDA side uses `USDA_WASDE` / `USDA_CROP_PROGRESS` / `USDA_OTHER`.
+
+## Provenance gate（收表规则）
+
+每条事件**同时**具备以下三项才标 `accepted` 并进入敏感性统计：
+
+1. **官方原文链接**（`official_url`，http/https）
+2. **官方原文摘录**（`official_excerpt`，不少于约一句）
+3. **可解析发布时间**（`published_at`，ISO-8601；缺时区按北京时间）
+
+缺任一字段 → `status=待核`，可留在表里备查，**不进**中国 / USDA / 合并统计，也**不触发**进入日影子提醒。
+
 ## Important timing rule
 
-Every event is entered at the first available trading session **strictly after its China Standard Time publication calendar date**, at that session's OPEN. This intentionally conservative rule avoids pretending that an event published after the close (or at an unknown intraday time) was tradable earlier that day. The reported 1/3/5/10/20-session returns end at the corresponding session CLOSE.
+Every **accepted** event is entered at the first available trading session **strictly after its China Standard Time publication calendar date**, at that session's OPEN. This intentionally conservative rule avoids pretending that an event published after the close (or at an unknown intraday time) was tradable earlier that day. The reported 1/3/5/10/20-session returns end at the corresponding session CLOSE.
 
-The event-study divergence label is an outcome label, not a signal that can be known at entry. For example, a positive event followed by a negative forward return is counted as a positive-news/negative-price divergence. Do not use that future label as an input feature.
+The event-study divergence label is an outcome label, not a signal that can be known at entry. Do not use that future label as an input feature.
 
 ## Input files
 
@@ -16,43 +43,43 @@ The event-study divergence label is an outcome label, not a signal that can be k
 
 Required columns: `date,open,close`; optional: `volume,oi`.
 
-- Use a consistent, documented CF main-continuous series for broad history.
-- Keep exact delivery-contract data separate; do not splice delivery contracts without a roll methodology.
-- Preserve source, contract/continuous basis, adjustment method, and raw cache provenance in the upstream dataset.
-- ICE data should be stored as a separate series and aligned by its own trading calendar before cross-market analysis.
+Desk loader also merges `.cache/history/CF0.json` and recent `.cache/sina/*/CF0.json`.
 
 ### Event CSV
 
-Required columns: `event_id,published_at,score`; recommended: `category,headline,source`.
+Columns:
 
-- `published_at`: ISO-8601 timestamp. If timezone is absent, China Standard Time is assumed.
-- `score`: signed integer from -3 to +3; positive = bullish cotton fundamental surprise, negative = bearish, zero = neutral/unscored.
-- Score the *surprise versus prevailing expectations*, not merely whether the headline sounds bullish or bearish.
-- Keep source URL, original publication time, ingestion time, event family, affected geography, expected duration, and confidence in the source master even if they are not all included in this first CSV interface.
-- Deduplicate syndicated copies and revisions; a USDA/WASDE revision is a new event only when it changes information available to the market.
+`event_id,published_at,family,category,headline,score,official_url,official_excerpt,status`
+
+- `family`: `CN` or `USDA` (optional if `category` already uses `CN_*` / `USDA_*`)
+- `score`: −3…+3；0 = 中性，不进方向统计
+- `status`: 可显式写 `待核`；否则由引擎按出处规则自动判定
 
 ## Run
 
 ```bash
-python cotton_npd.py --bars data/cotton/cf_daily.csv --events data/cotton/cotton_events.csv --output data/cotton_npd --round-trip-cost-bps 8
+python cotton_npd.py --bars data/cotton/cf0_daily_20211112_20261111.csv --events data/cotton/cotton_events.csv --output data/cotton_npd --round-trip-cost-bps 8
 ```
 
-The 8 bps above is an example only, not an asserted CF execution cost. Replace it with a measured fee + slippage assumption. The default is zero and must be treated as gross-like, not executable net performance.
-
 Outputs:
-- `cotton_npd_events.csv`: event-level pre-event context, forward returns, directional/contrarian paper returns, and divergence labels.
-- `cotton_npd_summary.json`: aggregate and per-year event statistics.
+
+- `cotton_npd_events.csv` — event-level rows（含 status / family）
+- `cotton_npd_summary.json` — **分开**列出：
+  - `by_family.CN` 中国事件
+  - `by_family.USDA` USDA 事件
+  - `by_family.combined` 两者合并  
+  便于直接比较郑棉对哪边消息更敏感（看各期限 `news_direction_win_rate` / `directional_mean` / `n`）。
 
 ## Research stages
 
-1. **Data audit first:** collect 2021-11-12 through 2026-11-12 daily CF and ICE bars; report missing sessions, duplicate dates, contract roll gaps, source and adjustment provenance.
-2. **Event master:** collect timestamped, source-linked events from USDA/WASDE, USDA Crop Progress, ICE/CFTC positioning, China Cotton Association, China Cotton Information Center, customs/trade releases, weather agencies, reserve/auction notices, mill orders and inventory reports.
-3. **Point-in-time scoring:** score surprise and confidence with a written rubric. Preserve original text and publication timestamps. Do not backfill an event timestamp from a later recap.
-4. **Event study:** calculate pre-event 5/10-session returns, post-event 1/3/5/10/20-session returns, divergence rates, directional and contrarian outcomes.
-5. **Controls:** stratify by category, score strength, prior trend, volatility regime, inventory/season, CF-ICE spread, and event clustering. Cluster multiple headlines describing the same underlying information.
-6. **Validation:** chronological train/test split, walk-forward checks, bootstrap confidence intervals, overlapping-event controls, realistic fees/slippage and roll costs. Report annual stability and sample counts; do not optimize thresholds on the full five-year sample.
-7. **Integration:** shadow output only in daily cotton research report after data-quality gates pass. No Path-A formal signal or position changes until separately validated and approved.
+1. Data audit for CF (and later ICE) bars.
+2. Fill the six CN categories + USDA from **official** releases only.
+3. Point-in-time scoring of surprise (−3…+3).
+4. Event study with CN / USDA / combined blocks.
+5. Controls (category, score strength, prior trend, vol regime, clustering).
+6. Walk-forward validation — do not optimize on the full sample.
+7. Desk: shadow entry-day reminder only until separately approved.
 
 ## Current limitations
 
-This initial engine is a deterministic CSV-based event-study core. It does **not** scrape historical news, authenticate the source timestamps, download historical bars, infer event scores, or claim five-year results. Those are separate data acquisition and point-in-time labeling tasks. A five-year win rate must not be published until both event and price coverage are audited.
+The engine does **not** scrape news or invent timestamps. A five-year win rate must not be published until event coverage and continuous-contract rolls are audited.

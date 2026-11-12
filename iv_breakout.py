@@ -27,6 +27,9 @@ CODE_TO_OPTION: dict[str, tuple[str, str]] = {
     "SR": ("czce", "白糖期权"),
     "CF": ("czce", "棉花期权"),
     "RM": ("czce", "菜籽粕期权"),
+    "SA": ("czce", "纯碱期权"),
+    "OI": ("czce", "菜籽油期权"),
+    "FG": ("czce", "玻璃期权"),
 }
 
 
@@ -170,8 +173,13 @@ def fetch_day_iv(
     *,
     use_cache: bool = True,
     refresh: bool = False,
+    cache_missing: bool = True,
 ) -> dict[str, Any] | None:
-    """One session front IV for ``code``. Cached under .cache/akshare/option_iv."""
+    """One session front IV for ``code``. Cached under .cache/akshare/option_iv.
+
+    ``cache_missing=False`` skips writing a permanent miss marker — use for the
+    latest session at 15:30 when exchange option hist may not be published yet.
+    """
     meta = option_meta(code)
     if not meta:
         return None
@@ -199,18 +207,20 @@ def fetch_day_iv(
             frame = ak.option_hist_czce(symbol=product, trade_date=ymd)
             payload = _front_iv_from_czce_frame(frame)
     except Exception as exc:  # noqa: BLE001
-        _write_json(
-            path,
-            {
-                "missing": True,
-                "code": code.upper(),
-                "date": ymd,
-                "error": f"{type(exc).__name__}:{str(exc)[:160]}",
-            },
-        )
+        if cache_missing:
+            _write_json(
+                path,
+                {
+                    "missing": True,
+                    "code": code.upper(),
+                    "date": ymd,
+                    "error": f"{type(exc).__name__}:{str(exc)[:160]}",
+                },
+            )
         return None
     if not payload:
-        _write_json(path, {"missing": True, "code": code.upper(), "date": ymd})
+        if cache_missing:
+            _write_json(path, {"missing": True, "code": code.upper(), "date": ymd})
         return None
     out = {
         "code": code.upper(),
@@ -221,6 +231,158 @@ def fetch_day_iv(
     }
     _write_json(path, out)
     return out
+
+
+def _weekday_ymds_ending(end_ymd: str, lookback_calendar_days: int = 15) -> list[str]:
+    """Weekday yyyymmdd list ending at ``end_ymd`` (inclusive), calendar lookback."""
+    from datetime import date, timedelta
+
+    ymd = _ymd(end_ymd)
+    if len(ymd) != 8:
+        return []
+    end = date(int(ymd[:4]), int(ymd[4:6]), int(ymd[6:8]))
+    out: list[str] = []
+    d = end
+    for _ in range(max(1, lookback_calendar_days) * 2 + 2):
+        if d.weekday() < 5:
+            out.append(d.strftime("%Y%m%d"))
+        if (end - d).days >= lookback_calendar_days:
+            break
+        d -= timedelta(days=1)
+    return list(reversed(out))
+
+
+def _resolve_iv_asof(asof: str | None = None) -> str:
+    if asof:
+        ymd = _ymd(asof)
+        if len(ymd) == 8:
+            return ymd
+    try:
+        from market_data import latest_expected_session_date
+
+        return latest_expected_session_date().strftime("%Y%m%d")
+    except Exception:  # noqa: BLE001
+        from datetime import date
+
+        return date.today().strftime("%Y%m%d")
+
+
+def refresh_option_iv(
+    root: Path,
+    *,
+    asof: str | None = None,
+    lookback_calendar_days: int = 15,
+    codes: list[str] | None = None,
+) -> dict[str, Any]:
+    """Daily backfill for front IV cache (soft on asof session; no poison miss).
+
+    Fills weekday gaps since ``lookback_calendar_days``. For the asof session,
+    empty/error responses are not written as ``missing`` so a later run can retry
+    after exchange option settlement tables publish.
+    """
+    root = Path(root)
+    asof_ymd = _resolve_iv_asof(asof)
+    days = _weekday_ymds_ending(asof_ymd, lookback_calendar_days=lookback_calendar_days)
+    want = [c.strip().upper() for c in (codes or list(CODE_TO_OPTION)) if c.strip()]
+    want = [c for c in want if c in CODE_TO_OPTION]
+    rows: list[dict[str, Any]] = []
+    fetched = 0
+    cached = 0
+    missing = 0
+    soft_empty = 0
+    last_ok: dict[str, str] = {}
+    for code in want:
+        code_fetched = 0
+        code_cached = 0
+        code_miss = 0
+        code_soft = 0
+        code_last = None
+        for ymd in days:
+            path = _cache_dir(root) / code / f"{ymd}.json"
+            prior = _read_json(path) if path.is_file() else None
+            if isinstance(prior, dict) and prior.get("iv") is not None:
+                code_cached += 1
+                cached += 1
+                code_last = ymd
+                last_ok[code] = ymd
+                continue
+            # Retry prior miss markers inside the lookback window.
+            soft = ymd >= asof_ymd
+            row = fetch_day_iv(
+                root,
+                code,
+                ymd,
+                use_cache=False,
+                refresh=True,
+                cache_missing=not soft,
+            )
+            if row and row.get("iv") is not None:
+                code_fetched += 1
+                fetched += 1
+                code_last = ymd
+                last_ok[code] = ymd
+            elif soft:
+                code_soft += 1
+                soft_empty += 1
+            else:
+                code_miss += 1
+                missing += 1
+        rows.append(
+            {
+                "code": code,
+                "fetched": code_fetched,
+                "cached": code_cached,
+                "missing": code_miss,
+                "soft_empty": code_soft,
+                "last_ok": code_last,
+            }
+        )
+        print(
+            f"[iv] {code} fetched={code_fetched} cached={code_cached} "
+            f"missing={code_miss} soft_empty={code_soft} last_ok={code_last}"
+        )
+    return {
+        "ok": True,
+        "asof": asof_ymd,
+        "lookback_calendar_days": lookback_calendar_days,
+        "days_n": len(days),
+        "codes": want,
+        "fetched": fetched,
+        "cached": cached,
+        "missing": missing,
+        "soft_empty": soft_empty,
+        "last_ok": last_ok,
+        "rows": rows,
+        "live_trading": False,
+    }
+
+
+def iv_cache_status(root: Path, codes: list[str] | None = None) -> dict[str, Any]:
+    """Latest successful IV cache date per code (desk health)."""
+    root = Path(root)
+    want = [c.strip().upper() for c in (codes or list(CODE_TO_OPTION)) if c.strip()]
+    by_code: dict[str, Any] = {}
+    oldest = None
+    newest = None
+    for code in want:
+        d = _cache_dir(root) / code
+        last = None
+        if d.is_dir():
+            for path in sorted(d.glob("*.json"), reverse=True):
+                raw = _read_json(path)
+                if isinstance(raw, dict) and raw.get("iv") is not None:
+                    last = path.stem
+                    break
+        by_code[code] = {"last_ok": last, "mapped": code in CODE_TO_OPTION}
+        if last:
+            oldest = last if oldest is None or last < oldest else oldest
+            newest = last if newest is None or last > newest else newest
+    return {
+        "ok": bool(newest),
+        "oldest_ok": oldest,
+        "newest_ok": newest,
+        "by_code": by_code,
+    }
 
 
 def load_iv_series(

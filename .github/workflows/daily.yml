@@ -75,9 +75,11 @@ jobs:
             .cache/member/shfe-*.txt
             .cache/member/czce-*.txt
             .cache/akshare/minute/*.json
+            .cache/akshare/option_iv/
             .cache/sina/
             .cache/history/
             .cache/warehouse/
+            data/vol_engine_latest.json
           if-no-files-found: warn
 
       - name: Commit archive + full cache
@@ -85,13 +87,15 @@ jobs:
         run: |
           git config user.name "cta-bot"
           git config user.email "cta-bot@users.noreply.github.com"
-          mkdir -p .cache/member .cache/akshare/minute .cache/history .cache/warehouse data/sentiment_mds
+          mkdir -p .cache/member .cache/akshare/minute .cache/akshare/option_iv .cache/history .cache/warehouse data/sentiment_mds
           git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
-          git add data/sentiment_mds/*.json data/tech_score_latest.json data/desk_composite_latest.json || true
+          git add data/sentiment_mds/*.json data/tech_score_latest.json data/desk_composite_latest.json data/vol_engine_latest.json || true
           git add data/gamma_wall/ || true
           git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
           git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true
           git add -f .cache/akshare/minute/*.json || true
+          # IV：郑商所/上期所期权日表 front IV；日更回填后入库，避免台面停在旧 asof。
+          git add -f .cache/akshare/option_iv/ || true
           # 仓单：交易所日报 + 东财库存旁路；缺则不同步，不编造。
           git add -f .cache/warehouse/em-inventory-*.json .cache/warehouse/ex-day-*.json .cache/warehouse/latest.json || true
           # Continuous daily only: stem is letters + trailing 0 (RB0, AG0), not month (RB2601).
@@ -130,7 +134,7 @@ jobs:
             echo "no changes"
             exit 0
           fi
-          git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+CODE0+sentiment"
+          git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+IV+CODE0+sentiment"
           # Fresh cache/report generation can leave other tracked files modified.
           # Autostash those residual changes so they cannot block the rebase.
           # Rebase generated outputs with priority on same-path conflicts.

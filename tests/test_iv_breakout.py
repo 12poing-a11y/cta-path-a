@@ -87,3 +87,66 @@ def test_gate_observe_on_suspect():
     assert g["force_observe"] is True
     g2 = iv_decision_gate("true_candidate", enabled=True, action="observe")
     assert g2["force_observe"] is False
+
+
+def test_fetch_day_iv_soft_empty_skips_poison_missing(tmp_path, monkeypatch):
+    import iv_breakout as iv
+
+    class _Empty:
+        empty = True
+        columns = []
+
+    class _Ak:
+        @staticmethod
+        def option_hist_czce(**_kwargs):
+            return _Empty()
+
+    monkeypatch.setitem(__import__("sys").modules, "akshare", _Ak())
+    out = iv.fetch_day_iv(
+        tmp_path, "CF", "20261112", use_cache=False, refresh=True, cache_missing=False
+    )
+    assert out is None
+    path = tmp_path / ".cache" / "akshare" / "option_iv" / "CF" / "20261112.json"
+    assert not path.exists()
+
+
+def test_refresh_option_iv_backfills_and_keeps_asof_soft(tmp_path, monkeypatch):
+    import iv_breakout as iv
+
+    calls: list[str] = []
+
+    def _fake_fetch(root, code, trade_date, *, use_cache=True, refresh=False, cache_missing=True):
+        ymd = str(trade_date).replace("-", "")[:8]
+        calls.append(f"{code}:{ymd}:{cache_missing}")
+        if ymd >= "20261112":
+            return None  # asof not published yet
+        path = iv._cache_dir(root) / code / f"{ymd}.json"
+        payload = {
+            "code": code,
+            "date": ymd,
+            "product": "棉花期权",
+            "venue": "czce",
+            "iv": 0.15,
+            "series": "czce_vw",
+            "volume": 1.0,
+            "source": "czce",
+        }
+        iv._write_json(path, payload)
+        return payload
+
+    monkeypatch.setattr(iv, "fetch_day_iv", _fake_fetch)
+    pack = iv.refresh_option_iv(
+        tmp_path,
+        asof="20261112",
+        lookback_calendar_days=5,
+        codes=["CF"],
+    )
+    assert pack["ok"] is True
+    assert pack["asof"] == "20261112"
+    assert pack["fetched"] >= 1
+    assert pack["soft_empty"] >= 1
+    assert "CF:20261112:False" in calls  # asof: do not poison-cache miss
+    assert any(c.startswith("CF:") and c.endswith(":True") for c in calls)
+    st = iv.iv_cache_status(tmp_path, codes=["CF"])
+    assert st["newest_ok"] is not None
+    assert st["newest_ok"] < "20261112"

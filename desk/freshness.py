@@ -127,4 +127,12 @@ def render_freshness_header(root: Path, page: str) -> dict:
         st.warning(f"【待核】{line}\n\n{f['reason']}")
     else:
         st.caption(f"{line} · 状态：已到")
+    # Research feeds (IV / vol engine / warehouse / gamma) — soft banner only.
+    try:
+        from desk.feed_health import render_feed_health
+
+        f["feeds"] = render_feed_health(root)
+    except Exception as exc:  # noqa: BLE001
+        st.caption(f"数据源健康检查跳过：{exc}")
+        f["feeds"] = {"ok": False, "error": str(exc)[:200]}
     return f

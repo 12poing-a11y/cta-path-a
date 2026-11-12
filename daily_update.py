@@ -585,6 +585,24 @@ def main():
             "error": str(exc)[:300],
             "rows": [],
         }
+
+    # Option IV daily backfill (CZCE/SHFE). Soft: asof empty not poison-cached.
+    iv_summary: dict = {"ok": False}
+    try:
+        from iv_breakout import refresh_option_iv
+
+        print("[cta] refresh option IV...")
+        iv_summary = refresh_option_iv(ROOT)
+        print(
+            f"[cta] option_iv asof={iv_summary.get('asof')} "
+            f"fetched={iv_summary.get('fetched')} cached={iv_summary.get('cached')} "
+            f"missing={iv_summary.get('missing')} soft_empty={iv_summary.get('soft_empty')}"
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[cta] option_iv soft-fail: {exc}")
+        print(f"::warning title=option IV refresh failed::{exc}")
+        iv_summary = {"ok": False, "error": str(exc)[:300]}
+
     if mode == "climax":
         for sig in signals:
             if sig.get("block") or sig.get("direction") not in ("多", "空"):
@@ -818,6 +836,16 @@ def main():
             "periods": minute_summary.get("periods"),
             "error": minute_summary.get("error"),
         },
+        "option_iv": {
+            "ok": bool(iv_summary.get("ok")),
+            "asof": iv_summary.get("asof"),
+            "fetched": iv_summary.get("fetched"),
+            "cached": iv_summary.get("cached"),
+            "missing": iv_summary.get("missing"),
+            "soft_empty": iv_summary.get("soft_empty"),
+            "last_ok": iv_summary.get("last_ok"),
+            "error": iv_summary.get("error"),
+        },
         "quality": quality,
         "quality_ok": bool(quality.get("ok")),
         "sentiment_mds": sentiment_meta,
@@ -904,9 +932,43 @@ def main():
                 f"[warehouse] primary={wh.get('primary_n')} bypass={wh.get('bypass_n')} "
                 f"missing={wh.get('missing_n')} ex={wh.get('exchange_ymd')}"
             )
+            ex_st = wh.get("exchange_status") or {}
+            for ex_name in ("SHFE", "DCE"):
+                pack = ex_st.get(ex_name) or {}
+                if pack and not pack.get("ok"):
+                    print(
+                        f"::warning title=warehouse {ex_name} primary down::"
+                        f"{pack.get('error') or 'empty'}; EM bypass in use"
+                    )
         except Exception as exc:
             print(f"[warehouse] refresh failed: {exc}")
             print(f"::warning title=warehouse refresh failed::{exc}")
+        try:
+            # Rewrite vol engine snapshot from warmed IV cache (desk IV panel).
+            from vol_engine import run_universe
+
+            print("[cta] refresh vol_engine snapshot...")
+            vol_pack = run_universe(
+                ROOT,
+                refresh_iv=False,
+                fetch_calendar=False,
+                write_data=True,
+                write_oos=False,
+            )
+            iv_dates = sorted(
+                {
+                    str((r.get("iv") or {}).get("date") or "")
+                    for r in (vol_pack.get("reports") or [])
+                    if (r.get("iv") or {}).get("date")
+                }
+            )
+            print(
+                f"[vol] ok={vol_pack.get('ok')} codes={len(vol_pack.get('codes') or [])} "
+                f"iv_dates={iv_dates[-3:] if iv_dates else []}"
+            )
+        except Exception as exc:
+            print(f"[vol] refresh failed: {exc}")
+            print(f"::warning title=vol_engine refresh failed::{exc}")
         try:
             # Keep desk_composite_latest.json aligned with today's L1 report (final signal
             # marks it 过期 otherwise). Soft: needs desk deps (requirements-desk.txt).

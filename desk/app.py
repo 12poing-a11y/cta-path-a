@@ -27,7 +27,12 @@ from desk.loaders import (  # noqa: E402
 from desk.chart_board import render_chart_tab  # noqa: E402
 from desk.curve_lag import curve_end_date, curve_lag  # noqa: E402
 from desk.freshness import render_freshness_header  # noqa: E402
-from desk.options_panel import DISCLAIMER, build_opportunities, opt_hedge_backtest_kpis  # noqa: E402
+from desk.options_panel import (  # noqa: E402
+    DISCLAIMER,
+    build_opportunities,
+    opt_hedge_backtest_kpis,
+    paper_holdings_table,
+)
 from desk.gamma_panel import render_gamma_panel  # noqa: E402
 from desk.decision import render_decision_tab  # noqa: E402
 from desk.final_signal import DETAIL_CAPTION, render_final_signal_tab  # noqa: E402
@@ -78,6 +83,7 @@ DESK_PAGES = (
     "席位板块",
     "情绪",
     "E1·情绪影子·不计分",
+    "E1·NPD影子·不计分",
     "期权机会",
     "套利观察",
     "Gamma 结构",
@@ -310,6 +316,12 @@ def main() -> None:
 
     if page == "最终信号":
         render_freshness_header(ROOT, "最终信号")
+        try:
+            from desk.npd_panel import render_npd_event_day_banner
+
+            render_npd_event_day_banner(ROOT)
+        except Exception as exc:  # noqa: BLE001
+            st.caption(f"NPD 影子提醒跳过：{exc}")
         render_final_signal_tab(ROOT)
 
     if page == "技术分析":
@@ -466,6 +478,12 @@ def main() -> None:
     # --- Tab 2: daily signals ---
     if page == "日信号":
         render_freshness_header(ROOT, "日信号")
+        try:
+            from desk.npd_panel import render_npd_event_day_banner
+
+            render_npd_event_day_banner(ROOT)
+        except Exception as exc:  # noqa: BLE001
+            st.caption(f"NPD 影子提醒跳过：{exc}")
         st.caption(DETAIL_CAPTION)
         report = load_l1_report(ROOT)
         if not report:
@@ -601,6 +619,12 @@ def main() -> None:
 
         render_sentiment_history_tab(ROOT)
 
+    if page == "E1·NPD影子·不计分":
+        render_freshness_header(ROOT, "E1·NPD影子·不计分")
+        from desk.npd_panel import render_npd_panel
+
+        render_npd_panel(ROOT)
+
     # 预测归因：后台 daily_update 仍写 lab/research/predictions/；UI 已搁置。
 
     # --- Tab: TV-style chart ---
@@ -619,21 +643,40 @@ def main() -> None:
         render_freshness_header(ROOT, "期权机会")
         st.subheader("保护期权纸面机会")
         st.caption(DISCLAIMER)
+        held = paper_holdings_table(ROOT)
+        st.markdown("**模拟持仓（paper_book）**")
+        if held.empty:
+            st.info(
+                "当前纸面模拟仓空仓（无未平仓品种）。"
+                "下方机会表在空仓时回退为日信号多/空观察候选；"
+                "可先侧栏「仅刷新模拟仓」。"
+            )
+        else:
+            st.dataframe(held, width="stretch", hide_index=True)
+            st.caption(
+                f"持仓 {held.attrs.get('held_n')} · asof={held.attrs.get('asof')} · "
+                f"来源={held.attrs.get('source')}"
+            )
         opp = build_opportunities(
             premium_atr_mult=prem_m,
             strike_atr_mult=strike_m,
             root=ROOT,
         )
+        st.markdown("**保护期权机会**")
         if opp.empty:
             st.info(
-                "当前模拟仓无持仓候选（paper_book / final_positions 为空，"
-                "且 l1_report 也无 lots_l1>0）。可先侧栏「仅刷新模拟仓」。"
+                "无保护期权候选：纸面空仓，且日信号也无可用多/空+ATR。"
+                "可先侧栏「仅刷新模拟仓」或同步日报。"
             )
         else:
             show = opp.drop(columns=["premium_atr_mult", "strike_atr_mult"], errors="ignore")
-            st.dataframe(show, width="stretch", hide_index=True)
+            # Keep 品种 visible first.
+            prefer = [c for c in ("品种", "代码", "名称", "期货方向", "建议期权", "手数") if c in show.columns]
+            rest = [c for c in show.columns if c not in prefer]
+            st.dataframe(show[prefer + rest], width="stretch", hide_index=True)
             st.caption(
-                f"asof={opp.attrs.get('asof')} · premium_atr_mult={prem_m} · strike_atr_mult={strike_m}"
+                f"asof={opp.attrs.get('asof')} · 仓来源={opp.attrs.get('book_source')} · "
+                f"premium_atr_mult={prem_m} · strike_atr_mult={strike_m}"
             )
 
         from desk.hv_panel import render_hv_panel

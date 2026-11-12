@@ -1,0 +1,5 @@
+event_id,published_at,family,category,headline,score,official_url,official_excerpt,status
+USDA-WASDE-2026-11,2026-11-11T01:00:00+08:00,USDA,USDA_WASDE,"WASDE-677 全球期末库存 70.68→70.57（符号规则利多）",1,https://esmis.nal.usda.gov/publication/world-agricultural-supply-and-demand-estimates/2026-11-10,"World ending stocks 2026/27 70.68 to 70.57 million bales (WASDE-677)",accepted
+CASDE-2026-11,2026-11-10T00:00:00+08:00,CN,CN_CASDE,"CASDE-No.125 本月对2026/27供需预测不作调整",0,https://www.agri.cn/sj/gxxs/202611/t20261110_8882796.htm,"本月对2026/27年度中国棉花供需预测值不作调整",accepted
+CASDE-2026-09,2026-09-11T00:00:00+08:00,CN,CN_CASDE,"CASDE-No.123 产量调增14万吨、期末库存829→843（利空）",-1,https://www.agri.cn/sj/gxxs/202609/t20260911_8870784.htm,"2026/27年度产量调增14万吨至648万吨、期末库存调增至843万吨",accepted
+CN-RESERVE-EXAMPLE-PENDING,,CN,CN_RESERVE,"国储棉轮出成交（缺官方原文与发布时间示例）",0,,,待核

@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 from collections import defaultdict
 from datetime import date, datetime
 from pathlib import Path
@@ -33,8 +34,8 @@ def _finite_positive(value: Any, field: str) -> float:
         number = float(value)
     except (TypeError, ValueError) as exc:
         raise ValueError(f"invalid_{field}:{value}") from exc
-    if number <= 0:
-        raise ValueError(f"non_positive_{field}:{value}")
+    if not math.isfinite(number) or number <= 0:
+        raise ValueError(f"invalid_or_non_positive_{field}:{value}")
     return number
 
 

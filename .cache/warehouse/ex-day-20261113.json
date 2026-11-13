@@ -1,0 +1,337 @@
+{
+  "ok": true,
+  "ymd": "20261113",
+  "date": "2026-11-13",
+  "role": "primary",
+  "exchanges": {
+    "CZCE": {
+      "ok": true,
+      "n_products": 23,
+      "error": null,
+      "codes": [
+        "CF",
+        "CJ",
+        "CY",
+        "FG",
+        "JR",
+        "LR",
+        "MA",
+        "OI",
+        "PF",
+        "PL",
+        "PM",
+        "PR",
+        "PX",
+        "RI",
+        "RM",
+        "RS",
+        "SA",
+        "SF",
+        "SH",
+        "SM",
+        "SR",
+        "TA",
+        "UR"
+      ]
+    },
+    "SHFE": {
+      "ok": true,
+      "n_products": 11,
+      "error": null,
+      "codes": [
+        "AG",
+        "AL",
+        "AU",
+        "BU",
+        "CU",
+        "FU",
+        "NI",
+        "RB",
+        "RU",
+        "SP",
+        "SS"
+      ]
+    },
+    "DCE": {
+      "ok": false,
+      "n_products": 0,
+      "error": "DceBlockedError:API Error: 大连商品交易所网站（dce.com.cn）对程序访问启用了反爬虫验证，请求被拒绝（HTTP 412），大商所相关接口暂时无法获取数据。大商所合约的成交持仓排名可改用 ak.futures_hold_pos_sina(symbol=\"多单持仓\", contract=\"M2701\", date=\"20261104\")，按单个合约查询。 (Status code: 412)",
+      "codes": []
+    }
+  },
+  "by_code": {
+    "SR": {
+      "code": "SR",
+      "receipt": 19761.0,
+      "change": -63.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "CF": {
+      "code": "CF",
+      "receipt": 6304.0,
+      "change": -7.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "CY": {
+      "code": "CY",
+      "receipt": 7.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "RM": {
+      "code": "RM",
+      "receipt": 2170.0,
+      "change": -62.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "OI": {
+      "code": "OI",
+      "receipt": 236.0,
+      "change": 206.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "RS": {
+      "code": "RS",
+      "receipt": 27.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "PM": {
+      "code": "PM",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "RI": {
+      "code": "RI",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "LR": {
+      "code": "LR",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "JR": {
+      "code": "JR",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "CJ": {
+      "code": "CJ",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "TA": {
+      "code": "TA",
+      "receipt": 22379.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "MA": {
+      "code": "MA",
+      "receipt": 4311.0,
+      "change": -400.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "FG": {
+      "code": "FG",
+      "receipt": 1621.0,
+      "change": -20.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "SF": {
+      "code": "SF",
+      "receipt": 5318.0,
+      "change": -100.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "SM": {
+      "code": "SM",
+      "receipt": 16843.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "UR": {
+      "code": "UR",
+      "receipt": 3348.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "SA": {
+      "code": "SA",
+      "receipt": 2531.0,
+      "change": -300.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "PF": {
+      "code": "PF",
+      "receipt": 1562.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "PX": {
+      "code": "PX",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "SH": {
+      "code": "SH",
+      "receipt": 111.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "PR": {
+      "code": "PR",
+      "receipt": 483.0,
+      "change": -58.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "PL": {
+      "code": "PL",
+      "receipt": 365.0,
+      "change": 0.0,
+      "exchange": "CZCE",
+      "source": "exchange.czce",
+      "date": "2026-11-13"
+    },
+    "CU": {
+      "code": "CU",
+      "receipt": 1470.0,
+      "change": -174.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "AL": {
+      "code": "AL",
+      "receipt": 272.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "NI": {
+      "code": "NI",
+      "receipt": 66585.0,
+      "change": 180.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "RU": {
+      "code": "RU",
+      "receipt": 3970.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "SP": {
+      "code": "SP",
+      "receipt": 18900.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "FU": {
+      "code": "FU",
+      "receipt": 0.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "BU": {
+      "code": "BU",
+      "receipt": 66560.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "AU": {
+      "code": "AU",
+      "receipt": 118404.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "AG": {
+      "code": "AG",
+      "receipt": 1077654.0,
+      "change": -3198.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "RB": {
+      "code": "RB",
+      "receipt": 22800.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    },
+    "SS": {
+      "code": "SS",
+      "receipt": 5573.0,
+      "change": 0.0,
+      "exchange": "SHFE",
+      "source": "exchange.shfe",
+      "date": "2026-11-13"
+    }
+  },
+  "fetched_at": "2026-11-13 08:39:30"
+}

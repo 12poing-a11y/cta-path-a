@@ -2,7 +2,7 @@
   "ok": true,
   "live_trading": false,
   "entry_filter_unchanged": "seats",
-  "generated_at": "2026-11-12T16:54:06+00:00",
+  "generated_at": "2026-11-13T08:40:43+00:00",
   "codes": [
     "CF",
     "SR",
@@ -19,40 +19,40 @@
       "product": "棉花期权",
       "venue": "czce",
       "live_trading": false,
-      "asof": "20261112",
-      "bars_n": 5288,
+      "asof": "20261113",
+      "bars_n": 5289,
       "iv_days": 60,
       "rv": {
         "ok": true,
-        "rv20": 0.122654,
+        "rv20": 0.122729,
         "rv_pct": 39.2,
         "n_hist": 250
       },
       "iv": {
         "ok": true,
-        "iv": 0.135729,
-        "iv_pct": 23.33,
+        "iv": 0.129564,
+        "iv_pct": 13.33,
         "n_hist": 60,
         "iv_thin": false,
-        "date": "20261112"
+        "date": "20261113"
       },
-      "vrp": 0.013075,
+      "vrp": 0.006835,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": -0.035772,
-        "z": -2.3373,
+        "delta_iv": -0.006165,
+        "z": -0.3773,
         "n": 60
       },
       "vol_state": {
-        "score": 31.3,
-        "label": "mid",
+        "score": 26.3,
+        "label": "low",
         "parts": [
           39.2,
-          23.33
+          13.33
         ]
       },
       "vol_pricing": {
-        "score": 42.1,
+        "score": 34.5,
         "label": "fair",
         "rich": null
       },
@@ -70,15 +70,15 @@
         "align": "neutral",
         "direction": "震荡",
         "dir_side": 0,
-        "conviction_pct": 3.0,
+        "conviction_pct": 7.5,
         "ref_side": -1,
-        "label": "neutral/震荡·3%"
+        "label": "neutral/震荡·8%"
       },
       "momentum": {
         "ok": true,
         "side": 0,
-        "r20": -1.895,
-        "r60": -7.612
+        "r20": -1.861,
+        "r60": -6.996
       },
       "breakout": {
         "side": 0,
@@ -122,85 +122,86 @@
       "product": "白糖期权",
       "venue": "czce",
       "live_trading": false,
-      "asof": "20261112",
-      "bars_n": 5060,
-      "iv_days": 60,
+      "asof": "20261113",
+      "bars_n": 5067,
+      "iv_days": 54,
       "rv": {
         "ok": true,
-        "rv20": 0.061386,
-        "rv_pct": 1.6,
+        "rv20": 0.058215,
+        "rv_pct": 3.6,
         "n_hist": 250
       },
       "iv": {
         "ok": true,
-        "iv": 0.127383,
-        "iv_pct": 8.33,
-        "n_hist": 60,
+        "iv": 0.152749,
+        "iv_pct": 68.52,
+        "n_hist": 54,
         "iv_thin": false,
-        "date": "20261112"
+        "date": "20261113"
       },
-      "vrp": 0.065997,
+      "vrp": 0.094534,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": -0.026688,
-        "z": -1.6704,
-        "n": 60
+        "delta_iv": 0.025366,
+        "z": 1.4931,
+        "n": 54
       },
       "vol_state": {
-        "score": 5.0,
-        "label": "low",
+        "score": 36.1,
+        "label": "mid",
         "parts": [
-          1.6,
-          8.33
+          3.6,
+          68.52
         ]
       },
       "vol_pricing": {
-        "score": 54.2,
-        "label": "fair",
-        "rich": null
+        "score": 84.3,
+        "label": "rich",
+        "rich": true
       },
       "trend": {
-        "score": -32.0,
+        "score": -62.0,
         "label": "short",
         "side": -1,
         "path_a_side": -1,
         "path_a_selected": false,
         "mom_side": 0,
-        "breakout_side": 0
+        "breakout_side": -1
       },
       "sentiment": {
         "tier": "neutral",
         "align": "neutral",
         "direction": "震荡",
         "dir_side": 0,
-        "conviction_pct": 3.0,
+        "conviction_pct": 7.5,
         "ref_side": -1,
-        "label": "neutral/震荡·3%"
+        "label": "neutral/震荡·8%"
       },
       "momentum": {
         "ok": true,
         "side": 0,
-        "r20": -3.623,
-        "r60": -2.756
+        "r20": -3.939,
+        "r60": -4.403
       },
       "breakout": {
-        "side": 0,
-        "date": "2026-11-09",
-        "stale": true,
+        "side": -1,
+        "date": "2026-11-13",
+        "stale": false,
         "iv_tag": "true_candidate",
-        "delta_iv": 0.019627
+        "delta_iv": 0.025366
       },
       "calendar": {
         "ok": false
       },
       "matrix": {
-        "tag": "no_trade",
+        "tag": "buy_vol_breakout",
         "tags": [
-          "no_trade"
+          "buy_vol_breakout",
+          "buy_call_or_put"
         ],
-        "reason": "条件不清晰 → 空仓/观望",
+        "reason": "低波分位+突破确认且IV未充分扩张 → 买波/方向期权研究",
         "false_breakout": false,
-        "buy_vol": false,
+        "buy_vol": true,
         "sell_vol": false,
         "sentiment_tier": "neutral",
         "sentiment_align": "neutral"
@@ -215,7 +216,7 @@
       "tag_window": {
         "n": 1,
         "counts": {
-          "no_trade": 1
+          "buy_vol_breakout": 1
         }
       }
     },
@@ -225,40 +226,40 @@
       "product": "甲醇期权",
       "venue": "czce",
       "live_trading": false,
-      "asof": "20261112",
-      "bars_n": 2880,
+      "asof": "20261113",
+      "bars_n": 2881,
       "iv_days": 60,
       "rv": {
         "ok": true,
-        "rv20": 0.457442,
-        "rv_pct": 72.0,
+        "rv20": 0.46868,
+        "rv_pct": 72.4,
         "n_hist": 250
       },
       "iv": {
         "ok": true,
-        "iv": 0.460295,
-        "iv_pct": 40.0,
+        "iv": 0.470132,
+        "iv_pct": 43.33,
         "n_hist": 60,
         "iv_thin": false,
-        "date": "20261112"
+        "date": "20261113"
       },
-      "vrp": 0.002853,
+      "vrp": 0.001452,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": -0.044354,
-        "z": -0.8948,
+        "delta_iv": 0.009837,
+        "z": 0.1276,
         "n": 60
       },
       "vol_state": {
-        "score": 56.0,
+        "score": 57.9,
         "label": "mid",
         "parts": [
-          72.0,
-          40.0
+          72.4,
+          43.33
         ]
       },
       "vol_pricing": {
-        "score": 46.2,
+        "score": 47.3,
         "label": "fair",
         "rich": null
       },
@@ -276,15 +277,15 @@
         "align": "neutral",
         "direction": "震荡",
         "dir_side": 0,
-        "conviction_pct": 3.0,
+        "conviction_pct": 7.5,
         "ref_side": 1,
-        "label": "neutral/震荡·3%"
+        "label": "neutral/震荡·8%"
       },
       "momentum": {
         "ok": true,
         "side": 0,
-        "r20": 0.063,
-        "r60": 21.672
+        "r20": 2.318,
+        "r60": 23.478
       },
       "breakout": {
         "side": 0,
@@ -328,40 +329,40 @@
       "product": "PTA期权",
       "venue": "czce",
       "live_trading": false,
-      "asof": "20261112",
-      "bars_n": 4833,
+      "asof": "20261113",
+      "bars_n": 4834,
       "iv_days": 60,
       "rv": {
         "ok": true,
-        "rv20": 0.283254,
-        "rv_pct": 35.2,
+        "rv20": 0.290817,
+        "rv_pct": 38.4,
         "n_hist": 250
       },
       "iv": {
         "ok": true,
-        "iv": 0.327224,
-        "iv_pct": 30.0,
+        "iv": 0.330259,
+        "iv_pct": 31.67,
         "n_hist": 60,
         "iv_thin": false,
-        "date": "20261112"
+        "date": "20261113"
       },
-      "vrp": 0.04397,
+      "vrp": 0.039442,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": -0.049877,
-        "z": -1.2799,
+        "delta_iv": 0.003035,
+        "z": 0.0465,
         "n": 60
       },
       "vol_state": {
-        "score": 32.6,
+        "score": 35.0,
         "label": "mid",
         "parts": [
-          35.2,
-          30.0
+          38.4,
+          31.67
         ]
       },
       "vol_pricing": {
-        "score": 58.3,
+        "score": 57.3,
         "label": "fair",
         "rich": null
       },
@@ -379,15 +380,15 @@
         "align": "neutral",
         "direction": "震荡",
         "dir_side": 0,
-        "conviction_pct": 3.0,
+        "conviction_pct": 7.5,
         "ref_side": 0,
-        "label": "neutral/震荡·3%"
+        "label": "neutral/震荡·8%"
       },
       "momentum": {
         "ok": true,
         "side": 0,
-        "r20": -6.751,
-        "r60": 4.962
+        "r20": -5.07,
+        "r60": 6.892
       },
       "breakout": {
         "side": 0,
@@ -431,40 +432,40 @@
       "product": "天胶期权",
       "venue": "shfe",
       "live_trading": false,
-      "asof": "20261112",
-      "bars_n": 5313,
-      "iv_days": 8,
+      "asof": "20261113",
+      "bars_n": 5320,
+      "iv_days": 10,
       "rv": {
         "ok": true,
-        "rv20": 0.205952,
-        "rv_pct": 55.6,
+        "rv20": 0.196159,
+        "rv_pct": 54.4,
         "n_hist": 250
       },
       "iv": {
         "ok": true,
-        "iv": 0.251074,
-        "iv_pct": 62.5,
-        "n_hist": 8,
+        "iv": 0.265383,
+        "iv_pct": 90.0,
+        "n_hist": 10,
         "iv_thin": true,
-        "date": "20261102"
+        "date": "20261113"
       },
-      "vrp": 0.045122,
+      "vrp": 0.069224,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": -0.001554,
-        "z": -0.2606,
-        "n": 8
+        "delta_iv": 0.028692,
+        "z": 0.7487,
+        "n": 10
       },
       "vol_state": {
-        "score": 59.0,
-        "label": "mid",
+        "score": 72.2,
+        "label": "high",
         "parts": [
-          55.6,
-          62.5
+          54.4,
+          90.0
         ]
       },
       "vol_pricing": {
-        "score": 75.1,
+        "score": 95.0,
         "label": "rich",
         "rich": true
       },
@@ -482,15 +483,15 @@
         "align": "neutral",
         "direction": "震荡",
         "dir_side": 0,
-        "conviction_pct": 3.0,
+        "conviction_pct": 7.5,
         "ref_side": 0,
-        "label": "neutral/震荡·3%"
+        "label": "neutral/震荡·8%"
       },
       "momentum": {
         "ok": true,
         "side": 0,
-        "r20": -1.52,
-        "r60": 8.273
+        "r20": -0.533,
+        "r60": 5.946
       },
       "breakout": {
         "side": 0,
@@ -535,42 +536,42 @@
       "product": "白银期权",
       "venue": "shfe",
       "live_trading": false,
-      "asof": "20261112",
-      "bars_n": 3530,
-      "iv_days": 37,
+      "asof": "20261113",
+      "bars_n": 3537,
+      "iv_days": 41,
       "rv": {
         "ok": true,
-        "rv20": 0.42683,
-        "rv_pct": 40.4,
+        "rv20": 0.403729,
+        "rv_pct": 34.4,
         "n_hist": 250
       },
       "iv": {
         "ok": true,
-        "iv": 0.447734,
-        "iv_pct": 59.46,
-        "n_hist": 37,
+        "iv": 0.477587,
+        "iv_pct": 75.61,
+        "n_hist": 41,
         "iv_thin": false,
-        "date": "20261112"
+        "date": "20261113"
       },
-      "vrp": 0.020904,
+      "vrp": 0.073858,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": 0.002587,
-        "z": -0.0208,
-        "n": 37
+        "delta_iv": 0.029853,
+        "z": 0.862,
+        "n": 41
       },
       "vol_state": {
-        "score": 49.9,
+        "score": 55.0,
         "label": "mid",
         "parts": [
-          40.4,
-          59.46
+          34.4,
+          75.61
         ]
       },
       "vol_pricing": {
-        "score": 63.4,
-        "label": "fair",
-        "rich": null
+        "score": 87.8,
+        "label": "rich",
+        "rich": true
       },
       "trend": {
         "score": -62.0,
@@ -586,15 +587,15 @@
         "align": "neutral",
         "direction": "震荡",
         "dir_side": 0,
-        "conviction_pct": 3.0,
+        "conviction_pct": 7.5,
         "ref_side": -1,
-        "label": "neutral/震荡·3%"
+        "label": "neutral/震荡·8%"
       },
       "momentum": {
         "ok": true,
         "side": -1,
-        "r20": -9.656,
-        "r60": -23.604
+        "r20": -8.567,
+        "r60": -28.537
       },
       "breakout": {
         "side": 0,
@@ -638,48 +639,48 @@
       "product": "螺纹钢期权",
       "venue": "shfe",
       "live_trading": false,
-      "asof": "20261112",
-      "bars_n": 4280,
-      "iv_days": 49,
+      "asof": "20261113",
+      "bars_n": 4287,
+      "iv_days": 46,
       "rv": {
         "ok": true,
-        "rv20": 0.079834,
-        "rv_pct": 19.6,
+        "rv20": 0.074652,
+        "rv_pct": 16.8,
         "n_hist": 250
       },
       "iv": {
         "ok": true,
         "iv": 0.117619,
-        "iv_pct": 14.29,
-        "n_hist": 49,
+        "iv_pct": 17.39,
+        "n_hist": 46,
         "iv_thin": false,
         "date": "20261112"
       },
-      "vrp": 0.037785,
+      "vrp": 0.042967,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": -0.001131,
-        "z": -0.0469,
-        "n": 49
+        "delta_iv": 0.002307,
+        "z": 0.7243,
+        "n": 46
       },
       "vol_state": {
-        "score": 16.9,
+        "score": 17.1,
         "label": "low",
         "parts": [
-          19.6,
-          14.29
+          16.8,
+          17.39
         ]
       },
       "vol_pricing": {
-        "score": 47.9,
+        "score": 51.6,
         "label": "fair",
         "rich": null
       },
       "trend": {
-        "score": 0.0,
-        "label": "flat",
-        "side": 0,
-        "path_a_side": 0,
+        "score": -32.0,
+        "label": "short",
+        "side": -1,
+        "path_a_side": -1,
         "path_a_selected": false,
         "mom_side": 0,
         "breakout_side": 0
@@ -689,15 +690,15 @@
         "align": "neutral",
         "direction": "震荡",
         "dir_side": 0,
-        "conviction_pct": 3.0,
-        "ref_side": 0,
-        "label": "neutral/震荡·3%"
+        "conviction_pct": 7.5,
+        "ref_side": -1,
+        "label": "neutral/震荡·8%"
       },
       "momentum": {
         "ok": true,
         "side": 0,
-        "r20": -1.53,
-        "r60": 0.465
+        "r20": -0.394,
+        "r60": -0.132
       },
       "breakout": {
         "side": 0,
@@ -741,7 +742,7 @@
       "no_trade": 1
     },
     "SR": {
-      "no_trade": 1
+      "buy_vol_breakout": 1
     },
     "MA": {
       "no_trade": 1

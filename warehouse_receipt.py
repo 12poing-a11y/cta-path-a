@@ -57,15 +57,20 @@ _EM_SYMBOL: dict[str, str] = {
 }
 
 # SHFE receipt table keys → Path-A code (厂库/仓库合并时取同 code 求和).
+# 2025-11-18 起 HTML 表题为「螺纹钢(仓库)」等，解析后常规范成「螺纹钢仓库」。
 _SHFE_NAME_TO_CODE: dict[str, str] = {
     "螺纹钢": "RB",
     "螺纹钢仓库": "RB",
     "螺纹钢厂库": "RB",
-    "热轧卷板": "RB",  # not Path-A; skipped unless mapped
+    "螺纹钢(仓库)": "RB",
+    "螺纹钢(厂库)": "RB",
+    "热轧卷板": "RB",  # not Path-A primary; skipped unless mapped intentionally
     "天然橡胶": "RU",
     "纸浆": "SP",
     "纸浆仓库": "SP",
     "纸浆厂库": "SP",
+    "纸浆(仓库)": "SP",
+    "纸浆(厂库)": "SP",
     "白银": "AG",
     "黄金": "AU",
     "铜": "CU",
@@ -74,12 +79,23 @@ _SHFE_NAME_TO_CODE: dict[str, str] = {
     "不锈钢": "SS",
     "不锈钢仓库": "SS",
     "不锈钢厂库": "SS",
+    "不锈钢(仓库)": "SS",
+    "不锈钢(厂库)": "SS",
     "燃料油": "FU",
     "沥青": "BU",
     "石油沥青": "BU",
     "石油沥青仓库": "BU",
     "石油沥青厂库": "BU",
+    "石油沥青(仓库)": "BU",
+    "石油沥青(厂库)": "BU",
 }
+
+# 上期所自 2025-11-18 起不再提供 {date}dailystock.dat（404），改 HTML 分表。
+_SHFE_HTML_SINCE = "20251118"
+_SHFE_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+)
 
 _CZCE_KEY_ALIASES = {"PTA": "TA"}
 
@@ -277,11 +293,123 @@ def _czce_totals(payload: dict) -> dict[str, dict[str, float | None]]:
     return out
 
 
+def _normalize_shfe_var_name(raw: str) -> str:
+    text = str(raw or "").strip()
+    return text.replace("(仓库)", "仓库").replace("(厂库)", "厂库")
+
+
+def _fetch_shfe_html(ymd: str) -> dict[str, Any]:
+    """Parse SHFE stockdata HTML (post-2025-11-18). Keys = variety table titles."""
+    import pandas as pd
+    import requests
+    from bs4 import BeautifulSoup
+
+    ymd = _ymd(ymd)
+    url = (
+        f"https://www.shfe.com.cn/data/tradedata/future/stockdata/"
+        f"dailystock_{ymd}/ZH/all.html"
+    )
+    headers = {"User-Agent": _SHFE_UA, "Referer": "https://www.shfe.com.cn/"}
+    r = requests.get(url, headers=headers, timeout=30)
+    r.raise_for_status()
+    r.encoding = "utf-8"
+    soup = BeautifulSoup(r.text, features="lxml")
+    column_map = {
+        "地区": "REGNAME",
+        "仓库": "WHABBRNAME",
+        "厂库": "WHABBRNAME",
+        "交割仓库": "WHABBRNAME",
+        "期货": "WRTWGHTS",
+        "本日数量": "WRTWGHTS",
+        "增减": "WRTCHANGE",
+    }
+    big_dict: dict[str, Any] = {}
+    for table in soup.find_all("table"):
+        header = [th.get_text(strip=True) for th in table.find_all("th")]
+        title_tr = table.find("tr", class_="special_row_type")
+        if not header or title_tr is None or title_tr.td is None:
+            continue
+        columns = [column_map.get(item, item) for item in header]
+        var_name = _normalize_shfe_var_name(title_tr.td.get_text(strip=True))
+        spans: dict[int, tuple[str, int]] = {}
+        rows: list[dict[str, Any]] = []
+        for tr in table.find_all("tr"):
+            if tr is title_tr or tr.find("th") is not None:
+                continue
+            cells = list(tr.find_all("td"))
+            row: list[str] = []
+            while len(row) < len(columns):
+                col = len(row)
+                if spans.get(col, ("", 0))[1] > 0:
+                    text, remaining = spans[col]
+                    spans[col] = (text, remaining - 1)
+                    row.append(text)
+                    continue
+                if not cells:
+                    break
+                td = cells.pop(0)
+                text = td.get_text(strip=True)
+                rowspan = int(td.get("rowspan", 1) or 1)
+                if rowspan > 1:
+                    spans[col] = (text, rowspan - 1)
+                colspan = int(td.get("colspan", 1) or 1)
+                row.extend([""] * (colspan - 1) + [text])
+            if len(row) != len(columns):
+                continue
+            item = dict(zip(columns, row))
+            reg = str(item.get("REGNAME") or "")
+            wh = str(item.get("WHABBRNAME") or "")
+            if reg.endswith("总计") or wh.endswith("总计"):
+                item["WHABBRNAME"] = reg + wh
+                item["REGNAME"] = ""
+                item["ROWSTATUS"] = "2"
+            elif "合计" in (reg, wh):
+                item["ROWSTATUS"] = "1"
+            else:
+                item["ROWSTATUS"] = "0"
+            rows.append(item)
+        if not rows:
+            continue
+        temp_df = pd.DataFrame(rows)
+        temp_df["VARNAME"] = var_name
+        keep = ["VARNAME", "REGNAME", "WHABBRNAME", "WRTWGHTS", "WRTCHANGE", "ROWSTATUS"]
+        for col in keep:
+            if col not in temp_df.columns:
+                temp_df[col] = None
+        temp_df = temp_df[keep]
+        temp_df["WRTWGHTS"] = pd.to_numeric(temp_df["WRTWGHTS"], errors="coerce")
+        temp_df["WRTCHANGE"] = pd.to_numeric(temp_df["WRTCHANGE"], errors="coerce")
+        # Merge 仓库/厂库 tables that map to the same Path-A code under one key.
+        big_dict[var_name] = temp_df
+    if not big_dict:
+        raise ValueError(f"shfe_html_empty:{ymd}")
+    return big_dict
+
+
+def _fetch_shfe_payload(ymd: str) -> dict[str, Any]:
+    """SHFE warehouse payload: new HTML after 2025-11-18, else akshare/.dat."""
+    ymd = _ymd(ymd)
+    if ymd >= _SHFE_HTML_SINCE:
+        return _fetch_shfe_html(ymd)
+    import akshare as ak
+
+    try:
+        payload = ak.futures_shfe_warehouse_receipt(date=ymd)
+        if isinstance(payload, dict) and payload:
+            return payload
+    except Exception:
+        pass
+    # Fallback: some mirrors still serve .dat briefly after cutover.
+    return _fetch_shfe_html(ymd)
+
+
 def _shfe_totals(payload: dict) -> dict[str, dict[str, float | None]]:
     """Sum WRTWGHTS across 仓库/厂库 tables mapped to the same Path-A code."""
     acc: dict[str, dict[str, float]] = {}
     for name, df in (payload or {}).items():
-        code = _SHFE_NAME_TO_CODE.get(str(name))
+        code = _SHFE_NAME_TO_CODE.get(str(name)) or _SHFE_NAME_TO_CODE.get(
+            _normalize_shfe_var_name(str(name))
+        )
         if not code or not hasattr(df, "to_dict"):
             continue
         # Prefer explicit total/合计 row; else sum positive warehouse rows.
@@ -403,22 +531,28 @@ def fetch_exchange_day(ymd: str, *, sleep_s: float = 0.4) -> dict[str, Any]:
         exchanges["CZCE"] = {"ok": False, "n_products": 0, "totals": {}, "error": f"{type(exc).__name__}:{exc}"}
         print(f"[warehouse:ex] CZCE {ymd} FAIL {exchanges['CZCE']['error']}")
     time.sleep(sleep_s)
-    # SHFE
+    # SHFE — own HTML path after 2025-11-18 (akshare .dat 404 → JSONDecodeError).
     try:
-        shfe = ak.futures_shfe_warehouse_receipt(date=ymd)
+        shfe = _fetch_shfe_payload(ymd)
         totals = _shfe_totals(shfe if isinstance(shfe, dict) else {})
         exchanges["SHFE"] = {
             "ok": bool(totals),
             "n_products": len(totals),
             "totals": totals,
             "error": None if totals else "empty_totals",
+            "transport": "html" if ymd >= _SHFE_HTML_SINCE else "dat/akshare",
         }
         print(f"[warehouse:ex] SHFE {ymd} products={len(totals)}")
     except Exception as exc:  # noqa: BLE001
-        exchanges["SHFE"] = {"ok": False, "n_products": 0, "totals": {}, "error": f"{type(exc).__name__}:{exc}"}
+        exchanges["SHFE"] = {
+            "ok": False,
+            "n_products": 0,
+            "totals": {},
+            "error": f"{type(exc).__name__}:{exc}",
+        }
         print(f"[warehouse:ex] SHFE {ymd} FAIL {exchanges['SHFE']['error']}")
     time.sleep(sleep_s)
-    # DCE
+    # DCE — exchange API often HTTP 412 (瑞数反爬); EM inventory remains bypass.
     try:
         dce = ak.futures_warehouse_receipt_dce(date=ymd)
         totals = _dce_totals(dce)
@@ -430,7 +564,10 @@ def fetch_exchange_day(ymd: str, *, sleep_s: float = 0.4) -> dict[str, Any]:
         }
         print(f"[warehouse:ex] DCE {ymd} products={len(totals)}")
     except Exception as exc:  # noqa: BLE001
-        exchanges["DCE"] = {"ok": False, "n_products": 0, "totals": {}, "error": f"{type(exc).__name__}:{exc}"}
+        err = f"{type(exc).__name__}:{exc}"
+        if "412" in err or "JSONDecodeError" in err:
+            err = f"{err} (瑞数/反爬常见；东财库存旁路顶上)"
+        exchanges["DCE"] = {"ok": False, "n_products": 0, "totals": {}, "error": err}
         print(f"[warehouse:ex] DCE {ymd} FAIL {exchanges['DCE']['error']}")
 
     by_code: dict[str, dict[str, Any]] = {}

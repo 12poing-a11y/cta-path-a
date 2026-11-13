@@ -149,19 +149,34 @@ def _warehouse_feed(root: Path, expected: date) -> dict[str, Any]:
         for name in ("SHFE", "DCE", "CZCE")
         if isinstance(ex.get(name), dict) and not ex[name].get("ok")
     ]
+    # DCE exchange API often HTTP 412 (瑞数); EM bypass is the designed fallback.
+    dce_only = down == ["DCE"]
+    hard_down = [n for n in down if n != "DCE"]
+    missing_n = int(raw.get("missing_n") or 0)
     stale = asof is None or (lag is not None and lag > WAREHOUSE_STALE_DAYS)
     notes = []
-    if down:
-        notes.append(f"交易所主源失败: {','.join(down)}（东财旁路）")
+    if hard_down:
+        notes.append(f"交易所主源失败: {','.join(hard_down)}（东财旁路）")
+    elif dce_only:
+        notes.append("大商所主源反爬(412)，铁矿/焦煤等用东财旁路")
     if lag and lag > 0:
         notes.append(f"落后约 {lag} 日")
+    if hard_down or missing_n > 0 or stale:
+        status = "主源异常" if hard_down else ("滞后" if stale else "缺品种")
+        is_stale = True
+    elif dce_only:
+        status = "已到(DCE旁路)"
+        is_stale = False
+    else:
+        status = "已到"
+        is_stale = False
     return {
         "id": "warehouse",
         "name": "仓单/库存",
         "asof": asof.strftime("%Y%m%d") if asof else None,
         "lag_busdays": lag,
-        "stale": bool(stale or down),
-        "status": "主源异常" if down else ("滞后" if stale else "已到"),
+        "stale": bool(is_stale),
+        "status": status,
         "note": "；".join(notes),
         "primary_n": raw.get("primary_n"),
         "bypass_n": raw.get("bypass_n"),

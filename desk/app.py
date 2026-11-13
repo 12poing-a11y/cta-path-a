@@ -71,22 +71,22 @@ PARKED_COMPARE_IDS = frozenset(
         "benchmark",
     }
 )
-# Nav order: P&L / drawdown reference first, then structure / sentiment / options.
+# Nav by current decision weight: formal Path-A first; E1 shadow pages last.
 DESK_PAGES = (
     "最终信号",
-    "概览对比",
-    "技术分析",
-    "决策",
-    "图表",
     "日信号",
-    "状态评分",
+    "决策",
     "席位板块",
+    "技术分析",
+    "图表",
+    "概览对比",
+    "状态评分",
     "情绪",
+    "期权机会",
+    "Gamma 结构",
+    "套利观察",
     "E1·情绪影子·不计分",
     "E1·NPD影子·不计分",
-    "期权机会",
-    "套利观察",
-    "Gamma 结构",
 )
 
 st.set_page_config(page_title="CTA Path-A Desk", layout="wide", initial_sidebar_state="expanded")

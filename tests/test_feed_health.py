@@ -60,6 +60,32 @@ def test_feed_health_flags_stale_iv_and_vol(tmp_path: Path):
     assert pack["stale_n"] >= 2
 
 
+def test_warehouse_dce_only_bypass_is_not_hard_stale(tmp_path: Path):
+    wh = tmp_path / ".cache" / "warehouse"
+    wh.mkdir(parents=True)
+    (wh / "latest.json").write_text(
+        json.dumps(
+            {
+                "asof": "2026-11-13",
+                "exchange_ymd": "20261113",
+                "primary_n": 17,
+                "bypass_n": 10,
+                "missing_n": 0,
+                "exchange_status": {
+                    "CZCE": {"ok": True},
+                    "SHFE": {"ok": True},
+                    "DCE": {"ok": False, "error": "412"},
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    pack = feed_health(tmp_path, now=_t("2026-11-13 18:00"))
+    by_id = {f["id"]: f for f in pack["feeds"]}
+    assert by_id["warehouse"]["status"] == "已到(DCE旁路)"
+    assert by_id["warehouse"]["stale"] is False
+
+
 def test_desk_freshness_still_independent(tmp_path: Path):
     (tmp_path / "l1_report.json").write_text(
         '{"asof":"20261112","signals":[{"code":"CF"}]}', encoding="utf-8"

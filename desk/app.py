@@ -85,6 +85,8 @@ DESK_PAGES = (
     "期权机会",
     "Gamma 结构",
     "套利观察",
+    "LSP 扫荡研究",
+    "P4 轻量ML",
     "E1·情绪影子·不计分",
     "E1·NPD影子·不计分",
 )
@@ -433,6 +435,20 @@ def main() -> None:
         except Exception as exc:  # soft-fail: never break overview
             st.caption(f"策略消融与资金组合面板暂不可用：{exc}")
 
+        try:
+            from desk.validation_panel import render_validation_panel
+
+            render_validation_panel(st, ROOT)
+        except Exception as exc:  # soft-fail: never break overview
+            st.caption(f"研究验证面板暂不可用：{exc}")
+
+        try:
+            from desk.portfolio_panel import render_portfolio_panel
+
+            render_portfolio_panel(st, ROOT)
+        except Exception as exc:  # soft-fail
+            st.caption(f"组合风险面板暂不可用：{exc}")
+
         if curves:
             aligned = align_curves(
                 curves,
@@ -612,6 +628,24 @@ def main() -> None:
         render_sentiment_panel(ROOT)
         st.divider()
         render_behav_finance_panel(ROOT)
+
+    if page == "LSP 扫荡研究":
+        render_freshness_header(ROOT, "LSP 扫荡研究")
+        try:
+            from desk.lsp_panel import render_lsp_panel
+
+            render_lsp_panel(st, ROOT)
+        except Exception as exc:  # noqa: BLE001
+            st.caption(f"LSP 面板暂不可用：{exc}")
+
+    if page == "P4 轻量ML":
+        render_freshness_header(ROOT, "P4 轻量ML")
+        try:
+            from desk.ml_panel import render_ml_panel
+
+            render_ml_panel(st, ROOT)
+        except Exception as exc:  # noqa: BLE001
+            st.caption(f"P4 面板暂不可用：{exc}")
 
     if page == "E1·情绪影子·不计分":
         render_freshness_header(ROOT, "E1·情绪影子·不计分")

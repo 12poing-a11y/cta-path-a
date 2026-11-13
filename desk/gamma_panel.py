@@ -345,3 +345,27 @@ def render_gamma_panel(root: Path) -> None:
         f"可用历史 {len(history)} 个交易日 · 窗口 {window}。"
         " call/put_dist_pct = (墙 − F)/F；历史不足不补造。"
     )
+
+    research = root / "lab" / "research" / "gamma" / f"gamma_{contract}_latest.json"
+    if research.is_file():
+        import json
+
+        with st.expander("研究层：迁移标签 / 触碰事件 / IV×OI", expanded=False):
+            try:
+                payload = json.loads(research.read_text(encoding="utf-8"))
+            except Exception as exc:  # noqa: BLE001
+                st.caption(f"无法读取研究产物：{exc}")
+                return
+            st.caption(payload.get("disclaimer") or "Research only.")
+            mig = payload.get("migration") or {}
+            touch = payload.get("touch") or {}
+            ivoi = payload.get("iv_oi") or {}
+            c1, c2, c3 = st.columns(3)
+            c1.metric("迁移事件", mig.get("n_events"))
+            c2.metric("触碰事件", touch.get("n_events"))
+            c3.metric("IV×OI 天数", ivoi.get("n_days"))
+            st.write("迁移标签", mig.get("label_counts") or {})
+            st.write("触碰结果", touch.get("outcome_probs") or {})
+            st.write("IV×OI 状态", ivoi.get("regime_counts") or {})
+            st.caption("生成：`python lab/scripts/run_gamma_research.py --contract CF2701`")
+

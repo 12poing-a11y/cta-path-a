@@ -6,9 +6,20 @@ import json
 from pathlib import Path
 
 
-def load_slippage_ticks(root: Path | None = None) -> float:
-    """SSOT: universe.slippage_ticks, else research_cost.path_a_fill.slippage_ticks, else 1.0."""
+def load_slippage_ticks(root: Path | None = None, *, scenario: str | None = None) -> float:
+    """SSOT: universe.slippage_ticks, else research_cost scenario / path_a_fill, else 1.0.
+
+    When scenario is set (base/stress/extreme), use research.execution.cost_model
+    (ignores universe override so stress tests stay comparable).
+    """
     root = root or Path(__file__).resolve().parent
+    if scenario:
+        try:
+            from research.execution.cost_model import scenario_slippage_ticks
+
+            return float(scenario_slippage_ticks(scenario, root=root))
+        except Exception:
+            pass
     try:
         uni = json.loads((root / "universe.json").read_text(encoding="utf-8"))
         if uni.get("slippage_ticks") is not None:
@@ -25,7 +36,14 @@ def load_slippage_ticks(root: Path | None = None) -> float:
     return 1.0
 
 
-def fill_cost(meta: dict, price, lots, slippage_ticks: float | None = None) -> float:
+def fill_cost(
+    meta: dict,
+    price,
+    lots,
+    slippage_ticks: float | None = None,
+    *,
+    fee_mult: float = 1.0,
+) -> float:
     """One fill: slippage_ticks × tick × mult × lots plus the posted per-side fee."""
     lots = abs(int(lots or 0))
     if lots <= 0 or price is None:
@@ -42,7 +60,7 @@ def fill_cost(meta: dict, price, lots, slippage_ticks: float | None = None) -> f
         fee += abs(float(price)) * mult * lots * rate
     if yuan:
         fee += yuan * lots
-    return slip + fee
+    return slip + fee * abs(float(fee_mult or 1.0))
 
 
 def measurement_reason(hist: list[dict], i: int, atr, max_atr_pct: float = 8.0) -> str | None:

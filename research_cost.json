@@ -1,11 +1,28 @@
 {
-  "schema": "cta-research-cost-v1",
-  "note": "统一纸面成交假设。正式 Path-A 回测 fill_price=next_open（见 universe.backtest）；手数策略用 path_a_filters.fill_cost；截面代理用 bps。live_trading=false。",
+  "schema": "cta-research-cost-v2",
+  "note": "统一纸面成交假设。正式 Path-A 回测 fill_price=next_open（见 universe.backtest）；手数策略用 path_a_fill；截面代理用 bps。live_trading=false。成本情景：Base=正常；Stress=滑点×2/手续费×1.25；Extreme=滑点×4/手续费×1.5。正式 KPI 默认 Base；压力报告至少含 Base+Stress。",
   "live_trading": false,
   "path_a_fill": {
     "slippage_ticks": 1.0,
     "fee_from_symbol_meta": true,
     "fill_price": "next_open"
+  },
+  "scenarios": {
+    "base": {
+      "slippage_ticks_mult": 1.0,
+      "fee_mult": 1.0,
+      "note": "正常流动性估计成本；正式基准回测默认"
+    },
+    "stress": {
+      "slippage_ticks_mult": 2.0,
+      "fee_mult": 1.25,
+      "note": "滑点扩大、手续费上浮；压力测试必报"
+    },
+    "extreme": {
+      "slippage_ticks_mult": 4.0,
+      "fee_mult": 1.5,
+      "note": "极端波动/跳空/流动性恶化；判断策略生存能力"
+    }
   },
   "sleeve_proxy": {
     "cost_bps_one_way": 3.0,

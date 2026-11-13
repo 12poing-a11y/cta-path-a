@@ -6,7 +6,9 @@
 
 ```
 lab/
-  config/          品种池、OOS 切分、因子注册表、存储预算
+  config/          品种池、OOS 切分、因子注册表、实验规则、存储预算
+  validation/      PSR / DSR / PBO / walk-forward（研究隔离，不改正式参数）
+  lsp/             流动性扫荡：摆动位刺穿检测、真假突破标签、条件概率（CF 先）
   data/raw/        原始摘录（可选）
   data/bars/       标准化日线（连续主力优先）
   data/factors/    日频因子面板（按日或按批）
@@ -15,6 +17,8 @@ lab/
   research/runs/   一次运行的元数据（参数哈希、截止日期）
   scripts/         引导、磁盘检查、从 Path-A 缓存灌日线/因子
 ```
+
+升级总计划见仓库根目录 `docs/UPGRADE_PLAN.md`。
 
 ## 快速开始
 

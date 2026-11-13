@@ -1,0 +1,40 @@
+{
+  "month": "2702",
+  "rows": [
+    {
+      "code": "AU",
+      "contract": "AU2702",
+      "ok": true,
+      "n": 199,
+      "start": "2026-01-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "AG",
+      "contract": "AG2702",
+      "ok": true,
+      "n": 177,
+      "start": "2026-02-25",
+      "end": "2026-11-13"
+    }
+  ],
+  "ok_n": 2,
+  "overlay": {
+    "month": "2702",
+    "symbols": {
+      "AU": {
+        "contract": "AU2702",
+        "coverage": 1.0,
+        "matched": 199,
+        "fill_series": "contract"
+      },
+      "AG": {
+        "contract": "AG2702",
+        "coverage": 1.0,
+        "matched": 177,
+        "fill_series": "contract"
+      }
+    },
+    "fill_series": "contract"
+  }
+}

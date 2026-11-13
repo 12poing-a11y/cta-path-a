@@ -48,9 +48,11 @@ LOOKBACK_DAYS = 260
 WARMUP = 60
 BATCH_LABEL = "2026一年-pathA-nextOpen"
 CUTOFF_DAYS = 420
-SCHEMA_VERSION = "cta-backtest-v12-intraday-exits"
+SCHEMA_VERSION = "cta-backtest-v13-tradability"
 DEFAULT_FILL_PRICE = "next_open"
 EXIT_MINUTE_PERIOD = "15"
+# Continuous main-series remains the Path-A fill proxy until contract-level packs land.
+# Explicit price_basis="continuous" without allow_continuous_fill still blocks.
 
 # --- P0 lookahead guards -----------------------------------------------------
 # Seat rankings / basis are published after the T close (seats ~16:00-17:00),
@@ -116,11 +118,18 @@ def lag_curves_carry(curves: dict, dates: list[str], lag: int) -> dict:
 
 
 def next_open_fill(c: dict, hist: list[dict], i: int) -> dict | None:
-    """Move a T-close candidate to the T+1 open; stop/target keep their distance."""
+    """Move a T-close candidate to the T+1 open; stop/target keep their distance.
+
+    Prefer exact-contract open when contract_pack overlay stamped ``contract_open``.
+    """
     if i + 1 >= len(hist):
         return None
     nb = hist[i + 1]
-    px = nb.get("open")
+    px = nb.get("contract_open")
+    fill_basis = "contract"
+    if px is None:
+        px = nb.get("open")
+        fill_basis = "continuous_proxy"
     if px is None:
         return None
     shift = float(px) - float(c["entry"])
@@ -130,7 +139,164 @@ def next_open_fill(c: dict, hist: list[dict], i: int) -> dict | None:
     c2["target"] = float(c["target"]) + shift
     c2["entry_date"] = nb["date"]
     c2["mark_from"] = float(px)
+    c2["fill_price_basis"] = fill_basis
+    if nb.get("contract"):
+        c2["fill_contract"] = nb.get("contract")
     return c2
+
+
+def prepare_pack_for_execution(pack, *, root: Path | None = None) -> dict:
+    """Stamp delivery calendar + optional contract-fill overlay onto a backtest pack."""
+    series, errors, sources = pack
+    root = root or ROOT
+    try:
+        from research.execution.contract_pack import annotate_pack_calendar, overlay_contract_fills
+
+        annotate_pack_calendar(series, root=root)
+        report = overlay_contract_fills(series, root=root)
+    except Exception as exc:  # noqa: BLE001
+        report = {"ok": False, "error": str(exc), "fill_series": "continuous_proxy"}
+    return report
+
+
+def _fill_quality_bar(
+    code: str,
+    hist_bar: dict,
+    meta: dict | None = None,
+    *,
+    atr: float | None = None,
+    next_open: float | None = None,
+    require_next_open: bool = False,
+) -> dict:
+    """Build classify_bar input for an intended fill (not a signal score)."""
+    meta = meta or {}
+    basis = str(meta.get("price_basis") or hist_bar.get("price_basis") or "continuous_proxy")
+    allow = meta.get("allow_continuous_fill")
+    if allow is None:
+        allow = hist_bar.get("allow_continuous_fill")
+    if allow is None:
+        # Default: Path-A continuous main series is an executable proxy until contract packs exist.
+        allow = basis in ("continuous_proxy", "continuous", "contract") and basis != "continuous_strict"
+    if basis == "continuous" and allow is True:
+        basis = "continuous_proxy"
+    bar = {
+        "code": code,
+        "open": hist_bar.get("open"),
+        "high": hist_bar.get("high"),
+        "low": hist_bar.get("low"),
+        "close": hist_bar.get("close"),
+        "volume": hist_bar.get("volume"),
+        "bar_date": hist_bar.get("date") or hist_bar.get("bar_date"),
+        "atr": atr if atr is not None else hist_bar.get("atr"),
+        "price_basis": basis,
+        "allow_continuous_fill": bool(allow),
+        "limit_status": hist_bar.get("limit_status") or hist_bar.get("limit_locked"),
+        "limit_locked": hist_bar.get("limit_locked"),
+        "delivery_restricted": hist_bar.get("delivery_restricted") or meta.get("delivery_restricted"),
+        "near_delivery": hist_bar.get("near_delivery"),
+        "roll_blocked": hist_bar.get("roll_blocked") or meta.get("roll_blocked"),
+        "no_new_position": hist_bar.get("no_new_position"),
+        "listed": hist_bar.get("listed", True),
+        "next_open": next_open,
+    }
+    return bar
+
+
+def entry_fill_allowed(
+    code: str,
+    hist_bar: dict,
+    meta: dict | None = None,
+    *,
+    side: str | None = None,
+    atr: float | None = None,
+    asof: str | None = None,
+    next_open: float | None = None,
+    require_next_open: bool = False,
+) -> tuple[bool, dict]:
+    """Return (ok, quality_record). Non-PASS blocks new entries."""
+    from research.data_quality import classify_bar
+
+    bar = _fill_quality_bar(
+        code,
+        hist_bar,
+        meta,
+        atr=atr,
+        next_open=next_open,
+        require_next_open=require_next_open,
+    )
+    q = classify_bar(
+        bar,
+        asof=asof or str(bar.get("bar_date") or ""),
+        side=side,
+        require_next_open=require_next_open,
+        next_open=next_open,
+    )
+    return q.get("status") == "PASS", q
+
+
+def cost_scenario_kpi(out: dict) -> dict:
+    """Compact KPI row for Base/Stress contrast tables."""
+    return {
+        "ok": out.get("ok"),
+        "cost_scenario": out.get("cost_scenario"),
+        "slippage_ticks": out.get("slippage_ticks"),
+        "fee_mult": out.get("fee_mult"),
+        "ret_pct": out.get("ret_pct"),
+        "gross_ret_pct": out.get("gross_ret_pct"),
+        "max_dd_pct": out.get("max_dd_pct"),
+        "cost_yuan": out.get("cost_yuan"),
+        "equity_end": out.get("equity_end"),
+        "closed_trades": out.get("closed_trades"),
+        "quality_blocks": out.get("quality_blocks"),
+    }
+
+
+def attach_cost_scenario_contrast(
+    primary: dict,
+    p: dict,
+    mode: str,
+    *,
+    pack=None,
+    scenarios: tuple[str, ...] = ("stress",),
+) -> dict:
+    """Re-run simulate on the same pack under stress/extreme; keep primary KPI as Base."""
+    if not primary.get("ok"):
+        return primary
+    primary_name = str(primary.get("cost_scenario") or "base")
+    rows = {primary_name: cost_scenario_kpi(primary)}
+    try:
+        from research.execution.cost_model import load_cost_scenario
+    except Exception as exc:  # noqa: BLE001
+        primary["cost_scenario_contrast"] = {"ok": False, "error": str(exc), "rows": rows}
+        return primary
+    pack = pack or (
+        _LAST_PACK.get("series") and (_LAST_PACK["series"], _LAST_PACK.get("errors") or {}, _LAST_PACK.get("sources") or {})
+    )
+    if pack is None:
+        primary["cost_scenario_contrast"] = {"ok": False, "error": "no_pack", "rows": rows}
+        return primary
+    for name in scenarios:
+        name = str(name).lower()
+        if name == primary_name:
+            continue
+        try:
+            sc = load_cost_scenario(name, root=ROOT)
+        except Exception as exc:  # noqa: BLE001
+            rows[name] = {"ok": False, "error": str(exc)}
+            continue
+        other = _simulate_cfg(
+            {**p, "slippage_ticks": sc["slippage_ticks"], "fee_mult": sc["fee_mult"], "cost_scenario": name},
+            mode,
+            pack=pack,
+        )
+        rows[name] = cost_scenario_kpi(other)
+    primary["cost_scenario_contrast"] = {
+        "ok": True,
+        "primary": primary_name,
+        "note": "Primary KPI remains Base; Stress/Extreme are contrast only.",
+        "rows": rows,
+    }
+    return primary
 
 
 def pack_sha256(series: dict) -> str:
@@ -815,20 +981,47 @@ def simulate(
     availability_lag=DEFAULT_AVAILABILITY_LAG,
     fill_price=DEFAULT_FILL_PRICE,
     slippage_ticks=None,
+    fee_mult=1.0,
+    cost_scenario="base",
+    enforce_tradability=True,
 ):
     if fill_price not in FILL_PRICES:
         raise ValueError(f"fill_price must be one of {FILL_PRICES}")
+    cost_scenario = str(cost_scenario or "base").strip().lower()
     if slippage_ticks is None:
-        slippage_ticks = load_slippage_ticks(ROOT)
+        try:
+            slippage_ticks = load_slippage_ticks(ROOT, scenario=cost_scenario)
+        except Exception:
+            slippage_ticks = load_slippage_ticks(ROOT)
     slippage_ticks = float(slippage_ticks)
+    fee_mult = abs(float(fee_mult if fee_mult is not None else 1.0))
+    if fee_mult == 1.0 and cost_scenario != "base":
+        try:
+            from research.execution.cost_model import load_cost_scenario as _lcs
+
+            fee_mult = float(_lcs(cost_scenario, root=ROOT).get("fee_mult") or 1.0)
+        except Exception:
+            pass
     bypass = carry_bypass_cfg(carry_bypass)
     vbypass = vol_bypass_cfg(vol_bypass)
     if pack is None:
         series, errors, sources = _fetch_pack(symbols)
+        pack = (series, errors, sources)
     else:
         series, errors, sources = pack
+    contract_pack_report = prepare_pack_for_execution(pack, root=ROOT)
+    series, errors, sources = pack
     _LAST_PACK.clear()
-    _LAST_PACK.update({"series": series, "sources": sources, "errors": errors, "member": {}, "carry": {}})
+    _LAST_PACK.update(
+        {
+            "series": series,
+            "sources": sources,
+            "errors": errors,
+            "member": {},
+            "carry": {},
+            "contract_pack": contract_pack_report,
+        }
+    )
 
     date_hits = Counter()
     for s in series.values():
@@ -863,6 +1056,7 @@ def simulate(
     trade_exits = {"target": 0, "stop": 0, "signal": 0}
     closed_pnls = []
     block_counts: dict[str, int] = {}
+    quality_blocks: dict[str, int] = {}
 
     trade_dates = dates[WARMUP:]
     curves = {}
@@ -971,7 +1165,13 @@ def simulate(
                     exit_px = px if reason else bar["close"]
                     price_pnl += (exit_px - prev_close) * mult * p["lots"] * sign
             if reason:
-                day_cost += fill_cost(series[code]["meta"], px, p["lots"], slippage_ticks=slippage_ticks)
+                day_cost += fill_cost(
+                    series[code]["meta"],
+                    px,
+                    p["lots"],
+                    slippage_ticks=slippage_ticks,
+                    fee_mult=fee_mult,
+                )
                 opt_pnl = 0.0
                 if option_hedge and p.get("opt_strike") is not None:
                     opt_pnl = option_payoff(
@@ -1160,9 +1360,40 @@ def simulate(
                 bucket = str(c.get("bucket") or "_")
                 if max_per_bucket > 0 and open_buckets.get(bucket, 0) >= int(max_per_bucket):
                     continue
+                sig_i = idx[c["code"]][d]
+                hist_c = series[c["code"]]["hist"]
                 if fill_price == "next_open":
-                    c = next_open_fill(c, series[c["code"]]["hist"], idx[c["code"]][d])
+                    c = next_open_fill(c, hist_c, sig_i)
                     if c is None:
+                        quality_blocks["missing_next_open"] = quality_blocks.get("missing_next_open", 0) + 1
+                        block_counts["quality:missing_next_open"] = (
+                            block_counts.get("quality:missing_next_open", 0) + 1
+                        )
+                        continue
+                    fill_bar = hist_c[sig_i + 1]
+                    next_px = float(c["entry"])
+                    need_next = False
+                else:
+                    fill_bar = hist_c[sig_i]
+                    next_px = None
+                    need_next = False
+                if enforce_tradability:
+                    ok_q, qrec = entry_fill_allowed(
+                        c["code"],
+                        fill_bar,
+                        series[c["code"]]["meta"],
+                        side=c["direction"],
+                        atr=c.get("atr"),
+                        asof=str(fill_bar.get("date") or d),
+                        next_open=next_px,
+                        require_next_open=need_next,
+                    )
+                    if not ok_q:
+                        reason_q = ",".join(qrec.get("reasons") or [qrec.get("status") or "quality"])
+                        key = f"quality:{qrec.get('status') or 'BLOCK'}"
+                        quality_blocks[key] = quality_blocks.get(key, 0) + 1
+                        quality_blocks[reason_q] = quality_blocks.get(reason_q, 0) + 1
+                        block_counts[key] = block_counts.get(key, 0) + 1
                         continue
                 row = {
                     "code": c["code"],
@@ -1194,7 +1425,11 @@ def simulate(
                     premium_total += prem
                 pos[c["code"]] = row
                 day_cost += fill_cost(
-                    series[c["code"]]["meta"], c["entry"], c["lots"], slippage_ticks=slippage_ticks
+                    series[c["code"]]["meta"],
+                    c["entry"],
+                    c["lots"],
+                    slippage_ticks=slippage_ticks,
+                    fee_mult=fee_mult,
                 )
                 open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
 
@@ -1285,9 +1520,29 @@ def simulate(
                     bucket = str(c.get("bucket") or "_")
                     if max_per_bucket > 0 and open_buckets.get(bucket, 0) >= int(max_per_bucket):
                         continue
+                    sig_i = idx[c["code"]][d]
+                    hist_c = series[c["code"]]["hist"]
                     if fill_price == "next_open":
-                        c = next_open_fill(c, series[c["code"]]["hist"], idx[c["code"]][d])
+                        c = next_open_fill(c, hist_c, sig_i)
                         if c is None:
+                            quality_blocks["missing_next_open"] = quality_blocks.get("missing_next_open", 0) + 1
+                            continue
+                        fill_bar = hist_c[sig_i + 1]
+                    else:
+                        fill_bar = hist_c[sig_i]
+                    if enforce_tradability:
+                        ok_q, qrec = entry_fill_allowed(
+                            c["code"],
+                            fill_bar,
+                            series[c["code"]]["meta"],
+                            side=c["direction"],
+                            atr=c.get("atr"),
+                            asof=str(fill_bar.get("date") or d),
+                        )
+                        if not ok_q:
+                            key = f"quality:{qrec.get('status') or 'BLOCK'}"
+                            quality_blocks[key] = quality_blocks.get(key, 0) + 1
+                            block_counts[key] = block_counts.get(key, 0) + 1
                             continue
                     pos[c["code"]] = {
                         "code": c["code"],
@@ -1306,8 +1561,12 @@ def simulate(
                     if c.get("mark_from") is not None:
                         pos[c["code"]]["mark_from"] = c["mark_from"]
                     day_cost += fill_cost(
-                    series[c["code"]]["meta"], c["entry"], c["lots"], slippage_ticks=slippage_ticks
-                )
+                        series[c["code"]]["meta"],
+                        c["entry"],
+                        c["lots"],
+                        slippage_ticks=slippage_ticks,
+                        fee_mult=fee_mult,
+                    )
                     open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
 
         pnl = price_pnl - day_cost
@@ -1366,12 +1625,39 @@ def simulate(
 
     pool = ",".join(u["code"] for u in symbols)
     hedge_net = hedge_payoff_total - premium_total
+    try:
+        from research.data_quality import config_version_stamp
+
+        cfg_stamp = config_version_stamp(ROOT)
+    except Exception:  # noqa: BLE001
+        cfg_stamp = {
+            "git_commit": (_git_sha(ROOT) or "")[:7] or None,
+            "execution_rules_sha256": _file_sha256(ROOT / "execution_rules.json"),
+            "universe_sha256": _file_sha256(ROOT / "universe.json"),
+            "research_cost_sha256": _file_sha256(ROOT / "research_cost.json"),
+        }
+    n_trials_assumed = 1
+    try:
+        archived = json.loads((ROOT / "execution_rules.json").read_text(encoding="utf-8")).get(
+            "archived_params"
+        ) or []
+        n_trials_assumed = max(1, 1 + len(archived))
+    except Exception:
+        pass
     return {
         "ok": True,
         "schema_version": SCHEMA_VERSION,
         "batch": BATCH_LABEL,
         "strategy": "path_a_atr_rr1_5_opt_hedge" if option_hedge else "path_a_atr_rr1_5",
         "mode": mode,
+        "cost_scenario": cost_scenario,
+        "fee_mult": fee_mult,
+        "enforce_tradability": bool(enforce_tradability),
+        "fill_series": (contract_pack_report or {}).get("fill_series") or "continuous_proxy",
+        "contract_pack": contract_pack_report,
+        "config_version": cfg_stamp,
+        "quality_blocks": quality_blocks,
+        "n_trials_assumed": n_trials_assumed,
         "data_source": "sina+tencent primary, iFinD fallback",
         "curve_coverage": curve_coverage(curves),
         "sources": sources,
@@ -1415,8 +1701,11 @@ def simulate(
         "daily_exit_fallback_checks": daily_exit_fallback_n,
         "slippage_ticks": slippage_ticks,
         "git_sha": _git_sha(ROOT),
-        "universe_sha256": _file_sha256(ROOT / "universe.json"),
-        "execution_rules_sha256": _file_sha256(ROOT / "execution_rules.json"),
+        "universe_sha256": cfg_stamp.get("universe_sha256") or _file_sha256(ROOT / "universe.json"),
+        "execution_rules_sha256": cfg_stamp.get("execution_rules_sha256")
+        or _file_sha256(ROOT / "execution_rules.json"),
+        "research_cost_sha256": cfg_stamp.get("research_cost_sha256")
+        or _file_sha256(ROOT / "research_cost.json"),
         "carry_bypass_counts": bypass_counts,
         "vol_bypass": vbypass,
         "vol_bypass_counts": vol_bypass_counts,
@@ -1446,8 +1735,10 @@ def simulate(
                 "r20/r60同向且|r20|≥min_r20、|r60|≥min_r60（ctf模式改用composite_trend）；"
                 "经entry_filter/席位等过滤；升贴水极端旁路（carry_bypass）可禁开或减仓；"
                 "再经组合帽（TopN、名义暴露、组合风险、板块上限）；"
+                "开仓前 classify_bar：status!=PASS 禁止新开（涨跌停/无量/缺下一开盘等）；"
                 "止损=stop_atr_mult×ATR，止盈=reward_rr×止损距；"
-                f"正式成交={fill_price}（next_open=T日信号、T+1开盘入场并平移止损止盈）。"
+                f"正式成交={fill_price}（next_open=T日信号、T+1开盘入场并平移止损止盈）；"
+                f"成本情景={cost_scenario}（滑点={slippage_ticks}跳，fee_mult={fee_mult}）。"
             ),
             "close": (
                 "持仓期优先用当日15分钟线按时间顺序触及止盈/止损即平"
@@ -1525,6 +1816,9 @@ def _simulate_cfg(
         availability_lag=int(p.get("availability_lag", DEFAULT_AVAILABILITY_LAG)),
         fill_price=str(p.get("fill_price") or DEFAULT_FILL_PRICE),
         slippage_ticks=p.get("slippage_ticks"),
+        fee_mult=float(p.get("fee_mult") if p.get("fee_mult") is not None else 1.0),
+        cost_scenario=str(p.get("cost_scenario") or "base"),
+        enforce_tradability=bool(p.get("enforce_tradability", True)),
     )
 
 
@@ -1805,6 +2099,24 @@ def main():
         out["entry_filter"] = mode
         if prior_cmp:
             out["comparison"] = prior_cmp
+        try:
+            pack_now = None
+            if _LAST_PACK.get("series"):
+                pack_now = (
+                    _LAST_PACK["series"],
+                    _LAST_PACK.get("errors") or {},
+                    _LAST_PACK.get("sources") or {},
+                )
+            if "--no-cost-stress" not in sys.argv:
+                attach_cost_scenario_contrast(out, p, mode, pack=pack_now, scenarios=("stress",))
+        except Exception as exc:  # noqa: BLE001
+            print(f"[bt] cost contrast soft-fail: {exc}")
+    try:
+        from lab.validation.report import validation_bundle_from_backtest
+
+        out["validation"] = validation_bundle_from_backtest(out)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[bt] validation soft-fail: {exc}")
     rep = usage_report()
     out["ifind_calls"] = rep["count"]
     out["ifind_call_log"] = rep["calls"]

@@ -2,6 +2,10 @@
 """Research credibility gates for Path-A paper reports (no live orders).
 
 Blocks formal signal/backtest artifacts when calendar or ATR sanity fails.
+
+P0 upgrade: data-valid vs tradability masks live in `research.data_quality`
+(import that package directly). Extend these gates there — do not fork a
+second incompatible quality system.
 """
 from __future__ import annotations
 

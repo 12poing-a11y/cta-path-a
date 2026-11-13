@@ -35,38 +35,7 @@
     }
   },
   "closed_today": [],
-  "opened_today": [
-    {
-      "trade_id": "建仓|P|2026-11-13|2026-11-13",
-      "event": "建仓",
-      "code": "P",
-      "date": "2026-11-13",
-      "entry_date": "2026-11-13",
-      "exit_date": null,
-      "direction": "空",
-      "lots": 1,
-      "entry": 8961.0,
-      "exit": null,
-      "mark": null,
-      "mult": 10.0,
-      "stop": 9119.344,
-      "target": 8644.312,
-      "atr": 197.93,
-      "stop_atr_mult": 0.8,
-      "reward_rr": 2.0,
-      "entry_reason": "daily_selected",
-      "strategy": "Path-A 日信号组合入选",
-      "tp_sl_scheme": "止损=0.8×ATR；止盈=RR×2（止损距）；ATR=197.9；止损价=9119；止盈价=8644",
-      "exit_condition": "平仓条件：止损=0.8×ATR；止盈=RR×2（止损距）；ATR=197.9；止损价=9119；止盈价=8644；盘中15m触及即平；否则收盘信号/趋势失效平仓。",
-      "reason": null,
-      "R": null,
-      "equity_delta": 0.0,
-      "equity_after": 190332.32,
-      "r20": -5.4148,
-      "r60": -7.9507,
-      "bucket": "农产品"
-    }
-  ],
+  "opened_today": [],
   "trade_ledger": [
     {
       "trade_id": "建仓|V|2026-10-20|2026-10-20",
@@ -374,7 +343,7 @@
       "bucket": "农产品"
     }
   ],
-  "opened_n": 1,
+  "opened_n": 0,
   "closed_n": 0,
   "held_n": 1,
   "ledger_n": 11,

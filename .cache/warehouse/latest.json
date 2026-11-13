@@ -58,7 +58,7 @@
     "DCE": {
       "ok": false,
       "n_products": 0,
-      "error": "JSONDecodeError:Expecting value: line 1 column 1 (char 0) (瑞数/反爬常见；东财库存旁路顶上)",
+      "error": "DceBlockedError:API Error: 大连商品交易所网站（dce.com.cn）对程序访问启用了反爬虫验证，请求被拒绝（HTTP 412），大商所相关接口暂时无法获取数据。大商所合约的成交持仓排名可改用 ak.futures_hold_pos_sina(symbol=\"多单持仓\", contract=\"M2701\", date=\"20261104\")，按单个合约查询。 (Status code: 412) (瑞数/反爬常见；东财库存旁路顶上)",
       "codes": []
     }
   },
@@ -312,5 +312,5 @@
     }
   ],
   "note": "正式仓单优先交易所日报（AKShare 三所）；东财库存仅旁路补洞。缺数保持 null，不编造。",
-  "fetched_at": "2026-11-13 20:59:44"
+  "fetched_at": "2026-11-13 15:51:01"
 }

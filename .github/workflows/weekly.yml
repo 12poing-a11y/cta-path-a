@@ -33,12 +33,17 @@ jobs:
 
       - name: Run weekly (PnL + seat backfill)
         env:
+          IFIND_AUTH_TOKEN: ${{ secrets.IFIND_AUTH_TOKEN }}
+          IFIND_AUTH_TOKEN_BACKUP: ${{ secrets.IFIND_AUTH_TOKEN_BACKUP }}
           IFIND_ACTIVE_SLOT: primary
+          IFIND_USER_AGENT: github-actions
         run: python weekly_backtest.py
 
       - name: Sync Notion
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          IFIND_AUTH_TOKEN: ${{ secrets.IFIND_AUTH_TOKEN }}
+          IFIND_AUTH_TOKEN_BACKUP: ${{ secrets.IFIND_AUTH_TOKEN_BACKUP }}
           IFIND_ACTIVE_SLOT: primary
         run: python notion_sync.py backtest
 

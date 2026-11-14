@@ -54,7 +54,7 @@ jobs:
           IFIND_ACTIVE_SLOT: primary
         run: |
           python notion_sync.py signals
-          # signals already pushes trades; explicit trades keeps ledger if signals skipped
+          # signals already pushes trades + dated 交易参照 brief; explicit trades keeps ledger if signals skipped
           python notion_sync.py trades
           # Verify row count, duplicate rate, required data and contract metadata after sync.
           python notion_sync.py verify
@@ -68,6 +68,7 @@ jobs:
             l1_report_risk15.json
             l1_report_quality_failed.json
             notion_daily_quality.json
+            data/trade_brief_latest.json
             data/sentiment_mds/
             archive/
             .cache/member/dce-*.json
@@ -90,6 +91,7 @@ jobs:
           mkdir -p .cache/member .cache/akshare/minute .cache/akshare/option_iv .cache/history .cache/warehouse data/sentiment_mds
           git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
           git add data/sentiment_mds/*.json data/tech_score_latest.json data/desk_composite_latest.json data/vol_engine_latest.json || true
+          git add data/shadow_perf/ || true
           git add data/gamma_wall/ || true
           git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
           git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true

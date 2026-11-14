@@ -26,7 +26,7 @@
 7. **正式回测成交**：T 日收盘算信号，**T+1 开盘成交**（`fill_price=next_open`）；席位/升贴水可用性滞后 1 个交易日。周度 KPI 与历史回测共用同一 `simulate` 引擎（含止损止盈与成本）。报告须标明配置版本（`execution_rules` sha + Git commit），见 `research.data_quality.config_version_stamp`。
 8. **研究升级**：数据有效性 / 可交易性双掩码与 Base·Stress·Extreme 成本情景见 `docs/UPGRADE_PLAN.md`（Research/Shadow 不得未经批准改正式参数）。
 
-正式 KPI 以 `historical_backtest_latest.json`（`schema_version=cta-backtest-v13-tradability`）为准，须与 `lab/research/validation/formal_scorecard_latest.json` 同次重跑对齐。当前 seats / next_open（**2025-12-23→2026-11-13**，`fill_series=mixed` / **historical_roll**）：净约 **-7.6%**、净回撤约 **20.5%**、成本约 6628（毛约 -4.3%；成交 91；结论「暂停」）。均合约覆盖约 **72%**，缺口日仍用连续价代理并打标。并列归档：旧 README v11 约 +2.25%/5.57%；归档 v12 约 +18%/6.7%；A1 仅连续代理曾虚高至 +216%——**已否决作正式成绩**。PBO 为 Research 诊断（本次约 0.46），**不单独晋级**。成本：每边 1 跳滑点 + 申万公示手续费（毛/净并列）。
+正式 KPI 以 `historical_backtest_latest.json`（`schema_version=cta-backtest-v13-tradability`）为准，须与 `lab/research/validation/formal_scorecard_latest.json` 同次重跑对齐。当前 seats / next_open（**2025-12-23→2026-11-13**，`fill_series=mixed` / **historical_roll** + **混价锁死**）：净约 **+5.0%**、净回撤约 **3.3%**、成本约 3244（毛约 +6.6%；成交 43；结论「继续L1」）。合约–连续基差>3% 强制 proxy；`proxy_entry_share` / `same_day_exit_*` 写入主 KPI。并列归档：混价污染旧成绩约 −7.6%/20.5%（已否决）；旧 README v11 约 +2.25%/5.57%；A1 仅连续代理曾虚高至 +216%——**已否决**。PBO 为 Research 诊断（本次约 0.39），**不单独晋级**。成本：每边 1 跳滑点 + 申万公示手续费（毛/净并列）。
 
 旁路（不改 ATR、不切 `entry_filter`）：升贴水极端、多维波动观望、实验室 Gate / 软信号。详见下文与 `lab/README.md`。
 
@@ -111,11 +111,13 @@ pip install -r requirements.txt
 # 本地：mcp_config.example.json → mcp_config.json（iFinD）
 python daily_update.py
 python weekly_backtest.py
-python notion_sync.py signals   # 日信号台账
+python notion_sync.py signals   # 日信号台账（并推送交易参照 brief + trades）
+python notion_sync.py brief     # 仅推送当日可参照品种（建议开/持有/建议平/预警）
 python notion_sync.py trades    # 建平仓流水 + 规则/统计
 python notion_sync.py annual    # 一年回测并顺带 trades
 python proxy_cta.py             # 本地代理 + 观察袖套曲线/持仓
 python scripts/strategy_indicator_ablation.py   # 策略×指标消融网格
+python scripts/run_shadow_perf.py --backfill-history   # 影子归因台账 + 品类胜率
 ```
 
 平仓原因码：`target` 止盈 / `stop` 止损 / `signal` 趋势失效。
@@ -139,6 +141,7 @@ CI 跑 desk 相关测试时安装 `requirements-desk.txt`（streamlit/plotly）�
 - `notion_sync.py` / `.github/workflows/` / `MOBILE.md`  
 - `external/` — 代理曲线、东证归档、知识卡、股指择时产物  
 - `data/ablation/` — 消融快照（本地/研究生成）  
+- `data/shadow_perf/` — 影子归因台账（L1/情绪 → T+N 回填；Desk「影子归因·品类胜率」；不计分）   
 
 ## Disclaimer
 

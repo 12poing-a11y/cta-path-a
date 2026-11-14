@@ -1,0 +1,40 @@
+{
+  "captured_at": "20261114T170121Z",
+  "git_head": "9a29e8818f65719268549cbea63d103114f28560",
+  "historical_backtest": {
+    "path": "historical_backtest_latest.json",
+    "schema_version": "cta-backtest-v13-tradability",
+    "batch": "2026一年-pathA-nextOpen",
+    "start": "2025-12-23",
+    "end": "2026-11-13",
+    "ret_pct": 4.992,
+    "max_dd_pct": 3.262,
+    "gross_ret_pct": 6.614,
+    "gross_max_dd_pct": 3.027,
+    "cost_yuan": 3244.46,
+    "equity_end": 209983.69,
+    "closed_trades": 43,
+    "entry_filter": "seats",
+    "fill_price": "next_open",
+    "stop_atr_mult": 0.8,
+    "reward_rr": 2.0,
+    "config_version": {
+      "git_commit": "9a29e88",
+      "execution_rules_sha256": "4b4f06a632cb",
+      "universe_sha256": "7422ca4a79dd",
+      "research_cost_sha256": "b0e27f3ef623",
+      "sha256": null
+    }
+  },
+  "pbo": {
+    "path": "lab\\research\\validation\\pbo_path_a_latest.json",
+    "pbo": 0.385714,
+    "n_obs": 214,
+    "n_trials": 11,
+    "primary_trial_id": "s0.8_rr2_m4_6",
+    "psr": 0.782973,
+    "dsr": 0.331029,
+    "primary_ret_pct": 4.992
+  },
+  "code_schema": "cta-backtest-v13-tradability"
+}

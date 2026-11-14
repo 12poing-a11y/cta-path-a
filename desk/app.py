@@ -87,6 +87,7 @@ DESK_PAGES = (
     "套利观察",
     "LSP 扫荡研究",
     "P4 轻量ML",
+    "影子归因·品类胜率",
     "E1·情绪影子·不计分",
     "E1·NPD影子·不计分",
 )
@@ -646,6 +647,15 @@ def main() -> None:
             render_ml_panel(st, ROOT)
         except Exception as exc:  # noqa: BLE001
             st.caption(f"P4 面板暂不可用：{exc}")
+
+    if page == "影子归因·品类胜率":
+        render_freshness_header(ROOT, "影子归因·品类胜率")
+        try:
+            from desk.shadow_perf_panel import render_shadow_perf_panel
+
+            render_shadow_perf_panel(ROOT)
+        except Exception as exc:  # noqa: BLE001
+            st.caption(f"影子归因面板暂不可用：{exc}")
 
     if page == "E1·情绪影子·不计分":
         render_freshness_header(ROOT, "E1·情绪影子·不计分")

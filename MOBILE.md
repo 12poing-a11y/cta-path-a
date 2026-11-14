@@ -32,7 +32,8 @@ Notion Integration 需连接「CTA日信号台账 / CTA回测报告」。
 
 1. **自动**：工作日约 15:30（北京时间）跑日报；周六约 09:00 周回测  
 2. **手动**：GitHub App → `cta-path-a` → Actions → 选 workflow → **Run workflow**  
-3. **看结果**：Actions 日志 / Artifacts；或仓库 `archive/`；或 Notion；或 https://12poing-a11y.github.io/（需同步 data）
+3. **看结果（交易参照）**：日报成功后 Notion 会多一页 **`YYYY-MM-DD 交易参照（研究建议）`**（挂在研究台账 hub 下），只列建议开/持有/建议平/止盈止损预警及带手数的日选；全市场明细仍在信号库  
+4. **其它**：Actions 日志 / Artifacts（含 `data/trade_brief_latest.json`）；或仓库 `archive/`；或 https://12poing-a11y.github.io/（需同步 data）
 
 ## 注意
 

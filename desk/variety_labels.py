@@ -24,6 +24,8 @@ P4_TASK_ZH = {
 
 STRATEGY_ZH = {
     "path_a": "路径A seats",
+    "path_a_selected": "路径A·入选",
+    "sentiment_mds": "情绪MDS+EHI",
     "cwft": "本地代理·CWFT",
     "fn": "本地代理·前后月ST",
     "ls": "本地代理·多空CWFT",

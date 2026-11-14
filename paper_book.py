@@ -8,7 +8,9 @@ Does not rewrite backtest KPIs. Paper only — no orders.
 """
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
@@ -121,7 +123,14 @@ def exit_condition_text(
 def _intraday_stop_exit(
     pos: dict, *, root: Path, asof_iso: str
 ) -> tuple[str | None, float | None]:
-    """Check cached 15m bars for stop/target touch on asof day."""
+    """Check cached 15m bars for stop/target touch on asof day.
+
+    Skip when ``entry_date == asof``: same-day opens must not be judged against
+    pre-entry (or full-day) minute bars — that made double daily runs non-idempotent.
+    """
+    entry_day = _ymd(str(pos.get("entry_date") or ""))
+    if entry_day and entry_day == _ymd(asof_iso):
+        return None, None
     try:
         from minute_data import load_minute_bars_on_date
         from wyckoff_pullback import apply_stop_target_intraday
@@ -234,13 +243,48 @@ def _ledger_keys(ledger: list[dict]) -> set[str]:
     return keys
 
 
-def _append_ledger(ledger: list[dict], row: dict, *, max_n: int = LEDGER_MAX) -> None:
+def _append_ledger(ledger: list[dict], row: dict, *, max_n: int = LEDGER_MAX) -> bool:
+    """Append if new. Returns True when a row was actually written."""
     tid = str(row.get("trade_id") or "")
     if tid and tid in _ledger_keys(ledger):
-        return
+        return False
     ledger.append(row)
     if len(ledger) > max_n:
         del ledger[: len(ledger) - max_n]
+    return True
+
+
+def _report_fingerprint(report: dict[str, Any]) -> str:
+    """Stable hash of the fields that drive paper rolls (not wall-clock noise)."""
+    payload = {
+        "asof": report.get("asof"),
+        "equity": report.get("equity"),
+        "signals": [
+            {
+                "code": s.get("code"),
+                "selected": s.get("selected"),
+                "direction": s.get("direction"),
+                "close": s.get("close"),
+                "atr": s.get("atr"),
+                "stop": s.get("stop"),
+                "target": s.get("target"),
+                "lots_l1": s.get("lots_l1"),
+            }
+            for s in (report.get("signals") or [])
+            if isinstance(s, dict)
+        ],
+    }
+    raw = json.dumps(payload, ensure_ascii=False, sort_keys=True, default=str)
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+
+
+def _atomic_write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    os.replace(tmp, path)
 
 
 def _detail_row(
@@ -471,11 +515,50 @@ def refresh_paper_book(
 
     asof = _norm_asof(report.get("asof"))
     asof_iso = _ymd(asof)
+    # Corrupt book must fail loudly (never silent reseed → wipe ledger).
+    if paper_path.is_file():
+        try:
+            json.loads(paper_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            return {
+                "ok": False,
+                "error": f"corrupt paper_book_latest.json: {exc}",
+                "path": str(paper_path),
+            }
+
+    prev_paper = _load(paper_path) or {}
+    prev_asof = _norm_asof(prev_paper.get("asof_ymd") or prev_paper.get("asof"))
+    if prev_asof and asof and asof < prev_asof:
+        return {
+            "ok": False,
+            "error": f"stale l1 asof {asof} < paper asof {prev_asof}",
+            "path": str(paper_path),
+            "asof": asof_iso,
+        }
+
+    fp = _report_fingerprint(report)
+    if (
+        prev_paper.get("ok")
+        and prev_asof
+        and asof
+        and prev_asof == asof
+        and prev_paper.get("l1_fingerprint") == fp
+    ):
+        # Idempotent: same day + same signal fingerprint → no-op.
+        out = dict(prev_paper)
+        out["ok"] = True
+        out["noop"] = True
+        out["l1_fingerprint"] = fp
+        out["notes"] = (
+            str(out.get("notes") or "")
+            + " · refresh no-op（同 asof + 同 l1 指纹，防双跑改账）。"
+        ).strip(" ·")
+        return out
+
     params = _exec_params()
     positions, meta, ledger = _seed_positions()
     sigs = _signal_map(report)
     mults = _mult_map(root)
-    prev_paper = _load(paper_path) or {}
     uni = _load(uni_path) or {}
     try:
         equity = float(
@@ -539,11 +622,12 @@ def refresh_paper_book(
                 equity_before=equity,
                 mults=mults,
             )
-            if detail.get("equity_delta") is not None:
+            appended = _append_ledger(ledger, detail)
+            if appended and detail.get("equity_delta") is not None:
                 equity = float(equity) + float(detail["equity_delta"])
                 detail["equity_after"] = round(equity, 2)
-            closed_today.append(detail)
-            _append_ledger(ledger, detail)
+            if appended:
+                closed_today.append(detail)
             continue
         if sig:
             # Refresh momentum labels only; keep stop/target unless ATR is sane.
@@ -633,11 +717,11 @@ def refresh_paper_book(
             "不改写 historical_backtest KPI。与 Notion 持仓中、决策页账面同源。"
         ),
         "l1_asof": asof,
+        "l1_fingerprint": fp,
         "updated_from_l1": True,
+        "noop": False,
     }
-    paper_path.write_text(
-        json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    _atomic_write_json(paper_path, out)
     return out
 
 

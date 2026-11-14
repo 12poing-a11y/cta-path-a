@@ -140,9 +140,54 @@ def next_open_fill(c: dict, hist: list[dict], i: int) -> dict | None:
     c2["entry_date"] = nb["date"]
     c2["mark_from"] = float(px)
     c2["fill_price_basis"] = fill_basis
-    if nb.get("contract"):
+    if fill_basis == "contract" and nb.get("contract"):
         c2["fill_contract"] = nb.get("contract")
     return c2
+
+
+def manage_ohlc_bar(bar: dict, basis: str | None) -> dict | None:
+    """OHLC for stop/target/mark — locked to the position's fill_price_basis.
+
+    Contract fills must not be managed on continuous high/low (false same-day
+    stop/target). Returns None when contract basis is requested but contract
+    OHLC is missing for this bar (caller must not fall back to continuous).
+    """
+    b = str(basis or "continuous_proxy").strip().lower()
+    if b == "contract":
+        if (
+            bar.get("contract_high") is None
+            or bar.get("contract_low") is None
+            or bar.get("contract_close") is None
+        ):
+            return None
+        try:
+            close = float(bar["contract_close"])
+            high = float(bar["contract_high"])
+            low = float(bar["contract_low"])
+            open_px = (
+                float(bar["contract_open"])
+                if bar.get("contract_open") is not None
+                else close
+            )
+        except (TypeError, ValueError):
+            return None
+        return {
+            "open": open_px,
+            "high": high,
+            "low": low,
+            "close": close,
+            "date": bar.get("date"),
+        }
+    try:
+        return {
+            "open": float(bar["open"]),
+            "high": float(bar["high"]),
+            "low": float(bar["low"]),
+            "close": float(bar["close"]),
+            "date": bar.get("date"),
+        }
+    except (KeyError, TypeError, ValueError):
+        return None
 
 
 def prepare_pack_for_execution(pack, *, root: Path | None = None) -> dict:
@@ -248,6 +293,11 @@ def cost_scenario_kpi(out: dict) -> dict:
         "equity_end": out.get("equity_end"),
         "closed_trades": out.get("closed_trades"),
         "quality_blocks": out.get("quality_blocks"),
+        "proxy_entry_share": out.get("proxy_entry_share"),
+        "contract_entry_share": out.get("contract_entry_share"),
+        "same_day_exit_n": out.get("same_day_exit_n"),
+        "fill_series": out.get("fill_series"),
+        "conclusion": out.get("conclusion"),
     }
 
 
@@ -1148,13 +1198,20 @@ def simulate(
             if i1 is None:
                 continue
             bar = hist[i1]
+            fill_basis = str(p.get("fill_price_basis") or "continuous_proxy")
+            mbar = manage_ohlc_bar(bar, fill_basis)
+            if mbar is None:
+                # Contract-locked position without contract OHLC today: do not
+                # manage or mark on continuous (avoids mixed-basis false exits).
+                continue
             mult = series[code]["meta"]["mult"]
             sign = 1 if p["direction"] == "多" else -1
-            # Prefer 15m first-touch; fall back to daily OHLC when cache misses.
+            # Prefer 15m first-touch only for continuous_proxy fills (minute cache
+            # is continuous/month-mixed). Contract fills use same-basis daily OHLC.
             # On entry day, ignore minute bars before ~day-session open (next_open fill).
-            reason, px = None, bar["close"]
+            reason, px = None, mbar["close"]
             used_minute = False
-            if load_minute_bars_on_date is not None:
+            if fill_basis != "contract" and load_minute_bars_on_date is not None:
                 try:
                     m_bars = load_minute_bars_on_date(
                         ROOT, code, d, period=EXIT_MINUTE_PERIOD
@@ -1180,43 +1237,51 @@ def simulate(
                         reason, px = m_reason, m_px
             if not used_minute:
                 reason, px = apply_stop_target(
-                    p["direction"], p["entry"], p["stop"], p["target"], bar
+                    p["direction"], p["entry"], p["stop"], p["target"], mbar
                 )
                 daily_exit_fallback_n += 1
             elif reason in ("stop", "target"):
                 minute_exit_n += 1
             # trend flip exit (Path-A conflict / opposite, or composite-trend sign flip)
+            # Signal uses continuous factors; exit price stays on locked manage bar.
             if reason is None and p.get("reason") == "roll_carry":
                 pair = ((curves.get(code) or {}).get("carry") or {}).get(d)
                 gap = carry_gap_pct(pair)
                 if gap is not None:
                     if p["direction"] == "多" and gap > 0:
-                        reason, px = "signal", bar["close"]
+                        reason, px = "signal", mbar["close"]
                     elif p["direction"] == "空" and gap < 0:
-                        reason, px = "signal", bar["close"]
+                        reason, px = "signal", mbar["close"]
             elif reason is None:
                 if mode == "ctf":
                     fac = composite_trend(hist, i1)
                     if fac is not None:
                         if p["direction"] == "多" and fac["f"] <= 0:
-                            reason, px = "signal", bar["close"]
+                            reason, px = "signal", mbar["close"]
                         elif p["direction"] == "空" and fac["f"] >= 0:
-                            reason, px = "signal", bar["close"]
+                            reason, px = "signal", mbar["close"]
                 else:
                     r20, r60 = ret_n(hist, i1, 20), ret_n(hist, i1, 60)
                     if r20 is not None and r60 is not None:
                         long_ok = r20 > 0 and r60 > 0
                         short_ok = r20 < 0 and r60 < 0
                         if p["direction"] == "多" and not long_ok:
-                            reason, px = "signal", bar["close"]
+                            reason, px = "signal", mbar["close"]
                         elif p["direction"] == "空" and not short_ok:
-                            reason, px = "signal", bar["close"]
+                            reason, px = "signal", mbar["close"]
             if prev_d is not None:
                 i0 = idx[code].get(prev_d)
                 if i0 is not None:
-                    prev_close = p.pop("mark_from", None) or hist[i0]["close"]
-                    exit_px = px if reason else bar["close"]
-                    price_pnl += (exit_px - prev_close) * mult * p["lots"] * sign
+                    prev_m = manage_ohlc_bar(hist[i0], fill_basis)
+                    if "mark_from" in p:
+                        prev_close = p.pop("mark_from")
+                    elif prev_m is not None:
+                        prev_close = prev_m["close"]
+                    else:
+                        prev_close = None
+                    if prev_close is not None:
+                        exit_px = px if reason else mbar["close"]
+                        price_pnl += (exit_px - prev_close) * mult * p["lots"] * sign
             if reason:
                 day_cost += fill_cost(
                     series[code]["meta"],
@@ -1258,6 +1323,8 @@ def simulate(
                         "R": round(r_mult, 2),
                         "opt_payoff": round(opt_pnl, 2),
                         "opt_premium": p.get("opt_premium"),
+                        "fill_price_basis": fill_basis,
+                        "fill_contract": p.get("fill_contract"),
                     }
                 )
                 del pos[code]
@@ -1461,7 +1528,14 @@ def simulate(
                     "r60": c.get("r60"),
                     "bucket": c.get("bucket"),
                     "reason": c.get("reason"),
+                    "fill_price_basis": str(
+                        c.get("fill_price_basis")
+                        or fill_bar.get("fill_price_basis")
+                        or "continuous_proxy"
+                    ),
                 }
+                if c.get("fill_contract") or fill_bar.get("contract"):
+                    row["fill_contract"] = c.get("fill_contract") or fill_bar.get("contract")
                 if c.get("mark_from") is not None:
                     row["mark_from"] = c["mark_from"]
                 if option_hedge:
@@ -1669,12 +1743,32 @@ def simulate(
     )
     expectancy_r = (sum(float(t["R"]) for t in closed_pnls) / closed_n) if closed_n else None
     breakeven_wr = 100.0 / (1.0 + reward_rr) if reward_rr > 0 else None
+    proxy_entries = sum(
+        1
+        for t in closed_pnls
+        if str(t.get("fill_price_basis") or "") == "continuous_proxy"
+    )
+    contract_entries = sum(
+        1 for t in closed_pnls if str(t.get("fill_price_basis") or "") == "contract"
+    )
+    same_day_exit_n = sum(
+        1
+        for t in closed_pnls
+        if str(t.get("entry_date") or "")[:10] == str(t.get("date") or "")[:10]
+    )
+    proxy_entry_share = (proxy_entries / closed_n) if closed_n else None
+    contract_entry_share = (contract_entries / closed_n) if closed_n else None
     if max_dd >= 20:
         conclusion = "暂停"
     elif max_dd >= 12 or ret_pct <= -5:
         conclusion = "减仓观察"
     else:
         conclusion = "继续L1"
+    # Credibility warning — does not change strategy params.
+    if proxy_entry_share is not None and proxy_entry_share >= 0.5:
+        conclusion = f"{conclusion}·proxy偏高"
+    if same_day_exit_n and closed_n and same_day_exit_n / closed_n >= 0.4:
+        conclusion = f"{conclusion}·当日进出偏多"
 
     pool = ",".join(u["code"] for u in symbols)
     hedge_net = hedge_payoff_total - premium_total
@@ -1771,6 +1865,14 @@ def simulate(
         "expectancy_r": round(expectancy_r, 3) if expectancy_r is not None else None,
         "breakeven_win_rate": round(breakeven_wr, 2) if breakeven_wr is not None else None,
         "closed_trades": closed_n,
+        "proxy_entry_n": proxy_entries,
+        "contract_entry_n": contract_entries,
+        "proxy_entry_share": round(proxy_entry_share, 4) if proxy_entry_share is not None else None,
+        "contract_entry_share": round(contract_entry_share, 4)
+        if contract_entry_share is not None
+        else None,
+        "same_day_exit_n": same_day_exit_n,
+        "same_day_exit_share": round(same_day_exit_n / closed_n, 4) if closed_n else None,
         "exits": trade_exits,
         "sleeve_counts": sleeve_counts,
         "avg_held": round(avg_held, 2),

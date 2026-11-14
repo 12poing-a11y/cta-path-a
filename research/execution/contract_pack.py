@@ -8,6 +8,10 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 
+# |contract_close/continuous_close - 1| above this → drop contract stamps (force proxy).
+# Calendar-nearest month ≠ OI main often shows 10–20% gaps; those must not fill mixed.
+DEFAULT_MAX_BASIS_REL = 0.03
+
 
 def default_front_month(root: Path | None = None) -> str:
     root = root or ROOT
@@ -105,6 +109,17 @@ def load_exact_contract_daily(contract: str, root: Path | None = None) -> list[d
     return [by[k] for k in sorted(by)]
 
 
+def _basis_rel(contract_px: float, continuous_px: float) -> float | None:
+    try:
+        c0 = float(continuous_px)
+        c1 = float(contract_px)
+    except (TypeError, ValueError):
+        return None
+    if c0 <= 0 or c1 <= 0:
+        return None
+    return abs(c1 / c0 - 1.0)
+
+
 def overlay_contract_fills(
     series: dict[str, dict[str, Any]],
     *,
@@ -112,6 +127,7 @@ def overlay_contract_fills(
     root: Path | None = None,
     min_coverage: float = 0.3,
     historical: bool = True,
+    max_basis_rel: float = DEFAULT_MAX_BASIS_REL,
 ) -> dict[str, Any]:
     """Annotate continuous hist with contract open/close when cache exists.
 
@@ -120,18 +136,26 @@ def overlay_contract_fills(
     When ``historical=True`` (default), each bar picks the front contract that was
     still tradeable on that bar date — not a single observe-month blanket.
     Pass ``month=YYMM`` and ``historical=False`` only for live/desk single-month overlays.
+
+    Bars whose contract close diverges from continuous by more than ``max_basis_rel``
+    are forced to ``continuous_proxy`` (no contract_* stamps) so simulate cannot mix
+    contract entry with continuous stop/target management.
     """
     root = root or ROOT
     from research.data_quality.calendar import active_front_contract_on_date, load_delivery_rules
 
     rules = load_delivery_rules(root)
+    max_basis = float(max_basis_rel)
     report: dict[str, Any] = {
         "month": month or ("historical" if historical else "per_product"),
         "mode": "historical_roll" if historical and month is None else ("fixed_month" if month else "per_product"),
         "symbols": {},
         "fill_series": "continuous_proxy",
+        "max_basis_rel": max_basis,
+        "basis_rejected_n": 0,
     }
     any_contract = False
+    basis_rejected_total = 0
     contract_cache: dict[str, dict[str, dict]] = {}
 
     def _bars_by_date(contract: str) -> dict[str, dict]:
@@ -145,6 +169,7 @@ def overlay_contract_fills(
         meta = dict(pack.get("meta") or {})
         matched = 0
         proxy_n = 0
+        basis_rejected = 0
         used: dict[str, int] = {}
         new_hist = []
         for b in hist:
@@ -168,27 +193,43 @@ def overlay_contract_fills(
             row["contract"] = contract
             used[contract] = used.get(contract, 0) + 1
             if cb:
-                matched += 1
-                row["contract_open"] = cb["open"]
-                row["contract_high"] = cb["high"]
-                row["contract_low"] = cb["low"]
-                row["contract_close"] = cb["close"]
-                row["price_basis"] = "contract"
-                row["fill_price_basis"] = "contract"
+                cont_close = row.get("close")
+                rel = _basis_rel(cb["close"], cont_close) if cont_close is not None else None
+                if rel is not None and rel > max_basis:
+                    # Wrong month vs main continuous — do not stamp executable contract fills.
+                    basis_rejected += 1
+                    row["price_basis"] = "continuous_proxy"
+                    row["fill_price_basis"] = "continuous_proxy"
+                    row["basis_rejected"] = True
+                    row["basis_rel"] = round(rel, 4)
+                    proxy_n += 1
+                else:
+                    matched += 1
+                    row["contract_open"] = cb["open"]
+                    row["contract_high"] = cb["high"]
+                    row["contract_low"] = cb["low"]
+                    row["contract_close"] = cb["close"]
+                    row["price_basis"] = "contract"
+                    row["fill_price_basis"] = "contract"
+                    if rel is not None:
+                        row["basis_rel"] = round(rel, 4)
             else:
                 row["price_basis"] = "continuous_proxy"
                 row["fill_price_basis"] = "continuous_proxy"
                 proxy_n += 1
             new_hist.append(row)
         cov = matched / max(len(hist), 1)
+        basis_rejected_total += basis_rejected
         meta["front_contract"] = (
             max(used.items(), key=lambda kv: kv[1])[0] if used else front_contract_for(code)
         )
         meta["contracts_used"] = used
         meta["contract_fill_coverage"] = round(cov, 4)
         meta["proxy_fill_share"] = round(proxy_n / max(len(hist), 1), 4)
+        meta["basis_rejected_n"] = basis_rejected
         meta["historical_roll"] = bool(historical and not month)
         if cov >= min_coverage and matched > 0:
+            # Continuous proxy always allowed as fallback; contract fills only when stamped.
             meta["allow_continuous_fill"] = True
             meta["fill_series"] = "contract" if proxy_n == 0 else "mixed"
             any_contract = True
@@ -203,9 +244,11 @@ def overlay_contract_fills(
             "coverage": round(cov, 4),
             "matched": matched,
             "proxy_n": proxy_n,
+            "basis_rejected_n": basis_rejected,
             "proxy_fill_share": meta["proxy_fill_share"],
             "fill_series": meta["fill_series"],
         }
+    report["basis_rejected_n"] = basis_rejected_total
     report["fill_series"] = "contract" if any_contract else "continuous_proxy"
     if any_contract:
         # Prefer mixed when any symbol still proxies

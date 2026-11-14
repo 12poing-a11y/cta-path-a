@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "live_trading": false,
+  "asof": "20261113",
+  "date": "2026-11-13",
+  "regime": "trend",
+  "sentiment": {
+    "direction": "震荡",
+    "conviction_pct": 7.5,
+    "label": "震荡 · 把握 8%"
+  },
+  "metrics": {
+    "open_n": 0,
+    "held_n": 1,
+    "alert_n": 0,
+    "brief_n": 1
+  },
+  "rows": [
+    {
+      "code": "P",
+      "variety": "P2701 棕榈油",
+      "action": "持有",
+      "direction": "空",
+      "lots": 1.0,
+      "entry": 8961.0,
+      "stop": 9119.344,
+      "target": 8644.312,
+      "tip": "仓向与决策同向",
+      "line": "P2701 棕榈油｜持有｜空｜1手｜入场8961.00｜止损9119.34｜止盈8644.31｜仓向与决策同向",
+      "l1_selected": true
+    }
+  ],
+  "disclaimer": "研究建议，非交易指令。",
+  "source": "desk.final_signal + l1_report_risk15"
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "cta-basis-lock-replay-v1",
+  "note": "Same snapshot as formal window; re-overlay with max_basis_rel=3% + manage_ohlc_bar lock. Not yet promoted to historical_backtest_latest.json — run full historical_backtest.py / scorecard to promote.",
+  "before": {
+    "ret_pct": -7.614,
+    "max_dd_pct": 20.5,
+    "closed_trades": 91,
+    "same_day_exit_n": 55,
+    "conclusion": "暂停",
+    "source": "historical_backtest_latest.json pre-fix"
+  },
+  "after": {
+    "ret_pct": 5.5,
+    "max_dd_pct": 3.217,
+    "gross_ret_pct": 7.141,
+    "closed_trades": 44,
+    "trade_win_rate": 38.64,
+    "expectancy_r": 0.175,
+    "proxy_entry_share": 0.4318,
+    "contract_entry_share": 0.5682,
+    "same_day_exit_n": 17,
+    "same_day_exit_share": 0.3864,
+    "exits": {
+      "target": 16,
+      "stop": 24,
+      "signal": 4
+    },
+    "conclusion": "继续L1",
+    "fill_series": "mixed",
+    "cost_yuan": 3282.49
+  },
+  "contract_pack": {
+    "basis_rejected_n": 1223,
+    "fill_series": "mixed"
+  }
+}

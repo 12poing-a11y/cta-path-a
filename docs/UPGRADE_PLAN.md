@@ -20,6 +20,9 @@
 | A1 正式成绩统一 | **完成**（scorecard 并列旧口径） |
 | A2 历史主力映射 | **完成**（逐日换月 + mixed 打标；正式 KPI 已重跑） |
 | A3 purge/embargo | **完成**（P4 时序 purge/embargo；PBO 并列秩+敏感性） |
+| **第二阶段（可信度优先）** | **进行中** → 见 `docs/PHASE2_AUDIT_DECISIONS.md` + `docs/P0_CODE_AUDIT.md` |
+
+> **2026-11-15 取舍**：先修混价/账本/proxy-KPI/Gate 接线；不做 ADX 堆过滤、不改正式参、不把观察袖套并入 paper。正式 KPI 在混价锁死前 **暂不可单独采信**。
 
 ---
 

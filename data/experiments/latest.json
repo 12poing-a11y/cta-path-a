@@ -1,281 +1,338 @@
 {
-  "ts": "2026-11-13T23:29:34+08:00",
-  "name": "p4_light_cf",
-  "kind": "ml_light",
+  "ts": "2026-11-15T01:01:21+08:00",
+  "name": "pbo_path_a_trial_matrix",
+  "kind": "validation_pbo",
   "params": {
-    "symbol": "CF",
+    "mode": "seats",
+    "n_groups": 8,
+    "n_trials": 11,
     "status": "Research"
   },
   "metrics": {
-    "lsp_reversal": {
-      "n": 54,
-      "pos_rate": 0.18518518518518517,
-      "accuracy": 0.7777777777777778,
-      "f1": 0.4,
-      "brier": 0.15479006240166415,
-      "auc": 0.7250000000000001
-    },
-    "trend_fail": {
-      "n": 332,
-      "pos_rate": 0.10240963855421686,
-      "accuracy": 0.8945783132530121,
-      "f1": 0.18604651162790697,
-      "brier": 0.08606600655677821,
-      "auc": 0.6696604816423214
-    },
-    "breakout_continue": {
-      "n": 66,
-      "pos_rate": 0.5757575757575758,
-      "accuracy": 0.5454545454545454,
-      "f1": 0.5714285714285714,
-      "brier": 0.3069135484989396,
-      "auc": 0.5263157894736843
-    },
+    "pbo": 0.385714,
+    "n_obs": 214,
+    "n_eff": 5.2271,
     "validation": {
       "ok": true,
-      "schema": "cta-p4-light-v1",
-      "status": "Research",
-      "live_trading": false,
-      "tasks": {
-        "lsp_reversal": {
-          "ok": true,
-          "task": "lsp_reversal",
-          "backend": "lightgbm",
-          "n": 179,
-          "n_train": 125,
-          "n_oos": 54,
-          "features": [
-            "atr",
-            "break_size_atr",
-            "break_up",
-            "distance_to_level",
-            "hour",
-            "htf_resonance",
-            "level_is_high",
-            "volume_ratio"
-          ],
-          "is": {
-            "n": 125,
-            "pos_rate": 0.328,
-            "accuracy": 0.976,
-            "f1": 0.9620253164556962,
-            "brier": 0.049658111886556805,
-            "auc": 0.9994192799070848
-          },
-          "oos": {
-            "n": 54,
-            "pos_rate": 0.18518518518518517,
-            "accuracy": 0.7777777777777778,
-            "f1": 0.4,
-            "brier": 0.15479006240166415,
-            "auc": 0.7250000000000001
-          },
-          "importance_top": [
-            {
-              "feature": "break_size_atr",
-              "importance": 197.0
-            },
-            {
-              "feature": "volume_ratio",
-              "importance": 168.0
-            },
-            {
-              "feature": "distance_to_level",
-              "importance": 130.0
-            },
-            {
-              "feature": "atr",
-              "importance": 105.0
-            },
-            {
-              "feature": "hour",
-              "importance": 90.0
-            },
-            {
-              "feature": "break_up",
-              "importance": 33.0
-            },
-            {
-              "feature": "level_is_high",
-              "importance": 2.0
-            },
-            {
-              "feature": "htf_resonance",
-              "importance": 0.0
-            }
-          ],
-          "oos_window": {
-            "start": "2026-10-29 10:15:00",
-            "end": "2026-11-13 21:30:00"
-          },
-          "is_window": {
-            "start": "2026-09-04 21:15:00",
-            "end": "2026-10-28 23:00:00"
-          },
-          "live_trading": false,
-          "auto_promote": false,
-          "note": "Research only; probabilities are not Path-A entry rules."
-        },
-        "trend_fail": {
-          "ok": true,
-          "task": "trend_fail",
-          "backend": "lightgbm",
-          "n": 1104,
-          "n_train": 772,
-          "n_oos": 332,
-          "features": [
-            "abs_r20",
-            "abs_r60",
-            "atr_pct",
-            "direction",
-            "r20",
-            "r60",
-            "vol_ratio"
-          ],
-          "is": {
-            "n": 772,
-            "pos_rate": 0.09715025906735751,
-            "accuracy": 0.977979274611399,
-            "f1": 0.8721804511278195,
-            "brier": 0.019024344739771583,
-            "auc": 0.999636537541846
-          },
-          "oos": {
-            "n": 332,
-            "pos_rate": 0.10240963855421686,
-            "accuracy": 0.8945783132530121,
-            "f1": 0.18604651162790697,
-            "brier": 0.08606600655677821,
-            "auc": 0.6696604816423214
-          },
-          "importance_top": [
-            {
-              "feature": "atr_pct",
-              "importance": 274.0
-            },
-            {
-              "feature": "abs_r20",
-              "importance": 189.0
-            },
-            {
-              "feature": "r60",
-              "importance": 184.0
-            },
-            {
-              "feature": "abs_r60",
-              "importance": 173.0
-            },
-            {
-              "feature": "vol_ratio",
-              "importance": 162.0
-            },
-            {
-              "feature": "r20",
-              "importance": 137.0
-            },
-            {
-              "feature": "direction",
-              "importance": 1.0
-            }
-          ],
-          "oos_window": {
-            "start": "2020-11-05",
-            "end": "2026-09-03"
-          },
-          "is_window": {
-            "start": "2005-04-08",
-            "end": "2020-11-04"
-          },
-          "live_trading": false,
-          "auto_promote": false,
-          "note": "Research only; probabilities are not Path-A entry rules."
-        },
-        "breakout_continue": {
-          "ok": true,
-          "task": "breakout_continue",
-          "backend": "lightgbm",
-          "n": 218,
-          "n_train": 152,
-          "n_oos": 66,
-          "features": [
-            "abs_r20",
-            "abs_r60",
-            "atr_pct",
-            "direction",
-            "r20",
-            "r60",
-            "vol_ratio"
-          ],
-          "is": {
-            "n": 152,
-            "pos_rate": 0.5526315789473685,
-            "accuracy": 0.9802631578947368,
-            "f1": 0.9822485207100592,
-            "brier": 0.06060202554641742,
-            "auc": 0.9950980392156863
-          },
-          "oos": {
-            "n": 66,
-            "pos_rate": 0.5757575757575758,
-            "accuracy": 0.5454545454545454,
-            "f1": 0.5714285714285714,
-            "brier": 0.3069135484989396,
-            "auc": 0.5263157894736843
-          },
-          "importance_top": [
-            {
-              "feature": "abs_r20",
-              "importance": 195.0
-            },
-            {
-              "feature": "atr_pct",
-              "importance": 169.0
-            },
-            {
-              "feature": "abs_r60",
-              "importance": 148.0
-            },
-            {
-              "feature": "vol_ratio",
-              "importance": 143.0
-            },
-            {
-              "feature": "r20",
-              "importance": 124.0
-            },
-            {
-              "feature": "r60",
-              "importance": 91.0
-            },
-            {
-              "feature": "direction",
-              "importance": 2.0
-            }
-          ],
-          "oos_window": {
-            "start": "2019-12-26",
-            "end": "2026-11-02"
-          },
-          "is_window": {
-            "start": "2005-04-08",
-            "end": "2019-12-19"
-          },
-          "live_trading": false,
-          "auto_promote": false,
-          "note": "Research only; probabilities are not Path-A entry rules."
-        }
+      "schema": "cta-pbo-report-v1",
+      "pbo": {
+        "ok": true,
+        "pbo": 0.385714,
+        "n_trials": 11,
+        "n_obs": 208,
+        "n_groups": 8,
+        "combos_evaluated": 70,
+        "overfit_tokens": 27,
+        "rank_method": "average_rank_ties",
+        "note": "High PBO → IS ranking poorly predicts OOS; report, do not hard-gate alone."
       },
-      "sample_counts": {
-        "lsp_events": 179,
-        "lsp_rows": 179,
-        "trend_rows": 1104,
-        "breakout_rows": 218,
-        "daily_bars": 5318
-      }
+      "pbo_sensitivity": {
+        "ok": true,
+        "rows": [
+          {
+            "n_groups": 4,
+            "ok": true,
+            "pbo": 0.166667,
+            "combos_evaluated": 6,
+            "error": null
+          },
+          {
+            "n_groups": 6,
+            "ok": true,
+            "pbo": 0.25,
+            "combos_evaluated": 20,
+            "error": null
+          },
+          {
+            "n_groups": 8,
+            "ok": true,
+            "pbo": 0.385714,
+            "combos_evaluated": 70,
+            "error": null
+          },
+          {
+            "n_groups": 10,
+            "ok": true,
+            "pbo": 0.40873,
+            "combos_evaluated": 252,
+            "error": null
+          },
+          {
+            "n_groups": 12,
+            "ok": true,
+            "pbo": 0.284632,
+            "combos_evaluated": 924,
+            "error": null
+          },
+          {
+            "n_groups": 16,
+            "ok": true,
+            "pbo": 0.4456,
+            "combos_evaluated": 5000,
+            "error": null
+          }
+        ],
+        "pbo_min": 0.166667,
+        "pbo_max": 0.4456,
+        "pbo_median": 0.385714,
+        "note": "Sensitivity across CSCV group counts; do not pick the lowest PBO."
+      },
+      "effective_trials": {
+        "ok": true,
+        "n_trials": 11,
+        "n_eff": 5.2271,
+        "mean_abs_corr": 0.577291,
+        "note": "Higher correlation among trials → fewer effective independent tries."
+      },
+      "primary_trial_id": "s0.8_rr2_m4_6",
+      "psr_primary": {
+        "ok": true,
+        "psr": 0.782973,
+        "z": 0.782272,
+        "n": 214,
+        "sharpe": 0.808254,
+        "sr_benchmark": 0.0,
+        "skew": 2.20403,
+        "kurtosis_excess": 20.427435,
+        "note": "PSR is not an automatic admission gate; report alongside sample size."
+      },
+      "dsr_primary": {
+        "ok": true,
+        "dsr": 0.331029,
+        "psr_vs_zero": 0.782973,
+        "sharpe": 0.808254,
+        "sr_benchmark_ann": 1.259844,
+        "n": 214,
+        "n_trials": 11,
+        "n_eff": 5.2271,
+        "mean_abs_corr": 0.577291,
+        "note": "DSR corrects for multiple strategy attempts; do not admit solely because DSR>threshold."
+      },
+      "trial_sharpes": [
+        {
+          "trial_id": "s0.8_rr2_m4_6",
+          "sharpe": 0.8082539663682096,
+          "n": 214
+        },
+        {
+          "trial_id": "s0.8_rr2_m3_5",
+          "sharpe": 1.0461886520976023,
+          "n": 214
+        },
+        {
+          "trial_id": "s1_rr1.5_m4_6",
+          "sharpe": 0.20110551050944667,
+          "n": 214
+        },
+        {
+          "trial_id": "s1.2_rr1.5_m4_6",
+          "sharpe": 0.39862919767073784,
+          "n": 214
+        },
+        {
+          "trial_id": "s1_rr2_m4_6",
+          "sharpe": 0.5844548206254353,
+          "n": 214
+        },
+        {
+          "trial_id": "s0.8_rr1.5_m4_6",
+          "sharpe": 0.8660027487975648,
+          "n": 214
+        },
+        {
+          "trial_id": "s0.8_rr2.5_m4_6",
+          "sharpe": 0.9080404962370024,
+          "n": 214
+        },
+        {
+          "trial_id": "s1_rr2.5_m4_6",
+          "sharpe": 0.8654430543445875,
+          "n": 214
+        },
+        {
+          "trial_id": "s1.2_rr2_m4_6",
+          "sharpe": 1.1217200358567658,
+          "n": 214
+        },
+        {
+          "trial_id": "s1.2_rr2.5_m4_6",
+          "sharpe": 1.8434727115838936,
+          "n": 214
+        },
+        {
+          "trial_id": "s0.8_rr2_m5_8",
+          "sharpe": 1.4836618961249148,
+          "n": 214
+        }
+      ],
+      "matrix_meta": {
+        "n_obs": 214,
+        "n_trials": 11,
+        "bytes_estimate": 18832,
+        "mode": "seats"
+      },
+      "trials": [
+        {
+          "trial_id": "s0.8_rr2_m4_6",
+          "label": "current",
+          "stop_atr_mult": 0.8,
+          "reward_rr": 2.0,
+          "min_r20": 4.0,
+          "min_r60": 6.0,
+          "ok": true,
+          "ret_pct": 4.992,
+          "max_dd_pct": 3.262,
+          "cost_yuan": 3244.46,
+          "closed_trades": 43,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s0.8_rr2_m3_5",
+          "label": "前正式动量 3%/5% + 0.8×ATR/2R risk2",
+          "stop_atr_mult": 0.8,
+          "reward_rr": 2.0,
+          "min_r20": 3.0,
+          "min_r60": 5.0,
+          "ok": true,
+          "ret_pct": 7.273,
+          "max_dd_pct": 4.953,
+          "cost_yuan": 4042.39,
+          "closed_trades": 44,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s1_rr1.5_m4_6",
+          "label": "前正式 1.0×ATR / 1.5R risk1.5",
+          "stop_atr_mult": 1.0,
+          "reward_rr": 1.5,
+          "min_r20": 4.0,
+          "min_r60": 6.0,
+          "ok": true,
+          "ret_pct": 0.9,
+          "max_dd_pct": 4.987,
+          "cost_yuan": 2908.65,
+          "closed_trades": 41,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s1.2_rr1.5_m4_6",
+          "label": "前正式 1.2×ATR / 1.5R",
+          "stop_atr_mult": 1.2,
+          "reward_rr": 1.5,
+          "min_r20": 4.0,
+          "min_r60": 6.0,
+          "ok": true,
+          "ret_pct": 1.851,
+          "max_dd_pct": 3.345,
+          "cost_yuan": 2096.68,
+          "closed_trades": 30,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s1_rr2_m4_6",
+          "label": "对照 1×ATR / 2R risk1.5",
+          "stop_atr_mult": 1.0,
+          "reward_rr": 2.0,
+          "min_r20": 4.0,
+          "min_r60": 6.0,
+          "ok": true,
+          "ret_pct": 2.378,
+          "max_dd_pct": 3.77,
+          "cost_yuan": 1942.75,
+          "closed_trades": 24,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s0.8_rr1.5_m4_6",
+          "label": "grid",
+          "stop_atr_mult": 0.8,
+          "reward_rr": 1.5,
+          "min_r20": 4.0,
+          "min_r60": 6.0,
+          "ok": true,
+          "ret_pct": 4.678,
+          "max_dd_pct": 2.756,
+          "cost_yuan": 3410.55,
+          "closed_trades": 46,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s0.8_rr2.5_m4_6",
+          "label": "grid",
+          "stop_atr_mult": 0.8,
+          "reward_rr": 2.5,
+          "min_r20": 4.0,
+          "min_r60": 6.0,
+          "ok": true,
+          "ret_pct": 3.916,
+          "max_dd_pct": 2.821,
+          "cost_yuan": 2317.42,
+          "closed_trades": 29,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s1_rr2.5_m4_6",
+          "label": "grid",
+          "stop_atr_mult": 1.0,
+          "reward_rr": 2.5,
+          "min_r20": 4.0,
+          "min_r60": 6.0,
+          "ok": true,
+          "ret_pct": 3.864,
+          "max_dd_pct": 3.402,
+          "cost_yuan": 1865.53,
+          "closed_trades": 22,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s1.2_rr2_m4_6",
+          "label": "grid",
+          "stop_atr_mult": 1.2,
+          "reward_rr": 2.0,
+          "min_r20": 4.0,
+          "min_r60": 6.0,
+          "ok": true,
+          "ret_pct": 5.904,
+          "max_dd_pct": 2.112,
+          "cost_yuan": 2159.78,
+          "closed_trades": 28,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s1.2_rr2.5_m4_6",
+          "label": "grid",
+          "stop_atr_mult": 1.2,
+          "reward_rr": 2.5,
+          "min_r20": 4.0,
+          "min_r60": 6.0,
+          "ok": true,
+          "ret_pct": 10.433,
+          "max_dd_pct": 2.027,
+          "cost_yuan": 2011.17,
+          "closed_trades": 27,
+          "sharpe_hint": null
+        },
+        {
+          "trial_id": "s0.8_rr2_m5_8",
+          "label": "mom_grid",
+          "stop_atr_mult": 0.8,
+          "reward_rr": 2.0,
+          "min_r20": 5.0,
+          "min_r60": 8.0,
+          "ok": true,
+          "ret_pct": 11.529,
+          "max_dd_pct": 3.82,
+          "cost_yuan": 3476.54,
+          "closed_trades": 50,
+          "sharpe_hint": null
+        }
+      ],
+      "live_trading": false,
+      "auto_promote": false
     }
   },
-  "artifact": "lab\\research\\ml\\p4_light_latest.json",
-  "notes": "P4 light trio; does not change Path-A.",
+  "artifact": "lab\\research\\validation\\pbo_path_a_latest.json",
+  "notes": "Param-grid PBO; does not change execution_rules.",
   "live_trading": false,
   "git_hint": "see repo HEAD; CI pytest gates formal Path-A reports"
 }

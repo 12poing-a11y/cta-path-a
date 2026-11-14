@@ -983,6 +983,19 @@ def main():
         except Exception as exc:
             print(f"[composite] refresh failed: {exc}")
             print(f"::warning title=desk composite refresh failed::{exc}")
+        try:
+            # Research-only shadow attribution ledger + category win rates.
+            # Soft: never mutates paper_book / entry_filter / formal Path-A.
+            from research.shadow_perf import refresh_shadow_perf
+
+            sp = refresh_shadow_perf(ROOT, write=True)
+            print(
+                f"[shadow_perf] asof={sp.get('asof')} n={sp.get('n_ledger')} "
+                f"new={sp.get('n_candidates_new')} → {sp.get('path')}"
+            )
+        except Exception as exc:
+            print(f"[shadow_perf] refresh failed: {exc}")
+            print(f"::warning title=shadow_perf refresh failed::{exc}")
     else:
         print("[paper] skip: quality gate failed")
     # Observation incomplete or quality fail → non-zero so CI does not publish formal.

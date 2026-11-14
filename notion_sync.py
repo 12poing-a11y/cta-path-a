@@ -385,6 +385,10 @@ def sync_signals(report_path: Path | None = None):
         sync_trades()
     except Exception as exc:
         print("[notion] trades sync after signals failed:", str(exc)[:300])
+    try:
+        sync_trade_brief(report_path=path)
+    except Exception as exc:
+        print("[notion] trade brief sync failed:", str(exc)[:300])
     return 0
 
 
@@ -931,6 +935,236 @@ def _paragraph(text: str) -> dict:
     }
 
 
+def _heading2(text: str) -> dict:
+    return {
+        "object": "block",
+        "type": "heading_2",
+        "heading_2": {
+            "rich_text": [{"type": "text", "text": {"content": str(text)[:2000]}}]
+        },
+    }
+
+
+def _bullet(text: str) -> dict:
+    return {
+        "object": "block",
+        "type": "bulleted_list_item",
+        "bulleted_list_item": {
+            "rich_text": [{"type": "text", "text": {"content": str(text)[:1900]}}]
+        },
+    }
+
+
+# Final-signal actions worth glancing at before paper trading.
+_TRADE_BRIEF_ACTIONS = ("建议开", "持有", "建议平", "止盈预警", "止损预警")
+
+
+def _fmt_px(v) -> str:
+    try:
+        if v is None or v == "" or v == "—":
+            return "—"
+        return f"{float(v):.2f}"
+    except (TypeError, ValueError):
+        return str(v)
+
+
+def build_trade_brief(
+    root: Path | None = None,
+    *,
+    report: dict | None = None,
+) -> dict:
+    """Compact actionable board: 建议开/持有/建议平/预警 + L1 日选手数>0.
+
+    Research reference only — not a live order ticket.
+    """
+    base = Path(root or ROOT)
+    path = base / "l1_report_risk15.json"
+    if report is None:
+        if not path.is_file():
+            return {"ok": False, "error": "missing l1_report_risk15.json", "rows": []}
+        report = json.loads(path.read_text(encoding="utf-8"))
+    if report.get("skipped"):
+        return {"ok": False, "error": f"skipped:{report.get('skipped')}", "rows": []}
+
+    from desk.final_signal import FOOTER, build_final_signal_board
+
+    board = build_final_signal_board(
+        base,
+        report=report,
+        compute_decisions=True,
+        full_decision_packs=False,
+    )
+    asof_raw = str(board.get("asof") or report.get("asof") or "")
+    if len(asof_raw) == 8 and asof_raw.isdigit():
+        date = f"{asof_raw[:4]}-{asof_raw[4:6]}-{asof_raw[6:8]}"
+        asof = asof_raw
+    else:
+        date = str(asof_raw)[:10]
+        asof = date.replace("-", "")[:8]
+
+    rows: list[dict] = []
+    seen: set[str] = set()
+    for src in (board.get("primary") or [], board.get("other") or []):
+        for r in src:
+            if not isinstance(r, dict):
+                continue
+            action = str(r.get("最终动作") or "")
+            code = str(r.get("代码") or "").upper()
+            if not code or code in seen:
+                continue
+            l1_sel = bool(r.get("_l1_selected"))
+            lots = r.get("手数")
+            try:
+                lots_n = float(lots) if lots not in (None, "", "—") else 0.0
+            except (TypeError, ValueError):
+                lots_n = 0.0
+            if action not in _TRADE_BRIEF_ACTIONS and not (l1_sel and lots_n > 0):
+                continue
+            seen.add(code)
+            line = (
+                f"{r.get('品种') or code}｜{action}｜{r.get('方向') or '—'}｜"
+                f"{lots_n:g}手｜入场{_fmt_px(r.get('入场'))}｜"
+                f"止损{_fmt_px(r.get('止损'))}｜止盈{_fmt_px(r.get('止盈'))}"
+            )
+            tip = str(r.get("_primary_tip") or r.get("理由") or "").strip()
+            if tip:
+                line = f"{line}｜{tip[:80]}"
+            rows.append(
+                {
+                    "code": code,
+                    "variety": r.get("品种") or code,
+                    "action": action or ("L1日选" if l1_sel else ""),
+                    "direction": r.get("方向"),
+                    "lots": lots_n,
+                    "entry": r.get("入场"),
+                    "stop": r.get("止损"),
+                    "target": r.get("止盈"),
+                    "tip": tip[:200],
+                    "line": line,
+                    "l1_selected": l1_sel,
+                }
+            )
+
+    # Stable order: opens → alerts → holds → closes → other
+    rank = {a: i for i, a in enumerate(_TRADE_BRIEF_ACTIONS)}
+    rows.sort(key=lambda x: (rank.get(str(x.get("action")), 9), str(x.get("code"))))
+
+    sentiment = board.get("sentiment") or {}
+    metrics = board.get("metrics") or {}
+    brief = {
+        "ok": True,
+        "live_trading": False,
+        "asof": asof,
+        "date": date,
+        "regime": board.get("regime"),
+        "sentiment": {
+            "direction": sentiment.get("direction"),
+            "conviction_pct": sentiment.get("conviction_pct"),
+            "label": sentiment.get("label") or sentiment.get("stance"),
+        },
+        "metrics": {
+            "open_n": metrics.get("open_n"),
+            "held_n": metrics.get("held_n"),
+            "alert_n": metrics.get("alert_n"),
+            "brief_n": len(rows),
+        },
+        "rows": rows,
+        "disclaimer": FOOTER,
+        "source": "desk.final_signal + l1_report_risk15",
+    }
+    out = base / "data" / "trade_brief_latest.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(brief, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return brief
+
+
+def sync_trade_brief(
+    report_path: Path | None = None,
+    *,
+    root: Path | None = None,
+) -> int:
+    """Push a dated Notion hub page with only trade-referable varieties."""
+    base = Path(root or ROOT)
+    report = None
+    if report_path is not None and Path(report_path).is_file():
+        report = json.loads(Path(report_path).read_text(encoding="utf-8"))
+    brief = build_trade_brief(base, report=report)
+    if not brief.get("ok"):
+        print("[notion] trade brief skip:", brief.get("error"))
+        return 0
+
+    date = brief.get("date") or ""
+    title = f"{date} 交易参照（研究建议）"
+    children: list[dict] = [
+        _paragraph(
+            f"{brief.get('disclaimer') or '研究建议，非交易指令。'} "
+            f"regime={brief.get('regime') or '—'}；"
+            f"情绪={((brief.get('sentiment') or {}).get('direction') or '—')}/"
+            f"{((brief.get('sentiment') or {}).get('conviction_pct') or '—')}%。"
+        ),
+        _paragraph(
+            f"摘要：参照品种 {brief['metrics'].get('brief_n', 0)}｜"
+            f"建议开 {brief['metrics'].get('open_n', 0)}｜"
+            f"持仓 {brief['metrics'].get('held_n', 0)}｜"
+            f"预警 {brief['metrics'].get('alert_n', 0)}。"
+        ),
+    ]
+    by_action: dict[str, list[dict]] = {a: [] for a in _TRADE_BRIEF_ACTIONS}
+    other: list[dict] = []
+    for row in brief.get("rows") or []:
+        act = str(row.get("action") or "")
+        if act in by_action:
+            by_action[act].append(row)
+        else:
+            other.append(row)
+
+    for act in _TRADE_BRIEF_ACTIONS:
+        group = by_action.get(act) or []
+        if not group:
+            continue
+        children.append(_heading2(f"{act}（{len(group)}）"))
+        for row in group:
+            children.append(_bullet(str(row.get("line") or "")))
+    if other:
+        children.append(_heading2(f"其他日选（{len(other)}）"))
+        for row in other:
+            children.append(_bullet(str(row.get("line") or "")))
+    if not (brief.get("rows") or []):
+        children.append(_paragraph("当日无「建议开/持有/建议平/预警」或带手数日选；全市场明细见信号台账。"))
+
+    # Notion create allows ≤100 children per request.
+    first, rest = children[:90], children[90:]
+    r = requests.post(
+        "https://api.notion.com/v1/pages",
+        headers=_headers(),
+        json={
+            "parent": {"page_id": HUB_PAGE},
+            "properties": {"title": [{"text": {"content": title[:2000]}}]},
+            "children": first,
+        },
+        timeout=60,
+    )
+    if r.status_code >= 400:
+        raise RuntimeError(f"Notion trade brief {r.status_code}: {r.text[:500]}")
+    page_id = (r.json() or {}).get("id") or ""
+    while rest and page_id:
+        chunk, rest = rest[:90], rest[90:]
+        ar = requests.patch(
+            f"https://api.notion.com/v1/blocks/{page_id}/children",
+            headers=_headers(),
+            json={"children": chunk},
+            timeout=60,
+        )
+        if ar.status_code >= 400:
+            print("[notion] trade brief append warn:", ar.status_code, ar.text[:200])
+            break
+    print(
+        f"[notion] trade brief date={date} rows={len(brief.get('rows') or [])} "
+        f"page={page_id or '?'}"
+    )
+    return 0
+
+
 def _sync_rules_page(b: dict):
     """Create or refresh a hub child page with entry/exit rules + backtest stats."""
     global RULES_PAGE
@@ -1088,6 +1322,8 @@ if __name__ == "__main__":
     if mode in ("verify", "verify_signals"):
         verify_signals()
         raise SystemExit(0)
+    if mode in ("brief", "trade_brief", "actionable"):
+        raise SystemExit(sync_trade_brief())
     raise SystemExit(sync_signals())
 
 

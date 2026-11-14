@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
 from typing import Any
 
@@ -21,7 +20,10 @@ def default_front_month(root: Path | None = None) -> str:
 
 
 def front_month_for_product(code: str, *, root: Path | None = None, fallback: str | None = None) -> str:
-    """Pick YYMM from product listed months nearest to observe month."""
+    """Pick YYMM from product listed months nearest to observe month (live/desk helper).
+
+    Historical fills must use ``active_front_contract_on_date`` instead of this.
+    """
     root = root or ROOT
     base = fallback or default_front_month(root)
     code = str(code or "").upper()
@@ -35,7 +37,6 @@ def front_month_for_product(code: str, *, root: Path | None = None, fallback: st
     yy = int(base[:2])
     mm = int(base[2:])
     year = 2000 + yy
-    # search forward up to 12 months for a listed month
     for _ in range(13):
         if mm in months:
             return f"{year % 100:02d}{mm:02d}"
@@ -59,12 +60,9 @@ def load_exact_contract_daily(contract: str, root: Path | None = None) -> list[d
     """Load cached exact-contract daily bars (no network)."""
     root = root or ROOT
     contract = str(contract).upper()
-    # Prefer stable contracts cache from backfill script
     stable = root / ".cache" / "contracts" / f"{contract}.json"
-    # Prefer gamma/raw exact daily
     raw = root / ".cache" / "gamma_wall" / "raw" / f"{contract}_daily.json"
     candidates = [stable, raw]
-    # Dated sina snapshots — take newest folder file
     sina_root = root / ".cache" / "sina"
     if sina_root.is_dir():
         hits = sorted(sina_root.glob(f"*/{contract}.json"), reverse=True)
@@ -101,7 +99,6 @@ def load_exact_contract_daily(contract: str, root: Path | None = None) -> list[d
                 continue
         if bars:
             break
-    # dedupe by date keep last
     by: dict[str, dict] = {}
     for b in bars:
         by[b["date"]] = b
@@ -114,44 +111,86 @@ def overlay_contract_fills(
     month: str | None = None,
     root: Path | None = None,
     min_coverage: float = 0.3,
+    historical: bool = True,
 ) -> dict[str, Any]:
     """Annotate continuous hist with contract open/close when cache exists.
 
     Signals stay on continuous; fills may use contract_open when present.
+
+    When ``historical=True`` (default), each bar picks the front contract that was
+    still tradeable on that bar date — not a single observe-month blanket.
+    Pass ``month=YYMM`` and ``historical=False`` only for live/desk single-month overlays.
     """
     root = root or ROOT
-    report = {"month": month or "per_product", "symbols": {}, "fill_series": "continuous_proxy"}
+    from research.data_quality.calendar import active_front_contract_on_date, load_delivery_rules
+
+    rules = load_delivery_rules(root)
+    report: dict[str, Any] = {
+        "month": month or ("historical" if historical else "per_product"),
+        "mode": "historical_roll" if historical and month is None else ("fixed_month" if month else "per_product"),
+        "symbols": {},
+        "fill_series": "continuous_proxy",
+    }
     any_contract = False
+    contract_cache: dict[str, dict[str, dict]] = {}
+
+    def _bars_by_date(contract: str) -> dict[str, dict]:
+        if contract not in contract_cache:
+            rows = load_exact_contract_daily(contract, root=root)
+            contract_cache[contract] = {b["date"]: b for b in rows}
+        return contract_cache[contract]
+
     for code, pack in series.items():
         hist = pack.get("hist") or []
         meta = dict(pack.get("meta") or {})
-        use_month = month or front_month_for_product(code, root=root)
-        contract = front_contract_for(code, use_month)
-        c_bars = load_exact_contract_daily(contract, root=root)
-        by_c = {b["date"]: b for b in c_bars}
         matched = 0
+        proxy_n = 0
+        used: dict[str, int] = {}
         new_hist = []
         for b in hist:
             row = dict(b)
             d = str(row.get("date") or "")[:10]
+            if month and not historical:
+                contract = front_contract_for(code, month)
+            elif month and historical:
+                # rare: force month for tests, still stamp that contract only
+                contract = front_contract_for(code, month)
+            else:
+                contract = active_front_contract_on_date(code, d, rules=rules)
+            if not contract:
+                row["price_basis"] = "continuous_proxy"
+                row["fill_price_basis"] = "continuous_proxy"
+                proxy_n += 1
+                new_hist.append(row)
+                continue
+            by_c = _bars_by_date(contract)
             cb = by_c.get(d)
+            row["contract"] = contract
+            used[contract] = used.get(contract, 0) + 1
             if cb:
                 matched += 1
-                row["contract"] = contract
                 row["contract_open"] = cb["open"]
                 row["contract_high"] = cb["high"]
                 row["contract_low"] = cb["low"]
                 row["contract_close"] = cb["close"]
-                row["price_basis"] = "continuous_proxy"
+                row["price_basis"] = "contract"
                 row["fill_price_basis"] = "contract"
+            else:
+                row["price_basis"] = "continuous_proxy"
+                row["fill_price_basis"] = "continuous_proxy"
+                proxy_n += 1
             new_hist.append(row)
         cov = matched / max(len(hist), 1)
-        meta["front_contract"] = contract
+        meta["front_contract"] = (
+            max(used.items(), key=lambda kv: kv[1])[0] if used else front_contract_for(code)
+        )
+        meta["contracts_used"] = used
         meta["contract_fill_coverage"] = round(cov, 4)
+        meta["proxy_fill_share"] = round(proxy_n / max(len(hist), 1), 4)
+        meta["historical_roll"] = bool(historical and not month)
         if cov >= min_coverage and matched > 0:
-            meta["price_basis"] = "continuous_proxy"
             meta["allow_continuous_fill"] = True
-            meta["fill_series"] = "contract"
+            meta["fill_series"] = "contract" if proxy_n == 0 else "mixed"
             any_contract = True
         else:
             meta["fill_series"] = "continuous_proxy"
@@ -159,12 +198,21 @@ def overlay_contract_fills(
         pack["hist"] = new_hist
         pack["meta"] = meta
         report["symbols"][code] = {
-            "contract": contract,
+            "contracts_used": used,
+            "front_contract": meta["front_contract"],
             "coverage": round(cov, 4),
             "matched": matched,
+            "proxy_n": proxy_n,
+            "proxy_fill_share": meta["proxy_fill_share"],
             "fill_series": meta["fill_series"],
         }
     report["fill_series"] = "contract" if any_contract else "continuous_proxy"
+    if any_contract:
+        # Prefer mixed when any symbol still proxies
+        if any(
+            (report["symbols"][c].get("proxy_n") or 0) > 0 for c in report["symbols"]
+        ):
+            report["fill_series"] = "mixed"
     return report
 
 
@@ -177,11 +225,12 @@ def annotate_pack_calendar(
     from research.data_quality.calendar import annotate_bars_with_calendar
 
     for code, pack in series.items():
-        use_month = month or front_month_for_product(code, root=root)
-        contract = front_contract_for(code, use_month)
+        # Per-bar inference when month is None (historical); fixed contract when month set.
+        front = front_contract_for(code, month) if month else None
         pack["hist"] = annotate_bars_with_calendar(
-            code, pack.get("hist") or [], front_contract=contract
+            code, pack.get("hist") or [], front_contract=front
         )
         meta = dict(pack.get("meta") or {})
-        meta["front_contract"] = contract
+        if front:
+            meta["front_contract"] = front
         pack["meta"] = meta

@@ -102,7 +102,14 @@ def _load_config():
             cfg.pop("failover_reason", None)
         return cfg
 
-    raise RuntimeError("缺少 IFIND_AUTH_TOKEN / mcp_config.json")
+    # Soft-empty so importers (weekly/Tq-first paths) can load without iFinD.
+    # Actual call()/token use still raises via _active_token.
+    return {
+        "auth_token": "",
+        "auth_token_backup": "",
+        "active_slot": env_slot or "primary",
+        "missing_credentials": True,
+    }
 
 
 def _save_config(cfg):
@@ -137,7 +144,11 @@ def _active_token(cfg=None):
     raise RuntimeError("无可用 IFIND_AUTH_TOKEN / auth_token_backup")
 
 
-_ACTIVE_SLOT, AUTH_TOKEN = _active_token(CONFIG)
+try:
+    _ACTIVE_SLOT, AUTH_TOKEN = _active_token(CONFIG)
+except RuntimeError:
+    # Import-safe when iFinD is only a last-resort fallback (TqSdk primary fill).
+    _ACTIVE_SLOT, AUTH_TOKEN = "primary", ""
 
 
 def active_slot() -> str:

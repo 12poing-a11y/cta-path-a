@@ -71,12 +71,16 @@ def probability_of_backtest_overfitting(
             oos_rows.extend(groups[gi])
         if len(is_rows) < 5 or len(oos_rows) < 5:
             continue
+        from lab.validation.purge import average_rank
+
         is_sharpes = [_sharpe_col([row[j] for row in is_rows], periods_per_year) for j in range(k)]
         oos_sharpes = [_sharpe_col([row[j] for row in oos_rows], periods_per_year) for j in range(k)]
-        best = max(range(k), key=lambda j: is_sharpes[j])
-        # Relative rank of best-IS on OOS (0=worst … 1=best)
-        better = sum(1 for j in range(k) if oos_sharpes[j] < oos_sharpes[best])
-        rank_rel = (better + 1) / k  # higher = better OOS
+        # Average ranks handle IS ties (competition ranking, 1=best)
+        is_ranks = average_rank(is_sharpes, higher_is_better=True)
+        best = min(range(k), key=lambda j: (is_ranks[j], -is_sharpes[j]))
+        oos_ranks = average_rank(oos_sharpes, higher_is_better=True)
+        # Convert average rank (1=best) → relative score in (0,1], higher=better
+        rank_rel = 1.0 - (oos_ranks[best] - 1.0) / max(k - 1, 1)
         # Overfit token ω = 1 when OOS performance of IS-best is below median
         if rank_rel < 0.5:
             overfit += 1
@@ -93,7 +97,42 @@ def probability_of_backtest_overfitting(
         "n_groups": s,
         "combos_evaluated": evaluated,
         "overfit_tokens": overfit,
+        "rank_method": "average_rank_ties",
         "note": "High PBO → IS ranking poorly predicts OOS; report, do not hard-gate alone.",
+    }
+
+
+def pbo_sensitivity(
+    returns_matrix: Sequence[Sequence[float]],
+    *,
+    group_grid: Sequence[int] = (4, 6, 8, 10, 12, 16),
+    periods_per_year: float = 252.0,
+) -> dict[str, Any]:
+    """Recompute PBO across CSCV group counts (research diagnostic)."""
+    rows = []
+    for g in group_grid:
+        one = probability_of_backtest_overfitting(
+            returns_matrix, n_groups=int(g), periods_per_year=periods_per_year
+        )
+        rows.append(
+            {
+                "n_groups": int(g),
+                "ok": one.get("ok"),
+                "pbo": one.get("pbo"),
+                "combos_evaluated": one.get("combos_evaluated"),
+                "error": one.get("error"),
+            }
+        )
+    ok_rows = [r for r in rows if r.get("ok") and r.get("pbo") is not None]
+    return {
+        "ok": bool(ok_rows),
+        "rows": rows,
+        "pbo_min": min((r["pbo"] for r in ok_rows), default=None),
+        "pbo_max": max((r["pbo"] for r in ok_rows), default=None),
+        "pbo_median": (
+            sorted(r["pbo"] for r in ok_rows)[len(ok_rows) // 2] if ok_rows else None
+        ),
+        "note": "Sensitivity across CSCV group counts; do not pick the lowest PBO.",
     }
 
 

@@ -21,13 +21,27 @@ def _matrix(rows: list[dict[str, Any]]) -> tuple[np.ndarray, np.ndarray, list[st
     return x, y, keys, ts
 
 
-def _time_split(n: int, oos_frac: float = 0.3) -> tuple[np.ndarray, np.ndarray]:
-    cut = max(1, int(n * (1.0 - oos_frac)))
-    if cut >= n:
-        cut = n - 1
-    tr = np.arange(0, cut)
-    te = np.arange(cut, n)
-    return tr, te
+def _time_split(
+    n: int,
+    oos_frac: float = 0.3,
+    *,
+    purge: int = 10,
+    embargo: int = 5,
+) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
+    from lab.validation.purge import time_split_with_purge
+
+    split = time_split_with_purge(n, oos_frac=oos_frac, purge=purge, embargo=embargo)
+    if not split.get("ok"):
+        # Fallback: plain cut (still report purge failure)
+        cut = max(1, int(n * (1.0 - oos_frac)))
+        if cut >= n:
+            cut = n - 1
+        return np.arange(0, cut), np.arange(cut, n), {**split, "fallback": "plain_cut"}
+    return (
+        np.array(split["train_idx"], dtype=int),
+        np.array(split["test_idx"], dtype=int),
+        split,
+    )
 
 
 def _metrics(y_true: np.ndarray, proba: np.ndarray, pred: np.ndarray) -> dict[str, Any]:
@@ -57,6 +71,8 @@ def train_binary_task(
     *,
     task: str,
     oos_frac: float = 0.3,
+    purge: int = 10,
+    embargo: int = 5,
 ) -> dict[str, Any]:
     x, y, keys, ts = _matrix(rows)
     if len(y) < 40:
@@ -65,9 +81,9 @@ def train_binary_task(
     order = np.argsort(np.array(ts))
     x, y = x[order], y[order]
     ts = [ts[i] for i in order]
-    tr, te = _time_split(len(y), oos_frac=oos_frac)
+    tr, te, split_meta = _time_split(len(y), oos_frac=oos_frac, purge=purge, embargo=embargo)
     if len(te) < 10 or len(set(y[tr].tolist())) < 2:
-        return {"ok": False, "task": task, "error": "bad_split", "n": int(len(y))}
+        return {"ok": False, "task": task, "error": "bad_split", "n": int(len(y)), "split": split_meta}
 
     try:
         import lightgbm as lgb
@@ -116,11 +132,18 @@ def train_binary_task(
         "is": _metrics(y[tr], proba_tr, pred_tr),
         "oos": _metrics(y[te], proba_te, pred_te),
         "importance_top": importance[:12],
-        "oos_window": {"start": ts[te[0]], "end": ts[te[-1]]},
-        "is_window": {"start": ts[tr[0]], "end": ts[tr[-1]]},
+        "oos_window": {"start": ts[int(te[0])], "end": ts[int(te[-1])]},
+        "is_window": {"start": ts[int(tr[0])], "end": ts[int(tr[-1])]},
+        "purge": int(purge),
+        "embargo": int(embargo),
+        "split": {
+            "n_purged": split_meta.get("n_purged"),
+            "n_embargoed": split_meta.get("n_embargoed"),
+            "fallback": split_meta.get("fallback"),
+        },
         "live_trading": False,
         "auto_promote": False,
-        "note": "Research only; probabilities are not Path-A entry rules.",
+        "note": "Research only; purge/embargo applied on time split; not Path-A entry rules.",
     }
 
 
@@ -142,11 +165,28 @@ def run_p4_light(root: Path | None = None) -> dict[str, Any]:
     trend = train_binary_task(trend_rows, task="trend_fail")
     brk = train_binary_task(break_rows, task="breakout_continue")
 
+    symbol = "CF"
+    contract = None
+    if events:
+        contract = str(events[0].get("contract") or "") or None
+        symbol = str(events[0].get("symbol") or symbol).upper()
+    if not contract:
+        try:
+            from minute_data import resolve_dominant_contract
+
+            dom = resolve_dominant_contract(root, symbol)
+            if isinstance(dom, dict) and dom.get("symbol"):
+                contract = str(dom["symbol"]).upper()
+        except Exception:
+            contract = f"{symbol}2701"
+
     return {
         "ok": True,
         "schema": "cta-p4-light-v1",
         "status": "Research",
         "live_trading": False,
+        "symbol": symbol,
+        "contract": contract,
         "tasks": {
             "lsp_reversal": lsp,
             "trend_fail": trend,
@@ -159,6 +199,7 @@ def run_p4_light(root: Path | None = None) -> dict[str, Any]:
             "breakout_rows": len(break_rows),
             "daily_bars": len(daily),
         },
+        "note": f"Trained on {contract or symbol}; Research only.",
     }
 
 

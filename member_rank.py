@@ -7,7 +7,7 @@
 3. SHFE/CZCE txt + DCE zip are optional densifiers (calendar / bonus), never
    required for observation completeness
 
-Bars still use 新浪+腾讯 (see ``market_data``); Tencent has no top-20 seat API.
+Bars use 新浪 → TqSdk → iFinD (see ``market_data``); seats are separate from OHLC.
 ``daily_update`` / weekly backfill require full observation coverage via 1–2.
 
 Seat books use three fixed name lists. Other top-20 members are ignored.

@@ -154,7 +154,7 @@ def build_trial_return_matrix(
 def compute_pbo_report(matrix_payload: dict[str, Any], *, n_groups: int = 8) -> dict[str, Any]:
     from lab.validation.dsr import deflated_sharpe_ratio
     from lab.validation.effective_trials import effective_trials, pairwise_corr
-    from lab.validation.pbo import probability_of_backtest_overfitting
+    from lab.validation.pbo import pbo_sensitivity, probability_of_backtest_overfitting
     from lab.validation.psr import probabilistic_sharpe_ratio
 
     if not matrix_payload.get("ok"):
@@ -162,6 +162,7 @@ def compute_pbo_report(matrix_payload: dict[str, Any], *, n_groups: int = 8) -> 
     mat = matrix_payload["returns"]
     names = matrix_payload["trial_ids"]
     pbo = probability_of_backtest_overfitting(mat, n_groups=n_groups)
+    sens = pbo_sensitivity(mat)
     corr = pairwise_corr(mat)
     et = effective_trials(len(names), corr_matrix=corr)
     # DSR/PSR for "current"-like first trial if present else best IS sharpe trial by full-sample
@@ -184,6 +185,7 @@ def compute_pbo_report(matrix_payload: dict[str, Any], *, n_groups: int = 8) -> 
         "ok": True,
         "schema": "cta-pbo-report-v1",
         "pbo": pbo,
+        "pbo_sensitivity": sens,
         "effective_trials": et,
         "primary_trial_id": primary,
         "psr_primary": psr,

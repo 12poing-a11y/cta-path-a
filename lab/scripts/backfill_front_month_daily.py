@@ -42,56 +42,81 @@ def save_contract(contract: str, bars: list[dict], root: Path) -> Path:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--month", default=None, help="YYMM e.g. 2701")
+    ap.add_argument("--month", default=None, help="YYMM e.g. 2701 (ignored if --months set)")
+    ap.add_argument(
+        "--months",
+        default="",
+        help="comma YYMM list for historical roll cache, e.g. 2609,2611,2612,2701",
+    )
     ap.add_argument("--sleep", type=float, default=0.35)
     ap.add_argument("--codes", default="", help="comma codes; default=universe")
     args = ap.parse_args(argv)
 
-    month = args.month or default_front_month(ROOT)
+    months = [m.strip() for m in str(args.months).split(",") if m.strip()]
+    if not months:
+        months = [args.month or default_front_month(ROOT)]
     uni = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
     codes = [c.strip().upper() for c in args.codes.split(",") if c.strip()]
     if not codes:
         codes = [str(s["code"]).upper() for s in uni.get("symbols") or [] if s.get("code")]
 
     rows = []
-    for i, code in enumerate(codes):
-        contract = front_contract_for(code, month)
-        print(f"[contracts] {i+1}/{len(codes)} fetch {contract}...")
-        try:
-            bars = fetch_sina_exact_contract(contract)
-        except Exception as exc:  # noqa: BLE001
-            print(f"  ERR {exc}")
-            rows.append({"code": code, "contract": contract, "ok": False, "error": str(exc)[:120]})
-            continue
-        if not bars:
-            print("  empty")
-            rows.append({"code": code, "contract": contract, "ok": False, "n": 0})
-        else:
-            path = save_contract(contract, bars, ROOT)
-            print(f"  n={len(bars)} {bars[0]['date']}→{bars[-1]['date']} → {path.relative_to(ROOT)}")
-            rows.append(
-                {
-                    "code": code,
-                    "contract": contract,
-                    "ok": True,
-                    "n": len(bars),
-                    "start": bars[0]["date"],
-                    "end": bars[-1]["date"],
-                }
-            )
-        time.sleep(max(0.0, float(args.sleep)))
+    total = len(codes) * len(months)
+    step = 0
+    for month in months:
+        for code in codes:
+            step += 1
+            contract = front_contract_for(code, month)
+            print(f"[contracts] {step}/{total} fetch {contract}...")
+            try:
+                bars = fetch_sina_exact_contract(contract)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  ERR {exc}")
+                rows.append(
+                    {
+                        "code": code,
+                        "contract": contract,
+                        "month": month,
+                        "ok": False,
+                        "error": str(exc)[:120],
+                    }
+                )
+                continue
+            if not bars:
+                print("  empty")
+                rows.append(
+                    {"code": code, "contract": contract, "month": month, "ok": False, "n": 0}
+                )
+            else:
+                path = save_contract(contract, bars, ROOT)
+                print(
+                    f"  n={len(bars)} {bars[0]['date']}→{bars[-1]['date']} → {path.relative_to(ROOT)}"
+                )
+                rows.append(
+                    {
+                        "code": code,
+                        "contract": contract,
+                        "month": month,
+                        "ok": True,
+                        "n": len(bars),
+                        "start": bars[0]["date"],
+                        "end": bars[-1]["date"],
+                    }
+                )
+            time.sleep(max(0.0, float(args.sleep)))
 
-    # Coverage vs a minimal continuous-length proxy using existing pack overlay
+    # Smoke overlay on last month's contracts as hist proxy
     series = {}
+    month = months[-1]
     for code in codes:
-        # Build synthetic hist from continuous CODE0 if available via contracts loader length only
         c = front_contract_for(code, month)
         bars = load_exact_contract_daily(c, root=ROOT)
-        # For overlay test use contract bars as hist too
         series[code] = {"meta": {"code": code}, "hist": bars[-260:] if bars else []}
-    report = overlay_contract_fills(series, month=month, root=ROOT, min_coverage=0.3)
+    report = overlay_contract_fills(
+        series, root=ROOT, min_coverage=0.3, historical=True
+    )
     out = {
-        "month": month,
+        "months": months,
         "rows": rows,
         "ok_n": sum(1 for r in rows if r.get("ok")),
         "overlay": report,

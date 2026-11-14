@@ -26,15 +26,15 @@
 7. **正式回测成交**：T 日收盘算信号，**T+1 开盘成交**（`fill_price=next_open`）；席位/升贴水可用性滞后 1 个交易日。周度 KPI 与历史回测共用同一 `simulate` 引擎（含止损止盈与成本）。报告须标明配置版本（`execution_rules` sha + Git commit），见 `research.data_quality.config_version_stamp`。
 8. **研究升级**：数据有效性 / 可交易性双掩码与 Base·Stress·Extreme 成本情景见 `docs/UPGRADE_PLAN.md`（Research/Shadow 不得未经批准改正式参数）。
 
-正式 KPI 以 `historical_backtest_latest.json`（`schema_version=cta-backtest-v11-next-open`）为准。当前 seats / next_open 样本（约 2025-12-17→2026-11-10）：净约 **+2.25%**、净回撤约 **5.57%**、成本约 5880（毛约 +5.19%）。旧对照窗数字（**收盘成交 close**）：base 净约 +6.7%/回撤约 5.5%，seats 约 +6.2%/5.0%；`universe.notes` 另记 close 口径约 +10.09%/4.86%——**仅历史对照，不作正式成绩**。成本：每边 1 跳滑点 + 申万公示手续费（毛/净并列）。
+正式 KPI 以 `historical_backtest_latest.json`（`schema_version=cta-backtest-v13-tradability`）为准，须与 `lab/research/validation/formal_scorecard_latest.json` 同次重跑对齐。当前 seats / next_open（**2025-12-23→2026-11-13**，`fill_series=mixed` / **historical_roll**）：净约 **-7.6%**、净回撤约 **20.5%**、成本约 6628（毛约 -4.3%；成交 91；结论「暂停」）。均合约覆盖约 **72%**，缺口日仍用连续价代理并打标。并列归档：旧 README v11 约 +2.25%/5.57%；归档 v12 约 +18%/6.7%；A1 仅连续代理曾虚高至 +216%——**已否决作正式成绩**。PBO 为 Research 诊断（本次约 0.46），**不单独晋级**。成本：每边 1 跳滑点 + 申万公示手续费（毛/净并列）。
 
 旁路（不改 ATR、不切 `entry_filter`）：升贴水极端、多维波动观望、实验室 Gate / 软信号。详见下文与 `lab/README.md`。
 
 ## 行情来源
 
-日线：**新浪 + 腾讯**合并（同日新浪覆盖腾讯）。不足 80 根、缺 OHLC、或最后交易日过旧时，才用 **iFinD** 主力连续补缺（重叠日仍以免费源为准）。
+日线：**新浪**主力连续。不足 80 根、缺 OHLC、或最后交易日过旧时，先用 **天勤 TqSdk** 主力连续补缺，仍不够再用 **iFinD**（重叠日仍以免费源为准）。腾讯商品日 K 已弃用（接口长期空/报错）。
 
-具体合约 / 换月 / 近次月：新浪合约日 K；缺口可再走 **扶摇 Fuyao**、**天勤 TqSdk**（可选 Secrets / 本地 `.env`，无 Key 则跳过、不拖垮日更）。
+具体合约 / 换月 / 近次月：新浪合约日 K；缺口优先 **天勤 TqSdk**，再可选 **扶摇 Fuyao**（Secrets / 本地 `.env`，无 Key 则跳过、不拖垮日更）。
 
 会员持仓：**东财 → 新浪补缺**（`.cache/member/`）；上期/郑商 txt、DCE zip 为辅。席位标签用机构席（`_INST`），不用家人席冒充。
 
@@ -95,12 +95,12 @@ python proxy_cta.py
 
 | 名称 | 用途 |
 |------|------|
-| `IFIND_AUTH_TOKEN` / `_BACKUP` | 免费源不足时补日线；启动始终优先 primary |
+| `TQ_USER` / `TQ_PASS` | 免费源不足时的第一补洞（主连 + 精确合约）/ 期权链研究备份 |
+| `IFIND_AUTH_TOKEN` / `_BACKUP` | TqSdk 仍不够时的兜底补日线；启动始终优先 primary |
 | `NOTION_TOKEN` | 可选：信号/流水/年报写入 Notion |
-| `FUYAO_API_KEY` | 可选：合约日线补洞 |
-| `TQ_USER` / `TQ_PASS` | 可选：天勤补洞 / 期权链研究备份 |
+| `FUYAO_API_KEY` | 可选：精确合约日线最后补洞 |
 
-本地可复制 `.env.example` → `.env.tqsdk` / `.env.fuyao`（已 gitignore）。CI 无扶摇/天勤 Key 时跳过对应补洞，不失败。
+本地可复制 `.env.example` → `.env.tqsdk` / `.env.fuyao`（已 gitignore）。CI 无天勤/扶摇 Key 时跳过对应补洞，不失败；无 iFinD 时也可 import（真正调用才报缺 token）。
 
 `IFIND_ACTIVE_SLOT` 默认 `primary`；`IFIND_PERSIST_FAILOVER=1` 才把 failover 写回本地 `mcp_config.json`。
 

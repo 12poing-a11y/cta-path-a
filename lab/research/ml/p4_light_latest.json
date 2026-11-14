@@ -3,14 +3,16 @@
   "schema": "cta-p4-light-v1",
   "status": "Research",
   "live_trading": false,
+  "symbol": "CF",
+  "contract": "CF2701",
   "tasks": {
     "lsp_reversal": {
       "ok": true,
       "task": "lsp_reversal",
       "backend": "lightgbm",
-      "n": 179,
-      "n_train": 125,
-      "n_oos": 54,
+      "n": 181,
+      "n_train": 116,
+      "n_oos": 50,
       "features": [
         "atr",
         "break_size_atr",
@@ -22,74 +24,81 @@
         "volume_ratio"
       ],
       "is": {
-        "n": 125,
-        "pos_rate": 0.328,
-        "accuracy": 0.976,
-        "f1": 0.9620253164556962,
-        "brier": 0.049658111886556805,
-        "auc": 0.9994192799070848
+        "n": 116,
+        "pos_rate": 0.33620689655172414,
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "brier": 0.04558503532583535,
+        "auc": 1.0
       },
       "oos": {
-        "n": 54,
-        "pos_rate": 0.18518518518518517,
-        "accuracy": 0.7777777777777778,
-        "f1": 0.4,
-        "brier": 0.15479006240166415,
-        "auc": 0.7250000000000001
+        "n": 50,
+        "pos_rate": 0.28,
+        "accuracy": 0.64,
+        "f1": 0.25,
+        "brier": 0.22586588499575666,
+        "auc": 0.6567460317460317
       },
       "importance_top": [
         {
-          "feature": "break_size_atr",
-          "importance": 197.0
-        },
-        {
           "feature": "volume_ratio",
-          "importance": 168.0
+          "importance": 166.0
         },
         {
           "feature": "distance_to_level",
           "importance": 130.0
         },
         {
+          "feature": "break_size_atr",
+          "importance": 121.0
+        },
+        {
           "feature": "atr",
-          "importance": 105.0
+          "importance": 91.0
         },
         {
           "feature": "hour",
-          "importance": 90.0
+          "importance": 59.0
         },
         {
           "feature": "break_up",
-          "importance": 33.0
+          "importance": 34.0
+        },
+        {
+          "feature": "htf_resonance",
+          "importance": 25.0
         },
         {
           "feature": "level_is_high",
           "importance": 2.0
-        },
-        {
-          "feature": "htf_resonance",
-          "importance": 0.0
         }
       ],
       "oos_window": {
-        "start": "2026-10-29 10:15:00",
-        "end": "2026-11-13 21:30:00"
+        "start": "2026-10-30 11:00:00",
+        "end": "2026-11-13 22:45:00"
       },
       "is_window": {
-        "start": "2026-09-04 21:15:00",
-        "end": "2026-10-28 23:00:00"
+        "start": "2026-09-07 09:45:00",
+        "end": "2026-10-26 22:00:00"
+      },
+      "purge": 10,
+      "embargo": 5,
+      "split": {
+        "n_purged": 10,
+        "n_embargoed": 5,
+        "fallback": null
       },
       "live_trading": false,
       "auto_promote": false,
-      "note": "Research only; probabilities are not Path-A entry rules."
+      "note": "Research only; purge/embargo applied on time split; not Path-A entry rules."
     },
     "trend_fail": {
       "ok": true,
       "task": "trend_fail",
       "backend": "lightgbm",
       "n": 1104,
-      "n_train": 772,
-      "n_oos": 332,
+      "n_train": 762,
+      "n_oos": 327,
       "features": [
         "abs_r20",
         "abs_r60",
@@ -100,70 +109,77 @@
         "vol_ratio"
       ],
       "is": {
-        "n": 772,
-        "pos_rate": 0.09715025906735751,
-        "accuracy": 0.977979274611399,
-        "f1": 0.8721804511278195,
-        "brier": 0.019024344739771583,
-        "auc": 0.999636537541846
+        "n": 762,
+        "pos_rate": 0.0984251968503937,
+        "accuracy": 0.9750656167979003,
+        "f1": 0.8549618320610687,
+        "brier": 0.018943537498511107,
+        "auc": 0.9998059194565746
       },
       "oos": {
-        "n": 332,
-        "pos_rate": 0.10240963855421686,
-        "accuracy": 0.8945783132530121,
-        "f1": 0.18604651162790697,
-        "brier": 0.08606600655677821,
-        "auc": 0.6696604816423214
+        "n": 327,
+        "pos_rate": 0.09480122324159021,
+        "accuracy": 0.9051987767584098,
+        "f1": 0.20512820512820512,
+        "brier": 0.08029371493118866,
+        "auc": 0.6615082824760243
       },
       "importance_top": [
         {
           "feature": "atr_pct",
-          "importance": 274.0
-        },
-        {
-          "feature": "abs_r20",
-          "importance": 189.0
+          "importance": 281.0
         },
         {
           "feature": "r60",
-          "importance": 184.0
+          "importance": 206.0
         },
         {
-          "feature": "abs_r60",
-          "importance": 173.0
+          "feature": "abs_r20",
+          "importance": 182.0
         },
         {
           "feature": "vol_ratio",
-          "importance": 162.0
+          "importance": 168.0
+        },
+        {
+          "feature": "abs_r60",
+          "importance": 155.0
         },
         {
           "feature": "r20",
-          "importance": 137.0
+          "importance": 128.0
         },
         {
           "feature": "direction",
-          "importance": 1.0
+          "importance": 0.0
         }
       ],
       "oos_window": {
-        "start": "2020-11-05",
+        "start": "2020-12-16",
         "end": "2026-09-03"
       },
       "is_window": {
         "start": "2005-04-08",
-        "end": "2020-11-04"
+        "end": "2020-10-21"
+      },
+      "purge": 10,
+      "embargo": 5,
+      "split": {
+        "n_purged": 10,
+        "n_embargoed": 5,
+        "fallback": null
       },
       "live_trading": false,
       "auto_promote": false,
-      "note": "Research only; probabilities are not Path-A entry rules."
+      "note": "Research only; purge/embargo applied on time split; not Path-A entry rules."
     },
     "breakout_continue": {
       "ok": true,
       "task": "breakout_continue",
       "backend": "lightgbm",
       "n": 218,
-      "n_train": 152,
-      "n_oos": 66,
+      "n_train": 142,
+      "n_oos": 61,
       "features": [
         "abs_r20",
         "abs_r60",
@@ -174,69 +190,77 @@
         "vol_ratio"
       ],
       "is": {
-        "n": 152,
-        "pos_rate": 0.5526315789473685,
-        "accuracy": 0.9802631578947368,
-        "f1": 0.9822485207100592,
-        "brier": 0.06060202554641742,
-        "auc": 0.9950980392156863
+        "n": 142,
+        "pos_rate": 0.5633802816901409,
+        "accuracy": 0.9859154929577465,
+        "f1": 0.9875,
+        "brier": 0.05782162966318771,
+        "auc": 0.997983870967742
       },
       "oos": {
-        "n": 66,
-        "pos_rate": 0.5757575757575758,
-        "accuracy": 0.5454545454545454,
-        "f1": 0.5714285714285714,
-        "brier": 0.3069135484989396,
-        "auc": 0.5263157894736843
+        "n": 61,
+        "pos_rate": 0.5737704918032787,
+        "accuracy": 0.5409836065573771,
+        "f1": 0.6,
+        "brier": 0.2874495138061097,
+        "auc": 0.5681318681318681
       },
       "importance_top": [
         {
-          "feature": "abs_r20",
-          "importance": 195.0
+          "feature": "vol_ratio",
+          "importance": 165.0
         },
         {
-          "feature": "atr_pct",
-          "importance": 169.0
+          "feature": "abs_r20",
+          "importance": 161.0
         },
         {
           "feature": "abs_r60",
-          "importance": 148.0
+          "importance": 161.0
         },
         {
-          "feature": "vol_ratio",
-          "importance": 143.0
-        },
-        {
-          "feature": "r20",
-          "importance": 124.0
+          "feature": "atr_pct",
+          "importance": 125.0
         },
         {
           "feature": "r60",
-          "importance": 91.0
+          "importance": 118.0
+        },
+        {
+          "feature": "r20",
+          "importance": 92.0
         },
         {
           "feature": "direction",
-          "importance": 2.0
+          "importance": 0.0
         }
       ],
       "oos_window": {
-        "start": "2019-12-26",
+        "start": "2020-12-11",
         "end": "2026-11-02"
       },
       "is_window": {
         "start": "2005-04-08",
-        "end": "2019-12-19"
+        "end": "2019-05-13"
+      },
+      "purge": 10,
+      "embargo": 5,
+      "split": {
+        "n_purged": 10,
+        "n_embargoed": 5,
+        "fallback": null
       },
       "live_trading": false,
       "auto_promote": false,
-      "note": "Research only; probabilities are not Path-A entry rules."
+      "note": "Research only; purge/embargo applied on time split; not Path-A entry rules."
     }
   },
   "sample_counts": {
-    "lsp_events": 179,
-    "lsp_rows": 179,
+    "lsp_events": 181,
+    "lsp_rows": 181,
     "trend_rows": 1104,
     "breakout_rows": 218,
     "daily_bars": 5318
-  }
+  },
+  "note": "Trained on CF2701; Research only."
 }

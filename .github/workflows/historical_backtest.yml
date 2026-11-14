@@ -22,6 +22,8 @@ jobs:
         run: pip install -r requirements.txt
       - name: Historical Path-A 1y backtest
         env:
+          TQ_USER: ${{ secrets.TQ_USER }}
+          TQ_PASS: ${{ secrets.TQ_PASS }}
           IFIND_AUTH_TOKEN: ${{ secrets.IFIND_AUTH_TOKEN }}
           IFIND_AUTH_TOKEN_BACKUP: ${{ secrets.IFIND_AUTH_TOKEN_BACKUP }}
           IFIND_ACTIVE_SLOT: primary

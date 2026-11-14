@@ -59,6 +59,9 @@ def test_detect_and_label_fake_break():
     stats = summarize_events(labeled)
     assert stats["n_events"] == len(labeled)
     assert abs(sum(stats["outcome_probs"].values()) - 1.0) < 1e-6 or stats["n_events"] == 0
+    assert stats.get("by_direction_detail")
+    for block in (stats.get("by_direction_detail") or {}).values():
+        assert "n" in block and "probs" in block and "counts" in block
 
 
 def test_run_lsp_pipeline(tmp_path):

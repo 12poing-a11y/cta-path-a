@@ -29,12 +29,22 @@ def summarize_events(events: Sequence[dict[str, Any]]) -> dict[str, Any]:
     def _avg(xs: list[float]) -> float | None:
         return None if not xs else round(sum(xs) / len(xs), 4)
 
+    by_direction_detail = {}
+    for k, counter in by_dir.items():
+        tot = int(sum(counter.values()))
+        by_direction_detail[k] = {
+            "n": tot,
+            "counts": dict(counter),
+            "probs": _probs(counter),
+        }
+
     return {
         "schema": "cta-lsp-stats-v1",
         "n_events": n,
         "outcome_counts": dict(counts),
         "outcome_probs": _probs(counts),
         "by_direction": {k: _probs(v) for k, v in by_dir.items()},
+        "by_direction_detail": by_direction_detail,
         "by_timeframe": {k: _probs(v) for k, v in by_tf.items()},
         "high_volume_ge_1_2": {
             "n": len(high_vol),

@@ -1,9 +1,882 @@
 {
-  "month": "2702",
+  "months": [
+    "2609",
+    "2611",
+    "2612",
+    "2701"
+  ],
   "rows": [
     {
+      "code": "MA",
+      "contract": "MA2609",
+      "month": "2609",
+      "ok": true,
+      "n": 240,
+      "start": "2025-09-15",
+      "end": "2026-09-11"
+    },
+    {
+      "code": "V",
+      "contract": "V2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "EG",
+      "contract": "EG2609",
+      "month": "2609",
+      "ok": true,
+      "n": 236,
+      "start": "2025-09-26",
+      "end": "2026-09-24"
+    },
+    {
+      "code": "M",
+      "contract": "M2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "FG",
+      "contract": "FG2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "EB",
+      "contract": "EB2609",
+      "month": "2609",
+      "ok": true,
+      "n": 237,
+      "start": "2025-09-30",
+      "end": "2026-09-24"
+    },
+    {
+      "code": "TA",
+      "contract": "TA2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "SA",
+      "contract": "SA2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "PP",
+      "contract": "PP2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "L",
+      "contract": "L2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "JD",
+      "contract": "JD2609",
+      "month": "2609",
+      "ok": true,
+      "n": 241,
+      "start": "2025-09-26",
+      "end": "2026-09-24"
+    },
+    {
+      "code": "P",
+      "contract": "P2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "RB",
+      "contract": "RB2609",
+      "month": "2609",
+      "ok": true,
+      "n": 241,
+      "start": "2025-09-16",
+      "end": "2026-09-15"
+    },
+    {
+      "code": "FU",
+      "contract": "FU2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-01",
+      "end": "2026-08-31"
+    },
+    {
+      "code": "CF",
+      "contract": "CF2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "BU",
+      "contract": "BU2609",
+      "month": "2609",
+      "ok": true,
+      "n": 466,
+      "start": "2024-09-20",
+      "end": "2026-09-15"
+    },
+    {
+      "code": "RU",
+      "contract": "RU2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-16",
+      "end": "2026-09-15"
+    },
+    {
+      "code": "AG",
+      "contract": "AG2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-16",
+      "end": "2026-09-15"
+    },
+    {
+      "code": "SP",
+      "contract": "SP2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-16",
+      "end": "2026-09-15"
+    },
+    {
+      "code": "SR",
+      "contract": "SR2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
       "code": "AU",
-      "contract": "AU2702",
+      "contract": "AU2609",
+      "month": "2609",
+      "ok": true,
+      "n": 60,
+      "start": "2026-06-16",
+      "end": "2026-09-08"
+    },
+    {
+      "code": "CU",
+      "contract": "CU2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-16",
+      "end": "2026-09-15"
+    },
+    {
+      "code": "AL",
+      "contract": "AL2609",
+      "month": "2609",
+      "ok": true,
+      "n": 241,
+      "start": "2025-09-16",
+      "end": "2026-09-15"
+    },
+    {
+      "code": "NI",
+      "contract": "NI2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-16",
+      "end": "2026-09-15"
+    },
+    {
+      "code": "I",
+      "contract": "I2609",
+      "month": "2609",
+      "ok": true,
+      "n": 241,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "JM",
+      "contract": "JM2609",
+      "month": "2609",
+      "ok": true,
+      "n": 242,
+      "start": "2025-09-15",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "SS",
+      "contract": "SS2609",
+      "month": "2609",
+      "ok": true,
+      "n": 240,
+      "start": "2025-09-16",
+      "end": "2026-09-15"
+    },
+    {
+      "code": "MA",
+      "contract": "MA2611",
+      "month": "2611",
+      "ok": true,
+      "n": 241,
+      "start": "2025-11-17",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "V",
+      "contract": "V2611",
+      "month": "2611",
+      "ok": true,
+      "n": 241,
+      "start": "2025-11-17",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "EG",
+      "contract": "EG2611",
+      "month": "2611",
+      "ok": true,
+      "n": 222,
+      "start": "2025-12-01",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "M",
+      "contract": "M2611",
+      "month": "2611",
+      "ok": true,
+      "n": 237,
+      "start": "2025-11-17",
+      "end": "2026-11-11"
+    },
+    {
+      "code": "FG",
+      "contract": "FG2611",
+      "month": "2611",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-17",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "EB",
+      "contract": "EB2611",
+      "month": "2611",
+      "ok": true,
+      "n": 223,
+      "start": "2025-11-26",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "TA",
+      "contract": "TA2611",
+      "month": "2611",
+      "ok": true,
+      "n": 235,
+      "start": "2025-11-20",
+      "end": "2026-11-11"
+    },
+    {
+      "code": "SA",
+      "contract": "SA2611",
+      "month": "2611",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-17",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "PP",
+      "contract": "PP2611",
+      "month": "2611",
+      "ok": true,
+      "n": 233,
+      "start": "2025-11-26",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "L",
+      "contract": "L2611",
+      "month": "2611",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-17",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "JD",
+      "contract": "JD2611",
+      "month": "2611",
+      "ok": true,
+      "n": 234,
+      "start": "2025-11-26",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "P",
+      "contract": "P2611",
+      "month": "2611",
+      "ok": true,
+      "n": 236,
+      "start": "2025-11-17",
+      "end": "2026-11-09"
+    },
+    {
+      "code": "RB",
+      "contract": "RB2611",
+      "month": "2611",
+      "ok": true,
+      "n": 235,
+      "start": "2025-11-18",
+      "end": "2026-11-09"
+    },
+    {
+      "code": "FU",
+      "contract": "FU2611",
+      "month": "2611",
+      "ok": true,
+      "n": 241,
+      "start": "2025-11-03",
+      "end": "2026-10-30"
+    },
+    {
+      "code": "CF",
+      "contract": "CF2611",
+      "month": "2611",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "BU",
+      "contract": "BU2611",
+      "month": "2611",
+      "ok": true,
+      "n": 227,
+      "start": "2025-11-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "RU",
+      "contract": "RU2611",
+      "month": "2611",
+      "ok": true,
+      "n": 236,
+      "start": "2025-11-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "AG",
+      "contract": "AG2611",
+      "month": "2611",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SP",
+      "contract": "SP2611",
+      "month": "2611",
+      "ok": true,
+      "n": 239,
+      "start": "2025-11-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SR",
+      "contract": "SR2611",
+      "month": "2611",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-17",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "AU",
+      "contract": "AU2611",
+      "month": "2611",
+      "ok": true,
+      "n": 58,
+      "start": "2026-08-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "CU",
+      "contract": "CU2611",
+      "month": "2611",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "AL",
+      "contract": "AL2611",
+      "month": "2611",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "NI",
+      "contract": "NI2611",
+      "month": "2611",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "I",
+      "contract": "I2611",
+      "month": "2611",
+      "ok": true,
+      "n": 237,
+      "start": "2025-11-17",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "JM",
+      "contract": "JM2611",
+      "month": "2611",
+      "ok": true,
+      "n": 237,
+      "start": "2025-11-17",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "SS",
+      "contract": "SS2611",
+      "month": "2611",
+      "ok": true,
+      "n": 237,
+      "start": "2025-11-18",
+      "end": "2026-11-12"
+    },
+    {
+      "code": "MA",
+      "contract": "MA2612",
+      "month": "2612",
+      "ok": true,
+      "n": 221,
+      "start": "2025-12-15",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "V",
+      "contract": "V2612",
+      "month": "2612",
+      "ok": true,
+      "n": 221,
+      "start": "2025-12-15",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "EG",
+      "contract": "EG2612",
+      "month": "2612",
+      "ok": true,
+      "n": 210,
+      "start": "2025-12-30",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "M",
+      "contract": "M2612",
+      "month": "2612",
+      "ok": true,
+      "n": 221,
+      "start": "2025-12-15",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "FG",
+      "contract": "FG2612",
+      "month": "2612",
+      "ok": true,
+      "n": 221,
+      "start": "2025-12-15",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "EB",
+      "contract": "EB2612",
+      "month": "2612",
+      "ok": true,
+      "n": 209,
+      "start": "2025-12-30",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "TA",
+      "contract": "TA2612",
+      "month": "2612",
+      "ok": true,
+      "n": 220,
+      "start": "2025-12-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SA",
+      "contract": "SA2612",
+      "month": "2612",
+      "ok": true,
+      "n": 221,
+      "start": "2025-12-15",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "PP",
+      "contract": "PP2612",
+      "month": "2612",
+      "ok": true,
+      "n": 221,
+      "start": "2025-12-15",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "L",
+      "contract": "L2612",
+      "month": "2612",
+      "ok": true,
+      "n": 218,
+      "start": "2025-12-17",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "JD",
+      "contract": "JD2612",
+      "month": "2612",
+      "ok": true,
+      "n": 211,
+      "start": "2025-12-29",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "P",
+      "contract": "P2612",
+      "month": "2612",
+      "ok": true,
+      "n": 219,
+      "start": "2025-12-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "RB",
+      "contract": "RB2612",
+      "month": "2612",
+      "ok": true,
+      "n": 220,
+      "start": "2025-12-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "FU",
+      "contract": "FU2612",
+      "month": "2612",
+      "ok": true,
+      "n": 231,
+      "start": "2025-12-01",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "CF",
+      "contract": "CF2612",
+      "month": "2612",
+      "ok": false,
+      "n": 0
+    },
+    {
+      "code": "BU",
+      "contract": "BU2612",
+      "month": "2612",
+      "ok": true,
+      "n": 453,
+      "start": "2024-12-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "RU",
+      "contract": "RU2612",
+      "month": "2612",
+      "ok": false,
+      "n": 0
+    },
+    {
+      "code": "AG",
+      "contract": "AG2612",
+      "month": "2612",
+      "ok": true,
+      "n": 220,
+      "start": "2025-12-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SP",
+      "contract": "SP2612",
+      "month": "2612",
+      "ok": true,
+      "n": 218,
+      "start": "2025-12-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SR",
+      "contract": "SR2612",
+      "month": "2612",
+      "ok": false,
+      "n": 0
+    },
+    {
+      "code": "AU",
+      "contract": "AU2612",
+      "month": "2612",
+      "ok": true,
+      "n": 240,
+      "start": "2025-11-18",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "CU",
+      "contract": "CU2612",
+      "month": "2612",
+      "ok": true,
+      "n": 220,
+      "start": "2025-12-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "AL",
+      "contract": "AL2612",
+      "month": "2612",
+      "ok": true,
+      "n": 220,
+      "start": "2025-12-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "NI",
+      "contract": "NI2612",
+      "month": "2612",
+      "ok": true,
+      "n": 220,
+      "start": "2025-12-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "I",
+      "contract": "I2612",
+      "month": "2612",
+      "ok": true,
+      "n": 221,
+      "start": "2025-12-15",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "JM",
+      "contract": "JM2612",
+      "month": "2612",
+      "ok": true,
+      "n": 221,
+      "start": "2025-12-15",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SS",
+      "contract": "SS2612",
+      "month": "2612",
+      "ok": true,
+      "n": 220,
+      "start": "2025-12-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "MA",
+      "contract": "MA2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "V",
+      "contract": "V2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "EG",
+      "contract": "EG2701",
+      "month": "2701",
+      "ok": true,
+      "n": 191,
+      "start": "2026-01-28",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "M",
+      "contract": "M2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "FG",
+      "contract": "FG2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "EB",
+      "contract": "EB2701",
+      "month": "2701",
+      "ok": true,
+      "n": 188,
+      "start": "2026-01-28",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "TA",
+      "contract": "TA2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SA",
+      "contract": "SA2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "PP",
+      "contract": "PP2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "L",
+      "contract": "L2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "JD",
+      "contract": "JD2701",
+      "month": "2701",
+      "ok": true,
+      "n": 191,
+      "start": "2026-01-28",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "P",
+      "contract": "P2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "RB",
+      "contract": "RB2701",
+      "month": "2701",
+      "ok": true,
+      "n": 199,
+      "start": "2026-01-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "FU",
+      "contract": "FU2701",
+      "month": "2701",
+      "ok": true,
+      "n": 208,
+      "start": "2026-01-05",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "CF",
+      "contract": "CF2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "BU",
+      "contract": "BU2701",
+      "month": "2701",
+      "ok": true,
+      "n": 187,
+      "start": "2026-01-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "RU",
+      "contract": "RU2701",
+      "month": "2701",
       "ok": true,
       "n": 199,
       "start": "2026-01-16",
@@ -11,30 +884,603 @@
     },
     {
       "code": "AG",
-      "contract": "AG2702",
+      "contract": "AG2701",
+      "month": "2701",
       "ok": true,
-      "n": 177,
-      "start": "2026-02-25",
+      "n": 199,
+      "start": "2026-01-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SP",
+      "contract": "SP2701",
+      "month": "2701",
+      "ok": true,
+      "n": 199,
+      "start": "2026-01-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SR",
+      "contract": "SR2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "AU",
+      "contract": "AU2701",
+      "month": "2701",
+      "ok": true,
+      "n": 21,
+      "start": "2026-10-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "CU",
+      "contract": "CU2701",
+      "month": "2701",
+      "ok": true,
+      "n": 199,
+      "start": "2026-01-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "AL",
+      "contract": "AL2701",
+      "month": "2701",
+      "ok": true,
+      "n": 199,
+      "start": "2026-01-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "NI",
+      "contract": "NI2701",
+      "month": "2701",
+      "ok": true,
+      "n": 199,
+      "start": "2026-01-16",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "I",
+      "contract": "I2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "JM",
+      "contract": "JM2701",
+      "month": "2701",
+      "ok": true,
+      "n": 198,
+      "start": "2026-01-19",
+      "end": "2026-11-13"
+    },
+    {
+      "code": "SS",
+      "contract": "SS2701",
+      "month": "2701",
+      "ok": true,
+      "n": 199,
+      "start": "2026-01-16",
       "end": "2026-11-13"
     }
   ],
-  "ok_n": 2,
+  "ok_n": 105,
   "overlay": {
-    "month": "2702",
+    "month": "historical",
+    "mode": "historical_roll",
     "symbols": {
-      "AU": {
-        "contract": "AU2702",
+      "MA": {
+        "contracts_used": {
+          "MA2602": 17,
+          "MA2603": 14,
+          "MA2604": 22,
+          "MA2605": 17,
+          "MA2606": 23,
+          "MA2607": 21,
+          "MA2608": 21,
+          "MA2609": 23,
+          "MA2610": 15,
+          "MA2611": 22,
+          "MA2612": 3
+        },
+        "front_contract": "MA2606",
+        "coverage": 0.3232,
+        "matched": 64,
+        "proxy_n": 134,
+        "proxy_fill_share": 0.6768,
+        "fill_series": "mixed"
+      },
+      "V": {
+        "contracts_used": {
+          "V2602": 17,
+          "V2603": 14,
+          "V2604": 22,
+          "V2605": 17,
+          "V2606": 23,
+          "V2607": 21,
+          "V2608": 21,
+          "V2609": 23,
+          "V2610": 15,
+          "V2611": 22,
+          "V2612": 3
+        },
+        "front_contract": "V2606",
+        "coverage": 0.3283,
+        "matched": 65,
+        "proxy_n": 133,
+        "proxy_fill_share": 0.6717,
+        "fill_series": "mixed"
+      },
+      "EG": {
+        "contracts_used": {
+          "EG2602": 10,
+          "EG2603": 14,
+          "EG2604": 22,
+          "EG2605": 17,
+          "EG2606": 23,
+          "EG2607": 21,
+          "EG2608": 21,
+          "EG2609": 23,
+          "EG2610": 15,
+          "EG2611": 22,
+          "EG2612": 3
+        },
+        "front_contract": "EG2606",
+        "coverage": 0.3351,
+        "matched": 64,
+        "proxy_n": 127,
+        "proxy_fill_share": 0.6649,
+        "fill_series": "mixed"
+      },
+      "M": {
+        "contracts_used": {
+          "M2603": 31,
+          "M2605": 39,
+          "M2607": 44,
+          "M2608": 21,
+          "M2609": 23,
+          "M2611": 37,
+          "M2612": 3
+        },
+        "front_contract": "M2607",
+        "coverage": 0.9848,
+        "matched": 195,
+        "proxy_n": 3,
+        "proxy_fill_share": 0.0152,
+        "fill_series": "mixed"
+      },
+      "FG": {
+        "contracts_used": {
+          "FG2602": 17,
+          "FG2603": 14,
+          "FG2604": 22,
+          "FG2605": 17,
+          "FG2606": 23,
+          "FG2607": 21,
+          "FG2608": 21,
+          "FG2609": 23,
+          "FG2610": 15,
+          "FG2611": 22,
+          "FG2612": 3
+        },
+        "front_contract": "FG2606",
+        "coverage": 0.3232,
+        "matched": 64,
+        "proxy_n": 134,
+        "proxy_fill_share": 0.6768,
+        "fill_series": "mixed"
+      },
+      "EB": {
+        "contracts_used": {
+          "EB2602": 8,
+          "EB2603": 13,
+          "EB2604": 22,
+          "EB2605": 17,
+          "EB2606": 23,
+          "EB2607": 21,
+          "EB2608": 21,
+          "EB2609": 23,
+          "EB2610": 15,
+          "EB2611": 22,
+          "EB2612": 3
+        },
+        "front_contract": "EB2606",
+        "coverage": 0.9681,
+        "matched": 182,
+        "proxy_n": 6,
+        "proxy_fill_share": 0.0319,
+        "fill_series": "mixed"
+      },
+      "TA": {
+        "contracts_used": {
+          "TA2602": 17,
+          "TA2603": 14,
+          "TA2604": 22,
+          "TA2605": 17,
+          "TA2606": 23,
+          "TA2607": 21,
+          "TA2608": 21,
+          "TA2609": 23,
+          "TA2610": 15,
+          "TA2611": 22,
+          "TA2612": 3
+        },
+        "front_contract": "TA2606",
+        "coverage": 0.3283,
+        "matched": 65,
+        "proxy_n": 133,
+        "proxy_fill_share": 0.6717,
+        "fill_series": "mixed"
+      },
+      "SA": {
+        "contracts_used": {
+          "SA2602": 17,
+          "SA2603": 14,
+          "SA2604": 22,
+          "SA2605": 17,
+          "SA2606": 23,
+          "SA2607": 21,
+          "SA2608": 21,
+          "SA2609": 23,
+          "SA2610": 15,
+          "SA2611": 22,
+          "SA2612": 3
+        },
+        "front_contract": "SA2606",
+        "coverage": 0.3232,
+        "matched": 64,
+        "proxy_n": 134,
+        "proxy_fill_share": 0.6768,
+        "fill_series": "mixed"
+      },
+      "PP": {
+        "contracts_used": {
+          "PP2602": 17,
+          "PP2603": 14,
+          "PP2604": 22,
+          "PP2605": 17,
+          "PP2606": 23,
+          "PP2607": 21,
+          "PP2608": 21,
+          "PP2609": 23,
+          "PP2610": 15,
+          "PP2611": 22,
+          "PP2612": 3
+        },
+        "front_contract": "PP2606",
+        "coverage": 0.3283,
+        "matched": 65,
+        "proxy_n": 133,
+        "proxy_fill_share": 0.6717,
+        "fill_series": "mixed"
+      },
+      "L": {
+        "contracts_used": {
+          "L2602": 17,
+          "L2603": 14,
+          "L2604": 22,
+          "L2605": 17,
+          "L2606": 23,
+          "L2607": 21,
+          "L2608": 21,
+          "L2609": 23,
+          "L2610": 15,
+          "L2611": 22,
+          "L2612": 3
+        },
+        "front_contract": "L2606",
+        "coverage": 0.3283,
+        "matched": 65,
+        "proxy_n": 133,
+        "proxy_fill_share": 0.6717,
+        "fill_series": "mixed"
+      },
+      "JD": {
+        "contracts_used": {
+          "JD2602": 10,
+          "JD2603": 14,
+          "JD2604": 22,
+          "JD2605": 17,
+          "JD2606": 23,
+          "JD2607": 21,
+          "JD2608": 21,
+          "JD2609": 23,
+          "JD2610": 15,
+          "JD2611": 22,
+          "JD2612": 3
+        },
+        "front_contract": "JD2606",
+        "coverage": 0.9895,
+        "matched": 189,
+        "proxy_n": 2,
+        "proxy_fill_share": 0.0105,
+        "fill_series": "mixed"
+      },
+      "P": {
+        "contracts_used": {
+          "P2603": 31,
+          "P2605": 39,
+          "P2607": 44,
+          "P2608": 21,
+          "P2609": 23,
+          "P2611": 37,
+          "P2612": 3
+        },
+        "front_contract": "P2607",
+        "coverage": 0.5101,
+        "matched": 101,
+        "proxy_n": 97,
+        "proxy_fill_share": 0.4899,
+        "fill_series": "mixed"
+      },
+      "RB": {
+        "contracts_used": {
+          "RB2605": 76,
+          "RB2610": 102,
+          "RB2701": 21
+        },
+        "front_contract": "RB2610",
         "coverage": 1.0,
         "matched": 199,
+        "proxy_n": 0,
+        "proxy_fill_share": 0.0,
+        "fill_series": "contract"
+      },
+      "FU": {
+        "contracts_used": {
+          "FU2601": 5,
+          "FU2602": 22,
+          "FU2603": 14,
+          "FU2604": 22,
+          "FU2605": 17,
+          "FU2606": 23,
+          "FU2607": 21,
+          "FU2608": 21,
+          "FU2609": 23,
+          "FU2610": 15,
+          "FU2611": 22,
+          "FU2612": 3
+        },
+        "front_contract": "FU2606",
+        "coverage": 0.6635,
+        "matched": 138,
+        "proxy_n": 70,
+        "proxy_fill_share": 0.3365,
+        "fill_series": "mixed"
+      },
+      "CF": {
+        "contracts_used": {
+          "CF2603": 31,
+          "CF2605": 39,
+          "CF2607": 44,
+          "CF2609": 44,
+          "CF2611": 37,
+          "CF2701": 3
+        },
+        "front_contract": "CF2607",
+        "coverage": 0.6212,
+        "matched": 123,
+        "proxy_n": 75,
+        "proxy_fill_share": 0.3788,
+        "fill_series": "mixed"
+      },
+      "BU": {
+        "contracts_used": {
+          "BU2602": 8,
+          "BU2603": 12,
+          "BU2604": 22,
+          "BU2605": 17,
+          "BU2606": 23,
+          "BU2607": 21,
+          "BU2608": 21,
+          "BU2609": 23,
+          "BU2610": 15,
+          "BU2611": 22,
+          "BU2612": 3
+        },
+        "front_contract": "BU2606",
+        "coverage": 0.9893,
+        "matched": 185,
+        "proxy_n": 2,
+        "proxy_fill_share": 0.0107,
+        "fill_series": "mixed"
+      },
+      "RU": {
+        "contracts_used": {
+          "RU2605": 76,
+          "RU2609": 86,
+          "RU2701": 37
+        },
+        "front_contract": "RU2609",
+        "coverage": 1.0,
+        "matched": 199,
+        "proxy_n": 0,
+        "proxy_fill_share": 0.0,
         "fill_series": "contract"
       },
       "AG": {
-        "contract": "AG2702",
+        "contracts_used": {
+          "AG2602": 21,
+          "AG2604": 36,
+          "AG2606": 40,
+          "AG2608": 43,
+          "AG2610": 38,
+          "AG2612": 21
+        },
+        "front_contract": "AG2608",
         "coverage": 1.0,
-        "matched": 177,
+        "matched": 199,
+        "proxy_n": 0,
+        "proxy_fill_share": 0.0,
         "fill_series": "contract"
+      },
+      "SP": {
+        "contracts_used": {
+          "SP2602": 18,
+          "SP2603": 14,
+          "SP2604": 22,
+          "SP2605": 17,
+          "SP2606": 23,
+          "SP2607": 21,
+          "SP2608": 21,
+          "SP2609": 23,
+          "SP2610": 15,
+          "SP2611": 22,
+          "SP2612": 3
+        },
+        "front_contract": "SP2606",
+        "coverage": 0.7035,
+        "matched": 140,
+        "proxy_n": 59,
+        "proxy_fill_share": 0.2965,
+        "fill_series": "mixed"
+      },
+      "SR": {
+        "contracts_used": {
+          "SR2603": 31,
+          "SR2605": 39,
+          "SR2607": 44,
+          "SR2609": 44,
+          "SR2611": 37,
+          "SR2701": 3
+        },
+        "front_contract": "SR2607",
+        "coverage": 0.6212,
+        "matched": 123,
+        "proxy_n": 75,
+        "proxy_fill_share": 0.3788,
+        "fill_series": "mixed"
+      },
+      "AU": {
+        "contracts_used": {
+          "AU2612": 21
+        },
+        "front_contract": "AU2612",
+        "coverage": 1.0,
+        "matched": 21,
+        "proxy_n": 0,
+        "proxy_fill_share": 0.0,
+        "fill_series": "contract"
+      },
+      "CU": {
+        "contracts_used": {
+          "CU2602": 21,
+          "CU2603": 14,
+          "CU2604": 22,
+          "CU2605": 19,
+          "CU2606": 21,
+          "CU2607": 21,
+          "CU2608": 22,
+          "CU2609": 22,
+          "CU2610": 16,
+          "CU2611": 21
+        },
+        "front_contract": "CU2604",
+        "coverage": 1.0,
+        "matched": 199,
+        "proxy_n": 0,
+        "proxy_fill_share": 0.0,
+        "fill_series": "contract"
+      },
+      "AL": {
+        "contracts_used": {
+          "AL2602": 18,
+          "AL2603": 14,
+          "AL2604": 22,
+          "AL2605": 17,
+          "AL2606": 23,
+          "AL2607": 21,
+          "AL2608": 21,
+          "AL2609": 23,
+          "AL2610": 15,
+          "AL2611": 22,
+          "AL2612": 3
+        },
+        "front_contract": "AL2606",
+        "coverage": 1.0,
+        "matched": 199,
+        "proxy_n": 0,
+        "proxy_fill_share": 0.0,
+        "fill_series": "contract"
+      },
+      "NI": {
+        "contracts_used": {
+          "NI2602": 18,
+          "NI2603": 14,
+          "NI2604": 22,
+          "NI2605": 17,
+          "NI2606": 23,
+          "NI2607": 21,
+          "NI2608": 21,
+          "NI2609": 23,
+          "NI2610": 15,
+          "NI2611": 22,
+          "NI2612": 3
+        },
+        "front_contract": "NI2606",
+        "coverage": 1.0,
+        "matched": 199,
+        "proxy_n": 0,
+        "proxy_fill_share": 0.0,
+        "fill_series": "contract"
+      },
+      "I": {
+        "contracts_used": {
+          "I2605": 70,
+          "I2609": 88,
+          "I2701": 40
+        },
+        "front_contract": "I2609",
+        "coverage": 0.9949,
+        "matched": 197,
+        "proxy_n": 1,
+        "proxy_fill_share": 0.0051,
+        "fill_series": "mixed"
+      },
+      "JM": {
+        "contracts_used": {
+          "JM2605": 70,
+          "JM2609": 88,
+          "JM2701": 40
+        },
+        "front_contract": "JM2609",
+        "coverage": 1.0,
+        "matched": 198,
+        "proxy_n": 0,
+        "proxy_fill_share": 0.0,
+        "fill_series": "contract"
+      },
+      "SS": {
+        "contracts_used": {
+          "SS2602": 18,
+          "SS2603": 14,
+          "SS2604": 22,
+          "SS2605": 17,
+          "SS2606": 23,
+          "SS2607": 21,
+          "SS2608": 21,
+          "SS2609": 23,
+          "SS2610": 15,
+          "SS2611": 22,
+          "SS2612": 3
+        },
+        "front_contract": "SS2606",
+        "coverage": 0.9899,
+        "matched": 197,
+        "proxy_n": 2,
+        "proxy_fill_share": 0.0101,
+        "fill_series": "mixed"
       }
     },
-    "fill_series": "contract"
+    "fill_series": "mixed"
   }
 }

@@ -129,7 +129,7 @@ def run_shadow_day(
         return {"ok": False, "path": None, "snap": None, "error": f"no seat+price rows for {day}"}
     snap = build_snapshot(rows, asof=day.replace("-", ""))
     snap["shadow"] = True
-    snap["price_source"] = "market_data.load_free_bars (sina/tencent)"
+    snap["price_source"] = "market_data.load_free_bars (sina)"
     snap["seat_dates"] = [prev, day]
     snap["seat_source"] = (
         "member_rank ensure_member_days (eastmoney+sina; shfe/czce/dce underlay)"

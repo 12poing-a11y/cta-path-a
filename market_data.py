@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Futures daily bars: Sina and Tencent first; Fuyao/TqSdk/iFinD fill gaps.
+"""Futures daily bars: Sina first; TqSdk then Fuyao/iFinD fill gaps.
 
 Exact delivery-month bars never fall back to continuous (*0 / CF00).
+Tencent commodity kline was dropped (always empty / param error).
 """
 from __future__ import annotations
 
@@ -23,25 +24,15 @@ SINA_DAILY_URL = (
     "https://stock2.finance.sina.com.cn/futures/api/json.php/"
     "InnerFuturesNewService.getDailyKLine"
 )
-TENCENT_KLINE_URL = "https://web.ifzq.gtimg.cn/appstock/app/kline/kline"
 HTTP_HEADERS = {
     "User-Agent": "Mozilla/5.0",
     "Referer": "https://finance.sina.com.cn",
-}
-TENCENT_HEADERS = {
-    "User-Agent": "Mozilla/5.0",
-    "Referer": "https://gu.qq.com/",
 }
 
 
 def sina_symbol(code: str) -> str:
     """Main continuous contract on Sina, e.g. MA -> MA0, M -> M0."""
     return f"{str(code or '').upper()}0"
-
-
-def tencent_symbol(code: str) -> str:
-    """Tencent futures-style symbol. Public kline currently rejects these."""
-    return f"nf_{sina_symbol(code)}"
 
 
 def _iso_date(value) -> str:
@@ -171,47 +162,6 @@ def fetch_sina_daily(code: str, timeout: float = 20) -> list[dict]:
     return fetch_sina_symbol(sina_symbol(code), timeout=timeout)
 
 
-def fetch_tencent_daily(code: str, timeout: float = 8) -> list[dict]:
-    """Tencent daily kline. Commodity symbols currently return param error.
-
-    Row order on the stock endpoint is date, open, close, high, low, volume.
-    The same order is used if a futures symbol ever starts returning bars.
-    """
-    sym = tencent_symbol(code)
-    resp = requests.get(
-        TENCENT_KLINE_URL,
-        params={"param": f"{sym},day,,,800,"},
-        headers=TENCENT_HEADERS,
-        timeout=timeout,
-    )
-    resp.raise_for_status()
-    payload = resp.json()
-    data = payload.get("data") if isinstance(payload, dict) else None
-    if not isinstance(data, dict):
-        return []
-    node = data.get(sym) or data.get(sym.lower()) or data.get(sym.upper())
-    if not isinstance(node, dict):
-        return []
-    rows = node.get("day") or node.get("qfqday") or []
-    out = []
-    for row in rows:
-        if not isinstance(row, (list, tuple)) or len(row) < 5:
-            continue
-        # date, open, close, high, low, volume
-        bar = _bar(
-            str(row[0]),
-            _f(row[1]),
-            _f(row[3]),
-            _f(row[4]),
-            _f(row[2]),
-            _f(row[5]) if len(row) > 5 else None,
-        )
-        if bar:
-            out.append(bar)
-    out.sort(key=lambda b: b["date"])
-    return out
-
-
 def merge_bars(primary: list[dict], secondary: list[dict]) -> list[dict]:
     """Primary overwrites secondary on the same date. Secondary fills holes."""
     by: dict[str, dict] = {}
@@ -303,39 +253,26 @@ def trim_bars(bars: list[dict], cutoff_days: int) -> list[dict]:
 
 
 def load_free_bars(code: str) -> tuple[list[dict], dict]:
-    """Sina and Tencent only. Does not call iFinD."""
+    """Sina continuous daily only. Does not call TqSdk / Fuyao / iFinD."""
     if code in _FREE:
         bars, meta = _FREE[code]
         return bars, dict(meta)
     meta = {
         "code": code,
         "sina_symbol": sina_symbol(code),
-        "tencent_symbol": tencent_symbol(code),
         "sina_n": 0,
-        "tencent_n": 0,
         "sina_error": "",
-        "tencent_error": "",
         "source": "",
     }
     sina: list[dict] = []
-    tencent: list[dict] = []
     try:
         sina = fetch_sina_daily(code)
         meta["sina_n"] = len(sina)
     except Exception as exc:
         meta["sina_error"] = str(exc)[:180]
-    try:
-        tencent = fetch_tencent_daily(code)
-        meta["tencent_n"] = len(tencent)
-    except Exception as exc:
-        meta["tencent_error"] = str(exc)[:180]
-    merged = filter_bars_asof(merge_bars(sina, tencent))
-    if sina and tencent:
-        meta["source"] = "sina+tencent"
-    elif sina:
+    merged = filter_bars_asof(sina)
+    if sina:
         meta["source"] = "sina"
-    elif tencent:
-        meta["source"] = "tencent"
     meta["free_n"] = len(merged)
     if merged:
         meta["last"] = merged[-1]["date"]
@@ -462,6 +399,63 @@ def fill_exact_contract_with_tqsdk(
     return merged, meta
 
 
+def fill_main_with_tqsdk(
+    code: str,
+    bars: list[dict],
+    *,
+    need_date: str | date | None = None,
+    root: Path | None = None,
+    length: int = 400,
+) -> tuple[list[dict], dict]:
+    """Gap-fill product main/continuous via TqSdk ``KQ.m@…``. Soft-skip without auth.
+
+    Existing free-source dates win on merge; TqSdk only fills holes / extends history.
+    """
+    meta = {
+        "code": str(code or "").upper(),
+        "tqsdk": False,
+        "tqsdk_n": 0,
+        "tqsdk_error": "",
+        "tqsdk_source": "",
+        "need_date": None,
+    }
+    need = None
+    if need_date is not None:
+        need = need_date.isoformat() if isinstance(need_date, date) else str(need_date)[:10]
+        meta["need_date"] = need
+        if any(str(b.get("date") or "")[:10] == need for b in bars):
+            return bars, meta
+    else:
+        expected = latest_expected_session_date().isoformat()
+        if bars and str(bars[-1].get("date") or "")[:10] >= expected:
+            return bars, meta
+
+    try:
+        from tqsdk_client import fetch_daily_bars, load_credentials
+    except ImportError as exc:
+        meta["tqsdk_error"] = f"import:{exc}"
+        return bars, meta
+
+    if not load_credentials(root=root):
+        meta["tqsdk_error"] = "no-auth"
+        return bars, meta
+
+    product = re.match(r"^([A-Za-z]+)", str(code or "").strip())
+    product_code = product.group(1).upper() if product else str(code or "").upper()
+    tq_bars, src = fetch_daily_bars(product_code, length=length, main=True, root=root)
+    meta["tqsdk_source"] = src
+    if not tq_bars:
+        meta["tqsdk_error"] = src or "empty"
+        return bars, meta
+
+    merged = filter_bars_asof(merge_bars(bars, tq_bars))
+    meta["tqsdk"] = True
+    meta["tqsdk_n"] = len(tq_bars)
+    if need and not any(str(b.get("date") or "")[:10] == need for b in merged):
+        meta["tqsdk_error"] = meta["tqsdk_error"] or f"missing_need_date:{need}"
+    return merged, meta
+
+
 def load_exact_contract_bars(
     contract: str,
     *,
@@ -469,7 +463,7 @@ def load_exact_contract_bars(
     root: Path | None = None,
     use_cache: bool = True,
 ) -> tuple[list[dict], dict]:
-    """Sina exact-contract daily; Fuyao then TqSdk gap-fill. Continuous rejected."""
+    """Sina exact-contract daily; TqSdk then Fuyao gap-fill. Continuous rejected."""
     contract = str(contract or "").upper()
     meta: dict = {
         "contract": contract,
@@ -501,21 +495,9 @@ def load_exact_contract_bars(
     except Exception as exc:  # noqa: BLE001
         meta["error"] = f"sina:{exc}"[:180]
 
-    bars, fmeta = fill_exact_contract_with_fuyao(
-        contract, sina, need_date=need_date, root=root
-    )
-    meta.update(
-        {
-            "fuyao": bool(fmeta.get("fuyao")),
-            "fuyao_n": int(fmeta.get("fuyao_n") or 0),
-            "thscode": fmeta.get("thscode"),
-            "fuyao_error": fmeta.get("fuyao_error") or "",
-            "need_date": fmeta.get("need_date"),
-        }
-    )
-
+    # TqSdk first (free 快期 account); Fuyao remains optional last gap-fill.
     bars, tmeta = fill_exact_contract_with_tqsdk(
-        contract, bars, need_date=need_date, root=root
+        contract, sina, need_date=need_date, root=root
     )
     meta.update(
         {
@@ -523,18 +505,31 @@ def load_exact_contract_bars(
             "tqsdk_n": int(tmeta.get("tqsdk_n") or 0),
             "tqsdk_error": tmeta.get("tqsdk_error") or "",
             "tqsdk_source": tmeta.get("tqsdk_source") or "",
+            "need_date": tmeta.get("need_date"),
         }
     )
-    if not meta.get("need_date") and tmeta.get("need_date"):
-        meta["need_date"] = tmeta.get("need_date")
+
+    bars, fmeta = fill_exact_contract_with_fuyao(
+        contract, bars, need_date=need_date, root=root
+    )
+    meta.update(
+        {
+            "fuyao": bool(fmeta.get("fuyao")),
+            "fuyao_n": int(fmeta.get("fuyao_n") or 0),
+            "thscode": fmeta.get("thscode"),
+            "fuyao_error": fmeta.get("fuyao_error") or "",
+        }
+    )
+    if not meta.get("need_date") and fmeta.get("need_date"):
+        meta["need_date"] = fmeta.get("need_date")
 
     parts = []
     if sina:
         parts.append("sina")
-    if meta["fuyao"]:
-        parts.append("fuyao")
     if meta["tqsdk"]:
         parts.append("tqsdk")
+    if meta["fuyao"]:
+        parts.append("fuyao")
     meta["source"] = "+".join(parts) if parts else ""
     if bars:
         meta["last"] = bars[-1]["date"]

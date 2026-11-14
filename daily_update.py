@@ -191,7 +191,8 @@ def _fetch_snapshot(u: dict, curves: dict, mode: str) -> dict:
         "bar_date": hist[i]["date"],
         "prev_date": hist[i - 1]["date"],
         "sina_n": meta.get("sina_n"),
-        "tencent_n": meta.get("tencent_n"),
+        "tqsdk": meta.get("tqsdk"),
+        "tqsdk_n": meta.get("tqsdk_n"),
         "ifind": meta.get("ifind"),
         "block": blocked,
     }
@@ -816,7 +817,7 @@ def main():
         "max_per_bucket": MAX_PER_BUCKET,
         "min_r20_pct": MIN_R20_PCT,
         "min_r60_pct": MIN_R60_PCT,
-        "data_source": "bars=sina+tencent→iFinD; seats=eastmoney→sina (exchange soft)",
+        "data_source": "bars=sina→TqSdk→iFinD; seats=eastmoney→sina (exchange soft)",
         "entry_filter": mode,
         "carry_bypass": bypass,
         "lab_edge_bypass": lab_bypass,

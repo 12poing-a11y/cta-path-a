@@ -1,0 +1,7410 @@
+{
+  "ok": true,
+  "schema_version": "cta-backtest-v12-intraday-exits",
+  "batch": "2026一年-pathA-nextOpen",
+  "strategy": "path_a_atr_rr1_5",
+  "mode": "seats",
+  "data_source": "sina+tencent primary, iFinD fallback",
+  "curve_coverage": {
+    "MA": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 10,
+      "carry_days": 275
+    },
+    "V": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 10,
+      "carry_days": 275
+    },
+    "EG": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 8,
+      "carry_days": 275
+    },
+    "M": {
+      "source": "sina",
+      "contracts": 18,
+      "roll_days": 10,
+      "carry_days": 275
+    },
+    "FG": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 8,
+      "carry_days": 275
+    },
+    "EB": {
+      "source": "sina",
+      "contracts": 27,
+      "roll_days": 48,
+      "carry_days": 275
+    },
+    "TA": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 10,
+      "carry_days": 275
+    },
+    "SA": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 10,
+      "carry_days": 275
+    },
+    "PP": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 10,
+      "carry_days": 275
+    },
+    "L": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 10,
+      "carry_days": 275
+    },
+    "JD": {
+      "source": "sina",
+      "contracts": 27,
+      "roll_days": 40,
+      "carry_days": 275
+    },
+    "P": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 8,
+      "carry_days": 275
+    },
+    "RB": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 8,
+      "carry_days": 275
+    },
+    "FU": {
+      "source": "sina",
+      "contracts": 28,
+      "roll_days": 24,
+      "carry_days": 275
+    },
+    "CF": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 8,
+      "carry_days": 275
+    },
+    "BU": {
+      "source": "sina",
+      "contracts": 28,
+      "roll_days": 80,
+      "carry_days": 275
+    },
+    "RU": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 10,
+      "carry_days": 275
+    },
+    "AG": {
+      "source": "sina",
+      "contracts": 27,
+      "roll_days": 18,
+      "carry_days": 275
+    },
+    "SP": {
+      "source": "sina",
+      "contracts": 18,
+      "roll_days": 16,
+      "carry_days": 275
+    },
+    "SR": {
+      "source": "sina",
+      "contracts": 7,
+      "roll_days": 8,
+      "carry_days": 275
+    },
+    "AU": {
+      "source": "sina",
+      "contracts": 23,
+      "roll_days": 16,
+      "carry_days": 275
+    },
+    "CU": {
+      "source": "sina",
+      "contracts": 27,
+      "roll_days": 38,
+      "carry_days": 275
+    },
+    "AL": {
+      "source": "sina",
+      "contracts": 27,
+      "roll_days": 46,
+      "carry_days": 275
+    },
+    "NI": {
+      "source": "sina",
+      "contracts": 27,
+      "roll_days": 36,
+      "carry_days": 275
+    },
+    "I": {
+      "source": "sina",
+      "contracts": 27,
+      "roll_days": 10,
+      "carry_days": 275
+    },
+    "JM": {
+      "source": "sina",
+      "contracts": 27,
+      "roll_days": 14,
+      "carry_days": 275
+    },
+    "SS": {
+      "source": "sina",
+      "contracts": 27,
+      "roll_days": 41,
+      "carry_days": 275
+    }
+  },
+  "sources": {
+    "MA": {
+      "sina_symbol": "MA0",
+      "tencent_symbol": "nf_MA0",
+      "sina_n": 2879,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina",
+      "free_n": 2879,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": false,
+      "bars": 276,
+      "fresh_for_expected_session": true
+    },
+    "V": {
+      "sina_symbol": "V0",
+      "tencent_symbol": "nf_V0",
+      "sina_n": 4235,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 4234,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\V0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "EG": {
+      "sina_symbol": "EG0",
+      "tencent_symbol": "nf_EG0",
+      "sina_n": 1919,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina",
+      "free_n": 1919,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": false,
+      "bars": 276,
+      "fresh_for_expected_session": true
+    },
+    "M": {
+      "sina_symbol": "M0",
+      "tencent_symbol": "nf_M0",
+      "sina_n": 5317,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 5317,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\M0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "FG": {
+      "sina_symbol": "FG0",
+      "tencent_symbol": "nf_FG0",
+      "sina_n": 3374,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 3374,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\FG0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "EB": {
+      "sina_symbol": "EB0",
+      "tencent_symbol": "nf_EB0",
+      "sina_n": 1724,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 1724,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\EB0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "TA": {
+      "sina_symbol": "TA0",
+      "tencent_symbol": "nf_TA0",
+      "sina_n": 4832,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 4831,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\TA0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "SA": {
+      "sina_symbol": "SA0",
+      "tencent_symbol": "nf_SA0",
+      "sina_n": 1678,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 1678,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\SA0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "PP": {
+      "sina_symbol": "PP0",
+      "tencent_symbol": "nf_PP0",
+      "sina_n": 3086,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 3085,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\PP0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "L": {
+      "sina_symbol": "L0",
+      "tencent_symbol": "nf_L0",
+      "sina_n": 4689,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 4689,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\L0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "JD": {
+      "sina_symbol": "JD0",
+      "tencent_symbol": "nf_JD0",
+      "sina_n": 3161,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 3161,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\JD0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "P": {
+      "sina_symbol": "P0",
+      "tencent_symbol": "nf_P0",
+      "sina_n": 4629,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina",
+      "free_n": 4628,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": false,
+      "bars": 276,
+      "fresh_for_expected_session": true
+    },
+    "RB": {
+      "sina_symbol": "RB0",
+      "tencent_symbol": "nf_RB0",
+      "sina_n": 4279,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina",
+      "free_n": 4279,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": false,
+      "bars": 276,
+      "fresh_for_expected_session": true
+    },
+    "FU": {
+      "sina_symbol": "FU0",
+      "tencent_symbol": "nf_FU0",
+      "sina_n": 5289,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 5289,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\FU0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "CF": {
+      "sina_symbol": "CF0",
+      "tencent_symbol": "nf_CF0",
+      "sina_n": 5315,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 5286,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\CF0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "BU": {
+      "sina_symbol": "BU0",
+      "tencent_symbol": "nf_BU0",
+      "sina_n": 3180,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 3178,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\BU0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "RU": {
+      "sina_symbol": "RU0",
+      "tencent_symbol": "nf_RU0",
+      "sina_n": 5313,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina",
+      "free_n": 5312,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": false,
+      "bars": 276,
+      "fresh_for_expected_session": true
+    },
+    "AG": {
+      "sina_symbol": "AG0",
+      "tencent_symbol": "nf_AG0",
+      "sina_n": 3528,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 3528,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\AG0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "SP": {
+      "sina_symbol": "SP0",
+      "tencent_symbol": "nf_SP0",
+      "sina_n": 1927,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 1927,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\SP0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "SR": {
+      "sina_symbol": "SR0",
+      "tencent_symbol": "nf_SR0",
+      "sina_n": 5059,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina",
+      "free_n": 5059,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": false,
+      "bars": 276,
+      "fresh_for_expected_session": true
+    },
+    "AU": {
+      "sina_symbol": "AU0",
+      "tencent_symbol": "nf_AU0",
+      "sina_n": 4587,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 4587,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\AU0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "CU": {
+      "sina_symbol": "CU0",
+      "tencent_symbol": "nf_CU0",
+      "sina_n": 5315,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina",
+      "free_n": 5315,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": false,
+      "bars": 276,
+      "fresh_for_expected_session": true
+    },
+    "AL": {
+      "sina_symbol": "AL0",
+      "tencent_symbol": "nf_AL0",
+      "sina_n": 5315,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina",
+      "free_n": 5315,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": false,
+      "bars": 276,
+      "fresh_for_expected_session": true
+    },
+    "NI": {
+      "sina_symbol": "NI0",
+      "tencent_symbol": "nf_NI0",
+      "sina_n": 2826,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 2825,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\NI0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "I": {
+      "sina_symbol": "I0",
+      "tencent_symbol": "nf_I0",
+      "sina_n": 3175,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 3175,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\I0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "JM": {
+      "sina_symbol": "JM0",
+      "tencent_symbol": "nf_JM0",
+      "sina_n": 3307,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina+ifind",
+      "free_n": 3307,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": true,
+      "ifind_n": 21,
+      "chart_cache": ".cache\\history\\JM0.json",
+      "bars": 282,
+      "fresh_for_expected_session": true
+    },
+    "SS": {
+      "sina_symbol": "SS0",
+      "tencent_symbol": "nf_SS0",
+      "sina_n": 1726,
+      "tencent_n": 0,
+      "sina_error": "",
+      "tencent_error": "",
+      "source": "sina",
+      "free_n": 1726,
+      "last": "2026-11-11",
+      "expected_session_date": "2026-11-11",
+      "ifind": false,
+      "bars": 276,
+      "fresh_for_expected_session": true
+    }
+  },
+  "reward_rr": 2.0,
+  "stop_atr_mult": 0.8,
+  "equity_compound": true,
+  "max_positions": 3,
+  "max_gross_exposure_pct": 50.0,
+  "max_portfolio_risk_pct": 8.0,
+  "max_per_bucket": 1,
+  "min_r20_pct": 4.0,
+  "min_r60_pct": 6.0,
+  "min_lots": 0,
+  "option_hedge": false,
+  "premium_atr_mult": null,
+  "strike_atr_mult": null,
+  "premium_yuan": 0.0,
+  "hedge_payoff_yuan": 0.0,
+  "hedge_net_yuan": 0.0,
+  "ifind_slot": "backup",
+  "universe_n": 27,
+  "universe": "MA,V,EG,M,FG,EB,TA,SA,PP,L,JD,P,RB,FU,CF,BU,RU,AG,SP,SR,AU,CU,AL,NI,I,JM,SS",
+  "start": "2025-12-18",
+  "end": "2026-11-11",
+  "trade_days": 222,
+  "equity_start": 200000.0,
+  "equity_end": 236439.8,
+  "gross_equity_end": 244598.0,
+  "ret_pct": 18.22,
+  "gross_ret_pct": 22.299,
+  "cost_yuan": 8158.2,
+  "max_dd_pct": 6.694,
+  "gross_max_dd_pct": 6.439,
+  "blocks": {
+    "贴水极端禁开空": 120,
+    "机构席位反向": 342,
+    "升水极端禁开多": 108
+  },
+  "carry_bypass": {
+    "enabled": true,
+    "extreme_gap_pct": 1.0,
+    "action": "block",
+    "scale": 0.5,
+    "note": "席位确认之后的软旁路：近次月升贴水 |gap|≥1% 时，升水禁开多、贴水禁开空；缺数据不拦。不替换 entry_filter=seats，也不改 ATR 止损止盈。"
+  },
+  "availability_lag": 1,
+  "fill_price": "next_open",
+  "exit_check": "minute_15",
+  "exit_minute_period": "15",
+  "minute_stop_exits": 16,
+  "daily_exit_fallback_checks": 260,
+  "slippage_ticks": 1.0,
+  "git_sha": "74665e1aea917f93b6b4ced009292676c8b5ffb9",
+  "universe_sha256": "7422ca4a79dd8fb9c9df715373e67aec72d124edaef438abb659f89bbf0f9e05",
+  "execution_rules_sha256": "4b4f06a632cb356ba9195542ec8d23ca83e4ed887e32b93535597322de86c0ea",
+  "carry_bypass_counts": {
+    "贴水极端禁开空": 120,
+    "升水极端禁开多": 108
+  },
+  "vol_bypass": {
+    "enabled": true,
+    "action": "observe",
+    "expand_ratio": 1.6,
+    "compress_ratio": 0.7,
+    "short_n": 5,
+    "mid_n": 20,
+    "long_n": 60,
+    "note": "多维波动率旁路：短5/中20/长60，短÷长≥1.6→决策观望（action=observe）。入场硬拦(action=block)经 OOS 验证不适用（见 lab/research/oos/vol_bypass_validate_latest.json）。不改 seats/ATR。"
+  },
+  "vol_bypass_counts": {},
+  "seat_follows": {
+    "缺席位": 498,
+    "跟随机构": 646
+  },
+  "win_rate": 47.75,
+  "trade_win_rate": 42.27,
+  "avg_win_r": 1.922,
+  "avg_loss_r": -0.966,
+  "realized_rr": 1.991,
+  "expectancy_r": 0.255,
+  "breakeven_win_rate": 33.33,
+  "closed_trades": 97,
+  "exits": {
+    "target": 39,
+    "stop": 53,
+    "signal": 5
+  },
+  "sleeve_counts": {
+    "path_a_rr2": 97
+  },
+  "avg_held": 1.48,
+  "conclusion": "继续L1",
+  "errors": {},
+  "bars": {
+    "MA": 276,
+    "V": 282,
+    "EG": 276,
+    "M": 282,
+    "FG": 282,
+    "EB": 282,
+    "TA": 282,
+    "SA": 282,
+    "PP": 282,
+    "L": 282,
+    "JD": 282,
+    "P": 276,
+    "RB": 276,
+    "FU": 282,
+    "CF": 282,
+    "BU": 282,
+    "RU": 276,
+    "AG": 282,
+    "SP": 282,
+    "SR": 276,
+    "AU": 282,
+    "CU": 276,
+    "AL": 276,
+    "NI": 282,
+    "I": 282,
+    "JM": 282,
+    "SS": 276
+  },
+  "final_positions": {},
+  "equity_curve": [
+    {
+      "date": "2025-12-18",
+      "equity": 199958.19,
+      "held": 2,
+      "pnl": -41.81,
+      "dd_pct": 0.021,
+      "gross_pct": 30.78,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-19",
+      "equity": 200737.62,
+      "held": 2,
+      "pnl": 779.43,
+      "dd_pct": 0.0,
+      "gross_pct": 61.6,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-22",
+      "equity": 202022.62,
+      "held": 2,
+      "pnl": 1285.0,
+      "dd_pct": 0.0,
+      "gross_pct": 60.63,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-23",
+      "equity": 201302.62,
+      "held": 2,
+      "pnl": -720.0,
+      "dd_pct": 0.356,
+      "gross_pct": 61.2,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-24",
+      "equity": 199095.05,
+      "held": 2,
+      "pnl": -2207.57,
+      "dd_pct": 1.449,
+      "gross_pct": 30.89,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-25",
+      "equity": 199110.46,
+      "held": 1,
+      "pnl": 15.41,
+      "dd_pct": 1.442,
+      "gross_pct": 16.05,
+      "codes": [
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-26",
+      "equity": 198688.96,
+      "held": 2,
+      "pnl": -421.5,
+      "dd_pct": 1.65,
+      "gross_pct": 52.85,
+      "codes": [
+        "CF",
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-29",
+      "equity": 197910.46,
+      "held": 1,
+      "pnl": -778.5,
+      "dd_pct": 2.035,
+      "gross_pct": 16.3,
+      "codes": [
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-30",
+      "equity": 197858.96,
+      "held": 2,
+      "pnl": -51.5,
+      "dd_pct": 2.061,
+      "gross_pct": 53.12,
+      "codes": [
+        "CF",
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-31",
+      "equity": 197803.96,
+      "held": 2,
+      "pnl": -55.0,
+      "dd_pct": 2.088,
+      "gross_pct": 53.23,
+      "codes": [
+        "CF",
+        "L"
+      ]
+    },
+    {
+      "date": "2026-01-05",
+      "equity": 198648.6,
+      "held": 1,
+      "pnl": 844.64,
+      "dd_pct": 1.67,
+      "gross_pct": 16.23,
+      "codes": [
+        "L"
+      ]
+    },
+    {
+      "date": "2026-01-06",
+      "equity": 198241.17,
+      "held": 0,
+      "pnl": -407.43,
+      "dd_pct": 1.872,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-01-07",
+      "equity": 198241.17,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 1.872,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-01-08",
+      "equity": 198216.17,
+      "held": 1,
+      "pnl": -25.0,
+      "dd_pct": 1.884,
+      "gross_pct": 12.83,
+      "codes": [
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-09",
+      "equity": 198219.67,
+      "held": 2,
+      "pnl": 3.5,
+      "dd_pct": 1.882,
+      "gross_pct": 49.9,
+      "codes": [
+        "CF",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-12",
+      "equity": 197418.1,
+      "held": 2,
+      "pnl": -801.57,
+      "dd_pct": 2.279,
+      "gross_pct": 50.06,
+      "codes": [
+        "CF",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-13",
+      "equity": 198083.1,
+      "held": 2,
+      "pnl": 665.0,
+      "dd_pct": 1.95,
+      "gross_pct": 50.23,
+      "codes": [
+        "CF",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-14",
+      "equity": 198213.1,
+      "held": 2,
+      "pnl": 130.0,
+      "dd_pct": 1.886,
+      "gross_pct": 50.26,
+      "codes": [
+        "CF",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-15",
+      "equity": 197198.1,
+      "held": 2,
+      "pnl": -1015.0,
+      "dd_pct": 2.388,
+      "gross_pct": 50.01,
+      "codes": [
+        "CF",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-16",
+      "equity": 196490.67,
+      "held": 1,
+      "pnl": -707.43,
+      "dd_pct": 2.738,
+      "gross_pct": 37.13,
+      "codes": [
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-01-19",
+      "equity": 196255.67,
+      "held": 2,
+      "pnl": -235.0,
+      "dd_pct": 2.855,
+      "gross_pct": 55.78,
+      "codes": [
+        "CF",
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-20",
+      "equity": 195116.89,
+      "held": 1,
+      "pnl": -1138.79,
+      "dd_pct": 3.418,
+      "gross_pct": 18.57,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-21",
+      "equity": 195181.89,
+      "held": 1,
+      "pnl": 65.0,
+      "dd_pct": 3.386,
+      "gross_pct": 18.8,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-22",
+      "equity": 196232.89,
+      "held": 1,
+      "pnl": 1051.0,
+      "dd_pct": 2.866,
+      "gross_pct": 19.6,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-23",
+      "equity": 196502.89,
+      "held": 1,
+      "pnl": 270.0,
+      "dd_pct": 2.732,
+      "gross_pct": 19.61,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-26",
+      "equity": 196472.89,
+      "held": 1,
+      "pnl": -30.0,
+      "dd_pct": 2.747,
+      "gross_pct": 19.6,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-27",
+      "equity": 196207.89,
+      "held": 1,
+      "pnl": -265.0,
+      "dd_pct": 2.878,
+      "gross_pct": 19.49,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "equity": 196887.89,
+      "held": 1,
+      "pnl": 680.0,
+      "dd_pct": 2.542,
+      "gross_pct": 19.77,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-29",
+      "equity": 197495.39,
+      "held": 2,
+      "pnl": 607.5,
+      "dd_pct": 2.241,
+      "gross_pct": 67.44,
+      "codes": [
+        "EB",
+        "P"
+      ]
+    },
+    {
+      "date": "2026-01-30",
+      "equity": 196365.0,
+      "held": 1,
+      "pnl": -1130.39,
+      "dd_pct": 2.8,
+      "gross_pct": 17.44,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-02",
+      "equity": 195792.24,
+      "held": 1,
+      "pnl": -572.76,
+      "dd_pct": 3.084,
+      "gross_pct": 37.99,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-02-03",
+      "equity": 197882.24,
+      "held": 1,
+      "pnl": 2090.0,
+      "dd_pct": 2.049,
+      "gross_pct": 38.71,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-02-04",
+      "equity": 199543.1,
+      "held": 1,
+      "pnl": 1660.86,
+      "dd_pct": 1.227,
+      "gross_pct": 38.97,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-02-05",
+      "equity": 198353.1,
+      "held": 1,
+      "pnl": -1190.0,
+      "dd_pct": 1.816,
+      "gross_pct": 38.76,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-02-06",
+      "equity": 197440.79,
+      "held": 2,
+      "pnl": -912.3,
+      "dd_pct": 2.268,
+      "gross_pct": 46.64,
+      "codes": [
+        "BU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-02-09",
+      "equity": 197103.56,
+      "held": 1,
+      "pnl": -337.24,
+      "dd_pct": 2.435,
+      "gross_pct": 16.98,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-10",
+      "equity": 197133.56,
+      "held": 1,
+      "pnl": 30.0,
+      "dd_pct": 2.42,
+      "gross_pct": 16.99,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-11",
+      "equity": 197363.56,
+      "held": 1,
+      "pnl": 230.0,
+      "dd_pct": 2.306,
+      "gross_pct": 17.09,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-12",
+      "equity": 197063.56,
+      "held": 1,
+      "pnl": -300.0,
+      "dd_pct": 2.455,
+      "gross_pct": 16.96,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-13",
+      "equity": 196706.37,
+      "held": 1,
+      "pnl": -357.19,
+      "dd_pct": 2.632,
+      "gross_pct": 50.02,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-24",
+      "equity": 196376.37,
+      "held": 1,
+      "pnl": -330.0,
+      "dd_pct": 2.795,
+      "gross_pct": 51.15,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-25",
+      "equity": 196629.87,
+      "held": 2,
+      "pnl": 253.5,
+      "dd_pct": 2.669,
+      "gross_pct": 90.34,
+      "codes": [
+        "BU",
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-02-26",
+      "equity": 196499.87,
+      "held": 2,
+      "pnl": -130.0,
+      "dd_pct": 2.734,
+      "gross_pct": 90.31,
+      "codes": [
+        "BU",
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-02-27",
+      "equity": 196394.87,
+      "held": 2,
+      "pnl": -105.0,
+      "dd_pct": 2.786,
+      "gross_pct": 90.31,
+      "codes": [
+        "BU",
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-03-02",
+      "equity": 199831.99,
+      "held": 1,
+      "pnl": 3437.13,
+      "dd_pct": 1.084,
+      "gross_pct": 35.02,
+      "codes": [
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "equity": 201691.99,
+      "held": 1,
+      "pnl": 1860.0,
+      "dd_pct": 0.164,
+      "gross_pct": 35.81,
+      "codes": [
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-03-04",
+      "equity": 201709.71,
+      "held": 1,
+      "pnl": 17.71,
+      "dd_pct": 0.155,
+      "gross_pct": 40.72,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-03-05",
+      "equity": 205180.56,
+      "held": 1,
+      "pnl": 3470.86,
+      "dd_pct": 0.0,
+      "gross_pct": 42.19,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-03-06",
+      "equity": 207210.56,
+      "held": 1,
+      "pnl": 2030.0,
+      "dd_pct": 0.0,
+      "gross_pct": 42.99,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-03-09",
+      "equity": 209072.57,
+      "held": 1,
+      "pnl": 1862.01,
+      "dd_pct": 0.0,
+      "gross_pct": 13.54,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-03-10",
+      "equity": 208109.62,
+      "held": 0,
+      "pnl": -962.95,
+      "dd_pct": 0.461,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-03-11",
+      "equity": 208074.62,
+      "held": 1,
+      "pnl": -35.0,
+      "dd_pct": 0.477,
+      "gross_pct": 29.49,
+      "codes": [
+        "M"
+      ]
+    },
+    {
+      "date": "2026-03-12",
+      "equity": 207118.04,
+      "held": 2,
+      "pnl": -956.57,
+      "dd_pct": 0.935,
+      "gross_pct": 43.06,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-13",
+      "equity": 209083.19,
+      "held": 2,
+      "pnl": 1965.14,
+      "dd_pct": 0.0,
+      "gross_pct": 43.61,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-16",
+      "equity": 209435.76,
+      "held": 2,
+      "pnl": 352.57,
+      "dd_pct": 0.0,
+      "gross_pct": 43.29,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-17",
+      "equity": 210340.76,
+      "held": 2,
+      "pnl": 905.0,
+      "dd_pct": 0.0,
+      "gross_pct": 43.22,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "equity": 208830.76,
+      "held": 2,
+      "pnl": -1510.0,
+      "dd_pct": 0.718,
+      "gross_pct": 42.81,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-19",
+      "equity": 209575.76,
+      "held": 2,
+      "pnl": 745.0,
+      "dd_pct": 0.364,
+      "gross_pct": 43.01,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "equity": 209390.76,
+      "held": 2,
+      "pnl": -185.0,
+      "dd_pct": 0.452,
+      "gross_pct": 42.96,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "equity": 210157.26,
+      "held": 1,
+      "pnl": 766.5,
+      "dd_pct": 0.087,
+      "gross_pct": 14.31,
+      "codes": [
+        "M"
+      ]
+    },
+    {
+      "date": "2026-03-24",
+      "equity": 209891.38,
+      "held": 2,
+      "pnl": -265.88,
+      "dd_pct": 0.214,
+      "gross_pct": 29.06,
+      "codes": [
+        "M",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "equity": 207742.14,
+      "held": 1,
+      "pnl": -2149.24,
+      "dd_pct": 1.235,
+      "gross_pct": 14.11,
+      "codes": [
+        "M"
+      ]
+    },
+    {
+      "date": "2026-03-26",
+      "equity": 207942.14,
+      "held": 1,
+      "pnl": 200.0,
+      "dd_pct": 1.14,
+      "gross_pct": 14.2,
+      "codes": [
+        "M"
+      ]
+    },
+    {
+      "date": "2026-03-27",
+      "equity": 207539.31,
+      "held": 1,
+      "pnl": -402.83,
+      "dd_pct": 1.332,
+      "gross_pct": 33.75,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "equity": 207372.84,
+      "held": 2,
+      "pnl": -166.47,
+      "dd_pct": 1.411,
+      "gross_pct": 49.31,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-03-31",
+      "equity": 206452.84,
+      "held": 2,
+      "pnl": -920.0,
+      "dd_pct": 1.848,
+      "gross_pct": 48.97,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-01",
+      "equity": 204916.26,
+      "held": 1,
+      "pnl": -1536.57,
+      "dd_pct": 2.579,
+      "gross_pct": 14.71,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-02",
+      "equity": 206666.26,
+      "held": 1,
+      "pnl": 1750.0,
+      "dd_pct": 1.747,
+      "gross_pct": 15.71,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-03",
+      "equity": 207846.26,
+      "held": 1,
+      "pnl": 1180.0,
+      "dd_pct": 1.186,
+      "gross_pct": 16.19,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-07",
+      "equity": 208174.21,
+      "held": 1,
+      "pnl": 327.95,
+      "dd_pct": 1.03,
+      "gross_pct": 34.13,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "equity": 204402.14,
+      "held": 1,
+      "pnl": -3772.06,
+      "dd_pct": 2.823,
+      "gross_pct": 30.55,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-09",
+      "equity": 206762.14,
+      "held": 1,
+      "pnl": 2360.0,
+      "dd_pct": 1.701,
+      "gross_pct": 31.0,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-10",
+      "equity": 204942.14,
+      "held": 1,
+      "pnl": -1820.0,
+      "dd_pct": 2.567,
+      "gross_pct": 30.39,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-13",
+      "equity": 206162.14,
+      "held": 1,
+      "pnl": 1220.0,
+      "dd_pct": 1.987,
+      "gross_pct": 30.8,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-14",
+      "equity": 200128.48,
+      "held": 1,
+      "pnl": -6033.66,
+      "dd_pct": 4.855,
+      "gross_pct": 28.87,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-04-15",
+      "equity": 199671.08,
+      "held": 2,
+      "pnl": -457.4,
+      "dd_pct": 5.073,
+      "gross_pct": 61.72,
+      "codes": [
+        "FG",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-04-16",
+      "equity": 198024.89,
+      "held": 1,
+      "pnl": -1646.19,
+      "dd_pct": 5.855,
+      "gross_pct": 37.42,
+      "codes": [
+        "SS"
+      ]
+    },
+    {
+      "date": "2026-04-17",
+      "equity": 199649.45,
+      "held": 0,
+      "pnl": 1624.56,
+      "dd_pct": 5.083,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-04-20",
+      "equity": 199602.95,
+      "held": 1,
+      "pnl": -46.5,
+      "dd_pct": 5.105,
+      "gross_pct": 40.08,
+      "codes": [
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-04-21",
+      "equity": 199652.95,
+      "held": 1,
+      "pnl": 50.0,
+      "dd_pct": 5.081,
+      "gross_pct": 40.03,
+      "codes": [
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-04-22",
+      "equity": 201461.38,
+      "held": 1,
+      "pnl": 1808.43,
+      "dd_pct": 4.221,
+      "gross_pct": 40.28,
+      "codes": [
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-04-23",
+      "equity": 201736.38,
+      "held": 1,
+      "pnl": 275.0,
+      "dd_pct": 4.091,
+      "gross_pct": 40.36,
+      "codes": [
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-04-24",
+      "equity": 201286.38,
+      "held": 1,
+      "pnl": -450.0,
+      "dd_pct": 4.305,
+      "gross_pct": 40.23,
+      "codes": [
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-04-27",
+      "equity": 202373.72,
+      "held": 2,
+      "pnl": 1087.34,
+      "dd_pct": 3.788,
+      "gross_pct": 78.43,
+      "codes": [
+        "CF",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-04-28",
+      "equity": 201713.72,
+      "held": 2,
+      "pnl": -660.0,
+      "dd_pct": 4.101,
+      "gross_pct": 78.37,
+      "codes": [
+        "CF",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "equity": 201958.72,
+      "held": 2,
+      "pnl": 245.0,
+      "dd_pct": 3.985,
+      "gross_pct": 78.4,
+      "codes": [
+        "CF",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-04-30",
+      "equity": 203576.87,
+      "held": 3,
+      "pnl": 1618.15,
+      "dd_pct": 3.216,
+      "gross_pct": 122.59,
+      "codes": [
+        "CF",
+        "FU",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-05-06",
+      "equity": 207860.04,
+      "held": 3,
+      "pnl": 4283.17,
+      "dd_pct": 1.179,
+      "gross_pct": 121.96,
+      "codes": [
+        "FU",
+        "JD",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-05-07",
+      "equity": 203928.55,
+      "held": 2,
+      "pnl": -3931.49,
+      "dd_pct": 3.048,
+      "gross_pct": 80.42,
+      "codes": [
+        "JD",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-05-08",
+      "equity": 201948.55,
+      "held": 2,
+      "pnl": -1980.0,
+      "dd_pct": 3.99,
+      "gross_pct": 80.23,
+      "codes": [
+        "JD",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-05-11",
+      "equity": 205546.62,
+      "held": 3,
+      "pnl": 3598.07,
+      "dd_pct": 2.279,
+      "gross_pct": 123.39,
+      "codes": [
+        "FU",
+        "JD",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-05-12",
+      "equity": 203660.3,
+      "held": 2,
+      "pnl": -1886.32,
+      "dd_pct": 3.176,
+      "gross_pct": 86.84,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "equity": 200680.3,
+      "held": 2,
+      "pnl": -2980.0,
+      "dd_pct": 4.593,
+      "gross_pct": 86.65,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-14",
+      "equity": 198252.2,
+      "held": 1,
+      "pnl": -2428.1,
+      "dd_pct": 5.747,
+      "gross_pct": 43.64,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-15",
+      "equity": 198062.2,
+      "held": 2,
+      "pnl": -190.0,
+      "dd_pct": 5.837,
+      "gross_pct": 65.68,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "equity": 200122.2,
+      "held": 2,
+      "pnl": 2060.0,
+      "dd_pct": 4.858,
+      "gross_pct": 66.16,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-05-19",
+      "equity": 200342.2,
+      "held": 2,
+      "pnl": 220.0,
+      "dd_pct": 4.754,
+      "gross_pct": 66.2,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "equity": 201131.37,
+      "held": 2,
+      "pnl": 789.17,
+      "dd_pct": 4.378,
+      "gross_pct": 44.46,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-05-21",
+      "equity": 201081.37,
+      "held": 2,
+      "pnl": -50.0,
+      "dd_pct": 4.402,
+      "gross_pct": 44.4,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-05-22",
+      "equity": 200801.37,
+      "held": 2,
+      "pnl": -280.0,
+      "dd_pct": 4.535,
+      "gross_pct": 44.33,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-05-25",
+      "equity": 199302.51,
+      "held": 1,
+      "pnl": -1498.86,
+      "dd_pct": 5.248,
+      "gross_pct": 22.21,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-26",
+      "equity": 200422.51,
+      "held": 1,
+      "pnl": 1120.0,
+      "dd_pct": 4.715,
+      "gross_pct": 22.64,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-27",
+      "equity": 201622.51,
+      "held": 1,
+      "pnl": 1200.0,
+      "dd_pct": 4.145,
+      "gross_pct": 23.1,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-28",
+      "equity": 200822.51,
+      "held": 1,
+      "pnl": -800.0,
+      "dd_pct": 4.525,
+      "gross_pct": 22.8,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-29",
+      "equity": 201948.73,
+      "held": 0,
+      "pnl": 1126.21,
+      "dd_pct": 3.99,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-06-01",
+      "equity": 201948.73,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 3.99,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-06-02",
+      "equity": 201899.01,
+      "held": 1,
+      "pnl": -49.72,
+      "dd_pct": 4.013,
+      "gross_pct": 48.14,
+      "codes": [
+        "SP"
+      ]
+    },
+    {
+      "date": "2026-06-03",
+      "equity": 201808.1,
+      "held": 2,
+      "pnl": -90.91,
+      "dd_pct": 4.057,
+      "gross_pct": 95.01,
+      "codes": [
+        "JD",
+        "SP"
+      ]
+    },
+    {
+      "date": "2026-06-04",
+      "equity": 201828.1,
+      "held": 2,
+      "pnl": 20.0,
+      "dd_pct": 4.047,
+      "gross_pct": 94.06,
+      "codes": [
+        "JD",
+        "SP"
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "equity": 200196.26,
+      "held": 1,
+      "pnl": -1631.84,
+      "dd_pct": 4.823,
+      "gross_pct": 48.41,
+      "codes": [
+        "SP"
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "equity": 200191.43,
+      "held": 2,
+      "pnl": -4.84,
+      "dd_pct": 4.825,
+      "gross_pct": 71.55,
+      "codes": [
+        "JD",
+        "SP"
+      ]
+    },
+    {
+      "date": "2026-06-09",
+      "equity": 200781.43,
+      "held": 2,
+      "pnl": 590.0,
+      "dd_pct": 4.545,
+      "gross_pct": 72.36,
+      "codes": [
+        "JD",
+        "SP"
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "equity": 200741.43,
+      "held": 2,
+      "pnl": -40.0,
+      "dd_pct": 4.564,
+      "gross_pct": 72.15,
+      "codes": [
+        "JD",
+        "SP"
+      ]
+    },
+    {
+      "date": "2026-06-11",
+      "equity": 199351.43,
+      "held": 2,
+      "pnl": -1390.0,
+      "dd_pct": 5.225,
+      "gross_pct": 72.6,
+      "codes": [
+        "JD",
+        "SP"
+      ]
+    },
+    {
+      "date": "2026-06-12",
+      "equity": 199305.63,
+      "held": 2,
+      "pnl": -45.8,
+      "dd_pct": 5.246,
+      "gross_pct": 59.74,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-15",
+      "equity": 204469.09,
+      "held": 2,
+      "pnl": 5163.46,
+      "dd_pct": 2.792,
+      "gross_pct": 39.51,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-16",
+      "equity": 204679.09,
+      "held": 2,
+      "pnl": 210.0,
+      "dd_pct": 2.692,
+      "gross_pct": 39.21,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-17",
+      "equity": 205919.09,
+      "held": 2,
+      "pnl": 1240.0,
+      "dd_pct": 2.102,
+      "gross_pct": 38.16,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-18",
+      "equity": 205535.52,
+      "held": 1,
+      "pnl": -383.57,
+      "dd_pct": 2.285,
+      "gross_pct": 36.34,
+      "codes": [
+        "I"
+      ]
+    },
+    {
+      "date": "2026-06-22",
+      "equity": 206132.42,
+      "held": 2,
+      "pnl": 596.9,
+      "dd_pct": 2.001,
+      "gross_pct": 81.01,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-06-23",
+      "equity": 208962.42,
+      "held": 2,
+      "pnl": 2830.0,
+      "dd_pct": 0.655,
+      "gross_pct": 78.25,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-06-24",
+      "equity": 207092.42,
+      "held": 2,
+      "pnl": -1870.0,
+      "dd_pct": 1.544,
+      "gross_pct": 79.86,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-06-25",
+      "equity": 211322.42,
+      "held": 2,
+      "pnl": 4230.0,
+      "dd_pct": 0.0,
+      "gross_pct": 76.26,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-06-26",
+      "equity": 208432.42,
+      "held": 2,
+      "pnl": -2890.0,
+      "dd_pct": 1.368,
+      "gross_pct": 78.71,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-06-29",
+      "equity": 208482.42,
+      "held": 2,
+      "pnl": 50.0,
+      "dd_pct": 1.344,
+      "gross_pct": 78.66,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-06-30",
+      "equity": 209102.42,
+      "held": 2,
+      "pnl": 620.0,
+      "dd_pct": 1.051,
+      "gross_pct": 78.13,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-07-01",
+      "equity": 212212.26,
+      "held": 1,
+      "pnl": 3109.85,
+      "dd_pct": 0.0,
+      "gross_pct": 41.12,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "equity": 213712.26,
+      "held": 1,
+      "pnl": 1500.0,
+      "dd_pct": 0.0,
+      "gross_pct": 40.13,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-03",
+      "equity": 211642.26,
+      "held": 1,
+      "pnl": -2070.0,
+      "dd_pct": 0.969,
+      "gross_pct": 41.5,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-06",
+      "equity": 210952.26,
+      "held": 1,
+      "pnl": -690.0,
+      "dd_pct": 1.291,
+      "gross_pct": 41.97,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "equity": 211132.26,
+      "held": 1,
+      "pnl": 180.0,
+      "dd_pct": 1.207,
+      "gross_pct": 41.85,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-08",
+      "equity": 206362.26,
+      "held": 1,
+      "pnl": -4770.0,
+      "dd_pct": 3.439,
+      "gross_pct": 45.12,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-09",
+      "equity": 202932.15,
+      "held": 1,
+      "pnl": -3430.11,
+      "dd_pct": 5.044,
+      "gross_pct": 46.55,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-10",
+      "equity": 203892.15,
+      "held": 1,
+      "pnl": 960.0,
+      "dd_pct": 4.595,
+      "gross_pct": 46.05,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "equity": 200360.19,
+      "held": 1,
+      "pnl": -3531.97,
+      "dd_pct": 6.248,
+      "gross_pct": 16.37,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-14",
+      "equity": 199405.86,
+      "held": 1,
+      "pnl": -954.33,
+      "dd_pct": 6.694,
+      "gross_pct": 32.02,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-15",
+      "equity": 200185.86,
+      "held": 1,
+      "pnl": 780.0,
+      "dd_pct": 6.329,
+      "gross_pct": 31.5,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "equity": 201079.2,
+      "held": 1,
+      "pnl": 893.34,
+      "dd_pct": 5.911,
+      "gross_pct": 41.14,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-17",
+      "equity": 203319.2,
+      "held": 1,
+      "pnl": 2240.0,
+      "dd_pct": 4.863,
+      "gross_pct": 39.62,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-20",
+      "equity": 203399.2,
+      "held": 1,
+      "pnl": 80.0,
+      "dd_pct": 4.826,
+      "gross_pct": 39.57,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-21",
+      "equity": 203359.48,
+      "held": 1,
+      "pnl": -39.72,
+      "dd_pct": 4.844,
+      "gross_pct": 49.62,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-22",
+      "equity": 202959.48,
+      "held": 1,
+      "pnl": -400.0,
+      "dd_pct": 5.031,
+      "gross_pct": 49.91,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "equity": 203541.98,
+      "held": 2,
+      "pnl": 582.5,
+      "dd_pct": 4.759,
+      "gross_pct": 65.07,
+      "codes": [
+        "M",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-24",
+      "equity": 204291.98,
+      "held": 2,
+      "pnl": 750.0,
+      "dd_pct": 4.408,
+      "gross_pct": 64.93,
+      "codes": [
+        "M",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-27",
+      "equity": 204581.98,
+      "held": 2,
+      "pnl": 290.0,
+      "dd_pct": 4.272,
+      "gross_pct": 64.1,
+      "codes": [
+        "M",
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-28",
+      "equity": 205963.16,
+      "held": 1,
+      "pnl": 1381.18,
+      "dd_pct": 3.626,
+      "gross_pct": 47.19,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-29",
+      "equity": 206963.16,
+      "held": 1,
+      "pnl": 1000.0,
+      "dd_pct": 3.158,
+      "gross_pct": 46.39,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-30",
+      "equity": 208994.88,
+      "held": 1,
+      "pnl": 2031.73,
+      "dd_pct": 2.207,
+      "gross_pct": 45.17,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "equity": 209794.88,
+      "held": 1,
+      "pnl": 800.0,
+      "dd_pct": 1.833,
+      "gross_pct": 44.57,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-03",
+      "equity": 211394.88,
+      "held": 1,
+      "pnl": 1600.0,
+      "dd_pct": 1.084,
+      "gross_pct": 43.47,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-04",
+      "equity": 211094.88,
+      "held": 1,
+      "pnl": -300.0,
+      "dd_pct": 1.225,
+      "gross_pct": 43.68,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-05",
+      "equity": 209594.88,
+      "held": 1,
+      "pnl": -1500.0,
+      "dd_pct": 1.927,
+      "gross_pct": 44.71,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-06",
+      "equity": 209594.88,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 1.927,
+      "gross_pct": 44.71,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-07",
+      "equity": 209394.88,
+      "held": 1,
+      "pnl": -200.0,
+      "dd_pct": 2.02,
+      "gross_pct": 44.84,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-10",
+      "equity": 207078.95,
+      "held": 1,
+      "pnl": -2315.94,
+      "dd_pct": 3.104,
+      "gross_pct": 18.66,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-11",
+      "equity": 206280.51,
+      "held": 1,
+      "pnl": -798.44,
+      "dd_pct": 3.477,
+      "gross_pct": 19.31,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-12",
+      "equity": 206560.51,
+      "held": 1,
+      "pnl": 280.0,
+      "dd_pct": 3.346,
+      "gross_pct": 19.11,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-13",
+      "equity": 207515.39,
+      "held": 1,
+      "pnl": 954.88,
+      "dd_pct": 2.9,
+      "gross_pct": 28.19,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-14",
+      "equity": 208165.61,
+      "held": 1,
+      "pnl": 650.22,
+      "dd_pct": 2.595,
+      "gross_pct": 43.68,
+      "codes": [
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-08-17",
+      "equity": 208575.61,
+      "held": 2,
+      "pnl": 410.0,
+      "dd_pct": 2.404,
+      "gross_pct": 64.27,
+      "codes": [
+        "EB",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-08-18",
+      "equity": 209560.61,
+      "held": 2,
+      "pnl": 985.0,
+      "dd_pct": 1.943,
+      "gross_pct": 64.87,
+      "codes": [
+        "EB",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-08-19",
+      "equity": 211705.61,
+      "held": 2,
+      "pnl": 2145.0,
+      "dd_pct": 0.939,
+      "gross_pct": 65.47,
+      "codes": [
+        "EB",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-08-20",
+      "equity": 211723.21,
+      "held": 1,
+      "pnl": 17.61,
+      "dd_pct": 0.931,
+      "gross_pct": 20.55,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-08-21",
+      "equity": 211341.14,
+      "held": 2,
+      "pnl": -382.07,
+      "dd_pct": 1.109,
+      "gross_pct": 54.22,
+      "codes": [
+        "EB",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-08-24",
+      "equity": 210383.11,
+      "held": 1,
+      "pnl": -958.03,
+      "dd_pct": 1.558,
+      "gross_pct": 25.69,
+      "codes": [
+        "EG"
+      ]
+    },
+    {
+      "date": "2026-08-25",
+      "equity": 209803.63,
+      "held": 2,
+      "pnl": -579.48,
+      "dd_pct": 1.829,
+      "gross_pct": 70.69,
+      "codes": [
+        "EG",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-08-26",
+      "equity": 208409.2,
+      "held": 2,
+      "pnl": -1394.43,
+      "dd_pct": 2.481,
+      "gross_pct": 94.91,
+      "codes": [
+        "EG",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-08-27",
+      "equity": 210219.2,
+      "held": 1,
+      "pnl": 1810.0,
+      "dd_pct": 1.634,
+      "gross_pct": 45.92,
+      "codes": [
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-08-28",
+      "equity": 211376.05,
+      "held": 2,
+      "pnl": 1156.85,
+      "dd_pct": 1.093,
+      "gross_pct": 90.25,
+      "codes": [
+        "BU",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-08-31",
+      "equity": 216902.54,
+      "held": 1,
+      "pnl": 5526.5,
+      "dd_pct": 0.0,
+      "gross_pct": 15.44,
+      "codes": [
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-01",
+      "equity": 217570.04,
+      "held": 1,
+      "pnl": 667.5,
+      "dd_pct": 0.0,
+      "gross_pct": 31.04,
+      "codes": [
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-02",
+      "equity": 217065.04,
+      "held": 2,
+      "pnl": -505.0,
+      "dd_pct": 0.232,
+      "gross_pct": 57.73,
+      "codes": [
+        "EG",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-03",
+      "equity": 216825.1,
+      "held": 3,
+      "pnl": -239.95,
+      "dd_pct": 0.342,
+      "gross_pct": 103.2,
+      "codes": [
+        "EG",
+        "JM",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-04",
+      "equity": 219925.1,
+      "held": 3,
+      "pnl": 3100.0,
+      "dd_pct": 0.0,
+      "gross_pct": 103.4,
+      "codes": [
+        "EG",
+        "JM",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "equity": 214937.42,
+      "held": 3,
+      "pnl": -4987.68,
+      "dd_pct": 2.268,
+      "gross_pct": 104.0,
+      "codes": [
+        "EG",
+        "JM",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-08",
+      "equity": 220647.42,
+      "held": 3,
+      "pnl": 5710.0,
+      "dd_pct": 0.0,
+      "gross_pct": 103.75,
+      "codes": [
+        "EG",
+        "JM",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-09",
+      "equity": 218017.42,
+      "held": 3,
+      "pnl": -2630.0,
+      "dd_pct": 1.192,
+      "gross_pct": 103.79,
+      "codes": [
+        "EG",
+        "JM",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-10",
+      "equity": 217877.42,
+      "held": 3,
+      "pnl": -140.0,
+      "dd_pct": 1.255,
+      "gross_pct": 103.8,
+      "codes": [
+        "EG",
+        "JM",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-11",
+      "equity": 216295.38,
+      "held": 3,
+      "pnl": -1582.04,
+      "dd_pct": 1.972,
+      "gross_pct": 122.64,
+      "codes": [
+        "BU",
+        "JM",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "equity": 217982.81,
+      "held": 2,
+      "pnl": 1687.43,
+      "dd_pct": 1.208,
+      "gross_pct": 78.86,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "equity": 219662.81,
+      "held": 2,
+      "pnl": 1680.0,
+      "dd_pct": 0.446,
+      "gross_pct": 79.02,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "equity": 222530.92,
+      "held": 1,
+      "pnl": 2868.11,
+      "dd_pct": 0.0,
+      "gross_pct": 15.63,
+      "codes": [
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "equity": 222008.99,
+      "held": 1,
+      "pnl": -521.93,
+      "dd_pct": 0.235,
+      "gross_pct": 27.46,
+      "codes": [
+        "EG"
+      ]
+    },
+    {
+      "date": "2026-09-18",
+      "equity": 221543.99,
+      "held": 2,
+      "pnl": -465.0,
+      "dd_pct": 0.444,
+      "gross_pct": 57.78,
+      "codes": [
+        "EG",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-21",
+      "equity": 221603.99,
+      "held": 2,
+      "pnl": 60.0,
+      "dd_pct": 0.417,
+      "gross_pct": 57.76,
+      "codes": [
+        "EG",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-22",
+      "equity": 219932.09,
+      "held": 2,
+      "pnl": -1671.89,
+      "dd_pct": 1.168,
+      "gross_pct": 77.42,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-23",
+      "equity": 218072.09,
+      "held": 2,
+      "pnl": -1860.0,
+      "dd_pct": 2.004,
+      "gross_pct": 76.14,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-24",
+      "equity": 225672.09,
+      "held": 2,
+      "pnl": 7600.0,
+      "dd_pct": 0.0,
+      "gross_pct": 76.94,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-28",
+      "equity": 221051.38,
+      "held": 1,
+      "pnl": -4620.71,
+      "dd_pct": 2.048,
+      "gross_pct": 46.23,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-09-29",
+      "equity": 224965.46,
+      "held": 1,
+      "pnl": 3914.08,
+      "dd_pct": 0.313,
+      "gross_pct": 46.64,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "equity": 222625.46,
+      "held": 1,
+      "pnl": -2340.0,
+      "dd_pct": 1.35,
+      "gross_pct": 45.04,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "equity": 232092.58,
+      "held": 2,
+      "pnl": 9467.12,
+      "dd_pct": 0.0,
+      "gross_pct": 44.37,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "equity": 231992.58,
+      "held": 2,
+      "pnl": -100.0,
+      "dd_pct": 0.043,
+      "gross_pct": 44.45,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-12",
+      "equity": 232302.58,
+      "held": 2,
+      "pnl": 310.0,
+      "dd_pct": 0.0,
+      "gross_pct": 44.26,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-13",
+      "equity": 233302.58,
+      "held": 2,
+      "pnl": 1000.0,
+      "dd_pct": 0.0,
+      "gross_pct": 43.64,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-14",
+      "equity": 233482.58,
+      "held": 2,
+      "pnl": 180.0,
+      "dd_pct": 0.0,
+      "gross_pct": 43.53,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-15",
+      "equity": 233852.58,
+      "held": 2,
+      "pnl": 370.0,
+      "dd_pct": 0.0,
+      "gross_pct": 43.31,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "equity": 233512.58,
+      "held": 2,
+      "pnl": -340.0,
+      "dd_pct": 0.145,
+      "gross_pct": 43.51,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "equity": 232512.58,
+      "held": 2,
+      "pnl": -1000.0,
+      "dd_pct": 0.573,
+      "gross_pct": 44.13,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-20",
+      "equity": 233132.58,
+      "held": 2,
+      "pnl": 620.0,
+      "dd_pct": 0.308,
+      "gross_pct": 43.75,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-21",
+      "equity": 233583.37,
+      "held": 2,
+      "pnl": 450.79,
+      "dd_pct": 0.115,
+      "gross_pct": 70.4,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-22",
+      "equity": 239255.73,
+      "held": 2,
+      "pnl": 5672.37,
+      "dd_pct": 0.0,
+      "gross_pct": 69.01,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-23",
+      "equity": 243215.73,
+      "held": 2,
+      "pnl": 3960.0,
+      "dd_pct": 0.0,
+      "gross_pct": 70.01,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-24",
+      "equity": 243215.73,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 70.01,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-25",
+      "equity": 243215.73,
+      "held": 2,
+      "pnl": 0.0,
+      "dd_pct": 0.0,
+      "gross_pct": 70.01,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-26",
+      "equity": 243954.28,
+      "held": 3,
+      "pnl": 738.54,
+      "dd_pct": 0.0,
+      "gross_pct": 75.14,
+      "codes": [
+        "I",
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "equity": 246124.28,
+      "held": 3,
+      "pnl": 2170.0,
+      "dd_pct": 0.0,
+      "gross_pct": 74.39,
+      "codes": [
+        "I",
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "equity": 244113.52,
+      "held": 2,
+      "pnl": -2010.75,
+      "dd_pct": 0.817,
+      "gross_pct": 41.56,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-10-29",
+      "equity": 242846.73,
+      "held": 1,
+      "pnl": -1266.8,
+      "dd_pct": 1.332,
+      "gross_pct": 14.05,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-10-30",
+      "equity": 243516.73,
+      "held": 1,
+      "pnl": 670.0,
+      "dd_pct": 1.059,
+      "gross_pct": 14.29,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-10-31",
+      "equity": 243516.73,
+      "held": 1,
+      "pnl": 0.0,
+      "dd_pct": 1.059,
+      "gross_pct": 0.0,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-11-01",
+      "equity": 243444.98,
+      "held": 2,
+      "pnl": -71.75,
+      "dd_pct": 1.089,
+      "gross_pct": 28.57,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-11-02",
+      "equity": 242154.03,
+      "held": 1,
+      "pnl": -1290.95,
+      "dd_pct": 1.613,
+      "gross_pct": 14.69,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-11-03",
+      "equity": 240265.23,
+      "held": 1,
+      "pnl": -1888.8,
+      "dd_pct": 2.381,
+      "gross_pct": 14.59,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-11-04",
+      "equity": 239151.04,
+      "held": 1,
+      "pnl": -1114.19,
+      "dd_pct": 2.833,
+      "gross_pct": 14.23,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-11-05",
+      "equity": 238028.8,
+      "held": 0,
+      "pnl": -1122.24,
+      "dd_pct": 3.289,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-11-06",
+      "equity": 238028.8,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 3.289,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-11-07",
+      "equity": 238028.8,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 3.289,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-11-08",
+      "equity": 238028.8,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 3.289,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-11-09",
+      "equity": 237996.3,
+      "held": 1,
+      "pnl": -32.5,
+      "dd_pct": 3.302,
+      "gross_pct": 36.06,
+      "codes": [
+        "P"
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "equity": 236439.8,
+      "held": 0,
+      "pnl": -1556.5,
+      "dd_pct": 3.935,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-11-11",
+      "equity": 236439.8,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 3.935,
+      "gross_pct": 0.0,
+      "codes": []
+    }
+  ],
+  "equity_curve_weekly": [
+    {
+      "date": "2025-12-18",
+      "equity": 199958.19,
+      "held": 2,
+      "pnl": -41.81,
+      "dd_pct": 0.021,
+      "gross_pct": 30.78,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-22",
+      "equity": 202022.62,
+      "held": 2,
+      "pnl": 1285.0,
+      "dd_pct": 0.0,
+      "gross_pct": 60.63,
+      "codes": [
+        "JD",
+        "L"
+      ]
+    },
+    {
+      "date": "2025-12-29",
+      "equity": 197910.46,
+      "held": 1,
+      "pnl": -778.5,
+      "dd_pct": 2.035,
+      "gross_pct": 16.3,
+      "codes": [
+        "L"
+      ]
+    },
+    {
+      "date": "2026-01-05",
+      "equity": 198648.6,
+      "held": 1,
+      "pnl": 844.64,
+      "dd_pct": 1.67,
+      "gross_pct": 16.23,
+      "codes": [
+        "L"
+      ]
+    },
+    {
+      "date": "2026-01-07",
+      "equity": 198241.17,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 1.872,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-01-14",
+      "equity": 198213.1,
+      "held": 2,
+      "pnl": 130.0,
+      "dd_pct": 1.886,
+      "gross_pct": 50.26,
+      "codes": [
+        "CF",
+        "TA"
+      ]
+    },
+    {
+      "date": "2026-01-21",
+      "equity": 195181.89,
+      "held": 1,
+      "pnl": 65.0,
+      "dd_pct": 3.386,
+      "gross_pct": 18.8,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "equity": 196887.89,
+      "held": 1,
+      "pnl": 680.0,
+      "dd_pct": 2.542,
+      "gross_pct": 19.77,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-02-02",
+      "equity": 195792.24,
+      "held": 1,
+      "pnl": -572.76,
+      "dd_pct": 3.084,
+      "gross_pct": 37.99,
+      "codes": [
+        "EB"
+      ]
+    },
+    {
+      "date": "2026-02-09",
+      "equity": 197103.56,
+      "held": 1,
+      "pnl": -337.24,
+      "dd_pct": 2.435,
+      "gross_pct": 16.98,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-02-24",
+      "equity": 196376.37,
+      "held": 1,
+      "pnl": -330.0,
+      "dd_pct": 2.795,
+      "gross_pct": 51.15,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-03-02",
+      "equity": 199831.99,
+      "held": 1,
+      "pnl": 3437.13,
+      "dd_pct": 1.084,
+      "gross_pct": 35.02,
+      "codes": [
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-03-09",
+      "equity": 209072.57,
+      "held": 1,
+      "pnl": 1862.01,
+      "dd_pct": 0.0,
+      "gross_pct": 13.54,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-03-16",
+      "equity": 209435.76,
+      "held": 2,
+      "pnl": 352.57,
+      "dd_pct": 0.0,
+      "gross_pct": 43.29,
+      "codes": [
+        "M",
+        "V"
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "equity": 210157.26,
+      "held": 1,
+      "pnl": 766.5,
+      "dd_pct": 0.087,
+      "gross_pct": 14.31,
+      "codes": [
+        "M"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "equity": 207372.84,
+      "held": 2,
+      "pnl": -166.47,
+      "dd_pct": 1.411,
+      "gross_pct": 49.31,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-01",
+      "equity": 204916.26,
+      "held": 1,
+      "pnl": -1536.57,
+      "dd_pct": 2.579,
+      "gross_pct": 14.71,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-07",
+      "equity": 208174.21,
+      "held": 1,
+      "pnl": 327.95,
+      "dd_pct": 1.03,
+      "gross_pct": 34.13,
+      "codes": [
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-04-14",
+      "equity": 200128.48,
+      "held": 1,
+      "pnl": -6033.66,
+      "dd_pct": 4.855,
+      "gross_pct": 28.87,
+      "codes": [
+        "FG"
+      ]
+    },
+    {
+      "date": "2026-04-21",
+      "equity": 199652.95,
+      "held": 1,
+      "pnl": 50.0,
+      "dd_pct": 5.081,
+      "gross_pct": 40.03,
+      "codes": [
+        "CF"
+      ]
+    },
+    {
+      "date": "2026-04-28",
+      "equity": 201713.72,
+      "held": 2,
+      "pnl": -660.0,
+      "dd_pct": 4.101,
+      "gross_pct": 78.37,
+      "codes": [
+        "CF",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-05-06",
+      "equity": 207860.04,
+      "held": 3,
+      "pnl": 4283.17,
+      "dd_pct": 1.179,
+      "gross_pct": 121.96,
+      "codes": [
+        "FU",
+        "JD",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-05-07",
+      "equity": 203928.55,
+      "held": 2,
+      "pnl": -3931.49,
+      "dd_pct": 3.048,
+      "gross_pct": 80.42,
+      "codes": [
+        "JD",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-05-14",
+      "equity": 198252.2,
+      "held": 1,
+      "pnl": -2428.1,
+      "dd_pct": 5.747,
+      "gross_pct": 43.64,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-05-21",
+      "equity": 201081.37,
+      "held": 2,
+      "pnl": -50.0,
+      "dd_pct": 4.402,
+      "gross_pct": 44.4,
+      "codes": [
+        "JD",
+        "PP"
+      ]
+    },
+    {
+      "date": "2026-05-28",
+      "equity": 200822.51,
+      "held": 1,
+      "pnl": -800.0,
+      "dd_pct": 4.525,
+      "gross_pct": 22.8,
+      "codes": [
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-01",
+      "equity": 201948.73,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 3.99,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-06-08",
+      "equity": 200191.43,
+      "held": 2,
+      "pnl": -4.84,
+      "dd_pct": 4.825,
+      "gross_pct": 71.55,
+      "codes": [
+        "JD",
+        "SP"
+      ]
+    },
+    {
+      "date": "2026-06-15",
+      "equity": 204469.09,
+      "held": 2,
+      "pnl": 5163.46,
+      "dd_pct": 2.792,
+      "gross_pct": 39.51,
+      "codes": [
+        "FU",
+        "JD"
+      ]
+    },
+    {
+      "date": "2026-06-22",
+      "equity": 206132.42,
+      "held": 2,
+      "pnl": 596.9,
+      "dd_pct": 2.001,
+      "gross_pct": 81.01,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-06-29",
+      "equity": 208482.42,
+      "held": 2,
+      "pnl": 50.0,
+      "dd_pct": 1.344,
+      "gross_pct": 78.66,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-07-01",
+      "equity": 212212.26,
+      "held": 1,
+      "pnl": 3109.85,
+      "dd_pct": 0.0,
+      "gross_pct": 41.12,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "equity": 211132.26,
+      "held": 1,
+      "pnl": 180.0,
+      "dd_pct": 1.207,
+      "gross_pct": 41.85,
+      "codes": [
+        "FU"
+      ]
+    },
+    {
+      "date": "2026-07-14",
+      "equity": 199405.86,
+      "held": 1,
+      "pnl": -954.33,
+      "dd_pct": 6.694,
+      "gross_pct": 32.02,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-21",
+      "equity": 203359.48,
+      "held": 1,
+      "pnl": -39.72,
+      "dd_pct": 4.844,
+      "gross_pct": 49.62,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-07-28",
+      "equity": 205963.16,
+      "held": 1,
+      "pnl": 1381.18,
+      "dd_pct": 3.626,
+      "gross_pct": 47.19,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-03",
+      "equity": 211394.88,
+      "held": 1,
+      "pnl": 1600.0,
+      "dd_pct": 1.084,
+      "gross_pct": 43.47,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-07",
+      "equity": 209394.88,
+      "held": 1,
+      "pnl": -200.0,
+      "dd_pct": 2.02,
+      "gross_pct": 44.84,
+      "codes": [
+        "SA"
+      ]
+    },
+    {
+      "date": "2026-08-14",
+      "equity": 208165.61,
+      "held": 1,
+      "pnl": 650.22,
+      "dd_pct": 2.595,
+      "gross_pct": 43.68,
+      "codes": [
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-08-21",
+      "equity": 211341.14,
+      "held": 2,
+      "pnl": -382.07,
+      "dd_pct": 1.109,
+      "gross_pct": 54.22,
+      "codes": [
+        "EB",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-08-28",
+      "equity": 211376.05,
+      "held": 2,
+      "pnl": 1156.85,
+      "dd_pct": 1.093,
+      "gross_pct": 90.25,
+      "codes": [
+        "BU",
+        "JM"
+      ]
+    },
+    {
+      "date": "2026-09-01",
+      "equity": 217570.04,
+      "held": 1,
+      "pnl": 667.5,
+      "dd_pct": 0.0,
+      "gross_pct": 31.04,
+      "codes": [
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "equity": 214937.42,
+      "held": 3,
+      "pnl": -4987.68,
+      "dd_pct": 2.268,
+      "gross_pct": 104.0,
+      "codes": [
+        "EG",
+        "JM",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "equity": 217982.81,
+      "held": 2,
+      "pnl": 1687.43,
+      "dd_pct": 1.208,
+      "gross_pct": 78.86,
+      "codes": [
+        "BU",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-21",
+      "equity": 221603.99,
+      "held": 2,
+      "pnl": 60.0,
+      "dd_pct": 0.417,
+      "gross_pct": 57.76,
+      "codes": [
+        "EG",
+        "M"
+      ]
+    },
+    {
+      "date": "2026-09-28",
+      "equity": 221051.38,
+      "held": 1,
+      "pnl": -4620.71,
+      "dd_pct": 2.048,
+      "gross_pct": 46.23,
+      "codes": [
+        "BU"
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "equity": 232092.58,
+      "held": 2,
+      "pnl": 9467.12,
+      "dd_pct": 0.0,
+      "gross_pct": 44.37,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-14",
+      "equity": 233482.58,
+      "held": 2,
+      "pnl": 180.0,
+      "dd_pct": 0.0,
+      "gross_pct": 43.53,
+      "codes": [
+        "FG",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-21",
+      "equity": 233583.37,
+      "held": 2,
+      "pnl": 450.79,
+      "dd_pct": 0.115,
+      "gross_pct": 70.4,
+      "codes": [
+        "FU",
+        "I"
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "equity": 244113.52,
+      "held": 2,
+      "pnl": -2010.75,
+      "dd_pct": 0.817,
+      "gross_pct": 41.56,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-11-01",
+      "equity": 243444.98,
+      "held": 2,
+      "pnl": -71.75,
+      "dd_pct": 1.089,
+      "gross_pct": 28.57,
+      "codes": [
+        "JD",
+        "MA"
+      ]
+    },
+    {
+      "date": "2026-11-07",
+      "equity": 238028.8,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 3.289,
+      "gross_pct": 0.0,
+      "codes": []
+    },
+    {
+      "date": "2026-11-11",
+      "equity": 236439.8,
+      "held": 0,
+      "pnl": 0.0,
+      "dd_pct": 3.935,
+      "gross_pct": 0.0,
+      "codes": []
+    }
+  ],
+  "day_pnls_tail": [
+    {
+      "date": "2026-10-23",
+      "pnl": 3960.0,
+      "equity": 243215.73
+    },
+    {
+      "date": "2026-10-24",
+      "pnl": 0.0,
+      "equity": 243215.73
+    },
+    {
+      "date": "2026-10-25",
+      "pnl": 0.0,
+      "equity": 243215.73
+    },
+    {
+      "date": "2026-10-26",
+      "pnl": 738.54,
+      "equity": 243954.28
+    },
+    {
+      "date": "2026-10-27",
+      "pnl": 2170.0,
+      "equity": 246124.28
+    },
+    {
+      "date": "2026-10-28",
+      "pnl": -2010.75,
+      "equity": 244113.52
+    },
+    {
+      "date": "2026-10-29",
+      "pnl": -1266.8,
+      "equity": 242846.73
+    },
+    {
+      "date": "2026-10-30",
+      "pnl": 670.0,
+      "equity": 243516.73
+    },
+    {
+      "date": "2026-10-31",
+      "pnl": 0.0,
+      "equity": 243516.73
+    },
+    {
+      "date": "2026-11-01",
+      "pnl": -71.75,
+      "equity": 243444.98
+    },
+    {
+      "date": "2026-11-02",
+      "pnl": -1290.95,
+      "equity": 242154.03
+    },
+    {
+      "date": "2026-11-03",
+      "pnl": -1888.8,
+      "equity": 240265.23
+    },
+    {
+      "date": "2026-11-04",
+      "pnl": -1114.19,
+      "equity": 239151.04
+    },
+    {
+      "date": "2026-11-05",
+      "pnl": -1122.24,
+      "equity": 238028.8
+    },
+    {
+      "date": "2026-11-06",
+      "pnl": 0.0,
+      "equity": 238028.8
+    },
+    {
+      "date": "2026-11-07",
+      "pnl": 0.0,
+      "equity": 238028.8
+    },
+    {
+      "date": "2026-11-08",
+      "pnl": 0.0,
+      "equity": 238028.8
+    },
+    {
+      "date": "2026-11-09",
+      "pnl": -32.5,
+      "equity": 237996.3
+    },
+    {
+      "date": "2026-11-10",
+      "pnl": -1556.5,
+      "equity": 236439.8
+    },
+    {
+      "date": "2026-11-11",
+      "pnl": 0.0,
+      "equity": 236439.8
+    }
+  ],
+  "closed_pnls_tail": [
+    {
+      "date": "2025-12-19",
+      "code": "L",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2025-12-19",
+      "entry": 6469.0,
+      "exit": 6349.1143,
+      "stop": 6528.9429,
+      "target": 6349.1143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2025-12-24",
+      "code": "L",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2025-12-22",
+      "entry": 6327.0,
+      "exit": 6393.1714,
+      "stop": 6393.1714,
+      "target": 6194.6571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2025-12-25",
+      "code": "JD",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2025-12-19",
+      "entry": 2908.0,
+      "exit": 2954.7429,
+      "stop": 2954.7429,
+      "target": 2814.5143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2025-12-29",
+      "code": "L",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2025-12-25",
+      "entry": 6415.0,
+      "exit": 6494.2571,
+      "stop": 6494.2571,
+      "target": 6256.4857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2025-12-29",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2025-12-29",
+      "entry": 14535.0,
+      "exit": 14421.8571,
+      "stop": 14421.8571,
+      "target": 14761.2857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-05",
+      "code": "L",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2025-12-30",
+      "entry": 6460.0,
+      "exit": 6541.7714,
+      "stop": 6541.7714,
+      "target": 6296.4571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-05",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2025-12-31",
+      "entry": 14585.0,
+      "exit": 14837.0,
+      "stop": 14459.0,
+      "target": 14837.0,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-06",
+      "code": "L",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-01-06",
+      "entry": 6481.0,
+      "exit": 6560.4857,
+      "stop": 6560.4857,
+      "target": 6322.0286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-12",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-12",
+      "entry": 14680.0,
+      "exit": 14504.2857,
+      "stop": 14504.2857,
+      "target": 15031.4286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-16",
+      "code": "TA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-09",
+      "entry": 5098.0,
+      "exit": 4996.5143,
+      "stop": 4996.5143,
+      "target": 5300.9714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-20",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-13",
+      "entry": 14625.0,
+      "exit": 14441.0,
+      "stop": 14441.0,
+      "target": 14993.0,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-20",
+      "code": "EB",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-20",
+      "entry": 7350.0,
+      "exit": 7239.5429,
+      "stop": 7239.5429,
+      "target": 7570.9143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-22",
+      "code": "EB",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-21",
+      "entry": 7327.0,
+      "exit": 7554.2,
+      "stop": 7213.4,
+      "target": 7554.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-30",
+      "code": "EB",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-23",
+      "entry": 7654.0,
+      "exit": 7925.8857,
+      "stop": 7518.0571,
+      "target": 7925.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-30",
+      "code": "P",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-30",
+      "entry": 9362.0,
+      "exit": 9248.6286,
+      "stop": 9248.6286,
+      "target": 9588.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-02",
+      "code": "BU",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-02-02",
+      "entry": 3442.0,
+      "exit": 3388.5714,
+      "stop": 3388.5714,
+      "target": 3548.8571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-04",
+      "code": "EB",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-02-03",
+      "entry": 7452.0,
+      "exit": 7831.0857,
+      "stop": 7262.4571,
+      "target": 7831.0857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-06",
+      "code": "EB",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-02-05",
+      "entry": 7808.0,
+      "exit": 7608.3429,
+      "stop": 7608.3429,
+      "target": 8207.3143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-09",
+      "code": "JD",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-02-09",
+      "entry": 3152.0,
+      "exit": 3149.0,
+      "stop": 3186.0,
+      "target": 3084.0,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": 0.09,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-13",
+      "code": "BU",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-02-09",
+      "entry": 3380.0,
+      "exit": 3314.6286,
+      "stop": 3314.6286,
+      "target": 3510.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-02",
+      "code": "BU",
+      "direction": "多",
+      "lots": 3,
+      "entry_date": "2026-02-24",
+      "entry": 3359.0,
+      "exit": 3497.4,
+      "stop": 3289.8,
+      "target": 3497.4,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-02",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-02-26",
+      "entry": 15370.0,
+      "exit": 15198.5714,
+      "stop": 15198.5714,
+      "target": 15712.8571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-04",
+      "code": "PP",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-03",
+      "entry": 7037.0,
+      "exit": 7228.7714,
+      "stop": 6941.1143,
+      "target": 7228.7714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-05",
+      "code": "EB",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-05",
+      "entry": 8120.0,
+      "exit": 8471.0857,
+      "stop": 7944.4571,
+      "target": 8471.0857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-09",
+      "code": "EB",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-06",
+      "entry": 8706.0,
+      "exit": 9099.6,
+      "stop": 8509.2,
+      "target": 9099.6,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-10",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-10",
+      "entry": 2799.0,
+      "exit": 2705.0571,
+      "stop": 2705.0571,
+      "target": 2986.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-12",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-12",
+      "entry": 3097.0,
+      "exit": 3053.1714,
+      "stop": 3053.1714,
+      "target": 3184.6571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-13",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-13",
+      "entry": 3075.0,
+      "exit": 3168.2571,
+      "stop": 3028.3714,
+      "target": 3168.2571,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-16",
+      "code": "V",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-13",
+      "entry": 5690.0,
+      "exit": 6027.8286,
+      "stop": 5521.0857,
+      "target": 6027.8286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-16",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-16",
+      "entry": 3123.0,
+      "exit": 3069.1714,
+      "stop": 3069.1714,
+      "target": 3230.6571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-23",
+      "code": "V",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-17",
+      "entry": 5780.0,
+      "exit": 6168.1143,
+      "stop": 5585.9429,
+      "target": 6168.1143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-23",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-17",
+      "entry": 3055.0,
+      "exit": 2997.1714,
+      "stop": 2997.1714,
+      "target": 3170.6571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-25",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-25",
+      "entry": 3175.0,
+      "exit": 2991.5714,
+      "stop": 2991.5714,
+      "target": 3541.8571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-27",
+      "code": "M",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-24",
+      "entry": 2985.0,
+      "exit": 2920.6571,
+      "stop": 2920.6571,
+      "target": 3113.6857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-01",
+      "code": "JD",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-30",
+      "entry": 3460.0,
+      "exit": 3418.8,
+      "stop": 3418.8,
+      "target": 3542.4,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-01",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-31",
+      "entry": 3295.0,
+      "exit": 3129.9714,
+      "stop": 3129.9714,
+      "target": 3625.0571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-07",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-02",
+      "entry": 3071.0,
+      "exit": 3405.0571,
+      "stop": 2903.9714,
+      "target": 3405.0571,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-08",
+      "code": "MA",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-04-08",
+      "entry": 3560.0,
+      "exit": 3376.6286,
+      "stop": 3376.6286,
+      "target": 3926.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-14",
+      "code": "MA",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-04-09",
+      "entry": 3087.0,
+      "exit": 2880.2571,
+      "stop": 2880.2571,
+      "target": 3500.4857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-16",
+      "code": "FG",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-04-15",
+      "entry": 964.0,
+      "exit": 981.7714,
+      "stop": 981.7714,
+      "target": 928.4571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-16",
+      "code": "JM",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-04-16",
+      "entry": 1234.0,
+      "exit": 1248.0,
+      "stop": 1263.2286,
+      "target": 1175.5429,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": -0.48,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-17",
+      "code": "SS",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-17",
+      "entry": 14830.0,
+      "exit": 15161.4286,
+      "stop": 14664.2857,
+      "target": 15161.4286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-22",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-21",
+      "entry": 15975.0,
+      "exit": 16365.2857,
+      "stop": 15779.8571,
+      "target": 16365.2857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-06",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-23",
+      "entry": 16230.0,
+      "exit": 16623.7143,
+      "stop": 16033.1429,
+      "target": 16623.7143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-07",
+      "code": "FU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-05-06",
+      "entry": 4369.0,
+      "exit": 4299.0,
+      "stop": 4232.0857,
+      "target": 4642.8286,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": -0.51,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-12",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-28",
+      "entry": 1277.5,
+      "exit": 1244.1857,
+      "stop": 1244.1857,
+      "target": 1344.1286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-14",
+      "code": "FU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-05-12",
+      "entry": 4385.0,
+      "exit": 4248.6571,
+      "stop": 4248.6571,
+      "target": 4657.6857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-20",
+      "code": "JD",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-05-07",
+      "entry": 4260.0,
+      "exit": 4446.9714,
+      "stop": 4166.5143,
+      "target": 4446.9714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-25",
+      "code": "PP",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-05-18",
+      "entry": 8800.0,
+      "exit": 8652.2286,
+      "stop": 8652.2286,
+      "target": 9095.5429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-29",
+      "code": "JD",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-05-21",
+      "entry": 4474.0,
+      "exit": 4695.1429,
+      "stop": 4363.4286,
+      "target": 4695.1429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-05",
+      "code": "JD",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-06-04",
+      "entry": 4727.0,
+      "exit": 4636.8857,
+      "stop": 4636.8857,
+      "target": 4907.2286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-12",
+      "code": "SP",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-06-03",
+      "entry": 4860.0,
+      "exit": 4906.4,
+      "stop": 4906.4,
+      "target": 4767.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-15",
+      "code": "FU",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-06-15",
+      "entry": 3597.0,
+      "exit": 3345.5714,
+      "stop": 3722.7143,
+      "target": 3345.5714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-18",
+      "code": "JD",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-06-09",
+      "entry": 4645.0,
+      "exit": 4550.5429,
+      "stop": 4550.5429,
+      "target": 4833.9143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-18",
+      "code": "FU",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-06-16",
+      "entry": 3355.0,
+      "exit": 3077.9714,
+      "stop": 3493.5143,
+      "target": 3077.9714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-01",
+      "code": "I",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-06-22",
+      "entry": 746.0,
+      "exit": 729.4286,
+      "stop": 754.2857,
+      "target": 729.4286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-09",
+      "code": "FU",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-06-23",
+      "entry": 3080.0,
+      "exit": 3214.7429,
+      "stop": 3214.7429,
+      "target": 2810.5143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-13",
+      "code": "FU",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-07-10",
+      "entry": 3162.0,
+      "exit": 3245.3143,
+      "stop": 3245.3143,
+      "target": 2995.3714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-14",
+      "code": "FU",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-07-14",
+      "entry": 3279.0,
+      "exit": 3363.4,
+      "stop": 3363.4,
+      "target": 3110.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-16",
+      "code": "SA",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-07-15",
+      "entry": 1064.0,
+      "exit": 1032.5714,
+      "stop": 1079.7143,
+      "target": 1032.5714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-21",
+      "code": "SA",
+      "direction": "空",
+      "lots": 4,
+      "entry_date": "2026-07-17",
+      "entry": 1035.0,
+      "exit": 1003.1143,
+      "stop": 1050.9429,
+      "target": 1003.1143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-28",
+      "code": "SA",
+      "direction": "空",
+      "lots": 5,
+      "entry_date": "2026-07-22",
+      "entry": 1009.0,
+      "exit": 976.4286,
+      "stop": 1025.2857,
+      "target": 976.4286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-28",
+      "code": "M",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-07-24",
+      "entry": 3180.0,
+      "exit": 3147.8857,
+      "stop": 3147.8857,
+      "target": 3244.2286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-30",
+      "code": "SA",
+      "direction": "空",
+      "lots": 5,
+      "entry_date": "2026-07-29",
+      "entry": 970.0,
+      "exit": 936.7429,
+      "stop": 986.6286,
+      "target": 936.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-10",
+      "code": "SA",
+      "direction": "空",
+      "lots": 5,
+      "entry_date": "2026-07-31",
+      "entry": 943.0,
+      "exit": 960.0857,
+      "stop": 960.0857,
+      "target": 908.8286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-11",
+      "code": "SA",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-08-11",
+      "entry": 968.0,
+      "exit": 984.9714,
+      "stop": 984.9714,
+      "target": 934.0571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-13",
+      "code": "SA",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-08-12",
+      "entry": 994.0,
+      "exit": 959.3714,
+      "stop": 1011.3143,
+      "target": 959.3714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-14",
+      "code": "SA",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-08-14",
+      "entry": 1036.0,
+      "exit": 1023.0,
+      "stop": 1054.1143,
+      "target": 999.7714,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": 0.72,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-20",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-08-17",
+      "entry": 1515.0,
+      "exit": 1589.2857,
+      "stop": 1477.8571,
+      "target": 1589.2857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-24",
+      "code": "EB",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-08-18",
+      "entry": 8533.0,
+      "exit": 8728.6,
+      "stop": 8728.6,
+      "target": 8141.8,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-24",
+      "code": "I",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-08-24",
+      "entry": 707.0,
+      "exit": 717.6286,
+      "stop": 717.6286,
+      "target": 685.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-26",
+      "code": "EG",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-08-25",
+      "entry": 5418.0,
+      "exit": 5268.0571,
+      "stop": 5268.0571,
+      "target": 5717.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-27",
+      "code": "EG",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-08-27",
+      "entry": 5040.0,
+      "exit": 5028.0,
+      "stop": 4885.7714,
+      "target": 5348.4571,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": -0.08,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-31",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-08-26",
+      "entry": 1580.0,
+      "exit": 1665.8857,
+      "stop": 1537.0571,
+      "target": 1665.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-31",
+      "code": "BU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-08-31",
+      "entry": 4631.0,
+      "exit": 4801.7429,
+      "stop": 4545.6286,
+      "target": 4801.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-01",
+      "code": "M",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-01",
+      "entry": 3338.0,
+      "exit": 3410.0,
+      "stop": 3302.0,
+      "target": 3410.0,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-07",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-04",
+      "entry": 1658.0,
+      "exit": 1610.0286,
+      "stop": 1610.0286,
+      "target": 1753.9429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-11",
+      "code": "EG",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-03",
+      "entry": 5780.0,
+      "exit": 6149.8286,
+      "stop": 5595.0857,
+      "target": 6149.8286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-14",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-08",
+      "entry": 1622.0,
+      "exit": 1571.1143,
+      "stop": 1571.1143,
+      "target": 1723.7714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-16",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-02",
+      "entry": 3385.0,
+      "exit": 3463.1714,
+      "stop": 3345.9143,
+      "target": 3463.1714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-16",
+      "code": "BU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-14",
+      "entry": 5065.0,
+      "exit": 5364.2,
+      "stop": 4915.4,
+      "target": 5364.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-17",
+      "code": "M",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-17",
+      "entry": 3479.0,
+      "exit": 3431.0571,
+      "stop": 3431.0571,
+      "target": 3574.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-22",
+      "code": "EG",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-18",
+      "entry": 6050.0,
+      "exit": 5806.8,
+      "stop": 5806.8,
+      "target": 6536.4,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-28",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-21",
+      "entry": 3393.0,
+      "exit": 3342.7143,
+      "stop": 3342.7143,
+      "target": 3493.5714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-29",
+      "code": "BU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-23",
+      "entry": 4979.0,
+      "exit": 5310.3143,
+      "stop": 4813.3429,
+      "target": 5310.3143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-08",
+      "code": "BU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-30",
+      "entry": 5130.0,
+      "exit": 5494.5714,
+      "stop": 4947.7143,
+      "target": 5494.5714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-21",
+      "code": "FG",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-10-09",
+      "entry": 867.0,
+      "exit": 832.1429,
+      "stop": 884.4286,
+      "target": 832.1429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-22",
+      "code": "I",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-10-09",
+      "entry": 683.5,
+      "exit": 665.8429,
+      "stop": 692.3286,
+      "target": 665.8429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-26",
+      "code": "FU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-10-22",
+      "entry": 4700.0,
+      "exit": 5164.6857,
+      "stop": 4467.6571,
+      "target": 5164.6857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-28",
+      "code": "I",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-10-23",
+      "entry": 669.0,
+      "exit": 678.3429,
+      "stop": 678.3429,
+      "target": 650.3143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-28",
+      "code": "PP",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-10-27",
+      "entry": 10008.0,
+      "exit": 10399.5429,
+      "stop": 9812.2286,
+      "target": 10399.5429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-29",
+      "code": "JD",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-10-27",
+      "entry": 3290.0,
+      "exit": 3367.3143,
+      "stop": 3367.3143,
+      "target": 3135.3714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-02",
+      "code": "JD",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-11-02",
+      "entry": 3450.0,
+      "exit": 3510.9143,
+      "stop": 3510.9143,
+      "target": 3328.1714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-03",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-10-29",
+      "entry": 3480.0,
+      "exit": 3373.5429,
+      "stop": 3373.5429,
+      "target": 3692.9143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-04",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-11-04",
+      "entry": 3472.0,
+      "exit": 3365.9429,
+      "stop": 3365.9429,
+      "target": 3684.1143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-05",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-11-05",
+      "entry": 3357.0,
+      "exit": 3247.4,
+      "stop": 3247.4,
+      "target": 3576.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-10",
+      "code": "P",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-11-10",
+      "entry": 8564.0,
+      "exit": 8716.4,
+      "stop": 8716.4,
+      "target": 8259.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    }
+  ],
+  "closed_pnls": [
+    {
+      "date": "2025-12-19",
+      "code": "L",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2025-12-19",
+      "entry": 6469.0,
+      "exit": 6349.1143,
+      "stop": 6528.9429,
+      "target": 6349.1143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2025-12-24",
+      "code": "L",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2025-12-22",
+      "entry": 6327.0,
+      "exit": 6393.1714,
+      "stop": 6393.1714,
+      "target": 6194.6571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2025-12-25",
+      "code": "JD",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2025-12-19",
+      "entry": 2908.0,
+      "exit": 2954.7429,
+      "stop": 2954.7429,
+      "target": 2814.5143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2025-12-29",
+      "code": "L",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2025-12-25",
+      "entry": 6415.0,
+      "exit": 6494.2571,
+      "stop": 6494.2571,
+      "target": 6256.4857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2025-12-29",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2025-12-29",
+      "entry": 14535.0,
+      "exit": 14421.8571,
+      "stop": 14421.8571,
+      "target": 14761.2857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-05",
+      "code": "L",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2025-12-30",
+      "entry": 6460.0,
+      "exit": 6541.7714,
+      "stop": 6541.7714,
+      "target": 6296.4571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-05",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2025-12-31",
+      "entry": 14585.0,
+      "exit": 14837.0,
+      "stop": 14459.0,
+      "target": 14837.0,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-06",
+      "code": "L",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-01-06",
+      "entry": 6481.0,
+      "exit": 6560.4857,
+      "stop": 6560.4857,
+      "target": 6322.0286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-12",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-12",
+      "entry": 14680.0,
+      "exit": 14504.2857,
+      "stop": 14504.2857,
+      "target": 15031.4286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-16",
+      "code": "TA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-09",
+      "entry": 5098.0,
+      "exit": 4996.5143,
+      "stop": 4996.5143,
+      "target": 5300.9714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-20",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-13",
+      "entry": 14625.0,
+      "exit": 14441.0,
+      "stop": 14441.0,
+      "target": 14993.0,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-20",
+      "code": "EB",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-20",
+      "entry": 7350.0,
+      "exit": 7239.5429,
+      "stop": 7239.5429,
+      "target": 7570.9143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-22",
+      "code": "EB",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-21",
+      "entry": 7327.0,
+      "exit": 7554.2,
+      "stop": 7213.4,
+      "target": 7554.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-30",
+      "code": "EB",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-23",
+      "entry": 7654.0,
+      "exit": 7925.8857,
+      "stop": 7518.0571,
+      "target": 7925.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-01-30",
+      "code": "P",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-01-30",
+      "entry": 9362.0,
+      "exit": 9248.6286,
+      "stop": 9248.6286,
+      "target": 9588.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-02",
+      "code": "BU",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-02-02",
+      "entry": 3442.0,
+      "exit": 3388.5714,
+      "stop": 3388.5714,
+      "target": 3548.8571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-04",
+      "code": "EB",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-02-03",
+      "entry": 7452.0,
+      "exit": 7831.0857,
+      "stop": 7262.4571,
+      "target": 7831.0857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-06",
+      "code": "EB",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-02-05",
+      "entry": 7808.0,
+      "exit": 7608.3429,
+      "stop": 7608.3429,
+      "target": 8207.3143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-09",
+      "code": "JD",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-02-09",
+      "entry": 3152.0,
+      "exit": 3149.0,
+      "stop": 3186.0,
+      "target": 3084.0,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": 0.09,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-02-13",
+      "code": "BU",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-02-09",
+      "entry": 3380.0,
+      "exit": 3314.6286,
+      "stop": 3314.6286,
+      "target": 3510.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-02",
+      "code": "BU",
+      "direction": "多",
+      "lots": 3,
+      "entry_date": "2026-02-24",
+      "entry": 3359.0,
+      "exit": 3497.4,
+      "stop": 3289.8,
+      "target": 3497.4,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-02",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-02-26",
+      "entry": 15370.0,
+      "exit": 15198.5714,
+      "stop": 15198.5714,
+      "target": 15712.8571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-04",
+      "code": "PP",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-03",
+      "entry": 7037.0,
+      "exit": 7228.7714,
+      "stop": 6941.1143,
+      "target": 7228.7714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-05",
+      "code": "EB",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-05",
+      "entry": 8120.0,
+      "exit": 8471.0857,
+      "stop": 7944.4571,
+      "target": 8471.0857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-09",
+      "code": "EB",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-06",
+      "entry": 8706.0,
+      "exit": 9099.6,
+      "stop": 8509.2,
+      "target": 9099.6,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-10",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-10",
+      "entry": 2799.0,
+      "exit": 2705.0571,
+      "stop": 2705.0571,
+      "target": 2986.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-12",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-12",
+      "entry": 3097.0,
+      "exit": 3053.1714,
+      "stop": 3053.1714,
+      "target": 3184.6571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-13",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-13",
+      "entry": 3075.0,
+      "exit": 3168.2571,
+      "stop": 3028.3714,
+      "target": 3168.2571,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-16",
+      "code": "V",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-13",
+      "entry": 5690.0,
+      "exit": 6027.8286,
+      "stop": 5521.0857,
+      "target": 6027.8286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-16",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-16",
+      "entry": 3123.0,
+      "exit": 3069.1714,
+      "stop": 3069.1714,
+      "target": 3230.6571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-23",
+      "code": "V",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-17",
+      "entry": 5780.0,
+      "exit": 6168.1143,
+      "stop": 5585.9429,
+      "target": 6168.1143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-23",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-17",
+      "entry": 3055.0,
+      "exit": 2997.1714,
+      "stop": 2997.1714,
+      "target": 3170.6571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-25",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-25",
+      "entry": 3175.0,
+      "exit": 2991.5714,
+      "stop": 2991.5714,
+      "target": 3541.8571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-03-27",
+      "code": "M",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-24",
+      "entry": 2985.0,
+      "exit": 2920.6571,
+      "stop": 2920.6571,
+      "target": 3113.6857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-01",
+      "code": "JD",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-03-30",
+      "entry": 3460.0,
+      "exit": 3418.8,
+      "stop": 3418.8,
+      "target": 3542.4,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-01",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-03-31",
+      "entry": 3295.0,
+      "exit": 3129.9714,
+      "stop": 3129.9714,
+      "target": 3625.0571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-07",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-02",
+      "entry": 3071.0,
+      "exit": 3405.0571,
+      "stop": 2903.9714,
+      "target": 3405.0571,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-08",
+      "code": "MA",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-04-08",
+      "entry": 3560.0,
+      "exit": 3376.6286,
+      "stop": 3376.6286,
+      "target": 3926.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-14",
+      "code": "MA",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-04-09",
+      "entry": 3087.0,
+      "exit": 2880.2571,
+      "stop": 2880.2571,
+      "target": 3500.4857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-16",
+      "code": "FG",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-04-15",
+      "entry": 964.0,
+      "exit": 981.7714,
+      "stop": 981.7714,
+      "target": 928.4571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-16",
+      "code": "JM",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-04-16",
+      "entry": 1234.0,
+      "exit": 1248.0,
+      "stop": 1263.2286,
+      "target": 1175.5429,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": -0.48,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-17",
+      "code": "SS",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-17",
+      "entry": 14830.0,
+      "exit": 15161.4286,
+      "stop": 14664.2857,
+      "target": 15161.4286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-04-22",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-21",
+      "entry": 15975.0,
+      "exit": 16365.2857,
+      "stop": 15779.8571,
+      "target": 16365.2857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-06",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-23",
+      "entry": 16230.0,
+      "exit": 16623.7143,
+      "stop": 16033.1429,
+      "target": 16623.7143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-07",
+      "code": "FU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-05-06",
+      "entry": 4369.0,
+      "exit": 4299.0,
+      "stop": 4232.0857,
+      "target": 4642.8286,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": -0.51,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-12",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-04-28",
+      "entry": 1277.5,
+      "exit": 1244.1857,
+      "stop": 1244.1857,
+      "target": 1344.1286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-14",
+      "code": "FU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-05-12",
+      "entry": 4385.0,
+      "exit": 4248.6571,
+      "stop": 4248.6571,
+      "target": 4657.6857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-20",
+      "code": "JD",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-05-07",
+      "entry": 4260.0,
+      "exit": 4446.9714,
+      "stop": 4166.5143,
+      "target": 4446.9714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-25",
+      "code": "PP",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-05-18",
+      "entry": 8800.0,
+      "exit": 8652.2286,
+      "stop": 8652.2286,
+      "target": 9095.5429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-05-29",
+      "code": "JD",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-05-21",
+      "entry": 4474.0,
+      "exit": 4695.1429,
+      "stop": 4363.4286,
+      "target": 4695.1429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-05",
+      "code": "JD",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-06-04",
+      "entry": 4727.0,
+      "exit": 4636.8857,
+      "stop": 4636.8857,
+      "target": 4907.2286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-12",
+      "code": "SP",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-06-03",
+      "entry": 4860.0,
+      "exit": 4906.4,
+      "stop": 4906.4,
+      "target": 4767.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-15",
+      "code": "FU",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-06-15",
+      "entry": 3597.0,
+      "exit": 3345.5714,
+      "stop": 3722.7143,
+      "target": 3345.5714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-18",
+      "code": "JD",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-06-09",
+      "entry": 4645.0,
+      "exit": 4550.5429,
+      "stop": 4550.5429,
+      "target": 4833.9143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-06-18",
+      "code": "FU",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-06-16",
+      "entry": 3355.0,
+      "exit": 3077.9714,
+      "stop": 3493.5143,
+      "target": 3077.9714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-01",
+      "code": "I",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-06-22",
+      "entry": 746.0,
+      "exit": 729.4286,
+      "stop": 754.2857,
+      "target": 729.4286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-09",
+      "code": "FU",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-06-23",
+      "entry": 3080.0,
+      "exit": 3214.7429,
+      "stop": 3214.7429,
+      "target": 2810.5143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-13",
+      "code": "FU",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-07-10",
+      "entry": 3162.0,
+      "exit": 3245.3143,
+      "stop": 3245.3143,
+      "target": 2995.3714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-14",
+      "code": "FU",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-07-14",
+      "entry": 3279.0,
+      "exit": 3363.4,
+      "stop": 3363.4,
+      "target": 3110.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-16",
+      "code": "SA",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-07-15",
+      "entry": 1064.0,
+      "exit": 1032.5714,
+      "stop": 1079.7143,
+      "target": 1032.5714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-21",
+      "code": "SA",
+      "direction": "空",
+      "lots": 4,
+      "entry_date": "2026-07-17",
+      "entry": 1035.0,
+      "exit": 1003.1143,
+      "stop": 1050.9429,
+      "target": 1003.1143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-28",
+      "code": "SA",
+      "direction": "空",
+      "lots": 5,
+      "entry_date": "2026-07-22",
+      "entry": 1009.0,
+      "exit": 976.4286,
+      "stop": 1025.2857,
+      "target": 976.4286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-28",
+      "code": "M",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-07-24",
+      "entry": 3180.0,
+      "exit": 3147.8857,
+      "stop": 3147.8857,
+      "target": 3244.2286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-07-30",
+      "code": "SA",
+      "direction": "空",
+      "lots": 5,
+      "entry_date": "2026-07-29",
+      "entry": 970.0,
+      "exit": 936.7429,
+      "stop": 986.6286,
+      "target": 936.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-10",
+      "code": "SA",
+      "direction": "空",
+      "lots": 5,
+      "entry_date": "2026-07-31",
+      "entry": 943.0,
+      "exit": 960.0857,
+      "stop": 960.0857,
+      "target": 908.8286,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-11",
+      "code": "SA",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-08-11",
+      "entry": 968.0,
+      "exit": 984.9714,
+      "stop": 984.9714,
+      "target": 934.0571,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-13",
+      "code": "SA",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-08-12",
+      "entry": 994.0,
+      "exit": 959.3714,
+      "stop": 1011.3143,
+      "target": 959.3714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-14",
+      "code": "SA",
+      "direction": "空",
+      "lots": 3,
+      "entry_date": "2026-08-14",
+      "entry": 1036.0,
+      "exit": 1023.0,
+      "stop": 1054.1143,
+      "target": 999.7714,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": 0.72,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-20",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-08-17",
+      "entry": 1515.0,
+      "exit": 1589.2857,
+      "stop": 1477.8571,
+      "target": 1589.2857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-24",
+      "code": "EB",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-08-18",
+      "entry": 8533.0,
+      "exit": 8728.6,
+      "stop": 8728.6,
+      "target": 8141.8,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-24",
+      "code": "I",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-08-24",
+      "entry": 707.0,
+      "exit": 717.6286,
+      "stop": 717.6286,
+      "target": 685.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-26",
+      "code": "EG",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-08-25",
+      "entry": 5418.0,
+      "exit": 5268.0571,
+      "stop": 5268.0571,
+      "target": 5717.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-27",
+      "code": "EG",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-08-27",
+      "entry": 5040.0,
+      "exit": 5028.0,
+      "stop": 4885.7714,
+      "target": 5348.4571,
+      "entry_reason": "path_a_rr2",
+      "reason": "signal",
+      "sleeve": "path_a_rr2",
+      "R": -0.08,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-31",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-08-26",
+      "entry": 1580.0,
+      "exit": 1665.8857,
+      "stop": 1537.0571,
+      "target": 1665.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-08-31",
+      "code": "BU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-08-31",
+      "entry": 4631.0,
+      "exit": 4801.7429,
+      "stop": 4545.6286,
+      "target": 4801.7429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-01",
+      "code": "M",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-01",
+      "entry": 3338.0,
+      "exit": 3410.0,
+      "stop": 3302.0,
+      "target": 3410.0,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-07",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-04",
+      "entry": 1658.0,
+      "exit": 1610.0286,
+      "stop": 1610.0286,
+      "target": 1753.9429,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-11",
+      "code": "EG",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-03",
+      "entry": 5780.0,
+      "exit": 6149.8286,
+      "stop": 5595.0857,
+      "target": 6149.8286,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-14",
+      "code": "JM",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-08",
+      "entry": 1622.0,
+      "exit": 1571.1143,
+      "stop": 1571.1143,
+      "target": 1723.7714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-16",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-02",
+      "entry": 3385.0,
+      "exit": 3463.1714,
+      "stop": 3345.9143,
+      "target": 3463.1714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-16",
+      "code": "BU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-14",
+      "entry": 5065.0,
+      "exit": 5364.2,
+      "stop": 4915.4,
+      "target": 5364.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-17",
+      "code": "M",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-17",
+      "entry": 3479.0,
+      "exit": 3431.0571,
+      "stop": 3431.0571,
+      "target": 3574.8857,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-22",
+      "code": "EG",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-09-18",
+      "entry": 6050.0,
+      "exit": 5806.8,
+      "stop": 5806.8,
+      "target": 6536.4,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-28",
+      "code": "M",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-21",
+      "entry": 3393.0,
+      "exit": 3342.7143,
+      "stop": 3342.7143,
+      "target": 3493.5714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-09-29",
+      "code": "BU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-23",
+      "entry": 4979.0,
+      "exit": 5310.3143,
+      "stop": 4813.3429,
+      "target": 5310.3143,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-08",
+      "code": "BU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-09-30",
+      "entry": 5130.0,
+      "exit": 5494.5714,
+      "stop": 4947.7143,
+      "target": 5494.5714,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-21",
+      "code": "FG",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-10-09",
+      "entry": 867.0,
+      "exit": 832.1429,
+      "stop": 884.4286,
+      "target": 832.1429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-22",
+      "code": "I",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-10-09",
+      "entry": 683.5,
+      "exit": 665.8429,
+      "stop": 692.3286,
+      "target": 665.8429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-26",
+      "code": "FU",
+      "direction": "多",
+      "lots": 2,
+      "entry_date": "2026-10-22",
+      "entry": 4700.0,
+      "exit": 5164.6857,
+      "stop": 4467.6571,
+      "target": 5164.6857,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-28",
+      "code": "I",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-10-23",
+      "entry": 669.0,
+      "exit": 678.3429,
+      "stop": 678.3429,
+      "target": 650.3143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-28",
+      "code": "PP",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-10-27",
+      "entry": 10008.0,
+      "exit": 10399.5429,
+      "stop": 9812.2286,
+      "target": 10399.5429,
+      "entry_reason": "path_a_rr2",
+      "reason": "target",
+      "sleeve": "path_a_rr2",
+      "R": 2.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-10-29",
+      "code": "JD",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-10-27",
+      "entry": 3290.0,
+      "exit": 3367.3143,
+      "stop": 3367.3143,
+      "target": 3135.3714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-02",
+      "code": "JD",
+      "direction": "空",
+      "lots": 2,
+      "entry_date": "2026-11-02",
+      "entry": 3450.0,
+      "exit": 3510.9143,
+      "stop": 3510.9143,
+      "target": 3328.1714,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-03",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-10-29",
+      "entry": 3480.0,
+      "exit": 3373.5429,
+      "stop": 3373.5429,
+      "target": 3692.9143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-04",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-11-04",
+      "entry": 3472.0,
+      "exit": 3365.9429,
+      "stop": 3365.9429,
+      "target": 3684.1143,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-05",
+      "code": "MA",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-11-05",
+      "entry": 3357.0,
+      "exit": 3247.4,
+      "stop": 3247.4,
+      "target": 3576.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    },
+    {
+      "date": "2026-11-10",
+      "code": "P",
+      "direction": "空",
+      "lots": 1,
+      "entry_date": "2026-11-10",
+      "entry": 8564.0,
+      "exit": 8716.4,
+      "stop": 8716.4,
+      "target": 8259.2,
+      "entry_reason": "path_a_rr2",
+      "reason": "stop",
+      "sleeve": "path_a_rr2",
+      "R": -1.0,
+      "opt_payoff": 0.0,
+      "opt_premium": null
+    }
+  ],
+  "entry_exit_rules": {
+    "open": "r20/r60同向且|r20|≥min_r20、|r60|≥min_r60（ctf模式改用composite_trend）；经entry_filter/席位等过滤；升贴水极端旁路（carry_bypass）可禁开或减仓；再经组合帽（TopN、名义暴露、组合风险、板块上限）；止损=stop_atr_mult×ATR，止盈=reward_rr×止损距；正式成交=next_open（next_open=T日信号、T+1开盘入场并平移止损止盈）。",
+    "close": "持仓期优先用当日15分钟线按时间顺序触及止盈/止损即平（单根15m内仍先止损后止盈）；无分钟缓存则回退日线OHLC；未触及则趋势不再同向或composite_trend翻号以signal在收盘价平仓。",
+    "exit_codes": {
+      "target": "盘中触及止盈",
+      "stop": "盘中触及止损",
+      "signal": "趋势/信号失效平仓"
+    },
+    "params": {
+      "reward_rr": 2.0,
+      "stop_atr_mult": 0.8,
+      "min_r20": 4.0,
+      "min_r60": 6.0,
+      "max_positions": 3,
+      "mode": "seats",
+      "exit_check": "minute_15",
+      "fill_price": "next_open"
+    }
+  },
+  "ifind_calls": 18,
+  "summary": "PathA seats 2025-12-18→2026-11-11 净权益 236440（+18.22%）毛权益 244598（+22.30%）成本 8158，净MaxDD 6.69% 毛MaxDD 6.44%，成交97笔，结论 继续L1",
+  "entry_filter": "seats",
+  "ifind_call_log": [
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码VZL.DCE（PVC主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码MZL.DCE（豆粕主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码FGZL.CZC（玻璃主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码EBZL.DCE（苯乙烯主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码TAZL.CZC（PTA主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码SAZL.CZC（纯碱主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码PPZL.DCE（聚丙烯主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码LZL.DCE（塑料主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码JDZL.DCE（鸡蛋主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码FUZL.SHF（燃油主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码CFZL.CZC（棉花主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码BUZL.SHF（沥青主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码AGZL.SHF（沪银主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码SPZL.SHF（纸浆主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码AUZL.SHF（沪金主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码NIZL.SHF（沪镍主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码IZL.DCE（铁矿石主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    },
+    {
+      "server": "future",
+      "tool": "future_quotes",
+      "query": "证券代码JMZL.DCE（焦煤主力连续）从2026-10-22到2026-11-11的交易日行情，只返回实际已发生交易日期；字段为日期、开盘价、最高价、最低价、收盘价、成交量。按日期升序输出Markdown表，不得补造、推测或输出未来日期。"
+    }
+  ],
+  "live_trading": false,
+  "quality": {
+    "ok": true,
+    "failures": [],
+    "end": "2026-11-11",
+    "start": "2025-12-18"
+  },
+  "quality_ok": true,
+  "input_snapshot": {
+    "path": "archive\\snapshots\\bt_input_20261111_8d34efaec67b.json",
+    "sha256": "8d34efaec67b6cfd7df3937e94e2ea654ddeb3cd03041af6c8b38d78ee69742f",
+    "bars_sha256": "5ff04b451e444e82d93ef143a8bd76396ac244879142f54cadb4a351f450cd2f",
+    "member_sha256": "c2ccee0e3e73e14a51dcf17aa793e4fdb311aca04483400301717f763f3b2d3c",
+    "seats_sha256": "c2ccee0e3e73e14a51dcf17aa793e4fdb311aca04483400301717f763f3b2d3c",
+    "carry_sha256": "dc71a58a1d92e768f56215da6ee70cb012ecf4f43a4d45c8176c5760ad788203",
+    "symbols": 27
+  }
+}

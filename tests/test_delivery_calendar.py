@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import date
 
 from research.data_quality.calendar import (
+    active_front_contract_on_date,
     annotate_bars_with_calendar,
     delivery_flags_for_date,
     estimate_last_trade_day,
@@ -52,6 +53,12 @@ def test_annotate_blocks_classify():
     assert q["tradable"] is False
 
 
+def test_active_front_rolls_by_date():
+    # Aug → CF2609 still alive; after Nov last-trade → CF2701
+    assert active_front_contract_on_date("CF", "2026-08-15") == "CF2609"
+    assert active_front_contract_on_date("CF", "2026-11-12") == "CF2701"
+
+
 def test_overlay_contract_fills_marks_coverage():
     series = {
         "CF": {
@@ -62,11 +69,26 @@ def test_overlay_contract_fills_marks_coverage():
             ],
         }
     }
-    report = overlay_contract_fills(series, month="2701")
+    report = overlay_contract_fills(series, month="2701", historical=False)
     assert "CF" in report["symbols"]
     assert series["CF"]["meta"].get("front_contract") == "CF2701"
-    # If cache has those dates, contract_open may appear
     assert front_contract_for("CF", "2701") == "CF2701"
+
+
+def test_overlay_historical_does_not_blanket_observe_month():
+    series = {
+        "CF": {
+            "meta": {"code": "CF", "mult": 5, "tick": 5},
+            "hist": [
+                {"date": "2026-08-15", "open": 1, "high": 2, "low": 1, "close": 1.5, "volume": 10},
+                {"date": "2026-11-12", "open": 1, "high": 2, "low": 1, "close": 1.5, "volume": 10},
+            ],
+        }
+    }
+    report = overlay_contract_fills(series, historical=True)
+    assert report.get("mode") == "historical_roll"
+    contracts = [b.get("contract") for b in series["CF"]["hist"]]
+    assert contracts == ["CF2609", "CF2701"]
 
 
 def test_next_open_prefers_contract_open():

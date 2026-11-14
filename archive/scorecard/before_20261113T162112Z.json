@@ -1,0 +1,48 @@
+{
+  "captured_at": "20261113T162112Z",
+  "git_head": "c3e87c907b064db942392f599a4f91609377b08a",
+  "readme": {
+    "schema_version": "cta-backtest-v11-next-open",
+    "window": "2025-12-17→2026-11-10",
+    "ret_pct": 2.25,
+    "max_dd_pct": 5.57,
+    "cost_yuan": 5880,
+    "gross_ret_pct": 5.19,
+    "note": "Stale README claim before A1 unify"
+  },
+  "historical_backtest": {
+    "path": "historical_backtest_latest.json",
+    "schema_version": "cta-backtest-v12-intraday-exits",
+    "batch": "2026一年-pathA-nextOpen",
+    "start": "2025-12-18",
+    "end": "2026-11-11",
+    "ret_pct": 18.22,
+    "max_dd_pct": 6.694,
+    "gross_ret_pct": 22.299,
+    "gross_max_dd_pct": 6.439,
+    "cost_yuan": 8158.2,
+    "equity_end": 236439.8,
+    "closed_trades": 97,
+    "entry_filter": "seats",
+    "fill_price": "next_open",
+    "stop_atr_mult": 0.8,
+    "reward_rr": 2.0,
+    "config_version": {
+      "git_commit": null,
+      "execution_rules_sha256": null,
+      "universe_sha256": null,
+      "research_cost_sha256": null,
+      "sha256": null
+    }
+  },
+  "pbo": {
+    "path": "lab\\research\\validation\\pbo_path_a_latest.json",
+    "pbo": 0.385714,
+    "n_obs": 215,
+    "n_trials": 11,
+    "primary_trial_id": "s0.8_rr2_m4_6",
+    "psr": 0.896343,
+    "dsr": 0.613447,
+    "primary_ret_pct": 16.746
+  }
+}

@@ -2,6 +2,7 @@
 """Data validity + tradability protocol (extends research_quality semantics)."""
 
 from research.data_quality.calendar import (
+    active_front_contract_on_date,
     annotate_bars_with_calendar,
     delivery_flags_for_date,
     estimate_last_trade_day,
@@ -17,6 +18,7 @@ from research.data_quality.schema import bar_quality_record, config_version_stam
 
 __all__ = [
     "DATA_STATUS",
+    "active_front_contract_on_date",
     "annotate_bars_with_calendar",
     "bar_quality_record",
     "classify_bar",

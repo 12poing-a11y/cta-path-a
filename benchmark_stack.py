@@ -62,7 +62,7 @@ def load_main(u: dict) -> tuple[list[dict], dict]:
     meta["contract"] = "主力连续"
     print(
         f"  source={meta.get('source')} sina={meta.get('sina_n')} "
-        f"tencent={meta.get('tencent_n')} ifind={meta.get('ifind')} "
+        f"tqsdk={meta.get('tqsdk')} ifind={meta.get('ifind')} "
         f"bars={len(bars)} last={bars[-1]['date'] if bars else '-'}"
     )
     return bars, meta
@@ -428,7 +428,7 @@ def main() -> int:
         "ok": True,
         "asof": yday,
         "contract": "主力连续",
-        "data_source": "sina+tencent primary, iFinD fills gaps",
+        "data_source": "sina primary, TqSdk then iFinD fills gaps",
         "rules": {
             "slow": "120日与250日收益同向，风险预算100%",
             "fast": "20/60同向且过3%/5%门槛，风险预算为慢趋势的1/3；不得逆慢趋势",

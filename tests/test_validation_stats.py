@@ -57,8 +57,22 @@ def test_pbo_needs_matrix_and_runs():
     out = probability_of_backtest_overfitting(mat, n_groups=8, max_combos=200)
     assert out["ok"]
     assert 0.0 <= out["pbo"] <= 1.0
+    assert out.get("rank_method") == "average_rank_ties"
     single = probability_of_backtest_overfitting([[r] for r in base], n_groups=8)
     assert single["ok"] is False
+
+
+def test_purge_and_average_rank():
+    from lab.validation import average_rank, time_split_with_purge
+
+    split = time_split_with_purge(100, oos_frac=0.3, purge=10, embargo=5)
+    assert split["ok"]
+    assert split["n_purged"] == 10
+    assert split["n_embargoed"] == 5
+    assert max(split["train_idx"]) < min(split["test_idx"])
+    ranks = average_rank([0.5, 0.5, 0.1], higher_is_better=True)
+    assert ranks[0] == ranks[1] == 1.5
+    assert ranks[2] == 3.0
 
 
 def test_walk_forward_and_bundle():

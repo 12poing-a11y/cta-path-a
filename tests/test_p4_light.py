@@ -55,6 +55,8 @@ def test_train_binary_synthetic():
                 "features": {"a": float(y) + 0.01 * i, "b": float(i % 5), "c": 1.0},
             }
         )
-    out = train_binary_task(rows, task="synthetic", oos_frac=0.25)
+    out = train_binary_task(rows, task="synthetic", oos_frac=0.25, purge=5, embargo=3)
     assert out["ok"]
     assert out["oos"]["n"] >= 10
+    assert out.get("purge") == 5
+    assert out.get("embargo") == 3

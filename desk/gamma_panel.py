@@ -356,7 +356,23 @@ def render_gamma_panel(root: Path) -> None:
             except Exception as exc:  # noqa: BLE001
                 st.caption(f"无法读取研究产物：{exc}")
                 return
-            st.caption(payload.get("disclaimer") or "Research only.")
+            try:
+                import re
+
+                from desk.variety_labels import variety_label
+
+                m = re.match(r"^([A-Za-z]+)(\d+)$", str(contract or ""))
+                prod = (m.group(1) if m else str(payload.get("product") or "")).upper()
+                vlabel = variety_label(root, prod, contract=contract, with_bucket=True)
+            except Exception:
+                vlabel = contract
+            st.markdown(f"**研究品种：{vlabel}**")
+            st.caption(
+                payload.get("disclaimer")
+                or "仅研究展示；持仓方向无法由 OI 单独判定。"
+            )
+            from desk.variety_labels import counts_zh, gamma_term_label
+
             mig = payload.get("migration") or {}
             touch = payload.get("touch") or {}
             ivoi = payload.get("iv_oi") or {}
@@ -364,8 +380,23 @@ def render_gamma_panel(root: Path) -> None:
             c1.metric("迁移事件", mig.get("n_events"))
             c2.metric("触碰事件", touch.get("n_events"))
             c3.metric("IV×OI 天数", ivoi.get("n_days"))
-            st.write("迁移标签", mig.get("label_counts") or {})
-            st.write("触碰结果", touch.get("outcome_probs") or {})
-            st.write("IV×OI 状态", ivoi.get("regime_counts") or {})
-            st.caption("生成：`python lab/scripts/run_gamma_research.py --contract CF2701`")
+            st.caption("墙位迁移标签")
+            st.dataframe(
+                counts_zh(mig.get("label_counts") or {}, gamma_term_label),
+                width="stretch",
+                hide_index=True,
+            )
+            st.caption("触碰结果（概率）")
+            st.dataframe(
+                counts_zh(touch.get("outcome_probs") or {}, gamma_term_label),
+                width="stretch",
+                hide_index=True,
+            )
+            st.caption("IV×OI 状态分布")
+            st.dataframe(
+                counts_zh(ivoi.get("regime_counts") or {}, gamma_term_label),
+                width="stretch",
+                hide_index=True,
+            )
+            st.caption(f"生成：`python lab/scripts/run_gamma_research.py --contract {contract}`")
 

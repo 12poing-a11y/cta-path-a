@@ -121,6 +121,41 @@ def session_distance(from_d: date, to_d: date) -> int:
     return n
 
 
+def active_front_contract_on_date(
+    code: str,
+    bar_date: str | date,
+    *,
+    rules: dict[str, Any] | None = None,
+) -> str | None:
+    """Pick the listed front contract still tradeable on ``bar_date`` (calendar approx).
+
+    Does **not** use the current observe month to blanket all history.
+    """
+    rules = rules or load_delivery_rules()
+    d = _parse_ymd(bar_date)
+    if d is None:
+        return None
+    code_u = str(code or "").upper()
+    pr = product_rule(code_u, rules)
+    months = pr.get("months") or list(range(1, 13))
+    y, m = d.year, d.month
+    for _ in range(24):
+        if m in months:
+            contract = f"{code_u}{y % 100:02d}{m:02d}"
+            explicit = (rules.get("last_trade_dates") or {}).get(contract)
+            if explicit:
+                ltd = _parse_ymd(explicit)
+            else:
+                ltd = estimate_last_trade_day(y, m, pr.get("last_trade_rule") or "month_day_10")
+            if ltd is not None and d <= ltd:
+                return contract
+        m += 1
+        if m > 12:
+            m = 1
+            y += 1
+    return None
+
+
 def delivery_flags_for_date(
     code: str,
     bar_date: str | date,
@@ -134,25 +169,7 @@ def delivery_flags_for_date(
     if d is None:
         return {"ok": False, "near_delivery": False, "roll_blocked": False, "delivery_restricted": False}
     pr = product_rule(code, rules)
-    contract = front_contract
-    if not contract:
-        # Infer active month from bar date: next listed month in product months
-        months = pr.get("months") or list(range(1, 13))
-        y, m = d.year, d.month
-        # pick current or next contract month
-        cand = None
-        for _ in range(24):
-            if m in months:
-                ltd = estimate_last_trade_day(y, m, pr.get("last_trade_rule") or "month_day_10")
-                if d <= ltd:
-                    cand = (y, m)
-                    break
-            m += 1
-            if m > 12:
-                m = 1
-                y += 1
-        if cand:
-            contract = f"{code.upper()}{cand[0] % 100:02d}{cand[1]:02d}"
+    contract = front_contract or active_front_contract_on_date(code, d, rules=rules)
     parsed = parse_contract_month(contract) if contract else None
     if not parsed:
         return {

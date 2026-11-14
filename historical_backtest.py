@@ -657,8 +657,23 @@ def _parse_zl_history(ans: str, *, max_date: date | None = None) -> list[dict]:
     )
 
 
+def _ifind_ready() -> bool:
+    """True when an iFinD token is actually usable (last-resort fill)."""
+    try:
+        from ifind_call import AUTH_TOKEN, CONFIG
+
+        if AUTH_TOKEN:
+            return True
+        cfg = CONFIG or {}
+        return bool(cfg.get("auth_token") or cfg.get("auth_token_backup"))
+    except Exception:
+        return False
+
+
 def _fetch_ifind_recent_history(u: dict, expected: date) -> list[dict]:
     """One bounded iFinD request to fill a recent gap; never refetch a full year."""
+    if not _ifind_ready():
+        return []
     ticker = u.get("ticker") or ""
     name = u.get("name") or ticker
     start = (expected - timedelta(days=20)).isoformat()
@@ -678,7 +693,9 @@ def _fetch_ifind_recent_history(u: dict, expected: date) -> list[dict]:
 
 
 def _fetch_ifind_history(u: dict, n: int = LOOKBACK_DAYS):
-    """iFinD 主力连续 fallback. Used only when Sina and Tencent are not enough."""
+    """iFinD 主力连续 fallback. Only after free + TqSdk still short/stale."""
+    if not _ifind_ready():
+        return []
     name = u["name"]
     ticker = u.get("ticker") or ""
     by = {}
@@ -735,8 +752,9 @@ def _fetch_ifind_history(u: dict, n: int = LOOKBACK_DAYS):
 
 
 def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
-    """Sina + Tencent first. iFinD fills missing dates when that set is short or stale."""
+    """Sina first; TqSdk main continuous; iFinD only if still short/stale."""
     from market_data import (
+        fill_main_with_tqsdk,
         latest_expected_session_date,
         load_free_bars,
         merge_bars,
@@ -756,31 +774,66 @@ def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
     free = [bar for bar in free if str(bar.get("date") or "") <= expected_iso]
     meta["free_n"] = len(free)
     meta["last"] = free[-1]["date"] if free else None
+    meta["tqsdk"] = False
+    meta["tqsdk_n"] = 0
+    meta["ifind"] = False
+    meta["ifind_n"] = 0
+
+    bars = free
+    chart_dirty = False
+
+    def _tag_source(extra: str) -> None:
+        cur = meta.get("source") or ""
+        meta["source"] = f"{cur}+{extra}" if cur else extra
+
+    def _apply_tqsdk(*, length: int, need_date: date | None) -> None:
+        nonlocal bars, chart_dirty
+        filled, tmeta = fill_main_with_tqsdk(
+            code, bars, need_date=need_date, root=ROOT, length=length
+        )
+        meta["tqsdk"] = bool(tmeta.get("tqsdk"))
+        meta["tqsdk_n"] = int(tmeta.get("tqsdk_n") or 0)
+        meta["tqsdk_error"] = tmeta.get("tqsdk_error") or ""
+        meta["tqsdk_source"] = tmeta.get("tqsdk_source") or ""
+        if tmeta.get("tqsdk"):
+            bars = [bar for bar in filled if str(bar.get("date") or "") <= expected_iso]
+            _tag_source("tqsdk")
+            chart_dirty = True
 
     if series_sufficient(free, need):
         if free and free[-1]["date"] < expected_iso:
-            # Enough history for indicators: fetch only the recent missing window
-            # once, rather than five overlapping historical chunks.
-            ifind = _fetch_ifind_recent_history(u, expected)
-            bars = merge_bars(free, ifind)
-            meta["ifind"] = bool(ifind)
-            meta["ifind_n"] = len(ifind)
-            if ifind:
-                meta["source"] = (meta.get("source") + "+ifind") if meta.get("source") else "ifind"
-                chart_cache = save_chart_history(code, bars)
-                meta["chart_cache"] = str(chart_cache.relative_to(ROOT)) if chart_cache else None
+            # Enough history: recent gap only — TqSdk first, iFinD last resort.
+            _apply_tqsdk(length=max(40, need), need_date=expected)
+            if not bars or bars[-1]["date"] < expected_iso:
+                ifind = _fetch_ifind_recent_history(u, expected)
+                if ifind:
+                    bars = merge_bars(bars, ifind)
+                    bars = [bar for bar in bars if str(bar.get("date") or "") <= expected_iso]
+                    meta["ifind"] = True
+                    meta["ifind_n"] = len(ifind)
+                    _tag_source("ifind")
+                    chart_dirty = True
         else:
             bars = free
-            meta["ifind"] = False
     else:
-        # Full historical fallback is reserved for genuinely insufficient history.
-        ifind = _fetch_ifind_history(u, n)
-        bars = merge_bars(free, ifind)
-        meta["ifind_n"] = len(ifind)
-        meta["ifind"] = True
-        meta["source"] = (meta.get("source") + "+ifind") if meta.get("source") else "ifind"
+        # Short history: TqSdk main continuous first; iFinD only if still insufficient.
+        _apply_tqsdk(length=max(n, need + 20), need_date=None)
+        if not series_sufficient(bars, need) or (
+            bars and bars[-1]["date"] < expected_iso
+        ):
+            ifind = _fetch_ifind_history(u, n)
+            if ifind:
+                bars = merge_bars(bars, ifind)
+                bars = [bar for bar in bars if str(bar.get("date") or "") <= expected_iso]
+                meta["ifind"] = True
+                meta["ifind_n"] = len(ifind)
+                _tag_source("ifind")
+                chart_dirty = True
+
+    if chart_dirty:
         chart_cache = save_chart_history(code, bars)
         meta["chart_cache"] = str(chart_cache.relative_to(ROOT)) if chart_cache else None
+
     # Apply the same upper bound after merging, including any existing cache rows.
     bars = [bar for bar in bars if str(bar.get("date") or "") <= expected_iso]
     bars = trim_bars(bars, CUTOFF_DAYS)
@@ -789,7 +842,7 @@ def fetch_history(u: dict, n: int = LOOKBACK_DAYS):
     meta["fresh_for_expected_session"] = bool(bars and bars[-1]["date"] >= expected.isoformat())
     print(
         f"  source={meta.get('source')} sina={meta.get('sina_n')} "
-        f"tencent={meta.get('tencent_n')} ifind={meta.get('ifind')} bars={len(bars)} "
+        f"tqsdk={meta.get('tqsdk')} ifind={meta.get('ifind')} bars={len(bars)} "
         f"last={bars[-1]['date'] if bars else '-'}"
     )
     return bars, meta
@@ -1658,7 +1711,7 @@ def simulate(
         "config_version": cfg_stamp,
         "quality_blocks": quality_blocks,
         "n_trials_assumed": n_trials_assumed,
-        "data_source": "sina+tencent primary, iFinD fallback",
+        "data_source": "sina primary, TqSdk then iFinD fallback",
         "curve_coverage": curve_coverage(curves),
         "sources": sources,
         "reward_rr": reward_rr,

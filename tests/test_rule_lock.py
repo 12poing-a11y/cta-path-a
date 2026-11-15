@@ -120,3 +120,10 @@ def test_weekly_fill_series_mismatch_writes_nothing(monkeypatch, tmp_path):
     with pytest.raises(rl.RuleLockError, match="fill_series"):
         wb.run(7)
     assert not (tmp_path / "weekly_backtest_latest.json").exists()
+
+
+def test_historical_backtest_formal_write_guarded():
+    src = (ROOT / "historical_backtest.py").read_text(encoding="utf-8")
+    i = src.index('path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")')
+    guard = src[max(0, i - 900):i]
+    assert "check_rules(ROOT" in guard and "check_clean(ROOT)" in guard and "check_fill_series(ROOT, out)" in guard

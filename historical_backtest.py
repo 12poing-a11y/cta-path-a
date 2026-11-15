@@ -191,6 +191,8 @@ def manage_ohlc_bar(bar: dict, basis: str | None) -> dict | None:
 
 
 MIN_SEAT_DAYS = 60  # varieties with <60 seat sessions (as of T) skip the formal seat filter
+ENTRY_DELIVERY_BUFFER = 10  # contract fill with <10 sessions before delivery month is not taken on that contract
+ENTRY_DELIVERY_ACTION = "proxy"  # "proxy": fill/manage on continuous main (rolls); "block": skip entry
 MAX_STALE_DAYS = 3  # >3 consecutive days without same-contract OHLC => force exit ("freeze")
 
 
@@ -1139,6 +1141,8 @@ def simulate(
     max_stale_days=MAX_STALE_DAYS,
     delivery_guard=True,
     min_seat_days=MIN_SEAT_DAYS,
+    entry_delivery_buffer=ENTRY_DELIVERY_BUFFER,
+    entry_delivery_action=ENTRY_DELIVERY_ACTION,
 ):
     if fill_price not in FILL_PRICES:
         raise ValueError(f"fill_price must be one of {FILL_PRICES}")
@@ -1226,10 +1230,54 @@ def simulate(
         member = lag_member(load_member_changes(member_dates, [c for c in series]), member_dates, lag)
     elif mode in ("seats", "roll"):
         member = lag_member(load_member_seats(member_dates, [c for c in series]), member_dates, lag)
-    # fix3: seat coverage gate (data-quality, not price info): a variety whose
-    # loaded seat history has < min_seat_days sessions skips the formal seat filter.
-    seat_cov = {c: sum(1 for v in (m or {}).values() if isinstance(v, dict)) for c, m in member.items()}
+    # fix3: seat coverage gate: a variety with < min_seat_days post-lag seat
+    # sessions as of T skips the formal seat filter that day (missing book => no block).
+    # As-of-T: count post-lag seat sessions visible on/before T (truncation-safe).
+    import bisect as _bisect
+
+    seat_dates = {c: sorted(str(k) for k, v in (m or {}).items() if isinstance(v, dict)) for c, m in member.items()}
+    seat_cov = {c: len(v) for c, v in seat_dates.items()}
     seat_short: dict[str, int] = {}
+
+    def _seat_days_upto(code_: str, day_: str) -> int:
+        return _bisect.bisect_right(seat_dates.get(code_) or [], str(day_))
+
+    delivery_entry_blocks: dict[str, int] = {}
+
+    def _delivery_window_block(c_: dict, fill_bar_: dict) -> bool:
+        """fix3-opt: block a contract fill that would be force-closed (delivery guard)
+        within ``entry_delivery_buffer`` sessions: count calendar sessions from the
+        fill date up to (excluding) the delivery month's first day."""
+        if not (freeze_fix and delivery_guard and entry_delivery_buffer):
+            return False
+        basis_ = str(c_.get("fill_price_basis") or fill_bar_.get("fill_price_basis") or "").lower()
+        if basis_ != "contract":
+            return False
+        ym_ = contract_delivery_ym(c_.get("fill_contract") or fill_bar_.get("contract"))
+        if not ym_:
+            return False
+        fd_ = str(fill_bar_.get("date") or "")
+        n_ = _bisect.bisect_left(dates, f"{ym_}-01") - _bisect.bisect_left(dates, fd_)
+        if n_ < int(entry_delivery_buffer):
+            delivery_entry_blocks[c_["code"]] = delivery_entry_blocks.get(c_["code"], 0) + 1
+            if str(entry_delivery_action) == "proxy":
+                # Do not take the expiring contract: fill on the continuous main
+                # series (rolls to the next dominant) at the same bar's open/close.
+                px_ = fill_bar_.get("open") if fill_price == "next_open" else fill_bar_.get("close")
+                if px_ is None:
+                    return True
+                shift_ = float(px_) - float(c_["entry"])
+                c_["entry"] = float(px_)
+                c_["stop"] = float(c_["stop"]) + shift_
+                c_["target"] = float(c_["target"]) + shift_
+                if "mark_from" in c_:
+                    c_["mark_from"] = float(px_)
+                c_["fill_price_basis"] = "continuous_proxy"
+                c_.pop("fill_contract", None)
+                c_["delivery_window_proxy"] = True
+                return False
+            return True
+        return False
 
     # Snapshot inputs must match what the backtest actually consumes (post-lag).
     _LAST_PACK["member"] = member
@@ -1461,7 +1509,7 @@ def simulate(
                 if (
                     mode in ("seats", "roll")
                     and min_seat_days
-                    and seat_cov.get(code, 0) < int(min_seat_days)
+                    and _seat_days_upto(code, d) < int(min_seat_days)
                 ):
                     member_used = {}
                     seat_short[code] = seat_short.get(code, 0) + 1
@@ -1589,6 +1637,9 @@ def simulate(
                     fill_bar = hist_c[sig_i]
                     next_px = None
                     need_next = False
+                if _delivery_window_block(c, fill_bar):
+                    block_counts["delivery_window"] = block_counts.get("delivery_window", 0) + 1
+                    continue
                 if enforce_tradability:
                     ok_q, qrec = entry_fill_allowed(
                         c["code"],
@@ -1749,6 +1800,9 @@ def simulate(
                         fill_bar = hist_c[sig_i + 1]
                     else:
                         fill_bar = hist_c[sig_i]
+                    if _delivery_window_block(c, fill_bar):
+                        block_counts["delivery_window"] = block_counts.get("delivery_window", 0) + 1
+                        continue
                     if enforce_tradability:
                         ok_q, qrec = entry_fill_allowed(
                             c["code"],
@@ -1966,7 +2020,8 @@ def simulate(
         "same_day_exit_n": same_day_exit_n,
         "same_day_exit_share": round(same_day_exit_n / closed_n, 4) if closed_n else None,
         "exits": trade_exits,
-        "seat_gate": {"min_seat_days": min_seat_days, "seat_days": seat_cov, "skipped_seat_filter_signals": seat_short},
+        "seat_gate": {"min_seat_days": min_seat_days, "seat_days": seat_cov, "skipped_seat_filter_signals": seat_short, "rule": "as_of_T_post_lag"},
+        "delivery_entry_block": {"buffer_sessions": entry_delivery_buffer, "blocked": delivery_entry_blocks},
         "freeze_fix": {"enabled": bool(freeze_fix), "max_stale_days": max_stale_days, "delivery_guard": bool(delivery_guard), **freeze_stats},
         "sleeve_counts": sleeve_counts,
         "avg_held": round(avg_held, 2),
@@ -2041,6 +2096,8 @@ def _simulate_cfg(
     max_stale_days=None,
     delivery_guard=None,
     min_seat_days=None,
+    entry_delivery_buffer=None,
+    entry_delivery_action=None,
 ):
     cfg = p["cfg"]
     print(f"[bt] mode={mode} ifind_so_far={usage_report()['count']}")
@@ -2076,6 +2133,8 @@ def _simulate_cfg(
         max_stale_days=(p.get("max_stale_days", MAX_STALE_DAYS) if max_stale_days is None else max_stale_days),
         delivery_guard=bool(p.get("delivery_guard", True) if delivery_guard is None else delivery_guard),
         min_seat_days=(p.get("min_seat_days", MIN_SEAT_DAYS) if min_seat_days is None else min_seat_days),
+        entry_delivery_buffer=(p.get("entry_delivery_buffer", ENTRY_DELIVERY_BUFFER) if entry_delivery_buffer is None else entry_delivery_buffer),
+        entry_delivery_action=str(p.get("entry_delivery_action", ENTRY_DELIVERY_ACTION) if entry_delivery_action is None else entry_delivery_action),
     )
 
 
@@ -2424,6 +2483,17 @@ def main():
         path = ROOT / "historical_backtest_latest.json"
         chart = ROOT / "historical_equity_curve.svg"
         title_prefix = "PathA"
+    if path.parent == ROOT:
+        # fix3-opt: formal write requires the rule lock + a clean working tree.
+        from research.execution.rule_lock import RuleLockError, check_clean, check_fill_series, check_rules
+
+        try:
+            check_rules(ROOT, _load_cfg())
+            check_fill_series(ROOT, out)
+            check_clean(ROOT)
+        except RuleLockError as exc:
+            print(f"[bt] RULE LOCK FAILED — formal historical_backtest_latest not written: {exc}", file=sys.stderr)
+            return 2
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     arch = ROOT / "archive"
     arch.mkdir(exist_ok=True)

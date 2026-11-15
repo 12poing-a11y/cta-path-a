@@ -651,6 +651,112 @@ def fetch_eastmoney_member_day(
     return payload
 
 
+# --- fix3-opt: historical dominant contract (no "today's main" backfill) -------
+_HIST_DAILY_CACHE: dict[str, dict[str, float]] = {}
+
+
+def _sina_contract_hold(contract: str) -> dict[str, float]:
+    """date ISO -> open interest for one contract (Sina daily, cached in-process)."""
+    c = str(contract).upper()
+    if c in _HIST_DAILY_CACHE:
+        return _HIST_DAILY_CACHE[c]
+    out: dict[str, float] = {}
+    try:
+        import akshare as ak
+
+        frame = ak.futures_zh_daily_sina(symbol=c)
+        for _, r in frame.iterrows():
+            h = _num(r.get("hold"))
+            if h is not None:
+                out[str(r.get("date"))[:10]] = float(h)
+    except Exception:  # noqa: BLE001
+        out = {}
+    _HIST_DAILY_CACHE[c] = out
+    return out
+
+
+def _candidate_contracts(variety: str, ymd: str, months_ahead: int = 12) -> list[str]:
+    y, m = int(ymd[:4]), int(ymd[4:6])
+    out = []
+    for k in range(0, months_ahead + 1):
+        mm = (m - 1 + k) % 12 + 1
+        yy = y + (m - 1 + k) // 12
+        out.append(f"{variety.upper()}{yy % 100:02d}{mm:02d}")
+    return out
+
+
+def historical_main_contract(variety: str, ymd: str) -> tuple[str | None, float | None]:
+    """Contract with the largest open interest on ``ymd`` (that day's data only).
+
+    4-digit YYMM codes (DCE/SHFE). Returns (contract, oi) or (None, None).
+    """
+    ymd = str(ymd).replace("-", "")
+    day_iso = f"{ymd[:4]}-{ymd[4:6]}-{ymd[6:8]}"
+    best, best_oi = None, None
+    for c in _candidate_contracts(variety, ymd):
+        oi = _sina_contract_hold(c).get(day_iso)
+        if oi is not None and oi > 0 and (best_oi is None or oi > best_oi):
+            best, best_oi = c, oi
+    return best, best_oi
+
+
+def fetch_dce_member_day_historical(ymd: str, codes: list[str] | None = None) -> dict[str, Any]:
+    """DCE seat ranks for a past session using THAT day's dominant contract.
+
+    Source order: DCE official (currently unreachable: HTTP 500 / zip API gone) ->
+    Eastmoney (only still-listed contracts) -> Sina. Each product row records
+    ``source``, ``contract`` and ``contract_rule``. Rewrites the DCE slice of
+    ``dce-{ymd}.json`` and ``em-{ymd}.json`` (non-DCE products untouched).
+    """
+    ymd = str(ymd).replace("-", "")
+    day_iso = f"{ymd[:4]}-{ymd[4:6]}-{ymd[6:8]}"
+    codes = [c.upper() for c in (codes or list(_DCE_VARS))]
+    products: dict[str, dict[str, Any]] = {}
+    status: dict[str, str] = {}
+    for code in codes:
+        contract, oi = historical_main_contract(code, ymd)
+        if not contract:
+            status[code] = "no_main"
+            continue
+        legs, src = None, None
+        from datetime import date as _date
+
+        listed = f"20{contract[-4:-2]}-{contract[-2:]}" >= _date.today().strftime("%Y-%m")
+        if listed:  # Eastmoney only serves still-listed contracts
+            try:
+                legs = _em_contract_legs(contract, day_iso)
+                src = "eastmoney.RPT_FUTU_DAILYPOSITION"
+            except Exception:  # noqa: BLE001
+                legs = None
+        if not legs:
+            legs = _sina_contract_legs(contract, ymd)
+            src = "sina.futures_hold_pos_sina"
+        packed = _pack_legs(contract, legs[0], legs[1]) if legs else None
+        if not packed:
+            status[code] = f"no_legs:{contract}"
+            continue
+        packed.update({"exchange": "DCE", "source": src, "contract_rule": "historical_oi_max", "main_oi": oi,
+                       "official_tried": "dce.com.cn memberDealPosiQuotes HTTP 500 (2026-11-15)"})
+        products[code] = packed
+        status[code] = f"{src}:{contract}"
+    if products:
+        for path in (_dce_json_path(ymd), _em_json_path(ymd)):
+            base: dict[str, Any] = {}
+            if path.is_file():
+                try:
+                    base = json.loads(path.read_text(encoding="utf-8"))
+                except Exception:  # noqa: BLE001
+                    base = {}
+            prods = dict(base.get("products") or {})
+            for k in list(prods):
+                if k in codes:
+                    prods.pop(k)
+            prods.update(products)
+            _write_product_cache(path, {"ymd": ymd, "source": base.get("source") or "historical_main_backfill",
+                                        "dce_rule": "historical_oi_max", "products": prods})
+    return {"ymd": ymd, "products": len(products), "status": status}
+
+
 def _fetch_dce_eastmoney(ymd: str) -> dict[str, Any] | None:
     """DCE-only slice via the shared Eastmoney pull."""
     got = fetch_eastmoney_member_day(ymd, codes=list(_DCE_VARS), force=True)

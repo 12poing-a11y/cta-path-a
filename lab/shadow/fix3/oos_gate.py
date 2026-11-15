@@ -25,20 +25,35 @@ def trunc(bars, end):
     return {c: [b for b in h if b["date"] <= end] for c, h in bars.items()}
 
 
+def trunc_member(member, end):
+    return {c: {d: v for d, v in (m or {}).items() if d <= end} for c, m in member.items()}
+
+
+def _use_member(member):
+    R.hb.load_member_seats = lambda dates, codes, _m=member: _m
+    R.hb.load_member_changes = lambda dates, codes, _m=member: _m
+
+
+def _run(bars, member, **kw):
+    _use_member(member)
+    p, pack = R.make_pack(bars)
+    return R.run(p, pack, **kw)
+
+
 def entries(out):
     a = {(t["code"], t["entry_date"], t["direction"], round(t["entry"], 2)) for t in out["closed_pnls"]}
     b = {(c, q["entry_date"], q["direction"], round(q["entry"], 2)) for c, q in (out.get("final_positions") or {}).items()}
     return a | b
 
 
-def lookahead(bars=None, **kw):
+def lookahead(bars=None, member=None, **kw):
+    """Bars AND seats truncated at each cut (seat-gate / seat lookahead visible)."""
     bars = bars or R.snap["bars"]
-    p, pack = R.make_pack(bars)
-    fe = entries(R.run(p, pack, **kw))
+    member = member if member is not None else R.snap["member"]
+    fe = entries(_run(bars, member, **kw))
     res = {}
     for cut in CUTS:
-        p, pack = R.make_pack(trunc(bars, cut))
-        te = entries(R.run(p, pack, **kw))
+        te = entries(_run(trunc(bars, cut), trunc_member(member, cut), **kw))
         a = {x for x in fe if x[1] <= cut}
         b = {x for x in te if x[1] <= cut}
         res[cut] = {"full_entries": len(a), "trunc_entries": len(b), "only_full": sorted(a - b), "only_trunc": sorted(b - a), "ok": a == b}
@@ -66,18 +81,17 @@ def daily_returns(out):
     return {cur[i]["date"]: cur[i]["equity"] / cur[i - 1]["equity"] - 1 for i in range(1, len(cur))}
 
 
-def oos(bars=None, **kw):
+def oos(bars=None, member=None, **kw):
     bars = bars or R.snap["bars"]
+    member = member if member is not None else R.snap["member"]
     end = max(b["date"] for h in bars.values() for b in h)
     train_bars = trunc(bars, TR_END)
     assert max(b["date"] for h in train_bars.values() for b in h) <= TR_END
     rows, rets = [], {}
     for s in hb.STOP_GRID:
         for rr in hb.RR_GRID:
-            p, pack = R.make_pack(train_bars)
-            tr = R.run(p, pack, stop_atr_mult=s, reward_rr=rr, **kw)  # selection input: train only
-            p, pack = R.make_pack(bars)
-            fu = R.run(p, pack, stop_atr_mult=s, reward_rr=rr, **kw)  # evaluation only
+            tr = _run(train_bars, trunc_member(member, TR_END), stop_atr_mult=s, reward_rr=rr, **kw)  # selection: train only
+            fu = _run(bars, member, stop_atr_mult=s, reward_rr=rr, **kw)  # evaluation only
             te = V.seg_ret(fu, TE_A, end)
             rows.append({"stop": s, "rr": rr, "train_ret": tr["ret_pct"], "train_dd": tr["max_dd_pct"], "train_n": tr["closed_trades"],
                          "train_calmar": round(tr["ret_pct"] / tr["max_dd_pct"], 3) if tr["max_dd_pct"] else None,
@@ -98,9 +112,17 @@ def oos(bars=None, **kw):
             "test_trades_best": best["test_n"], "test_trades_formal": formal["test_n"], "n_trials": len(rows)}
 
 
+def backfilled_member():
+    """H口径: snapshot seats, DCE replaced by historical-main backfill (seat_backfill_run.build_member)."""
+    import seat_backfill_run as SB
+
+    return SB.merged_member()
+
+
 if __name__ == "__main__":
-    res = {"lookahead": lookahead(), "oos": oos()}
+    mem = backfilled_member() if "--backfill" in sys.argv else None
+    res = {"seats": "dce_hist_backfill" if mem else "snapshot", "lookahead": lookahead(member=mem), "oos": oos(member=mem)}
     print(json.dumps({"lookahead": {k: (v["full_entries"], v["ok"]) for k, v in res["lookahead"].items()},
                       "best": res["oos"]["best_by_train_calmar"], "formal": res["oos"]["formal_0.8_2"],
                       "rank_corr": res["oos"]["train_test_rank_corr"], "pbo": res["oos"]["pbo"]}, ensure_ascii=False, indent=1))
-    (HERE / "oos_gate_result.json").write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
+    (HERE / ("oos_gate_backfill_result.json" if mem else "oos_gate_result.json")).write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))

@@ -5,7 +5,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import replay as R, variants as V
 
-KEYS = ["ret_pct","max_dd_pct","closed_trades","trade_win_rate","expectancy_r","exits","freeze_fix","seat_gate","proxy_entry_n","contract_entry_n","same_day_exit_n","avg_held","conclusion"]
+KEYS = ["ret_pct","max_dd_pct","closed_trades","trade_win_rate","expectancy_r","exits","freeze_fix","seat_gate","delivery_entry_block","proxy_entry_n","contract_entry_n","same_day_exit_n","avg_held","conclusion"]
 
 def cross_delivery(out):
     from historical_backtest import contract_delivery_ym
@@ -24,7 +24,9 @@ def run_all():
         ("A_legacy_ee4476b", None, dict(freeze_fix=False, min_seat_days=0)),
         ("C_audit_ffill_approx", V.ffill, dict(freeze_fix=False, min_seat_days=0)),
         ("FIX3_proxy_basis_only", None, dict(freeze_fix=True, delivery_guard=False, max_stale_days=10**6, min_seat_days=0)),
+        ("FIX3_fd5dd04_equiv_no_entry_guard", None, dict(freeze_fix=True, min_seat_days=0, entry_delivery_buffer=0)),
         ("FIX3_freeze_fix", None, dict(freeze_fix=True, min_seat_days=0)),
+        ("FIX3_entry_block_variant", None, dict(freeze_fix=True, entry_delivery_action="block")),
         ("FIX3_full_formal_seatgate60", None, dict(freeze_fix=True)),
     ]
     for name, fn, kw in cases:

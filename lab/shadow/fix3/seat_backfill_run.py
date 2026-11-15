@@ -13,8 +13,19 @@ DCE = ["M", "P", "JD", "EG", "EB", "V", "L", "PP", "I", "JM"]
 def build_member():
     bars = R.snap["bars"]
     dates = sorted({b["date"] for h in bars.values() for b in h})
-    m = ORIG["load_member_seats"](dates, list(bars))
-    return ORIG["lag_member"](m, dates, 1), dates
+    import member_rank as MR  # unpatched loader (replay.py patches hb.* at import)
+
+    m = MR.load_member_seats(dates, list(bars))
+    return {c: hb.lag_by_trade_dates(b, dates, 1) for c, b in (m or {}).items()}, dates
+
+def merged_member():
+    mem, _ = build_member()
+    lo = min(d for c in R.snap["member"] for d in R.snap["member"][c])
+    new = dict(R.snap["member"])
+    for c in DCE:
+        new[c] = {d: v for d, v in (mem.get(c) or {}).items() if d >= lo}
+    return new
+
 
 if __name__ == "__main__":
     mem, dates = build_member()
@@ -38,5 +49,5 @@ if __name__ == "__main__":
     r["cross_delivery_trades"] = RC.cross_delivery(out)
     print(json.dumps({k: r[k] for k in ("ret_pct", "max_dd_pct", "closed_trades", "seat_days_dce", "train", "test")}, ensure_ascii=False))
     print("non-DCE snapshot match share:", {k: round(v, 3) for k, v in same.items()})
-    print("seat_gate", out["seat_gate"])
+    print("seat_gate", out["seat_gate"]); print("delivery_entry", out["delivery_entry_block"])
     (HERE / "seat_backfill_result.json").write_text(json.dumps(r, ensure_ascii=False, indent=1, default=str))

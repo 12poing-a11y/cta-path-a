@@ -28,7 +28,7 @@ SNAP = ROOT / "archive/snapshots/bt_input_20261113_d246813d911a.json"
 pytestmark = pytest.mark.skipif(not SNAP.exists(), reason="snapshot missing")
 
 _PATCHED = ("prepare_pack_for_execution", "load_member_seats", "load_member_changes", "lag_member", "load_curves", "lag_curves_carry")
-_SHADOW_MODS = ("replay", "variants", "recompute", "oos_gate")
+_SHADOW_MODS = ("replay", "variants", "recompute", "oos_gate", "seat_backfill_run")
 
 
 @pytest.fixture(autouse=True)
@@ -89,6 +89,17 @@ def test_truncation_lookahead_four_cuts():
         assert r["full_entries"] > 0
 
 
+def test_truncation_lookahead_with_backfilled_seats_truncated():
+    """H口径: DCE historical-main seat backfill; bars AND seats truncated at each cut."""
+    import oos_gate as G
+
+    mem = G.backfilled_member()
+    assert sum(len(mem.get(c) or {}) for c in ("M", "P", "L", "I")) > 300
+    res = G.lookahead(member=mem)
+    for cut, r in res.items():
+        assert r["ok"], (cut, r["only_full"][:3], r["only_trunc"][:3])
+
+
 def test_locked_oos_train_only_selection_and_report():
     import oos_gate as G
 
@@ -112,11 +123,31 @@ def test_locked_oos_train_only_selection_and_report():
     assert res["test_trades_formal"] > 0 and res["formal_0.8_2"]["train_n"] > 0
 
 
-def test_seat_gate_skips_short_coverage_varieties():
+def test_seat_gate_as_of_T():
     import replay as R
 
     p, pack = R.make_pack()
     out = R.run(p, pack)
-    short = set(out["seat_gate"]["skipped_seat_filter_signals"])
-    covered = {c for c, m in R.snap["member"].items() if len(m) >= 60}
-    assert short and not (short & covered)
+    sg = out["seat_gate"]
+    assert sg["rule"] == "as_of_T_post_lag" and sg["min_seat_days"] == 60
+    # short-history varieties (DCE 21/42 days in snapshot) never reach 60 => always skipped
+    for c in ("I", "JM", "M", "P", "L"):
+        assert sg["seat_days"].get(c, 0) < 60
+
+
+def test_entry_delivery_window():
+    import replay as R
+
+    p, pack = R.make_pack()
+    out = R.run(p, pack)
+    assert out["delivery_entry_block"]["buffer_sessions"] == 10
+    assert sum(out["delivery_entry_block"]["blocked"].values()) > 0
+    dates = sorted({b["date"] for h in pack[0].values() for b in h["hist"]})
+    import bisect
+
+    for t in out["closed_pnls"]:
+        if t.get("fill_price_basis") != "contract":
+            continue
+        ym = hb.contract_delivery_ym(t.get("fill_contract"))
+        n = bisect.bisect_left(dates, f"{ym}-01") - bisect.bisect_left(dates, t["entry_date"])
+        assert n >= 10, t

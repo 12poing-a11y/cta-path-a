@@ -100,6 +100,15 @@ def test_truncation_lookahead_with_backfilled_seats_truncated():
         assert r["ok"], (cut, r["only_full"][:3], r["only_trunc"][:3])
 
 
+def test_truncation_lookahead_block_variant():
+    """entry_delivery_action=block must also be truncation-safe (ex-ante calendar)."""
+    import oos_gate as G
+
+    res = G.lookahead(entry_delivery_action="block")
+    for cut, r in res.items():
+        assert r["ok"], (cut, r["only_full"][:3], r["only_trunc"][:3])
+
+
 def test_locked_oos_train_only_selection_and_report():
     import oos_gate as G
 
@@ -142,12 +151,10 @@ def test_entry_delivery_window():
     out = R.run(p, pack)
     assert out["delivery_entry_block"]["buffer_sessions"] == 10
     assert sum(out["delivery_entry_block"]["blocked"].values()) > 0
-    dates = sorted({b["date"] for h in pack[0].values() for b in h["hist"]})
-    import bisect
+    import numpy as np
 
     for t in out["closed_pnls"]:
         if t.get("fill_price_basis") != "contract":
             continue
         ym = hb.contract_delivery_ym(t.get("fill_contract"))
-        n = bisect.bisect_left(dates, f"{ym}-01") - bisect.bisect_left(dates, t["entry_date"])
-        assert n >= 10, t
+        assert int(np.busday_count(t["entry_date"][:10], f"{ym}-01")) >= 10, t

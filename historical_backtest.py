@@ -1225,7 +1225,9 @@ def simulate(
         curves = lag_curves_carry(curves, dates, availability_lag)
     member = {}
     lag = max(0, int(availability_lag))
-    member_dates = dates[max(0, WARMUP - lag):]
+    # fix3-opt ③: load seats over the whole bar window (incl. WARMUP) so the as-of-T
+    # seat-day count includes real pre-window sessions (CZCE/SHFE prints from 2025-09-22).
+    member_dates = dates
     if mode == "member":
         member = lag_member(load_member_changes(member_dates, [c for c in series]), member_dates, lag)
     elif mode in ("seats", "roll"):
@@ -1245,9 +1247,9 @@ def simulate(
     delivery_entry_blocks: dict[str, int] = {}
 
     def _delivery_window_block(c_: dict, fill_bar_: dict) -> bool:
-        """fix3-opt: block a contract fill that would be force-closed (delivery guard)
-        within ``entry_delivery_buffer`` sessions: count calendar sessions from the
-        fill date up to (excluding) the delivery month's first day."""
+        """fix3-opt: a contract fill whose delivery month starts within
+        ``entry_delivery_buffer`` weekdays of the fill date is not taken on that
+        contract ("proxy": continuous main; "block": skip entry)."""
         if not (freeze_fix and delivery_guard and entry_delivery_buffer):
             return False
         basis_ = str(c_.get("fill_price_basis") or fill_bar_.get("fill_price_basis") or "").lower()
@@ -1256,8 +1258,12 @@ def simulate(
         ym_ = contract_delivery_ym(c_.get("fill_contract") or fill_bar_.get("contract"))
         if not ym_:
             return False
-        fd_ = str(fill_bar_.get("date") or "")
-        n_ = _bisect.bisect_left(dates, f"{ym_}-01") - _bisect.bisect_left(dates, fd_)
+        fd_ = str(fill_bar_.get("date") or "")[:10]
+        # Ex-ante calendar (weekdays; CN holidays not removed) — must NOT depend on
+        # which future bars are loaded (truncation-safe).
+        import numpy as _np
+
+        n_ = int(_np.busday_count(fd_, f"{ym_}-01")) if fd_ else 0
         if n_ < int(entry_delivery_buffer):
             delivery_entry_blocks[c_["code"]] = delivery_entry_blocks.get(c_["code"], 0) + 1
             if str(entry_delivery_action) == "proxy":

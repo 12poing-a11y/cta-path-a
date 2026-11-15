@@ -121,8 +121,10 @@ def backfilled_member():
 
 if __name__ == "__main__":
     mem = backfilled_member() if "--backfill" in sys.argv else None
-    res = {"seats": "dce_hist_backfill" if mem else "snapshot", "lookahead": lookahead(member=mem), "oos": oos(member=mem)}
+    kw = {"entry_delivery_action": "block"} if "--block" in sys.argv else {}
+    res = {"seats": ("dce_hist_backfill+prewindow" if mem else "snapshot"), "entry_delivery_action": kw.get("entry_delivery_action", "proxy"),
+           "lookahead": lookahead(member=mem, **kw), "oos": oos(member=mem, **kw)}
     print(json.dumps({"lookahead": {k: (v["full_entries"], v["ok"]) for k, v in res["lookahead"].items()},
                       "best": res["oos"]["best_by_train_calmar"], "formal": res["oos"]["formal_0.8_2"],
                       "rank_corr": res["oos"]["train_test_rank_corr"], "pbo": res["oos"]["pbo"]}, ensure_ascii=False, indent=1))
-    (HERE / ("oos_gate_backfill_result.json" if mem else "oos_gate_result.json")).write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
+    (HERE / (("oos_gate_backfill_result" if mem else "oos_gate_result") + ("_block" if kw else "") + ".json")).write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))

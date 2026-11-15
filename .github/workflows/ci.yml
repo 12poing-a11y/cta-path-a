@@ -27,7 +27,7 @@ jobs:
           pip install pytest
 
       - name: Gates (freeze fix + rule lock + truncation lookahead + locked OOS)
-        run: python -m pytest tests/test_freeze_fix_gates.py tests/test_rule_lock.py -v --tb=short
+        run: python -m pytest tests/test_freeze_fix_gates.py tests/test_rule_lock.py tests/test_formal_write_dirty_exit2.py -v --tb=short
 
       - name: Unit tests (quality + sentiment)
         run: python -m pytest tests/ -q --tb=short

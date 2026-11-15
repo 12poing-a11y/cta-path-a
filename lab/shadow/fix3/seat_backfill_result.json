@@ -1,0 +1,101 @@
+{
+ "ret_pct": 9.129,
+ "max_dd_pct": 3.395,
+ "closed_trades": 66,
+ "trade_win_rate": 43.94,
+ "expectancy_r": 0.249,
+ "exits": {
+  "target": 25,
+  "stop": 34,
+  "signal": 5,
+  "delivery": 2
+ },
+ "freeze_fix": {
+  "enabled": true,
+  "max_stale_days": 3,
+  "delivery_guard": true,
+  "proxied_bar_days": 3,
+  "delivery_exits": 2,
+  "freeze_exits": 0
+ },
+ "seat_gate": {
+  "min_seat_days": 60,
+  "seat_days": {
+   "AG": 215,
+   "AL": 215,
+   "AU": 215,
+   "BU": 215,
+   "CF": 215,
+   "CU": 215,
+   "EB": 70,
+   "EG": 112,
+   "FG": 215,
+   "FU": 215,
+   "I": 112,
+   "JD": 112,
+   "JM": 112,
+   "L": 112,
+   "M": 112,
+   "MA": 215,
+   "NI": 215,
+   "P": 112,
+   "PP": 112,
+   "RB": 215,
+   "RU": 215,
+   "SA": 215,
+   "SP": 215,
+   "SR": 215,
+   "SS": 215,
+   "TA": 215,
+   "V": 112
+  },
+  "skipped_seat_filter_signals": {}
+ },
+ "proxy_entry_n": 27,
+ "contract_entry_n": 39,
+ "same_day_exit_n": 19,
+ "avg_held": 0.97,
+ "conclusion": "继续L1",
+ "seat_days_dce": {
+  "M": 112,
+  "P": 112,
+  "JD": 112,
+  "EG": 112,
+  "EB": 70,
+  "V": 112,
+  "L": 112,
+  "PP": 112,
+  "I": 112,
+  "JM": 112
+ },
+ "nondce_match_vs_snapshot": {
+  "AG": 0.9953488372093023,
+  "AL": 1.0,
+  "AU": 1.0,
+  "BU": 0.9627906976744186,
+  "CF": 0.8837209302325582,
+  "CU": 0.9953488372093023,
+  "FG": 0.8837209302325582,
+  "FU": 0.9348837209302325,
+  "MA": 0.8837209302325582,
+  "NI": 0.9953488372093023,
+  "RB": 1.0,
+  "RU": 1.0,
+  "SA": 0.8837209302325582,
+  "SP": 0.9395348837209302,
+  "SR": 0.8837209302325582,
+  "SS": 0.9953488372093023,
+  "TA": 0.8837209302325582
+ },
+ "train": [
+  7.01,
+  3.39,
+  50
+ ],
+ "test": [
+  2.0,
+  2.56,
+  16
+ ],
+ "cross_delivery_trades": []
+}

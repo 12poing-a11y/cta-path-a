@@ -9,7 +9,7 @@ __pycache__/
 .venv/
 venv/
 .DS_Store
-weekly_backtest_latest.json
+# weekly_backtest_latest.json is tracked (fix3); formal writes need clean tree + rule lock.
 # keep archive in git optionally; ignore local noise
 *.conflict.*
 .cache/

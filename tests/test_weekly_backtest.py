@@ -85,6 +85,12 @@ def test_weekly_run_uses_simulate_not_paper_overlay(monkeypatch, tmp_path):
     monkeypatch.setattr(hb, "_simulate_cfg", lambda p, mode, **kw: dict(fake_sim))
     monkeypatch.setattr(wb, "_paper_book_equity", lambda: 999_999.0)
     monkeypatch.setattr(wb, "ROOT", tmp_path)
+    import research.execution.rule_lock as rl
+
+    monkeypatch.setattr(rl, "check_rules", lambda root, p=None: {"execution_rules_sha256_lf": "x"})
+    monkeypatch.setattr(rl, "check_clean", lambda root: None)
+    monkeypatch.setattr(rl, "check_fill_series", lambda root, sim: None)
+    fake_sim["fill_series"] = "mixed"
 
     # skip member backfill
     import member_rank

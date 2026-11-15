@@ -67,7 +67,32 @@ def _slice_curve_kpis(curve: list[dict], days: int) -> dict:
     }
 
 
-def run(days: int = 7) -> dict:
+def _write_result(out: dict, out_path: Path | None) -> Path:
+    """Formal path requires a clean working tree (rule_lock.check_clean)."""
+    from research.execution.rule_lock import check_clean
+
+    formal = ROOT / "weekly_backtest_latest.json"
+    path = Path(out_path) if out_path else formal
+    if path.resolve() == formal.resolve():
+        check_clean(ROOT)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return path
+
+
+def run(days: int = 7, out_path: Path | None = None) -> dict:
+    """Weekly KPI under the formal-rule lock.
+
+    Raises research.execution.rule_lock.RuleLockError (and writes nothing) when
+    execution_rules.json (LF-normalised sha) / params / fill_series do not match
+    configs/formal_rule_lock.json, or when writing the formal file from a dirty tree.
+    """
+    from research.execution.rule_lock import check_fill_series, check_rules
+
+    import historical_backtest as hb
+
+    p = hb._load_cfg()
+    lock_info = check_rules(ROOT, p)  # before any network / backfill
     # GitHub weekly: densify seat ranks (esp. DCE/EM) so desk charts are readable.
     try:
         from member_rank import backfill_member_lookback
@@ -85,9 +110,6 @@ def run(days: int = 7) -> dict:
     except Exception as exc:  # noqa: BLE001
         print(f"[weekly] member backfill soft-fail: {exc}")
 
-    import historical_backtest as hb
-
-    p = hb._load_cfg()
     mode = p.get("entry_filter") or "seats"
     if mode not in ("base", "p0", "carry", "oi", "member", "climax", "seats", "roll", "ctf"):
         mode = "seats"
@@ -114,9 +136,7 @@ def run(days: int = 7) -> dict:
             "live_trading": False,
             "detail": json.dumps({"error": str(exc)}, ensure_ascii=False),
         }
-        (ROOT / "weekly_backtest_latest.json").write_text(
-            json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-        )
+        _write_result(out, out_path)
         print(json.dumps(out, ensure_ascii=False, indent=2))
         return out
 
@@ -140,12 +160,11 @@ def run(days: int = 7) -> dict:
             "live_trading": False,
             "detail": json.dumps({"sim": {k: sim.get(k) for k in ("errors", "summary")}}, ensure_ascii=False),
         }
-        (ROOT / "weekly_backtest_latest.json").write_text(
-            json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-        )
+        _write_result(out, out_path)
         print(json.dumps(out, ensure_ascii=False, indent=2))
         return out
 
+    check_fill_series(ROOT, sim)  # mismatch => RuleLockError, no output
     curve = sim.get("equity_curve") or []
     win = _slice_curve_kpis(curve, days)
     paper_eq = _paper_book_equity()
@@ -191,6 +210,9 @@ def run(days: int = 7) -> dict:
         "git_sha": sim.get("git_sha"),
         "universe_sha256": sim.get("universe_sha256"),
         "execution_rules_sha256": sim.get("execution_rules_sha256"),
+        "execution_rules_sha256_lf": lock_info.get("execution_rules_sha256_lf"),
+        "fill_series": sim.get("fill_series"),
+        "rule_lock": "ok",
         "ledger": "historical_simulate",
         "paper_book_equity": paper_eq,
         **win,
@@ -203,11 +225,19 @@ def run(days: int = 7) -> dict:
             ensure_ascii=False,
         ),
     }
-    path = ROOT / "weekly_backtest_latest.json"
-    path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    _write_result(out, out_path)
     print(json.dumps(out, ensure_ascii=False, indent=2))
     return out
 
 
 if __name__ == "__main__":
-    run(7)
+    from research.execution.rule_lock import RuleLockError
+
+    _out = None
+    if "--out" in sys.argv:
+        _out = Path(sys.argv[sys.argv.index("--out") + 1])
+    try:
+        run(7, out_path=_out)
+    except RuleLockError as exc:
+        print(f"[weekly] RULE LOCK FAILED — no output written: {exc}", file=sys.stderr)
+        sys.exit(2)

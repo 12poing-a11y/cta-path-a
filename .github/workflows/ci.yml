@@ -2,7 +2,7 @@ name: CTA CI gates
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, "shadow/**"]
   pull_request:
   workflow_dispatch:
 
@@ -25,6 +25,9 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements-desk.txt
           pip install pytest
+
+      - name: Gates (freeze fix + rule lock + truncation lookahead + locked OOS)
+        run: python -m pytest tests/test_freeze_fix_gates.py tests/test_rule_lock.py -v --tb=short
 
       - name: Unit tests (quality + sentiment)
         run: python -m pytest tests/ -q --tb=short

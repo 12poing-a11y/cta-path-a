@@ -2,7 +2,7 @@
 
 Shadow research only. No orders. This track does not change formal Path-A.
 
-Formal paper stays on `execution_rules.json`: stop **ATR×1.2**, reward **1.5R**. The runner does not read that file and does not write `paper_book_latest.json`, `l1_report.json`, `historical_backtest_latest.json`, `benchmark_latest.json`, or any `latest.json`.
+Formal paper stays on `execution_rules.json`: stop **0.8×ATR**, reward **2R**. The runner does not read that file and does not write `paper_book_latest.json`, `l1_report.json`, `historical_backtest_latest.json`, `benchmark_latest.json`, or any `latest.json`.
 
 An order block here is a location and a stop reference. It is not treated as proven alpha. v1 keeps failed zones and zones that never retest. There is no quality score.
 

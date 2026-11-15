@@ -190,6 +190,54 @@ def manage_ohlc_bar(bar: dict, basis: str | None) -> dict | None:
         return None
 
 
+MIN_SEAT_DAYS = 60  # varieties with <60 seat sessions (as of T) skip the formal seat filter
+MAX_STALE_DAYS = 3  # >3 consecutive days without same-contract OHLC => force exit ("freeze")
+
+
+def contract_delivery_ym(contract: str | None) -> str | None:
+    """'L2601' -> '2026-01'; 'FG605' (CZCE 3-digit) -> '2026-05'. None if unparsable."""
+    import re as _re
+
+    m = _re.search(r"(\d{3,4})$", str(contract or ""))
+    if not m:
+        return None
+    dg = m.group(1)
+    if len(dg) == 3:
+        yy, mm = 20 + int(dg[0]), int(dg[1:])
+    else:
+        yy, mm = int(dg[:2]), int(dg[2:])
+    if not 1 <= mm <= 12:
+        return None
+    return f"{2000 + yy if yy < 100 else yy:04d}-{mm:02d}"
+
+
+def manage_bar_fixed(bar: dict, p: dict) -> tuple[dict | None, bool]:
+    """Freeze-fix manage bar (shadow fix3).
+
+    Contract fills: use same-contract OHLC when present (and refresh the
+    position's basis offset); otherwise manage on continuous OHLC + latest
+    known basis (contract - continuous). Returns (mbar, proxied).
+    """
+    basis = str(p.get("fill_price_basis") or "continuous_proxy").strip().lower()
+    if basis != "contract":
+        return manage_ohlc_bar(bar, "continuous_proxy"), False
+    fc = p.get("fill_contract")
+    same = fc is None or bar.get("contract") in (None, fc)
+    if same:
+        cb = manage_ohlc_bar(bar, "contract")
+        if cb is not None:
+            try:
+                p["basis_off"] = float(bar["contract_close"]) - float(bar["close"])
+            except (KeyError, TypeError, ValueError):
+                pass
+            return cb, False
+    cont = manage_ohlc_bar(bar, "continuous_proxy")
+    if cont is None:
+        return None, True
+    off = float(p.get("basis_off") or 0.0)
+    return {k: (v + off if k in ("open", "high", "low", "close") else v) for k, v in cont.items()}, True
+
+
 def prepare_pack_for_execution(pack, *, root: Path | None = None) -> dict:
     """Stamp delivery calendar + optional contract-fill overlay onto a backtest pack."""
     series, errors, sources = pack
@@ -1087,6 +1135,10 @@ def simulate(
     fee_mult=1.0,
     cost_scenario="base",
     enforce_tradability=True,
+    freeze_fix=True,
+    max_stale_days=MAX_STALE_DAYS,
+    delivery_guard=True,
+    min_seat_days=MIN_SEAT_DAYS,
 ):
     if fill_price not in FILL_PRICES:
         raise ValueError(f"fill_price must be one of {FILL_PRICES}")
@@ -1157,6 +1209,7 @@ def simulate(
     day_pnls = []
     pos: dict = {}
     trade_exits = {"target": 0, "stop": 0, "signal": 0}
+    freeze_stats = {"proxied_bar_days": 0, "delivery_exits": 0, "freeze_exits": 0}
     closed_pnls = []
     block_counts: dict[str, int] = {}
     quality_blocks: dict[str, int] = {}
@@ -1173,6 +1226,11 @@ def simulate(
         member = lag_member(load_member_changes(member_dates, [c for c in series]), member_dates, lag)
     elif mode in ("seats", "roll"):
         member = lag_member(load_member_seats(member_dates, [c for c in series]), member_dates, lag)
+    # fix3: seat coverage gate (data-quality, not price info): a variety whose
+    # loaded seat history has < min_seat_days sessions skips the formal seat filter.
+    seat_cov = {c: sum(1 for v in (m or {}).values() if isinstance(v, dict)) for c, m in member.items()}
+    seat_short: dict[str, int] = {}
+
     # Snapshot inputs must match what the backtest actually consumes (post-lag).
     _LAST_PACK["member"] = member
     _LAST_PACK["carry"] = _carry_subset(curves)
@@ -1196,13 +1254,24 @@ def simulate(
             hist = series[code]["hist"]
             i1 = idx[code].get(d)
             if i1 is None:
+                if freeze_fix:
+                    p["stale_days"] = int(p.get("stale_days") or 0) + 1
                 continue
             bar = hist[i1]
             fill_basis = str(p.get("fill_price_basis") or "continuous_proxy")
-            mbar = manage_ohlc_bar(bar, fill_basis)
+            proxied = False
+            if freeze_fix:
+                mbar, proxied = manage_bar_fixed(bar, p)
+                if proxied:
+                    p["stale_days"] = int(p.get("stale_days") or 0) + 1
+                    freeze_stats["proxied_bar_days"] += 1
+                else:
+                    p["stale_days"] = 0
+            else:
+                mbar = manage_ohlc_bar(bar, fill_basis)
             if mbar is None:
-                # Contract-locked position without contract OHLC today: do not
-                # manage or mark on continuous (avoids mixed-basis false exits).
+                # Legacy (ee4476b): contract-locked position without contract
+                # OHLC today is skipped (=> freeze; fixed by freeze_fix).
                 continue
             mult = series[code]["meta"]["mult"]
             sign = 1 if p["direction"] == "多" else -1
@@ -1269,7 +1338,22 @@ def simulate(
                             reason, px = "signal", mbar["close"]
                         elif p["direction"] == "空" and not short_ok:
                             reason, px = "signal", mbar["close"]
-            if prev_d is not None:
+            if freeze_fix and reason is None:
+                fc_ym = contract_delivery_ym(p.get("fill_contract")) if fill_basis == "contract" else None
+                nxt = trade_dates[di + 1] if di + 1 < len(trade_dates) else None
+                if delivery_guard and fc_ym and (str(d)[:7] >= fc_ym or (nxt and str(nxt)[:7] >= fc_ym)):
+                    reason, px = "delivery", mbar["close"]
+                    freeze_stats["delivery_exits"] += 1
+                elif max_stale_days is not None and int(p.get("stale_days") or 0) > int(max_stale_days):
+                    reason, px = "freeze", mbar["close"]
+                    freeze_stats["freeze_exits"] += 1
+            if freeze_fix:
+                prev_close = p.pop("mark_from") if "mark_from" in p else p.get("last_mark")
+                exit_px = px if reason else mbar["close"]
+                if prev_close is not None:
+                    price_pnl += (exit_px - prev_close) * mult * p["lots"] * sign
+                p["last_mark"] = mbar["close"]
+            elif prev_d is not None:
                 i0 = idx[code].get(prev_d)
                 if i0 is not None:
                     prev_m = manage_ohlc_bar(hist[i0], fill_basis)
@@ -1373,6 +1457,14 @@ def simulate(
                             continue
                         peers.append(ret_n(other_s["hist"], oi, 20))
                 block_mode = "seats" if mode == "roll" else mode
+                member_used = member
+                if (
+                    mode in ("seats", "roll")
+                    and min_seat_days
+                    and seat_cov.get(code, 0) < int(min_seat_days)
+                ):
+                    member_used = {}
+                    seat_short[code] = seat_short.get(code, 0) + 1
                 blocked = None if mode == "ctf" else entry_block(
                     block_mode,
                     hist,
@@ -1382,11 +1474,11 @@ def simulate(
                     code,
                     a,
                     curves,
-                    member,
+                    member_used,
                     [p for p in peers if p is not None],
                 )
                 if mode in ("seats", "roll") and not blocked:
-                    _reason, label = seat_decision(direction, (member.get(code) or {}).get(d))
+                    _reason, label = seat_decision(direction, (member_used.get(code) or {}).get(d))
                     seat_follows[label] = seat_follows.get(label, 0) + 1
                 if blocked:
                     block_counts[blocked] = block_counts.get(blocked, 0) + 1
@@ -1874,6 +1966,8 @@ def simulate(
         "same_day_exit_n": same_day_exit_n,
         "same_day_exit_share": round(same_day_exit_n / closed_n, 4) if closed_n else None,
         "exits": trade_exits,
+        "seat_gate": {"min_seat_days": min_seat_days, "seat_days": seat_cov, "skipped_seat_filter_signals": seat_short},
+        "freeze_fix": {"enabled": bool(freeze_fix), "max_stale_days": max_stale_days, "delivery_guard": bool(delivery_guard), **freeze_stats},
         "sleeve_counts": sleeve_counts,
         "avg_held": round(avg_held, 2),
         "conclusion": conclusion,
@@ -1943,6 +2037,10 @@ def _simulate_cfg(
     option_hedge=None,
     reward_rr=None,
     stop_atr_mult=None,
+    freeze_fix=None,
+    max_stale_days=None,
+    delivery_guard=None,
+    min_seat_days=None,
 ):
     cfg = p["cfg"]
     print(f"[bt] mode={mode} ifind_so_far={usage_report()['count']}")
@@ -1974,6 +2072,10 @@ def _simulate_cfg(
         fee_mult=float(p.get("fee_mult") if p.get("fee_mult") is not None else 1.0),
         cost_scenario=str(p.get("cost_scenario") or "base"),
         enforce_tradability=bool(p.get("enforce_tradability", True)),
+        freeze_fix=bool(p.get("freeze_fix", True) if freeze_fix is None else freeze_fix),
+        max_stale_days=(p.get("max_stale_days", MAX_STALE_DAYS) if max_stale_days is None else max_stale_days),
+        delivery_guard=bool(p.get("delivery_guard", True) if delivery_guard is None else delivery_guard),
+        min_seat_days=(p.get("min_seat_days", MIN_SEAT_DAYS) if min_seat_days is None else min_seat_days),
     )
 
 

@@ -1,0 +1,7 @@
+{
+  "note": "fix3 formal rule lock; change only with 磊 sign-off",
+  "execution_rules_sha256_lf": "77999d44e490912762ee5d2ed035e2316963a52783805b3208a2748d87d8039c",
+  "fill_series": "mixed",
+  "stop_atr_mult": 0.8,
+  "reward_rr": 2.0
+}

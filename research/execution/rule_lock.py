@@ -22,6 +22,7 @@ DIRTY_IGNORE_PREFIXES = (
     "archive/",
     "data/",
     "lab/data/",
+    "lab/research/predictions/",  # rewritten by unit tests in CI before weekly
     "weekly_backtest_latest.json",
     "equity_state.json",
 )

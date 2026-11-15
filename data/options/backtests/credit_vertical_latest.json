@@ -1,0 +1,421 @@
+{
+  "schema": "cta-options-credit-bt-v1",
+  "built_at": "2026-11-15T18:17:02+08:00",
+  "params": {
+    "codes": [
+      "CF",
+      "SR",
+      "MA"
+    ],
+    "kind": "put_credit",
+    "width_points": 200.0,
+    "slip_ticks": 2.0,
+    "exit_mode": "next_snap",
+    "max_margin_cny": null,
+    "stop_loss_mult": 2.0
+  },
+  "strategy_state": "WARN",
+  "metrics": {
+    "n_closed": 5,
+    "n_skipped": 3,
+    "win_rate": 0.4,
+    "avg_credit_points": 27.4,
+    "avg_pnl_points": -6.6,
+    "avg_pnl_cny": -33.0,
+    "max_adverse_points": 25.0,
+    "total_pnl_cny": -165.0,
+    "sum_margin_est_cny": 4315.0
+  },
+  "trades": [
+    {
+      "strategy_id": "credit_vertical",
+      "kind": "put_credit",
+      "asof": "2026-11-05",
+      "code": "CF",
+      "underlying_settle": 15340.0,
+      "short": {
+        "symbol": "CF701P15200",
+        "side": "P",
+        "strike": 15200.0,
+        "px": 151.0
+      },
+      "long": {
+        "symbol": "CF701P15000",
+        "side": "P",
+        "strike": 15000.0,
+        "px": 109.0
+      },
+      "width_points": 200.0,
+      "raw_credit_points": 42.0,
+      "slip_points": 10.0,
+      "credit_points": 32.0,
+      "pricing_mode": "settle_discount",
+      "multiplier": 5.0,
+      "quality_status": "WARN",
+      "legs": [
+        {
+          "symbol": "CF701P15200",
+          "side": "P",
+          "strike": 15200.0,
+          "settle": 151.0,
+          "close": 141.0,
+          "bid": null,
+          "ask": null,
+          "oi": 25203.0,
+          "volume": 10461.0,
+          "exchange_iv": 0.1117,
+          "delta": -0.3893
+        },
+        {
+          "symbol": "CF701P15000",
+          "side": "P",
+          "strike": 15000.0,
+          "settle": 109.0,
+          "close": 101.0,
+          "bid": null,
+          "ask": null,
+          "oi": 43995.0,
+          "volume": 39009.0,
+          "exchange_iv": 0.1274,
+          "delta": -0.2799
+        }
+      ],
+      "status": "closed",
+      "entry_asof": "2026-11-05",
+      "margin_est_cny": 840.0,
+      "strategy_state": "WARN",
+      "exit_asof": "2026-11-06",
+      "exit_debit_points": 49.0,
+      "exit_reason": "next_snap",
+      "pnl_points": -17.0,
+      "pnl_cny": -85.0,
+      "max_adverse_points": 17.0
+    },
+    {
+      "strategy_id": "credit_vertical",
+      "kind": "put_credit",
+      "asof": "2026-11-06",
+      "code": "CF",
+      "underlying_settle": 15345.0,
+      "short": {
+        "symbol": "CF701P15200",
+        "side": "P",
+        "strike": 15200.0,
+        "px": 160.0
+      },
+      "long": {
+        "symbol": "CF701P15000",
+        "side": "P",
+        "strike": 15000.0,
+        "px": 111.0
+      },
+      "width_points": 200.0,
+      "raw_credit_points": 49.0,
+      "slip_points": 10.0,
+      "credit_points": 39.0,
+      "pricing_mode": "settle_discount",
+      "multiplier": 5.0,
+      "quality_status": "WARN",
+      "legs": [
+        {
+          "symbol": "CF701P15200",
+          "side": "P",
+          "strike": 15200.0,
+          "settle": 160.0,
+          "close": 142.0,
+          "bid": null,
+          "ask": null,
+          "oi": 24711.0,
+          "volume": 7435.0,
+          "exchange_iv": 0.1195,
+          "delta": -0.3907
+        },
+        {
+          "symbol": "CF701P15000",
+          "side": "P",
+          "strike": 15000.0,
+          "settle": 111.0,
+          "close": 100.0,
+          "bid": null,
+          "ask": null,
+          "oi": 43619.0,
+          "volume": 28256.0,
+          "exchange_iv": 0.1313,
+          "delta": -0.2802
+        }
+      ],
+      "status": "closed",
+      "entry_asof": "2026-11-06",
+      "margin_est_cny": 805.0,
+      "strategy_state": "WARN",
+      "exit_asof": "2026-11-09",
+      "exit_debit_points": 36.0,
+      "exit_reason": "next_snap",
+      "pnl_points": 3.0,
+      "pnl_cny": 15.0,
+      "max_adverse_points": 0.0
+    },
+    {
+      "strategy_id": "credit_vertical",
+      "kind": "put_credit",
+      "asof": "2026-11-09",
+      "code": "CF",
+      "underlying_settle": 15395.0,
+      "short": {
+        "symbol": "CF701P15200",
+        "side": "P",
+        "strike": 15200.0,
+        "px": 119.0
+      },
+      "long": {
+        "symbol": "CF701P15000",
+        "side": "P",
+        "strike": 15000.0,
+        "px": 83.0
+      },
+      "width_points": 200.0,
+      "raw_credit_points": 36.0,
+      "slip_points": 10.0,
+      "credit_points": 26.0,
+      "pricing_mode": "settle_discount",
+      "multiplier": 5.0,
+      "quality_status": "WARN",
+      "legs": [
+        {
+          "symbol": "CF701P15200",
+          "side": "P",
+          "strike": 15200.0,
+          "settle": 119.0,
+          "close": 136.0,
+          "bid": null,
+          "ask": null,
+          "oi": 25107.0,
+          "volume": 7739.0,
+          "exchange_iv": 0.1117,
+          "delta": -0.3427
+        },
+        {
+          "symbol": "CF701P15000",
+          "side": "P",
+          "strike": 15000.0,
+          "settle": 83.0,
+          "close": 94.0,
+          "bid": null,
+          "ask": null,
+          "oi": 42595.0,
+          "volume": 19436.0,
+          "exchange_iv": 0.1268,
+          "delta": -0.2381
+        }
+      ],
+      "status": "closed",
+      "entry_asof": "2026-11-09",
+      "margin_est_cny": 870.0,
+      "strategy_state": "WARN",
+      "exit_asof": "2026-11-10",
+      "exit_debit_points": 36.0,
+      "exit_reason": "next_snap",
+      "pnl_points": -10.0,
+      "pnl_cny": -50.0,
+      "max_adverse_points": 10.0
+    },
+    {
+      "strategy_id": "credit_vertical",
+      "kind": "put_credit",
+      "asof": "2026-11-10",
+      "code": "CF",
+      "underlying_settle": 15395.0,
+      "short": {
+        "symbol": "CF701P15200",
+        "side": "P",
+        "strike": 15200.0,
+        "px": 118.0
+      },
+      "long": {
+        "symbol": "CF701P15000",
+        "side": "P",
+        "strike": 15000.0,
+        "px": 82.0
+      },
+      "width_points": 200.0,
+      "raw_credit_points": 36.0,
+      "slip_points": 10.0,
+      "credit_points": 26.0,
+      "pricing_mode": "settle_discount",
+      "multiplier": 5.0,
+      "quality_status": "WARN",
+      "legs": [
+        {
+          "symbol": "CF701P15200",
+          "side": "P",
+          "strike": 15200.0,
+          "settle": 118.0,
+          "close": 133.0,
+          "bid": null,
+          "ask": null,
+          "oi": 25338.0,
+          "volume": 5268.0,
+          "exchange_iv": 0.1131,
+          "delta": -0.3422
+        },
+        {
+          "symbol": "CF701P15000",
+          "side": "P",
+          "strike": 15000.0,
+          "settle": 82.0,
+          "close": 92.0,
+          "bid": null,
+          "ask": null,
+          "oi": 44161.0,
+          "volume": 14646.0,
+          "exchange_iv": 0.1286,
+          "delta": -0.2377
+        }
+      ],
+      "status": "closed",
+      "entry_asof": "2026-11-10",
+      "margin_est_cny": 870.0,
+      "strategy_state": "WARN",
+      "exit_asof": "2026-11-12",
+      "exit_debit_points": 10.0,
+      "exit_reason": "next_snap",
+      "pnl_points": 16.0,
+      "pnl_cny": 80.0,
+      "max_adverse_points": 0.0
+    },
+    {
+      "strategy_id": "credit_vertical",
+      "kind": "put_credit",
+      "asof": "2026-11-12",
+      "code": "CF",
+      "underlying_settle": 15525.0,
+      "short": {
+        "symbol": "CF701P15400",
+        "side": "P",
+        "strike": 15400.0,
+        "px": 110.0
+      },
+      "long": {
+        "symbol": "CF701P15200",
+        "side": "P",
+        "strike": 15200.0,
+        "px": 86.0
+      },
+      "width_points": 200.0,
+      "raw_credit_points": 24.0,
+      "slip_points": 10.0,
+      "credit_points": 14.0,
+      "pricing_mode": "settle_discount",
+      "multiplier": 5.0,
+      "quality_status": "WARN",
+      "legs": [
+        {
+          "symbol": "CF701P15400",
+          "side": "P",
+          "strike": 15400.0,
+          "settle": 110.0,
+          "close": 121.0,
+          "bid": null,
+          "ask": null,
+          "oi": 20848.0,
+          "volume": 12340.0,
+          "exchange_iv": 0.0951,
+          "delta": -0.3757
+        },
+        {
+          "symbol": "CF701P15200",
+          "side": "P",
+          "strike": 15200.0,
+          "settle": 86.0,
+          "close": 82.0,
+          "bid": null,
+          "ask": null,
+          "oi": 26559.0,
+          "volume": 8677.0,
+          "exchange_iv": 0.12140000000000001,
+          "delta": -0.2615
+        }
+      ],
+      "status": "closed",
+      "entry_asof": "2026-11-12",
+      "margin_est_cny": 930.0,
+      "strategy_state": "WARN",
+      "exit_asof": "2026-11-13",
+      "exit_debit_points": 39.0,
+      "exit_reason": "stop_loss_mtm",
+      "pnl_points": -25.0,
+      "pnl_cny": -125.0,
+      "max_adverse_points": 25.0
+    },
+    {
+      "strategy_id": "credit_vertical",
+      "kind": "put_credit",
+      "asof": "2026-11-13",
+      "code": "CF",
+      "underlying_settle": 15545.0,
+      "short": {
+        "symbol": "CF701P15400",
+        "side": "P",
+        "strike": 15400.0,
+        "px": 116.0
+      },
+      "long": {
+        "symbol": "CF701P15200",
+        "side": "P",
+        "strike": 15200.0,
+        "px": 77.0
+      },
+      "width_points": 200.0,
+      "raw_credit_points": 39.0,
+      "slip_points": 10.0,
+      "credit_points": 29.0,
+      "pricing_mode": "settle_discount",
+      "multiplier": 5.0,
+      "quality_status": "WARN",
+      "legs": [
+        {
+          "symbol": "CF701P15400",
+          "side": "P",
+          "strike": 15400.0,
+          "settle": 116.0,
+          "close": 109.0,
+          "bid": null,
+          "ask": null,
+          "oi": 21852.0,
+          "volume": 13844.0,
+          "exchange_iv": 0.1051,
+          "delta": -0.3675
+        },
+        {
+          "symbol": "CF701P15200",
+          "side": "P",
+          "strike": 15200.0,
+          "settle": 77.0,
+          "close": 69.0,
+          "bid": null,
+          "ask": null,
+          "oi": 29210.0,
+          "volume": 14290.0,
+          "exchange_iv": 0.12029999999999999,
+          "delta": -0.2446
+        }
+      ],
+      "status": "skipped",
+      "entry_asof": "2026-11-13",
+      "margin_est_cny": 855.0,
+      "strategy_state": "WARN",
+      "reason": "no_next_snap"
+    },
+    {
+      "status": "skipped",
+      "code": "SR",
+      "reason": "need_ge_2_snapshots"
+    },
+    {
+      "status": "skipped",
+      "code": "MA",
+      "reason": "need_ge_2_snapshots"
+    }
+  ],
+  "disclaimer": "Research only; settle_discount without Bid/Ask caps at WARN; does not write paper_book or formal historical_backtest."
+}

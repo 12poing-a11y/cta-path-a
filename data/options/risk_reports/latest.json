@@ -1,0 +1,30 @@
+{
+  "schema": "cta-options-risk-v1",
+  "built_at": "2026-11-15T18:17:02+08:00",
+  "strategy_state": "WARN",
+  "bt_metrics": {
+    "n_closed": 5,
+    "n_skipped": 3,
+    "win_rate": 0.4,
+    "avg_credit_points": 27.4,
+    "avg_pnl_points": -6.6,
+    "avg_pnl_cny": -33.0,
+    "max_adverse_points": 25.0,
+    "total_pnl_cny": -165.0,
+    "sum_margin_est_cny": 4315.0
+  },
+  "ledger_n": 5,
+  "ledger_open_ish": 0,
+  "quality_reject_skips": 0,
+  "by_code": {
+    "CF": {
+      "n": 5,
+      "margin": 4315.0,
+      "pnl": -165.0
+    }
+  },
+  "same_direction_counts": {
+    "CF:put_credit": 5
+  },
+  "disclaimer": "Research approximate margin; not exchange SPAN; not Path-A formal risk."
+}

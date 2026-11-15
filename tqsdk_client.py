@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-"""TianQin TqSdk client — futures bars + option chain (OI + computed IV).
+"""TianQin TqSdk client — futures bars + option chain (OI + IV + Bid/Ask).
 
 Auth from TQ_USER/TQ_PASS env, or repo-local .env.tqsdk (gitignored).
 Uses 快期账户 via TqAuth (行情); no futures-broker login required for market data.
 
 Capability note vs Gamma Wall:
 - Quote exposes open_interest (OI) natively.
+- Best bid/ask via bid_price1/ask_price1 (F1 research snapshots).
 - Implied vol is *computed* via tqsdk.ta.OPTION_IMPV (BS), not exchange settlement IV.
   Prefer exchange IV (AkShare CZCE) when both exist; TqSdk fills gaps / non-CZCE.
 Missing credentials soft-fail (empty results) so CI/daily jobs never break.
@@ -212,16 +213,59 @@ def fetch_daily_bars(
         return [], f"tqsdk:error:{type(e).__name__}:{e}"
 
 
+def _finite_px(value: Any) -> float | None:
+    try:
+        if value is None:
+            return None
+        x = float(value)
+        if x != x or x <= 0:  # NaN or non-positive
+            return None
+        return x
+    except (TypeError, ValueError):
+        return None
+
+
+def quote_bid_ask(oq: Any) -> tuple[float | None, float | None]:
+    """Extract best bid/ask from a Tq quote-like object.
+
+    Tries common TqSdk attribute names; returns (None, None) when absent.
+    """
+    bid = None
+    ask = None
+    for name in ("bid_price1", "bid_price", "bid"):
+        bid = _finite_px(getattr(oq, name, None))
+        if bid is not None:
+            break
+    for name in ("ask_price1", "ask_price", "ask"):
+        ask = _finite_px(getattr(oq, name, None))
+        if ask is not None:
+            break
+    # Some feeds expose parallel arrays
+    if bid is None:
+        arr = getattr(oq, "bid_price", None)
+        if isinstance(arr, (list, tuple)) and arr:
+            bid = _finite_px(arr[0])
+    if ask is None:
+        arr = getattr(oq, "ask_price", None)
+        if isinstance(arr, (list, tuple)) and arr:
+            ask = _finite_px(arr[0])
+    return bid, ask
+
+
 def fetch_option_chain_snapshot(
     underlying_contract: str,
     *,
     root: Path | None = None,
     rate: float = 0.025,
     max_options: int = 120,
+    compute_iv: bool = True,
+    overall_deadline_s: float = 90.0,
 ) -> dict[str, Any]:
-    """Live option chain for a futures delivery month: OI + OPTION_IMPV.
+    """Live option chain for a futures delivery month: OI + Bid/Ask (+ optional IV).
 
-    Returns dict with keys: underlying, asof, rows (list), source, notes.
+    ``compute_iv=False`` skips per-leg kline/OPTION_IMPV (fast path for daily Bid/Ask
+    accumulation). ``overall_deadline_s`` caps wall time; returns partial rows + note.
+
     Soft-empty without auth.
     """
     empty = {
@@ -230,6 +274,8 @@ def fetch_option_chain_snapshot(
         "rows": [],
         "source": "tqsdk",
         "notes": [],
+        "bid_ask_coverage": 0.0,
+        "n_with_bid_ask": 0,
     }
     if not load_credentials(root=root):
         empty["notes"].append("no-auth")
@@ -240,19 +286,33 @@ def fetch_option_chain_snapshot(
         empty["notes"].append(str(e))
         return empty
 
-    try:
-        from tqsdk.ta import OPTION_IMPV
-    except ImportError:
-        empty["notes"].append("OPTION_IMPV unavailable")
-        return empty
+    OPTION_IMPV = None
+    if compute_iv:
+        try:
+            from tqsdk.ta import OPTION_IMPV as _OPTION_IMPV
+
+            OPTION_IMPV = _OPTION_IMPV
+        except ImportError:
+            empty["notes"].append("OPTION_IMPV unavailable")
+            compute_iv = False
 
     notes: list[str] = []
     rows: list[dict] = []
     asof: str | None = None
+    t0 = datetime.now(tz=TZ_SH).timestamp()
+    deadline_abs = t0 + max(5.0, float(overall_deadline_s))
+
+    def _time_left() -> float:
+        return deadline_abs - datetime.now(tz=TZ_SH).timestamp()
+
     try:
         with open_api(root=root) as api:
             und_q = api.get_quote(und_sym)
-            api.wait_update(deadline=datetime.now(tz=TZ_SH).timestamp() + 8)
+            wait0 = min(8.0, max(1.0, _time_left()))
+            api.wait_update(deadline=datetime.now(tz=TZ_SH).timestamp() + wait0)
+            if _time_left() <= 0:
+                empty["notes"].append("deadline_before_query_options")
+                return empty
             try:
                 options = list(api.query_options(underlying_symbol=und_sym, expired=False) or [])
             except Exception as e:  # noqa: BLE001
@@ -266,50 +326,162 @@ def fetch_option_chain_snapshot(
                 options = options[:max_options]
 
             und_last = float(getattr(und_q, "last_price", 0) or getattr(und_q, "pre_close", 0) or 0)
-            for opt_sym in options:
+
+            # Fast path: subscribe quotes once, single wait, then read Bid/Ask (no IV).
+            if not compute_iv:
                 try:
-                    oq = api.get_quote(opt_sym)
-                    api.wait_update(deadline=datetime.now(tz=TZ_SH).timestamp() + 3)
-                    oi = getattr(oq, "open_interest", None)
-                    try:
-                        oi_f = float(oi) if oi is not None else None
-                    except (TypeError, ValueError):
-                        oi_f = None
-                    strike = getattr(oq, "strike_price", None)
-                    opt_class = str(getattr(oq, "option_class", "") or "").upper()
-                    # C/CALL → C, P/PUT → P
-                    side = "C" if opt_class.startswith("C") else ("P" if opt_class.startswith("P") else "")
-                    iv = None
-                    try:
-                        kl = api.get_kline_serial([opt_sym, und_sym], 86400, data_length=5)
-                        api.wait_update(deadline=datetime.now(tz=TZ_SH).timestamp() + 3)
-                        impv = OPTION_IMPV(kl, oq, rate)
-                        raw = float(impv["impv"].iloc[-1])
-                        if raw == raw and raw > 0:
-                            iv = raw  # fraction
-                    except Exception:
-                        iv = None
-                    expire = getattr(oq, "expire_datetime", None) or getattr(oq, "last_exercise_datetime", None)
-                    exp_s = None
-                    if expire:
-                        exp_s = _iso_from_ns(int(expire) * 1_000_000_000) if int(expire) < 1e12 else _iso_from_ns(expire)
-                    rows.append(
-                        {
-                            "合约代码": opt_sym.split(".", 1)[-1],
-                            "tq_symbol": opt_sym,
-                            "期权类型": side,
-                            "行权价": float(strike) if strike is not None else None,
-                            "持仓量": oi_f,
-                            "空盘量": oi_f,
-                            "隐含波动率": (iv * 100.0) if iv is not None else None,  # percent, CZCE-style
-                            "最新价": float(getattr(oq, "last_price", 0) or 0) or None,
-                            "到期日": exp_s,
-                            "iv_source": "tqsdk.OPTION_IMPV",
-                        }
-                    )
+                    quote_map = api.get_quote(*options) if len(options) > 1 else {options[0]: api.get_quote(options[0])}
+                    # get_quote(*syms) may return a list/tuple of quotes aligned with symbols
+                    if isinstance(quote_map, (list, tuple)):
+                        q_by = {sym: quote_map[i] for i, sym in enumerate(options) if i < len(quote_map)}
+                    elif hasattr(quote_map, "items") and not hasattr(quote_map, "strike_price"):
+                        q_by = dict(quote_map)
+                    else:
+                        # single quote object
+                        q_by = {options[0]: quote_map}
+                    wait_b = min(12.0, max(1.0, _time_left()))
+                    api.wait_update(deadline=datetime.now(tz=TZ_SH).timestamp() + wait_b)
                 except Exception as e:  # noqa: BLE001
-                    notes.append(f"opt-skip:{opt_sym}:{type(e).__name__}")
-                    continue
+                    notes.append(f"batch_quote:{type(e).__name__}:{e}")
+                    q_by = {}
+                    for sym in options:
+                        if _time_left() <= 0:
+                            notes.append("deadline_partial")
+                            break
+                        try:
+                            q_by[sym] = api.get_quote(sym)
+                        except Exception:
+                            continue
+                    if q_by and _time_left() > 0:
+                        api.wait_update(
+                            deadline=datetime.now(tz=TZ_SH).timestamp() + min(8.0, _time_left())
+                        )
+
+                for opt_sym in options:
+                    if _time_left() <= 0:
+                        notes.append("deadline_partial")
+                        break
+                    oq = q_by.get(opt_sym)
+                    if oq is None:
+                        try:
+                            oq = api.get_quote(opt_sym)
+                        except Exception as e:  # noqa: BLE001
+                            notes.append(f"opt-skip:{opt_sym}:{type(e).__name__}")
+                            continue
+                    try:
+                        oi = getattr(oq, "open_interest", None)
+                        try:
+                            oi_f = float(oi) if oi is not None else None
+                        except (TypeError, ValueError):
+                            oi_f = None
+                        strike = getattr(oq, "strike_price", None)
+                        opt_class = str(getattr(oq, "option_class", "") or "").upper()
+                        side = "C" if opt_class.startswith("C") else ("P" if opt_class.startswith("P") else "")
+                        expire = getattr(oq, "expire_datetime", None) or getattr(
+                            oq, "last_exercise_datetime", None
+                        )
+                        exp_s = None
+                        if expire:
+                            exp_s = (
+                                _iso_from_ns(int(expire) * 1_000_000_000)
+                                if int(expire) < 1e12
+                                else _iso_from_ns(expire)
+                            )
+                        last = _finite_px(getattr(oq, "last_price", None))
+                        bid, ask = quote_bid_ask(oq)
+                        rows.append(
+                            {
+                                "合约代码": opt_sym.split(".", 1)[-1],
+                                "tq_symbol": opt_sym,
+                                "期权类型": side,
+                                "行权价": float(strike) if strike is not None else None,
+                                "持仓量": oi_f,
+                                "空盘量": oi_f,
+                                "隐含波动率": None,
+                                "最新价": last,
+                                "今收盘": last,
+                                "今结算": last,
+                                "买价": bid,
+                                "卖价": ask,
+                                "bid": bid,
+                                "ask": ask,
+                                "到期日": exp_s,
+                                "iv_source": None,
+                                "quote_source": "tqsdk_live_fast",
+                            }
+                        )
+                    except Exception as e:  # noqa: BLE001
+                        notes.append(f"opt-skip:{opt_sym}:{type(e).__name__}")
+                        continue
+            else:
+                for opt_sym in options:
+                    if _time_left() <= 0:
+                        notes.append("deadline_partial")
+                        break
+                    try:
+                        oq = api.get_quote(opt_sym)
+                        api.wait_update(
+                            deadline=datetime.now(tz=TZ_SH).timestamp()
+                            + min(3.0, max(0.5, _time_left()))
+                        )
+                        oi = getattr(oq, "open_interest", None)
+                        try:
+                            oi_f = float(oi) if oi is not None else None
+                        except (TypeError, ValueError):
+                            oi_f = None
+                        strike = getattr(oq, "strike_price", None)
+                        opt_class = str(getattr(oq, "option_class", "") or "").upper()
+                        side = "C" if opt_class.startswith("C") else ("P" if opt_class.startswith("P") else "")
+                        iv = None
+                        try:
+                            if OPTION_IMPV is not None and _time_left() > 2:
+                                kl = api.get_kline_serial([opt_sym, und_sym], 86400, data_length=5)
+                                api.wait_update(
+                                    deadline=datetime.now(tz=TZ_SH).timestamp()
+                                    + min(3.0, max(0.5, _time_left()))
+                                )
+                                impv = OPTION_IMPV(kl, oq, rate)
+                                raw = float(impv["impv"].iloc[-1])
+                                if raw == raw and raw > 0:
+                                    iv = raw
+                        except Exception:
+                            iv = None
+                        expire = getattr(oq, "expire_datetime", None) or getattr(
+                            oq, "last_exercise_datetime", None
+                        )
+                        exp_s = None
+                        if expire:
+                            exp_s = (
+                                _iso_from_ns(int(expire) * 1_000_000_000)
+                                if int(expire) < 1e12
+                                else _iso_from_ns(expire)
+                            )
+                        last = _finite_px(getattr(oq, "last_price", None))
+                        bid, ask = quote_bid_ask(oq)
+                        rows.append(
+                            {
+                                "合约代码": opt_sym.split(".", 1)[-1],
+                                "tq_symbol": opt_sym,
+                                "期权类型": side,
+                                "行权价": float(strike) if strike is not None else None,
+                                "持仓量": oi_f,
+                                "空盘量": oi_f,
+                                "隐含波动率": (iv * 100.0) if iv is not None else None,
+                                "最新价": last,
+                                "今收盘": last,
+                                "今结算": last,
+                                "买价": bid,
+                                "卖价": ask,
+                                "bid": bid,
+                                "ask": ask,
+                                "到期日": exp_s,
+                                "iv_source": "tqsdk.OPTION_IMPV" if iv is not None else None,
+                                "quote_source": "tqsdk_live",
+                            }
+                        )
+                    except Exception as e:  # noqa: BLE001
+                        notes.append(f"opt-skip:{opt_sym}:{type(e).__name__}")
+                        continue
 
             asof = date.today().isoformat()
             try:
@@ -319,6 +491,11 @@ def fetch_option_chain_snapshot(
             except Exception:
                 pass
 
+            n_ba = sum(
+                1 for r in rows if r.get("bid") is not None and r.get("ask") is not None
+            )
+            if n_ba == 0:
+                notes.append("no_bid_ask_on_quotes")
             return {
                 "underlying": underlying_contract,
                 "underlying_symbol": und_sym,
@@ -327,6 +504,10 @@ def fetch_option_chain_snapshot(
                 "rows": rows,
                 "source": "tqsdk",
                 "notes": notes,
+                "bid_ask_coverage": round(n_ba / len(rows), 4) if rows else 0.0,
+                "n_with_bid_ask": n_ba,
+                "compute_iv": compute_iv,
+                "elapsed_s": round(datetime.now(tz=TZ_SH).timestamp() - t0, 2),
             }
     except Exception as e:  # noqa: BLE001
         empty["notes"].append(f"error:{type(e).__name__}:{e}")

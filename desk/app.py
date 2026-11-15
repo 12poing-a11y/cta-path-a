@@ -832,6 +832,13 @@ def main() -> None:
             st.info("未找到 path_a_opt_hedge 回测产物。")
 
         st.markdown(f"> **免责声明**：{DISCLAIMER}")
+        try:
+            from desk.options_research_panel import render_options_research_panel
+
+            st.divider()
+            render_options_research_panel(st, ROOT)
+        except Exception as exc:
+            st.warning(f"上市期权研究面板暂不可用: {exc}")
 
     if page == "Gamma 结构":
         render_freshness_header(ROOT, "Gamma 结构")

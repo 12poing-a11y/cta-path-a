@@ -16,10 +16,13 @@ def hedge_enabled(cfg: dict[str, Any] | None) -> bool:
 
 
 def hedge_params(cfg: dict[str, Any] | None) -> dict[str, float]:
+    """Parse observe hedge knobs. Zero is valid (e.g. ATM strike_atr_mult=0)."""
     oh = (cfg or {}).get("option_hedge") or {}
+    prem = oh.get("premium_atr_mult")
+    strike = oh.get("strike_atr_mult")
     return {
-        "premium_atr_mult": float(oh.get("premium_atr_mult") or 2.0),
-        "strike_atr_mult": float(oh.get("strike_atr_mult") or 1.0),
+        "premium_atr_mult": float(2.0 if prem is None else prem),
+        "strike_atr_mult": float(1.0 if strike is None else strike),
     }
 
 

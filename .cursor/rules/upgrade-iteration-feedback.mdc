@@ -1,0 +1,15 @@
+---
+description: Path-A upgrades open one phase at a time; short feedback after each iteration; sync plan status to docs/UPGRADE_ITERATIONS.md
+alwaysApply: true
+---
+
+# Upgrade iteration discipline
+
+When doing Path-A / options research upgrades in this repo:
+
+1. **One open knife**: Only implement the phase marked 下一刀 / explicitly requested. Do not auto-start the next phase.
+2. **Authoritative status**: Keep `docs/UPGRADE_ITERATIONS.md` and `docs/options/ROADMAP.md` in sync when a phase completes or stays closed.
+3. **End-of-iteration feedback** (required, 3–6 lines): what shipped, artifact paths, verification, risks/deferred, recommend next knife or stop.
+4. **Hard fence**: Do not write Path-A formal `paper_book`, formal BT promotion, or seats unless the user explicitly orders it.
+5. **Personal archive**: If the user asks to sync 个人档案 / Notion, update Notion Memory + About Current work and the personal store `cta-path-a/UPGRADE_PLAN.md`.
+6. **Next-upgrade reminder**: When the user says 继续 / 升级 / 下一步 without naming a phase, first state the locked next knife from `research/options/upgrade_gate.py` (`F2` content) and current sample readiness (`data/options/upgrade_gate_latest.json` or `assess_upgrade_readiness`). Do **not** start F2 until they confirm, unless they already said to open it. If samples are not ready, remind the gap and wait.

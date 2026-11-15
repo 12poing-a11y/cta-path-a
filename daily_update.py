@@ -996,6 +996,55 @@ def main():
         except Exception as exc:
             print(f"[shadow_perf] refresh failed: {exc}")
             print(f"::warning title=shadow_perf refresh failed::{exc}")
+        try:
+            # Options research: gamma cache snaps + optional live Bid/Ask accumulate + BT.
+            # Soft: never writes paper_book / formal historical_backtest.
+            from research.options.chain_store import accumulate_live_bidask, collect_code_from_cache
+            from research.options.backtest.engine import run_credit_vertical_bt
+            from research.options.risk_report import build_risk_report
+
+            n_snap = 0
+            for code in ("CF", "SR", "MA"):
+                for r in collect_code_from_cache(ROOT, code, limit=5):
+                    if r.get("error"):
+                        print(f"[options-chain] {code} {r.get('asof')} soft-fail: {r['error']}")
+                    else:
+                        n_snap += 1
+            print(f"[options-chain] soft collect n={n_snap}")
+            try:
+                # Fast Bid/Ask only; 45s/code cap — must not hang daily_update.
+                acc = accumulate_live_bidask(
+                    ROOT, codes=["CF", "SR", "MA"], overall_deadline_s=45.0
+                )
+                print(
+                    f"[options-chain] live bid/ask ok={acc.get('n_ok')} "
+                    f"fail={acc.get('n_fail')}"
+                )
+            except Exception as live_exc:
+                print(f"[options-chain] live bid/ask soft-fail: {live_exc}")
+            try:
+                from research.options.upgrade_gate import write_gate
+
+                gate = write_gate(ROOT)
+                print(f"[options-upgrade] {gate.get('reminder')}")
+                if gate.get("ready"):
+                    print(
+                        "::notice title=options F2 sample ready::"
+                        f"{gate.get('next_upgrade_id')}: {gate.get('next_upgrade_title')}"
+                    )
+            except Exception as gate_exc:
+                print(f"[options-upgrade] gate soft-fail: {gate_exc}")
+            bt = run_credit_vertical_bt(ROOT, codes=["CF", "SR", "MA"], write=True)
+            m = bt.get("metrics") or {}
+            print(
+                f"[options-bt] state={bt.get('strategy_state')} "
+                f"n_closed={m.get('n_closed')} → {bt.get('path')}"
+            )
+            risk = build_risk_report(ROOT, write=True)
+            print(f"[options-risk] → {risk.get('path')}")
+        except Exception as exc:
+            print(f"[options-research] soft-fail: {exc}")
+            print(f"::warning title=options research soft-fail::{exc}")
     else:
         print("[paper] skip: quality gate failed")
     # Observation incomplete or quality fail → non-zero so CI does not publish formal.

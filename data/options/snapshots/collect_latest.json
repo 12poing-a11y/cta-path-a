@@ -1,0 +1,15 @@
+{
+  "n": 1,
+  "results": [
+    {
+      "code": "CF",
+      "asof": "2026-11-15",
+      "path": "D:\\AI\\cta-path-a\\data\\options\\snapshots\\CF\\2026-11-15.json",
+      "quality": "OK",
+      "n_legs": 62,
+      "n_with_bid_ask": 37,
+      "elapsed_s": 23.04,
+      "ok": true
+    }
+  ]
+}

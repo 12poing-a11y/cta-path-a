@@ -8,10 +8,33 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parent
+
+# Cache entries older than this are refreshed (hist_last_close / months).
+_CACHE_MAX_AGE_HOURS = 24.0
+
+
+def _utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _cache_fresh(fetched_at: Any, max_age_hours: float = _CACHE_MAX_AGE_HOURS) -> bool:
+    """True if fetched_at ISO timestamp is within max_age_hours."""
+    if not fetched_at:
+        return False
+    try:
+        text = str(fetched_at).strip().replace("Z", "+00:00")
+        ts = datetime.fromisoformat(text)
+        if ts.tzinfo is None:
+            ts = ts.replace(tzinfo=timezone.utc)
+        age_h = (_utc_now() - ts.astimezone(timezone.utc)).total_seconds() / 3600.0
+        return age_h <= float(max_age_hours)
+    except (TypeError, ValueError):
+        return False
 
 # Path-A codes that map to a sina commodity-option product page.
 CODE_TO_SINA: dict[str, str] = {
@@ -87,7 +110,11 @@ def list_months(product: str) -> list[str]:
     key = re.sub(r"\W+", "_", product)
     path = _cache_path(f"months_{key}.json")
     cached = _read_json(path)
-    if isinstance(cached, dict) and cached.get("months"):
+    if (
+        isinstance(cached, dict)
+        and cached.get("months")
+        and _cache_fresh(cached.get("fetched_at"))
+    ):
         return [str(m) for m in cached["months"]]
     try:
         import akshare as ak
@@ -106,7 +133,14 @@ def list_months(product: str) -> list[str]:
             if text:
                 months.append(text)
     if months:
-        _write_json(path, {"product": product, "months": months})
+        _write_json(
+            path,
+            {
+                "product": product,
+                "months": months,
+                "fetched_at": _utc_now().isoformat(),
+            },
+        )
     return months
 
 
@@ -170,12 +204,17 @@ def _pick_leg(frame, *, want_put: bool, strike_target: float) -> dict[str, Any] 
     return best
 
 
-def hist_last_close(option_symbol: str) -> float | None:
+def hist_last_close(option_symbol: str, *, max_age_hours: float = _CACHE_MAX_AGE_HOURS) -> float | None:
+    """Last close for an option symbol; cache expires after max_age_hours (default 24h)."""
     if not option_symbol:
         return None
     path = _cache_path(f"hist_{option_symbol}.json")
     cached = _read_json(path)
-    if isinstance(cached, dict) and _num(cached.get("close")) is not None:
+    if (
+        isinstance(cached, dict)
+        and _num(cached.get("close")) is not None
+        and _cache_fresh(cached.get("fetched_at") or cached.get("asof"), max_age_hours)
+    ):
         return float(cached["close"])
     try:
         import akshare as ak
@@ -191,7 +230,18 @@ def hist_last_close(option_symbol: str) -> float | None:
     last = _num(frame.iloc[-1].get(close_col))
     if last is None:
         return None
-    _write_json(path, {"symbol": option_symbol, "close": last})
+    asof = None
+    if "date" in getattr(frame, "columns", []):
+        asof = str(frame.iloc[-1].get("date") or "")[:10] or None
+    _write_json(
+        path,
+        {
+            "symbol": option_symbol,
+            "close": last,
+            "asof": asof,
+            "fetched_at": _utc_now().isoformat(),
+        },
+    )
     return float(last)
 
 

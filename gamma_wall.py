@@ -78,11 +78,10 @@ def czce_option_month(futures_contract: str) -> str:
 
 
 def black76_gamma(futures: float, strike: float, years: float, rate: float, iv: float) -> float:
-    if min(futures, strike, years, iv) <= 0: raise ValueError("F、K、T、IV 必须大于 0")
-    vol_t = iv * math.sqrt(years)
-    d1 = (math.log(futures / strike) + 0.5 * iv * iv * years) / vol_t
-    pdf = math.exp(-0.5 * d1 * d1) / math.sqrt(2.0 * math.pi)
-    return math.exp(-rate * years) * pdf / (futures * vol_t)
+    """Thin wrapper → research.options.pricing.black76 (behavior unchanged)."""
+    from research.options.pricing.black76 import black76_gamma as _g
+
+    return _g(futures, strike, years, rate, iv)
 
 
 def _contract_side(code: str, product_month: str):

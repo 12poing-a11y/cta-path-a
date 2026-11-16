@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "asof": "2026-11-13",
-  "asof_ymd": "20261113",
+  "asof": "2026-11-16",
+  "asof_ymd": "20261116",
   "source": "paper_book",
   "seed": "paper_book_latest",
   "parent_backtest_end": "2026-10-20",
@@ -9,8 +9,8 @@
   "stop_atr_mult": 0.8,
   "reward_rr": 2.0,
   "equity": 190332.32,
-  "equity_floating": 0.0,
-  "equity_mark": 190332.32,
+  "equity_floating": -480.0,
+  "equity_mark": 189852.32,
   "positions": {
     "P": {
       "code": "P",
@@ -19,19 +19,19 @@
       "entry": 8961.0,
       "stop": 9119.344,
       "target": 8644.312,
-      "atr": 197.93,
+      "atr": 185.5,
       "stop_atr_mult": 0.8,
       "reward_rr": 2.0,
-      "r20": -5.4148,
-      "r60": -7.9507,
+      "r20": -4.8981,
+      "r60": -8.4265,
       "bucket": "农产品",
       "sleeve": null,
       "reason": "daily_selected",
       "entry_date": "2026-11-13",
-      "exit_condition": "平仓条件：止损=0.8×ATR；止盈=RR×2（止损距）；ATR=197.9；止损价=9119；止盈价=8644；盘中15m触及即平；否则收盘信号/趋势失效平仓。",
+      "exit_condition": "平仓条件：止损=0.8×ATR；止盈=RR×2（止损距）；ATR=185.5；止损价=9119；止盈价=8644；盘中15m触及即平；否则收盘信号/趋势失效平仓。",
       "mult": 10.0,
-      "mark": 8961.0,
-      "equity_delta": 0.0
+      "mark": 9009.0,
+      "equity_delta": -480.0
     }
   },
   "closed_today": [],
@@ -348,6 +348,8 @@
   "held_n": 1,
   "ledger_n": 11,
   "notes": "纸面模拟仓：以回测期末持仓为种子，按最新 l1_report 做信号平仓/组合入选开仓；持仓先按当日15m触及止盈止损平仓，否则按收盘信号/趋势失效平仓；每条持仓含 exit_condition（平仓条件）；trade_ledger 含入场/出场/止盈止损/策略/权益增减（平仓为已实现，持仓中为浮动）；equity 为平仓累计后账面，equity_floating 为未平仓浮动盈亏。不改写 historical_backtest KPI。与 Notion 持仓中、决策页账面同源。",
-  "l1_asof": "20261113",
-  "updated_from_l1": true
+  "l1_asof": "20261116",
+  "l1_fingerprint": "c4dd022d875524cb",
+  "updated_from_l1": true,
+  "noop": false
 }

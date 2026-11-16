@@ -1,1 +1,1 @@
-{"missing": true, "code": "CU", "date": "20261102"}
+{"missing": true, "code": "CU", "date": "20261102", "error": "TypeError:option_vol_shfe() got an unexpected keyword argument 'trade_date'"}

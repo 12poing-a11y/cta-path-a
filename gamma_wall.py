@@ -154,9 +154,34 @@ def resolve_snapshot_asof(trade_date: str | None = None, *, now=None) -> str:
     return latest_expected_session_date(now).isoformat()
 
 
-def _fetch_czce_day(product, trade_date):
+def option_hist_czce_day(symbol: str, trade_date: str):
+    """Call AkShare CZCE option day table across ``trade_date``/``date`` renames.
+
+    AkShare ≥1.20 renamed the day kwarg from ``trade_date`` to ``date``. CI installs
+    latest; local/older pins may still use ``trade_date``. Prefer ``date``, fall back.
+    """
+    import inspect
+
     import akshare as ak
-    return ak.option_hist_czce(symbol=CZCE_NAMES[product], trade_date=trade_date.replace("-", ""))
+
+    ymd = str(trade_date).replace("-", "")[:8]
+    fn = ak.option_hist_czce
+    try:
+        params = inspect.signature(fn).parameters
+    except (TypeError, ValueError):
+        params = {}
+    if "date" in params:
+        return fn(symbol=symbol, date=ymd)
+    if "trade_date" in params:
+        return fn(symbol=symbol, trade_date=ymd)
+    try:
+        return fn(symbol=symbol, date=ymd)
+    except TypeError:
+        return fn(symbol=symbol, trade_date=ymd)
+
+
+def _fetch_czce_day(product, trade_date):
+    return option_hist_czce_day(CZCE_NAMES[product], trade_date)
 
 
 def _normalize_fut_row(row: dict) -> dict:

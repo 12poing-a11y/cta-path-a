@@ -22,6 +22,61 @@ def test_czce_month_mapping():
     assert czce_option_month("TA2701") == "TA701"
 
 
+def test_option_hist_czce_day_prefers_date_kw(monkeypatch):
+    """AkShare 1.20+ uses date=; older used trade_date= — both must work."""
+    import inspect
+    import types
+
+    from gamma_wall import option_hist_czce_day
+
+    calls: list[dict] = []
+
+    def _fake(*, symbol, date):
+        calls.append({"symbol": symbol, "date": date})
+        return "ok-date"
+
+    _fake.__signature__ = inspect.Signature(
+        parameters=[
+            inspect.Parameter("symbol", inspect.Parameter.KEYWORD_ONLY),
+            inspect.Parameter("date", inspect.Parameter.KEYWORD_ONLY),
+        ]
+    )
+    monkeypatch.setitem(
+        __import__("sys").modules,
+        "akshare",
+        types.SimpleNamespace(option_hist_czce=_fake),
+    )
+    assert option_hist_czce_day("棉花期权", "2026-11-17") == "ok-date"
+    assert calls == [{"symbol": "棉花期权", "date": "20261117"}]
+
+
+def test_option_hist_czce_day_falls_back_trade_date(monkeypatch):
+    import inspect
+    import types
+
+    from gamma_wall import option_hist_czce_day
+
+    calls: list[dict] = []
+
+    def _fake(*, symbol, trade_date):
+        calls.append({"symbol": symbol, "trade_date": trade_date})
+        return "ok-trade"
+
+    _fake.__signature__ = inspect.Signature(
+        parameters=[
+            inspect.Parameter("symbol", inspect.Parameter.KEYWORD_ONLY),
+            inspect.Parameter("trade_date", inspect.Parameter.KEYWORD_ONLY),
+        ]
+    )
+    monkeypatch.setitem(
+        __import__("sys").modules,
+        "akshare",
+        types.SimpleNamespace(option_hist_czce=_fake),
+    )
+    assert option_hist_czce_day("棉花期权", "2026-11-17") == "ok-trade"
+    assert calls == [{"symbol": "棉花期权", "trade_date": "20261117"}]
+
+
 def test_supported_observation_contracts():
     from gamma_wall import PRODUCTS, supported_contracts
 

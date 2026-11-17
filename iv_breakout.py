@@ -204,7 +204,9 @@ def fetch_day_iv(
             frame = ak.option_vol_shfe(symbol=product, trade_date=ymd)
             payload = _front_iv_from_shfe_frame(frame)
         elif venue == "czce":
-            frame = ak.option_hist_czce(symbol=product, trade_date=ymd)
+            from gamma_wall import option_hist_czce_day
+
+            frame = option_hist_czce_day(product, ymd)
             payload = _front_iv_from_czce_frame(frame)
     except Exception as exc:  # noqa: BLE001
         if cache_missing:

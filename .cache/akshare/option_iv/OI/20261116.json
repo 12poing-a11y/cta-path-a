@@ -1,1 +1,1 @@
-{"missing": true, "code": "OI", "date": "20261116", "error": "TypeError:option_hist_czce() got an unexpected keyword argument 'trade_date'"}
+{"code": "OI", "date": "20261116", "product": "菜籽油期权", "venue": "czce", "iv": 0.172454, "series": "czce_vw", "volume": 56418.0, "n_legs": 119, "source": "czce"}

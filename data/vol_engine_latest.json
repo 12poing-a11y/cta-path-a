@@ -2,7 +2,7 @@
   "ok": true,
   "live_trading": false,
   "entry_filter_unchanged": "seats",
-  "generated_at": "2026-11-17T13:51:22+00:00",
+  "generated_at": "2026-11-17T17:05:19+00:00",
   "codes": [
     "CF",
     "SR",
@@ -21,7 +21,7 @@
       "live_trading": false,
       "asof": "20261117",
       "bars_n": 5291,
-      "iv_days": 58,
+      "iv_days": 60,
       "rv": {
         "ok": true,
         "rv20": 0.119993,
@@ -30,29 +30,29 @@
       },
       "iv": {
         "ok": true,
-        "iv": 0.129564,
-        "iv_pct": 10.34,
-        "n_hist": 58,
+        "iv": 0.145911,
+        "iv_pct": 45.0,
+        "n_hist": 60,
         "iv_thin": false,
-        "date": "20261113"
+        "date": "20261117"
       },
-      "vrp": 0.009571,
+      "vrp": 0.025918,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": -0.006165,
-        "z": -0.3773,
-        "n": 58
+        "delta_iv": 0.004057,
+        "z": 0.2287,
+        "n": 60
       },
       "vol_state": {
-        "score": 22.4,
-        "label": "low",
+        "score": 39.7,
+        "label": "mid",
         "parts": [
           34.4,
-          10.34
+          45.0
         ]
       },
       "vol_pricing": {
-        "score": 34.2,
+        "score": 58.3,
         "label": "fair",
         "rich": null
       },
@@ -124,7 +124,7 @@
       "live_trading": false,
       "asof": "20261117",
       "bars_n": 5063,
-      "iv_days": 58,
+      "iv_days": 60,
       "rv": {
         "ok": true,
         "rv20": 0.063103,
@@ -133,29 +133,29 @@
       },
       "iv": {
         "ok": true,
-        "iv": 0.152749,
-        "iv_pct": 68.97,
-        "n_hist": 58,
+        "iv": 0.160511,
+        "iv_pct": 81.67,
+        "n_hist": 60,
         "iv_thin": false,
-        "date": "20261113"
+        "date": "20261117"
       },
-      "vrp": 0.089646,
+      "vrp": 0.097408,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": 0.025366,
-        "z": 1.4931,
-        "n": 58
+        "delta_iv": 0.000376,
+        "z": -0.0308,
+        "n": 60
       },
       "vol_state": {
-        "score": 35.7,
+        "score": 42.0,
         "label": "mid",
         "parts": [
           2.4,
-          68.97
+          81.67
         ]
       },
       "vol_pricing": {
-        "score": 84.5,
+        "score": 90.8,
         "label": "rich",
         "rich": true
       },
@@ -187,8 +187,8 @@
         "side": 0,
         "date": "2026-11-16",
         "stale": true,
-        "iv_tag": "iv_missing",
-        "delta_iv": null
+        "iv_tag": "true_candidate",
+        "delta_iv": 0.007386
       },
       "calendar": {
         "ok": false
@@ -227,7 +227,7 @@
       "live_trading": false,
       "asof": "20261117",
       "bars_n": 2883,
-      "iv_days": 58,
+      "iv_days": 60,
       "rv": {
         "ok": true,
         "rv20": 0.478754,
@@ -236,29 +236,29 @@
       },
       "iv": {
         "ok": true,
-        "iv": 0.470132,
-        "iv_pct": 41.38,
-        "n_hist": 58,
+        "iv": 0.464595,
+        "iv_pct": 36.67,
+        "n_hist": 60,
         "iv_thin": false,
-        "date": "20261113"
+        "date": "20261117"
       },
-      "vrp": -0.008622,
+      "vrp": -0.014159,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": 0.009837,
-        "z": 0.1276,
-        "n": 58
+        "delta_iv": -0.019517,
+        "z": -0.4326,
+        "n": 60
       },
       "vol_state": {
-        "score": 56.9,
+        "score": 54.5,
         "label": "mid",
         "parts": [
           72.4,
-          41.38
+          36.67
         ]
       },
       "vol_pricing": {
-        "score": 42.1,
+        "score": 37.4,
         "label": "fair",
         "rich": null
       },
@@ -330,7 +330,7 @@
       "live_trading": false,
       "asof": "20261117",
       "bars_n": 4836,
-      "iv_days": 58,
+      "iv_days": 60,
       "rv": {
         "ok": true,
         "rv20": 0.288059,
@@ -339,29 +339,29 @@
       },
       "iv": {
         "ok": true,
-        "iv": 0.330259,
-        "iv_pct": 29.31,
-        "n_hist": 58,
+        "iv": 0.325446,
+        "iv_pct": 25.0,
+        "n_hist": 60,
         "iv_thin": false,
-        "date": "20261113"
+        "date": "20261117"
       },
-      "vrp": 0.0422,
+      "vrp": 0.037387,
       "iv_velocity": {
         "ok": true,
-        "delta_iv": 0.003035,
-        "z": 0.0465,
-        "n": 58
+        "delta_iv": -0.006567,
+        "z": -0.1916,
+        "n": 60
       },
       "vol_state": {
-        "score": 32.9,
+        "score": 30.7,
         "label": "mid",
         "parts": [
           36.4,
-          29.31
+          25.0
         ]
       },
       "vol_pricing": {
-        "score": 57.2,
+        "score": 53.1,
         "label": "fair",
         "rich": null
       },

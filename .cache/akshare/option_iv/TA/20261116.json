@@ -1,1 +1,1 @@
-{"missing": true, "code": "TA", "date": "20261116", "error": "TypeError:option_hist_czce() got an unexpected keyword argument 'trade_date'"}
+{"code": "TA", "date": "20261116", "product": "PTA期权", "venue": "czce", "iv": 0.332013, "series": "czce_vw", "volume": 410188.0, "n_legs": 109, "source": "czce"}

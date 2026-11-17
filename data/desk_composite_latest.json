@@ -27,7 +27,7 @@
   "book": {
     "ok": true,
     "source": "paper_book",
-    "asof": "2026-11-17",
+    "asof": "2026-11-18",
     "equity": 190332.32,
     "equity_floating": 1670.0,
     "equity_mark": 192002.32,
@@ -40,10 +40,10 @@
       "I"
     ],
     "n": 1,
-    "asof": "20261117"
+    "asof": "20261118"
   },
-  "asof": "20261117",
+  "asof": "20261118",
   "live_trading": false,
   "note": "研究桌面综合分；纸面，不下单。情绪已计入全面统计分分层投票。",
-  "generated_at": "2026-11-17T13:51:22+00:00"
+  "generated_at": "2026-11-17T17:05:19+00:00"
 }

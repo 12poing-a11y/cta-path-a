@@ -1,1 +1,1 @@
-{"missing": true, "code": "SR", "date": "20261117", "error": "TypeError:option_hist_czce() got an unexpected keyword argument 'trade_date'"}
+{"code": "SR", "date": "20261117", "product": "白糖期权", "venue": "czce", "iv": 0.160511, "series": "czce_vw", "volume": 411227.0, "n_legs": 126, "source": "czce"}

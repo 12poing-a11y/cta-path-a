@@ -2,15 +2,15 @@
   "ok": true,
   "schema": "cta-desk-daily-refresh-v1",
   "pack": "merged",
-  "generated_at": "2026-11-18 21:49:20",
-  "n_ok": 9,
-  "n_fail": 0,
-  "seconds_total": 18.86,
+  "generated_at": "2026-11-19 00:45:52",
+  "n_ok": 8,
+  "n_fail": 2,
+  "seconds_total": 143.37,
   "steps": [
     {
       "id": "lsp",
       "ok": true,
-      "at": "2026-11-18 21:49:14",
+      "at": "2026-11-19 00:43:29",
       "pack": "core",
       "writes": [
         "lab/research/lsp/lsp_*_{15m,60m}_{latest,events}.json"
@@ -21,12 +21,12 @@
         "n_ok": 24,
         "n_skip": 0
       },
-      "seconds": 1.25
+      "seconds": 0.66
     },
     {
       "id": "p4_light",
       "ok": true,
-      "at": "2026-11-18 21:49:15",
+      "at": "2026-11-19 00:43:30",
       "pack": "core",
       "writes": [
         "lab/research/ml/p4_light_latest.json"
@@ -35,21 +35,21 @@
       "detail": {
         "ok": true,
         "n": {
-          "lsp_events": 186,
-          "lsp_rows": 186,
+          "lsp_events": 181,
+          "lsp_rows": 181,
           "trend_rows": 1104,
           "breakout_rows": 218,
           "daily_bars": 5321
         },
-        "path": "lab\\research\\ml\\p4_light_latest.json"
+        "path": "lab/research/ml/p4_light_latest.json"
       },
-      "path": "lab\\research\\ml\\p4_light_latest.json",
-      "seconds": 1.96
+      "path": "lab/research/ml/p4_light_latest.json",
+      "seconds": 0.85
     },
     {
       "id": "gamma_research",
       "ok": true,
-      "at": "2026-11-18 21:49:17",
+      "at": "2026-11-19 00:43:30",
       "pack": "core",
       "writes": [
         "lab/research/gamma/gamma_*_latest.json"
@@ -58,7 +58,7 @@
       "detail": {
         "ok": true,
         "n_ok": 8,
-        "path": "lab\\research\\gamma\\gamma_OI2701_latest.json",
+        "path": "lab/research/gamma/gamma_OI2701_latest.json",
         "contracts": [
           "CF2701",
           "SR2701",
@@ -70,68 +70,72 @@
           "OI2701"
         ]
       },
-      "path": "lab\\research\\gamma\\gamma_OI2701_latest.json",
-      "seconds": 0.16
+      "path": "lab/research/gamma/gamma_OI2701_latest.json",
+      "seconds": 0.07
     },
     {
       "id": "ablation",
       "ok": true,
-      "at": "2026-11-18 21:46:59",
+      "at": "2026-11-19 00:43:31",
+      "pack": "heavy",
+      "writes": [
+        "data/ablation/strategy_indicator_ablation_latest.json"
+      ],
+      "mutates_formal": false,
       "detail": {
         "ok": true,
         "path": "scripts/strategy_indicator_ablation.py"
       },
       "path": "scripts/strategy_indicator_ablation.py",
-      "seconds": 12.26
+      "seconds": 11.06
     },
     {
       "id": "strategy_blend",
       "ok": true,
-      "at": "2026-11-18 21:47:11",
+      "at": "2026-11-19 00:43:42",
+      "pack": "heavy",
+      "writes": [
+        "data/ablation/strategy_blend_latest.json"
+      ],
+      "mutates_formal": false,
       "detail": {
         "ok": true,
         "path": "scripts/strategy_blend_grid.py"
       },
       "path": "scripts/strategy_blend_grid.py",
-      "seconds": 0.48
+      "seconds": 0.37
     },
     {
       "id": "ic_groups",
-      "ok": true,
-      "at": "2026-11-18 21:49:17",
+      "ok": false,
+      "at": "2026-11-19 00:43:31",
       "pack": "core",
       "writes": [
         "lab/research/ic/ic_groups_latest.json"
       ],
       "mutates_formal": false,
-      "detail": {
-        "ok": true,
-        "path": "lab/scripts/run_ic_groups.py"
-      },
-      "path": "lab/scripts/run_ic_groups.py",
-      "seconds": 1.5
+      "error": "lab/scripts/run_ic_groups.py exit=1: /scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "trace": "scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/cta-path-a/cta-path-a/lab/data/factors/panel_daily.jsonl'\n\n",
+      "seconds": 0.04
     },
     {
       "id": "oos_vs_path_a",
-      "ok": true,
-      "at": "2026-11-18 21:49:19",
+      "ok": false,
+      "at": "2026-11-19 00:43:31",
       "pack": "core",
       "writes": [
         "lab/research/oos/oos_vs_path_a_latest.json",
         "lab/research/runs/oos_*"
       ],
       "mutates_formal": false,
-      "detail": {
-        "ok": true,
-        "path": "lab/scripts/run_oos_vs_path_a.py"
-      },
-      "path": "lab/scripts/run_oos_vs_path_a.py",
-      "seconds": 1.11
+      "error": "lab/scripts/run_oos_vs_path_a.py exit=1: /scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "trace": "scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/cta-path-a/cta-path-a/lab/data/factors/panel_daily.jsonl'\n\n",
+      "seconds": 0.03
     },
     {
       "id": "portfolio_risk",
       "ok": true,
-      "at": "2026-11-18 21:49:20",
+      "at": "2026-11-19 00:43:31",
       "pack": "core",
       "writes": [
         "lab/research/portfolio/portfolio_risk_latest.json"
@@ -142,12 +146,12 @@
         "path": "lab/scripts/run_portfolio_risk.py"
       },
       "path": "lab/scripts/run_portfolio_risk.py",
-      "seconds": 0.07
+      "seconds": 0.04
     },
     {
       "id": "npd_reminders",
       "ok": true,
-      "at": "2026-11-18 21:49:20",
+      "at": "2026-11-19 00:43:31",
       "pack": "core",
       "writes": [
         "data/cotton/npd_reminders_latest.json"
@@ -156,15 +160,33 @@
       "detail": {
         "ok": true,
         "n": 0,
-        "path": "data\\cotton\\npd_reminders_latest.json",
-        "asof": "2026-11-18"
+        "path": "data/cotton/npd_reminders_latest.json",
+        "asof": "2026-11-19"
       },
-      "path": "data\\cotton\\npd_reminders_latest.json",
-      "seconds": 0.07
+      "path": "data/cotton/npd_reminders_latest.json",
+      "seconds": 0.08
+    },
+    {
+      "id": "gamma_wall_collect",
+      "ok": true,
+      "at": "2026-11-19 00:43:42",
+      "pack": "heavy",
+      "writes": [
+        "data/gamma_wall/<contract>/<asof>.json",
+        ".cache/gamma_wall/raw/*"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "path": "scripts/gamma_wall_daily_collect.py"
+      },
+      "path": "scripts/gamma_wall_daily_collect.py",
+      "seconds": 130.17
     }
   ],
   "packs_run": [
-    "core"
+    "core",
+    "heavy"
   ],
   "write_bounds": {
     "lsp": {

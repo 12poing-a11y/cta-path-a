@@ -1,0 +1,126 @@
+{
+  "ok": true,
+  "schema": "cta-desk-daily-refresh-v1",
+  "pack": "heavy",
+  "generated_at": "2026-11-19 00:45:52",
+  "n_ok": 3,
+  "n_fail": 0,
+  "seconds_total": 141.61,
+  "steps": [
+    {
+      "id": "ablation",
+      "ok": true,
+      "at": "2026-11-19 00:43:31",
+      "pack": "heavy",
+      "writes": [
+        "data/ablation/strategy_indicator_ablation_latest.json"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "path": "scripts/strategy_indicator_ablation.py"
+      },
+      "path": "scripts/strategy_indicator_ablation.py",
+      "seconds": 11.06
+    },
+    {
+      "id": "strategy_blend",
+      "ok": true,
+      "at": "2026-11-19 00:43:42",
+      "pack": "heavy",
+      "writes": [
+        "data/ablation/strategy_blend_latest.json"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "path": "scripts/strategy_blend_grid.py"
+      },
+      "path": "scripts/strategy_blend_grid.py",
+      "seconds": 0.37
+    },
+    {
+      "id": "gamma_wall_collect",
+      "ok": true,
+      "at": "2026-11-19 00:43:42",
+      "pack": "heavy",
+      "writes": [
+        "data/gamma_wall/<contract>/<asof>.json",
+        ".cache/gamma_wall/raw/*"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "path": "scripts/gamma_wall_daily_collect.py"
+      },
+      "path": "scripts/gamma_wall_daily_collect.py",
+      "seconds": 130.17
+    }
+  ],
+  "write_bounds": {
+    "ablation": {
+      "writes": [
+        "data/ablation/strategy_indicator_ablation_latest.json"
+      ],
+      "reads": [
+        "bars",
+        "seats cache",
+        "carry curves"
+      ],
+      "mutates_formal": false,
+      "typical_s": 12.0,
+      "pack": "heavy",
+      "note": "mode=ablation only (not full_grid)"
+    },
+    "strategy_blend": {
+      "writes": [
+        "data/ablation/strategy_blend_latest.json"
+      ],
+      "reads": [
+        "data/ablation/strategy_indicator_ablation_latest.json",
+        "equity curves"
+      ],
+      "mutates_formal": false,
+      "typical_s": 0.5,
+      "pack": "heavy"
+    },
+    "gamma_wall_collect": {
+      "writes": [
+        "data/gamma_wall/<contract>/<asof>.json",
+        ".cache/gamma_wall/raw/*"
+      ],
+      "reads": [
+        "AkShare/CZCE option day tables",
+        "exact-contract futures"
+      ],
+      "mutates_formal": false,
+      "typical_s": null,
+      "pack": "heavy",
+      "note": "network; often not-ready at 15:30; gamma_wall_daily.yml@16:35 backup"
+    }
+  },
+  "skipped_by_policy": [
+    {
+      "id": "formal_scorecard",
+      "reason": "rewrites formal historical_backtest + PBO; needs explicit order"
+    },
+    {
+      "id": "weekly_backtest",
+      "reason": "weekly.yml Saturday formal PnL path"
+    },
+    {
+      "id": "option_hedge_historical_bt",
+      "reason": "heavy observe BT; desk button / historical_backtest --observe"
+    },
+    {
+      "id": "equity_timing",
+      "reason": "external/equity_timing_latest.json is manual input"
+    },
+    {
+      "id": "cotton_events_ingest",
+      "reason": "data/cotton/cotton_events.csv stays human-audited; only reminders snapshot refreshes"
+    }
+  ],
+  "live_trading": false,
+  "status": "Research"
+}

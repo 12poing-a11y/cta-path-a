@@ -4,20 +4,20 @@
   "symbol": "MA",
   "contract": "MA2701",
   "timeframe": "60m",
-  "n_bars": 1119,
-  "n_events": 216,
+  "n_bars": 1103,
+  "n_events": 213,
   "stats": {
     "schema": "cta-lsp-stats-v1",
-    "n_events": 216,
+    "n_events": 213,
     "outcome_counts": {
       "fake_break_reversal": 51,
       "invalid_sweep": 25,
-      "true_break_continuation": 140
+      "true_break_continuation": 137
     },
     "outcome_probs": {
-      "fake_break_reversal": 0.2361,
-      "invalid_sweep": 0.1157,
-      "true_break_continuation": 0.6481
+      "fake_break_reversal": 0.2394,
+      "invalid_sweep": 0.1174,
+      "true_break_continuation": 0.6432
     },
     "by_direction": {
       "down": {
@@ -26,9 +26,9 @@
         "true_break_continuation": 0.5349
       },
       "up": {
-        "fake_break_reversal": 0.1769,
-        "invalid_sweep": 0.1,
-        "true_break_continuation": 0.7231
+        "fake_break_reversal": 0.1811,
+        "invalid_sweep": 0.1024,
+        "true_break_continuation": 0.7165
       }
     },
     "by_direction_detail": {
@@ -46,44 +46,44 @@
         }
       },
       "up": {
-        "n": 130,
+        "n": 127,
         "counts": {
           "fake_break_reversal": 23,
-          "true_break_continuation": 94,
+          "true_break_continuation": 91,
           "invalid_sweep": 13
         },
         "probs": {
-          "fake_break_reversal": 0.1769,
-          "invalid_sweep": 0.1,
-          "true_break_continuation": 0.7231
+          "fake_break_reversal": 0.1811,
+          "invalid_sweep": 0.1024,
+          "true_break_continuation": 0.7165
         }
       }
     },
     "by_timeframe": {
       "60m": {
-        "fake_break_reversal": 0.2361,
-        "invalid_sweep": 0.1157,
-        "true_break_continuation": 0.6481
+        "fake_break_reversal": 0.2394,
+        "invalid_sweep": 0.1174,
+        "true_break_continuation": 0.6432
       }
     },
     "high_volume_ge_1_2": {
-      "n": 69,
+      "n": 68,
       "probs": {
-        "fake_break_reversal": 0.2609,
-        "invalid_sweep": 0.1594,
-        "true_break_continuation": 0.5797
+        "fake_break_reversal": 0.2647,
+        "invalid_sweep": 0.1618,
+        "true_break_continuation": 0.5735
       }
     },
     "low_volume_lt_1_2": {
-      "n": 147,
+      "n": 145,
       "probs": {
-        "fake_break_reversal": 0.2245,
-        "invalid_sweep": 0.0952,
-        "true_break_continuation": 0.6803
+        "fake_break_reversal": 0.2276,
+        "invalid_sweep": 0.0966,
+        "true_break_continuation": 0.6759
       }
     },
-    "avg_mfe_atr": 1.9031,
-    "avg_mae_atr": 2.1763,
+    "avg_mfe_atr": 1.9232,
+    "avg_mae_atr": 2.1627,
     "live_trading": false,
     "status": "Research",
     "note": "Conditional frequencies only; not Path-A entry rules."
@@ -91,6 +91,96 @@
   "live_trading": false,
   "status": "Research",
   "events_tail": [
+    {
+      "schema": "cta-lsp-event-v1",
+      "symbol": "MA",
+      "contract": "MA2701",
+      "timestamp": "2026-09-09 14:15:00",
+      "timeframe": "60m",
+      "bar_index": 857,
+      "level_type": "swing_high",
+      "level_price": 3362.0,
+      "distance_to_level": 1.4021,
+      "break_direction": "up",
+      "break_size_atr": 1.5464,
+      "volume_ratio": 0.8475,
+      "oi_change": null,
+      "vwap_deviation": null,
+      "reclaim_bars": null,
+      "post_sweep_return_1": -0.005539,
+      "post_sweep_return_3": 0.01895,
+      "post_sweep_return_5": 0.009913,
+      "post_sweep_return_10": -0.105248,
+      "mfe": 2.9897,
+      "mae": 7.7938,
+      "outcome": "true_break_continuation",
+      "status": "Research",
+      "note": "Detected pierce; outcome filled by label_events().",
+      "level_index": 211,
+      "level_confirmed_index": 214,
+      "atr": 48.5,
+      "outside_hold_bars": 7
+    },
+    {
+      "schema": "cta-lsp-event-v1",
+      "symbol": "MA",
+      "contract": "MA2701",
+      "timestamp": "2026-09-10 11:15:00",
+      "timeframe": "60m",
+      "bar_index": 862,
+      "level_type": "swing_high",
+      "level_price": 3365.3544,
+      "distance_to_level": 1.6924,
+      "break_direction": "up",
+      "break_size_atr": 2.5503,
+      "volume_ratio": 1.4048,
+      "oi_change": null,
+      "vwap_deviation": null,
+      "reclaim_bars": 3,
+      "post_sweep_return_1": -0.011836,
+      "post_sweep_return_3": -0.109988,
+      "post_sweep_return_5": -0.11403,
+      "post_sweep_return_10": -0.118649,
+      "mfe": 0.0343,
+      "mae": 8.3039,
+      "outcome": "fake_break_reversal",
+      "status": "Research",
+      "note": "Detected pierce; outcome filled by label_events().",
+      "level_index": 230,
+      "level_confirmed_index": 230,
+      "atr": 58.2857,
+      "outside_hold_bars": 2
+    },
+    {
+      "schema": "cta-lsp-event-v1",
+      "symbol": "MA",
+      "contract": "MA2701",
+      "timestamp": "2026-09-11 10:00:00",
+      "timeframe": "60m",
+      "bar_index": 867,
+      "level_type": "swing_high",
+      "level_price": 2919.0,
+      "distance_to_level": 1.8568,
+      "break_direction": "up",
+      "break_size_atr": 2.6985,
+      "volume_ratio": 0.3451,
+      "oi_change": null,
+      "vwap_deviation": null,
+      "reclaim_bars": null,
+      "post_sweep_return_1": -0.000326,
+      "post_sweep_return_3": -0.017269,
+      "post_sweep_return_5": -0.005213,
+      "post_sweep_return_10": -0.001629,
+      "mfe": 0.3714,
+      "mae": 1.1017,
+      "outcome": "true_break_continuation",
+      "status": "Research",
+      "note": "Detected pierce; outcome filled by label_events().",
+      "level_index": 457,
+      "level_confirmed_index": 460,
+      "atr": 80.7857,
+      "outside_hold_bars": 10
+    },
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "MA",
@@ -1460,16 +1550,16 @@
       "post_sweep_return_1": 0.003748,
       "post_sweep_return_3": 0.019988,
       "post_sweep_return_5": 0.026858,
-      "post_sweep_return_10": -0.010306,
+      "post_sweep_return_10": null,
       "mfe": 2.7128,
-      "mae": 1.6713,
+      "mae": 0.1696,
       "outcome": "true_break_continuation",
       "status": "Research",
       "note": "Detected pierce; outcome filled by label_events().",
       "level_index": 907,
       "level_confirmed_index": 910,
       "atr": 41.2857,
-      "outside_hold_bars": 10
+      "outside_hold_bars": 5
     },
     {
       "schema": "cta-lsp-event-v1",
@@ -1487,110 +1577,20 @@
       "oi_change": null,
       "vwap_deviation": null,
       "reclaim_bars": null,
-      "post_sweep_return_1": -0.015815,
-      "post_sweep_return_3": -0.027068,
-      "post_sweep_return_5": -0.036192,
-      "post_sweep_return_10": -0.048358,
+      "post_sweep_return_1": null,
+      "post_sweep_return_3": null,
+      "post_sweep_return_5": null,
+      "post_sweep_return_10": null,
       "mfe": 0.0,
-      "mae": 4.3721,
-      "outcome": "true_break_continuation",
+      "mae": 0.0,
+      "outcome": "invalid_sweep",
       "status": "Research",
       "note": "Detected pierce; outcome filled by label_events().",
       "level_index": 910,
       "level_confirmed_index": 910,
       "atr": 43.0,
-      "outside_hold_bars": 10
-    },
-    {
-      "schema": "cta-lsp-event-v1",
-      "symbol": "MA",
-      "contract": "MA2701",
-      "timestamp": "2026-11-16 22:00:00",
-      "timeframe": "60m",
-      "bar_index": 1107,
-      "level_type": "swing_high",
-      "level_price": 2953.0,
-      "distance_to_level": 4.3324,
-      "break_direction": "up",
-      "break_size_atr": 4.533,
-      "volume_ratio": 2.0226,
-      "oi_change": null,
-      "vwap_deviation": null,
-      "reclaim_bars": null,
-      "post_sweep_return_1": -0.001262,
-      "post_sweep_return_3": -0.01136,
-      "post_sweep_return_5": -0.012622,
-      "post_sweep_return_10": -0.024929,
-      "mfe": 0.2407,
-      "mae": 1.765,
-      "outcome": "true_break_continuation",
-      "status": "Research",
-      "note": "Detected pierce; outcome filled by label_events().",
-      "level_index": 911,
-      "level_confirmed_index": 914,
-      "atr": 49.8571,
-      "outside_hold_bars": 10
-    },
-    {
-      "schema": "cta-lsp-event-v1",
-      "symbol": "MA",
-      "contract": "MA2701",
-      "timestamp": "2026-11-17 15:00:00",
-      "timeframe": "60m",
-      "bar_index": 1112,
-      "level_type": "swing_high",
-      "level_price": 2905.7945,
-      "distance_to_level": 5.0977,
-      "break_direction": "up",
-      "break_size_atr": 5.3032,
-      "volume_ratio": 0.1645,
-      "oi_change": null,
-      "vwap_deviation": null,
-      "reclaim_bars": null,
-      "post_sweep_return_1": 0.012464,
-      "post_sweep_return_3": -0.008949,
-      "post_sweep_return_5": -0.012464,
-      "post_sweep_return_10": null,
-      "mfe": 1.1876,
-      "mae": 1.3246,
-      "outcome": "true_break_continuation",
-      "status": "Research",
-      "note": "Detected pierce; outcome filled by label_events().",
-      "level_index": 920,
-      "level_confirmed_index": 920,
-      "atr": 43.7857,
-      "outside_hold_bars": 6
-    },
-    {
-      "schema": "cta-lsp-event-v1",
-      "symbol": "MA",
-      "contract": "MA2701",
-      "timestamp": "2026-11-18 14:15:00",
-      "timeframe": "60m",
-      "bar_index": 1117,
-      "level_type": "swing_high",
-      "level_price": 2967.0,
-      "distance_to_level": 2.9948,
-      "break_direction": "up",
-      "break_size_atr": 3.6765,
-      "volume_ratio": 0.0472,
-      "oi_change": null,
-      "vwap_deviation": null,
-      "reclaim_bars": null,
-      "post_sweep_return_1": -0.004531,
-      "post_sweep_return_3": null,
-      "post_sweep_return_5": null,
-      "post_sweep_return_10": null,
-      "mfe": 0.0,
-      "mae": 0.4626,
-      "outcome": "invalid_sweep",
-      "status": "Research",
-      "note": "Detected pierce; outcome filled by label_events().",
-      "level_index": 927,
-      "level_confirmed_index": 930,
-      "atr": 41.0714,
-      "outside_hold_bars": 1
+      "outside_hold_bars": 0
     }
   ],
-  "events_n": 216
+  "events_n": 213
 }

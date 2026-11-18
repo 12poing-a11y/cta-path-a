@@ -7,11 +7,12 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "TA2701",
-    "n_snapshots": 5,
-    "n_events": 8,
+    "n_snapshots": 7,
+    "n_events": 12,
     "label_counts": {
-      "unchanged": 7,
-      "migrated": 1
+      "unchanged": 9,
+      "migrated": 1,
+      "new_or_shifted_wall": 2
     },
     "live_trading": false,
     "note": "Display GEX convention; OI does not identify dealer side.",
@@ -103,6 +104,50 @@
         "gex_change_pct": 0.2028,
         "futures_price": 6108.0,
         "dist_pct": 8.055
+      },
+      {
+        "date": "2026-11-17",
+        "side": "call",
+        "from": 6500.0,
+        "to": 6500.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.1314,
+        "futures_price": 5962.0,
+        "dist_pct": 9.024
+      },
+      {
+        "date": "2026-11-17",
+        "side": "put",
+        "from": 6600.0,
+        "to": 5500.0,
+        "move": -1100.0,
+        "label": "new_or_shifted_wall",
+        "gex_change_pct": -0.0843,
+        "futures_price": 5962.0,
+        "dist_pct": -7.749
+      },
+      {
+        "date": "2026-11-18",
+        "side": "call",
+        "from": 6500.0,
+        "to": 6200.0,
+        "move": -300.0,
+        "label": "new_or_shifted_wall",
+        "gex_change_pct": -0.0075,
+        "futures_price": 5870.0,
+        "dist_pct": 5.622
+      },
+      {
+        "date": "2026-11-18",
+        "side": "put",
+        "from": 5500.0,
+        "to": 5500.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.1837,
+        "futures_price": 5870.0,
+        "dist_pct": -6.303
       }
     ]
   },
@@ -207,33 +252,11 @@
     "ok": true,
     "schema": "cta-gamma-iv-oi-v1",
     "product": "TA",
-    "n_days": 3,
-    "regime_counts": {
-      "iv_down_oi_up": 1,
-      "iv_up_oi_up": 1
-    },
+    "n_days": 0,
+    "regime_counts": {},
     "live_trading": false,
     "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
-    "changes_tail": [
-      {
-        "date": "2026-11-06",
-        "d_iv": -0.020858,
-        "d_oi": 7470.0,
-        "regime": "iv_down_oi_up",
-        "call_put_oi_same_sign": false,
-        "iv": 0.437115,
-        "oi": 414314.0
-      },
-      {
-        "date": "2026-11-10",
-        "d_iv": 0.094154,
-        "d_oi": 58438.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.531269,
-        "oi": 472752.0
-      }
-    ]
+    "changes_tail": []
   },
   "n_daily_bars": 4833,
   "live_trading": false,

@@ -7,11 +7,11 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "CF2701",
-    "n_snapshots": 7,
-    "n_events": 12,
+    "n_snapshots": 8,
+    "n_events": 14,
     "label_counts": {
-      "unchanged": 11,
-      "new_or_shifted_wall": 1
+      "unchanged": 12,
+      "new_or_shifted_wall": 2
     },
     "live_trading": false,
     "note": "Display GEX convention; OI does not identify dealer side.",
@@ -147,6 +147,28 @@
         "gex_change_pct": 0.2373,
         "futures_price": 15480.0,
         "dist_pct": -3.101
+      },
+      {
+        "date": "2026-11-18",
+        "side": "call",
+        "from": 15600.0,
+        "to": 16000.0,
+        "move": 400.0,
+        "label": "new_or_shifted_wall",
+        "gex_change_pct": 0.1146,
+        "futures_price": 15555.0,
+        "dist_pct": 2.861
+      },
+      {
+        "date": "2026-11-18",
+        "side": "put",
+        "from": 15000.0,
+        "to": 15000.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.0295,
+        "futures_price": 15555.0,
+        "dist_pct": -3.568
       }
     ]
   },
@@ -275,79 +297,11 @@
     "ok": true,
     "schema": "cta-gamma-iv-oi-v1",
     "product": "CF",
-    "n_days": 8,
-    "regime_counts": {
-      "iv_down_oi_up": 3,
-      "iv_up_oi_up": 3,
-      "iv_down_oi_down": 1
-    },
+    "n_days": 0,
+    "regime_counts": {},
     "live_trading": false,
     "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
-    "changes_tail": [
-      {
-        "date": "2026-11-06",
-        "d_iv": -0.027643,
-        "d_oi": 7476.0,
-        "regime": "iv_down_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.145072,
-        "oi": 818736.0
-      },
-      {
-        "date": "2026-11-09",
-        "d_iv": 0.040649,
-        "d_oi": 13104.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.185721,
-        "oi": 831840.0
-      },
-      {
-        "date": "2026-11-10",
-        "d_iv": 0.005727,
-        "d_oi": 7523.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.191448,
-        "oi": 839363.0
-      },
-      {
-        "date": "2026-11-12",
-        "d_iv": -0.036561,
-        "d_oi": -77654.0,
-        "regime": "iv_down_oi_down",
-        "call_put_oi_same_sign": true,
-        "iv": 0.154887,
-        "oi": 761709.0
-      },
-      {
-        "date": "2026-11-13",
-        "d_iv": -0.008459,
-        "d_oi": 1732.0,
-        "regime": "iv_down_oi_up",
-        "call_put_oi_same_sign": false,
-        "iv": 0.146428,
-        "oi": 763441.0
-      },
-      {
-        "date": "2026-11-16",
-        "d_iv": 0.025086,
-        "d_oi": 13855.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.171514,
-        "oi": 777296.0
-      },
-      {
-        "date": "2026-11-17",
-        "d_iv": -0.011725,
-        "d_oi": 12369.0,
-        "regime": "iv_down_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.159789,
-        "oi": 789665.0
-      }
-    ]
+    "changes_tail": []
   },
   "n_daily_bars": 5287,
   "live_trading": false,

@@ -7,10 +7,11 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "SR2701",
-    "n_snapshots": 4,
-    "n_events": 6,
+    "n_snapshots": 6,
+    "n_events": 10,
     "label_counts": {
-      "unchanged": 6
+      "unchanged": 9,
+      "migrated": 1
     },
     "live_trading": false,
     "note": "Display GEX convention; OI does not identify dealer side.",
@@ -80,6 +81,50 @@
         "gex_change_pct": -0.059,
         "futures_price": 5146.0,
         "dist_pct": 1.049
+      },
+      {
+        "date": "2026-11-17",
+        "side": "call",
+        "from": 5300.0,
+        "to": 5200.0,
+        "move": -100.0,
+        "label": "migrated",
+        "gex_change_pct": -0.1003,
+        "futures_price": 5060.0,
+        "dist_pct": 2.767
+      },
+      {
+        "date": "2026-11-17",
+        "side": "put",
+        "from": 5200.0,
+        "to": 5200.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.3374,
+        "futures_price": 5060.0,
+        "dist_pct": 2.767
+      },
+      {
+        "date": "2026-11-18",
+        "side": "call",
+        "from": 5200.0,
+        "to": 5200.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.3317,
+        "futures_price": 5130.0,
+        "dist_pct": 1.365
+      },
+      {
+        "date": "2026-11-18",
+        "side": "put",
+        "from": 5200.0,
+        "to": 5200.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.4088,
+        "futures_price": 5130.0,
+        "dist_pct": 1.365
       }
     ]
   },
@@ -197,7 +242,7 @@
     "ok": true,
     "schema": "cta-gamma-iv-oi-v1",
     "product": "SR",
-    "n_days": 1,
+    "n_days": 0,
     "regime_counts": {},
     "live_trading": false,
     "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",

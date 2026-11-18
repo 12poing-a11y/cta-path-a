@@ -9,8 +9,8 @@
   "stop_atr_mult": 0.8,
   "reward_rr": 2.0,
   "equity": 190332.32,
-  "equity_floating": 1670.0,
-  "equity_mark": 192002.32,
+  "equity_floating": 3000.0,
+  "equity_mark": 193332.32,
   "positions": {
     "P": {
       "code": "P",
@@ -19,19 +19,19 @@
       "entry": 8961.0,
       "stop": 9119.344,
       "target": 8644.312,
-      "atr": 193.57,
+      "atr": 187.21,
       "stop_atr_mult": 0.8,
       "reward_rr": 2.0,
-      "r20": -8.3194,
-      "r60": -10.6119,
+      "r20": -10.8002,
+      "r60": -13.4728,
       "bucket": "农产品",
       "sleeve": null,
       "reason": "daily_selected",
       "entry_date": "2026-11-13",
-      "exit_condition": "平仓条件：止损=0.8×ATR；止盈=RR×2（止损距）；ATR=193.6；止损价=9119；止盈价=8644；盘中15m触及即平；否则收盘信号/趋势失效平仓。",
+      "exit_condition": "平仓条件：止损=0.8×ATR；止盈=RR×2（止损距）；ATR=187.2；止损价=9119；止盈价=8644；盘中15m触及即平；否则收盘信号/趋势失效平仓。",
       "mult": 10.0,
-      "mark": 8794.0,
-      "equity_delta": 1670.0
+      "mark": 8606.0,
+      "equity_delta": 3550.0
     },
     "I": {
       "code": "I",
@@ -40,19 +40,19 @@
       "entry": 640.5,
       "stop": 650.012,
       "target": 621.476,
-      "atr": 11.89,
+      "atr": 11.64,
       "stop_atr_mult": 0.8,
       "reward_rr": 2.0,
-      "r20": -6.0161,
-      "r60": -9.3418,
+      "r20": -5.2091,
+      "r60": -9.5238,
       "bucket": "黑色",
       "sleeve": "observe",
       "reason": "daily_selected_observe",
       "entry_date": "2026-11-17",
-      "exit_condition": "平仓条件：止损=0.8×ATR；止盈=RR×2（止损距）；ATR=11.89；止损价=650；止盈价=621.5；盘中15m触及即平；否则收盘信号/趋势失效平仓。",
+      "exit_condition": "平仓条件：止损=0.8×ATR；止盈=RR×2（止损距）；ATR=11.64；止损价=650；止盈价=621.5；盘中15m触及即平；否则收盘信号/趋势失效平仓。",
       "mult": 100.0,
-      "mark": 640.5,
-      "equity_delta": 0.0
+      "mark": 646.0,
+      "equity_delta": -550.0
     }
   },
   "closed_today": [],
@@ -400,7 +400,7 @@
   "ledger_n": 12,
   "notes": "纸面模拟仓：以回测期末持仓为种子，按最新 l1_report 做信号平仓/组合入选开仓；持仓先按当日15m触及止盈止损平仓，否则按收盘信号/趋势失效平仓；每条持仓含 exit_condition（平仓条件）；trade_ledger 含入场/出场/止盈止损/策略/权益增减（平仓为已实现，持仓中为浮动）；equity 为平仓累计后账面，equity_floating 为未平仓浮动盈亏。不改写 historical_backtest KPI。与 Notion 持仓中、决策页账面同源。",
   "l1_asof": "20261118",
-  "l1_fingerprint": "dc0f4f5837053c59",
+  "l1_fingerprint": "bb902dfd1dcb6194",
   "updated_from_l1": true,
   "noop": false
 }

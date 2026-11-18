@@ -320,30 +320,28 @@ def render_gamma_panel(root: Path) -> None:
     )
     st.plotly_chart(mf, use_container_width=True)
 
-    show_cols = [
-        c
-        for c in (
-            "date",
-            "futures_price",
-            "put_wall",
-            "gamma_flip",
-            "call_wall",
-            "put_dist_pct",
-            "call_dist_pct",
-            "net_gex",
-            "put_wall_move",
-            "call_wall_move",
-        )
-        if c in hdf.columns
-    ]
-    st.dataframe(
-        hdf[show_cols].sort_values("date", ascending=False),
-        use_container_width=True,
-        hide_index=True,
+    col_zh = {
+        "date": "交易日",
+        "futures_price": "期货价",
+        "put_wall": "Put墙",
+        "gamma_flip": "Gamma翻转",
+        "call_wall": "Call墙",
+        "put_dist_pct": "Put墙距F%",
+        "call_dist_pct": "Call墙距F%",
+        "net_gex": "净GEX",
+        "put_wall_move": "Put墙变动",
+        "call_wall_move": "Call墙变动",
+    }
+    show_cols = [c for c in col_zh if c in hdf.columns]
+    table = (
+        hdf[show_cols]
+        .sort_values("date", ascending=False)
+        .rename(columns={c: col_zh[c] for c in show_cols})
     )
+    st.dataframe(table, use_container_width=True, hide_index=True)
     st.caption(
         f"可用历史 {len(history)} 个交易日 · 窗口 {window}。"
-        " call/put_dist_pct = (墙 − F)/F；历史不足不补造。"
+        " Put/Call墙距F% = (墙 − F)/F；历史不足不补造。"
     )
 
     research = root / "lab" / "research" / "gamma" / f"gamma_{contract}_latest.json"
@@ -398,5 +396,8 @@ def render_gamma_panel(root: Path) -> None:
                 width="stretch",
                 hide_index=True,
             )
-            st.caption(f"生成：`python lab/scripts/run_gamma_research.py --contract {contract}`")
+            st.caption(
+                f"盘后 soft 日更会刷新；也可手动："
+                f"`python lab/scripts/run_gamma_research.py --contract {contract}`"
+            )
 

@@ -1,0 +1,260 @@
+{
+  "ok": true,
+  "live_trading": false,
+  "shadow": true,
+  "counts_toward_score": false,
+  "asof": "2026-11-18",
+  "is_entry_day": false,
+  "n": 0,
+  "n_scored": 0,
+  "reminders": [],
+  "entry_rule": "first session strictly after event calendar date, at OPEN",
+  "by_family": {
+    "CN": {
+      "label": "中国事件",
+      "event_count": 2,
+      "scored_event_count": 1,
+      "horizons": {
+        "1": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.008552229688454482,
+          "directional_median": 0.008552229688454482,
+          "contrarian_mean": -0.008552229688454482
+        },
+        "3": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.020158827122785605,
+          "directional_median": 0.020158827122785605,
+          "contrarian_mean": -0.020158827122785605
+        },
+        "5": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.0378741600488699,
+          "directional_median": 0.0378741600488699,
+          "contrarian_mean": -0.0378741600488699
+        },
+        "10": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.022602321319486918,
+          "directional_median": 0.022602321319486918,
+          "contrarian_mean": -0.022602321319486918
+        },
+        "20": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.035430665852168586,
+          "directional_median": 0.035430665852168586,
+          "contrarian_mean": -0.035430665852168586
+        }
+      },
+      "by_year": {
+        "2026": {
+          "1": {
+            "n": 1,
+            "directional_mean": 0.008552229688454482,
+            "directional_win_rate": 1.0
+          },
+          "3": {
+            "n": 1,
+            "directional_mean": 0.020158827122785605,
+            "directional_win_rate": 1.0
+          },
+          "5": {
+            "n": 1,
+            "directional_mean": 0.0378741600488699,
+            "directional_win_rate": 1.0
+          },
+          "10": {
+            "n": 1,
+            "directional_mean": 0.022602321319486918,
+            "directional_win_rate": 1.0
+          },
+          "20": {
+            "n": 1,
+            "directional_mean": 0.035430665852168586,
+            "directional_win_rate": 1.0
+          }
+        }
+      }
+    },
+    "USDA": {
+      "label": "USDA事件",
+      "event_count": 1,
+      "scored_event_count": 1,
+      "horizons": {
+        "1": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.0035529715762274705,
+          "directional_median": 0.0035529715762274705,
+          "contrarian_mean": -0.0035529715762274705
+        },
+        "3": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.002260981912144633,
+          "directional_median": 0.002260981912144633,
+          "contrarian_mean": -0.002260981912144633
+        },
+        "5": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.0009689922480620172,
+          "directional_median": 0.0009689922480620172,
+          "contrarian_mean": -0.0009689922480620172
+        },
+        "10": {
+          "n": 0,
+          "news_direction_win_rate": null,
+          "contrarian_win_rate": null,
+          "divergence_rate": null,
+          "directional_mean": null,
+          "directional_median": null,
+          "contrarian_mean": null
+        },
+        "20": {
+          "n": 0,
+          "news_direction_win_rate": null,
+          "contrarian_win_rate": null,
+          "divergence_rate": null,
+          "directional_mean": null,
+          "directional_median": null,
+          "contrarian_mean": null
+        }
+      },
+      "by_year": {
+        "2026": {
+          "1": {
+            "n": 1,
+            "directional_mean": 0.0035529715762274705,
+            "directional_win_rate": 1.0
+          },
+          "3": {
+            "n": 1,
+            "directional_mean": 0.002260981912144633,
+            "directional_win_rate": 1.0
+          },
+          "5": {
+            "n": 1,
+            "directional_mean": 0.0009689922480620172,
+            "directional_win_rate": 1.0
+          }
+        }
+      }
+    },
+    "combined": {
+      "label": "中国+USDA合并",
+      "event_count": 3,
+      "scored_event_count": 2,
+      "horizons": {
+        "1": {
+          "n": 2,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.0060526006323409764,
+          "directional_median": 0.0060526006323409764,
+          "contrarian_mean": -0.0060526006323409764
+        },
+        "3": {
+          "n": 2,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.011209904517465119,
+          "directional_median": 0.011209904517465119,
+          "contrarian_mean": -0.011209904517465119
+        },
+        "5": {
+          "n": 2,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.019421576148465958,
+          "directional_median": 0.019421576148465958,
+          "contrarian_mean": -0.019421576148465958
+        },
+        "10": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.022602321319486918,
+          "directional_median": 0.022602321319486918,
+          "contrarian_mean": -0.022602321319486918
+        },
+        "20": {
+          "n": 1,
+          "news_direction_win_rate": 1.0,
+          "contrarian_win_rate": 0.0,
+          "divergence_rate": 0.0,
+          "directional_mean": 0.035430665852168586,
+          "directional_median": 0.035430665852168586,
+          "contrarian_mean": -0.035430665852168586
+        }
+      },
+      "by_year": {
+        "2026": {
+          "1": {
+            "n": 2,
+            "directional_mean": 0.0060526006323409764,
+            "directional_win_rate": 1.0
+          },
+          "3": {
+            "n": 2,
+            "directional_mean": 0.011209904517465119,
+            "directional_win_rate": 1.0
+          },
+          "5": {
+            "n": 2,
+            "directional_mean": 0.019421576148465958,
+            "directional_win_rate": 1.0
+          },
+          "10": {
+            "n": 1,
+            "directional_mean": 0.022602321319486918,
+            "directional_win_rate": 1.0
+          },
+          "20": {
+            "n": 1,
+            "directional_mean": 0.035430665852168586,
+            "directional_win_rate": 1.0
+          }
+        }
+      }
+    }
+  },
+  "pending_count": 1,
+  "cn_watchlist": {
+    "CN_RESERVE": "国储棉轮入/轮出公告与成交结果",
+    "CN_SLIDING_QUOTA": "棉花进口滑准税配额发放",
+    "CN_CASDE": "农业农村部农产品供需形势分析（CASDE）",
+    "CN_NBS_OUTPUT": "国家统计局棉花产量公告",
+    "CN_XJ_TARGET_PRICE": "新疆棉目标价格等政策公告",
+    "CN_CUSTOMS_IMPORT": "海关棉花进口月度数据"
+  },
+  "schema": "cta-npd-reminders-v1",
+  "generated_at": "2026-11-18 21:49:20",
+  "status": "Research",
+  "note": "Snapshot only; cotton_events.csv remains human-audited."
+}

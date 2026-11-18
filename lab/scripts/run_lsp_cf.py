@@ -17,34 +17,16 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from lab.lsp.pipeline import load_bars_from_minute_cache, run_lsp, save_lsp_run  # noqa: E402
+from lab.lsp.pipeline import (  # noqa: E402
+    DEFAULT_LSP_SYMBOLS,
+    load_bars_from_minute_cache,
+    refresh_lsp_universe,
+    resolve_lsp_contract,
+    run_lsp,
+    save_lsp_run,
+)
 from lab.lsp.resonance import resonate_with_higher_tf, resonance_stats  # noqa: E402
 from research.governance import register_experiment  # noqa: E402
-
-
-def _resolve_contract(root: Path, code: str, explicit: str | None) -> str | None:
-    if explicit:
-        return str(explicit).upper()
-    try:
-        from minute_data import resolve_dominant_contract
-
-        dom = resolve_dominant_contract(root, code)
-        if isinstance(dom, dict) and dom.get("symbol"):
-            return str(dom["symbol"]).upper()
-    except Exception:
-        pass
-    # Fallback: pick a month file from minute cache (prefer 2701/2612-style stems).
-    minute = root / ".cache" / "akshare" / "minute"
-    if minute.is_dir():
-        stems: list[str] = []
-        for p in minute.glob(f"{code}*_15_sina.json"):
-            stem = p.name.split("_")[0].upper()
-            rest = stem[len(code) :]
-            if rest[:1].isdigit() and stem != f"{code}0":
-                stems.append(stem)
-        if stems:
-            return sorted(stems)[-1]
-    return None
 
 
 def _run_one(symbol: str, contract: str | None, period: str) -> dict:
@@ -106,10 +88,29 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument(
         "--symbols",
         default=None,
-        help="Comma-separated product codes; overrides --symbol",
+        help="Comma-separated product codes; overrides --symbol. "
+        f"Default desk set: {','.join(DEFAULT_LSP_SYMBOLS)}",
     )
     ap.add_argument("--period", default="15", choices=("15", "60", "both"))
+    ap.add_argument(
+        "--daily",
+        action="store_true",
+        help="Bulk soft refresh (no experiment registry); same path as daily_update",
+    )
     args = ap.parse_args(argv)
+
+    if args.daily:
+        codes = (
+            [c.strip().upper() for c in str(args.symbols).split(",") if c.strip()]
+            if args.symbols
+            else list(DEFAULT_LSP_SYMBOLS)
+        )
+        summary = refresh_lsp_universe(ROOT, symbols=codes, period=args.period)
+        print(
+            f"[lsp] daily refresh ok={summary.get('ok')} "
+            f"n_ok={summary.get('n_ok')} n_skip={summary.get('n_skip')}"
+        )
+        return 0 if summary.get("ok") else 1
 
     codes = (
         [c.strip().upper() for c in str(args.symbols).split(",") if c.strip()]
@@ -118,7 +119,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     ok_any = False
     for code in codes:
-        contract = _resolve_contract(ROOT, code, args.contract if len(codes) == 1 else None)
+        contract = resolve_lsp_contract(
+            ROOT, code, args.contract if len(codes) == 1 else None
+        )
         print(f"[lsp] === {code} contract={contract or 'auto/none'} ===")
         payloads = _run_one(code, contract, args.period)
         ok_any = ok_any or bool(payloads)

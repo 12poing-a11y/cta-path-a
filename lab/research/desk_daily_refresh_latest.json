@@ -1,0 +1,316 @@
+{
+  "ok": true,
+  "schema": "cta-desk-daily-refresh-v1",
+  "pack": "merged",
+  "generated_at": "2026-11-18 21:49:20",
+  "n_ok": 9,
+  "n_fail": 0,
+  "seconds_total": 18.86,
+  "steps": [
+    {
+      "id": "lsp",
+      "ok": true,
+      "at": "2026-11-18 21:49:14",
+      "pack": "core",
+      "writes": [
+        "lab/research/lsp/lsp_*_{15m,60m}_{latest,events}.json"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "n_ok": 24,
+        "n_skip": 0
+      },
+      "seconds": 1.25
+    },
+    {
+      "id": "p4_light",
+      "ok": true,
+      "at": "2026-11-18 21:49:15",
+      "pack": "core",
+      "writes": [
+        "lab/research/ml/p4_light_latest.json"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "n": {
+          "lsp_events": 186,
+          "lsp_rows": 186,
+          "trend_rows": 1104,
+          "breakout_rows": 218,
+          "daily_bars": 5321
+        },
+        "path": "lab\\research\\ml\\p4_light_latest.json"
+      },
+      "path": "lab\\research\\ml\\p4_light_latest.json",
+      "seconds": 1.96
+    },
+    {
+      "id": "gamma_research",
+      "ok": true,
+      "at": "2026-11-18 21:49:17",
+      "pack": "core",
+      "writes": [
+        "lab/research/gamma/gamma_*_latest.json"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "n_ok": 8,
+        "path": "lab\\research\\gamma\\gamma_OI2701_latest.json",
+        "contracts": [
+          "CF2701",
+          "SR2701",
+          "MA2701",
+          "TA2701",
+          "SA2701",
+          "FG2701",
+          "RM2701",
+          "OI2701"
+        ]
+      },
+      "path": "lab\\research\\gamma\\gamma_OI2701_latest.json",
+      "seconds": 0.16
+    },
+    {
+      "id": "ablation",
+      "ok": true,
+      "at": "2026-11-18 21:46:59",
+      "detail": {
+        "ok": true,
+        "path": "scripts/strategy_indicator_ablation.py"
+      },
+      "path": "scripts/strategy_indicator_ablation.py",
+      "seconds": 12.26
+    },
+    {
+      "id": "strategy_blend",
+      "ok": true,
+      "at": "2026-11-18 21:47:11",
+      "detail": {
+        "ok": true,
+        "path": "scripts/strategy_blend_grid.py"
+      },
+      "path": "scripts/strategy_blend_grid.py",
+      "seconds": 0.48
+    },
+    {
+      "id": "ic_groups",
+      "ok": true,
+      "at": "2026-11-18 21:49:17",
+      "pack": "core",
+      "writes": [
+        "lab/research/ic/ic_groups_latest.json"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "path": "lab/scripts/run_ic_groups.py"
+      },
+      "path": "lab/scripts/run_ic_groups.py",
+      "seconds": 1.5
+    },
+    {
+      "id": "oos_vs_path_a",
+      "ok": true,
+      "at": "2026-11-18 21:49:19",
+      "pack": "core",
+      "writes": [
+        "lab/research/oos/oos_vs_path_a_latest.json",
+        "lab/research/runs/oos_*"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "path": "lab/scripts/run_oos_vs_path_a.py"
+      },
+      "path": "lab/scripts/run_oos_vs_path_a.py",
+      "seconds": 1.11
+    },
+    {
+      "id": "portfolio_risk",
+      "ok": true,
+      "at": "2026-11-18 21:49:20",
+      "pack": "core",
+      "writes": [
+        "lab/research/portfolio/portfolio_risk_latest.json"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "path": "lab/scripts/run_portfolio_risk.py"
+      },
+      "path": "lab/scripts/run_portfolio_risk.py",
+      "seconds": 0.07
+    },
+    {
+      "id": "npd_reminders",
+      "ok": true,
+      "at": "2026-11-18 21:49:20",
+      "pack": "core",
+      "writes": [
+        "data/cotton/npd_reminders_latest.json"
+      ],
+      "mutates_formal": false,
+      "detail": {
+        "ok": true,
+        "n": 0,
+        "path": "data\\cotton\\npd_reminders_latest.json",
+        "asof": "2026-11-18"
+      },
+      "path": "data\\cotton\\npd_reminders_latest.json",
+      "seconds": 0.07
+    }
+  ],
+  "packs_run": [
+    "core"
+  ],
+  "write_bounds": {
+    "lsp": {
+      "writes": [
+        "lab/research/lsp/lsp_*_{15m,60m}_{latest,events}.json"
+      ],
+      "reads": [
+        ".cache/akshare/minute/*"
+      ],
+      "mutates_formal": false,
+      "typical_s": 1.3,
+      "pack": "core"
+    },
+    "p4_light": {
+      "writes": [
+        "lab/research/ml/p4_light_latest.json"
+      ],
+      "reads": [
+        "lab/research/lsp/*",
+        ".cache/history or daily bars"
+      ],
+      "mutates_formal": false,
+      "typical_s": 2.0,
+      "pack": "core"
+    },
+    "gamma_research": {
+      "writes": [
+        "lab/research/gamma/gamma_*_latest.json"
+      ],
+      "reads": [
+        "data/gamma_wall/<contract>/*.json"
+      ],
+      "mutates_formal": false,
+      "typical_s": 0.2,
+      "pack": "core"
+    },
+    "ic_groups": {
+      "writes": [
+        "lab/research/ic/ic_groups_latest.json"
+      ],
+      "reads": [
+        "lab panel / factors"
+      ],
+      "mutates_formal": false,
+      "typical_s": 1.5,
+      "pack": "core"
+    },
+    "oos_vs_path_a": {
+      "writes": [
+        "lab/research/oos/oos_vs_path_a_latest.json",
+        "lab/research/runs/oos_*"
+      ],
+      "reads": [
+        "lab factors",
+        "historical_backtest_latest.json (read-only)"
+      ],
+      "mutates_formal": false,
+      "typical_s": 1.1,
+      "pack": "core"
+    },
+    "portfolio_risk": {
+      "writes": [
+        "lab/research/portfolio/portfolio_risk_latest.json"
+      ],
+      "reads": [
+        "historical_backtest_latest.json (read-only)"
+      ],
+      "mutates_formal": false,
+      "typical_s": 0.1,
+      "pack": "core"
+    },
+    "npd_reminders": {
+      "writes": [
+        "data/cotton/npd_reminders_latest.json"
+      ],
+      "reads": [
+        "data/cotton/cotton_events.csv (no invent)",
+        "bars"
+      ],
+      "mutates_formal": false,
+      "typical_s": 0.1,
+      "pack": "core"
+    },
+    "ablation": {
+      "writes": [
+        "data/ablation/strategy_indicator_ablation_latest.json"
+      ],
+      "reads": [
+        "bars",
+        "seats cache",
+        "carry curves"
+      ],
+      "mutates_formal": false,
+      "typical_s": 12.0,
+      "pack": "heavy",
+      "note": "mode=ablation only (not full_grid)"
+    },
+    "strategy_blend": {
+      "writes": [
+        "data/ablation/strategy_blend_latest.json"
+      ],
+      "reads": [
+        "data/ablation/strategy_indicator_ablation_latest.json",
+        "equity curves"
+      ],
+      "mutates_formal": false,
+      "typical_s": 0.5,
+      "pack": "heavy"
+    },
+    "gamma_wall_collect": {
+      "writes": [
+        "data/gamma_wall/<contract>/<asof>.json",
+        ".cache/gamma_wall/raw/*"
+      ],
+      "reads": [
+        "AkShare/CZCE option day tables",
+        "exact-contract futures"
+      ],
+      "mutates_formal": false,
+      "typical_s": null,
+      "pack": "heavy",
+      "note": "network; often not-ready at 15:30; gamma_wall_daily.yml@16:35 backup"
+    }
+  },
+  "skipped_by_policy": [
+    {
+      "id": "formal_scorecard",
+      "reason": "rewrites formal historical_backtest + PBO; needs explicit order"
+    },
+    {
+      "id": "weekly_backtest",
+      "reason": "weekly.yml Saturday formal PnL path"
+    },
+    {
+      "id": "option_hedge_historical_bt",
+      "reason": "heavy observe BT; desk button / historical_backtest --observe"
+    },
+    {
+      "id": "equity_timing",
+      "reason": "external/equity_timing_latest.json is manual input"
+    },
+    {
+      "id": "cotton_events_ingest",
+      "reason": "data/cotton/cotton_events.csv stays human-audited; only reminders snapshot refreshes"
+    }
+  ],
+  "live_trading": false,
+  "status": "Research"
+}

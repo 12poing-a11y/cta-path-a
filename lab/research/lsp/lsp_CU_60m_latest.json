@@ -2,22 +2,22 @@
   "ok": true,
   "schema": "cta-lsp-run-v1",
   "symbol": "CU",
-  "contract": "CU2612",
+  "contract": "CU2701",
   "timeframe": "60m",
-  "n_bars": 1023,
-  "n_events": 197,
+  "n_bars": 1044,
+  "n_events": 201,
   "stats": {
     "schema": "cta-lsp-stats-v1",
-    "n_events": 197,
+    "n_events": 201,
     "outcome_counts": {
-      "invalid_sweep": 34,
-      "fake_break_reversal": 61,
-      "true_break_continuation": 102
+      "invalid_sweep": 33,
+      "fake_break_reversal": 62,
+      "true_break_continuation": 106
     },
     "outcome_probs": {
-      "fake_break_reversal": 0.3096,
-      "invalid_sweep": 0.1726,
-      "true_break_continuation": 0.5178
+      "fake_break_reversal": 0.3085,
+      "invalid_sweep": 0.1642,
+      "true_break_continuation": 0.5274
     },
     "by_direction": {
       "up": {
@@ -26,9 +26,9 @@
         "true_break_continuation": 0.5714
       },
       "down": {
-        "fake_break_reversal": 0.3696,
-        "invalid_sweep": 0.1739,
-        "true_break_continuation": 0.4565
+        "fake_break_reversal": 0.3646,
+        "invalid_sweep": 0.1562,
+        "true_break_continuation": 0.4792
       }
     },
     "by_direction_detail": {
@@ -46,44 +46,44 @@
         }
       },
       "down": {
-        "n": 92,
+        "n": 96,
         "counts": {
-          "invalid_sweep": 16,
-          "fake_break_reversal": 34,
-          "true_break_continuation": 42
+          "invalid_sweep": 15,
+          "fake_break_reversal": 35,
+          "true_break_continuation": 46
         },
         "probs": {
-          "fake_break_reversal": 0.3696,
-          "invalid_sweep": 0.1739,
-          "true_break_continuation": 0.4565
+          "fake_break_reversal": 0.3646,
+          "invalid_sweep": 0.1562,
+          "true_break_continuation": 0.4792
         }
       }
     },
     "by_timeframe": {
       "60m": {
-        "fake_break_reversal": 0.3096,
-        "invalid_sweep": 0.1726,
-        "true_break_continuation": 0.5178
+        "fake_break_reversal": 0.3085,
+        "invalid_sweep": 0.1642,
+        "true_break_continuation": 0.5274
       }
     },
     "high_volume_ge_1_2": {
-      "n": 72,
+      "n": 75,
       "probs": {
-        "fake_break_reversal": 0.3056,
-        "invalid_sweep": 0.2083,
-        "true_break_continuation": 0.4861
+        "fake_break_reversal": 0.3067,
+        "invalid_sweep": 0.2,
+        "true_break_continuation": 0.4933
       }
     },
     "low_volume_lt_1_2": {
-      "n": 125,
+      "n": 126,
       "probs": {
-        "fake_break_reversal": 0.312,
-        "invalid_sweep": 0.152,
-        "true_break_continuation": 0.536
+        "fake_break_reversal": 0.3095,
+        "invalid_sweep": 0.1429,
+        "true_break_continuation": 0.5476
       }
     },
-    "avg_mfe_atr": 1.9745,
-    "avg_mae_atr": 1.772,
+    "avg_mfe_atr": 2.0587,
+    "avg_mae_atr": 1.7473,
     "live_trading": false,
     "status": "Research",
     "note": "Conditional frequencies only; not Path-A entry rules."
@@ -94,127 +94,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
-      "timestamp": "2026-09-23 10:00:00",
-      "timeframe": "60m",
-      "bar_index": 776,
-      "level_type": "swing_high",
-      "level_price": 110260.0,
-      "distance_to_level": -0.1055,
-      "break_direction": "up",
-      "break_size_atr": 1.4765,
-      "volume_ratio": 1.5956,
-      "oi_change": null,
-      "vwap_deviation": null,
-      "reclaim_bars": 1,
-      "post_sweep_return_1": -0.002087,
-      "post_sweep_return_3": -0.00254,
-      "post_sweep_return_5": -0.004173,
-      "post_sweep_return_10": -0.004264,
-      "mfe": 0.0791,
-      "mae": 1.8192,
-      "outcome": "fake_break_reversal",
-      "status": "Research",
-      "note": "Detected pierce; outcome filled by label_events().",
-      "level_index": 688,
-      "level_confirmed_index": 691,
-      "atr": 379.2857,
-      "outside_hold_bars": 0
-    },
-    {
-      "schema": "cta-lsp-event-v1",
-      "symbol": "CU",
-      "contract": "CU2612",
-      "timestamp": "2026-09-23 23:00:00",
-      "timeframe": "60m",
-      "bar_index": 781,
-      "level_type": "swing_low",
-      "level_price": 109770.0,
-      "distance_to_level": -0.03,
-      "break_direction": "down",
-      "break_size_atr": 0.6009,
-      "volume_ratio": 0.2875,
-      "oi_change": null,
-      "vwap_deviation": null,
-      "reclaim_bars": 1,
-      "post_sweep_return_1": -0.00082,
-      "post_sweep_return_3": -0.000456,
-      "post_sweep_return_5": 9.1e-05,
-      "post_sweep_return_10": 0.005922,
-      "mfe": 2.794,
-      "mae": 0.721,
-      "outcome": "invalid_sweep",
-      "status": "Research",
-      "note": "Detected pierce; outcome filled by label_events().",
-      "level_index": 698,
-      "level_confirmed_index": 701,
-      "atr": 332.8571,
-      "outside_hold_bars": 6
-    },
-    {
-      "schema": "cta-lsp-event-v1",
-      "symbol": "CU",
-      "contract": "CU2612",
-      "timestamp": "2026-09-24 14:15:00",
-      "timeframe": "60m",
-      "bar_index": 786,
-      "level_type": "swing_high",
-      "level_price": 109287.8985,
-      "distance_to_level": 1.7206,
-      "break_direction": "up",
-      "break_size_atr": 2.2791,
-      "volume_ratio": 0.0026,
-      "oi_change": null,
-      "vwap_deviation": null,
-      "reclaim_bars": 2,
-      "post_sweep_return_1": 0.0,
-      "post_sweep_return_3": -0.005376,
-      "post_sweep_return_5": -0.005831,
-      "post_sweep_return_10": -0.007472,
-      "mfe": 0.0372,
-      "mae": 4.1702,
-      "outcome": "fake_break_reversal",
-      "status": "Research",
-      "note": "Detected pierce; outcome filled by label_events().",
-      "level_index": 710,
-      "level_confirmed_index": 710,
-      "atr": 268.5714,
-      "outside_hold_bars": 1
-    },
-    {
-      "schema": "cta-lsp-event-v1",
-      "symbol": "CU",
-      "contract": "CU2612",
-      "timestamp": "2026-09-28 15:00:00",
-      "timeframe": "60m",
-      "bar_index": 791,
-      "level_type": "swing_low",
-      "level_price": 109118.1355,
-      "distance_to_level": -0.0285,
-      "break_direction": "down",
-      "break_size_atr": 0.4496,
-      "volume_ratio": 0.0052,
-      "oi_change": null,
-      "vwap_deviation": null,
-      "reclaim_bars": null,
-      "post_sweep_return_1": 0.0011,
-      "post_sweep_return_3": 0.002933,
-      "post_sweep_return_5": 0.00165,
-      "post_sweep_return_10": -0.002658,
-      "mfe": 1.6842,
-      "mae": 1.1579,
-      "outcome": "true_break_continuation",
-      "status": "Research",
-      "note": "Detected pierce; outcome filled by label_events().",
-      "level_index": 690,
-      "level_confirmed_index": 690,
-      "atr": 285.0,
-      "outside_hold_bars": 7
-    },
-    {
-      "schema": "cta-lsp-event-v1",
-      "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-09-29 10:00:00",
       "timeframe": "60m",
       "bar_index": 796,
@@ -244,7 +124,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-09-29 23:00:00",
       "timeframe": "60m",
       "bar_index": 801,
@@ -274,7 +154,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-09-30 14:15:00",
       "timeframe": "60m",
       "bar_index": 806,
@@ -304,7 +184,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-08 15:00:00",
       "timeframe": "60m",
       "bar_index": 811,
@@ -334,7 +214,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-09 10:00:00",
       "timeframe": "60m",
       "bar_index": 816,
@@ -364,7 +244,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-09 23:00:00",
       "timeframe": "60m",
       "bar_index": 821,
@@ -394,7 +274,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-12 14:15:00",
       "timeframe": "60m",
       "bar_index": 826,
@@ -424,7 +304,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-13 01:00:00",
       "timeframe": "60m",
       "bar_index": 831,
@@ -454,7 +334,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-13 22:00:00",
       "timeframe": "60m",
       "bar_index": 836,
@@ -484,7 +364,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-14 11:15:00",
       "timeframe": "60m",
       "bar_index": 841,
@@ -514,7 +394,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-15 00:00:00",
       "timeframe": "60m",
       "bar_index": 846,
@@ -544,7 +424,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-15 15:00:00",
       "timeframe": "60m",
       "bar_index": 851,
@@ -574,7 +454,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-16 10:00:00",
       "timeframe": "60m",
       "bar_index": 856,
@@ -604,7 +484,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-16 23:00:00",
       "timeframe": "60m",
       "bar_index": 861,
@@ -634,7 +514,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-19 14:15:00",
       "timeframe": "60m",
       "bar_index": 866,
@@ -664,7 +544,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-20 01:00:00",
       "timeframe": "60m",
       "bar_index": 871,
@@ -694,7 +574,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-20 22:00:00",
       "timeframe": "60m",
       "bar_index": 876,
@@ -724,7 +604,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-21 11:15:00",
       "timeframe": "60m",
       "bar_index": 881,
@@ -754,7 +634,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-22 00:00:00",
       "timeframe": "60m",
       "bar_index": 886,
@@ -784,7 +664,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-22 15:00:00",
       "timeframe": "60m",
       "bar_index": 891,
@@ -814,7 +694,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-23 10:00:00",
       "timeframe": "60m",
       "bar_index": 896,
@@ -844,7 +724,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-23 23:00:00",
       "timeframe": "60m",
       "bar_index": 901,
@@ -874,7 +754,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-26 14:15:00",
       "timeframe": "60m",
       "bar_index": 906,
@@ -904,7 +784,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-27 01:00:00",
       "timeframe": "60m",
       "bar_index": 911,
@@ -934,7 +814,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-27 22:00:00",
       "timeframe": "60m",
       "bar_index": 916,
@@ -964,7 +844,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-28 11:15:00",
       "timeframe": "60m",
       "bar_index": 921,
@@ -994,7 +874,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-29 00:00:00",
       "timeframe": "60m",
       "bar_index": 926,
@@ -1024,7 +904,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-29 15:00:00",
       "timeframe": "60m",
       "bar_index": 931,
@@ -1054,7 +934,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-30 10:00:00",
       "timeframe": "60m",
       "bar_index": 936,
@@ -1084,7 +964,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-10-30 23:00:00",
       "timeframe": "60m",
       "bar_index": 941,
@@ -1114,7 +994,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-02 14:15:00",
       "timeframe": "60m",
       "bar_index": 946,
@@ -1144,7 +1024,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-03 01:00:00",
       "timeframe": "60m",
       "bar_index": 951,
@@ -1174,7 +1054,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-03 22:00:00",
       "timeframe": "60m",
       "bar_index": 956,
@@ -1204,7 +1084,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-04 11:15:00",
       "timeframe": "60m",
       "bar_index": 961,
@@ -1234,7 +1114,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-05 00:00:00",
       "timeframe": "60m",
       "bar_index": 966,
@@ -1264,7 +1144,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-05 15:00:00",
       "timeframe": "60m",
       "bar_index": 971,
@@ -1294,7 +1174,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-06 10:00:00",
       "timeframe": "60m",
       "bar_index": 976,
@@ -1324,7 +1204,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-06 23:00:00",
       "timeframe": "60m",
       "bar_index": 981,
@@ -1354,7 +1234,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-09 14:15:00",
       "timeframe": "60m",
       "bar_index": 986,
@@ -1384,7 +1264,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-10 01:00:00",
       "timeframe": "60m",
       "bar_index": 991,
@@ -1414,7 +1294,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-10 22:00:00",
       "timeframe": "60m",
       "bar_index": 996,
@@ -1444,7 +1324,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-11 11:15:00",
       "timeframe": "60m",
       "bar_index": 1001,
@@ -1474,7 +1354,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-12 00:00:00",
       "timeframe": "60m",
       "bar_index": 1006,
@@ -1504,7 +1384,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-12 15:00:00",
       "timeframe": "60m",
       "bar_index": 1011,
@@ -1534,7 +1414,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-13 10:00:00",
       "timeframe": "60m",
       "bar_index": 1016,
@@ -1550,8 +1430,8 @@
       "post_sweep_return_1": 0.001422,
       "post_sweep_return_3": 0.003318,
       "post_sweep_return_5": 0.007393,
-      "post_sweep_return_10": null,
-      "mfe": 2.4543,
+      "post_sweep_return_10": 0.045877,
+      "mfe": 10.7134,
       "mae": 0.3841,
       "outcome": "true_break_continuation",
       "status": "Research",
@@ -1559,12 +1439,12 @@
       "level_index": 657,
       "level_confirmed_index": 660,
       "atr": 468.5714,
-      "outside_hold_bars": 6
+      "outside_hold_bars": 10
     },
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "CU",
-      "contract": "CU2612",
+      "contract": "CU2701",
       "timestamp": "2026-11-13 23:00:00",
       "timeframe": "60m",
       "bar_index": 1021,
@@ -1577,20 +1457,140 @@
       "oi_change": null,
       "vwap_deviation": null,
       "reclaim_bars": null,
-      "post_sweep_return_1": 0.003056,
-      "post_sweep_return_3": null,
-      "post_sweep_return_5": null,
-      "post_sweep_return_10": null,
-      "mfe": 0.7518,
+      "post_sweep_return_1": 0.026261,
+      "post_sweep_return_3": 0.032945,
+      "post_sweep_return_5": 0.03877,
+      "post_sweep_return_10": 0.029889,
+      "mfe": 8.6154,
       "mae": 0.0406,
-      "outcome": "invalid_sweep",
+      "outcome": "true_break_continuation",
       "status": "Research",
       "note": "Detected pierce; outcome filled by label_events().",
       "level_index": 480,
       "level_confirmed_index": 480,
       "atr": 492.1429,
-      "outside_hold_bars": 1
+      "outside_hold_bars": 10
+    },
+    {
+      "schema": "cta-lsp-event-v1",
+      "symbol": "CU",
+      "contract": "CU2701",
+      "timestamp": "2026-11-16 14:15:00",
+      "timeframe": "60m",
+      "bar_index": 1026,
+      "level_type": "swing_low",
+      "level_price": 101110.0,
+      "distance_to_level": -0.4134,
+      "break_direction": "down",
+      "break_size_atr": 0.5787,
+      "volume_ratio": 4.233,
+      "oi_change": null,
+      "vwap_deviation": null,
+      "reclaim_bars": 2,
+      "post_sweep_return_1": -0.00308,
+      "post_sweep_return_3": -0.01063,
+      "post_sweep_return_5": -0.009239,
+      "post_sweep_return_10": -0.001093,
+      "mfe": 0.2756,
+      "mae": 1.378,
+      "outcome": "fake_break_reversal",
+      "status": "Research",
+      "note": "Detected pierce; outcome filled by label_events().",
+      "level_index": 275,
+      "level_confirmed_index": 278,
+      "atr": 1088.5714,
+      "outside_hold_bars": 5
+    },
+    {
+      "schema": "cta-lsp-event-v1",
+      "symbol": "CU",
+      "contract": "CU2701",
+      "timestamp": "2026-11-17 01:00:00",
+      "timeframe": "60m",
+      "bar_index": 1031,
+      "level_type": "swing_low",
+      "level_price": 102289.6345,
+      "distance_to_level": -0.6495,
+      "break_direction": "down",
+      "break_size_atr": 0.7424,
+      "volume_ratio": 0.2988,
+      "oi_change": null,
+      "vwap_deviation": null,
+      "reclaim_bars": null,
+      "post_sweep_return_1": 0.006694,
+      "post_sweep_return_3": 0.006595,
+      "post_sweep_return_5": 0.008072,
+      "post_sweep_return_10": 0.016931,
+      "mfe": 1.7082,
+      "mae": 0.0557,
+      "outcome": "true_break_continuation",
+      "status": "Research",
+      "note": "Detected pierce; outcome filled by label_events().",
+      "level_index": 290,
+      "level_confirmed_index": 290,
+      "atr": 1077.1429,
+      "outside_hold_bars": 10
+    },
+    {
+      "schema": "cta-lsp-event-v1",
+      "symbol": "CU",
+      "contract": "CU2701",
+      "timestamp": "2026-11-17 22:00:00",
+      "timeframe": "60m",
+      "bar_index": 1036,
+      "level_type": "swing_low",
+      "level_price": 101542.7719,
+      "distance_to_level": -0.7635,
+      "break_direction": "down",
+      "break_size_atr": 1.1686,
+      "volume_ratio": 3.4327,
+      "oi_change": null,
+      "vwap_deviation": null,
+      "reclaim_bars": null,
+      "post_sweep_return_1": -0.001786,
+      "post_sweep_return_3": -0.003374,
+      "post_sweep_return_5": 0.008931,
+      "post_sweep_return_10": null,
+      "mfe": 3.1814,
+      "mae": 0.6817,
+      "outcome": "true_break_continuation",
+      "status": "Research",
+      "note": "Detected pierce; outcome filled by label_events().",
+      "level_index": 280,
+      "level_confirmed_index": 280,
+      "atr": 1012.1429,
+      "outside_hold_bars": 7
+    },
+    {
+      "schema": "cta-lsp-event-v1",
+      "symbol": "CU",
+      "contract": "CU2701",
+      "timestamp": "2026-11-18 11:15:00",
+      "timeframe": "60m",
+      "bar_index": 1041,
+      "level_type": "swing_low",
+      "level_price": 100360.0,
+      "distance_to_level": -0.7473,
+      "break_direction": "down",
+      "break_size_atr": 0.9303,
+      "volume_ratio": 3.1446,
+      "oi_change": null,
+      "vwap_deviation": null,
+      "reclaim_bars": null,
+      "post_sweep_return_1": 0.01522,
+      "post_sweep_return_3": null,
+      "post_sweep_return_5": null,
+      "post_sweep_return_10": null,
+      "mfe": 3.5381,
+      "mae": 0.0153,
+      "outcome": "true_break_continuation",
+      "status": "Research",
+      "note": "Detected pierce; outcome filled by label_events().",
+      "level_index": 264,
+      "level_confirmed_index": 267,
+      "atr": 655.7143,
+      "outside_hold_bars": 2
     }
   ],
-  "events_n": 197
+  "events_n": 201
 }

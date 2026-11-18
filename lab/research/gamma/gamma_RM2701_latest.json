@@ -1,0 +1,83 @@
+{
+  "ok": true,
+  "schema": "cta-gamma-research-v1",
+  "contract": "RM2701",
+  "product": "RM",
+  "migration": {
+    "ok": true,
+    "schema": "cta-gamma-migration-v1",
+    "contract": "RM2701",
+    "n_snapshots": 3,
+    "n_events": 4,
+    "label_counts": {
+      "unchanged": 4
+    },
+    "live_trading": false,
+    "note": "Display GEX convention; OI does not identify dealer side.",
+    "events_tail": [
+      {
+        "date": "2026-11-12",
+        "side": "call",
+        "from": 2300.0,
+        "to": 2300.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.4288,
+        "futures_price": 2267.0,
+        "dist_pct": 1.456
+      },
+      {
+        "date": "2026-11-12",
+        "side": "put",
+        "from": 2200.0,
+        "to": 2200.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.2061,
+        "futures_price": 2267.0,
+        "dist_pct": -2.955
+      },
+      {
+        "date": "2026-11-13",
+        "side": "call",
+        "from": 2300.0,
+        "to": 2300.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.2184,
+        "futures_price": 2288.0,
+        "dist_pct": 0.524
+      },
+      {
+        "date": "2026-11-13",
+        "side": "put",
+        "from": 2200.0,
+        "to": 2200.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.1116,
+        "futures_price": 2288.0,
+        "dist_pct": -3.846
+      }
+    ]
+  },
+  "touch": {
+    "ok": false,
+    "error": "no_daily_bars",
+    "n_events": 0
+  },
+  "iv_oi": {
+    "ok": true,
+    "schema": "cta-gamma-iv-oi-v1",
+    "product": "RM",
+    "n_days": 0,
+    "regime_counts": {},
+    "live_trading": false,
+    "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
+    "changes_tail": []
+  },
+  "n_daily_bars": 0,
+  "live_trading": false,
+  "status": "Research",
+  "disclaimer": "Call+/Put− GEX 为展示约定；OI 不能识别做市商方向。本模块只做结构观察，不生成 Path-A 多空信号。"
+}

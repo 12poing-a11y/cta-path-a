@@ -73,3 +73,13 @@ def test_run_lsp_pipeline(tmp_path):
 
     paths = save_lsp_run(payload, root=tmp_path)
     assert (tmp_path / paths["latest"]).is_file()
+
+
+def test_refresh_lsp_universe_skips_empty_cache(tmp_path):
+    from lab.lsp.pipeline import refresh_lsp_universe
+
+    summary = refresh_lsp_universe(tmp_path, symbols=["CF"], period="both")
+    assert summary["schema"] == "cta-lsp-refresh-v1"
+    assert summary["n_ok"] == 0
+    assert summary["n_skip"] >= 1
+    assert summary["ok"] is False

@@ -93,6 +93,14 @@ jobs:
           git add data/sentiment_mds/*.json data/tech_score_latest.json data/desk_composite_latest.json data/vol_engine_latest.json || true
           git add data/shadow_perf/ || true
           git add data/gamma_wall/ || true
+          git add data/ablation/ || true
+          git add data/cotton/npd_reminders_latest.json || true
+          # 研究台 soft 日更产物（LSP/P4/Gamma研究/IC/OOS/组合风险等）
+          git add lab/research/lsp/ lab/research/ml/ lab/research/gamma/ || true
+          git add lab/research/ic/ lab/research/oos/ lab/research/portfolio/ || true
+          git add lab/research/desk_daily_refresh_latest.json || true
+          git add lab/research/desk_daily_refresh_core_latest.json || true
+          git add lab/research/desk_daily_refresh_heavy_latest.json || true
           git add -f .cache/member/dce-*.json .cache/member/em-*.json || true
           git add -f .cache/member/shfe-*.txt .cache/member/czce-*.txt || true
           git add -f .cache/akshare/minute/*.json || true
@@ -136,7 +144,7 @@ jobs:
             echo "no changes"
             exit 0
           fi
-          git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+IV+CODE0+sentiment"
+          git commit -m "chore(cta): daily $(date -u +%Y%m%d) seats+minute+IV+CODE0+sentiment+lsp"
           # Fresh cache/report generation can leave other tracked files modified.
           # Autostash those residual changes so they cannot block the rebase.
           # Rebase generated outputs with priority on same-path conflicts.

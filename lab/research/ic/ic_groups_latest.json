@@ -2,7 +2,7 @@
   "ok": true,
   "meta": {
     "plan": "A",
-    "created_at": "2026-10-23T09:43:10.154293+00:00",
+    "created_at": "2026-11-18T13:49:18.181816+00:00",
     "root": "D:/AI/cta-path-a",
     "oos_split": {
       "schema": "cta-lab-oos-v1",
@@ -22,7 +22,7 @@
     },
     "panel_sha16": "2cb8098a92a3d3c9",
     "bars_manifest_sha16": "1b2ce32d429c9dec",
-    "factors_registry_sha16": "8da8afaead0ccca6",
+    "factors_registry_sha16": "284a1040dc426ff5",
     "script": "run_ic_groups.py"
   },
   "in_sample": {

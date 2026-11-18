@@ -134,7 +134,7 @@ def render_blend_section(st, root: Path) -> None:
     st.caption(
         "B→A：在消融候选曲线上扫离散权重；主排序 Calmar；观察袖套硬帽≤10%；"
         "全表剔除负收益或最大回撤>15%（及校验失败）的组合。"
-        "运行：`python scripts/strategy_blend_grid.py`"
+        "盘后 soft 日更会刷新；也可手动：`python scripts/strategy_blend_grid.py`"
     )
     if not blend:
         st.info(f"尚无资金组合快照。请先跑脚本生成 `{BLEND_REL.as_posix()}`。")
@@ -190,8 +190,8 @@ def render_ablation_panel(st, root: Path) -> None:
         st.divider()
         st.markdown("**策略×指标消融（B·纸面）**")
         st.caption(
-            "默认 full_grid：策略×指标组合全扫；也可用 `--mode ablation` 做单因子开关。"
-            "运行：`python scripts/strategy_indicator_ablation.py`"
+            "日更为 `--mode ablation`（单因子开关）；全扫可用 `--mode full_grid`。"
+            "盘后 soft 日更会刷新；也可手动：`python scripts/strategy_indicator_ablation.py --mode ablation`"
         )
         if not payload:
             st.info(f"尚无消融快照。请先跑脚本生成 `{OUT_REL.as_posix()}`。")

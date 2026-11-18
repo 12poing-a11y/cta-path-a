@@ -2,7 +2,7 @@
   "ok": true,
   "meta": {
     "plan": "A",
-    "created_at": "2026-10-23T09:43:12.092493+00:00",
+    "created_at": "2026-11-18T13:49:20.172626+00:00",
     "root": "D:/AI/cta-path-a",
     "oos_split": {
       "schema": "cta-lab-oos-v1",
@@ -22,7 +22,7 @@
     },
     "panel_sha16": "2cb8098a92a3d3c9",
     "bars_manifest_sha16": "1b2ce32d429c9dec",
-    "factors_registry_sha16": "8da8afaead0ccca6",
+    "factors_registry_sha16": "284a1040dc426ff5",
     "script": "run_oos_vs_path_a.py",
     "cost_bps_one_way": 3.0
   },
@@ -327,35 +327,35 @@
   "overlap_vs_official_path_a": {
     "lab_prior": {
       "ok": true,
-      "n_days": 215,
-      "start": "2025-11-27",
-      "end": "2026-10-20",
-      "lab_ret_pct": -5.039,
-      "path_a_official_ret_pct": 5.054,
+      "n_days": 198,
+      "start": "2025-12-23",
+      "end": "2026-10-21",
+      "lab_ret_pct": -4.463,
+      "path_a_official_ret_pct": 3.162,
       "lab_max_dd_pct": 31.362,
-      "path_a_official_max_dd_pct": 4.802,
+      "path_a_official_max_dd_pct": 6.755,
       "note": "同重叠日 rebase；官方 Path-A 曲线窗可能短于 lab OOS。"
     },
     "lab_is_sign": {
       "ok": true,
-      "n_days": 215,
-      "start": "2025-11-27",
-      "end": "2026-10-20",
-      "lab_ret_pct": -16.057,
-      "path_a_official_ret_pct": 5.054,
-      "lab_max_dd_pct": 32.559,
-      "path_a_official_max_dd_pct": 4.802,
+      "n_days": 198,
+      "start": "2025-12-23",
+      "end": "2026-10-21",
+      "lab_ret_pct": -11.573,
+      "path_a_official_ret_pct": 3.162,
+      "lab_max_dd_pct": 30.358,
+      "path_a_official_max_dd_pct": 6.755,
       "note": "同重叠日 rebase；官方 Path-A 曲线窗可能短于 lab OOS。"
     },
     "path_a_proxy": {
       "ok": true,
-      "n_days": 215,
-      "start": "2025-11-27",
-      "end": "2026-10-20",
-      "lab_ret_pct": 14.615,
-      "path_a_official_ret_pct": 5.054,
+      "n_days": 199,
+      "start": "2025-12-23",
+      "end": "2026-10-22",
+      "lab_ret_pct": 10.894,
+      "path_a_official_ret_pct": 4.944,
       "lab_max_dd_pct": 20.386,
-      "path_a_official_max_dd_pct": 4.802,
+      "path_a_official_max_dd_pct": 6.755,
       "note": "同重叠日 rebase；官方 Path-A 曲线窗可能短于 lab OOS。"
     },
     "official_curve_points": 215

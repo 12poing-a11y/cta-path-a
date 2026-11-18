@@ -86,3 +86,115 @@ def save_lsp_run(payload: dict[str, Any], root: Path | None = None) -> dict[str,
         "latest": str(full.relative_to(root)),
         "events": str(ev_path.relative_to(root)),
     }
+
+
+# Desk / daily soft refresh universe (matches existing lab/research/lsp coverage).
+DEFAULT_LSP_SYMBOLS: tuple[str, ...] = (
+    "CF",
+    "P",
+    "RB",
+    "MA",
+    "TA",
+    "RU",
+    "CU",
+    "AU",
+    "AG",
+    "I",
+    "FG",
+    "SA",
+)
+
+
+def resolve_lsp_contract(root: Path, code: str, explicit: str | None = None) -> str | None:
+    """Dominant or latest month file for LSP bar load."""
+    if explicit:
+        return str(explicit).upper()
+    try:
+        from minute_data import resolve_dominant_contract
+
+        dom = resolve_dominant_contract(root, code)
+        if isinstance(dom, dict) and dom.get("symbol"):
+            return str(dom["symbol"]).upper()
+    except Exception:
+        pass
+    minute = root / ".cache" / "akshare" / "minute"
+    if minute.is_dir():
+        stems: list[str] = []
+        for p in minute.glob(f"{code}*_15_sina.json"):
+            stem = p.name.split("_")[0].upper()
+            rest = stem[len(code) :]
+            if rest[:1].isdigit() and stem != f"{code}0":
+                stems.append(stem)
+        if stems:
+            return sorted(stems)[-1]
+    return None
+
+
+def refresh_lsp_universe(
+    root: Path | None = None,
+    *,
+    symbols: list[str] | tuple[str, ...] | None = None,
+    period: str = "both",
+) -> dict[str, Any]:
+    """Recompute LSP latest/events from minute cache. Research-only; no paper_book.
+
+    Soft-safe for daily_update: skips symbols with insufficient bars.
+    """
+    from lab.lsp.resonance import resonate_with_higher_tf, resonance_stats
+
+    root = root or ROOT
+    codes = [str(c).strip().upper() for c in (symbols or DEFAULT_LSP_SYMBOLS) if str(c).strip()]
+    periods = ("15", "60") if period == "both" else (period,)
+    rows: list[dict[str, Any]] = []
+    ok_n = 0
+    skip_n = 0
+    for code in codes:
+        contract = resolve_lsp_contract(root, code)
+        payloads: dict[str, Any] = {}
+        for per in periods:
+            tf = f"{per}m"
+            bars, _sym = load_bars_from_minute_cache(root, code, per, contract=contract)
+            if len(bars) < 80:
+                skip_n += 1
+                rows.append(
+                    {
+                        "symbol": code,
+                        "timeframe": tf,
+                        "ok": False,
+                        "reason": "insufficient_bars",
+                        "n_bars": len(bars),
+                    }
+                )
+                continue
+            payload = run_lsp(bars, symbol=code, contract=contract, timeframe=tf)
+            payloads[tf] = payload
+            paths = save_lsp_run(payload, root=root)
+            ok_n += 1
+            rows.append(
+                {
+                    "symbol": code,
+                    "timeframe": tf,
+                    "ok": True,
+                    "n_bars": payload["n_bars"],
+                    "n_events": payload["n_events"],
+                    "bar_end": (bars[-1] or {}).get("datetime"),
+                    "path": paths.get("latest"),
+                }
+            )
+        if "15m" in payloads and "60m" in payloads:
+            res_events = resonate_with_higher_tf(
+                payloads["15m"]["events"], payloads["60m"]["events"]
+            )
+            rstats = resonance_stats(res_events)
+            payloads["15m"]["events"] = res_events
+            payloads["15m"]["stats"]["resonance"] = rstats
+            save_lsp_run(payloads["15m"], root=root)
+    return {
+        "ok": ok_n > 0,
+        "schema": "cta-lsp-refresh-v1",
+        "n_ok": ok_n,
+        "n_skip": skip_n,
+        "symbols": codes,
+        "period": period,
+        "rows": rows,
+    }

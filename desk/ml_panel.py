@@ -20,7 +20,10 @@ def render_ml_panel(st, root: Path) -> None:
         "**仅研究**，不改 Path-A 入场。"
     )
     if not path.is_file():
-        st.info("尚无产物。运行：`python lab/scripts/run_p4_light.py`")
+        st.info(
+            "尚无产物。盘后 `daily_update` soft 刷新会写入；也可手动："
+            "`python lab/scripts/run_p4_light.py`"
+        )
         return
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))

@@ -98,8 +98,8 @@ def render_lsp_panel(st, root: Path) -> None:
     symbols = _discover_symbols(root)
     if not symbols:
         st.info(
-            "尚无 LSP 产物。运行：\n"
-            "`python lab/scripts/run_lsp_cf.py --symbols CF,P,RB,MA,TA --period both`"
+            "尚无 LSP 产物。盘后 `daily_update` 会 soft 刷新；也可手动：\n"
+            "`python lab/scripts/run_lsp_cf.py --daily --period both`"
         )
         return
 

@@ -1,0 +1,130 @@
+{
+  "ok": true,
+  "schema": "cta-gamma-research-v1",
+  "contract": "OI2701",
+  "product": "OI",
+  "migration": {
+    "ok": true,
+    "schema": "cta-gamma-migration-v1",
+    "contract": "OI2701",
+    "n_snapshots": 4,
+    "n_events": 6,
+    "label_counts": {
+      "unchanged": 6
+    },
+    "live_trading": false,
+    "note": "Display GEX convention; OI does not identify dealer side.",
+    "events_tail": [
+      {
+        "date": "2026-11-10",
+        "side": "call",
+        "from": 10400.0,
+        "to": 10400.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.1793,
+        "futures_price": 9762.0,
+        "dist_pct": 6.536
+      },
+      {
+        "date": "2026-11-10",
+        "side": "put",
+        "from": 9800.0,
+        "to": 9800.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.2145,
+        "futures_price": 9762.0,
+        "dist_pct": 0.389
+      },
+      {
+        "date": "2026-11-12",
+        "side": "call",
+        "from": 10400.0,
+        "to": 10400.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.5714,
+        "futures_price": 10011.0,
+        "dist_pct": 3.886
+      },
+      {
+        "date": "2026-11-12",
+        "side": "put",
+        "from": 9800.0,
+        "to": 9800.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.0783,
+        "futures_price": 10011.0,
+        "dist_pct": -2.108
+      },
+      {
+        "date": "2026-11-13",
+        "side": "call",
+        "from": 10400.0,
+        "to": 10400.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.4733,
+        "futures_price": 10113.0,
+        "dist_pct": 2.838
+      },
+      {
+        "date": "2026-11-13",
+        "side": "put",
+        "from": 9800.0,
+        "to": 9800.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.0887,
+        "futures_price": 10113.0,
+        "dist_pct": -3.095
+      }
+    ]
+  },
+  "touch": {
+    "ok": true,
+    "schema": "cta-gamma-touch-v1",
+    "contract": "OI2701",
+    "n_events": 1,
+    "touch_atr": 3.0,
+    "outcome_counts": {
+      "stay": 1
+    },
+    "outcome_probs": {
+      "stay": 1.0
+    },
+    "live_trading": false,
+    "note": "Sparse when gamma history is short; not a trade signal.",
+    "events_tail": [
+      {
+        "date": "2026-11-06",
+        "side": "put",
+        "wall": 9800.0,
+        "futures": 9871.0,
+        "dist_atr": 0.4459,
+        "outcome": "stay",
+        "mfe_atr": 0.0,
+        "mae_atr": 0.0,
+        "ret_1": null,
+        "ret_3": null,
+        "ret_5": null
+      }
+    ]
+  },
+  "iv_oi": {
+    "ok": true,
+    "schema": "cta-gamma-iv-oi-v1",
+    "product": "OI",
+    "n_days": 1,
+    "regime_counts": {},
+    "live_trading": false,
+    "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
+    "changes_tail": []
+  },
+  "n_daily_bars": 193,
+  "live_trading": false,
+  "status": "Research",
+  "disclaimer": "Call+/Put− GEX 为展示约定；OI 不能识别做市商方向。本模块只做结构观察，不生成 Path-A 多空信号。"
+}

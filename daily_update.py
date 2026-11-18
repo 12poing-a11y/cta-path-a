@@ -587,6 +587,33 @@ def main():
             "rows": [],
         }
 
+    # Desk research soft refresh — split packs so slow/network (heavy) cannot
+    # block fast desk pages (core). Never paper_book / formal BT / seats.
+    try:
+        from research.desk_daily_refresh import refresh_desk_research_split
+
+        print("[cta] refresh desk research (core then heavy)...")
+        desk_r = refresh_desk_research_split(ROOT)
+        print(
+            f"[desk-research] ok={desk_r.get('ok')} "
+            f"seconds={desk_r.get('seconds_total')} → {desk_r.get('path')}"
+        )
+        for label in ("core", "heavy"):
+            sub = desk_r.get(label) or {}
+            print(
+                f"[desk-research:{label}] n_ok={sub.get('n_ok')} "
+                f"n_fail={sub.get('n_fail')} {sub.get('seconds_total')}s"
+            )
+            for step in sub.get("steps") or []:
+                if not step.get("ok"):
+                    print(
+                        f"::warning title=desk research {label}/{step.get('id')} soft-fail::"
+                        f"{step.get('error') or 'failed'}"
+                    )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[desk-research] soft-fail: {exc}")
+        print(f"::warning title=desk research soft-fail::{exc}")
+
     # Option IV daily backfill (CZCE/SHFE). Soft: asof empty not poison-cached.
     iv_summary: dict = {"ok": False}
     try:

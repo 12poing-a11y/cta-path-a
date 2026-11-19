@@ -7,10 +7,10 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "FG2701",
-    "n_snapshots": 7,
-    "n_events": 12,
+    "n_snapshots": 8,
+    "n_events": 14,
     "label_counts": {
-      "unchanged": 8,
+      "unchanged": 10,
       "migrated": 3,
       "micro_move": 1
     },
@@ -148,6 +148,28 @@
         "gex_change_pct": -0.0538,
         "futures_price": 900.0,
         "dist_pct": -5.556
+      },
+      {
+        "date": "2026-11-19",
+        "side": "call",
+        "from": 950.0,
+        "to": 950.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.1004,
+        "futures_price": 907.0,
+        "dist_pct": 4.741
+      },
+      {
+        "date": "2026-11-19",
+        "side": "put",
+        "from": 850.0,
+        "to": 850.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.0137,
+        "futures_price": 907.0,
+        "dist_pct": -6.284
       }
     ]
   },

@@ -1,10 +1,10 @@
 {
   "ok": true,
-  "asof": "2026-11-19 18:11",
+  "asof": "2026-11-20 00:47",
   "grid_mode": "ablation",
   "disclaimer": "纸面研究：本地代理非东证原版因子库；W(权证)本地恒为0不可辨识；不改正式 entry_filter / universe.json；不构成交易建议。",
   "n_rows": 20,
-  "elapsed_sec": 9.2,
+  "elapsed_sec": 9.5,
   "rows": [
     {
       "strategy_id": "proxy_cwft",
@@ -337,7 +337,7 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 3.32
+      "elapsed_sec": 3.46
     },
     {
       "strategy_id": "path_a",
@@ -361,7 +361,7 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.8
+      "elapsed_sec": 0.82
     },
     {
       "strategy_id": "path_a",
@@ -385,7 +385,7 @@
       "min_r20": 0.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.84
+      "elapsed_sec": 0.86
     },
     {
       "strategy_id": "path_a",
@@ -409,7 +409,7 @@
       "min_r20": 4.0,
       "min_r60": 0.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.81
+      "elapsed_sec": 0.83
     },
     {
       "strategy_id": "path_a",
@@ -433,7 +433,7 @@
       "min_r20": 0.0,
       "min_r60": 0.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.88
+      "elapsed_sec": 0.9
     },
     {
       "strategy_id": "path_a",
@@ -457,7 +457,7 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": false,
-      "elapsed_sec": 0.93
+      "elapsed_sec": 0.97
     },
     {
       "strategy_id": "path_a",
@@ -481,7 +481,7 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.79
+      "elapsed_sec": 0.82
     }
   ],
   "summary": {

@@ -5,14 +5,9 @@
   "source": "eastmoney.futures_inventory_em",
   "rows": [
     {
-      "date": "2026-08-11",
-      "inventory": 86342.0,
-      "change": null
-    },
-    {
       "date": "2026-08-12",
       "inventory": 86170.0,
-      "change": -172.0
+      "change": null
     },
     {
       "date": "2026-08-13",
@@ -338,16 +333,21 @@
       "date": "2026-11-19",
       "inventory": 54041.0,
       "change": -187.0
+    },
+    {
+      "date": "2026-11-20",
+      "inventory": 53675.0,
+      "change": -366.0
     }
   ],
   "error": null,
   "n": 67,
-  "start": "2026-08-11",
-  "end": "2026-11-19",
+  "start": "2026-08-12",
+  "end": "2026-11-20",
   "last": {
-    "date": "2026-11-19",
-    "inventory": 54041.0,
-    "change": -187.0
+    "date": "2026-11-20",
+    "inventory": 53675.0,
+    "change": -366.0
   },
-  "fetched_at": "2026-11-19 16:50:29"
+  "fetched_at": "2026-11-20 10:36:37"
 }

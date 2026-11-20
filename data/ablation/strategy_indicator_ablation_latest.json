@@ -1,10 +1,10 @@
 {
   "ok": true,
-  "asof": "2026-11-20 00:47",
+  "asof": "2026-11-20 18:34",
   "grid_mode": "ablation",
   "disclaimer": "纸面研究：本地代理非东证原版因子库；W(权证)本地恒为0不可辨识；不改正式 entry_filter / universe.json；不构成交易建议。",
   "n_rows": 20,
-  "elapsed_sec": 9.5,
+  "elapsed_sec": 15.1,
   "rows": [
     {
       "strategy_id": "proxy_cwft",
@@ -12,17 +12,17 @@
       "variant": "full",
       "variant_label": "完整",
       "ablated": [],
-      "ret_pct": 34.535,
+      "ret_pct": 36.446,
       "max_dd_pct": 10.154,
-      "calmar": 3.603,
+      "calmar": 3.766,
       "delta_ret_vs_full": null,
       "delta_dd_vs_full": null,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "F",
@@ -37,17 +37,17 @@
       "ablated": [
         "C"
       ],
-      "ret_pct": 14.949,
+      "ret_pct": 19.258,
       "max_dd_pct": 12.903,
-      "calmar": 1.433,
-      "delta_ret_vs_full": -19.586,
+      "calmar": 1.768,
+      "delta_ret_vs_full": -17.188,
       "delta_dd_vs_full": 2.749,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "F",
         "T"
@@ -61,17 +61,17 @@
       "ablated": [
         "F"
       ],
-      "ret_pct": 35.146,
+      "ret_pct": 38.96,
       "max_dd_pct": 9.572,
-      "calmar": 3.882,
-      "delta_ret_vs_full": 0.611,
+      "calmar": 4.222,
+      "delta_ret_vs_full": 2.514,
       "delta_dd_vs_full": -0.582,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "T"
@@ -85,17 +85,17 @@
       "ablated": [
         "T"
       ],
-      "ret_pct": 32.98,
+      "ret_pct": 34.824,
       "max_dd_pct": 11.797,
-      "calmar": 2.97,
-      "delta_ret_vs_full": -1.555,
+      "calmar": 3.108,
+      "delta_ret_vs_full": -1.622,
       "delta_dd_vs_full": 1.643,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "F"
@@ -110,17 +110,17 @@
         "C",
         "F"
       ],
-      "ret_pct": 1.301,
+      "ret_pct": 4.064,
       "max_dd_pct": 16.694,
-      "calmar": 0.242,
-      "delta_ret_vs_full": -33.234,
+      "calmar": 0.431,
+      "delta_ret_vs_full": -32.382,
       "delta_dd_vs_full": 6.54,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "T"
       ]
@@ -131,17 +131,17 @@
       "variant": "full",
       "variant_label": "完整",
       "ablated": [],
-      "ret_pct": 31.818,
+      "ret_pct": 33.782,
       "max_dd_pct": 10.439,
-      "calmar": 3.273,
+      "calmar": 3.44,
       "delta_ret_vs_full": null,
       "delta_dd_vs_full": null,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "F",
@@ -157,17 +157,17 @@
       "ablated": [
         "C"
       ],
-      "ret_pct": 16.119,
+      "ret_pct": 20.471,
       "max_dd_pct": 10.633,
-      "calmar": 1.852,
-      "delta_ret_vs_full": -15.699,
+      "calmar": 2.258,
+      "delta_ret_vs_full": -13.311,
       "delta_dd_vs_full": 0.194,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "F",
         "LONG_MOM",
@@ -182,17 +182,17 @@
       "ablated": [
         "F"
       ],
-      "ret_pct": 34.643,
+      "ret_pct": 38.442,
       "max_dd_pct": 10.706,
-      "calmar": 3.432,
-      "delta_ret_vs_full": 2.825,
+      "calmar": 3.737,
+      "delta_ret_vs_full": 4.66,
       "delta_dd_vs_full": 0.267,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "LONG_MOM",
@@ -207,17 +207,17 @@
       "ablated": [
         "LONG_MOM"
       ],
-      "ret_pct": 35.29,
+      "ret_pct": 37.212,
       "max_dd_pct": 11.549,
-      "calmar": 3.219,
-      "delta_ret_vs_full": 3.472,
+      "calmar": 3.362,
+      "delta_ret_vs_full": 3.43,
       "delta_dd_vs_full": 1.11,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "F",
@@ -232,17 +232,17 @@
       "ablated": [
         "SHORT_MOM"
       ],
-      "ret_pct": 32.772,
+      "ret_pct": 34.75,
       "max_dd_pct": 10.373,
-      "calmar": 3.379,
-      "delta_ret_vs_full": 0.954,
+      "calmar": 3.546,
+      "delta_ret_vs_full": 0.968,
       "delta_dd_vs_full": -0.066,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "F",
@@ -255,17 +255,17 @@
       "variant": "full",
       "variant_label": "完整",
       "ablated": [],
-      "ret_pct": 32.082,
+      "ret_pct": 33.959,
       "max_dd_pct": 10.148,
-      "calmar": 3.398,
+      "calmar": 3.561,
       "delta_ret_vs_full": null,
       "delta_dd_vs_full": null,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "ST"
@@ -279,17 +279,17 @@
       "ablated": [
         "C"
       ],
-      "ret_pct": 19.033,
+      "ret_pct": 22.808,
       "max_dd_pct": 13.995,
-      "calmar": 1.62,
-      "delta_ret_vs_full": -13.049,
+      "calmar": 1.882,
+      "delta_ret_vs_full": -11.151,
       "delta_dd_vs_full": 3.847,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "ST"
       ]
@@ -302,17 +302,17 @@
       "ablated": [
         "ST"
       ],
-      "ret_pct": 32.98,
+      "ret_pct": 34.824,
       "max_dd_pct": 11.797,
-      "calmar": 2.97,
-      "delta_ret_vs_full": 0.898,
+      "calmar": 3.108,
+      "delta_ret_vs_full": 0.865,
       "delta_dd_vs_full": 1.649,
       "n_trades": 60,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C"
       ]
@@ -323,21 +323,21 @@
       "variant": "full",
       "variant_label": "完整 seats",
       "ablated": [],
-      "ret_pct": 5.174,
+      "ret_pct": 5.777,
       "max_dd_pct": 6.739,
-      "calmar": 0.768,
+      "calmar": 0.857,
       "delta_ret_vs_full": null,
       "delta_dd_vs_full": null,
       "n_trades": 66,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
       "entry_filter": "seats",
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 3.46
+      "elapsed_sec": 5.29
     },
     {
       "strategy_id": "path_a",
@@ -347,21 +347,21 @@
       "ablated": [
         "no_seats"
       ],
-      "ret_pct": 1.96,
+      "ret_pct": 2.564,
       "max_dd_pct": 6.353,
-      "calmar": 0.309,
-      "delta_ret_vs_full": -3.214,
+      "calmar": 0.404,
+      "delta_ret_vs_full": -3.213,
       "delta_dd_vs_full": -0.386,
       "n_trades": 62,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
       "entry_filter": "base",
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.82
+      "elapsed_sec": 1.33
     },
     {
       "strategy_id": "path_a",
@@ -374,18 +374,18 @@
       "ret_pct": 5.325,
       "max_dd_pct": 3.619,
       "calmar": 1.471,
-      "delta_ret_vs_full": 0.151,
+      "delta_ret_vs_full": -0.452,
       "delta_dd_vs_full": -3.12,
       "n_trades": 67,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
       "entry_filter": "seats",
       "min_r20": 0.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.86
+      "elapsed_sec": 1.41
     },
     {
       "strategy_id": "path_a",
@@ -395,21 +395,21 @@
       "ablated": [
         "no_r60"
       ],
-      "ret_pct": 3.223,
+      "ret_pct": 3.238,
       "max_dd_pct": 5.922,
-      "calmar": 0.544,
-      "delta_ret_vs_full": -1.951,
+      "calmar": 0.547,
+      "delta_ret_vs_full": -2.539,
       "delta_dd_vs_full": -0.817,
       "n_trades": 65,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
       "entry_filter": "seats",
       "min_r20": 4.0,
       "min_r60": 0.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.83
+      "elapsed_sec": 1.37
     },
     {
       "strategy_id": "path_a",
@@ -419,21 +419,21 @@
       "ablated": [
         "no_momentum"
       ],
-      "ret_pct": 7.571,
+      "ret_pct": 7.078,
       "max_dd_pct": 4.113,
-      "calmar": 1.841,
-      "delta_ret_vs_full": 2.397,
+      "calmar": 1.721,
+      "delta_ret_vs_full": 1.301,
       "delta_dd_vs_full": -2.626,
-      "n_trades": 83,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "n_trades": 84,
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
       "entry_filter": "seats",
       "min_r20": 0.0,
       "min_r60": 0.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.9
+      "elapsed_sec": 1.49
     },
     {
       "strategy_id": "path_a",
@@ -443,21 +443,21 @@
       "ablated": [
         "no_carry_bypass"
       ],
-      "ret_pct": 8.414,
+      "ret_pct": 9.018,
       "max_dd_pct": 7.248,
-      "calmar": 1.161,
-      "delta_ret_vs_full": 3.24,
+      "calmar": 1.244,
+      "delta_ret_vs_full": 3.241,
       "delta_dd_vs_full": 0.509,
       "n_trades": 68,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
       "entry_filter": "seats",
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": false,
-      "elapsed_sec": 0.97
+      "elapsed_sec": 1.59
     },
     {
       "strategy_id": "path_a",
@@ -467,21 +467,21 @@
       "ablated": [
         "carry_filter"
       ],
-      "ret_pct": 8.196,
+      "ret_pct": 8.768,
       "max_dd_pct": 6.488,
-      "calmar": 1.263,
-      "delta_ret_vs_full": 3.022,
+      "calmar": 1.351,
+      "delta_ret_vs_full": 2.991,
       "delta_dd_vs_full": -0.251,
-      "n_trades": 56,
-      "start": "2025-12-26",
-      "end": "2026-11-19",
+      "n_trades": 57,
+      "start": "2025-12-29",
+      "end": "2026-11-20",
       "ok": true,
       "error": "",
       "entry_filter": "carry",
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 0.82
+      "elapsed_sec": 1.36
     }
   ],
   "summary": {
@@ -490,46 +490,33 @@
       {
         "strategy_id": "proxy_cwft",
         "strategy_name": "本地代理·CWFT",
-        "ret_pct": 34.535,
+        "ret_pct": 36.446,
         "max_dd_pct": 10.154,
-        "calmar": 3.603
+        "calmar": 3.766
       },
       {
         "strategy_id": "proxy_frontnext_st",
         "strategy_name": "本地代理·C_frontnext&ShortTrend",
-        "ret_pct": 32.082,
+        "ret_pct": 33.959,
         "max_dd_pct": 10.148,
-        "calmar": 3.398
+        "calmar": 3.561
       },
       {
         "strategy_id": "proxy_long_short_cwft",
         "strategy_name": "本地代理·Long/Short CWFT",
-        "ret_pct": 31.818,
+        "ret_pct": 33.782,
         "max_dd_pct": 10.439,
-        "calmar": 3.273
+        "calmar": 3.44
       },
       {
         "strategy_id": "path_a",
         "strategy_name": "路径A seats",
-        "ret_pct": 5.174,
+        "ret_pct": 5.777,
         "max_dd_pct": 6.739,
-        "calmar": 0.768
+        "calmar": 0.857
       }
     ],
     "top_pairs_by_ret": [
-      {
-        "strategy_id": "proxy_long_short_cwft",
-        "variant": "no_long_mom",
-        "variant_label": "关长端动量",
-        "kept": [
-          "C",
-          "F",
-          "SHORT_MOM"
-        ],
-        "ret_pct": 35.29,
-        "max_dd_pct": 11.549,
-        "calmar": 3.219
-      },
       {
         "strategy_id": "proxy_cwft",
         "variant": "no_F",
@@ -538,9 +525,9 @@
           "C",
           "T"
         ],
-        "ret_pct": 35.146,
+        "ret_pct": 38.96,
         "max_dd_pct": 9.572,
-        "calmar": 3.882
+        "calmar": 4.222
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -551,9 +538,22 @@
           "LONG_MOM",
           "SHORT_MOM"
         ],
-        "ret_pct": 34.643,
+        "ret_pct": 38.442,
         "max_dd_pct": 10.706,
-        "calmar": 3.432
+        "calmar": 3.737
+      },
+      {
+        "strategy_id": "proxy_long_short_cwft",
+        "variant": "no_long_mom",
+        "variant_label": "关长端动量",
+        "kept": [
+          "C",
+          "F",
+          "SHORT_MOM"
+        ],
+        "ret_pct": 37.212,
+        "max_dd_pct": 11.549,
+        "calmar": 3.362
       },
       {
         "strategy_id": "proxy_cwft",
@@ -564,9 +564,9 @@
           "F",
           "T"
         ],
-        "ret_pct": 34.535,
+        "ret_pct": 36.446,
         "max_dd_pct": 10.154,
-        "calmar": 3.603
+        "calmar": 3.766
       },
       {
         "strategy_id": "proxy_cwft",
@@ -576,9 +576,9 @@
           "C",
           "F"
         ],
-        "ret_pct": 32.98,
+        "ret_pct": 34.824,
         "max_dd_pct": 11.797,
-        "calmar": 2.97
+        "calmar": 3.108
       },
       {
         "strategy_id": "proxy_frontnext_st",
@@ -587,9 +587,9 @@
         "kept": [
           "C"
         ],
-        "ret_pct": 32.98,
+        "ret_pct": 34.824,
         "max_dd_pct": 11.797,
-        "calmar": 2.97
+        "calmar": 3.108
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -600,9 +600,9 @@
           "F",
           "LONG_MOM"
         ],
-        "ret_pct": 32.772,
+        "ret_pct": 34.75,
         "max_dd_pct": 10.373,
-        "calmar": 3.379
+        "calmar": 3.546
       },
       {
         "strategy_id": "proxy_frontnext_st",
@@ -612,9 +612,9 @@
           "C",
           "ST"
         ],
-        "ret_pct": 32.082,
+        "ret_pct": 33.959,
         "max_dd_pct": 10.148,
-        "calmar": 3.398
+        "calmar": 3.561
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -626,9 +626,9 @@
           "LONG_MOM",
           "SHORT_MOM"
         ],
-        "ret_pct": 31.818,
+        "ret_pct": 33.782,
         "max_dd_pct": 10.439,
-        "calmar": 3.273
+        "calmar": 3.44
       },
       {
         "strategy_id": "proxy_frontnext_st",
@@ -637,9 +637,9 @@
         "kept": [
           "ST"
         ],
-        "ret_pct": 19.033,
+        "ret_pct": 22.808,
         "max_dd_pct": 13.995,
-        "calmar": 1.62
+        "calmar": 1.882
       }
     ],
     "top_pairs_by_calmar": [
@@ -651,9 +651,9 @@
           "C",
           "T"
         ],
-        "ret_pct": 35.146,
+        "ret_pct": 38.96,
         "max_dd_pct": 9.572,
-        "calmar": 3.882
+        "calmar": 4.222
       },
       {
         "strategy_id": "proxy_cwft",
@@ -664,9 +664,9 @@
           "F",
           "T"
         ],
-        "ret_pct": 34.535,
+        "ret_pct": 36.446,
         "max_dd_pct": 10.154,
-        "calmar": 3.603
+        "calmar": 3.766
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -677,9 +677,9 @@
           "LONG_MOM",
           "SHORT_MOM"
         ],
-        "ret_pct": 34.643,
+        "ret_pct": 38.442,
         "max_dd_pct": 10.706,
-        "calmar": 3.432
+        "calmar": 3.737
       },
       {
         "strategy_id": "proxy_frontnext_st",
@@ -689,9 +689,9 @@
           "C",
           "ST"
         ],
-        "ret_pct": 32.082,
+        "ret_pct": 33.959,
         "max_dd_pct": 10.148,
-        "calmar": 3.398
+        "calmar": 3.561
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -702,9 +702,9 @@
           "F",
           "LONG_MOM"
         ],
-        "ret_pct": 32.772,
+        "ret_pct": 34.75,
         "max_dd_pct": 10.373,
-        "calmar": 3.379
+        "calmar": 3.546
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -716,9 +716,9 @@
           "LONG_MOM",
           "SHORT_MOM"
         ],
-        "ret_pct": 31.818,
+        "ret_pct": 33.782,
         "max_dd_pct": 10.439,
-        "calmar": 3.273
+        "calmar": 3.44
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -729,9 +729,9 @@
           "F",
           "SHORT_MOM"
         ],
-        "ret_pct": 35.29,
+        "ret_pct": 37.212,
         "max_dd_pct": 11.549,
-        "calmar": 3.219
+        "calmar": 3.362
       },
       {
         "strategy_id": "proxy_cwft",
@@ -741,9 +741,9 @@
           "C",
           "F"
         ],
-        "ret_pct": 32.98,
+        "ret_pct": 34.824,
         "max_dd_pct": 11.797,
-        "calmar": 2.97
+        "calmar": 3.108
       },
       {
         "strategy_id": "proxy_frontnext_st",
@@ -752,9 +752,9 @@
         "kept": [
           "C"
         ],
-        "ret_pct": 32.98,
+        "ret_pct": 34.824,
         "max_dd_pct": 11.797,
-        "calmar": 2.97
+        "calmar": 3.108
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -765,9 +765,9 @@
           "LONG_MOM",
           "SHORT_MOM"
         ],
-        "ret_pct": 16.119,
+        "ret_pct": 20.471,
         "max_dd_pct": 10.633,
-        "calmar": 1.852
+        "calmar": 2.258
       }
     ],
     "most_valuable_indicators": [
@@ -775,7 +775,7 @@
         "strategy_id": "proxy_cwft",
         "variant": "only_T",
         "variant_label": "仅T(关C+F)",
-        "delta_ret_vs_full": -33.234,
+        "delta_ret_vs_full": -32.382,
         "delta_dd_vs_full": 6.54,
         "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
       },
@@ -783,7 +783,7 @@
         "strategy_id": "proxy_cwft",
         "variant": "no_C",
         "variant_label": "关C升贴水",
-        "delta_ret_vs_full": -19.586,
+        "delta_ret_vs_full": -17.188,
         "delta_dd_vs_full": 2.749,
         "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
       },
@@ -791,7 +791,7 @@
         "strategy_id": "proxy_long_short_cwft",
         "variant": "no_C",
         "variant_label": "关C升贴水",
-        "delta_ret_vs_full": -15.699,
+        "delta_ret_vs_full": -13.311,
         "delta_dd_vs_full": 0.194,
         "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
       },
@@ -799,7 +799,7 @@
         "strategy_id": "proxy_frontnext_st",
         "variant": "no_C",
         "variant_label": "关C升贴水",
-        "delta_ret_vs_full": -13.049,
+        "delta_ret_vs_full": -11.151,
         "delta_dd_vs_full": 3.847,
         "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
       },
@@ -807,7 +807,7 @@
         "strategy_id": "path_a",
         "variant": "no_seats",
         "variant_label": "关席位→base",
-        "delta_ret_vs_full": -3.214,
+        "delta_ret_vs_full": -3.213,
         "delta_dd_vs_full": -0.386,
         "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
       },
@@ -815,7 +815,7 @@
         "strategy_id": "path_a",
         "variant": "no_r60",
         "variant_label": "关 min_r60",
-        "delta_ret_vs_full": -1.951,
+        "delta_ret_vs_full": -2.539,
         "delta_dd_vs_full": -0.817,
         "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
       },
@@ -823,7 +823,7 @@
         "strategy_id": "proxy_cwft",
         "variant": "no_T",
         "variant_label": "关T动量",
-        "delta_ret_vs_full": -1.555,
+        "delta_ret_vs_full": -1.622,
         "delta_dd_vs_full": 1.643,
         "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
       },
@@ -831,33 +831,41 @@
         "strategy_id": "path_a",
         "variant": "no_r20",
         "variant_label": "关 min_r20",
-        "delta_ret_vs_full": 0.151,
+        "delta_ret_vs_full": -0.452,
         "delta_dd_vs_full": -3.12,
-        "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
-      },
-      {
-        "strategy_id": "proxy_cwft",
-        "variant": "no_F",
-        "variant_label": "关F期现",
-        "delta_ret_vs_full": 0.611,
-        "delta_dd_vs_full": -0.582,
         "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
       },
       {
         "strategy_id": "proxy_frontnext_st",
         "variant": "no_ST",
         "variant_label": "关短趋势r5",
-        "delta_ret_vs_full": 0.898,
+        "delta_ret_vs_full": 0.865,
         "delta_dd_vs_full": 1.649,
+        "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
+      },
+      {
+        "strategy_id": "proxy_long_short_cwft",
+        "variant": "no_short_mom",
+        "variant_label": "关短端动量",
+        "delta_ret_vs_full": 0.968,
+        "delta_dd_vs_full": -0.066,
         "note": "相对完整配置Δ收益最负 → 关掉的部分贡献大"
       }
     ],
     "redundant_or_harmful": [
       {
         "strategy_id": "proxy_long_short_cwft",
+        "variant": "no_F",
+        "variant_label": "关F期现",
+        "delta_ret_vs_full": 4.66,
+        "delta_dd_vs_full": 0.267,
+        "note": "相对完整配置Δ收益≥0 → 该组合不更差"
+      },
+      {
+        "strategy_id": "proxy_long_short_cwft",
         "variant": "no_long_mom",
         "variant_label": "关长端动量",
-        "delta_ret_vs_full": 3.472,
+        "delta_ret_vs_full": 3.43,
         "delta_dd_vs_full": 1.11,
         "note": "相对完整配置Δ收益≥0 → 该组合不更差"
       },
@@ -865,7 +873,7 @@
         "strategy_id": "path_a",
         "variant": "no_carry_bypass",
         "variant_label": "关 carry_bypass",
-        "delta_ret_vs_full": 3.24,
+        "delta_ret_vs_full": 3.241,
         "delta_dd_vs_full": 0.509,
         "note": "相对完整配置Δ收益≥0 → 该组合不更差"
       },
@@ -873,23 +881,23 @@
         "strategy_id": "path_a",
         "variant": "carry_filter",
         "variant_label": "过滤改 carry",
-        "delta_ret_vs_full": 3.022,
+        "delta_ret_vs_full": 2.991,
         "delta_dd_vs_full": -0.251,
         "note": "相对完整配置Δ收益≥0 → 该组合不更差"
       },
       {
-        "strategy_id": "proxy_long_short_cwft",
+        "strategy_id": "proxy_cwft",
         "variant": "no_F",
         "variant_label": "关F期现",
-        "delta_ret_vs_full": 2.825,
-        "delta_dd_vs_full": 0.267,
+        "delta_ret_vs_full": 2.514,
+        "delta_dd_vs_full": -0.582,
         "note": "相对完整配置Δ收益≥0 → 该组合不更差"
       },
       {
         "strategy_id": "path_a",
         "variant": "no_momentum",
         "variant_label": "关动量门槛",
-        "delta_ret_vs_full": 2.397,
+        "delta_ret_vs_full": 1.301,
         "delta_dd_vs_full": -2.626,
         "note": "相对完整配置Δ收益≥0 → 该组合不更差"
       },
@@ -897,7 +905,7 @@
         "strategy_id": "proxy_long_short_cwft",
         "variant": "no_short_mom",
         "variant_label": "关短端动量",
-        "delta_ret_vs_full": 0.954,
+        "delta_ret_vs_full": 0.968,
         "delta_dd_vs_full": -0.066,
         "note": "相对完整配置Δ收益≥0 → 该组合不更差"
       },
@@ -905,24 +913,8 @@
         "strategy_id": "proxy_frontnext_st",
         "variant": "no_ST",
         "variant_label": "关短趋势r5",
-        "delta_ret_vs_full": 0.898,
+        "delta_ret_vs_full": 0.865,
         "delta_dd_vs_full": 1.649,
-        "note": "相对完整配置Δ收益≥0 → 该组合不更差"
-      },
-      {
-        "strategy_id": "proxy_cwft",
-        "variant": "no_F",
-        "variant_label": "关F期现",
-        "delta_ret_vs_full": 0.611,
-        "delta_dd_vs_full": -0.582,
-        "note": "相对完整配置Δ收益≥0 → 该组合不更差"
-      },
-      {
-        "strategy_id": "path_a",
-        "variant": "no_r20",
-        "variant_label": "关 min_r20",
-        "delta_ret_vs_full": 0.151,
-        "delta_dd_vs_full": -3.12,
         "note": "相对完整配置Δ收益≥0 → 该组合不更差"
       }
     ],

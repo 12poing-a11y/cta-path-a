@@ -1,16 +1,16 @@
 {
   "ok": true,
-  "desk_score": 57.0,
+  "desk_score": 60.9,
   "parts": [
     {
       "名": "全面统计分",
       "权重": 0.55,
-      "分": 43.3
+      "分": 49.3
     },
     {
       "名": "账本盯市",
       "权重": 0.2,
-      "分": 97.1
+      "分": 100.0
     },
     {
       "名": "Path-A日选",
@@ -23,17 +23,17 @@
     "book_mark": 0.2,
     "selected": 0.25
   },
-  "full_score": 43.3,
+  "full_score": 49.3,
   "book": {
     "ok": true,
     "source": "paper_book",
     "asof": "2026-11-20",
     "equity": 190332.32,
-    "equity_floating": 4480.0,
-    "equity_mark": 194812.32,
+    "equity_floating": 5050.0,
+    "equity_mark": 195382.32,
     "held_n": 2
   },
-  "book_score": 97.1,
+  "book_score": 100.0,
   "selected": {
     "score": 55.0,
     "selected": [
@@ -45,5 +45,5 @@
   "asof": "20261120",
   "live_trading": false,
   "note": "研究桌面综合分；纸面，不下单。情绪已计入全面统计分分层投票。",
-  "generated_at": "2026-11-19T16:50:31+00:00"
+  "generated_at": "2026-11-20T10:36:40+00:00"
 }

@@ -254,7 +254,7 @@
     "CN_CUSTOMS_IMPORT": "海关棉花进口月度数据"
   },
   "schema": "cta-npd-reminders-v1",
-  "generated_at": "2026-11-20 00:47:24",
+  "generated_at": "2026-11-20 18:34:15",
   "status": "Research",
   "note": "Snapshot only; cotton_events.csv remains human-audited."
 }

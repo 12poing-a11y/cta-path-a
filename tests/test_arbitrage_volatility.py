@@ -98,3 +98,14 @@ def test_position_sizing_requires_pass_gate():
     assert passed["contracts_a"] == 10
     assert passed["contracts_b"] == 8
     assert passed["estimated_risk_yuan"] == 500
+
+
+def test_position_sizing_never_returns_unhedged_leg():
+    sized = size_pair_position(
+        risk_budget_yuan=1000, spread_vol_points=1,
+        multiplier_a=1, multiplier_b=100, hedge_ratio=0.1,
+        gate={"allow_new_risk": True},
+    )
+    assert sized["status"] == "BLOCK"
+    assert sized["contracts_a"] == 0
+    assert sized["contracts_b"] == 0

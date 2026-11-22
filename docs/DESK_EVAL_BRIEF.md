@@ -65,6 +65,7 @@
 | 会员持仓 | 东财 → 新浪 | 上期/郑商 txt、DCE zip | 标签用机构席，不用家人席冒充 |
 | 分钟 15m/60m | AkShare | — | 技术/图表 |
 | 期权 IV | AkShare 郑商所结算等 | — | Gamma / vol engine |
+| 双源对账（观察） | 新浪 vs `.cache/history`；东财席位 vs 上期/郑商打印 | **不调** 付费 Key | `data/dual_source_diff_latest.json`；只读，不改正式层 |
 
 **重要口径**：信号、影子归因、多数回测默认基于 **主力连续合约**（`price_basis=continuous` / `CODE0`），不是评估人误以为的「全程真实交割月成交」。正式历史回测已尽量叠 front-month，缺口仍可能 continuous 代理。
 

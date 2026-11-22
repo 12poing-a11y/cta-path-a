@@ -38,6 +38,8 @@
 
 会员持仓：**东财 → 新浪补缺**（`.cache/member/`）；上期/郑商 txt、DCE zip 为辅。席位标签用机构席（`_INST`），不用家人席冒充。
 
+双源对账（观察、不烧付费 Key）：`python scripts/run_dual_source_diff.py` → `data/dual_source_diff_latest.json`（新浪 vs history；东财席位 vs 上期/郑商打印）。
+
 新浪连续：`InnerFuturesNewService.getDailyKLine`，代码 `{品种}0`。`hq.sinajs.cn` 实时字段不改写日线 OHLC。
 
 ## 研究台（Streamlit）

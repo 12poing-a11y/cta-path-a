@@ -60,6 +60,7 @@
 | **T 可信度** | **T-DU** | 日报会话日陈旧熔断 | **完成** | 封闭 |
 | **T 可信度** | **T-GV** | Gate↔scorecard（产物推导） | **完成** | 封闭 |
 | **T 可信度** | **T-P1** | BT 成交归因 + Regime×袖套 | **完成** | 封闭 |
+| **T 可信度** | **T-DQ-diff** | 双源对账报告（免费优先） | **完成** | 封闭 |
 | **A 套利影子** | V1–V1.3 | 对齐/协整/费后 BT/双路径监控 | **完成·观察** | 封闭（积样本） |
 | **A 套利影子** | V1.4–V1.5 | IV/VRP 监控；动态波动托管 | **封闭·等样本** | 未开放 |
 | **V 波动协同** | Gemini P0–P2 | TVS/VRP/Carry 整案模拟+审计 | **观察·不晋级** | 封闭 |
@@ -206,6 +207,14 @@
 - **验证**：`pytest tests/test_scorecard_gate.py tests/test_shadow_attribution.py tests/test_research_quality.py` 19 passed；gate `artifact_build_ok=True`（仍缺 human_approval → `pass=false`）  
 - **风险/未做**：未重跑全年 BT（gate-only 刷新）；F2/A-V1.4/F+/正式晋级未开；日积仍需凭证  
 - **建议下一刀**：**停 · 积样本**；够样后确认 **F2**  
+
+### T-DQ-diff（2026-11-22）
+
+- **做了**：台内双源对账（新浪 vs history；东财席位 vs 上期/郑商打印 kind 净持仓）；硬禁付费 Key；Desk 只读展开  
+- **产物**：`research/data_quality/dual_source_diff.py`；`scripts/run_dual_source_diff.py`；`data/dual_source_diff_latest.json`  
+- **验证**：`pytest tests/test_dual_source_diff.py`；CLI 抽样跑  
+- **风险/未做**：未对差异硬熔断；DCE 无独立交易所对照；未挂日更强制  
+- **建议下一刀**：**停 · 积样本**；够样后确认 **F2**（或明示再加 diff 硬闸）  
 
 ---
 

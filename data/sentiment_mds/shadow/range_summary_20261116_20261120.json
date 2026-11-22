@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-11-22T23:11:34+08:00",
+  "start": "2026-11-16",
+  "end": "2026-11-20",
+  "n_days": 5,
+  "ok": 5,
+  "fail": 0,
+  "skip": 0,
+  "log": "D:\\AI\\cta-path-a\\data\\sentiment_mds\\shadow\\range_log_20261116_20261120.jsonl",
+  "shadow_dir": "D:\\AI\\cta-path-a\\data\\sentiment_mds\\shadow",
+  "note": "Paper MDS+EHI shadow range; does not update latest.json or formal scoring.",
+  "results": [
+    {
+      "day": "2026-11-16",
+      "status": "ok",
+      "path": "D:\\AI\\cta-path-a\\data\\sentiment_mds\\shadow\\sentiment_20261116.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.4621,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-11-17",
+      "status": "ok",
+      "path": "D:\\AI\\cta-path-a\\data\\sentiment_mds\\shadow\\sentiment_20261117.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": -0.0944,
+      "stance": "neutral"
+    },
+    {
+      "day": "2026-11-18",
+      "status": "ok",
+      "path": "D:\\AI\\cta-path-a\\data\\sentiment_mds\\shadow\\sentiment_20261118.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.2708,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-11-19",
+      "status": "ok",
+      "path": "D:\\AI\\cta-path-a\\data\\sentiment_mds\\shadow\\sentiment_20261119.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.1519,
+      "stance": "risk_on"
+    },
+    {
+      "day": "2026-11-20",
+      "status": "ok",
+      "path": "D:\\AI\\cta-path-a\\data\\sentiment_mds\\shadow\\sentiment_20261120.json",
+      "error": null,
+      "n": 27,
+      "portfolio_p3": 0.1061,
+      "stance": "neutral"
+    }
+  ]
+}

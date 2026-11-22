@@ -90,7 +90,8 @@ jobs:
           git config user.email "cta-bot@users.noreply.github.com"
           mkdir -p .cache/member .cache/akshare/minute .cache/akshare/option_iv .cache/history .cache/warehouse data/sentiment_mds
           git add archive/*.json l1_report_risk15.json l1_report.json paper_book_latest.json || true
-          git add data/sentiment_mds/*.json data/tech_score_latest.json data/desk_composite_latest.json data/vol_engine_latest.json || true
+          # Include shadow/*.json — E1 curve reads only data/sentiment_mds/shadow/.
+          git add data/sentiment_mds/ data/tech_score_latest.json data/desk_composite_latest.json data/vol_engine_latest.json || true
           git add data/shadow_perf/ || true
           git add data/gamma_wall/ || true
           git add data/ablation/ || true

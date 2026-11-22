@@ -1,0 +1,278 @@
+{
+  "schema_version": "cta-dual-source-diff-v1",
+  "generated_at": "2026-11-22T22:50:41",
+  "root": "D:\\AI\\cta-path-a",
+  "seat_ymd": "20261120",
+  "lookback_days": 40,
+  "close_tol_pct": 0.15,
+  "fetch_free": true,
+  "allow_paid": false,
+  "overall_status": "mismatch",
+  "summary": {
+    "codes": 4,
+    "bars_mismatch": 0,
+    "bars_paid_fill_suspected": 3,
+    "seats_mismatch": 3,
+    "seats_missing": 0,
+    "seats_sina_fill": 0,
+    "paid_calls": 0,
+    "policy": "free_primary_cache_secondary_no_paid"
+  },
+  "bars": [
+    {
+      "code": "CF",
+      "status": "history_only_fill",
+      "lookback_days": 40,
+      "close_tol_pct": 0.15,
+      "free_n": 29,
+      "history_n": 28,
+      "overlap_n": 22,
+      "only_free_n": 7,
+      "only_history_n": 6,
+      "only_history_sample": [
+        "2026-10-24",
+        "2026-10-25",
+        "2026-10-31",
+        "2026-11-01",
+        "2026-11-07",
+        "2026-11-08"
+      ],
+      "mismatch_n": 0,
+      "mismatch_sample": [],
+      "max_abs_close_pct": 0.0,
+      "paid_fill_suspected": true,
+      "note": "history_only dates likely came from Tq/Fuyao/iFinD gap-fill; overlap mismatches mean free vs merged disagree.",
+      "free_source": "sina",
+      "free_error": "",
+      "history_path": ".cache/history/CF0.json"
+    },
+    {
+      "code": "MA",
+      "status": "ok",
+      "lookback_days": 40,
+      "close_tol_pct": 0.15,
+      "free_n": 29,
+      "history_n": 20,
+      "overlap_n": 20,
+      "only_free_n": 9,
+      "only_history_n": 0,
+      "only_history_sample": [],
+      "mismatch_n": 0,
+      "mismatch_sample": [],
+      "max_abs_close_pct": 0.0,
+      "paid_fill_suspected": false,
+      "note": "history_only dates likely came from Tq/Fuyao/iFinD gap-fill; overlap mismatches mean free vs merged disagree.",
+      "free_source": "sina",
+      "free_error": "",
+      "history_path": ".cache/history/MA0.json"
+    },
+    {
+      "code": "SR",
+      "status": "history_only_fill",
+      "lookback_days": 40,
+      "close_tol_pct": 0.15,
+      "free_n": 29,
+      "history_n": 30,
+      "overlap_n": 24,
+      "only_free_n": 5,
+      "only_history_n": 6,
+      "only_history_sample": [
+        "2026-10-24",
+        "2026-10-25",
+        "2026-10-31",
+        "2026-11-01",
+        "2026-11-07",
+        "2026-11-08"
+      ],
+      "mismatch_n": 0,
+      "mismatch_sample": [],
+      "max_abs_close_pct": 0.0,
+      "paid_fill_suspected": true,
+      "note": "history_only dates likely came from Tq/Fuyao/iFinD gap-fill; overlap mismatches mean free vs merged disagree.",
+      "free_source": "sina",
+      "free_error": "",
+      "history_path": ".cache/history/SR0.json"
+    },
+    {
+      "code": "CU",
+      "status": "history_only_fill",
+      "lookback_days": 40,
+      "close_tol_pct": 0.15,
+      "free_n": 29,
+      "history_n": 31,
+      "overlap_n": 25,
+      "only_free_n": 4,
+      "only_history_n": 6,
+      "only_history_sample": [
+        "2026-10-24",
+        "2026-10-25",
+        "2026-10-31",
+        "2026-11-01",
+        "2026-11-07",
+        "2026-11-08"
+      ],
+      "mismatch_n": 0,
+      "mismatch_sample": [],
+      "max_abs_close_pct": 0.0,
+      "paid_fill_suspected": true,
+      "note": "history_only dates likely came from Tq/Fuyao/iFinD gap-fill; overlap mismatches mean free vs merged disagree.",
+      "free_source": "sina",
+      "free_error": "",
+      "history_path": ".cache/history/CU0.json"
+    }
+  ],
+  "seats": [
+    {
+      "code": "CF",
+      "em_present": true,
+      "exchange_present": true,
+      "em_source": "eastmoney.RPT_FUTU_DAILYPOSITION",
+      "sina_fill": false,
+      "status": "mismatch",
+      "em_kind_nets": {
+        "inst": 3408.0,
+        "foreign": 17139.0,
+        "holder": 27153.0
+      },
+      "exchange_kind_nets": {
+        "inst": -35935.0,
+        "foreign": 0.0,
+        "holder": -8316.0
+      },
+      "kind_diff_n": 3,
+      "kind_diff_sample": [
+        {
+          "kind": "inst",
+          "em_net": 3408.0,
+          "exchange_net": -35935.0,
+          "abs_delta": 39343.0
+        },
+        {
+          "kind": "foreign",
+          "em_net": 17139.0,
+          "exchange_net": 0.0,
+          "abs_delta": 17139.0
+        },
+        {
+          "kind": "holder",
+          "em_net": 27153.0,
+          "exchange_net": -8316.0,
+          "abs_delta": 35469.0
+        }
+      ],
+      "em_long_total": 451049.0,
+      "em_short_total": 425381.0
+    },
+    {
+      "code": "MA",
+      "em_present": true,
+      "exchange_present": true,
+      "em_source": "eastmoney.RPT_FUTU_DAILYPOSITION",
+      "sina_fill": false,
+      "status": "mismatch",
+      "em_kind_nets": {
+        "inst": 100149.0,
+        "foreign": 68060.0,
+        "holder": -38127.0
+      },
+      "exchange_kind_nets": {
+        "inst": 193051.0,
+        "foreign": 59866.0,
+        "holder": -51824.0
+      },
+      "kind_diff_n": 3,
+      "kind_diff_sample": [
+        {
+          "kind": "inst",
+          "em_net": 100149.0,
+          "exchange_net": 193051.0,
+          "abs_delta": 92902.0
+        },
+        {
+          "kind": "foreign",
+          "em_net": 68060.0,
+          "exchange_net": 59866.0,
+          "abs_delta": 8194.0
+        },
+        {
+          "kind": "holder",
+          "em_net": -38127.0,
+          "exchange_net": -51824.0,
+          "abs_delta": 13697.0
+        }
+      ],
+      "em_long_total": 578336.0,
+      "em_short_total": 483352.0
+    },
+    {
+      "code": "SR",
+      "em_present": true,
+      "exchange_present": true,
+      "em_source": "eastmoney.RPT_FUTU_DAILYPOSITION",
+      "sina_fill": false,
+      "status": "mismatch",
+      "em_kind_nets": {
+        "inst": -46847.0,
+        "foreign": -87581.0,
+        "holder": 8403.0
+      },
+      "exchange_kind_nets": {
+        "inst": -69292.0,
+        "foreign": -119772.0,
+        "holder": 37796.0
+      },
+      "kind_diff_n": 3,
+      "kind_diff_sample": [
+        {
+          "kind": "inst",
+          "em_net": -46847.0,
+          "exchange_net": -69292.0,
+          "abs_delta": 22445.0
+        },
+        {
+          "kind": "foreign",
+          "em_net": -87581.0,
+          "exchange_net": -119772.0,
+          "abs_delta": 32191.0
+        },
+        {
+          "kind": "holder",
+          "em_net": 8403.0,
+          "exchange_net": 37796.0,
+          "abs_delta": 29393.0
+        }
+      ],
+      "em_long_total": 428129.0,
+      "em_short_total": 516271.0
+    },
+    {
+      "code": "CU",
+      "em_present": true,
+      "exchange_present": true,
+      "em_source": "eastmoney.RPT_FUTU_DAILYPOSITION",
+      "sina_fill": false,
+      "status": "ok",
+      "em_kind_nets": {
+        "inst": 11531.0,
+        "foreign": 8361.0,
+        "holder": 4618.0
+      },
+      "exchange_kind_nets": {
+        "inst": 11531.0,
+        "foreign": 8361.0,
+        "holder": 4618.0
+      },
+      "kind_diff_n": 0,
+      "kind_diff_sample": [],
+      "em_long_total": 148946.0,
+      "em_short_total": 140787.0
+    }
+  ],
+  "seat_fill": {
+    "CF": "eastmoney.RPT_FUTU_DAILYPOSITION",
+    "MA": "eastmoney.RPT_FUTU_DAILYPOSITION",
+    "SR": "eastmoney.RPT_FUTU_DAILYPOSITION",
+    "CU": "eastmoney.RPT_FUTU_DAILYPOSITION"
+  },
+  "fence": "no_paper_book_no_seats_no_formal_bt"
+}

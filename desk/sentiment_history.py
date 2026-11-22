@@ -169,6 +169,7 @@ def render_sentiment_history_tab(root: Path) -> None:
     st.warning(
         f"【{LABEL}】仅影子观察：不进 Path-A 评分、不改 latest.json、不下单。"
         "缺日请跑 scripts/run_sentiment_shadow_range.py 补齐。"
+        " 日更须提交 data/sentiment_mds/shadow/（勿只 add 顶层 *.json）。"
     )
     df = shadow_history_frame(root)
     if df.empty:

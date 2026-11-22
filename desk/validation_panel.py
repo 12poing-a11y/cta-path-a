@@ -19,8 +19,12 @@ def _load_bt(root: Path) -> dict[str, Any]:
 
 def render_validation_panel(st, root: Path) -> None:
     bt = _load_bt(root)
-    if not bt:
-        return
+    if bt:
+        _render_bt_quality(st, root, bt)
+    _render_dual_source_diff(st, root)
+
+
+def _render_bt_quality(st, root: Path, bt: dict[str, Any]) -> None:
     with st.expander("研究验证 / 数据质量（Path-A 最新回测）", expanded=False):
         st.caption(
             "PSR/DSR/PBO 与可交易性闸门为研究指标；**不会**自动改正式参数。"
@@ -127,3 +131,57 @@ def render_validation_panel(st, root: Path) -> None:
                 f"配置版本 git={cfg.get('git_commit')} · "
                 f"rules={(cfg.get('execution_rules_sha256') or '')[:12]}…"
             )
+
+
+def _render_dual_source_diff(st, root: Path) -> None:
+    path = root / "data" / "dual_source_diff_latest.json"
+    if not path.is_file():
+        return
+    try:
+        rep = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return
+    with st.expander("双源对账（免费优先 · 只读）", expanded=False):
+        st.caption(
+            "新浪日线 vs 本地 history 缓存；东财/新浪席位 vs 上期/郑商打印（机构/外资/家人净持仓）。"
+            " **不调用** 天勤/扶摇/iFinD；**不改** paper_book / seats。"
+            " 生成：`python scripts/run_dual_source_diff.py`"
+        )
+        summary = rep.get("summary") or {}
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("总状态", rep.get("overall_status") or "—")
+        c2.metric("行情价差", summary.get("bars_mismatch"))
+        c3.metric("疑似付费补洞日", summary.get("bars_paid_fill_suspected"))
+        c4.metric("席位口径差", summary.get("seats_mismatch"))
+        st.caption(
+            f"席位日 {rep.get('seat_ymd') or '—'} · "
+            f"sina 补席 {summary.get('seats_sina_fill')} · "
+            f"paid_calls={summary.get('paid_calls')}"
+        )
+        bar_rows = [
+            {
+                "品种": r.get("code"),
+                "状态": r.get("status"),
+                "重叠日": r.get("overlap_n"),
+                "仅history": r.get("only_history_n"),
+                "价差笔数": r.get("mismatch_n"),
+                "最大|Δ%|": r.get("max_abs_close_pct"),
+            }
+            for r in (rep.get("bars") or [])
+            if r.get("status") not in (None, "ok", "free_only")
+        ]
+        if bar_rows:
+            st.dataframe(bar_rows, width="stretch", hide_index=True)
+        seat_rows = [
+            {
+                "品种": r.get("code"),
+                "状态": r.get("status"),
+                "EM源": (r.get("em_source") or "")[:28],
+                "sina补": r.get("sina_fill"),
+                "口径差": r.get("kind_diff_n"),
+            }
+            for r in (rep.get("seats") or [])
+            if r.get("status") not in (None, "ok", "em_only")
+        ]
+        if seat_rows:
+            st.dataframe(seat_rows, width="stretch", hide_index=True)

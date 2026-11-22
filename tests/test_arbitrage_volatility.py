@@ -61,11 +61,19 @@ def test_pair_correlation():
     assert corr is not None and corr > 0.99
 
 
-def test_gate_fails_closed_on_missing_inputs():
+def test_gate_fails_closed_on_missing_or_malformed_inputs():
     gate = evaluate_risk_gate(volatility={}, correlation=None, hedge_ratio=None)
     assert gate["allow_new_risk"] is False
     assert gate["status"] == "BLOCK"
     assert len(gate["reasons"]) >= 4
+    malformed = evaluate_risk_gate(
+        volatility={"ok": True, "vol_expansion_ratio": "bad"},
+        correlation="bad", hedge_ratio="bad",
+    )
+    assert malformed["allow_new_risk"] is False
+    assert "correlation_unavailable" in malformed["reasons"]
+    assert "hedge_ratio_unavailable" in malformed["reasons"]
+    assert "volatility_ratio_unavailable" in malformed["reasons"]
 
 
 def test_gate_accepts_negative_correlation_when_magnitude_is_sufficient():

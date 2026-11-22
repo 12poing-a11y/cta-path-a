@@ -246,6 +246,8 @@ def size_pair_position(
     vals = (risk_budget_yuan, multiplier_a, multiplier_b)
     if any(not math.isfinite(float(v)) or float(v) <= 0 for v in vals):
         raise ValueError("risk budget and multipliers must be positive finite values")
+    if int(max_a_contracts) < 1:
+        raise ValueError("max_a_contracts must be at least 1")
     blocked = not gate or not bool(gate.get("allow_new_risk"))
     if blocked:
         return {
@@ -270,6 +272,10 @@ def size_pair_position(
     raw = int(math.floor(float(risk_budget_yuan) / risk_per_pair))
     contracts_a = max(0, min(int(max_a_contracts), raw))
     contracts_b = int(round(abs(beta) * float(multiplier_a) / float(multiplier_b) * contracts_a))
+    # Never return a one-legged recommendation when integer rounding removes the hedge.
+    if contracts_b <= 0:
+        contracts_a = 0
+        contracts_b = 0
     return {
         "ok": contracts_a > 0 and contracts_b > 0,
         "status": "SIZED" if contracts_a > 0 and contracts_b > 0 else "BLOCK",

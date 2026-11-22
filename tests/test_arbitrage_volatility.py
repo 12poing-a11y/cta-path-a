@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+from datetime import date, timedelta
 from research.arbitrage_volatility import (
     evaluate_risk_gate,
     pair_correlation,
@@ -13,10 +14,11 @@ from research.arbitrage_volatility import (
 
 def _pair_rows(n=100):
     rows = []
+    start = date(2026, 1, 1)
     for i in range(n):
         b = 100.0 + i * 0.25 + math.sin(i / 4.0)
         a = 15.0 + 1.8 * b + math.sin(i / 5.0) * 0.4
-        rows.append({"date": f"2026-01-{i+1:02d}" if i < 28 else f"2026-02-{i-27:02d}",
+        rows.append({"date": (start + timedelta(days=i)).isoformat(),
                      "leg_a_close": a, "leg_b_close": b})
     return rows
 
@@ -64,6 +66,12 @@ def test_gate_fails_closed_on_missing_inputs():
     assert gate["allow_new_risk"] is False
     assert gate["status"] == "BLOCK"
     assert len(gate["reasons"]) >= 4
+
+
+def test_gate_accepts_negative_correlation_when_magnitude_is_sufficient():
+    vol = {"ok": True, "vol_expansion_ratio": 1.0}
+    gate = evaluate_risk_gate(volatility=vol, correlation=-0.85, hedge_ratio=-1.2)
+    assert gate["allow_new_risk"] is True
 
 
 def test_gate_blocks_correlation_breakdown_and_vol_spike():

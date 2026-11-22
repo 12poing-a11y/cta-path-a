@@ -11,12 +11,17 @@ from datetime import date
 from typing import Any, Sequence
 
 
-def _finite_positive(value: Any) -> float | None:
+def _finite_number(value: Any) -> float | None:
     try:
         x = float(value)
     except (TypeError, ValueError):
         return None
-    return x if math.isfinite(x) and x > 0 else None
+    return x if math.isfinite(x) else None
+
+
+def _finite_positive(value: Any) -> float | None:
+    x = _finite_number(value)
+    return x if x is not None and x > 0 else None
 
 
 def _mean(xs: Sequence[float]) -> float:
@@ -75,7 +80,7 @@ def rolling_spread(
             valid_date = len(day) == 10 and day > previous_date
         except ValueError:
             valid_date = False
-        if day:
+        if valid_date:
             previous_date = day
         if not valid_date or a is None or b is None:
             out.append({
@@ -202,15 +207,17 @@ def evaluate_risk_gate(
     reasons: list[str] = []
     if not volatility or not volatility.get("ok"):
         reasons.append("spread_volatility_unavailable")
-    if correlation is None or not math.isfinite(float(correlation)):
+    corr = _finite_number(correlation)
+    if corr is None:
         reasons.append("correlation_unavailable")
-    elif abs(correlation) < min_correlation:
+    elif abs(corr) < min_correlation:
         reasons.append("correlation_breakdown")
-    if hedge_ratio is None or not math.isfinite(float(hedge_ratio)):
+    beta = _finite_number(hedge_ratio)
+    if beta is None:
         reasons.append("hedge_ratio_unavailable")
-    elif abs(float(hedge_ratio)) > max_abs_hedge_ratio or abs(float(hedge_ratio)) < 1e-8:
+    elif abs(beta) > max_abs_hedge_ratio or abs(beta) < 1e-8:
         reasons.append("hedge_ratio_out_of_bounds")
-    ratio = (volatility or {}).get("vol_expansion_ratio")
+    ratio = _finite_number((volatility or {}).get("vol_expansion_ratio"))
     if ratio is None:
         reasons.append("volatility_ratio_unavailable")
     elif ratio > max_expansion_ratio:
@@ -219,8 +226,8 @@ def evaluate_risk_gate(
         "allow_new_risk": not reasons,
         "status": "PASS" if not reasons else "BLOCK",
         "reasons": reasons,
-        "correlation": correlation,
-        "hedge_ratio": hedge_ratio,
+        "correlation": corr,
+        "hedge_ratio": beta,
         "vol_expansion_ratio": ratio,
         "mode": "shadow_only",
     }

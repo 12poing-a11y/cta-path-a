@@ -86,9 +86,14 @@ def _close_series(root: Path) -> dict[str, pd.Series]:
                 continue
             code = f.stem[:-1].upper()
             if code in out:
-                merged = out[code].copy()
-                merged.update(s)
-                out[code] = merged.sort_index()
+                # Series.update only rewrites existing labels and drops newer
+                # sina dates — concat+last so later day folders extend history.
+                out[code] = (
+                    pd.concat([out[code], s])
+                    .groupby(level=0)
+                    .last()
+                    .sort_index()
+                )
             else:
                 out[code] = s
     return out

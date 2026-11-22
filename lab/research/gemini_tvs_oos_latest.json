@@ -1,0 +1,660 @@
+{
+  "mode": "gemini_p0_tvs_independent_oos_bundle",
+  "disclaimer": "IS 选参冻结后评 OOS；不晋级 Path-A。两个切分互证稳健性。",
+  "studies": {
+    "frac_60_40": {
+      "ok": true,
+      "mode": "gemini_p0_tvs_independent_oos",
+      "disclaimer": "独立 OOS：仅在 IS 选参并冻结；OOS 段杠杆从 1.0 重启、只用当日及以前信息；full_sample_peek 仅对照、不作验收；不改 Path-A / paper_book / seats。",
+      "split": {
+        "ok": true,
+        "split_date": "2026-07-08",
+        "n_is": 129,
+        "n_oos": 86,
+        "is_start": "2025-12-23",
+        "is_end": "2026-07-08",
+        "oos_start": "2026-07-09",
+        "oos_end": "2026-11-13"
+      },
+      "is_selection": {
+        "ok": true,
+        "selected": {
+          "target_vol": 0.15,
+          "tolerance_band": 0.0,
+          "score": 0.0,
+          "eligible": true,
+          "baseline": {
+            "equity_start": 200000.0,
+            "equity_end": 203206.95,
+            "ret_pct": 1.603,
+            "max_dd_pct": 4.071
+          },
+          "tvs_shadow": {
+            "equity_start": 200000.0,
+            "equity_end": 203206.95,
+            "ret_pct": 1.603,
+            "max_dd_pct": 4.071,
+            "n_leverage_adjust": 0,
+            "leverage_turnover": 0.0,
+            "n_iv_warn": 0,
+            "final_lev": 1.0
+          },
+          "delta": {
+            "ret_pct_pts": 0.0,
+            "dd_pct_pts": 0.0
+          }
+        },
+        "grid": [
+          {
+            "target_vol": 0.1,
+            "tolerance_band": 0.0,
+            "score": -0.22899999999999987,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 202747.34,
+              "ret_pct": 1.374,
+              "max_dd_pct": 3.917,
+              "n_leverage_adjust": 12,
+              "leverage_turnover": 0.7184,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": -0.229,
+              "dd_pct_pts": -0.154
+            }
+          },
+          {
+            "target_vol": 0.1,
+            "tolerance_band": 0.05,
+            "score": -0.31400000000000006,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 202578.88,
+              "ret_pct": 1.289,
+              "max_dd_pct": 3.887,
+              "n_leverage_adjust": 8,
+              "leverage_turnover": 0.5618,
+              "n_iv_warn": 0,
+              "final_lev": 0.9609
+            },
+            "delta": {
+              "ret_pct_pts": -0.314,
+              "dd_pct_pts": -0.184
+            }
+          },
+          {
+            "target_vol": 0.15,
+            "tolerance_band": 0.0,
+            "score": 0.0,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071,
+              "n_leverage_adjust": 0,
+              "leverage_turnover": 0.0,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": 0.0,
+              "dd_pct_pts": 0.0
+            }
+          },
+          {
+            "target_vol": 0.15,
+            "tolerance_band": 0.05,
+            "score": 0.0,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071,
+              "n_leverage_adjust": 0,
+              "leverage_turnover": 0.0,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": 0.0,
+              "dd_pct_pts": 0.0
+            }
+          },
+          {
+            "target_vol": 0.2,
+            "tolerance_band": 0.0,
+            "score": 0.0,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071,
+              "n_leverage_adjust": 0,
+              "leverage_turnover": 0.0,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": 0.0,
+              "dd_pct_pts": 0.0
+            }
+          },
+          {
+            "target_vol": 0.2,
+            "tolerance_band": 0.05,
+            "score": 0.0,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203206.95,
+              "ret_pct": 1.603,
+              "max_dd_pct": 4.071,
+              "n_leverage_adjust": 0,
+              "leverage_turnover": 0.0,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": 0.0,
+              "dd_pct_pts": 0.0
+            }
+          }
+        ],
+        "selection_rule": "max(d_ret - 0.35*max(0,d_dd)) with d_dd<=dd_slack",
+        "dd_slack": 1.0
+      },
+      "frozen_params": {
+        "target_vol": 0.15,
+        "tolerance_band": 0.0,
+        "max_leverage": 1.0,
+        "hv_window": 20,
+        "iv_warn_pctile": 0.9,
+        "iv_compress": 0.5
+      },
+      "is_frozen_eval": {
+        "baseline": {
+          "equity_start": 200000.0,
+          "equity_end": 203206.95,
+          "ret_pct": 1.603,
+          "max_dd_pct": 4.071
+        },
+        "tvs_shadow": {
+          "equity_start": 200000.0,
+          "equity_end": 203206.95,
+          "ret_pct": 1.603,
+          "max_dd_pct": 4.071,
+          "n_leverage_adjust": 0,
+          "leverage_turnover": 0.0,
+          "n_iv_warn": 0,
+          "final_lev": 1.0
+        },
+        "delta": {
+          "ret_pct_pts": 0.0,
+          "dd_pct_pts": 0.0
+        }
+      },
+      "oos_eval": {
+        "baseline": {
+          "equity_start": 203206.97,
+          "equity_end": 207976.26,
+          "ret_pct": 2.347,
+          "max_dd_pct": 6.755
+        },
+        "tvs_shadow": {
+          "equity_start": 203206.97,
+          "equity_end": 208535.13,
+          "ret_pct": 2.622,
+          "max_dd_pct": 5.885,
+          "n_leverage_adjust": 15,
+          "leverage_turnover": 1.6071,
+          "n_iv_warn": 1,
+          "final_lev": 1.0
+        },
+        "delta": {
+          "ret_pct_pts": 0.275,
+          "dd_pct_pts": -0.87
+        }
+      },
+      "full_sample_peek_contaminated": {
+        "baseline": {
+          "equity_start": 200000.0,
+          "equity_end": 207976.24,
+          "ret_pct": 3.988,
+          "max_dd_pct": 6.755
+        },
+        "tvs_shadow": {
+          "equity_start": 200000.0,
+          "equity_end": 208535.11,
+          "ret_pct": 4.268,
+          "max_dd_pct": 5.885,
+          "n_leverage_adjust": 15,
+          "leverage_turnover": 1.6071,
+          "n_iv_warn": 1,
+          "final_lev": 1.0
+        },
+        "delta": {
+          "ret_pct_pts": 0.28,
+          "dd_pct_pts": -0.87
+        },
+        "note": "contaminated_not_for_acceptance"
+      },
+      "oos_acceptance": {
+        "pass": true,
+        "rule": "OOS d_ret>=0 and d_dd<=0.5pt vs OOS baseline",
+        "promote_path_a": false
+      },
+      "source": "D:\\AI\\cta-path-a-arb-v11\\historical_backtest_latest.json",
+      "path_a_meta": {
+        "ret_pct": 3.988,
+        "max_dd_pct": 6.755,
+        "start": "2025-12-23",
+        "end": "2026-11-13",
+        "mode": "seats"
+      }
+    },
+    "split_20260630": {
+      "ok": true,
+      "mode": "gemini_p0_tvs_independent_oos",
+      "disclaimer": "独立 OOS：仅在 IS 选参并冻结；OOS 段杠杆从 1.0 重启、只用当日及以前信息；full_sample_peek 仅对照、不作验收；不改 Path-A / paper_book / seats。",
+      "split": {
+        "ok": true,
+        "split_date": "2026-06-30",
+        "n_is": 123,
+        "n_oos": 92,
+        "is_start": "2025-12-23",
+        "is_end": "2026-06-30",
+        "oos_start": "2026-07-01",
+        "oos_end": "2026-11-13"
+      },
+      "is_selection": {
+        "ok": true,
+        "selected": {
+          "target_vol": 0.15,
+          "tolerance_band": 0.0,
+          "score": 0.0,
+          "eligible": true,
+          "baseline": {
+            "equity_start": 200000.0,
+            "equity_end": 203977.35,
+            "ret_pct": 1.989,
+            "max_dd_pct": 4.071
+          },
+          "tvs_shadow": {
+            "equity_start": 200000.0,
+            "equity_end": 203977.35,
+            "ret_pct": 1.989,
+            "max_dd_pct": 4.071,
+            "n_leverage_adjust": 0,
+            "leverage_turnover": 0.0,
+            "n_iv_warn": 0,
+            "final_lev": 1.0
+          },
+          "delta": {
+            "ret_pct_pts": 0.0,
+            "dd_pct_pts": 0.0
+          }
+        },
+        "grid": [
+          {
+            "target_vol": 0.1,
+            "tolerance_band": 0.0,
+            "score": -0.2300000000000002,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203517.74,
+              "ret_pct": 1.759,
+              "max_dd_pct": 3.917,
+              "n_leverage_adjust": 12,
+              "leverage_turnover": 0.7184,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": -0.23,
+              "dd_pct_pts": -0.154
+            }
+          },
+          {
+            "target_vol": 0.1,
+            "tolerance_band": 0.05,
+            "score": -0.3290000000000002,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203319.18,
+              "ret_pct": 1.66,
+              "max_dd_pct": 3.887,
+              "n_leverage_adjust": 8,
+              "leverage_turnover": 0.5618,
+              "n_iv_warn": 0,
+              "final_lev": 0.9609
+            },
+            "delta": {
+              "ret_pct_pts": -0.329,
+              "dd_pct_pts": -0.184
+            }
+          },
+          {
+            "target_vol": 0.15,
+            "tolerance_band": 0.0,
+            "score": 0.0,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071,
+              "n_leverage_adjust": 0,
+              "leverage_turnover": 0.0,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": 0.0,
+              "dd_pct_pts": 0.0
+            }
+          },
+          {
+            "target_vol": 0.15,
+            "tolerance_band": 0.05,
+            "score": 0.0,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071,
+              "n_leverage_adjust": 0,
+              "leverage_turnover": 0.0,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": 0.0,
+              "dd_pct_pts": 0.0
+            }
+          },
+          {
+            "target_vol": 0.2,
+            "tolerance_band": 0.0,
+            "score": 0.0,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071,
+              "n_leverage_adjust": 0,
+              "leverage_turnover": 0.0,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": 0.0,
+              "dd_pct_pts": 0.0
+            }
+          },
+          {
+            "target_vol": 0.2,
+            "tolerance_band": 0.05,
+            "score": 0.0,
+            "eligible": true,
+            "baseline": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071
+            },
+            "tvs_shadow": {
+              "equity_start": 200000.0,
+              "equity_end": 203977.35,
+              "ret_pct": 1.989,
+              "max_dd_pct": 4.071,
+              "n_leverage_adjust": 0,
+              "leverage_turnover": 0.0,
+              "n_iv_warn": 0,
+              "final_lev": 1.0
+            },
+            "delta": {
+              "ret_pct_pts": 0.0,
+              "dd_pct_pts": 0.0
+            }
+          }
+        ],
+        "selection_rule": "max(d_ret - 0.35*max(0,d_dd)) with d_dd<=dd_slack",
+        "dd_slack": 1.0
+      },
+      "frozen_params": {
+        "target_vol": 0.15,
+        "tolerance_band": 0.0,
+        "max_leverage": 1.0,
+        "hv_window": 20,
+        "iv_warn_pctile": 0.9,
+        "iv_compress": 0.5
+      },
+      "is_frozen_eval": {
+        "baseline": {
+          "equity_start": 200000.0,
+          "equity_end": 203977.35,
+          "ret_pct": 1.989,
+          "max_dd_pct": 4.071
+        },
+        "tvs_shadow": {
+          "equity_start": 200000.0,
+          "equity_end": 203977.35,
+          "ret_pct": 1.989,
+          "max_dd_pct": 4.071,
+          "n_leverage_adjust": 0,
+          "leverage_turnover": 0.0,
+          "n_iv_warn": 0,
+          "final_lev": 1.0
+        },
+        "delta": {
+          "ret_pct_pts": 0.0,
+          "dd_pct_pts": 0.0
+        }
+      },
+      "oos_eval": {
+        "baseline": {
+          "equity_start": 203977.37,
+          "equity_end": 207976.26,
+          "ret_pct": 1.96,
+          "max_dd_pct": 6.755
+        },
+        "tvs_shadow": {
+          "equity_start": 203977.37,
+          "equity_end": 208535.13,
+          "ret_pct": 2.234,
+          "max_dd_pct": 5.885,
+          "n_leverage_adjust": 15,
+          "leverage_turnover": 1.6071,
+          "n_iv_warn": 1,
+          "final_lev": 1.0
+        },
+        "delta": {
+          "ret_pct_pts": 0.274,
+          "dd_pct_pts": -0.87
+        }
+      },
+      "full_sample_peek_contaminated": {
+        "baseline": {
+          "equity_start": 200000.0,
+          "equity_end": 207976.24,
+          "ret_pct": 3.988,
+          "max_dd_pct": 6.755
+        },
+        "tvs_shadow": {
+          "equity_start": 200000.0,
+          "equity_end": 208535.11,
+          "ret_pct": 4.268,
+          "max_dd_pct": 5.885,
+          "n_leverage_adjust": 15,
+          "leverage_turnover": 1.6071,
+          "n_iv_warn": 1,
+          "final_lev": 1.0
+        },
+        "delta": {
+          "ret_pct_pts": 0.28,
+          "dd_pct_pts": -0.87
+        },
+        "note": "contaminated_not_for_acceptance"
+      },
+      "oos_acceptance": {
+        "pass": true,
+        "rule": "OOS d_ret>=0 and d_dd<=0.5pt vs OOS baseline",
+        "promote_path_a": false
+      },
+      "source": "D:\\AI\\cta-path-a-arb-v11\\historical_backtest_latest.json",
+      "path_a_meta": {
+        "ret_pct": 3.988,
+        "max_dd_pct": 6.755,
+        "start": "2025-12-23",
+        "end": "2026-11-13",
+        "mode": "seats"
+      }
+    }
+  },
+  "summary": {
+    "frac_60_40": {
+      "ok": true,
+      "split": {
+        "ok": true,
+        "split_date": "2026-07-08",
+        "n_is": 129,
+        "n_oos": 86,
+        "is_start": "2025-12-23",
+        "is_end": "2026-07-08",
+        "oos_start": "2026-07-09",
+        "oos_end": "2026-11-13"
+      },
+      "frozen_params": {
+        "target_vol": 0.15,
+        "tolerance_band": 0.0,
+        "max_leverage": 1.0,
+        "hv_window": 20,
+        "iv_warn_pctile": 0.9,
+        "iv_compress": 0.5
+      },
+      "is_delta": {
+        "ret_pct_pts": 0.0,
+        "dd_pct_pts": 0.0
+      },
+      "oos_delta": {
+        "ret_pct_pts": 0.275,
+        "dd_pct_pts": -0.87
+      },
+      "oos_acceptance": {
+        "pass": true,
+        "rule": "OOS d_ret>=0 and d_dd<=0.5pt vs OOS baseline",
+        "promote_path_a": false
+      }
+    },
+    "split_20260630": {
+      "ok": true,
+      "split": {
+        "ok": true,
+        "split_date": "2026-06-30",
+        "n_is": 123,
+        "n_oos": 92,
+        "is_start": "2025-12-23",
+        "is_end": "2026-06-30",
+        "oos_start": "2026-07-01",
+        "oos_end": "2026-11-13"
+      },
+      "frozen_params": {
+        "target_vol": 0.15,
+        "tolerance_band": 0.0,
+        "max_leverage": 1.0,
+        "hv_window": 20,
+        "iv_warn_pctile": 0.9,
+        "iv_compress": 0.5
+      },
+      "is_delta": {
+        "ret_pct_pts": 0.0,
+        "dd_pct_pts": 0.0
+      },
+      "oos_delta": {
+        "ret_pct_pts": 0.274,
+        "dd_pct_pts": -0.87
+      },
+      "oos_acceptance": {
+        "pass": true,
+        "rule": "OOS d_ret>=0 and d_dd<=0.5pt vs OOS baseline",
+        "promote_path_a": false
+      }
+    }
+  }
+}

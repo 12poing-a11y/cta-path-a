@@ -1,0 +1,202 @@
+{
+  "ok": true,
+  "schema": "cta-vol-observe-v1",
+  "built_at": "2026-11-22T22:06:16+08:00",
+  "live_trading": false,
+  "promote_path_a": false,
+  "target_vol": 0.15,
+  "tolerance_band": 0.05,
+  "n": 27,
+  "rows": [
+    {
+      "code": "FU",
+      "downside_hv": 0.93691,
+      "target_leverage": 0.1601,
+      "suggested_leverage_band": 0.1601,
+      "n_rets": 5300
+    },
+    {
+      "code": "BU",
+      "downside_hv": 0.693675,
+      "target_leverage": 0.2162,
+      "suggested_leverage_band": 0.2162,
+      "n_rets": 3186
+    },
+    {
+      "code": "EB",
+      "downside_hv": 0.545331,
+      "target_leverage": 0.2751,
+      "suggested_leverage_band": 0.2751,
+      "n_rets": 1733
+    },
+    {
+      "code": "JD",
+      "downside_hv": 0.54228,
+      "target_leverage": 0.2766,
+      "suggested_leverage_band": 0.2766,
+      "n_rets": 3169
+    },
+    {
+      "code": "MA",
+      "downside_hv": 0.508565,
+      "target_leverage": 0.2949,
+      "suggested_leverage_band": 0.2949,
+      "n_rets": 2876
+    },
+    {
+      "code": "PP",
+      "downside_hv": 0.503068,
+      "target_leverage": 0.2982,
+      "suggested_leverage_band": 0.2982,
+      "n_rets": 3093
+    },
+    {
+      "code": "AG",
+      "downside_hv": 0.476673,
+      "target_leverage": 0.3147,
+      "suggested_leverage_band": 0.3147,
+      "n_rets": 3537
+    },
+    {
+      "code": "L",
+      "downside_hv": 0.445842,
+      "target_leverage": 0.3364,
+      "suggested_leverage_band": 0.3364,
+      "n_rets": 4698
+    },
+    {
+      "code": "EG",
+      "downside_hv": 0.429191,
+      "target_leverage": 0.3495,
+      "suggested_leverage_band": 0.3495,
+      "n_rets": 1927
+    },
+    {
+      "code": "TA",
+      "downside_hv": 0.402929,
+      "target_leverage": 0.3723,
+      "suggested_leverage_band": 0.3723,
+      "n_rets": 4838
+    },
+    {
+      "code": "P",
+      "downside_hv": 0.283387,
+      "target_leverage": 0.5293,
+      "suggested_leverage_band": 0.5293,
+      "n_rets": 276
+    },
+    {
+      "code": "V",
+      "downside_hv": 0.241043,
+      "target_leverage": 0.6223,
+      "suggested_leverage_band": 0.6223,
+      "n_rets": 4245
+    },
+    {
+      "code": "JM",
+      "downside_hv": 0.236461,
+      "target_leverage": 0.6344,
+      "suggested_leverage_band": 0.6344,
+      "n_rets": 3316
+    },
+    {
+      "code": "FG",
+      "downside_hv": 0.227008,
+      "target_leverage": 0.6608,
+      "suggested_leverage_band": 0.6608,
+      "n_rets": 3383
+    },
+    {
+      "code": "AU",
+      "downside_hv": 0.225649,
+      "target_leverage": 0.6647,
+      "suggested_leverage_band": 0.6647,
+      "n_rets": 4593
+    },
+    {
+      "code": "SA",
+      "downside_hv": 0.218613,
+      "target_leverage": 0.6861,
+      "suggested_leverage_band": 0.6861,
+      "n_rets": 1684
+    },
+    {
+      "code": "RU",
+      "downside_hv": 0.215154,
+      "target_leverage": 0.6972,
+      "suggested_leverage_band": 0.6972,
+      "n_rets": 5319
+    },
+    {
+      "code": "M",
+      "downside_hv": 0.185562,
+      "target_leverage": 0.8084,
+      "suggested_leverage_band": 0.8084,
+      "n_rets": 5326
+    },
+    {
+      "code": "CU",
+      "downside_hv": 0.161074,
+      "target_leverage": 0.9313,
+      "suggested_leverage_band": 0.9313,
+      "n_rets": 5323
+    },
+    {
+      "code": "SP",
+      "downside_hv": 0.157305,
+      "target_leverage": 0.9536,
+      "suggested_leverage_band": 1.0,
+      "n_rets": 1936
+    },
+    {
+      "code": "CF",
+      "downside_hv": 0.143393,
+      "target_leverage": 1.0461,
+      "suggested_leverage_band": 1.0,
+      "n_rets": 5292
+    },
+    {
+      "code": "NI",
+      "downside_hv": 0.137478,
+      "target_leverage": 1.0911,
+      "suggested_leverage_band": 1.0911,
+      "n_rets": 2835
+    },
+    {
+      "code": "I",
+      "downside_hv": 0.126664,
+      "target_leverage": 1.1842,
+      "suggested_leverage_band": 1.1842,
+      "n_rets": 3181
+    },
+    {
+      "code": "AL",
+      "downside_hv": 0.122221,
+      "target_leverage": 1.2273,
+      "suggested_leverage_band": 1.2273,
+      "n_rets": 5312
+    },
+    {
+      "code": "SS",
+      "downside_hv": 0.119778,
+      "target_leverage": 1.2523,
+      "suggested_leverage_band": 1.2523,
+      "n_rets": 1730
+    },
+    {
+      "code": "SR",
+      "downside_hv": 0.09497,
+      "target_leverage": 1.5,
+      "suggested_leverage_band": 1.5,
+      "n_rets": 5066
+    },
+    {
+      "code": "RB",
+      "downside_hv": 0.08298,
+      "target_leverage": 1.5,
+      "suggested_leverage_band": 1.5,
+      "n_rets": 4286
+    }
+  ],
+  "note": "观察旁路：分品种下行 HV → 杠杆建议；±band 容忍。不写 position_rules / paper_book / seats。"
+}

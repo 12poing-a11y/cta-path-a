@@ -3,7 +3,8 @@
 **日期**：2026-11-15  
 **范围**：`historical_backtest.py` · `paper_book.py` · `research/execution/*` · `research/data_quality/*` · `daily_update.py` · `research/governance/*`  
 **约束**：不改正式 Path-A 参数；本文件只列问题与修法。  
-**状态**：清单已定；修复按 `PHASE2_AUDIT_DECISIONS.md` P0 顺序推进。
+**状态**：清单已定；P0 主修多已落地。**DU-01 / GV-01（T-DU/T-GV）已完成（2026-11-22）**。余项见 `docs/UPGRADE_ITERATIONS.md` §4。  
+裁决原文：`PHASE2_AUDIT_DECISIONS.md`。
 
 ---
 
@@ -18,8 +19,8 @@
 | BT-02 | P0 | proxy 占比未进主 KPI / `cost_scenario_kpi` |
 | BT-03 | P0 | 席位缺失 fail-open（「缺席位」仍可进） |
 | DQ-01 | P0 | 涨跌停/连续不可成交/陈旧等闸门在真实数据上基本不触发 |
-| GV-01 | P0 | `evaluate_strategy_gate` 无生产接线；布尔由调用方自报 |
-| DU-01 | P0 | 日报几乎无陈旧熔断；`asof` 偏运行日而非 bar 日 |
+| GV-01 | P0 | ~~`evaluate_strategy_gate` 无生产接线~~ → **已修 T-GV**（产物推导 + scorecard.gate） |
+| DU-01 | P0 | ~~日报几乎无陈旧熔断；`asof` 偏运行日而非 bar 日~~ → **已修 T-DU**（会话日 asof + expected_session 硬闸） |
 
 ---
 
@@ -117,4 +118,4 @@
 - 主 KPI 增加 `proxy_entry_share` / `contract_entry_share` / `same_day_exit_n`；偏高时 conclusion 附加警告
 - 测试：`tests/test_basis_lock.py`
 
-其余 Gate 接线 / 日报陈旧熔断等按上表继续。
+日报陈旧熔断（DU-01）与 Gate 接线（GV-01）已落地；其余见总表 §4。

@@ -1,0 +1,384 @@
+{
+  "ok": true,
+  "schema": "cta-shadow-attribution-v1",
+  "built_at": "2026-11-22T22:06:16+08:00",
+  "live_trading": false,
+  "source_bt": "historical_backtest_latest.json",
+  "bt_window": {
+    "start": "2025-12-23",
+    "end": "2026-11-13"
+  },
+  "n_trades": 69,
+  "min_cell": 5,
+  "proxy_entry_share": 0.5942,
+  "cost_yuan": 5219.61,
+  "tables": {
+    "by_code": [
+      {
+        "key": "M",
+        "n": 10,
+        "win_rate": 0.2,
+        "avg_R": -0.4,
+        "sum_R": -4.0,
+        "enough": true
+      },
+      {
+        "key": "I",
+        "n": 8,
+        "win_rate": 0.25,
+        "avg_R": -0.25,
+        "sum_R": -2.0,
+        "enough": true
+      },
+      {
+        "key": "FU",
+        "n": 7,
+        "win_rate": 0.2857,
+        "avg_R": -0.1429,
+        "sum_R": -1.0,
+        "enough": true
+      },
+      {
+        "key": "EB",
+        "n": 6,
+        "win_rate": 0.6667,
+        "avg_R": 0.8433,
+        "sum_R": 5.06,
+        "enough": true
+      },
+      {
+        "key": "SA",
+        "n": 6,
+        "win_rate": 0.8333,
+        "avg_R": 1.2867,
+        "sum_R": 7.72,
+        "enough": true
+      },
+      {
+        "key": "JD",
+        "n": 5,
+        "win_rate": 0.6,
+        "avg_R": 0.8,
+        "sum_R": 4.0,
+        "enough": true
+      },
+      {
+        "key": "CF",
+        "n": 3,
+        "win_rate": 0.6667,
+        "avg_R": 1.0,
+        "sum_R": 3.0,
+        "enough": false
+      },
+      {
+        "key": "P",
+        "n": 3,
+        "win_rate": 0.0,
+        "avg_R": -1.0,
+        "sum_R": -3.0,
+        "enough": false
+      },
+      {
+        "key": "JM",
+        "n": 3,
+        "win_rate": 1.0,
+        "avg_R": 1.3433,
+        "sum_R": 4.03,
+        "enough": false
+      },
+      {
+        "key": "MA",
+        "n": 3,
+        "win_rate": 0.0,
+        "avg_R": -1.0,
+        "sum_R": -3.0,
+        "enough": false
+      },
+      {
+        "key": "PP",
+        "n": 3,
+        "win_rate": 0.0,
+        "avg_R": -1.0,
+        "sum_R": -3.0,
+        "enough": false
+      },
+      {
+        "key": "L",
+        "n": 2,
+        "win_rate": 0.0,
+        "avg_R": -1.0,
+        "sum_R": -2.0,
+        "enough": false
+      },
+      {
+        "key": "TA",
+        "n": 2,
+        "win_rate": 0.0,
+        "avg_R": -1.0,
+        "sum_R": -2.0,
+        "enough": false
+      },
+      {
+        "key": "BU",
+        "n": 2,
+        "win_rate": 1.0,
+        "avg_R": 2.0,
+        "sum_R": 4.0,
+        "enough": false
+      },
+      {
+        "key": "EG",
+        "n": 2,
+        "win_rate": 0.0,
+        "avg_R": -1.0,
+        "sum_R": -2.0,
+        "enough": false
+      },
+      {
+        "key": "V",
+        "n": 1,
+        "win_rate": 1.0,
+        "avg_R": 2.0,
+        "sum_R": 2.0,
+        "enough": false
+      },
+      {
+        "key": "FG",
+        "n": 1,
+        "win_rate": 0.0,
+        "avg_R": -1.0,
+        "sum_R": -1.0,
+        "enough": false
+      },
+      {
+        "key": "SS",
+        "n": 1,
+        "win_rate": 1.0,
+        "avg_R": 2.0,
+        "sum_R": 2.0,
+        "enough": false
+      },
+      {
+        "key": "SR",
+        "n": 1,
+        "win_rate": 0.0,
+        "avg_R": -1.0,
+        "sum_R": -1.0,
+        "enough": false
+      }
+    ],
+    "by_bucket": [
+      {
+        "key": "能化",
+        "n": 35,
+        "win_rate": 0.4,
+        "avg_R": 0.1366,
+        "sum_R": 4.78,
+        "enough": true
+      },
+      {
+        "key": "农产品",
+        "n": 22,
+        "win_rate": 0.3182,
+        "avg_R": -0.0455,
+        "sum_R": -1.0,
+        "enough": true
+      },
+      {
+        "key": "黑色",
+        "n": 12,
+        "win_rate": 0.5,
+        "avg_R": 0.3358,
+        "sum_R": 4.03,
+        "enough": true
+      }
+    ],
+    "by_side": [
+      {
+        "key": "long",
+        "n": 43,
+        "win_rate": 0.3953,
+        "avg_R": 0.1493,
+        "sum_R": 6.42,
+        "enough": true
+      },
+      {
+        "key": "short",
+        "n": 26,
+        "win_rate": 0.3846,
+        "avg_R": 0.0535,
+        "sum_R": 1.39,
+        "enough": true
+      }
+    ],
+    "by_exit_reason": [
+      {
+        "key": "stop",
+        "n": 41,
+        "win_rate": 0.0,
+        "avg_R": -1.0,
+        "sum_R": -41.0,
+        "enough": true
+      },
+      {
+        "key": "target",
+        "n": 24,
+        "win_rate": 1.0,
+        "avg_R": 2.0,
+        "sum_R": 48.0,
+        "enough": true
+      },
+      {
+        "key": "signal",
+        "n": 4,
+        "win_rate": 0.75,
+        "avg_R": 0.2025,
+        "sum_R": 0.81,
+        "enough": false
+      }
+    ],
+    "by_hold_bucket": [
+      {
+        "key": "0-1d",
+        "n": 32,
+        "win_rate": 0.3125,
+        "avg_R": -0.1025,
+        "sum_R": -3.28,
+        "enough": true
+      },
+      {
+        "key": "4-7d",
+        "n": 19,
+        "win_rate": 0.4737,
+        "avg_R": 0.4547,
+        "sum_R": 8.64,
+        "enough": true
+      },
+      {
+        "key": "2-3d",
+        "n": 13,
+        "win_rate": 0.2308,
+        "avg_R": -0.3077,
+        "sum_R": -4.0,
+        "enough": true
+      },
+      {
+        "key": "8-15d",
+        "n": 4,
+        "win_rate": 1.0,
+        "avg_R": 1.5075,
+        "sum_R": 6.03,
+        "enough": false
+      },
+      {
+        "key": "16d+",
+        "n": 1,
+        "win_rate": 1.0,
+        "avg_R": 0.42,
+        "sum_R": 0.42,
+        "enough": false
+      }
+    ],
+    "by_fill_basis": [
+      {
+        "key": "continuous_proxy",
+        "n": 41,
+        "win_rate": 0.4146,
+        "avg_R": 0.2127,
+        "sum_R": 8.72,
+        "enough": true
+      },
+      {
+        "key": "contract",
+        "n": 28,
+        "win_rate": 0.3571,
+        "avg_R": -0.0325,
+        "sum_R": -0.91,
+        "enough": true
+      }
+    ],
+    "by_sleeve": [
+      {
+        "key": "path_a_rr2",
+        "n": 69,
+        "win_rate": 0.3913,
+        "avg_R": 0.1132,
+        "sum_R": 7.81,
+        "enough": true
+      }
+    ],
+    "by_regime": [
+      {
+        "key": "trend_up",
+        "n": 28,
+        "win_rate": 0.4286,
+        "avg_R": 0.2857,
+        "sum_R": 8.0,
+        "enough": true
+      },
+      {
+        "key": "vol_expand",
+        "n": 21,
+        "win_rate": 0.2857,
+        "avg_R": -0.279,
+        "sum_R": -5.86,
+        "enough": true
+      },
+      {
+        "key": "trend_down",
+        "n": 17,
+        "win_rate": 0.4706,
+        "avg_R": 0.2959,
+        "sum_R": 5.03,
+        "enough": true
+      },
+      {
+        "key": "chop",
+        "n": 3,
+        "win_rate": 0.3333,
+        "avg_R": 0.2133,
+        "sum_R": 0.64,
+        "enough": false
+      }
+    ],
+    "regime_x_sleeve": [
+      {
+        "sleeve": "path_a_rr2",
+        "regime": "chop",
+        "n": 3,
+        "win_rate": 0.3333,
+        "avg_R": 0.2133,
+        "sum_R": 0.64,
+        "enough": false
+      },
+      {
+        "sleeve": "path_a_rr2",
+        "regime": "trend_down",
+        "n": 17,
+        "win_rate": 0.4706,
+        "avg_R": 0.2959,
+        "sum_R": 5.03,
+        "enough": true
+      },
+      {
+        "sleeve": "path_a_rr2",
+        "regime": "trend_up",
+        "n": 28,
+        "win_rate": 0.4286,
+        "avg_R": 0.2857,
+        "sum_R": 8.0,
+        "enough": true
+      },
+      {
+        "sleeve": "path_a_rr2",
+        "regime": "vol_expand",
+        "n": 21,
+        "win_rate": 0.2857,
+        "avg_R": -0.279,
+        "sum_R": -5.86,
+        "enough": true
+      }
+    ]
+  },
+  "disclaimer": "Research shadow attribution only · 不改 Path-A / paper_book / seats。单格 n<5 只展示。regime=trailing HV/ret 规则标签（非 HMM）。"
+}

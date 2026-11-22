@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Shadow attribution ledger — Research only, never mutates Path-A / paper_book."""
 
+from research.shadow_perf.attribution import build_shadow_attribution
 from research.shadow_perf.ledger import (
     HORIZONS,
     MIN_SAMPLE,
@@ -16,6 +17,7 @@ __all__ = [
     "MIN_SAMPLE",
     "SCHEMA",
     "aggregate_summary",
+    "build_shadow_attribution",
     "load_ledger",
     "load_summary",
     "refresh_shadow_perf",

@@ -171,6 +171,15 @@ def main() -> int:
         "live_trading": False,
         "note": "Formal KPI = after.historical_backtest; PBO is Research diagnostic only.",
     }
+    # T-GV: derive Gate from artifacts (not caller self-report); fail build if Stress/PSR missing.
+    from research.governance.experiment_registry import register_experiment
+    from research.governance.scorecard_gate import (
+        attach_gate_to_scorecard,
+        evaluate_from_artifacts,
+    )
+
+    gate = evaluate_from_artifacts(ROOT, human_approved=False)
+    card = attach_gate_to_scorecard(card, gate)
     out = ROOT / "lab" / "research" / "validation" / "formal_scorecard_latest.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(card, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -180,6 +189,32 @@ def main() -> int:
         f"dd={card['deltas']['max_dd_pct']['bt_after']} "
         f"PBO={card['deltas']['pbo']['after']}"
     )
+    print(
+        f"[scorecard] gate artifact_build_ok={gate.get('artifact_build_ok')} "
+        f"pass={gate.get('pass')} hard={gate.get('hard_failures')}"
+    )
+    try:
+        register_experiment(
+            name="formal_scorecard",
+            kind="formal_backtest",
+            params={"fill": "next_open", "stamp": stamp},
+            metrics={
+                "ret_pct": card["deltas"]["ret_pct"]["bt_after"],
+                "max_dd_pct": card["deltas"]["max_dd_pct"]["bt_after"],
+                "pbo": card["deltas"]["pbo"]["after"],
+            },
+            validation=gate.get("validation"),
+            artifact=str(out.relative_to(ROOT)),
+            status="Research",
+            notes=f"gate_hard={gate.get('hard_failures')}",
+            root=ROOT,
+        )
+        print("[scorecard] registered experiment formal_scorecard")
+    except Exception as exc:  # noqa: BLE001
+        print(f"[scorecard] experiment register soft-fail: {exc}")
+    if not card.get("ok"):
+        print("[scorecard] GATE BUILD FAIL — formal ok=false (see card.gate)")
+        return 2
     return 0
 
 

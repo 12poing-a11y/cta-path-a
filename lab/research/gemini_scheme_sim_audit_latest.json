@@ -1,0 +1,402 @@
+{
+  "mode": "gemini_scheme_sim_then_audit",
+  "simulation": {
+    "ok": true,
+    "mode": "gemini_full_scheme_simulation",
+    "scheme_version": "gemini_scheme_sim_v1",
+    "design": {
+      "scheme_version": "gemini_scheme_sim_v1",
+      "source": "Gemini/HTML《从趋势单腿到波动率协同》",
+      "governance": {
+        "writes_paper_book": false,
+        "writes_seats": false,
+        "writes_position_rules": false,
+        "mode": "closed_loop_shadow_simulation"
+      },
+      "layers": {
+        "P0_tvs": {
+          "intent": "Downside-HV TVS + IV forward warn + ±5% band replace static ATR caps",
+          "html_targets": [
+            "position_rules.py",
+            "portfolio/risk_contribution.py",
+            "regime_enable.json"
+          ],
+          "sim_implementation": [
+            "portfolio equity overlay (run_tvs_overlay)",
+            "per-symbol overlay (run_per_symbol_tvs)",
+            "independent IS/OOS freeze"
+          ],
+          "known_gaps_vs_html": [
+            "does_not_recompute_lots_from_ATR_budget",
+            "does_not_write_regime_enable",
+            "iv_from_akshare_cache_not_gamma_wall_atm_chain",
+            "max_leverage_capped_at_1.0_no_upscale"
+          ]
+        },
+        "P1_vrp_sleeve": {
+          "intent": "IV-RV premium → short-vol shadow sleeve + delta-neutral narrative",
+          "html_targets": [
+            "vol_engine.py",
+            "option_hedge.py",
+            "proxy_vol_vrp"
+          ],
+          "sim_implementation": [
+            "variance_risk_proxy_pnl = notional * (iv^2 - rv^2) on warn days",
+            "opportunity counting only when IV pctile high"
+          ],
+          "known_gaps_vs_html": [
+            "no_real_straddle_fills",
+            "no_greeks_rebalance_at_0.15_delta",
+            "no_bid_ask_costs",
+            "proxy_notional_is_research_assumption"
+          ]
+        },
+        "P2_carry_friction": {
+          "intent": "Roll yield soft weight + dynamic slippage",
+          "html_targets": [
+            "basis_data.py",
+            "path_a_filters.py",
+            "research/execution"
+          ],
+          "sim_implementation": [
+            "soft_scale Path-A day pnl by carry_alignment when gaps loadable",
+            "static_slip_stress_scenario only (no depth model)"
+          ],
+          "known_gaps_vs_html": [
+            "no_dynamic_slippage_from_OI_depth",
+            "no_path_a_filters_weight_injection",
+            "carry_may_be_unavailable"
+          ]
+        }
+      },
+      "acceptance_html": {
+        "P0": "turnover/cost down; max DD not above 3.3% on L1 ablation",
+        "P1": "shadow Sharpe>1 and corr(Path-A)<0.25",
+        "P2": "Locked OOS net + PBO<0.30"
+      }
+    },
+    "path_a_meta": {
+      "start": "2025-12-23",
+      "end": "2026-11-13",
+      "ret_pct": 3.988,
+      "max_dd_pct": 6.755
+    },
+    "simulation": {
+      "P0_portfolio": {
+        "full": {
+          "baseline": {
+            "equity_start": 200000.0,
+            "equity_end": 207976.24,
+            "ret_pct": 3.988,
+            "max_dd_pct": 6.755
+          },
+          "tvs_shadow": {
+            "equity_start": 200000.0,
+            "equity_end": 208328.63,
+            "ret_pct": 4.164,
+            "max_dd_pct": 5.878,
+            "n_leverage_adjust": 5,
+            "leverage_turnover": 1.4099,
+            "n_iv_warn": 1,
+            "final_lev": 1.0
+          },
+          "delta": {
+            "ret_pct_pts": 0.176,
+            "dd_pct_pts": -0.877
+          }
+        },
+        "oos": {
+          "baseline": {
+            "equity_start": 203206.97,
+            "equity_end": 207976.26,
+            "ret_pct": 2.347,
+            "max_dd_pct": 6.755
+          },
+          "tvs_shadow": {
+            "equity_start": 203206.97,
+            "equity_end": 208535.13,
+            "ret_pct": 2.622,
+            "max_dd_pct": 5.885,
+            "n_leverage_adjust": 15,
+            "leverage_turnover": 1.6071,
+            "n_iv_warn": 1,
+            "final_lev": 1.0
+          },
+          "delta": {
+            "ret_pct_pts": 0.275,
+            "dd_pct_pts": -0.87
+          }
+        },
+        "oos_acceptance": {
+          "pass": true,
+          "rule": "OOS d_ret>=0 and d_dd<=0.5pt vs OOS baseline",
+          "promote_path_a": false
+        },
+        "frozen_params": {
+          "target_vol": 0.15,
+          "tolerance_band": 0.0,
+          "max_leverage": 1.0,
+          "hv_window": 20,
+          "iv_warn_pctile": 0.9,
+          "iv_compress": 0.5
+        }
+      },
+      "P0_per_symbol": {
+        "full": {
+          "baseline": {
+            "equity_start": 200000.0,
+            "equity_end": 207976.24,
+            "ret_pct": 3.988,
+            "max_dd_pct": 6.755
+          },
+          "tvs_shadow": {
+            "equity_start": 200000.0,
+            "equity_end": 216509.63,
+            "ret_pct": 8.255,
+            "max_dd_pct": 2.983,
+            "n_leverage_adjust": 69,
+            "leverage_turnover": 13.6768,
+            "n_iv_warn": 1
+          },
+          "delta": {
+            "ret_pct_pts": 4.267,
+            "dd_pct_pts": -3.772
+          },
+          "tracking": {
+            "residual_pnl_sum": -488.79,
+            "n_codes": 19
+          }
+        },
+        "oos": {
+          "baseline": {
+            "equity_start": 203206.97,
+            "equity_end": 207976.26,
+            "ret_pct": 2.347,
+            "max_dd_pct": 6.755
+          },
+          "tvs_shadow": {
+            "equity_start": 203206.97,
+            "equity_end": 207254.55,
+            "ret_pct": 1.992,
+            "max_dd_pct": 3.121,
+            "n_leverage_adjust": 33,
+            "leverage_turnover": 7.8038,
+            "n_iv_warn": 1
+          },
+          "delta": {
+            "ret_pct_pts": -0.355,
+            "dd_pct_pts": -3.634
+          }
+        },
+        "split": {
+          "ok": true,
+          "split_date": "2026-07-08",
+          "n_is": 129,
+          "n_oos": 86,
+          "is_start": "2025-12-23",
+          "is_end": "2026-07-08",
+          "oos_start": "2026-07-09",
+          "oos_end": "2026-11-13"
+        }
+      },
+      "P1_vrp_sleeve": {
+        "ok": true,
+        "layer": "P1_vrp_sleeve_proxy",
+        "n_opportunity_hits": 1,
+        "n_days_with_pnl": 1,
+        "notional_per_hit": 20000.0,
+        "metrics": {
+          "ret_pct": 0.005,
+          "max_dd_pct": 0.0,
+          "equity_start": 200000.0,
+          "equity_end": 200009.07
+        },
+        "note": "variance_proxy_only_not_option_fills",
+        "day_pnls_tail": [
+          {
+            "date": "2026-11-09",
+            "pnl": 0.0
+          },
+          {
+            "date": "2026-11-10",
+            "pnl": 0.0
+          },
+          {
+            "date": "2026-11-11",
+            "pnl": 0.0
+          },
+          {
+            "date": "2026-11-12",
+            "pnl": 0.0
+          },
+          {
+            "date": "2026-11-13",
+            "pnl": 0.0
+          }
+        ]
+      },
+      "P2_carry_soft": {
+        "ok": true,
+        "layer": "P2_carry_soft",
+        "carry_data_available": false,
+        "n_days_scaled": 0,
+        "baseline": {
+          "ret_pct": 3.988,
+          "max_dd_pct": 6.755,
+          "equity_start": 200000.0,
+          "equity_end": 207976.24
+        },
+        "carry_soft": {
+          "ret_pct": 3.988,
+          "max_dd_pct": 6.755,
+          "equity_start": 200000.0,
+          "equity_end": 207976.24
+        },
+        "delta_ret_pct_pts": 0.0,
+        "known_gap": "static_soft_scale_not_dynamic_slippage_model"
+      },
+      "combo_p0_p1": {
+        "baseline_ret_pct": 3.988,
+        "combo_p0_p1_ret_pct": 8.259,
+        "p0_path_pnl": 16509.63,
+        "p1_extra_pnl": 9.07,
+        "p2_alt_delta_ret_pct_pts": 0.0,
+        "note": "P2 reported separately to avoid double-scaling P0 path"
+      }
+    }
+  },
+  "audit": {
+    "mode": "gemini_scheme_audit",
+    "audit_posture": "GPT-style: methodology absorbable; strategy promotion blocked; Alpha/Risk/Execution separated; parameters need calibration evidence",
+    "findings": [
+      {
+        "id": "F1_p0_wiring",
+        "claim": "P0 Dual-Track TVS replaces ATR caps in position_rules",
+        "status": "FAIL",
+        "evidence": "simulation is shadow overlay only; position_rules untouched",
+        "gaps": [
+          "does_not_recompute_lots_from_ATR_budget",
+          "does_not_write_regime_enable",
+          "iv_from_akshare_cache_not_gamma_wall_atm_chain",
+          "max_leverage_capped_at_1.0_no_upscale"
+        ]
+      },
+      {
+        "id": "F2_p0_math_live",
+        "claim": "Downside HV + IV warn + tolerance band are implemented in sim",
+        "status": "PASS",
+        "evidence": {
+          "portfolio_delta": {
+            "ret_pct_pts": 0.176,
+            "dd_pct_pts": -0.877
+          },
+          "per_symbol_delta": {
+            "ret_pct_pts": 4.267,
+            "dd_pct_pts": -3.772
+          }
+        }
+      },
+      {
+        "id": "F3_p0_html_dd_gate",
+        "claim": "HTML P0: max DD not above 3.3% on L1 ablation",
+        "status": "PASS",
+        "evidence": {
+          "path_a_dd": 6.755,
+          "per_symbol_tvs_dd": 2.983
+        },
+        "note": "baseline Path-A DD already exceeds 3.3%; HTML gate is mismatched to current book"
+      },
+      {
+        "id": "F4_p0_oos",
+        "claim": "Independent OOS does not worsen return/DD vs baseline",
+        "status": "PASS",
+        "evidence": {
+          "portfolio_oos_acceptance": {
+            "pass": true,
+            "rule": "OOS d_ret>=0 and d_dd<=0.5pt vs OOS baseline",
+            "promote_path_a": false
+          },
+          "per_symbol_oos_delta": {
+            "ret_pct_pts": -0.355,
+            "dd_pct_pts": -3.634
+          }
+        }
+      },
+      {
+        "id": "F5_p1_vrp",
+        "claim": "P1 proxy_vol_vrp delta-neutral sleeve with Sharpe>1 / corr<0.25",
+        "status": "PARTIAL",
+        "evidence": {
+          "n_opportunity_hits": 1,
+          "metrics": {
+            "ret_pct": 0.005,
+            "max_dd_pct": 0.0,
+            "equity_start": 200000.0,
+            "equity_end": 200009.07
+          },
+          "note": "variance_proxy_only_not_option_fills"
+        },
+        "gaps": [
+          "no_real_straddle_fills",
+          "no_greeks_rebalance_at_0.15_delta",
+          "no_bid_ask_costs",
+          "proxy_notional_is_research_assumption"
+        ]
+      },
+      {
+        "id": "F6_p2_carry",
+        "claim": "P2 carry weight + dynamic slippage + PBO<0.30",
+        "status": "PARTIAL",
+        "evidence": {
+          "carry_data_available": false,
+          "delta_ret_pct_pts": 0.0,
+          "known_gap": "static_soft_scale_not_dynamic_slippage_model"
+        },
+        "gaps": [
+          "no_dynamic_slippage_from_OI_depth",
+          "no_path_a_filters_weight_injection",
+          "carry_may_be_unavailable"
+        ]
+      },
+      {
+        "id": "F7_combo",
+        "claim": "Stacked P0+P1 improves Path-A without promoting execution",
+        "status": "PASS",
+        "evidence": {
+          "baseline_ret_pct": 3.988,
+          "combo_p0_p1_ret_pct": 8.259,
+          "p0_path_pnl": 16509.63,
+          "p1_extra_pnl": 9.07,
+          "p2_alt_delta_ret_pct_pts": 0.0,
+          "note": "P2 reported separately to avoid double-scaling P0 path"
+        }
+      },
+      {
+        "id": "F8_governance",
+        "claim": "Risk engine veto / no paper_book writes",
+        "status": "PASS",
+        "evidence": {
+          "writes_paper_book": false,
+          "writes_seats": false,
+          "writes_position_rules": false,
+          "mode": "closed_loop_shadow_simulation"
+        }
+      }
+    ],
+    "verdict": {
+      "promote_path_a": false,
+      "promote_shadow_continue": true,
+      "recommended_next": "keep_P0_per_symbol_shadow; defer_P1_until_bidask; defer_P2_dynamic_slip; do_not_merge_into_CTA_signal",
+      "block_reasons": [
+        "not_wired_into_position_rules",
+        "manual_gate_required"
+      ],
+      "score": {
+        "PASS": 5,
+        "PARTIAL": 2,
+        "FAIL": 1
+      }
+    },
+    "summary_zh": "方案可在影子层模拟 P0/P1/P2 逻辑，但与 HTML 预期的主链改造仍有结构性缺口；OOS 仅支持继续观察，不支持写入 position_rules / paper_book。"
+  }
+}

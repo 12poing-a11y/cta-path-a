@@ -1,0 +1,200 @@
+{
+  "mode": "shadow_v1_3_monitor",
+  "model_version": "arb_shadow_v1.3",
+  "disclaimer": "V1.3 影子监控：只回答为何拦截与拦截后的反事实表现；counterfactual 为事后归因，不写 paper_book / seats，不自动开平。",
+  "block_reason_counts": {
+    "correlation_breakdown": 223,
+    "cointegration_failed": 840,
+    "extreme_spread_volatility": 11,
+    "residual_structure_break": 163,
+    "half_life_too_long": 3
+  },
+  "data_quality_counts": {
+    "suspected_roll_or_gap": 30
+  },
+  "dual_path_totals": {
+    "gated_signal_pnl_sum": -1520.0,
+    "counterfactual_all_signal_pnl_sum": 93160.0,
+    "blocked_only_counterfactual_pnl_sum": 94680.0,
+    "n_signal": 227,
+    "n_pass": 6,
+    "n_block": 221
+  },
+  "pairs": [
+    {
+      "ok": true,
+      "pair": "M/P",
+      "model_version": "arb_shadow_v1.3",
+      "window": {
+        "start": "2025-11-20",
+        "end": "2026-11-20"
+      },
+      "n_days": 243,
+      "n_signal": 60,
+      "n_pass": 0,
+      "n_block": 60,
+      "n_watch": 0,
+      "block_reason_counts": {
+        "correlation_breakdown": 69,
+        "cointegration_failed": 237,
+        "extreme_spread_volatility": 7,
+        "residual_structure_break": 49
+      },
+      "data_quality_counts": {
+        "suspected_roll_or_gap": 2
+      },
+      "dual_path": {
+        "gated_signal_pnl_sum": 0,
+        "gated_signal_n": 0,
+        "counterfactual_all_signal_pnl_sum": 39080.0,
+        "counterfactual_all_signal_n": 24,
+        "blocked_only_counterfactual_pnl_sum": 39080.0,
+        "blocked_only_n": 24,
+        "blocked_only_mean_pnl": 1628.33
+      }
+    },
+    {
+      "ok": true,
+      "pair": "RB/I",
+      "model_version": "arb_shadow_v1.3",
+      "window": {
+        "start": "2025-11-20",
+        "end": "2026-11-20"
+      },
+      "n_days": 243,
+      "n_signal": 60,
+      "n_pass": 4,
+      "n_block": 56,
+      "n_watch": 0,
+      "block_reason_counts": {
+        "cointegration_failed": 219,
+        "residual_structure_break": 92,
+        "extreme_spread_volatility": 2
+      },
+      "data_quality_counts": {},
+      "dual_path": {
+        "gated_signal_pnl_sum": 2150.0,
+        "gated_signal_n": 4,
+        "counterfactual_all_signal_pnl_sum": 25100.0,
+        "counterfactual_all_signal_n": 60,
+        "blocked_only_counterfactual_pnl_sum": 22950.0,
+        "blocked_only_n": 56,
+        "blocked_only_mean_pnl": 409.82
+      }
+    },
+    {
+      "ok": true,
+      "pair": "RB/JM",
+      "model_version": "arb_shadow_v1.3",
+      "window": {
+        "start": "2025-11-20",
+        "end": "2026-11-20"
+      },
+      "n_days": 243,
+      "n_signal": 61,
+      "n_pass": 2,
+      "n_block": 59,
+      "n_watch": 4,
+      "block_reason_counts": {
+        "cointegration_failed": 184,
+        "residual_structure_break": 22,
+        "half_life_too_long": 3
+      },
+      "data_quality_counts": {
+        "suspected_roll_or_gap": 14
+      },
+      "dual_path": {
+        "gated_signal_pnl_sum": -3670.0,
+        "gated_signal_n": 2,
+        "counterfactual_all_signal_pnl_sum": -7920.0,
+        "counterfactual_all_signal_n": 7,
+        "blocked_only_counterfactual_pnl_sum": -4250.0,
+        "blocked_only_n": 5,
+        "blocked_only_mean_pnl": -850.0
+      }
+    },
+    {
+      "ok": true,
+      "pair": "I/JM",
+      "model_version": "arb_shadow_v1.3",
+      "window": {
+        "start": "2025-11-20",
+        "end": "2026-11-20"
+      },
+      "n_days": 243,
+      "n_signal": 46,
+      "n_pass": 0,
+      "n_block": 46,
+      "n_watch": 1,
+      "block_reason_counts": {
+        "cointegration_failed": 200,
+        "correlation_breakdown": 154,
+        "extreme_spread_volatility": 2
+      },
+      "data_quality_counts": {
+        "suspected_roll_or_gap": 14
+      },
+      "dual_path": {
+        "gated_signal_pnl_sum": 0,
+        "gated_signal_n": 0,
+        "counterfactual_all_signal_pnl_sum": 36900.0,
+        "counterfactual_all_signal_n": 12,
+        "blocked_only_counterfactual_pnl_sum": 36900.0,
+        "blocked_only_n": 12,
+        "blocked_only_mean_pnl": 3075.0
+      }
+    }
+  ],
+  "window": {
+    "start": "2025-11-20",
+    "end": "2026-11-20"
+  },
+  "align_meta": [
+    {
+      "pair": "M/P",
+      "bucket": "农产品",
+      "ok": true,
+      "n": 4634,
+      "dropped_a_only": 691,
+      "dropped_b_only": 1
+    },
+    {
+      "pair": "RB/I",
+      "bucket": "黑色",
+      "ok": true,
+      "n": 3180,
+      "dropped_a_only": 1106,
+      "dropped_b_only": 3
+    },
+    {
+      "pair": "RB/JM",
+      "bucket": "黑色",
+      "ok": true,
+      "n": 3312,
+      "dropped_a_only": 974,
+      "dropped_b_only": 3
+    },
+    {
+      "pair": "I/JM",
+      "bucket": "黑色",
+      "ok": true,
+      "n": 3180,
+      "dropped_a_only": 3,
+      "dropped_b_only": 135
+    }
+  ],
+  "focus": "农产品+黑色供需",
+  "excluded": {
+    "贵金属": [
+      "AU/AG"
+    ],
+    "能化": [
+      "MA/TA",
+      "MA/EG",
+      "FG/SA"
+    ],
+    "有色": [
+      "CU/AL"
+    ]
+  }
+}

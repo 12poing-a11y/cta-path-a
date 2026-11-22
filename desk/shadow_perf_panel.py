@@ -143,4 +143,36 @@ def render_shadow_perf_panel(root: Path) -> dict[str, Any] | None:
                 )
             st.dataframe(pd.DataFrame(view), width="stretch", hide_index=True)
 
+    # T-P1 formal BT closed_pnls attribution (separate from T+N candidate ledger)
+    attr_path = root / "lab" / "research" / "validation" / "shadow_attribution_latest.json"
+    with st.expander("正式BT成交归因 · Regime×袖套（T-P1 · 只读）", expanded=False):
+        if not attr_path.is_file():
+            st.caption("尚无 shadow_attribution_latest.json；日更 soft 或本地 build_shadow_attribution。")
+        else:
+            try:
+                import json
+
+                attr = json.loads(attr_path.read_text(encoding="utf-8"))
+                st.caption(attr.get("disclaimer") or "")
+                st.markdown(
+                    f"n={attr.get('n_trades')} · proxy_share={attr.get('proxy_entry_share')} · "
+                    f"窗口 {((attr.get('bt_window') or {}).get('start'))}→"
+                    f"{((attr.get('bt_window') or {}).get('end'))}"
+                )
+                tables = attr.get("tables") or {}
+                mat = tables.get("regime_x_sleeve") or []
+                if mat:
+                    st.dataframe(pd.DataFrame(mat), width="stretch", hide_index=True)
+                for title, key in (
+                    ("退出原因", "by_exit_reason"),
+                    ("持仓天数", "by_hold_bucket"),
+                    ("成交口径", "by_fill_basis"),
+                ):
+                    rows = tables.get(key) or []
+                    if rows:
+                        st.markdown(f"**{title}**")
+                        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+            except Exception as exc:  # noqa: BLE001
+                st.caption(f"归因读取失败：{exc}")
+
     return pack

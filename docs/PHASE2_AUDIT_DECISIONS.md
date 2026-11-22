@@ -1,5 +1,7 @@
 # CTA Path-A · 第二阶段审计取舍（定稿）
 
+> **2026-11-22 合并**：刀序权威见 `docs/UPGRADE_ITERATIONS.md`。本文件保留裁决原文；**T-DU / T-GV / T-P1 已完成**；余项见总表 §4（F2 等样本）。
+
 **日期**：2026-11-15  
 **输入**：[多方审计分享](https://chatgpt.com/s/t_6af8897299688191a2357d49a2ef8d6c) + 本仓对照 + P0 代码级审计（见 `docs/P0_CODE_AUDIT.md`）  
 **原则**：研究系统可信度优先于策略收益优化；正式参数不动；不堆指标。
@@ -58,17 +60,17 @@
 2. **主力合约选择**：calendar nearest ≠ OI 主力；超差（默认 3%）强制 proxy — **已做**（`basis_rejected`）；OI 映射仍待后续  
 3. **proxy 进主 KPI**：`proxy_entry_share` / `same_day_exit_n` — **已做**  
 4. **paper_book**：同日双跑幂等、入场日不吃盘前 15m、原子写、拒绝回退 asof — **已做**；组合帽/next_open 对齐仍待  
-5. **日报陈旧熔断**：`bar_date` 对齐期望会话；静默降级改显式 — 待做  
-6. **Gate 接线**：scorecard 读产物布尔；登记每次正式回测/扫参 — 待做  
+5. **日报陈旧熔断**：`bar_date` 对齐期望会话；静默降级改显式 — **已做（T-DU 2026-11-22）**  
+6. **Gate 接线**：scorecard 读产物布尔；登记每次正式回测/扫参 — **已做（T-GV 2026-11-22）**  
 
 **正式晋升已完成**（2026-11-15）：`historical_backtest_latest.json` + `formal_scorecard_latest.json`  
 同窗结果：**−7.6%/DD20.5 → +5.0%/DD3.3**（成交 43；结论「继续L1」；PBO≈0.39）。旧污染成绩已归档于 `archive/scorecard/`。  
 
 ### P1 — 搞清盈亏从哪来
 
-1. 完整收益归因（品种/板块/多空/持仓天数/退出原因/席位/换月/成本）  
-2. Regime 影子标签 + 策略×状态矩阵（统一成交与成本口径）  
-3. 组合相关性 / 因子集中度影子（不替代现有 Top3/板块帽）  
+1. 完整收益归因（品种/板块/多空/持仓天数/退出原因/席位/换月/成本） — **骨架已做（T-P1）**：`shadow_attribution_latest.json`（席位/换月细项可后续加厚）  
+2. Regime 影子标签 + 策略×状态矩阵（统一成交与成本口径） — **规则 Regime×袖套已做（T-P1）**；非 HMM  
+3. 组合相关性 / 因子集中度影子（不替代现有 Top3/板块帽） — **延后**（已有 portfolio risk 影子）  
 
 ### P2 — 新优势研究（P0/P1 过线后）
 
@@ -107,4 +109,6 @@
 
 - 评估说明书：`docs/DESK_EVAL_BRIEF.md`  
 - P0 逐文件问题：`docs/P0_CODE_AUDIT.md`  
-- 既有升级总表：`docs/UPGRADE_PLAN.md`（本文件覆盖其「下一阶段优先级」）  
+- 合并权威刀序：`docs/UPGRADE_ITERATIONS.md`  
+- 历史执行记录：`docs/UPGRADE_PLAN.md`（P0–P4 / A1–A3）  
+

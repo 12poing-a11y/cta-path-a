@@ -1,0 +1,103 @@
+{
+  "path_a_meta": {
+    "start": "2025-12-23",
+    "end": "2026-11-13",
+    "ret_pct": 3.988,
+    "max_dd_pct": 6.755
+  },
+  "P0_portfolio_full_delta": {
+    "ret_pct_pts": 0.176,
+    "dd_pct_pts": -0.877
+  },
+  "P0_per_symbol_full_delta": {
+    "ret_pct_pts": 4.267,
+    "dd_pct_pts": -3.772
+  },
+  "P0_per_symbol_oos_delta": {
+    "ret_pct_pts": -0.355,
+    "dd_pct_pts": -3.634
+  },
+  "P1": {
+    "hits": 1,
+    "metrics": {
+      "ret_pct": 0.005,
+      "max_dd_pct": 0.0,
+      "equity_start": 200000.0,
+      "equity_end": 200009.07
+    }
+  },
+  "P2": {
+    "carry_data": false,
+    "delta": 0.0
+  },
+  "combo": {
+    "baseline_ret_pct": 3.988,
+    "combo_p0_p1_ret_pct": 8.259,
+    "p0_path_pnl": 16509.63,
+    "p1_extra_pnl": 9.07,
+    "p2_alt_delta_ret_pct_pts": 0.0,
+    "note": "P2 reported separately to avoid double-scaling P0 path"
+  },
+  "audit_score": {
+    "PASS": 5,
+    "PARTIAL": 2,
+    "FAIL": 1
+  },
+  "verdict": {
+    "promote_path_a": false,
+    "promote_shadow_continue": true,
+    "recommended_next": "keep_P0_per_symbol_shadow; defer_P1_until_bidask; defer_P2_dynamic_slip; do_not_merge_into_CTA_signal",
+    "block_reasons": [
+      "not_wired_into_position_rules",
+      "manual_gate_required"
+    ],
+    "score": {
+      "PASS": 5,
+      "PARTIAL": 2,
+      "FAIL": 1
+    }
+  },
+  "findings": [
+    {
+      "id": "F1_p0_wiring",
+      "status": "FAIL",
+      "claim": "P0 Dual-Track TVS replaces ATR caps in position_rules"
+    },
+    {
+      "id": "F2_p0_math_live",
+      "status": "PASS",
+      "claim": "Downside HV + IV warn + tolerance band are implemented in sim"
+    },
+    {
+      "id": "F3_p0_html_dd_gate",
+      "status": "PASS",
+      "claim": "HTML P0: max DD not above 3.3% on L1 ablation"
+    },
+    {
+      "id": "F4_p0_oos",
+      "status": "PASS",
+      "claim": "Independent OOS does not worsen return/DD vs baseline"
+    },
+    {
+      "id": "F5_p1_vrp",
+      "status": "PARTIAL",
+      "claim": "P1 proxy_vol_vrp delta-neutral sleeve with Sharpe>1 / corr<0.25"
+    },
+    {
+      "id": "F6_p2_carry",
+      "status": "PARTIAL",
+      "claim": "P2 carry weight + dynamic slippage + PBO<0.30"
+    },
+    {
+      "id": "F7_combo",
+      "status": "PASS",
+      "claim": "Stacked P0+P1 improves Path-A without promoting execution"
+    },
+    {
+      "id": "F8_governance",
+      "status": "PASS",
+      "claim": "Risk engine veto / no paper_book writes"
+    }
+  ],
+  "summary_zh": "方案可在影子层模拟 P0/P1/P2 逻辑，但与 HTML 预期的主链改造仍有结构性缺口；OOS 仅支持继续观察，不支持写入 position_rules / paper_book。"
+}

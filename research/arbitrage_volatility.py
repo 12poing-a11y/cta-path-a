@@ -202,8 +202,15 @@ def evaluate_risk_gate(
     min_correlation: float = 0.30,
     max_expansion_ratio: float = 2.50,
     max_abs_hedge_ratio: float = 20.0,
+    cointegration: dict | None = None,
+    require_cointegration: bool = False,
+    max_half_life: float | None = 60.0,
 ) -> dict[str, Any]:
-    """Fail-closed risk gate. A missing critical input blocks new risk."""
+    """Fail-closed risk gate. A missing critical input blocks new risk.
+
+    When ``require_cointegration`` is True, a missing/failed Engle-Granger
+    diagnostic or an excessive residual half-life also blocks new risk.
+    """
     reasons: list[str] = []
     if not volatility or not volatility.get("ok"):
         reasons.append("spread_volatility_unavailable")
@@ -222,6 +229,22 @@ def evaluate_risk_gate(
         reasons.append("volatility_ratio_unavailable")
     elif ratio > max_expansion_ratio:
         reasons.append("extreme_spread_volatility")
+    coint_ok = None
+    half_life = None
+    if require_cointegration:
+        if not cointegration or not isinstance(cointegration, dict):
+            reasons.append("cointegration_unavailable")
+        else:
+            coint_ok = bool(cointegration.get("ok"))
+            half_life = _finite_number(cointegration.get("half_life"))
+            if not coint_ok:
+                reasons.append("cointegration_failed")
+            if half_life is None:
+                reasons.append("half_life_unavailable")
+            elif max_half_life is not None and half_life > float(max_half_life):
+                reasons.append("half_life_too_long")
+            if cointegration.get("break_flag"):
+                reasons.append("residual_structure_break")
     return {
         "allow_new_risk": not reasons,
         "status": "PASS" if not reasons else "BLOCK",
@@ -229,6 +252,8 @@ def evaluate_risk_gate(
         "correlation": corr,
         "hedge_ratio": beta,
         "vol_expansion_ratio": ratio,
+        "cointegration_ok": coint_ok,
+        "half_life": half_life,
         "mode": "shadow_only",
     }
 
@@ -296,3 +321,409 @@ def size_pair_position(
         "mode": "shadow_only",
         "note": "未计保证金、跳空、手续费、滑点及最小手数约束；不可直接用于实盘下单。",
     }
+
+
+# ---------------------------------------------------------------------------
+# V1.1 — alignment, contract specs, Engle-Granger / ADF / half-life
+# ---------------------------------------------------------------------------
+
+# Approximate MacKinnon (1991) critical values for ADF residual test, no constant
+# in the residual regression beyond the EG residual mean (tau_c style approx).
+_ADF_CRIT_5 = -2.86
+_ADF_CRIT_1 = -3.43
+
+
+def align_pair_bars(
+    leg_a: Sequence[dict],
+    leg_b: Sequence[dict],
+    *,
+    date_key: str = "date",
+    price_key: str = "close",
+    volume_key: str = "volume",
+    oi_key: str = "open_interest",
+) -> dict[str, Any]:
+    """Inner-join two leg bar series on calendar date. Never forward-fills.
+
+    Bars missing on either leg are dropped (not carried). Output rows keep
+    optional volume/OI when both sides provide finite values.
+    """
+    def _index(rows: Sequence[dict]) -> dict[str, dict]:
+        out: dict[str, dict] = {}
+        prev = ""
+        for row in rows or []:
+            day = str(row.get(date_key) or "")[:10]
+            try:
+                date.fromisoformat(day)
+                ok_day = len(day) == 10 and day > prev
+            except ValueError:
+                ok_day = False
+            if not ok_day:
+                continue
+            prev = day
+            px = _finite_positive(row.get(price_key))
+            if px is None:
+                continue
+            out[day] = row
+        return out
+
+    ia, ib = _index(leg_a), _index(leg_b)
+    common = sorted(set(ia) & set(ib))
+    aligned: list[dict] = []
+    for day in common:
+        ra, rb = ia[day], ib[day]
+        a = _finite_positive(ra.get(price_key))
+        b = _finite_positive(rb.get(price_key))
+        if a is None or b is None:
+            continue
+        row = {
+            "date": day,
+            "leg_a_close": a,
+            "leg_b_close": b,
+            "leg_a_volume": _finite_number(ra.get(volume_key)),
+            "leg_b_volume": _finite_number(rb.get(volume_key)),
+            "leg_a_oi": _finite_number(ra.get(oi_key)),
+            "leg_b_oi": _finite_number(rb.get(oi_key)),
+        }
+        # Prefer next-day open fields when present (V1.2 fill); else absent.
+        for src, dst in (
+            (ra.get("open"), "leg_a_open"),
+            (rb.get("open"), "leg_b_open"),
+            (ra.get("high"), "leg_a_high"),
+            (rb.get("high"), "leg_b_high"),
+            (ra.get("low"), "leg_a_low"),
+            (rb.get("low"), "leg_b_low"),
+        ):
+            v = _finite_positive(src)
+            if v is not None:
+                row[dst] = v
+        aligned.append(row)
+    dropped_a = len(ia) - len(common)
+    dropped_b = len(ib) - len(common)
+    return {
+        "ok": len(aligned) >= 3,
+        "rows": aligned,
+        "n": len(aligned),
+        "dropped_a_only": dropped_a,
+        "dropped_b_only": dropped_b,
+        "fill_policy": "inner_join_no_ffill",
+    }
+
+
+def contract_spec_from_universe_row(row: dict | None) -> dict[str, Any] | None:
+    """Normalize Path-A universe symbol fields into a research contract spec."""
+    if not isinstance(row, dict) or not row.get("code"):
+        return None
+    mult = _finite_positive(row.get("mult") or row.get("multiplier"))
+    tick = _finite_positive(row.get("tick"))
+    if mult is None or tick is None:
+        return None
+    fee_yuan = _finite_number(row.get("fee_yuan")) or 0.0
+    fee_rate = _finite_number(row.get("fee_rate")) or 0.0
+    margin_rate = _finite_positive(row.get("margin_rate")) or 0.12
+    limit_pct = _finite_positive(row.get("limit_pct")) or 0.07
+    return {
+        "code": str(row["code"]).upper(),
+        "name": str(row.get("name") or ""),
+        "bucket": str(row.get("bucket") or ""),
+        "mult": float(mult),
+        "tick": float(tick),
+        "fee_yuan": float(fee_yuan),
+        "fee_rate": float(fee_rate),
+        "margin_rate": float(margin_rate),
+        "limit_pct": float(limit_pct),
+    }
+
+
+def adf_tstat(series: Sequence[float], *, lags: int = 0) -> dict[str, Any]:
+    """Stdlib ADF(0) style t-stat: Δy = α + β y_{t-1} (+ lag Δy if lags>0)."""
+    y = [float(v) for v in series if _finite_number(v) is not None]
+    if len(y) < 20:
+        return {"ok": False, "reason": "insufficient_sample", "tstat": None, "n": len(y)}
+    dy = [y[i] - y[i - 1] for i in range(1, len(y))]
+    level = y[:-1]
+    # Build regression dy_t = a + b*y_{t-1} + sum c_k dy_{t-k}
+    n = len(dy)
+    if lags < 0 or lags >= n - 3:
+        return {"ok": False, "reason": "invalid_lags", "tstat": None, "n": n}
+    rows_x: list[list[float]] = []
+    rows_y: list[float] = []
+    for t in range(lags, n):
+        x = [1.0, level[t]]
+        for k in range(1, lags + 1):
+            x.append(dy[t - k])
+        rows_x.append(x)
+        rows_y.append(dy[t])
+    k = len(rows_x[0])
+    # OLS via normal equations (small k).
+    xtx = [[0.0] * k for _ in range(k)]
+    xty = [0.0] * k
+    for i in range(len(rows_x)):
+        for r in range(k):
+            xty[r] += rows_x[i][r] * rows_y[i]
+            for c in range(k):
+                xtx[r][c] += rows_x[i][r] * rows_x[i][c]
+    beta = _solve_linear(xtx, xty)
+    if beta is None:
+        return {"ok": False, "reason": "singular", "tstat": None, "n": len(rows_y)}
+    resid = [
+        rows_y[i] - sum(beta[j] * rows_x[i][j] for j in range(k))
+        for i in range(len(rows_y))
+    ]
+    dof = len(resid) - k
+    if dof < 1:
+        return {"ok": False, "reason": "dof", "tstat": None, "n": len(resid)}
+    sse = sum(r * r for r in resid)
+    sigma2 = sse / dof
+    # Var(beta) ≈ sigma2 * (X'X)^{-1}
+    inv = _invert_matrix(xtx)
+    if inv is None or inv[1][1] <= 0 or sigma2 <= 0:
+        return {"ok": False, "reason": "se_unavailable", "tstat": None, "n": len(resid)}
+    se_b = math.sqrt(sigma2 * inv[1][1])
+    if se_b <= 1e-14:
+        return {"ok": False, "reason": "se_zero", "tstat": None, "n": len(resid)}
+    tstat = beta[1] / se_b
+    return {
+        "ok": True,
+        "tstat": tstat,
+        "beta": beta[1],
+        "n": len(resid),
+        "reject_5pct": tstat < _ADF_CRIT_5,
+        "reject_1pct": tstat < _ADF_CRIT_1,
+        "crit_5pct": _ADF_CRIT_5,
+        "crit_1pct": _ADF_CRIT_1,
+    }
+
+
+def _solve_linear(a: list[list[float]], b: list[float]) -> list[float] | None:
+    """Gaussian elimination with partial pivoting."""
+    n = len(b)
+    m = [row[:] + [b[i]] for i, row in enumerate(a)]
+    for col in range(n):
+        piv = max(range(col, n), key=lambda r: abs(m[r][col]))
+        if abs(m[piv][col]) < 1e-14:
+            return None
+        m[col], m[piv] = m[piv], m[col]
+        div = m[col][col]
+        for j in range(col, n + 1):
+            m[col][j] /= div
+        for r in range(n):
+            if r == col:
+                continue
+            fac = m[r][col]
+            for j in range(col, n + 1):
+                m[r][j] -= fac * m[col][j]
+    return [m[i][n] for i in range(n)]
+
+
+def _invert_matrix(a: list[list[float]]) -> list[list[float]] | None:
+    n = len(a)
+    m = [a[i][:] + [1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
+    for col in range(n):
+        piv = max(range(col, n), key=lambda r: abs(m[r][col]))
+        if abs(m[piv][col]) < 1e-14:
+            return None
+        m[col], m[piv] = m[piv], m[col]
+        div = m[col][col]
+        for j in range(2 * n):
+            m[col][j] /= div
+        for r in range(n):
+            if r == col:
+                continue
+            fac = m[r][col]
+            for j in range(2 * n):
+                m[r][j] -= fac * m[col][j]
+    return [row[n:] for row in m]
+
+
+def half_life_ou(residuals: Sequence[float]) -> dict[str, Any]:
+    """AR(1) half-life on residual levels: Δr = λ r_{t-1} + ε."""
+    r = [float(v) for v in residuals if _finite_number(v) is not None]
+    if len(r) < 20:
+        return {"ok": False, "half_life": None, "lambda": None, "reason": "insufficient_sample"}
+    x = r[:-1]
+    y = [r[i] - r[i - 1] for i in range(1, len(r))]
+    mx, my = _mean(x), _mean(y)
+    denom = sum((v - mx) ** 2 for v in x)
+    if denom <= 1e-14:
+        return {"ok": False, "half_life": None, "lambda": None, "reason": "flat_residual"}
+    lam = sum((x[i] - mx) * (y[i] - my) for i in range(len(x))) / denom
+    # Need mean-reverting: -1 < lam < 0  (since Δr = λ r => r_t = (1+λ) r_{t-1})
+    phi = 1.0 + lam
+    if not (-1.0 < lam < 0.0) or phi <= 0.0 or phi >= 1.0:
+        return {
+            "ok": False, "half_life": None, "lambda": lam,
+            "reason": "not_mean_reverting",
+        }
+    hl = -math.log(2.0) / math.log(phi)
+    if not math.isfinite(hl) or hl <= 0:
+        return {"ok": False, "half_life": None, "lambda": lam, "reason": "non_finite_half_life"}
+    return {"ok": True, "half_life": hl, "lambda": lam, "reason": ""}
+
+
+def residual_structure_break(
+    residuals: Sequence[float],
+    *,
+    threshold: float = 0.75,
+) -> dict[str, Any]:
+    """Flag large shift in residual variance between first/second half."""
+    r = [float(v) for v in residuals if _finite_number(v) is not None]
+    if len(r) < 40:
+        return {"ok": False, "break_flag": False, "reason": "insufficient_sample"}
+    mid = len(r) // 2
+    s1 = _sample_std(r[:mid])
+    s2 = _sample_std(r[mid:])
+    if s1 is None or s2 is None or min(s1, s2) <= 1e-12:
+        return {"ok": False, "break_flag": False, "reason": "std_unavailable"}
+    ratio = max(s1, s2) / min(s1, s2)
+    return {
+        "ok": True,
+        "break_flag": ratio >= (1.0 + float(threshold)),
+        "std_first": s1,
+        "std_second": s2,
+        "std_ratio": ratio,
+        "threshold_ratio": 1.0 + float(threshold),
+        "reason": "",
+    }
+
+
+def engle_granger(
+    leg_a: Sequence[float],
+    leg_b: Sequence[float],
+    *,
+    adf_lags: int = 0,
+    max_half_life: float = 60.0,
+) -> dict[str, Any]:
+    """Engle-Granger: OLS A~B then ADF + half-life on residuals (prior sample)."""
+    if len(leg_a) != len(leg_b) or len(leg_a) < 30:
+        return {
+            "ok": False, "reason": "insufficient_sample",
+            "adf": None, "half_life": None, "break_flag": False,
+        }
+    a = [float(x) for x in leg_a]
+    b = [float(x) for x in leg_b]
+    if any(not math.isfinite(x) or x <= 0 for x in a + b):
+        return {
+            "ok": False, "reason": "non_positive_price",
+            "adf": None, "half_life": None, "break_flag": False,
+        }
+    fit = _ols(b, a)
+    if fit is None:
+        return {
+            "ok": False, "reason": "ols_failed",
+            "adf": None, "half_life": None, "break_flag": False,
+        }
+    intercept, beta = fit
+    resid = [a[i] - intercept - beta * b[i] for i in range(len(a))]
+    adf = adf_tstat(resid, lags=adf_lags)
+    hl = half_life_ou(resid)
+    br = residual_structure_break(resid)
+    coint = bool(adf.get("ok") and adf.get("reject_5pct"))
+    hl_ok = bool(hl.get("ok") and hl.get("half_life") is not None
+                 and float(hl["half_life"]) <= float(max_half_life))
+    ok = coint and hl_ok and not bool(br.get("break_flag"))
+    reason = ""
+    if not coint:
+        reason = "adf_not_rejected"
+    elif not hl_ok:
+        reason = "half_life_fail"
+    elif br.get("break_flag"):
+        reason = "structure_break"
+    return {
+        "ok": ok,
+        "reason": reason,
+        "intercept": intercept,
+        "hedge_ratio": beta,
+        "adf": adf,
+        "half_life": hl.get("half_life"),
+        "half_life_detail": hl,
+        "break_flag": bool(br.get("break_flag")),
+        "break_detail": br,
+        "n": len(resid),
+    }
+
+
+def rolling_cointegration(
+    rows: Sequence[dict],
+    *,
+    lookback: int = 120,
+    min_observations: int = 60,
+    date_key: str = "date",
+    leg_a_key: str = "leg_a_close",
+    leg_b_key: str = "leg_b_close",
+    max_half_life: float = 60.0,
+) -> list[dict]:
+    """Point-in-time Engle-Granger using strictly prior aligned rows."""
+    if lookback < 30 or min_observations < 30 or min_observations > lookback:
+        raise ValueError("invalid lookback/min_observations for cointegration")
+    out: list[dict] = []
+    clean_a: list[float] = []
+    clean_b: list[float] = []
+    previous_date = ""
+    for row in rows or []:
+        day = str(row.get(date_key) or "")[:10]
+        a = _finite_positive(row.get(leg_a_key))
+        b = _finite_positive(row.get(leg_b_key))
+        try:
+            date.fromisoformat(day)
+            valid_date = len(day) == 10 and day > previous_date
+        except ValueError:
+            valid_date = False
+        if valid_date:
+            previous_date = day
+        if not valid_date or a is None or b is None:
+            out.append({"date": day, "ok": False, "reason": "invalid_or_unsorted_bar"})
+            continue
+        prior_a = clean_a[-lookback:]
+        prior_b = clean_b[-lookback:]
+        if len(prior_a) < min_observations:
+            out.append({
+                "date": day, "ok": False, "reason": "insufficient_fit_history",
+                "n": len(prior_a),
+            })
+        else:
+            eg = engle_granger(prior_a, prior_b, max_half_life=max_half_life)
+            out.append({"date": day, **eg})
+        clean_a.append(a)
+        clean_b.append(b)
+    return out
+
+
+def spread_risk_metrics(
+    spread_rows: Sequence[dict],
+    *,
+    short_window: int = 5,
+    long_window: int = 60,
+    ewma_lambda: float = 0.94,
+    es_alpha: float = 0.05,
+) -> dict[str, Any]:
+    """V1.2 diagnostics: ATR-like, EWMA, percentile, and left-tail ES of Δspread."""
+    base = spread_volatility(
+        spread_rows,
+        short_window=short_window,
+        long_window=long_window,
+        ewma_lambda=ewma_lambda,
+    )
+    valid = [r for r in (spread_rows or []) if r.get("ok") and r.get("spread") is not None]
+    spreads = [float(r["spread"]) for r in valid]
+    changes = [spreads[i] - spreads[i - 1] for i in range(1, len(spreads))]
+    pct = None
+    es = None
+    if len(changes) >= max(20, long_window):
+        sample = sorted(changes[-long_window:])
+        # historical percentile of |Δspread|
+        abs_s = sorted(abs(x) for x in sample)
+        pct = abs_s[int(0.95 * (len(abs_s) - 1))]
+        # ES of adverse (negative) changes — losses for long-spread book
+        left = sorted(sample)
+        cut = max(1, int(math.floor(es_alpha * len(left))))
+        es = abs(sum(left[:cut]) / cut)
+    atr = None
+    if len(changes) >= short_window:
+        atr = _mean([abs(x) for x in changes[-short_window:]])
+    base.update({
+        "spread_atr": atr,
+        "vol_p95_abs": pct,
+        "es_abs": es,
+        "es_alpha": es_alpha,
+    })
+    return base

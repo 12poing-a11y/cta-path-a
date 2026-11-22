@@ -7,6 +7,7 @@ strictly prior observations; current-bar prices never enter their own fit.
 from __future__ import annotations
 
 import math
+from datetime import date
 from typing import Any, Sequence
 
 
@@ -64,13 +65,16 @@ def rolling_spread(
     out: list[dict] = []
     clean_a: list[float] = []
     clean_b: list[float] = []
-    clean_dates: list[str] = []
     previous_date = ""
     for row in rows or []:
         day = str(row.get(date_key) or "")[:10]
         a = _finite_positive(row.get(leg_a_key))
         b = _finite_positive(row.get(leg_b_key))
-        valid_date = len(day) == 10 and day > previous_date
+        try:
+            date.fromisoformat(day)
+            valid_date = len(day) == 10 and day > previous_date
+        except ValueError:
+            valid_date = False
         if day:
             previous_date = day
         if not valid_date or a is None or b is None:
@@ -102,7 +106,6 @@ def rolling_spread(
             })
         clean_a.append(a)
         clean_b.append(b)
-        clean_dates.append(day)
     return out
 
 
@@ -201,7 +204,7 @@ def evaluate_risk_gate(
         reasons.append("spread_volatility_unavailable")
     if correlation is None or not math.isfinite(float(correlation)):
         reasons.append("correlation_unavailable")
-    elif correlation < min_correlation:
+    elif abs(correlation) < min_correlation:
         reasons.append("correlation_breakdown")
     if hedge_ratio is None or not math.isfinite(float(hedge_ratio)):
         reasons.append("hedge_ratio_unavailable")

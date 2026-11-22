@@ -1,9 +1,11 @@
 # 期权研究台 · 路线图
 
-**日期**：2026-11-15  
-**已完成**：阶段 A–E + F1  
+**日期**：2026-11-22（计划合并）  
+**已完成**：阶段 A–E + F1 + F1b  
 **原则**：全程不改 Path-A 正式层（`paper_book` / 正式 BT / seats）。  
-**逐步开放 / 迭代反馈**：见仓库根计划 `docs/UPGRADE_ITERATIONS.md`（个人档案已同步）。
+**逐步开放 / 迭代反馈 / 合并总表**：见 `docs/UPGRADE_ITERATIONS.md`（四轨 O/T/A/V；个人档案已同步）。  
+**当前姿态**：**观察积样本**；锁定下一刀仍为 **F2**（Bid/Ask 信用价差研究 BT），样本未够不开。  
+**旁轨**：可信度 **T-DU/T-GV/T-P1** 与 **V-旁路** 已完成；余项（F2 等样本、A-V1.4、F+）见总表 §4。
 
 ---
 
@@ -115,3 +117,11 @@ python -m pytest tests/test_options_pipeline.py tests/test_options_black76.py -q
 | `option_hedge` Synthetic | 保留；OH-01 已修 |
 | `gamma_wall` | 保留；共享 black76 |
 | `desk/options_panel` | 保留 Synthetic；研究面板另建 |
+
+## 相关研究轨（非本 ROADMAP 主刀，见总计划）
+
+| 轨 | 状态 | 说明 |
+|----|------|------|
+| 套利影子 V1.1–V1.3 | **观察** | 不晋级；细则 `docs/ARBITRAGE_VOLATILITY_UPGRADE.md` |
+| Gemini TVS / 波动率协同模拟 | **观察** | 不写 `position_rules`；审计见 `gemini_scheme_sim_audit_latest.json` |
+| 期权 V1.4（商品 IV/VRP 监控） | **封闭** | 与 F2 盘口样本相关；够样后再议 |

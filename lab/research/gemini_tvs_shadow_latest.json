@@ -1,0 +1,197 @@
+{
+  "mode": "gemini_p0_tvs_shadow_grid",
+  "disclaimer": "Gemini/HTML P0 影子对照：仅把 Dual-Track TVS 叠在已有 Path-A 日PnL上；不改 position_rules / paper_book / seats。",
+  "primary": {
+    "ok": true,
+    "mode": "gemini_p0_tvs_shadow",
+    "disclaimer": "Gemini/HTML P0 影子对照：仅把 Dual-Track TVS 叠在已有 Path-A 日PnL上；不改 position_rules / paper_book / seats。",
+    "params": {
+      "target_vol": 0.15,
+      "hv_window": 20,
+      "max_leverage": 1.0,
+      "iv_warn_pctile": 0.9,
+      "iv_compress": 0.5,
+      "tolerance_band": 0.05
+    },
+    "window": {
+      "start": "2025-12-23",
+      "end": "2026-11-13",
+      "n_days": 215
+    },
+    "baseline": {
+      "equity_start": 200000.0,
+      "equity_end": 207976.24,
+      "ret_pct": 3.988,
+      "max_dd_pct": 6.755
+    },
+    "tvs_shadow": {
+      "equity_start": 200000.0,
+      "equity_end": 208328.63,
+      "ret_pct": 4.164,
+      "max_dd_pct": 5.878,
+      "n_leverage_adjust": 5,
+      "leverage_turnover": 1.4099,
+      "n_iv_warn": 1,
+      "final_lev": 1.0
+    },
+    "delta": {
+      "ret_pct_pts": 0.176,
+      "dd_pct_pts": -0.877
+    },
+    "source": "D:\\AI\\cta-path-a-arb-v11\\historical_backtest_latest.json",
+    "path_a_meta": {
+      "ret_pct": 3.988,
+      "max_dd_pct": 6.755,
+      "start": "2025-12-23",
+      "end": "2026-11-13",
+      "mode": "seats"
+    }
+  },
+  "grid": [
+    {
+      "target_vol": 0.1,
+      "tolerance_band": 0.05,
+      "baseline": {
+        "equity_start": 200000.0,
+        "equity_end": 207976.24,
+        "ret_pct": 3.988,
+        "max_dd_pct": 6.755
+      },
+      "tvs_shadow": {
+        "equity_start": 200000.0,
+        "equity_end": 207416.75,
+        "ret_pct": 3.708,
+        "max_dd_pct": 5.672,
+        "n_leverage_adjust": 13,
+        "leverage_turnover": 2.1293,
+        "n_iv_warn": 1,
+        "final_lev": 1.0
+      },
+      "delta": {
+        "ret_pct_pts": -0.28,
+        "dd_pct_pts": -1.083
+      }
+    },
+    {
+      "target_vol": 0.1,
+      "tolerance_band": 0.0,
+      "baseline": {
+        "equity_start": 200000.0,
+        "equity_end": 207976.24,
+        "ret_pct": 3.988,
+        "max_dd_pct": 6.755
+      },
+      "tvs_shadow": {
+        "equity_start": 200000.0,
+        "equity_end": 207900.2,
+        "ret_pct": 3.95,
+        "max_dd_pct": 5.826,
+        "n_leverage_adjust": 27,
+        "leverage_turnover": 2.4564,
+        "n_iv_warn": 1,
+        "final_lev": 1.0
+      },
+      "delta": {
+        "ret_pct_pts": -0.038,
+        "dd_pct_pts": -0.929
+      }
+    },
+    {
+      "target_vol": 0.15,
+      "tolerance_band": 0.05,
+      "baseline": {
+        "equity_start": 200000.0,
+        "equity_end": 207976.24,
+        "ret_pct": 3.988,
+        "max_dd_pct": 6.755
+      },
+      "tvs_shadow": {
+        "equity_start": 200000.0,
+        "equity_end": 208328.63,
+        "ret_pct": 4.164,
+        "max_dd_pct": 5.878,
+        "n_leverage_adjust": 5,
+        "leverage_turnover": 1.4099,
+        "n_iv_warn": 1,
+        "final_lev": 1.0
+      },
+      "delta": {
+        "ret_pct_pts": 0.176,
+        "dd_pct_pts": -0.877
+      }
+    },
+    {
+      "target_vol": 0.15,
+      "tolerance_band": 0.0,
+      "baseline": {
+        "equity_start": 200000.0,
+        "equity_end": 207976.24,
+        "ret_pct": 3.988,
+        "max_dd_pct": 6.755
+      },
+      "tvs_shadow": {
+        "equity_start": 200000.0,
+        "equity_end": 208535.11,
+        "ret_pct": 4.268,
+        "max_dd_pct": 5.885,
+        "n_leverage_adjust": 15,
+        "leverage_turnover": 1.6071,
+        "n_iv_warn": 1,
+        "final_lev": 1.0
+      },
+      "delta": {
+        "ret_pct_pts": 0.28,
+        "dd_pct_pts": -0.87
+      }
+    },
+    {
+      "target_vol": 0.2,
+      "tolerance_band": 0.05,
+      "baseline": {
+        "equity_start": 200000.0,
+        "equity_end": 207976.24,
+        "ret_pct": 3.988,
+        "max_dd_pct": 6.755
+      },
+      "tvs_shadow": {
+        "equity_start": 200000.0,
+        "equity_end": 208438.83,
+        "ret_pct": 4.219,
+        "max_dd_pct": 6.355,
+        "n_leverage_adjust": 6,
+        "leverage_turnover": 1.3148,
+        "n_iv_warn": 1,
+        "final_lev": 1.0
+      },
+      "delta": {
+        "ret_pct_pts": 0.231,
+        "dd_pct_pts": -0.4
+      }
+    },
+    {
+      "target_vol": 0.2,
+      "tolerance_band": 0.0,
+      "baseline": {
+        "equity_start": 200000.0,
+        "equity_end": 207976.24,
+        "ret_pct": 3.988,
+        "max_dd_pct": 6.755
+      },
+      "tvs_shadow": {
+        "equity_start": 200000.0,
+        "equity_end": 208710.41,
+        "ret_pct": 4.355,
+        "max_dd_pct": 6.367,
+        "n_leverage_adjust": 15,
+        "leverage_turnover": 1.4761,
+        "n_iv_warn": 1,
+        "final_lev": 1.0
+      },
+      "delta": {
+        "ret_pct_pts": 0.367,
+        "dd_pct_pts": -0.388
+      }
+    }
+  ],
+  "verdict_hint": "若 tvs 费后/回撤相对 baseline 无改善，则 Gemini P0 不宜晋级 Path-A；仅作影子旁路研究。"
+}

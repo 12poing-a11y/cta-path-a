@@ -1,0 +1,183 @@
+{
+  "window": {
+    "start": "2025-11-20",
+    "end": "2026-11-20"
+  },
+  "disclaimer": "剔除贵金属+能化；影子研究口径同前，非正式验收",
+  "excluded": {
+    "贵金属": [
+      "AU/AG"
+    ],
+    "能化/能源扰动": [
+      "FG/SA",
+      "MA/EG",
+      "MA/TA"
+    ]
+  },
+  "focus_农产品_黑色供需": {
+    "name": "农产品+黑色供需",
+    "n": 4,
+    "pairs": [
+      {
+        "pair": "RB/JM",
+        "pnl_yuan": -3870.0,
+        "ret_on_1m_pct": -0.387,
+        "trades": 2,
+        "blocked_entries": 0
+      },
+      {
+        "pair": "M/P",
+        "pnl_yuan": 5750.0,
+        "ret_on_1m_pct": 0.575,
+        "trades": 3,
+        "blocked_entries": 18
+      },
+      {
+        "pair": "RB/I",
+        "pnl_yuan": 8700.0,
+        "ret_on_1m_pct": 0.87,
+        "trades": 6,
+        "blocked_entries": 0
+      },
+      {
+        "pair": "I/JM",
+        "pnl_yuan": 12510.0,
+        "ret_on_1m_pct": 1.251,
+        "trades": 3,
+        "blocked_entries": 35
+      }
+    ],
+    "sum_pnl_yuan": 23090.0,
+    "sum_ret_on_1m_pct": 2.309,
+    "mean_pnl_yuan": 5772.5,
+    "mean_ret_on_1m_pct": 0.577,
+    "trim_drop": [
+      "RB/JM",
+      "I/JM"
+    ],
+    "trim_mean_pnl_yuan": 7225.0,
+    "trim_mean_ret_on_1m_pct": 0.722
+  },
+  "focus_加有色供需": {
+    "name": "农产品+黑色+有色供需",
+    "n": 5,
+    "pairs": [
+      {
+        "pair": "CU/AL",
+        "pnl_yuan": -61175.0,
+        "ret_on_1m_pct": -6.117,
+        "trades": 10,
+        "blocked_entries": 1
+      },
+      {
+        "pair": "RB/JM",
+        "pnl_yuan": -3870.0,
+        "ret_on_1m_pct": -0.387,
+        "trades": 2,
+        "blocked_entries": 0
+      },
+      {
+        "pair": "M/P",
+        "pnl_yuan": 5750.0,
+        "ret_on_1m_pct": 0.575,
+        "trades": 3,
+        "blocked_entries": 18
+      },
+      {
+        "pair": "RB/I",
+        "pnl_yuan": 8700.0,
+        "ret_on_1m_pct": 0.87,
+        "trades": 6,
+        "blocked_entries": 0
+      },
+      {
+        "pair": "I/JM",
+        "pnl_yuan": 12510.0,
+        "ret_on_1m_pct": 1.251,
+        "trades": 3,
+        "blocked_entries": 35
+      }
+    ],
+    "sum_pnl_yuan": -38085.0,
+    "sum_ret_on_1m_pct": -3.808,
+    "mean_pnl_yuan": -7617.0,
+    "mean_ret_on_1m_pct": -0.762,
+    "trim_drop": [
+      "CU/AL",
+      "I/JM"
+    ],
+    "trim_mean_pnl_yuan": 3526.67,
+    "trim_mean_ret_on_1m_pct": 0.353
+  },
+  "农产品_only": {
+    "name": "农产品",
+    "n": 1,
+    "pairs": [
+      {
+        "pair": "M/P",
+        "pnl_yuan": 5750.0,
+        "ret_on_1m_pct": 0.575,
+        "trades": 3,
+        "blocked_entries": 18
+      }
+    ],
+    "sum_pnl_yuan": 5750.0,
+    "sum_ret_on_1m_pct": 0.575,
+    "mean_pnl_yuan": 5750.0,
+    "mean_ret_on_1m_pct": 0.575
+  },
+  "黑色供需_only": {
+    "name": "黑色供需",
+    "n": 3,
+    "pairs": [
+      {
+        "pair": "RB/JM",
+        "pnl_yuan": -3870.0,
+        "ret_on_1m_pct": -0.387,
+        "trades": 2,
+        "blocked_entries": 0
+      },
+      {
+        "pair": "RB/I",
+        "pnl_yuan": 8700.0,
+        "ret_on_1m_pct": 0.87,
+        "trades": 6,
+        "blocked_entries": 0
+      },
+      {
+        "pair": "I/JM",
+        "pnl_yuan": 12510.0,
+        "ret_on_1m_pct": 1.251,
+        "trades": 3,
+        "blocked_entries": 35
+      }
+    ],
+    "sum_pnl_yuan": 17340.0,
+    "sum_ret_on_1m_pct": 1.734,
+    "mean_pnl_yuan": 5780.0,
+    "mean_ret_on_1m_pct": 0.578,
+    "trim_drop": [
+      "RB/JM",
+      "I/JM"
+    ],
+    "trim_mean_pnl_yuan": 8700.0,
+    "trim_mean_ret_on_1m_pct": 0.87
+  },
+  "有色供需_only": {
+    "name": "有色供需",
+    "n": 1,
+    "pairs": [
+      {
+        "pair": "CU/AL",
+        "pnl_yuan": -61175.0,
+        "ret_on_1m_pct": -6.117,
+        "trades": 10,
+        "blocked_entries": 1
+      }
+    ],
+    "sum_pnl_yuan": -61175.0,
+    "sum_ret_on_1m_pct": -6.117,
+    "mean_pnl_yuan": -61175.0,
+    "mean_ret_on_1m_pct": -6.117
+  }
+}

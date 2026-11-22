@@ -1,0 +1,160 @@
+{
+  "mode": "shadow_research_only",
+  "disclaimer": "非正式V1.2回测；无手续费/滑点/保证金/涨跌停；CODE0连续合约有换月噪声；信号为价差Z均值回归研究代理，非已验收策略；不可用于晋级/下单。",
+  "window": {
+    "start": "2025-11-20",
+    "end": "2026-11-20"
+  },
+  "capital_yuan": 1000000.0,
+  "risk_budget_per_pair_yuan": 20000.0,
+  "signal": {
+    "z_enter": 1.5,
+    "z_exit": 0.5,
+    "fade_z": true
+  },
+  "portfolio": {
+    "pnl_yuan": -412145.0,
+    "ret_pct": -41.214,
+    "max_dd_pct": 51.077,
+    "n_pairs_ok": 9,
+    "n_days": 243
+  },
+  "pairs": [
+    {
+      "pair": "RB/I",
+      "bucket": "黑色",
+      "ok": true,
+      "start": "2025-11-20",
+      "end": "2026-11-20",
+      "n_days": 243,
+      "pnl_yuan": 8700.0,
+      "ret_on_1m_pct": 0.87,
+      "max_dd_on_pnl_path_pct": 907.143,
+      "trades": 6,
+      "blocked_entries": 0,
+      "final_pos": 0
+    },
+    {
+      "pair": "RB/JM",
+      "bucket": "黑色",
+      "ok": true,
+      "start": "2025-11-20",
+      "end": "2026-11-20",
+      "n_days": 243,
+      "pnl_yuan": -3870.0,
+      "ret_on_1m_pct": -0.387,
+      "max_dd_on_pnl_path_pct": 0.0,
+      "trades": 2,
+      "blocked_entries": 0,
+      "final_pos": 0
+    },
+    {
+      "pair": "I/JM",
+      "bucket": "黑色",
+      "ok": true,
+      "start": "2025-11-20",
+      "end": "2026-11-20",
+      "n_days": 243,
+      "pnl_yuan": 12510.0,
+      "ret_on_1m_pct": 1.251,
+      "max_dd_on_pnl_path_pct": 92.857,
+      "trades": 3,
+      "blocked_entries": 35,
+      "final_pos": 0
+    },
+    {
+      "pair": "MA/TA",
+      "bucket": "能化",
+      "ok": true,
+      "start": "2025-11-20",
+      "end": "2026-11-20",
+      "n_days": 243,
+      "pnl_yuan": 56520.0,
+      "ret_on_1m_pct": 5.652,
+      "max_dd_on_pnl_path_pct": 71.199,
+      "trades": 8,
+      "blocked_entries": 2,
+      "final_pos": 0
+    },
+    {
+      "pair": "MA/EG",
+      "bucket": "能化",
+      "ok": true,
+      "start": "2025-11-20",
+      "end": "2026-11-20",
+      "n_days": 243,
+      "pnl_yuan": 5250.0,
+      "ret_on_1m_pct": 0.525,
+      "max_dd_on_pnl_path_pct": 171.726,
+      "trades": 10,
+      "blocked_entries": 0,
+      "final_pos": 0
+    },
+    {
+      "pair": "FG/SA",
+      "bucket": "能化",
+      "ok": true,
+      "start": "2025-11-20",
+      "end": "2026-11-20",
+      "n_days": 243,
+      "pnl_yuan": 6860.0,
+      "ret_on_1m_pct": 0.686,
+      "max_dd_on_pnl_path_pct": 285.153,
+      "trades": 7,
+      "blocked_entries": 0,
+      "final_pos": -1
+    },
+    {
+      "pair": "M/P",
+      "bucket": "农产品",
+      "ok": true,
+      "start": "2025-11-20",
+      "end": "2026-11-20",
+      "n_days": 243,
+      "pnl_yuan": 5750.0,
+      "ret_on_1m_pct": 0.575,
+      "max_dd_on_pnl_path_pct": 123.124,
+      "trades": 3,
+      "blocked_entries": 18,
+      "final_pos": 0
+    },
+    {
+      "pair": "CU/AL",
+      "bucket": "有色",
+      "ok": true,
+      "start": "2025-11-20",
+      "end": "2026-11-20",
+      "n_days": 243,
+      "pnl_yuan": -61175.0,
+      "ret_on_1m_pct": -6.117,
+      "max_dd_on_pnl_path_pct": 125.209,
+      "trades": 10,
+      "blocked_entries": 1,
+      "final_pos": 1
+    },
+    {
+      "pair": "AU/AG",
+      "bucket": "贵金属",
+      "ok": true,
+      "start": "2025-11-20",
+      "end": "2026-11-20",
+      "n_days": 243,
+      "pnl_yuan": -442690.0,
+      "ret_on_1m_pct": -44.269,
+      "max_dd_on_pnl_path_pct": 1999.316,
+      "trades": 6,
+      "blocked_entries": 0,
+      "final_pos": 1
+    }
+  ],
+  "path_a_reference": {
+    "start": "2025-12-23",
+    "end": "2026-11-13",
+    "ret_pct": 3.988,
+    "max_dd_pct": 6.755,
+    "closed_trades": 69,
+    "mode": "seats",
+    "equity_start": 200000.0,
+    "equity_end": 207976.25
+  }
+}

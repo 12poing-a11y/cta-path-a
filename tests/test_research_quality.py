@@ -121,3 +121,52 @@ def test_unknown_price_basis_fails_closed():
     q = validate_signals([row], asof="20261105", universe=universe)
     assert q["ok"] is False
     assert "P:invalid_price_basis" in q["failures"]
+
+
+def test_expected_session_aligned_passes():
+    """T-DU: bar_date == expected session → ok; omit expected_session → legacy ok."""
+    universe = [{"code": "CF", "mult": 5, "tick": 5}]
+    row = {
+        "code": "CF", "close": 15000, "atr": 120, "r20": 0.04,
+        "r60": 0.08, "bar_date": "2026-11-20", "mult": 5,
+    }
+    q = validate_signals(
+        [row],
+        asof="20261120",
+        universe=universe,
+        expected_session=date(2026, 11, 20),
+    )
+    assert q["ok"] is True
+    assert q["expected_session"] == "2026-11-20"
+    assert q["stale_codes"] == []
+    # Legacy callers (no expected_session) still accept older bar vs asof.
+    legacy = dict(row, bar_date="20261119")
+    q2 = validate_signals([legacy], asof="20261120", universe=universe)
+    assert q2["ok"] is True
+    assert q2.get("expected_session") is None
+
+
+def test_expected_session_stale_fails_closed():
+    universe = [{"code": "CF", "mult": 5, "tick": 5}]
+    row = {
+        "code": "CF", "close": 15000, "atr": 120, "r20": 0.04,
+        "r60": 0.08, "bar_date": "2026-11-19", "mult": 5,
+    }
+    q = validate_signals(
+        [row],
+        asof="20261120",
+        universe=universe,
+        expected_session="2026-11-20",
+    )
+    assert q["ok"] is False
+    assert "CF:bar_date_stale" in q["failures"]
+    assert "CF" in q["stale_codes"]
+
+
+def test_expected_session_ahead_fails_closed():
+    # 2026-11-23 is Monday (weekday); must not use weekend dates (weekend fails first).
+    ok, reason = validate_bar_date(
+        "2026-11-23",
+        expected_session=date(2026, 11, 20),
+    )
+    assert not ok and reason == "bar_date_ahead_of_session"

@@ -743,13 +743,30 @@ def main():
         f"bucket_skip={port_meta.get('bucket_skipped')}"
     )
 
-    asof_ymd = now.strftime("%Y%m%d")
+    # T-DU / DU-01: formal asof = expected session day (not wall-clock run day).
+    from market_data import latest_expected_session_date
     from research_quality import validate_signals
 
-    quality = validate_signals(signals, asof=asof_ymd, universe=UNIVERSE)
+    session_date = latest_expected_session_date(now)
+    asof_ymd = session_date.strftime("%Y%m%d")
+    session_iso = session_date.isoformat()
+    quality = validate_signals(
+        signals,
+        asof=asof_ymd,
+        universe=UNIVERSE,
+        expected_session=session_date,
+    )
+    stale = list(quality.get("stale_codes") or [])
+    ahead = list(quality.get("ahead_codes") or [])
+    if stale or ahead:
+        print(
+            f"[cta] STALE FUSE session={session_iso} "
+            f"stale={stale or []} ahead={ahead or []}"
+        )
     if not quality.get("ok"):
         print(
-            f"[cta] QUALITY GATE FAIL bad={quality.get('bad_codes')} "
+            f"[cta] QUALITY GATE FAIL session={session_iso} "
+            f"bad={quality.get('bad_codes')} "
             f"failures={quality.get('failures')[:12]}"
         )
         for sig in signals:
@@ -761,10 +778,11 @@ def main():
                 sig["action"] = f"质量门禁阻断: {','.join(quality.get('bad_codes') or [])}"
         port_meta["selected"] = []
         port_meta["quality_blocked"] = True
+        port_meta["stale_fuse"] = True
     else:
         print(
-            f"[cta] quality ok checked={quality.get('checked')} "
-            f"bad_n={quality.get('bad_n')}"
+            f"[cta] quality ok session={session_iso} "
+            f"checked={quality.get('checked')} bad_n={quality.get('bad_n')}"
         )
 
     # Paper-only MDS+EHI sentiment sleeve (ChatGPT share); never sizes Path-A lots.
@@ -830,6 +848,7 @@ def main():
 
     report = {
         "asof": asof_ymd,
+        "session_date": session_iso,
         "updated_at": now.isoformat(),
         "equity_base": EQUITY_BASE,
         "equity": sizing_eq,
@@ -1020,6 +1039,23 @@ def main():
                 f"[shadow_perf] asof={sp.get('asof')} n={sp.get('n_ledger')} "
                 f"new={sp.get('n_candidates_new')} → {sp.get('path')}"
             )
+            try:
+                from research.shadow_perf.attribution import build_shadow_attribution
+
+                attr = build_shadow_attribution(ROOT, write=True)
+                print(
+                    f"[shadow_attr] ok={attr.get('ok')} n={attr.get('n_trades')} "
+                    f"→ {attr.get('path')}"
+                )
+            except Exception as attr_exc:  # noqa: BLE001
+                print(f"[shadow_attr] soft-fail: {attr_exc}")
+            try:
+                from research.vol_observe import build_vol_observe
+
+                vo = build_vol_observe(ROOT, write=True)
+                print(f"[vol_observe] n={vo.get('n')} → {vo.get('path')}")
+            except Exception as vo_exc:  # noqa: BLE001
+                print(f"[vol_observe] soft-fail: {vo_exc}")
         except Exception as exc:
             print(f"[shadow_perf] refresh failed: {exc}")
             print(f"::warning title=shadow_perf refresh failed::{exc}")

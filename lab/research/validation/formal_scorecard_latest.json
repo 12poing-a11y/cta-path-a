@@ -108,5 +108,65 @@
     }
   },
   "live_trading": false,
-  "note": "Formal KPI = after.historical_backtest; PBO is Research diagnostic only."
+  "note": "Formal KPI = after.historical_backtest; PBO is Research diagnostic only.",
+  "gate": {
+    "schema": "cta-strategy-gate-v1",
+    "pass": false,
+    "auto_promote": false,
+    "artifact_build_ok": true,
+    "hard_failures": [
+      "human_approval"
+    ],
+    "checks": [
+      {
+        "id": "oos",
+        "ok": true,
+        "detail": "Independent OOS reported"
+      },
+      {
+        "id": "cost_stress",
+        "ok": true,
+        "detail": "Base+Stress costs reported"
+      },
+      {
+        "id": "psr_reported",
+        "ok": true,
+        "detail": "PSR=0.782973"
+      },
+      {
+        "id": "dsr_reported",
+        "ok": true,
+        "detail": "DSR=0.331029"
+      },
+      {
+        "id": "pbo_reported_or_waived",
+        "ok": true,
+        "detail": "PBO=0.385714 (None)"
+      },
+      {
+        "id": "incremental_vs_path_a",
+        "ok": false,
+        "detail": "Must beat Path-A or clearly improve risk (manual flag)"
+      },
+      {
+        "id": "human_approval",
+        "ok": false,
+        "detail": "Approved tier requires human sign-off"
+      }
+    ],
+    "flags": {
+      "has_oos": true,
+      "has_cost_stress": true,
+      "beats_path_a": null,
+      "human_approved": false
+    },
+    "artifacts": {
+      "bt_present": true,
+      "pbo_present": true,
+      "bt_path": "historical_backtest_latest.json",
+      "pbo_path": "lab/research/validation/pbo_path_a_latest.json",
+      "stress_ok": true
+    },
+    "note": "Gate never mutates execution_rules.json or universe.json."
+  }
 }

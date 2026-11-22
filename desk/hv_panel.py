@@ -109,3 +109,24 @@ def render_hv_panel(root: Path, premium_atr_mult: float) -> None:
         "HV=对数收益年化标准差；ATR年化≈ATR%×√252/1.25（ATR→σ 粗换算，仅对照）。"
         "连续合约含换月跳空，换月日附近 HV 偏高，待核。没有隐含波动率（IV）数据。"
     )
+    # V-旁路：下行 HV 观察快照（只读 · 不改 position_rules）
+    vol_path = root / "lab" / "research" / "vol_observe_latest.json"
+    if vol_path.is_file():
+        try:
+            import json
+
+            vo = json.loads(vol_path.read_text(encoding="utf-8"))
+            st.caption(
+                f"下行HV观察旁路 · n={vo.get('n')} · band={vo.get('tolerance_band')} · "
+                f"{vo.get('note') or 'observe only'}"
+            )
+            rows = vo.get("rows") or []
+            if rows:
+                top = sorted(
+                    [r for r in rows if r.get("downside_hv") is not None],
+                    key=lambda r: float(r["downside_hv"]),
+                    reverse=True,
+                )[:8]
+                st.dataframe(top, width="stretch", hide_index=True)
+        except Exception:  # noqa: BLE001
+            pass

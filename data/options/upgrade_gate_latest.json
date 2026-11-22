@@ -1,6 +1,6 @@
 {
   "schema": "cta-options-upgrade-gate-v1",
-  "built_at": "2026-11-15T18:39:54+08:00",
+  "built_at": "2026-11-22T21:59:36+08:00",
   "ready": false,
   "next_upgrade_id": "F2",
   "next_upgrade_title": "含 Bid/Ask 的信用价差研究 BT",

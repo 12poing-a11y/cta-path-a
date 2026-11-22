@@ -1,0 +1,383 @@
+{
+  "mode": "shadow_v1_2_research",
+  "disclaimer": "研究回测：费后近似、T+1成交（无开则用收）、含滑点与涨跌停跳过；非正式晋级/不下单/不写paper_book。",
+  "window": {
+    "start": "2025-11-20",
+    "end": "2026-11-20"
+  },
+  "capital_yuan": 1000000.0,
+  "total_risk_budget_yuan": 80000.0,
+  "require_cointegration": true,
+  "focus_pairs": [
+    "M/P",
+    "RB/I",
+    "RB/JM",
+    "I/JM"
+  ],
+  "controls": {
+    "fixed_lots": {
+      "portfolio": {
+        "gross_pnl_yuan": -240.0,
+        "cost_yuan": 380.06,
+        "net_pnl_yuan": -620.06,
+        "ret_pct": -0.062,
+        "max_dd_pct": 0.24,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": null
+      },
+      "pairs": {
+        "M/P": {
+          "ok": true,
+          "mode": "fixed_lots",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 0.0,
+          "cost_yuan": 0.0,
+          "net_pnl_yuan": 0.0,
+          "max_dd_pct": 0.0,
+          "trades": 0,
+          "blocked_entries": 0,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "RB/I": {
+          "ok": true,
+          "mode": "fixed_lots",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 0.0,
+          "cost_yuan": 0.0,
+          "net_pnl_yuan": 0.0,
+          "max_dd_pct": 0.0,
+          "trades": 0,
+          "blocked_entries": 0,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "RB/JM": {
+          "ok": true,
+          "mode": "fixed_lots",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 0.0,
+          "cost_yuan": 0.0,
+          "net_pnl_yuan": 0.0,
+          "max_dd_pct": 0.0,
+          "trades": 0,
+          "blocked_entries": 0,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "I/JM": {
+          "ok": true,
+          "mode": "fixed_lots",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": -240.0,
+          "cost_yuan": 380.06,
+          "net_pnl_yuan": -620.06,
+          "max_dd_pct": 155.513,
+          "trades": 2,
+          "blocked_entries": 0,
+          "limit_skips": 0,
+          "require_cointegration": true
+        }
+      }
+    },
+    "spread_vol": {
+      "portfolio": {
+        "gross_pnl_yuan": 18370.0,
+        "cost_yuan": 7104.0,
+        "net_pnl_yuan": 11266.0,
+        "ret_pct": 1.127,
+        "max_dd_pct": 2.653,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": null
+      },
+      "pairs": {
+        "M/P": {
+          "ok": true,
+          "mode": "spread_vol",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 9420.0,
+          "cost_yuan": 665.0,
+          "net_pnl_yuan": 8755.0,
+          "max_dd_pct": 62.171,
+          "trades": 3,
+          "blocked_entries": 0,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "RB/I": {
+          "ok": true,
+          "mode": "spread_vol",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 6350.0,
+          "cost_yuan": 2212.85,
+          "net_pnl_yuan": 4137.15,
+          "max_dd_pct": 625.98,
+          "trades": 6,
+          "blocked_entries": 0,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "RB/JM": {
+          "ok": true,
+          "mode": "spread_vol",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": -1980.0,
+          "cost_yuan": 668.86,
+          "net_pnl_yuan": -2648.86,
+          "max_dd_pct": 650.576,
+          "trades": 2,
+          "blocked_entries": 0,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "I/JM": {
+          "ok": true,
+          "mode": "spread_vol",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 4580.0,
+          "cost_yuan": 3557.29,
+          "net_pnl_yuan": 1022.71,
+          "max_dd_pct": 610.709,
+          "trades": 5,
+          "blocked_entries": 0,
+          "limit_skips": 0,
+          "require_cointegration": true
+        }
+      }
+    },
+    "spread_vol_gate": {
+      "portfolio": {
+        "gross_pnl_yuan": 30.0,
+        "cost_yuan": 1411.67,
+        "net_pnl_yuan": -1381.67,
+        "ret_pct": -0.138,
+        "max_dd_pct": 1.102,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": null
+      },
+      "pairs": {
+        "M/P": {
+          "ok": true,
+          "mode": "spread_vol_gate",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 0.0,
+          "cost_yuan": 0.0,
+          "net_pnl_yuan": 0.0,
+          "max_dd_pct": 0.0,
+          "trades": 0,
+          "blocked_entries": 60,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "RB/I": {
+          "ok": true,
+          "mode": "spread_vol_gate",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 2200.0,
+          "cost_yuan": 743.48,
+          "net_pnl_yuan": 1456.52,
+          "max_dd_pct": 102.891,
+          "trades": 2,
+          "blocked_entries": 46,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "RB/JM": {
+          "ok": true,
+          "mode": "spread_vol_gate",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": -2170.0,
+          "cost_yuan": 668.19,
+          "net_pnl_yuan": -2838.19,
+          "max_dd_pct": 729.44,
+          "trades": 2,
+          "blocked_entries": 50,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "I/JM": {
+          "ok": true,
+          "mode": "spread_vol_gate",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 0.0,
+          "cost_yuan": 0.0,
+          "net_pnl_yuan": 0.0,
+          "max_dd_pct": 0.0,
+          "trades": 0,
+          "blocked_entries": 46,
+          "limit_skips": 0,
+          "require_cointegration": true
+        }
+      }
+    },
+    "portfolio_mrc": {
+      "portfolio": {
+        "gross_pnl_yuan": 30.0,
+        "cost_yuan": 1411.67,
+        "net_pnl_yuan": -1381.67,
+        "ret_pct": -0.138,
+        "max_dd_pct": 1.102,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": {
+          "M/P": 20000.0,
+          "RB/I": 20000.0,
+          "RB/JM": 20000.0,
+          "I/JM": 20000.0
+        }
+      },
+      "pairs": {
+        "M/P": {
+          "ok": true,
+          "mode": "portfolio_mrc",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 0.0,
+          "cost_yuan": 0.0,
+          "net_pnl_yuan": 0.0,
+          "max_dd_pct": 0.0,
+          "trades": 0,
+          "blocked_entries": 60,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "RB/I": {
+          "ok": true,
+          "mode": "portfolio_mrc",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 2200.0,
+          "cost_yuan": 743.48,
+          "net_pnl_yuan": 1456.52,
+          "max_dd_pct": 102.891,
+          "trades": 2,
+          "blocked_entries": 46,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "RB/JM": {
+          "ok": true,
+          "mode": "portfolio_mrc",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": -2170.0,
+          "cost_yuan": 668.19,
+          "net_pnl_yuan": -2838.19,
+          "max_dd_pct": 729.44,
+          "trades": 2,
+          "blocked_entries": 50,
+          "limit_skips": 0,
+          "require_cointegration": true
+        },
+        "I/JM": {
+          "ok": true,
+          "mode": "portfolio_mrc",
+          "fill_policy": "next_open_else_close",
+          "start": "2025-11-20",
+          "end": "2026-11-20",
+          "n_days": 243,
+          "gross_pnl_yuan": 0.0,
+          "cost_yuan": 0.0,
+          "net_pnl_yuan": 0.0,
+          "max_dd_pct": 0.0,
+          "trades": 0,
+          "blocked_entries": 46,
+          "limit_skips": 0,
+          "require_cointegration": true
+        }
+      }
+    }
+  },
+  "align_meta": [
+    {
+      "pair": "M/P",
+      "bucket": "农产品",
+      "ok": true,
+      "n": 4634,
+      "dropped_a_only": 691,
+      "dropped_b_only": 1
+    },
+    {
+      "pair": "RB/I",
+      "bucket": "黑色",
+      "ok": true,
+      "n": 3180,
+      "dropped_a_only": 1106,
+      "dropped_b_only": 3
+    },
+    {
+      "pair": "RB/JM",
+      "bucket": "黑色",
+      "ok": true,
+      "n": 3312,
+      "dropped_a_only": 974,
+      "dropped_b_only": 3
+    },
+    {
+      "pair": "I/JM",
+      "bucket": "黑色",
+      "ok": true,
+      "n": 3180,
+      "dropped_a_only": 3,
+      "dropped_b_only": 135
+    }
+  ],
+  "excluded": {
+    "贵金属": [
+      "AU/AG"
+    ],
+    "能化": [
+      "MA/TA",
+      "MA/EG",
+      "FG/SA"
+    ],
+    "有色": [
+      "CU/AL"
+    ]
+  }
+}

@@ -1,0 +1,344 @@
+{
+  "mode": "arb_fade_vs_follow_shadow",
+  "disclaimer": "同一套 V1.2 口径；follow=价差动量（反向于均值回归）；非正式晋级/不下单。",
+  "window": {
+    "start": "2025-11-20",
+    "end": "2026-11-20"
+  },
+  "align_meta": [
+    {
+      "pair": "M/P",
+      "bucket": "农产品",
+      "ok": true,
+      "n": 4634,
+      "dropped_a_only": 691,
+      "dropped_b_only": 1
+    },
+    {
+      "pair": "RB/I",
+      "bucket": "黑色",
+      "ok": true,
+      "n": 3180,
+      "dropped_a_only": 1106,
+      "dropped_b_only": 3
+    },
+    {
+      "pair": "RB/JM",
+      "bucket": "黑色",
+      "ok": true,
+      "n": 3312,
+      "dropped_a_only": 974,
+      "dropped_b_only": 3
+    },
+    {
+      "pair": "I/JM",
+      "bucket": "黑色",
+      "ok": true,
+      "n": 3180,
+      "dropped_a_only": 3,
+      "dropped_b_only": 135
+    }
+  ],
+  "fade": {
+    "signal_mode": "fade",
+    "controls": {
+      "fixed_lots": {
+        "gross_pnl_yuan": -240.0,
+        "cost_yuan": 380.06,
+        "net_pnl_yuan": -620.06,
+        "ret_pct": -0.062,
+        "max_dd_pct": 0.24,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": null
+      },
+      "spread_vol": {
+        "gross_pnl_yuan": 18370.0,
+        "cost_yuan": 7104.0,
+        "net_pnl_yuan": 11266.0,
+        "ret_pct": 1.127,
+        "max_dd_pct": 2.653,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": null
+      },
+      "spread_vol_gate": {
+        "gross_pnl_yuan": 30.0,
+        "cost_yuan": 1411.67,
+        "net_pnl_yuan": -1381.67,
+        "ret_pct": -0.138,
+        "max_dd_pct": 1.102,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": null
+      },
+      "portfolio_mrc": {
+        "gross_pnl_yuan": 30.0,
+        "cost_yuan": 1411.67,
+        "net_pnl_yuan": -1381.67,
+        "ret_pct": -0.138,
+        "max_dd_pct": 1.102,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": {
+          "M/P": 20000.0,
+          "RB/I": 20000.0,
+          "RB/JM": 20000.0,
+          "I/JM": 20000.0
+        }
+      }
+    },
+    "pair_nets": {
+      "fixed_lots": {
+        "M/P": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 0
+        },
+        "RB/I": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 0
+        },
+        "RB/JM": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 0
+        },
+        "I/JM": {
+          "net_pnl_yuan": -620.06,
+          "trades": 2,
+          "blocked_entries": 0
+        }
+      },
+      "spread_vol": {
+        "M/P": {
+          "net_pnl_yuan": 8755.0,
+          "trades": 3,
+          "blocked_entries": 0
+        },
+        "RB/I": {
+          "net_pnl_yuan": 4137.15,
+          "trades": 6,
+          "blocked_entries": 0
+        },
+        "RB/JM": {
+          "net_pnl_yuan": -2648.86,
+          "trades": 2,
+          "blocked_entries": 0
+        },
+        "I/JM": {
+          "net_pnl_yuan": 1022.71,
+          "trades": 5,
+          "blocked_entries": 0
+        }
+      },
+      "spread_vol_gate": {
+        "M/P": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 60
+        },
+        "RB/I": {
+          "net_pnl_yuan": 1456.52,
+          "trades": 2,
+          "blocked_entries": 46
+        },
+        "RB/JM": {
+          "net_pnl_yuan": -2838.19,
+          "trades": 2,
+          "blocked_entries": 50
+        },
+        "I/JM": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 46
+        }
+      },
+      "portfolio_mrc": {
+        "M/P": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 60
+        },
+        "RB/I": {
+          "net_pnl_yuan": 1456.52,
+          "trades": 2,
+          "blocked_entries": 46
+        },
+        "RB/JM": {
+          "net_pnl_yuan": -2838.19,
+          "trades": 2,
+          "blocked_entries": 50
+        },
+        "I/JM": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 46
+        }
+      }
+    }
+  },
+  "follow": {
+    "signal_mode": "follow",
+    "controls": {
+      "fixed_lots": {
+        "gross_pnl_yuan": 240.0,
+        "cost_yuan": 380.06,
+        "net_pnl_yuan": -140.06,
+        "ret_pct": -0.014,
+        "max_dd_pct": 0.176,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": null
+      },
+      "spread_vol": {
+        "gross_pnl_yuan": -18370.0,
+        "cost_yuan": 7104.0,
+        "net_pnl_yuan": -25474.0,
+        "ret_pct": -2.547,
+        "max_dd_pct": 4.12,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": null
+      },
+      "spread_vol_gate": {
+        "gross_pnl_yuan": -30.0,
+        "cost_yuan": 1411.67,
+        "net_pnl_yuan": -1441.67,
+        "ret_pct": -0.144,
+        "max_dd_pct": 0.768,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": null
+      },
+      "portfolio_mrc": {
+        "gross_pnl_yuan": -30.0,
+        "cost_yuan": 1411.67,
+        "net_pnl_yuan": -1441.67,
+        "ret_pct": -0.144,
+        "max_dd_pct": 0.768,
+        "n_days": 243,
+        "n_pairs": 4,
+        "mrc_budgets": {
+          "M/P": 20000.0,
+          "RB/I": 20000.0,
+          "RB/JM": 20000.0,
+          "I/JM": 20000.0
+        }
+      }
+    },
+    "pair_nets": {
+      "fixed_lots": {
+        "M/P": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 0
+        },
+        "RB/I": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 0
+        },
+        "RB/JM": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 0
+        },
+        "I/JM": {
+          "net_pnl_yuan": -140.06,
+          "trades": 2,
+          "blocked_entries": 0
+        }
+      },
+      "spread_vol": {
+        "M/P": {
+          "net_pnl_yuan": -10085.0,
+          "trades": 3,
+          "blocked_entries": 0
+        },
+        "RB/I": {
+          "net_pnl_yuan": -8562.85,
+          "trades": 6,
+          "blocked_entries": 0
+        },
+        "RB/JM": {
+          "net_pnl_yuan": 1311.14,
+          "trades": 2,
+          "blocked_entries": 0
+        },
+        "I/JM": {
+          "net_pnl_yuan": -8137.29,
+          "trades": 5,
+          "blocked_entries": 0
+        }
+      },
+      "spread_vol_gate": {
+        "M/P": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 60
+        },
+        "RB/I": {
+          "net_pnl_yuan": -2943.48,
+          "trades": 2,
+          "blocked_entries": 46
+        },
+        "RB/JM": {
+          "net_pnl_yuan": 1501.81,
+          "trades": 2,
+          "blocked_entries": 50
+        },
+        "I/JM": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 46
+        }
+      },
+      "portfolio_mrc": {
+        "M/P": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 60
+        },
+        "RB/I": {
+          "net_pnl_yuan": -2943.48,
+          "trades": 2,
+          "blocked_entries": 46
+        },
+        "RB/JM": {
+          "net_pnl_yuan": 1501.81,
+          "trades": 2,
+          "blocked_entries": 50
+        },
+        "I/JM": {
+          "net_pnl_yuan": 0.0,
+          "trades": 0,
+          "blocked_entries": 46
+        }
+      }
+    }
+  },
+  "delta_follow_minus_fade": {
+    "fixed_lots": {
+      "ret_pct_pts": 0.048,
+      "net_pnl_yuan": 480.0,
+      "dd_pct_pts": -0.064
+    },
+    "spread_vol": {
+      "ret_pct_pts": -3.674,
+      "net_pnl_yuan": -36740.0,
+      "dd_pct_pts": 1.467
+    },
+    "spread_vol_gate": {
+      "ret_pct_pts": -0.006,
+      "net_pnl_yuan": -60.0,
+      "dd_pct_pts": -0.334
+    },
+    "portfolio_mrc": {
+      "ret_pct_pts": -0.006,
+      "net_pnl_yuan": -60.0,
+      "dd_pct_pts": -0.334
+    }
+  }
+}

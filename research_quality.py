@@ -43,18 +43,40 @@ def atr_close_ok(close: float | None, atr: float | None, *, max_ratio: float = 0
     return a < c * float(max_ratio)
 
 
+def _coerce_session_date(value: date | str | None) -> date | None:
+    if value is None:
+        return None
+    if isinstance(value, date) and not isinstance(value, datetime):
+        return value
+    return parse_ymd(str(value))
+
+
 def validate_bar_date(
     bar_date: str | None,
     *,
     asof: str | None = None,
     today: date | None = None,
     allow_future_days: int = 0,
+    expected_session: date | str | None = None,
 ) -> tuple[bool, str]:
+    """Validate bar calendar day; optionally require alignment to expected session.
+
+    When ``expected_session`` is set (T-DU / DU-01):
+    - ``bar_date < expected`` → ``bar_date_stale``
+    - ``bar_date > expected`` → ``bar_date_ahead_of_session``
+    """
     d = parse_ymd(bar_date)
     if d is None:
         return False, "bar_date_unparsed"
     if not is_weekday(d):
         return False, "bar_date_weekend"
+    session = _coerce_session_date(expected_session)
+    if session is not None:
+        if d < session:
+            return False, "bar_date_stale"
+        if d > session:
+            return False, "bar_date_ahead_of_session"
+        return True, "ok"
     ref = parse_ymd(asof) or (today or date.today())
     if d > ref + timedelta(days=max(0, int(allow_future_days))):
         return False, "bar_date_future"
@@ -82,16 +104,25 @@ def validate_signals(
     asof: str | None = None,
     universe: list[dict[str, Any]] | None = None,
     max_bad_ratio: float = 0.0,
+    expected_session: date | str | None = None,
 ) -> dict[str, Any]:
     """Strict pre-publication gate for required fields, prices, ATR and contract metadata.
 
 Tick alignment is enforced for executable contract prices. Continuous main-contract
 series are synthetic roll-adjusted/stitched series and must be checked for numeric
 and range sanity, not exchange tick alignment.
+
+When ``expected_session`` is provided (daily_update T-DU), each row's ``bar_date``
+must equal that session or the gate fails closed with ``bar_date_stale`` /
+``bar_date_ahead_of_session``.
 """
     import math
 
     failures: list[str] = []
+    stale_codes: list[str] = []
+    ahead_codes: list[str] = []
+    session = _coerce_session_date(expected_session)
+    session_iso = session.isoformat() if session else None
     rows = [row for row in signals if isinstance(row, dict)]
     expected = {
         str(item.get("code") or "").upper(): item
@@ -156,9 +187,17 @@ and range sanity, not exchange tick alignment.
             except (TypeError, ValueError):
                 failures.append(f"{code}:universe_tick_invalid")
 
-        ok, reason = validate_bar_date(str(row.get("bar_date")), asof=asof)
+        ok, reason = validate_bar_date(
+            str(row.get("bar_date")),
+            asof=asof,
+            expected_session=session,
+        )
         if not ok:
             failures.append(f"{code}:{reason}")
+            if reason == "bar_date_stale":
+                stale_codes.append(code)
+            elif reason == "bar_date_ahead_of_session":
+                ahead_codes.append(code)
 
         absent_optional = [
             key for key in ("volume", "oi", "ret_1d")
@@ -187,6 +226,9 @@ and range sanity, not exchange tick alignment.
         "bad_ratio": round(bad_ratio, 4),
         "optional_missing": optional_missing,
         "asof": asof,
+        "expected_session": session_iso,
+        "stale_codes": sorted(set(stale_codes)),
+        "ahead_codes": sorted(set(ahead_codes)),
     }
 
 

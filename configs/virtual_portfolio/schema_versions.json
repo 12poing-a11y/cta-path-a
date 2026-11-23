@@ -1,0 +1,9 @@
+{
+  "schema": "cta-vp-schema-registry-v1",
+  "versions": {
+    "cta-vp-account-v1": 1,
+    "cta-vp-ledger-v1": 1,
+    "cta-vp-instruments-v1": 1
+  },
+  "updated_at": "2026-11-23"
+}

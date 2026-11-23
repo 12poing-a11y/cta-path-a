@@ -1,0 +1,765 @@
+{
+  "schema": "cta-vp-instruments-v1",
+  "version": 1,
+  "note": "VP-only instrument table. Do not write back to universe.json. Exchange/broker/stress margins are separate columns.",
+  "default_margin_tier": "broker",
+  "slippage_ticks_default": 1.0,
+  "rows": [
+    {
+      "instrument_id": "MA",
+      "exchange": "CZCE",
+      "name": "甲醇",
+      "contract_multiplier": 10.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0005
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0005
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "V",
+      "exchange": "DCE",
+      "name": "PVC",
+      "contract_multiplier": 5.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 5.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 5.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "EG",
+      "exchange": "DCE",
+      "name": "乙二醇",
+      "contract_multiplier": 10.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 15.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 15.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "M",
+      "exchange": "DCE",
+      "name": "豆粕",
+      "contract_multiplier": 10.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 7.5,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 7.5,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "FG",
+      "exchange": "CZCE",
+      "name": "玻璃",
+      "contract_multiplier": 20.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 10.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 10.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "EB",
+      "exchange": "DCE",
+      "name": "苯乙烯",
+      "contract_multiplier": 5.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 5.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 5.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "TA",
+      "exchange": "CZCE",
+      "name": "PTA",
+      "contract_multiplier": 5.0,
+      "tick_size": 2.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 15.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 15.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "SA",
+      "exchange": "CZCE",
+      "name": "纯碱",
+      "contract_multiplier": 20.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0005
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0005
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "PP",
+      "exchange": "DCE",
+      "name": "聚丙烯",
+      "contract_multiplier": 5.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 5.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 5.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "L",
+      "exchange": "DCE",
+      "name": "塑料",
+      "contract_multiplier": 5.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 5.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 5.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "JD",
+      "exchange": "DCE",
+      "name": "鸡蛋",
+      "contract_multiplier": 10.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.00075
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.00075
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "P",
+      "exchange": "DCE",
+      "name": "棕榈油",
+      "contract_multiplier": 10.0,
+      "tick_size": 2.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 12.5,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 12.5,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "RB",
+      "exchange": "SHFE",
+      "name": "螺纹钢",
+      "contract_multiplier": 10.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0005
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0005
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "FU",
+      "exchange": "SHFE",
+      "name": "燃油",
+      "contract_multiplier": 10.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.00025
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.00025
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "CF",
+      "exchange": "CZCE",
+      "name": "棉花",
+      "contract_multiplier": 5.0,
+      "tick_size": 5.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 21.5,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 21.5,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "BU",
+      "exchange": "SHFE",
+      "name": "沥青",
+      "contract_multiplier": 10.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.00025
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.00025
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "RU",
+      "exchange": "SHFE",
+      "name": "橡胶",
+      "contract_multiplier": 10.0,
+      "tick_size": 5.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 15.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 15.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "AG",
+      "exchange": "SHFE",
+      "name": "沪银",
+      "contract_multiplier": 15.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 5e-05
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 5e-05
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "SP",
+      "exchange": "SHFE",
+      "name": "纸浆",
+      "contract_multiplier": 10.0,
+      "tick_size": 2.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0001
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0001
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "SR",
+      "exchange": "CZCE",
+      "name": "白糖",
+      "contract_multiplier": 10.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 10.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 10.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "AU",
+      "exchange": "SHFE",
+      "name": "沪金",
+      "contract_multiplier": 1000.0,
+      "tick_size": 0.02,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 10.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 10.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "CU",
+      "exchange": "SHFE",
+      "name": "沪铜",
+      "contract_multiplier": 5.0,
+      "tick_size": 10.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 5e-05
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 5e-05
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "AL",
+      "exchange": "SHFE",
+      "name": "沪铝",
+      "contract_multiplier": 5.0,
+      "tick_size": 5.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 15.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 15.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "NI",
+      "exchange": "SHFE",
+      "name": "沪镍",
+      "contract_multiplier": 1.0,
+      "tick_size": 10.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 3.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 3.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "I",
+      "exchange": "DCE",
+      "name": "铁矿石",
+      "contract_multiplier": 100.0,
+      "tick_size": 0.5,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0001
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0001
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "JM",
+      "exchange": "DCE",
+      "name": "焦煤",
+      "contract_multiplier": 60.0,
+      "tick_size": 0.5,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0001
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0001
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "SS",
+      "exchange": "SHFE",
+      "name": "不锈钢",
+      "contract_multiplier": 5.0,
+      "tick_size": 5.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": 0.12,
+      "margin_rate_short_broker": 0.12,
+      "margin_rate_long_stress": 0.15,
+      "margin_rate_short_stress": 0.15,
+      "commission_open": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0001
+      },
+      "commission_close": {
+        "fee_yuan": 0.0,
+        "fee_rate": 0.0001
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "universe_meta+broker_margin_research_estimate",
+      "verified_at": null,
+      "notes": "margin_broker=0.12 research estimate; NOT exchange official; verified_at null"
+    },
+    {
+      "instrument_id": "VPTEST",
+      "exchange": "TEST",
+      "name": "VP margin-missing fixture",
+      "contract_multiplier": 10.0,
+      "tick_size": 1.0,
+      "margin_rate_long_exchange": null,
+      "margin_rate_short_exchange": null,
+      "margin_rate_long_broker": null,
+      "margin_rate_short_broker": null,
+      "margin_rate_long_stress": null,
+      "margin_rate_short_stress": null,
+      "commission_open": {
+        "fee_yuan": 1.0,
+        "fee_rate": 0.0
+      },
+      "commission_close": {
+        "fee_yuan": 1.0,
+        "fee_rate": 0.0
+      },
+      "commission_close_today": null,
+      "effective_from": "2026-11-23",
+      "effective_to": null,
+      "source": "test_fixture",
+      "verified_at": null,
+      "notes": "all margin tiers null → MARGIN_DATA_MISSING"
+    }
+  ]
+}

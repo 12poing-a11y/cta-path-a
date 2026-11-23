@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+"""CLI: Vol-V1.4 daily vol engine report (shadow only)."""
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from research.options.volatility.daily_vol_report import main  # noqa: E402
+
+if __name__ == "__main__":
+    main()

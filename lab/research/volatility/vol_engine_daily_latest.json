@@ -1,0 +1,292 @@
+{
+  "schema": "cta-vol-engine-daily-v1",
+  "model_version": "vol_engine_v1.4",
+  "ok": true,
+  "built_at": "2026-11-23T21:24:55+08:00",
+  "asof_requested": null,
+  "codes": [
+    "CF"
+  ],
+  "n_ok": 1,
+  "n_fail": 0,
+  "products": [
+    {
+      "ok": true,
+      "code": "CF",
+      "asof": "2026-11-23",
+      "futures": 15375.0,
+      "years": 0.04931507,
+      "expiry": "2026-12-11",
+      "quality": "WARN",
+      "warnings": [],
+      "n_surface_ok": 46,
+      "n_surface_fail": 14,
+      "n_shadow_legs": 6,
+      "surface_summary": {
+        "n_ok": 46,
+        "n_skip": 2,
+        "n_fail": 14,
+        "quality": "WARN"
+      },
+      "legs": [
+        {
+          "symbol": "CF701C15400",
+          "side": "C",
+          "strike": 15400.0,
+          "status": "OK",
+          "premium": 171.5,
+          "premium_source": "mid",
+          "vanilla": {
+            "price": 171.5000071,
+            "delta": 0.48386697,
+            "gamma": 0.0008645991,
+            "vega": 1359.72817367,
+            "theta": -1856.3854409,
+            "theta_per_day": -5.08598751,
+            "iv": 0.1349048,
+            "side": "C",
+            "strike": 15400.0,
+            "futures": 15375.0,
+            "years": 0.04931507
+          },
+          "shadow": {
+            "d_frac": 0.01,
+            "dF": 153.75,
+            "sticky_strike": {
+              "delta": 0.48393818,
+              "gamma": 0.0008566581,
+              "gamma_up": 0.0008141706,
+              "gamma_dn": 0.0008079359,
+              "iv_used": 0.1349048
+            },
+            "sticky_delta": {
+              "delta": 0.56230662,
+              "gamma": 0.001273187,
+              "gamma_up": 0.0007171618,
+              "gamma_dn": 0.0011800722,
+              "iv_at_F": 0.13490481,
+              "iv_up": 0.14775195,
+              "iv_dn": 0.12921149
+            },
+            "note": "monitor_only_not_trade_signal"
+          }
+        },
+        {
+          "symbol": "CF701C15200",
+          "side": "C",
+          "strike": 15200.0,
+          "status": "OK",
+          "premium": 304.5,
+          "premium_source": "mid",
+          "vanilla": {
+            "price": 304.49999912,
+            "delta": 0.63862711,
+            "gamma": 0.0007217075,
+            "vega": 1277.00594425,
+            "theta": -1959.10231389,
+            "theta_per_day": -5.3674036,
+            "iv": 0.15178253,
+            "side": "C",
+            "strike": 15200.0,
+            "futures": 15375.0,
+            "years": 0.04931507
+          },
+          "shadow": {
+            "d_frac": 0.01,
+            "dF": 153.75,
+            "sticky_strike": {
+              "delta": 0.63651488,
+              "gamma": 0.0007173184,
+              "gamma_up": 0.0006135186,
+              "gamma_dn": 0.0007698129,
+              "iv_used": 0.15178253
+            },
+            "sticky_delta": {
+              "delta": 0.74740912,
+              "gamma": 0.0006834473,
+              "gamma_up": 0.0002925763,
+              "gamma_dn": 0.0011066422,
+              "iv_at_F": 0.15178252,
+              "iv_up": 0.16649778,
+              "iv_dn": 0.13880626
+            },
+            "note": "monitor_only_not_trade_signal"
+          }
+        },
+        {
+          "symbol": "CF701C15600",
+          "side": "C",
+          "strike": 15600.0,
+          "status": "OK",
+          "premium": 85.0,
+          "premium_source": "mid",
+          "vanilla": {
+            "price": 85.00000568,
+            "delta": 0.30874098,
+            "gamma": 0.0008079196,
+            "vega": 1201.74600211,
+            "theta": -1552.9680724,
+            "theta_per_day": -4.25470705,
+            "iv": 0.12759529,
+            "side": "C",
+            "strike": 15600.0,
+            "futures": 15375.0,
+            "years": 0.04931507
+          },
+          "shadow": {
+            "d_frac": 0.01,
+            "dF": 153.75,
+            "sticky_strike": {
+              "delta": 0.31212097,
+              "gamma": 0.0008013432,
+              "gamma_up": 0.0008870814,
+              "gamma_dn": 0.0006397782,
+              "iv_used": 0.12759529
+            },
+            "sticky_delta": {
+              "delta": 0.32871204,
+              "gamma": 0.0012342334,
+              "gamma_up": 0.0011734862,
+              "gamma_dn": 0.000698934,
+              "iv_at_F": 0.12759529,
+              "iv_up": 0.13323195,
+              "iv_dn": 0.13031461
+            },
+            "note": "monitor_only_not_trade_signal"
+          }
+        },
+        {
+          "symbol": "CF701P15400",
+          "side": "P",
+          "strike": 15400.0,
+          "status": "OK",
+          "premium": 190.0,
+          "premium_source": "mid",
+          "vanilla": {
+            "price": 190.00000661,
+            "delta": -0.5161481,
+            "gamma": 0.0008961474,
+            "vega": 1359.58973885,
+            "theta": -1797.77659656,
+            "theta_per_day": -4.92541533,
+            "iv": 0.13014232,
+            "side": "P",
+            "strike": 15400.0,
+            "futures": 15375.0,
+            "years": 0.04931507
+          },
+          "shadow": {
+            "d_frac": 0.01,
+            "dF": 153.75,
+            "sticky_strike": {
+              "delta": -0.51604368,
+              "gamma": 0.0008873104,
+              "gamma_up": 0.0008410902,
+              "gamma_dn": 0.0008323573,
+              "iv_used": 0.13014232
+            },
+            "sticky_delta": {
+              "delta": -0.43259904,
+              "gamma": 0.0011269514,
+              "gamma_up": 0.0008044482,
+              "gamma_dn": 0.0012173562,
+              "iv_at_F": 0.13014233,
+              "iv_up": 0.14203035,
+              "iv_dn": 0.12209349
+            },
+            "note": "monitor_only_not_trade_signal"
+          }
+        },
+        {
+          "symbol": "CF701P15200",
+          "side": "P",
+          "strike": 15200.0,
+          "status": "OK",
+          "premium": 122.0,
+          "premium_source": "mid",
+          "vanilla": {
+            "price": 122.00000246,
+            "delta": -0.35540088,
+            "gamma": 0.0007478885,
+            "vega": 1270.82349521,
+            "theta": -1880.51977148,
+            "theta_per_day": -5.15210896,
+            "iv": 0.14576003,
+            "side": "P",
+            "strike": 15200.0,
+            "futures": 15375.0,
+            "years": 0.04931507
+          },
+          "shadow": {
+            "d_frac": 0.01,
+            "dF": 153.75,
+            "sticky_strike": {
+              "delta": -0.35774808,
+              "gamma": 0.0007430142,
+              "gamma_up": 0.000628078,
+              "gamma_dn": 0.0008010749,
+              "iv_used": 0.14576003
+            },
+            "sticky_delta": {
+              "delta": -0.2489452,
+              "gamma": 0.0007922503,
+              "gamma_up": 0.0001503734,
+              "gamma_dn": 0.0010094935,
+              "iv_at_F": 0.14576003,
+              "iv_up": 0.16127122,
+              "iv_dn": 0.13375252
+            },
+            "note": "monitor_only_not_trade_signal"
+          }
+        },
+        {
+          "symbol": "CF701P15600",
+          "side": "P",
+          "strike": 15600.0,
+          "status": "OK",
+          "premium": 300.5,
+          "premium_source": "mid",
+          "vanilla": {
+            "price": 300.49999845,
+            "delta": -0.70220212,
+            "gamma": 0.0008453929,
+            "vega": 1180.74597235,
+            "theta": -1440.29288655,
+            "theta_per_day": -3.94600791,
+            "iv": 0.1198086,
+            "side": "P",
+            "strike": 15600.0,
+            "futures": 15375.0,
+            "years": 0.04931507
+          },
+          "shadow": {
+            "d_frac": 0.01,
+            "dF": 153.75,
+            "sticky_strike": {
+              "delta": -0.6981563,
+              "gamma": 0.0008379371,
+              "gamma_up": 0.0009418731,
+              "gamma_dn": 0.0006482678,
+              "iv_used": 0.1198086
+            },
+            "sticky_delta": {
+              "delta": -0.66017233,
+              "gamma": 0.0012596846,
+              "gamma_up": 0.0010954293,
+              "gamma_dn": 0.0007811521,
+              "iv_at_F": 0.1198086,
+              "iv_up": 0.12777735,
+              "iv_dn": 0.11884444
+            },
+            "note": "monitor_only_not_trade_signal"
+          }
+        }
+      ],
+      "live_trading": false,
+      "promote_path_a": false
+    }
+  ],
+  "live_trading": false,
+  "promote_path_a": false,
+  "note": "shadow_monitor_only_no_trade_instructions"
+}

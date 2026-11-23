@@ -23,6 +23,11 @@ def main() -> int:
     ap.add_argument("--width", type=float, default=200.0)
     ap.add_argument("--slip-ticks", type=float, default=2.0)
     ap.add_argument("--exit", default="next_snap", choices=["next_snap", "expiry"])
+    ap.add_argument(
+        "--settle-only",
+        action="store_true",
+        help="Force settle_discount pricing (no Bid/Ask preference)",
+    )
     ap.add_argument("--ingest-paper", action="store_true")
     ap.add_argument("--root", type=Path, default=ROOT)
     args = ap.parse_args()
@@ -34,6 +39,7 @@ def main() -> int:
         width_points=args.width,
         slip_ticks=args.slip_ticks,
         exit_mode=args.exit,
+        prefer_bid_ask=not args.settle_only,
         write=True,
     )
     m = bt.get("metrics") or {}

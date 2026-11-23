@@ -1,11 +1,11 @@
 # 期权研究台 · 路线图
 
 **日期**：2026-11-23（用户决议：先积样 · 够样后再升级）  
-**已完成**：阶段 A–E + F1 + F1b；旁轨 **Vol-V1.4**（定价/Greeks · **本机完成，待入库 GitHub**）  
+**已完成**：阶段 A–E + F1 + F1b；旁轨 **Vol-V1.4**（已轻量入库 · Shadow only · **结果弱 · 不晋级**）  
 **原则**：全程不改 Path-A 正式层（`paper_book` / 正式 BT / seats）。  
 **逐步开放 / 迭代反馈 / 合并总表**：见 `docs/UPGRADE_ITERATIONS.md`（五轨 O/T/A/V/VP；个人档案已同步）。  
 **当前姿态**：**只积盘口，不开新刀**；锁定下一刀仍为 **F2**，gate `ready=false`（CF=2/10，SR/MA=1/5）前不升级。  
-**旁轨**：可信度 **T-DU/T-GV/T-P1/T-DQ-diff**、**V-旁路**、**Vol-V1.4** 已完成；**VP-1A PASS(RESEARCH_ONLY) 已合 GitHub main（#30）**；**1B-0 规格已备、实现待明示**（不改本期权轨 / 不解锁 F2）；后续刀序（F2 → Vol-V1.6/V1.5 → … → F+）见总表 §4。
+**旁轨**：可信度旁轨已完成；**Vol-V1.4 已归档但不晋级**；**VP-1A** 已合 main；**1B-0** 规格已备、实现待明示；锁定 **F2**（积样）。后续刀序见总表 §4。
 
 ---
 
@@ -124,4 +124,4 @@ python -m pytest tests/test_options_pipeline.py tests/test_options_black76.py -q
 |----|------|------|
 | 套利影子 V1.1–V1.3 | **观察** | 不晋级；细则 `docs/ARBITRAGE_VOLATILITY_UPGRADE.md` |
 | Gemini TVS / 波动率协同模拟 | **观察** | 不写 `position_rules`；审计见 `gemini_scheme_sim_audit_latest.json` |
-| Vol-V1.4（定价/Greeks/Shadow） | **完成** | `docs/VOLATILITY_ENGINE_SPEC.md`；Shadow only；V1.5+ 仍封闭 |
+| Vol-V1.4（定价/Greeks/Shadow） | **已归档 · 不晋级** | 结果弱；规格头注禁止作交易/F2 依据；V1.5+ 仍封闭 |

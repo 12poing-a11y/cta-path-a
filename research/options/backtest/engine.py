@@ -44,6 +44,7 @@ def run_credit_vertical_bt(
     exit_mode: ExitMode = "next_snap",
     max_margin_cny: float | None = None,
     stop_loss_mult: float | None = 2.0,
+    prefer_bid_ask: bool = True,
     write: bool = True,
 ) -> dict[str, Any]:
     """Run research BT. Skips REJECT quality days. Caps status at WARN without bid/ask."""
@@ -79,6 +80,7 @@ def run_credit_vertical_bt(
                 kind=kind,  # type: ignore[arg-type]
                 width_points=width_points,
                 slip_ticks=slip_ticks,
+                prefer_bid_ask=prefer_bid_ask,
             )
             if sel is None:
                 trades.append(
@@ -209,6 +211,7 @@ def run_credit_vertical_bt(
             "exit_mode": exit_mode,
             "max_margin_cny": max_margin_cny,
             "stop_loss_mult": stop_loss_mult,
+            "prefer_bid_ask": prefer_bid_ask,
         },
         "strategy_state": strategy_state,
         "metrics": metrics,

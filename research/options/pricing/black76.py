@@ -107,6 +107,25 @@ def black76_vega(
     return math.exp(-rate * years) * futures * _norm_pdf(d1) * math.sqrt(years)
 
 
+def black76_theta(
+    futures: float,
+    strike: float,
+    years: float,
+    rate: float,
+    iv: float,
+    side: Side,
+) -> float:
+    """Calendar theta dV/dT (per year); divide by 365 for per-day approx."""
+    _validate_inputs(futures, strike, years, iv)
+    d1, d2 = _d1_d2(futures, strike, years, iv)
+    df = math.exp(-rate * years)
+    pdf = _norm_pdf(d1)
+    vol_term = -df * futures * pdf * iv / (2.0 * math.sqrt(years))
+    if _side(side) == "C":
+        return vol_term + rate * df * (futures * _norm_cdf(d1) - strike * _norm_cdf(d2))
+    return vol_term - rate * df * (strike * _norm_cdf(-d2) - futures * _norm_cdf(-d1))
+
+
 def implied_vol(
     premium: float,
     futures: float,

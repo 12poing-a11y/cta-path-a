@@ -2478,8 +2478,26 @@ def main():
         out["input_snapshot"] = write_input_snapshot(out, sys.argv[1:])
     except Exception as exc:  # noqa: BLE001
         print(f"[bt] input snapshot soft-fail: {exc}")
-    # Observe / option-hedge runs must not overwrite the formal Path-A artifact.
-    if "--observe" in sys.argv or bool(out.get("option_hedge")):
+    # R0: --out PATH writes offline research artifact (no formal lock / no archive/backtest_*).
+    out_cli = _cli_val("--out")
+    formal_latest = (ROOT / "historical_backtest_latest.json").resolve()
+    if out_cli is not None:
+        path = Path(out_cli).expanduser()
+        if not path.is_absolute():
+            path = (ROOT / path).resolve()
+        else:
+            path = path.resolve()
+        if path == formal_latest:
+            print(
+                "[bt] --out must not target root historical_backtest_latest.json",
+                file=sys.stderr,
+            )
+            return 2
+        path.parent.mkdir(parents=True, exist_ok=True)
+        chart = path.parent / f"{path.stem}_equity.svg"
+        title_prefix = "PathA-out"
+    elif "--observe" in sys.argv or bool(out.get("option_hedge")):
+        # Observe / option-hedge runs must not overwrite the formal Path-A artifact.
         art = ROOT / "_art_opt"
         art.mkdir(parents=True, exist_ok=True)
         path = art / "historical_backtest_latest.json"
@@ -2489,7 +2507,7 @@ def main():
         path = ROOT / "historical_backtest_latest.json"
         chart = ROOT / "historical_equity_curve.svg"
         title_prefix = "PathA"
-    if path.parent == ROOT:
+    if path.parent == ROOT and out_cli is None:
         # fix3-opt: formal write requires the rule lock + a clean working tree.
         from research.execution.rule_lock import RuleLockError, check_clean, check_fill_series, check_rules
 
@@ -2503,7 +2521,7 @@ def main():
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     arch = ROOT / "archive"
     arch.mkdir(exist_ok=True)
-    if out.get("end") and path.parent == ROOT:
+    if out.get("end") and path.parent == ROOT and out_cli is None:
         (arch / f"backtest_{out['end'].replace('-', '')}.json").write_text(
             path.read_text(encoding="utf-8"), encoding="utf-8"
         )

@@ -5,7 +5,7 @@
 **原则**：全程不改 Path-A 正式层（`paper_book` / 正式 BT / seats）。  
 **逐步开放 / 迭代反馈 / 合并总表**：见 `docs/UPGRADE_ITERATIONS.md`（五轨 O/T/A/V/VP；个人档案已同步）。  
 **当前姿态**：**只积盘口，不开新刀**；锁定下一刀仍为 **F2**，gate `ready=false`（CF=2/10，SR/MA=1/5）前不升级。  
-**旁轨**：可信度 **T-DU/T-GV/T-P1/T-DQ-diff**、**V-旁路**、**Vol-V1.4** 已完成；**VP-1A PASS(RESEARCH_ONLY)** 合入准备；**1B-0 规格已备、实现未开**（不改本期权轨 / 不解锁 F2）；后续刀序（F2 → Vol-V1.6/V1.5 → … → F+）见总表 §4。
+**旁轨**：可信度 **T-DU/T-GV/T-P1/T-DQ-diff**、**V-旁路**、**Vol-V1.4** 已完成；**VP-1A PASS(RESEARCH_ONLY) 已合 GitHub main（#30）**；**1B-0 规格已备、实现待明示**（不改本期权轨 / 不解锁 F2）；后续刀序（F2 → Vol-V1.6/V1.5 → … → F+）见总表 §4。
 
 ---
 

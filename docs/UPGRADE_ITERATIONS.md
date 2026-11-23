@@ -1,6 +1,6 @@
 # CTA Path-A · 升级计划（合并权威版）
 
-**同步日期**：2026-11-23（VP-1A 合入准备 · 1B-0 规格已备 · F2 仍锁定）  
+**同步日期**：2026-11-23（VP-1A 已合 GitHub main · 1B-0 规格已备 · F2 仍锁定）  
 **仓库**：`d:\AI\cta-path-a`  
 **本文件角色**：**唯一刀序权威**。细则仍分散在子文档；状态与优先级以本表为准。
 
@@ -37,22 +37,39 @@
 
 ## 1. 当前姿态与锁定下一刀
 
-**姿态（2026-11-23）**：**期权轨继续积样**；**VP-1A = PASS(RESEARCH_ONLY)** 待合 main；**1B-0 规格已备（未开工）**；不自动开 1B-0/F2。
+**姿态（2026-11-23）**：**VP-1A = PASS(RESEARCH_ONLY) 已合入 GitHub `main`**（PR [#30](https://github.com/12poing-a11y/cta-path-a/pull/30) → `d61ec7c`）；**1B-0 规格已备、实现未开**；期权轨继续积样；不自动开 1B-0/F2。
 
-**已完成旁轨**：**Vol-V1.4**；**VP-Phase0**；**VP-Phase1-GoNoGo**；**VP-Phase1A**；**VP-1A-Acceptance**；**VP-1A-Fix**；**VP-1B-0-SPEC**  
+**已完成旁轨**：**Vol-V1.4**；**VP-Phase0**；**VP-Phase1-GoNoGo**；**VP-Phase1A**；**VP-1A-Acceptance**；**VP-1A-Fix**；**VP-1B-0-SPEC**；**VP-1A → main**  
 **settle BT 现况**：`credit_vertical` put_credit · `--settle-only` → n_closed=17 · 胜率≈18% · 总 PnL≈−2185 元 · **WARN**
 
 **锁定下一刀（期权 · 未开放）**：**F2** — 含 Bid/Ask 的信用价差研究 BT  
 
 - **内容**：活链 Bid/Ask 快照跑 `credit_vertical`（`pricing_mode=bid_ask`），对照 settle_discount；状态最高 WARN；不写正式层。  
 - **门槛**（`research/options/upgrade_gate.py`）：CF 盘口日 ≥10 **或** CF/SR/MA 各 ≥5。  
-- **现样（2026-11-23）**：`ready=false`；CF=2/10，SR/MA=1/5。  
+- **现样（gate）**：`ready=false`；CF bidask=1/10，SR=0/5，MA=0/5。  
 - **提醒**：说「继续/升级」时先念 F2 + 是否够样，**确认后再干**。
 
-**旁轨已完成**：**VP-Phase1A** — 独立账户/资金/手工成交账本（**不接**自动 L1）  
+**旁轨已完成**：**VP-Phase1A** — 独立账户/资金/手工成交账本（**不接**自动 L1）；已上 `main`  
 
-- **裁决执行**：1A 已落地；1B / 2 仍 **NO-GO**（见 docs/audit/VP_PHASE1_GO_NO_GO.md + VP_PHASE1A_*.md）。  
-- **硬围栏**：未写正式 paper_book / 信号 / seats / 正式 BT；未修 PA-001；F2 未解锁。
+- **硬围栏**：未写正式 paper_book / 信号 / seats / 正式 BT；未修 PA-001；F2 未解锁；**未**实现 1B-0。
+
+### 1.1 GPT 后续计划（VP · 对齐裁决 · 未自动开刀）
+
+核心界线：**VP 可观察 CTA 信号，不可按信号交易。**
+
+| 序 | 项 | 状态 | 说明 |
+|----|----|------|------|
+| ✅ | 1A PASS(RESEARCH_ONLY) | **完成并上 GitHub** | 研究账本 + 人工模拟；≠ 自动交易验收 |
+| ✅ | 分支同步 + PR 合 main | **完成** | #30；无敏感账号/DB |
+| ✅ | 1B-0 实施规格 | **完成** | `docs/audit/VP_PHASE1B0_SPEC.md` |
+| ▶ | **VP-1B-0 实现** | **CONDITIONAL GO · 待你明示** | 只读 L1→独立 inbox；新建 `SIGNAL_READ_ALLOWED`；**禁止**全局开 `SIGNAL_INGEST` |
+| ⏸ | 1B-0 硬门槛测 | 随实现 | 污染哨兵、权限拆分、幂等、无改账户 |
+| 🚫 | 1B-1（订单意图） | NO-GO | 1B-0 通过后**另批**；不自动进入 |
+| 🚫 | 1B-2（模拟成交） | NO-GO | 同上 |
+| 📋 | 技术债（不挡 1A） | 挂账 | 投影版本一致性；`append_event` 文件锁；加权均价 vs FIFO 口径（执行阶段前定） |
+
+**1B-0 允许**：读根目录 `l1_report.json`；校验/去重；写 `data/virtual_portfolio/signal_inbox/`；Desk 只读查询。  
+**1B-0 禁止**：下单/成交/改资金持仓；写 Paper Book；改正式信号；动 F2/PA-001；猜测信号源。
 
 **积样本动作（非刀 · 需 Tq 凭证 · 日常运维）**：  
 `python scripts/run_options_chain_collect.py --codes CF,SR,MA --tq-live-only --deadline 45`
@@ -145,7 +162,7 @@
 |------|------|------|
 | **Phase 0** | **完成** | 四件套：AUDIT / DEPENDENCY_MAP / DATA_DICTIONARY / RISK_REGISTER |
 | **Go / No-Go** | **完成** | VP_PHASE1_GO_NO_GO.md；附账户规则 / 成交规范 / Paper 异常专项 |
-| **Phase 1A** | **完成** | PASS(RESEARCH_ONLY)；分支已与 main 同步；Draft PR 合入 |
+| **Phase 1A** | **完成 · 已上 main** | PASS(RESEARCH_ONLY)；PR #30 → `d61ec7c` |
 | **1B-0 规格** | **完成** | `VP_PHASE1B0_SPEC.md`（读口/收件箱/权限拆分）；**未写业务代码** |
 | **1B-0 实现** | **CONDITIONAL GO · 未开** | 须明示开刀；见规格 §6 |
 | 1B-1 / 1B-2 | NO-GO | 订单意图 / 模拟成交；须 1B-0 另批 |
@@ -174,7 +191,8 @@ ext_open。
 |----|-----|------|----------|------|
 | 0 | （非刀） | F1b 日积盘口 CF/SR/MA | Tq 凭证 + 交易日续跑 | **运维中** |
 | **1 · 锁** | **F2** | Bid/Ask 信用价差研究 BT；对照 settle；最高 WARN；不写正式层 | gate `ready=true` **且** 你确认 | **等样本** |
-| — | **VP-Phase1A** | 虚拟账户 + 手工成交账本（不接 L1） | 已确认执行 | **完成** |
+| — | **VP-Phase1A** | 虚拟账户 + 手工成交账本（不接 L1） | 已确认执行 | **完成 · main** |
+| — | **VP-1B-0** | 信号只读 + inbox + `SIGNAL_READ_ALLOWED` | 规格已备 **且** 你明示开刀 | **待明示** |
 | 2 | Vol-V1.6 | TVS 风险预算硬化（审计 P0；旁路可加深） | 你明示（可与 F2 并行旁轨，仍一刀一开） | 封闭 |
 | 3 | Vol-V1.5 | VRP / Gamma Scalping 研究（Shadow） | V1.4 已完成 + 决议 | 封闭 |
 | 4 | Vol-V1.7 | 真实执行成本账本（研究） | 决议 | 封闭 |
@@ -183,7 +201,7 @@ ext_open。
 | 7 | DQ / 纸面帽 / 官历·因子 | 低优抛光 | — | 延后 |
 | — | 写正式 `paper_book`/seats / 解 SUSPENDED | 明示 + Gate 人工 | **硬围栏** | 封闭 |
 
-**默认下一动作**：**停**（积样 + 审阅 `VP_PHASE1_GO_NO_GO.md`）。确认后开 **VP-Phase1A**；或够样后确认 **F2**（一刀一开）。
+**默认下一动作**：**停**（期权积样）。VP 旁轨若续开：明示 **开 VP-1B-0**（按 `VP_PHASE1B0_SPEC.md`）；或够样后确认 **F2**（一刀一开）。
 
 ---
 
@@ -205,6 +223,7 @@ ext_open。
 | **本文件** | 刀序 + 合并状态 + 候选队列 |
 | `docs/audit/VIRTUAL_PORTFOLIO_*.md` | VP Phase 0 审计四件套 |
 | `docs/audit/VP_PHASE1_GO_NO_GO.md` | VP Phase 1 准入裁决 |
+| `docs/audit/VP_PHASE1B0_SPEC.md` | 1B-0 实施规格（读口/inbox/权限） |
 | `docs/audit/VP_PHASE1_{ACCOUNT,FILL}_RULES.md` | 1A 账户/成交规则 |
 | `docs/audit/PAPER_ANOMALY_TRACKER.md` | Paper 异常专项（不混入 VP） |
 | `docs/VOLATILITY_ENGINE_SPEC.md` | Vol-V1.4 规格（v2 审计吸收） |

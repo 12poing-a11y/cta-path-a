@@ -139,21 +139,51 @@ def _history_rows(root: Path, code: str) -> list[dict]:
     return [b for b in rows if isinstance(b, dict)]
 
 
+def _is_session_bar(bar: dict) -> bool:
+    """True for a real session bar: weekday + non-empty open.
+
+    ``.cache/history`` sometimes retains weekend placeholder rows (no open,
+    H=L=C = prior close) from sparse iFinD merges; those must not enter the
+    paper_book trading calendar.
+    """
+    from datetime import date as _date
+
+    d = str(bar.get("date") or "")[:10]
+    if len(d) != 10:
+        return False
+    try:
+        if _date.fromisoformat(d).weekday() >= 5:
+            return False
+    except ValueError:
+        return False
+    o = bar.get("open")
+    if o is None or o == "":
+        return False
+    try:
+        if float(o) <= 0:
+            return False
+    except (TypeError, ValueError):
+        return False
+    return True
+
+
 def _local_daily_bar(root: Path, code: str, asof_iso: str) -> dict | None:
     """Read ``.cache/history/{CODE}0.json`` for the bar with date == asof_iso."""
     day = _ymd(asof_iso)
     if not day:
         return None
     for b in _history_rows(root, code):
-        if str(b.get("date") or "")[:10] == day:
+        if str(b.get("date") or "")[:10] == day and _is_session_bar(b):
             return b
     return None
 
 
 def _session_dates(root: Path, code: str) -> list[str]:
-    """Ascending trading-day dates from local continuous history."""
+    """Ascending trading-day dates from local continuous history (no weekends)."""
     out: list[str] = []
     for b in _history_rows(root, code):
+        if not _is_session_bar(b):
+            continue
         d = str(b.get("date") or "")[:10]
         if len(d) == 10:
             out.append(d)

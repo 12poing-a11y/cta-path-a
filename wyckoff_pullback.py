@@ -443,23 +443,26 @@ def apply_stop_target(
     direction: str,
     entry: float,
     stop: float,
-    target: float,
+    target: float | None,
     bar: dict,
 ) -> tuple[str | None, float]:
-    """
-    Intrabar stop/target. Conservative: stop checked before target on same bar.
-    Returns (exit_reason, exit_price) or (None, close).
-    """
-    high, low, close = bar["high"], bar["low"], bar["close"]
+    """开盘穿越止损按开盘价成交；止盈仍按 target 价（保守，不计入有利跳空）。
+    target 为 None 表示没有固定止盈（R9 需要）。"""
+    high, low, close = float(bar["high"]), float(bar["low"]), float(bar["close"])
+    o = float(bar.get("open") if bar.get("open") is not None else close)
     if direction == "多":
+        if o <= stop:
+            return "stop", o
         if low <= stop:
             return "stop", stop
-        if high >= target:
+        if target is not None and high >= target:
             return "target", target
         return None, close
+    if o >= stop:
+        return "stop", o
     if high >= stop:
         return "stop", stop
-    if low <= target:
+    if target is not None and low <= target:
         return "target", target
     return None, close
 

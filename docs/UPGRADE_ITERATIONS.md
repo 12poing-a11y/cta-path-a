@@ -1,6 +1,6 @@
 # CTA Path-A · 升级计划（合并权威版）
 
-**同步日期**：2026-11-23（VP-1A-Fix PASS · F2 仍锁定）  
+**同步日期**：2026-11-23（VP-1A 合入准备 · 1B-0 规格已备 · F2 仍锁定）  
 **仓库**：`d:\AI\cta-path-a`  
 **本文件角色**：**唯一刀序权威**。细则仍分散在子文档；状态与优先级以本表为准。
 
@@ -37,9 +37,9 @@
 
 ## 1. 当前姿态与锁定下一刀
 
-**姿态（2026-11-23）**：**期权轨继续积样**；**VP-1A-Fix 完成 → PASS(RESEARCH_ONLY)**；不自动开 1B-0/F2。
+**姿态（2026-11-23）**：**期权轨继续积样**；**VP-1A = PASS(RESEARCH_ONLY)** 待合 main；**1B-0 规格已备（未开工）**；不自动开 1B-0/F2。
 
-**已完成旁轨**：**Vol-V1.4**；**VP-Phase0**；**VP-Phase1-GoNoGo**；**VP-Phase1A**；**VP-1A-Acceptance**；**VP-1A-Fix**  
+**已完成旁轨**：**Vol-V1.4**；**VP-Phase0**；**VP-Phase1-GoNoGo**；**VP-Phase1A**；**VP-1A-Acceptance**；**VP-1A-Fix**；**VP-1B-0-SPEC**  
 **settle BT 现况**：`credit_vertical` put_credit · `--settle-only` → n_closed=17 · 胜率≈18% · 总 PnL≈−2185 元 · **WARN**
 
 **锁定下一刀（期权 · 未开放）**：**F2** — 含 Bid/Ask 的信用价差研究 BT  
@@ -145,8 +145,10 @@
 |------|------|------|
 | **Phase 0** | **完成** | 四件套：AUDIT / DEPENDENCY_MAP / DATA_DICTIONARY / RISK_REGISTER |
 | **Go / No-Go** | **完成** | VP_PHASE1_GO_NO_GO.md；附账户规则 / 成交规范 / Paper 异常专项 |
-| **Phase 1A** | **完成** | 账户+账本+手工成交；测绿；污染报告已出 |
-| Phase 1B | NO-GO | 只读跟 L1；须 1A 验收 |
+| **Phase 1A** | **完成** | PASS(RESEARCH_ONLY)；分支已与 main 同步；Draft PR 合入 |
+| **1B-0 规格** | **完成** | `VP_PHASE1B0_SPEC.md`（读口/收件箱/权限拆分）；**未写业务代码** |
+| **1B-0 实现** | **CONDITIONAL GO · 未开** | 须明示开刀；见规格 §6 |
+| 1B-1 / 1B-2 | NO-GO | 订单意图 / 模拟成交；须 1B-0 另批 |
 | Phase 2+ | NO-GO | 诊断 / Desk |
 
 **隔离要点**：正式纸面写入唯一入口 paper_book.refresh_paper_book；VP 只读 L1/缓存；席位须 cache-only；默认成交对齐正式 
@@ -292,10 +294,18 @@ ext_open。
 
 
 
+### VP-1A-merge + 1B-0-SPEC（2026-11-23）
+
+- **做了**：`feature/vp-phase1a-fix` merge 最新 main；pytest 17 绿；起草 1B-0 规格（真源=`l1_report.json` 根路径、inbox、`SIGNAL_READ_ALLOWED` 拆分）；Draft PR → 审查合入  
+- **产物**：`docs/audit/VP_PHASE1B0_SPEC.md`；本表 / ROADMAP 同步  
+- **验证**：`pytest tests/test_vp_phase1a.py` 17 passed（merge 后）  
+- **风险/未做**：**未**实现 1B-0；未改权限代码；投影陈旧/无文件锁/FIFO 口径仍挂账  
+- **建议下一刀**：**停**；或你明示 **开 VP-1B-0**（按规格）；期权轨仍积样等 **F2**  
+
 ### VP-1A-Fix（2026-11-23）
 
 - **做了**：ACC-01 查询只读/显式 rebuild；ACC-02 RESEARCH_ONLY+AUTO fail-closed；补测；Desk 状态展示  
-- **产物**：irtual_portfolio/permissions.py；引擎拆分 load/compute/rebuild；VP_PHASE1A_FIX_REPORT.md  
+- **产物**：`virtual_portfolio/permissions.py`；引擎拆分 load/compute/rebuild；VP_PHASE1A_FIX_REPORT.md  
 - **验证**：pytest tests/test_vp_phase1a.py 17 passed  
 - **风险/未做**：未开 1B-0；instruments 哈希弱绑定；无文件锁  
 - **建议下一刀**：**停**；分支推送后人工复核；明示再开 **1B-0**  

@@ -39,7 +39,8 @@
 
 **姿态（2026-11-23）**：**VP-1A = PASS(RESEARCH_ONLY) 已合入 GitHub `main`**（PR [#30](https://github.com/12poing-a11y/cta-path-a/pull/30) → `d61ec7c`）；**1B-0 规格已备、实现未开**；期权轨继续积样；不自动开 1B-0/F2。
 
-**已完成旁轨**：**Vol-V1.4**；**VP-Phase0**；**VP-Phase1-GoNoGo**；**VP-Phase1A**；**VP-1A-Acceptance**；**VP-1A-Fix**；**VP-1B-0-SPEC**；**VP-1A → main**  
+**已完成旁轨**：**VP-Phase0**；**VP-Phase1-GoNoGo**；**VP-Phase1A**；**VP-1A-Acceptance**；**VP-1A-Fix**；**VP-1B-0-SPEC**；**VP-1A → main**  
+**Vol-V1.4**：本机研究完成（Shadow only），**尚未合入 GitHub** — 清单见 `docs/audit/LOCAL_WIP_INVENTORY.md`。
 **settle BT 现况**：`credit_vertical` put_credit · `--settle-only` → n_closed=17 · 胜率≈18% · 总 PnL≈−2185 元 · **WARN**
 
 **锁定下一刀（期权 · 未开放）**：**F2** — 含 Bid/Ask 的信用价差研究 BT  
@@ -96,7 +97,7 @@
 | **A 套利影子** | V1.4–V1.5（旧号） | 已改挂 **Vol** 轨 | 见 Vol-V1.4+ | — |
 | **V 波动协同** | Gemini P0–P2 | TVS/VRP/Carry 整案模拟+审计 | **观察·不晋级** | 封闭 |
 | **V 波动协同** | **V-旁路** | 下行 HV + 容忍带观察快照 | **完成（观察）** | 封闭 |
-| **V 波动引擎** | **Vol-V1.4** | 定价 / IV 面 / Greeks / Shadow Greeks | **完成** | 封闭 |
+| **V 波动引擎** | **Vol-V1.4** | 定价 / IV 面 / Greeks / Shadow Greeks | **本机完成 · 未进 GitHub** | 待明示入库 |
 | **V 波动引擎** | Vol-V1.5–V2.0 | VRP/TVS/执行成本/奇异/OOS | **封闭** | 未开放 |
 | **S 会话** | Session brief | 多时段盘中 brief | 交 Grokbot | 本仓不做 |
 | **R 研究台旧项** | P1–P4 / A1–A3 | PBO/LSP/Gamma/组合风险/轻量 ML / 主力映射 | **主路径完成** | 封闭 |
@@ -145,7 +146,7 @@
 | P0 TVS 影子 / OOS | 观察；`promote_path_a=false` |
 | P1 VRP 代理 / P2 Carry | 封闭/弱 |
 | **V-旁路** | **完成** | `vol_observe_latest.json` + HV 面板只读；`promote_path_a=false` |
-| **Vol-V1.4** | **完成** | IV 面 + Black-76 Greeks + Sticky Strike/Delta Shadow；`vol_engine_daily_latest.json`；`live_trading=false` |
+| **Vol-V1.4** | **本机完成 · 未进 main** | 产物在本地 WIP；见 `LOCAL_WIP_INVENTORY.md`；须单独开刀 PR |
 
 ### 3.5 研究台旧轨 R — 原 `UPGRADE_PLAN.md`
 
@@ -224,6 +225,7 @@ ext_open。
 | `docs/audit/VIRTUAL_PORTFOLIO_*.md` | VP Phase 0 审计四件套 |
 | `docs/audit/VP_PHASE1_GO_NO_GO.md` | VP Phase 1 准入裁决 |
 | `docs/audit/VP_PHASE1B0_SPEC.md` | 1B-0 实施规格（读口/inbox/权限） |
+| `docs/audit/LOCAL_WIP_INVENTORY.md` | 本机未入库文件清单（含 Vol-V1.4） |
 | `docs/audit/VP_PHASE1_{ACCOUNT,FILL}_RULES.md` | 1A 账户/成交规则 |
 | `docs/audit/PAPER_ANOMALY_TRACKER.md` | Paper 异常专项（不混入 VP） |
 | `docs/VOLATILITY_ENGINE_SPEC.md` | Vol-V1.4 规格（v2 审计吸收） |
@@ -291,8 +293,16 @@ ext_open。
 - **做了**：吸收 v2 审计进规格；落地 IV 面 / Black-76 Greeks / Sticky Strike·Delta Shadow Greeks / 日报告（Shadow only）  
 - **产物**：`research/options/volatility/{iv_surface,greeks_engine,shadow_greeks,daily_vol_report}.py`；`lab/research/run_vol_engine_daily.py`；`lab/research/volatility/vol_engine_daily_latest.json`；`docs/VOLATILITY_ENGINE_SPEC.md`  
 - **验证**：`pytest tests/test_vol_engine_v14.py` 绿；CF 2026-11-23 快照跑通（surface ok≈61，ATM Shadow 腿 6）；`live_trading=false` / `promote_path_a=false`  
-- **风险/未做**：未开 SABR/VRP/奇异/自动对冲；F2 仍不够样（CF=2/10）；未写正式层  
-- **建议下一刀**：**停 · 积样本**；够样后确认 **F2**；或明示 **Vol-V1.6**  
+- **风险/未做**：**上述产物仍为本地 WIP，未合 GitHub main**（2026-11-23 清库确认）；未开 SABR/VRP/奇异；F2 不够样  
+- **建议下一刀**：**停 · 积样本**；或明示 **Vol-V1.4 入库 PR** / **F2** / **Vol-V1.6**  
+
+### 档案同步 + 本地 WIP 登记（2026-11-23）
+
+- **做了**：登记 `LOCAL_WIP_INVENTORY.md`；纠正 Vol-V1.4「已完成」≠「已上 GitHub」；同步个人库 / Notion Memory·About / 第二大脑卡片与主台账  
+- **产物**：`docs/audit/LOCAL_WIP_INVENTORY.md`；个人库 `cta-path-a/UPGRADE_PLAN.md`  
+- **验证**：`origin/main` tip=`98d9790`；本机 `main` 对齐；Vol 路径未出现在 `git ls-tree origin/main`  
+- **风险/未做**：未提交 Vol WIP；未开 1B-0  
+- **建议下一刀**：**停**；或明示 **开 VP-1B-0** / **Vol-V1.4 入库** / 积样等 **F2**  
 
 ### 积样决议 + settle BT 快照（2026-11-23）
 

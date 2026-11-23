@@ -1,6 +1,6 @@
 # CTA Path-A · 升级计划（合并权威版）
 
-**同步日期**：2026-11-23（VP-1A 已合 GitHub main · 1B-0 规格已备 · F2 仍锁定）  
+**同步日期**：2026-11-23（VP-1A 已合 GitHub main · 1B-0 规格已备 · F2 仍锁定 · **新登记 R 审计升级轨 R0–R16 + carry 袖套 K0–K7，优先级排在 F2 之前**）  
 **仓库**：`d:\AI\cta-path-a`  
 **本文件角色**：**唯一刀序权威**。细则仍分散在子文档；状态与优先级以本表为准。
 
@@ -8,7 +8,7 @@
 
 ## 工作方式（固定）
 
-1. **标记**：本文件为总状态；期权细则 `docs/options/ROADMAP.md`；套利细则 `docs/ARBITRAGE_VOLATILITY_UPGRADE.md`；可信度细则 `docs/PHASE2_AUDIT_DECISIONS.md` + `docs/P0_CODE_AUDIT.md`。  
+1. **标记**：本文件为总状态；期权细则 `docs/options/ROADMAP.md`；套利细则 `docs/ARBITRAGE_VOLATILITY_UPGRADE.md`；可信度细则 `docs/PHASE2_AUDIT_DECISIONS.md` + `docs/P0_CODE_AUDIT.md`；**R 审计升级轨细则 `docs/UPGRADE_R_TRACK.md`（carry 袖套另见 `docs/CARRY_SLEEVE_R14.md`，证据依据见 `docs/STRATEGY_EVIDENCE_REVIEW.md`）**。  
 2. **逐步开放**：未完成项保持「封闭」；只开状态为 **下一刀** 的一项。  
 3. **迭代反馈**（每刀结束后必写，3–6 行）：做了什么 / 产物 / 验证 / 风险与未做 / 建议下一刀或停。  
 4. **个人档案**：Notion Memory + About「Current work」；本机个人库 `cta-path-a/UPGRADE_PLAN.md`。  
@@ -30,6 +30,9 @@
 | ChatGPT v2.0 白皮书审计（2026-11-23） | 波动率策略升级框架 | **吸收为 Vol 轨** | 不整包开发；先 Vol-V1.4 定价/Greeks；见 `docs/VOLATILITY_ENGINE_SPEC.md` |
 | Notion Memory / 个人库镜像 | 提醒偏好与姿态 | **跟本表** | F2 先念内容；样本够再提醒 |
 | ChatGPT CTA Virtual Portfolio 1.0 | 虚拟组合隔离轨 | **吸收为轨 VP** | Phase 0 审计完成；Phase 1+ 待确认 |
+| `docs/UPGRADE_R_TRACK.md`（AWS Quick 全项目审计，2026-11-23） | 回测可信度修复 → 降回撤 → 新收益来源 → 治理（R0–R16） | **吸收为轨 R（审计升级）** | 优先级排在 F2 之前；🔒 刀（R1–R7）改正式 KPI，需磊签字；ID 与「R 研究台旧项」（P1–P4/A1–A3）不同 |
+| `docs/CARRY_SLEEVE_R14.md`（2026-11-23） | R14 期限结构 carry 独立袖套细则（K0–K7） | **并入轨 R 的 R14** | Research → Shadow；K0–K2 只动数据层，可与 R0–R7 并行；不写 `paper_book` |
+| `docs/STRATEGY_EVIDENCE_REVIEW.md`（2026-11-23） | 量化与期权策略证据综述（37 个来源） | **依据文档** | 不开刀；R9–R14 开刀前先读对应章节 |
 
 **合并原则**：可信度 > alpha；样本不够不开刀；观察续跑 ≠ 开新刀；正式层需明示。
 
@@ -38,6 +41,14 @@
 ## 1. 当前姿态与锁定下一刀
 
 **姿态（2026-11-23）**：**VP-1A** 已上 main；**VP-1B-0 已落地（只读收件箱）· 停**；不自动开 1B-1/F2；期权轨继续积样。
+
+### 1.0 轨 R（审计升级）优先级 · 新登记 2026-11-23
+
+- **结论**：审计发现正式回测引擎至少有 5 类错误（分钟线合约错配造成 3 笔假止损、夜盘交易日归属、跳空止损按止损价成交、组合帽不计已有持仓、模拟账本缺日线兜底），现行 +5.78% / DD 6.74% 不可信。详见 `docs/UPGRADE_R_TRACK.md` §0–§2。
+- **优先级**：**轨 R 阶段 A（R0–R7）排在 F2 之前**。F2 仍按原门槛等样本，不受影响；但说「继续/升级」时，**先念轨 R 的下一刀，再念 F2 是否够样**。
+- **下一刀候选**：**R0 冻结基线**（未开放，需磊明示）。R0 之后按 R1→R7 顺序一刀一开；K0–K2 可在 R0 之后与阶段 A 并行，需单独明示。
+- **硬围栏（轨 R 追加）**：R1–R7 完成前不提交 `historical_backtest_latest.json`、`paper_book_latest.json`；R7 重跑并签字后才更新 `configs/formal_rule_lock.json`；结果变差也不回退修复。
+- **对齐**：§3.2「组合帽 / next_open 纸面完全对齐」原为低优延后，现由轨 R 的 R4、R5 接手。
 
 **已完成旁轨**：**VP-Phase0**；**VP-Phase1-GoNoGo**；**VP-Phase1A**；**VP-1A-Acceptance**；**VP-1A-Fix**；**VP-1B-0-SPEC**；**VP-1B-0**；**VP-1A → main**  
 **Vol-V1.4**：已**轻量入库** GitHub（Shadow only · **结果弱 · 不晋级**）；见规格头注 + `LOCAL_WIP_INVENTORY.md`。  
@@ -102,6 +113,11 @@
 | **S 会话** | Session brief | 多时段盘中 brief | 交 Grokbot | 本仓不做 |
 | **R 研究台旧项** | P1–P4 / A1–A3 | PBO/LSP/Gamma/组合风险/轻量 ML / 主力映射 | **主路径完成** | 封闭 |
 | **R 研究台旧项** | 官历/因子注册/聚类 | `UPGRADE_PLAN`「下次剩余」 | **低优延后** | 封闭 |
+| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **新登记 · 优先于 F2** | **下一刀候选 R0（待明示）** |
+| **R 审计升级** | R8–R12（阶段 B） | 长样本入口、出场预注册 5 组、风险预算生效、波动目标 + 回撤刹车、品种池 | **封闭** | 依赖 R7 |
+| **R 审计升级** | R13（阶段 C） | 席位因子长样本验证（回补 2019+） | **封闭** | 依赖 R8 |
+| **R 审计升级** | **R14 / K0–K7（阶段 C）** | carry 独立袖套：分月库 → 可交易曲线 → 持有指数 → 预登记 10 试验 → 闸门 → Shadow | **封闭** | K0–K2 可与阶段 A 并行（需明示）；K4 起依赖 R6、R8 |
+| **R 审计升级** | R15–R16（阶段 D） | 试验登记强制化 + DSR 真实 n_trials；晋级门槛写进代码 | **封闭** | 可随时插入 |
 
 ---
 
@@ -222,6 +238,10 @@ ext_open。
 | 文件 | 角色 |
 |------|------|
 | **本文件** | 刀序 + 合并状态 + 候选队列 |
+| `docs/UPGRADE_R_TRACK.md` | 轨 R 细则：R0–R16 每刀的证据、改法、测试、验收（2026-11-23 审计） |
+| `docs/CURSOR_PROMPTS_R0_R1.md` | R0、R1 可直接粘贴给 Cursor 的执行指令（一次一段） |
+| `docs/CARRY_SLEEVE_R14.md` | R14 carry 袖套细则：原型结果、数据缺陷 D1–D4、K0–K7、闸门 |
+| `docs/STRATEGY_EVIDENCE_REVIEW.md` | 证据综述：哪些量化/期权策略有长期证据、在中国是否成立（37 个来源） |
 | `docs/audit/VIRTUAL_PORTFOLIO_*.md` | VP Phase 0 审计四件套 |
 | `docs/audit/VP_PHASE1_GO_NO_GO.md` | VP Phase 1 准入裁决 |
 | `docs/audit/VP_PHASE1B0_SPEC.md` | 1B-0 实施规格（读口/inbox/权限） |
@@ -240,6 +260,14 @@ ext_open。
 ---
 
 ## 7. 近期迭代反馈（保留）
+
+### R-REG 轨 R 登记（2026-11-23 · 非刀）
+
+- **做了**：AWS Quick 只读审计本地仓库 + 云端十年近似重放；产出轨 R 清单、carry 袖套细则、证据综述；在本表登记轨 R（§0 / §1.0 / §2 / §6）  
+- **产物**：`docs/UPGRADE_R_TRACK.md`；`docs/UPGRADE_R_TRACK_equity.png`；`docs/CARRY_SLEEVE_R14.md`；`docs/STRATEGY_EVIDENCE_REVIEW.md`  
+- **验证**：仅文档；未改代码、未写 `paper_book` / 正式 BT / seats / `execution_rules.json`；未提交  
+- **风险/未做**：十年重放与 carry 原型为简化近似（无席位、按比例仓位、近似复权、面板 carry 有缺陷），只用于判方向，不替代 R8 / K4；模拟账本现有 P、I 持仓越过止盈/止损未平，留待 R5 处理  
+- **建议下一刀**：明示后开 **R0 冻结基线**；F2 继续积样  
 
 ### F1
 

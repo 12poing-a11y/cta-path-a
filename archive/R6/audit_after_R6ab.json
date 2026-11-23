@@ -1,0 +1,10 @@
+{
+  "checked": 57,
+  "mismatches": 0,
+  "skipped_proxied": 0,
+  "skipped_no_bar": 0,
+  "mismatch_trades": [],
+  "bt_path": "D:\\AI\\cta-path-a\\archive\\R6\\replay_after_R6ab.json",
+  "snap_path": "D:\\AI\\cta-path-a\\archive\\snapshots\\bt_input_20261123_da9c8de64ab4.json",
+  "snap_loaded": true
+}

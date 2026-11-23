@@ -214,16 +214,24 @@ def contract_delivery_ym(contract: str | None) -> str | None:
     return f"{2000 + yy if yy < 100 else yy:04d}-{mm:02d}"
 
 
-def manage_bar_fixed(bar: dict, p: dict) -> tuple[dict | None, bool]:
-    """Freeze-fix manage bar (shadow fix3).
+def manage_bar_fixed(
+    bar: dict,
+    p: dict,
+    *,
+    rolled: bool = False,
+    contract_ohlc: dict | None = None,
+    last_close: float | None = None,
+) -> tuple[dict | None, bool, str | None]:
+    """Freeze-fix manage bar (shadow fix3 + R6a).
 
-    Contract fills: use same-contract OHLC when present (and refresh the
-    position's basis offset); otherwise manage on continuous OHLC + latest
-    known basis (contract - continuous). Returns (mbar, proxied).
+    Contract fills: same-contract OHLC (snap or cache) first; on a roll day
+    without that OHLC → ``roll_unpriced`` (never proxy with the new main).
+    Off-roll missing OHLC still uses continuous + basis_off.
+    Returns (mbar, proxied, force_reason).
     """
     basis = str(p.get("fill_price_basis") or "continuous_proxy").strip().lower()
     if basis != "contract":
-        return manage_ohlc_bar(bar, "continuous_proxy"), False
+        return manage_ohlc_bar(bar, "continuous_proxy"), False, None
     fc = p.get("fill_contract")
     same = fc is None or bar.get("contract") in (None, fc)
     if same:
@@ -231,14 +239,44 @@ def manage_bar_fixed(bar: dict, p: dict) -> tuple[dict | None, bool]:
         if cb is not None:
             try:
                 p["basis_off"] = float(bar["contract_close"]) - float(bar["close"])
+                p["basis_off_contract"] = str(bar.get("contract") or fc or "")
             except (KeyError, TypeError, ValueError):
                 pass
-            return cb, False
+            return cb, False, None
+    if contract_ohlc is not None:
+        try:
+            p["basis_off"] = float(contract_ohlc["close"]) - float(bar["close"])
+            p["basis_off_contract"] = str(fc or bar.get("contract") or "")
+        except (KeyError, TypeError, ValueError):
+            pass
+        return {
+            "open": float(contract_ohlc["open"]),
+            "high": float(contract_ohlc["high"]),
+            "low": float(contract_ohlc["low"]),
+            "close": float(contract_ohlc["close"]),
+            "date": bar.get("date"),
+        }, False, None
+    # R6a: on a detected roll, never proxy with the new main's continuous prices.
+    if rolled:
+        if last_close is not None:
+            px = float(last_close)
+            return {
+                "open": px,
+                "high": px,
+                "low": px,
+                "close": px,
+                "date": bar.get("date"),
+            }, True, "roll_unpriced"
+        return None, True, "roll_unpriced"
     cont = manage_ohlc_bar(bar, "continuous_proxy")
     if cont is None:
-        return None, True
+        return None, True, None
     off = float(p.get("basis_off") or 0.0)
-    return {k: (v + off if k in ("open", "high", "low", "close") else v) for k, v in cont.items()}, True
+    return (
+        {k: (v + off if k in ("open", "high", "low", "close") else v) for k, v in cont.items()},
+        True,
+        None,
+    )
 
 
 def prepare_pack_for_execution(pack, *, root: Path | None = None) -> dict:
@@ -1297,6 +1335,9 @@ def simulate(
     minute_rejected_mismatch = 0
     minute_manage_checks = 0
     daily_exit_fallback_n = 0
+    roll_shifted_n = 0
+    roll_exit_n = 0
+    roll_unpriced_n = 0
     # R2 (B): sina daily open ≈ night-session open → entry day uses full trading-day
     # minute bars (no 09:00 cutoff). R2 (A): daily H/L includes night → match_daily
     # on the full trading-day minute envelope.
@@ -1304,6 +1345,18 @@ def simulate(
         from minute_data import load_minute_bars_on_trading_day
     except Exception:  # noqa: BLE001
         load_minute_bars_on_trading_day = None  # type: ignore[assignment]
+    try:
+        from research.data_quality.rolls import (
+            is_roll_day,
+            last_contract_close,
+            load_contract_bar,
+            roll_shift_from_contracts,
+        )
+    except Exception:  # noqa: BLE001
+        is_roll_day = None  # type: ignore[assignment]
+        last_contract_close = None  # type: ignore[assignment]
+        load_contract_bar = None  # type: ignore[assignment]
+        roll_shift_from_contracts = None  # type: ignore[assignment]
     _sessions_by_code: dict[str, list[str]] = {}
     for _code, _pack in series.items():
         _sessions_by_code[_code] = [
@@ -1327,8 +1380,128 @@ def simulate(
             bar = hist[i1]
             fill_basis = str(p.get("fill_price_basis") or "continuous_proxy")
             proxied = False
+            force_reason = None
+            prev_bar = hist[idx[code][prev_d]] if prev_d and idx[code].get(prev_d) is not None else None
+            rolled = bool(is_roll_day and is_roll_day(prev_bar, bar))
+            # R6b: continuous_proxy on roll day — shift stops or exit at prior close.
+            if (
+                freeze_fix
+                and fill_basis != "contract"
+                and rolled
+                and prev_bar is not None
+                and roll_shift_from_contracts is not None
+            ):
+                old_c = str(prev_bar.get("contract") or p.get("fill_contract") or "")
+                new_c = str(bar.get("contract") or "")
+                shift = None
+                if old_c and new_c and old_c != new_c:
+                    # R6b: need both contracts' d−1 closes; else roll_exit (no
+                    # continuous-gap substitute — that mutates entry and fakes fills).
+                    shift = roll_shift_from_contracts(old_c, new_c, str(prev_d)[:10], root=ROOT)
+                else:
+                    # Calendar stamp unchanged: sina OI/gap roll on continuous —
+                    # translate levels by the continuous overnight jump.
+                    try:
+                        shift = float(bar["open"]) - float(prev_bar["close"])
+                    except (TypeError, ValueError, KeyError):
+                        shift = None
+                if shift is not None:
+                    p["stop"] = float(p["stop"]) + shift
+                    p["target"] = float(p["target"]) + shift
+                    p["entry"] = float(p["entry"]) + shift
+                    if new_c:
+                        p["fill_contract"] = new_c
+                    p["roll_shifted_on"] = d
+                    roll_shifted_n += 1
+                    # Two fill costs (close old + open new).
+                    day_cost += 2 * fill_cost(
+                        series[code]["meta"],
+                        float(bar.get("open") or bar["close"]),
+                        p["lots"],
+                        slippage_ticks=slippage_ticks,
+                        fee_mult=fee_mult,
+                    )
+                    # After shifting stop/target by the continuous gap, the open
+                    # no longer counts as a cross-contract gap-through.
+                else:
+                    # Cannot price the roll → exit at prior continuous close.
+                    force_reason = "roll_exit"
+                    mbar = manage_ohlc_bar(prev_bar, "continuous_proxy") or {
+                        "open": float(prev_bar["close"]),
+                        "high": float(prev_bar["close"]),
+                        "low": float(prev_bar["close"]),
+                        "close": float(prev_bar["close"]),
+                        "date": prev_d,
+                    }
+                    reason, px = "roll_exit", float(mbar["close"])
+                    roll_exit_n += 1
+                    # Fall through to book the exit below (skip stop logic).
+                    fill_basis = str(p.get("fill_price_basis") or "continuous_proxy")
+                    mult = series[code]["meta"]["mult"]
+                    sign = 1 if p["direction"] == "多" else -1
+                    if freeze_fix:
+                        prev_close = p.pop("mark_from") if "mark_from" in p else p.get("last_mark")
+                        if prev_close is not None:
+                            price_pnl += (px - prev_close) * mult * p["lots"] * sign
+                        p["last_mark"] = px
+                    day_cost += fill_cost(
+                        series[code]["meta"],
+                        px,
+                        p["lots"],
+                        slippage_ticks=slippage_ticks,
+                        fee_mult=fee_mult,
+                    )
+                    trade_exits[reason] = trade_exits.get(reason, 0) + 1
+                    sleeve = str(p.get("reason") or "path_a")
+                    sleeve_counts[sleeve] = sleeve_counts.get(sleeve, 0) + 1
+                    risk = abs(p["entry"] - p["stop"]) or 1e-9
+                    r_mult = ((px - p["entry"]) * sign) / risk
+                    closed_pnls.append(
+                        {
+                            "date": d,
+                            "code": code,
+                            "direction": p.get("direction"),
+                            "lots": p.get("lots"),
+                            "entry_date": p.get("entry_date"),
+                            "entry": round(float(p["entry"]), 4),
+                            "exit": round(float(px), 4),
+                            "stop": round(float(p["stop"]), 4) if p.get("stop") is not None else None,
+                            "target": round(float(p["target"]), 4) if p.get("target") is not None else None,
+                            "entry_reason": p.get("reason") or "path_a",
+                            "reason": reason,
+                            "sleeve": p.get("reason"),
+                            "R": round(r_mult, 2),
+                            "opt_payoff": 0.0,
+                            "opt_premium": p.get("opt_premium"),
+                            "fill_price_basis": fill_basis,
+                            "fill_contract": p.get("fill_contract"),
+                        }
+                    )
+                    del pos[code]
+                    continue
+            contract_ohlc = None
+            last_c_close = None
+            if fill_basis == "contract" and load_contract_bar is not None and p.get("fill_contract"):
+                contract_ohlc = load_contract_bar(
+                    str(p["fill_contract"]),
+                    d,
+                    root=ROOT,
+                    snap_bar=bar,
+                )
+                if contract_ohlc is None and last_contract_close is not None:
+                    last_c_close = last_contract_close(
+                        str(p["fill_contract"]), on_or_before=str(prev_d or d)[:10], root=ROOT
+                    )
             if freeze_fix:
-                mbar, proxied = manage_bar_fixed(bar, p)
+                mbar, proxied, force_reason = manage_bar_fixed(
+                    bar,
+                    p,
+                    rolled=rolled and fill_basis == "contract",
+                    contract_ohlc=contract_ohlc,
+                    last_close=last_c_close,
+                )
+                if force_reason == "roll_unpriced":
+                    roll_unpriced_n += 1
                 if proxied:
                     p["stale_days"] = int(p.get("stale_days") or 0) + 1
                     freeze_stats["proxied_bar_days"] += 1
@@ -1345,44 +1518,48 @@ def simulate(
             # Prefer 15m first-touch only for continuous_proxy fills (minute cache
             # is continuous/month-mixed). Contract fills use same-basis daily OHLC.
             # R2: load by trading day (prev-evening night session belongs to today).
-            reason, px = None, mbar["close"]
-            used_minute = False
-            if fill_basis != "contract" and load_minute_bars_on_trading_day is not None:
-                try:
-                    m_bars = load_minute_bars_on_trading_day(
-                        ROOT,
-                        code,
-                        d,
-                        period=EXIT_MINUTE_PERIOD,
-                        sessions=_sessions_by_code.get(code) or [],
+            if force_reason == "roll_unpriced":
+                reason, px = "roll_unpriced", float(mbar["close"])
+                used_minute = False
+            else:
+                reason, px = None, mbar["close"]
+                used_minute = False
+                if fill_basis != "contract" and load_minute_bars_on_trading_day is not None:
+                    try:
+                        m_bars = load_minute_bars_on_trading_day(
+                            ROOT,
+                            code,
+                            d,
+                            period=EXIT_MINUTE_PERIOD,
+                            sessions=_sessions_by_code.get(code) or [],
+                        )
+                    except Exception:  # noqa: BLE001
+                        m_bars = []
+                    # R2 (B): daily open is night open → keep full trading-day bars on
+                    # entry day (no natural-time 09:00 cutoff; night bars are prev calendar).
+                    if m_bars and not minute_bars_match_daily(
+                        m_bars, mbar, tick=float(series[code]["meta"].get("tick") or 0)
+                    ):
+                        minute_rejected_mismatch += 1
+                        m_bars = []
+                    # Month-contract minute vs continuous entry → reject (false stops).
+                    if m_bars and not minute_bars_aligned_with_entry(p["entry"], m_bars):
+                        m_bars = []
+                    if m_bars:
+                        m_reason, m_px = apply_stop_target_intraday(
+                            p["direction"], p["entry"], p["stop"], p["target"], m_bars
+                        )
+                        used_minute = True
+                        minute_manage_checks += 1
+                        if m_reason:
+                            reason, px = m_reason, m_px
+                if not used_minute:
+                    reason, px = apply_stop_target(
+                        p["direction"], p["entry"], p["stop"], p["target"], mbar
                     )
-                except Exception:  # noqa: BLE001
-                    m_bars = []
-                # R2 (B): daily open is night open → keep full trading-day bars on
-                # entry day (no natural-time 09:00 cutoff; night bars are prev calendar).
-                if m_bars and not minute_bars_match_daily(
-                    m_bars, mbar, tick=float(series[code]["meta"].get("tick") or 0)
-                ):
-                    minute_rejected_mismatch += 1
-                    m_bars = []
-                # Month-contract minute vs continuous entry → reject (false stops).
-                if m_bars and not minute_bars_aligned_with_entry(p["entry"], m_bars):
-                    m_bars = []
-                if m_bars:
-                    m_reason, m_px = apply_stop_target_intraday(
-                        p["direction"], p["entry"], p["stop"], p["target"], m_bars
-                    )
-                    used_minute = True
-                    minute_manage_checks += 1
-                    if m_reason:
-                        reason, px = m_reason, m_px
-            if not used_minute:
-                reason, px = apply_stop_target(
-                    p["direction"], p["entry"], p["stop"], p["target"], mbar
-                )
-                daily_exit_fallback_n += 1
-            elif reason in ("stop", "target"):
-                minute_exit_n += 1
+                    daily_exit_fallback_n += 1
+                elif reason in ("stop", "target"):
+                    minute_exit_n += 1
             # trend flip exit (Path-A conflict / opposite, or composite-trend sign flip)
             # Signal uses continuous factors; exit price stays on locked manage bar.
             if reason is None and p.get("reason") == "roll_carry":
@@ -2018,6 +2195,9 @@ def simulate(
         "minute_rejected_mismatch": minute_rejected_mismatch,
         "minute_manage_checks": minute_manage_checks,
         "daily_exit_fallback_checks": daily_exit_fallback_n,
+        "roll_shifted": roll_shifted_n,
+        "roll_exit": roll_exit_n,
+        "roll_unpriced": roll_unpriced_n,
         "slippage_ticks": slippage_ticks,
         "git_sha": _git_sha(ROOT),
         "universe_sha256": cfg_stamp.get("universe_sha256") or _file_sha256(ROOT / "universe.json"),

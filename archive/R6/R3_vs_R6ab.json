@@ -1,0 +1,138 @@
+{
+  "R3": {
+    "ret_pct": 10.026,
+    "gross_ret_pct": 12.528,
+    "max_dd_pct": 6.904,
+    "closed_trades": 65,
+    "exits": {
+      "target": 26,
+      "stop": 35,
+      "signal": 4
+    },
+    "cost_yuan": 5004.07,
+    "roll_shifted": null,
+    "roll_exit": null,
+    "roll_unpriced": null
+  },
+  "R6ab": {
+    "ret_pct": 12.449,
+    "gross_ret_pct": 15.16,
+    "max_dd_pct": 4.64,
+    "closed_trades": 64,
+    "exits": {
+      "target": 30,
+      "stop": 27,
+      "signal": 4,
+      "roll_exit": 3
+    },
+    "cost_yuan": 5420.59,
+    "roll_shifted": 6,
+    "roll_exit": 3,
+    "roll_unpriced": 0
+  },
+  "gap_stop_exits": {
+    "R3": 4,
+    "R6ab": 1
+  },
+  "gap_slippage_R": {
+    "R3": 6.4806,
+    "R6ab": 0.1204
+  },
+  "three_reruns": {
+    "MA_2026-04-14": {
+      "R3": {
+        "code": "MA",
+        "direction": "多",
+        "lots": 1,
+        "entry_date": "2026-04-13",
+        "date": "2026-04-14",
+        "entry": 3089.0,
+        "exit": 2860.0,
+        "stop": 2895.2286,
+        "reason": "stop",
+        "R": -1.18,
+        "fill_price_basis": "contract",
+        "fill_contract": "MA2605"
+      },
+      "R6ab": {
+        "code": "MA",
+        "direction": "多",
+        "lots": 1,
+        "entry_date": "2026-04-13",
+        "date": "2026-04-14",
+        "entry": 3089.0,
+        "exit": 3122.0,
+        "stop": 2895.2286,
+        "reason": "signal",
+        "R": 0.17,
+        "fill_price_basis": "contract",
+        "fill_contract": "MA2605"
+      }
+    },
+    "FG_2026-04-16": {
+      "R3": {
+        "code": "FG",
+        "direction": "空",
+        "lots": 3,
+        "entry_date": "2026-04-15",
+        "date": "2026-04-16",
+        "entry": 964.0,
+        "exit": 1072.0,
+        "stop": 981.7714,
+        "reason": "stop",
+        "R": -6.08,
+        "fill_price_basis": "contract",
+        "fill_contract": "FG2605"
+      },
+      "R6ab": {
+        "code": "FG",
+        "direction": "空",
+        "lots": 3,
+        "entry_date": "2026-04-15",
+        "date": "2026-04-16",
+        "entry": 964.0,
+        "exit": 981.7714,
+        "stop": 981.7714,
+        "reason": "stop",
+        "R": -1.0,
+        "fill_price_basis": "contract",
+        "fill_contract": "FG2605"
+      }
+    },
+    "EG_2026-09-22": {
+      "R3": {
+        "code": "EG",
+        "direction": "多",
+        "lots": 1,
+        "entry_date": "2026-09-18",
+        "date": "2026-09-22",
+        "entry": 6050.0,
+        "exit": 5539.0,
+        "stop": 5806.8,
+        "reason": "stop",
+        "R": -2.1,
+        "fill_price_basis": "continuous_proxy",
+        "fill_contract": "EG2610"
+      },
+      "R6ab": {
+        "code": "EG",
+        "direction": "多",
+        "lots": 1,
+        "entry_date": "2026-09-18",
+        "date": "2026-09-22",
+        "entry": 5562.0,
+        "exit": 5318.8,
+        "stop": 5318.8,
+        "reason": "stop",
+        "R": -1.0,
+        "fill_price_basis": "continuous_proxy",
+        "fill_contract": "EG2610"
+      }
+    }
+  },
+  "stops_R_lt_neg2": [],
+  "audit": {
+    "checked": 57,
+    "mismatches": 0
+  }
+}

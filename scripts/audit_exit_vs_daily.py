@@ -66,15 +66,49 @@ def _load_cache_contract(root: Path, contract: str) -> list[dict]:
 def _ohlc(bar: dict, *, basis: str) -> tuple[float, float, float, float] | None:
     try:
         if basis == "contract":
-            o = bar.get("contract_open", bar.get("open"))
-            h = bar.get("contract_high", bar.get("high"))
-            lo = bar.get("contract_low", bar.get("low"))
-            c = bar.get("contract_close", bar.get("close"))
-        else:
-            o, h, lo, c = bar.get("open"), bar.get("high"), bar.get("low"), bar.get("close")
+            # Only real contract_* keys — do NOT fall back to continuous via .get default
+            # when the key is missing (that was the R1 false-mismatch bug).
+            if (
+                bar.get("contract_high") is None
+                or bar.get("contract_low") is None
+                or bar.get("contract_close") is None
+            ):
+                return None
+            close = float(bar["contract_close"])
+            o = (
+                float(bar["contract_open"])
+                if bar.get("contract_open") is not None
+                else close
+            )
+            return o, float(bar["contract_high"]), float(bar["contract_low"]), close
+        o, h, lo, c = bar.get("open"), bar.get("high"), bar.get("low"), bar.get("close")
         return float(o), float(h), float(lo), float(c)
     except (TypeError, ValueError):
         return None
+
+
+def _basis_off_before(
+    snap_bars: list[dict],
+    *,
+    day: str,
+    fill_contract: str,
+) -> float | None:
+    """Last known (contract_close − continuous close) on/before day for fill_contract."""
+    want = fill_contract.upper()
+    off = None
+    for b in snap_bars:
+        d = str(b.get("date") or "")[:10]
+        if d > day:
+            break
+        if str(b.get("contract") or "").upper() not in ("", want):
+            continue
+        if b.get("contract_close") is None:
+            continue
+        try:
+            off = float(b["contract_close"]) - float(b["close"])
+        except (TypeError, ValueError):
+            continue
+    return off
 
 
 def resolve_day_bar(
@@ -90,31 +124,43 @@ def resolve_day_bar(
     Return (bar, source, skip_reason).
     skip_reason is set when the trade should be skipped (not counted as mismatch).
     """
+    snap_bars = None
     if snap and isinstance(snap.get("bars"), dict):
-        bars = snap["bars"].get(code)
-        bar = _bar_by_date(bars, day)
-        if bar is None:
+        snap_bars = snap["bars"].get(code)
+        bar = _bar_by_date(snap_bars, day)
+        if bar is None and basis == "continuous_proxy":
             return None, "snap_missing_day", "skipped_no_bar"
-        if basis == "contract":
-            bar_c = str(bar.get("contract") or "").strip().upper()
+        if basis == "continuous_proxy" and bar is not None:
+            return bar, "snap_continuous", None
+        if basis == "contract" and bar is not None:
             want = str(fill_contract or "").strip().upper()
-            if want and bar_c and bar_c != want:
-                return None, "snap_proxied_contract", "skipped_proxied"
-            # contract fields may still be absent → fall through to cache
-            ohlc = _ohlc(bar, basis="contract")
-            if ohlc is not None and (
+            # Real contract_* on snap
+            if (
                 bar.get("contract_high") is not None
-                or bar.get("contract_low") is not None
-                or (want and bar_c == want)
+                and bar.get("contract_low") is not None
+                and bar.get("contract_close") is not None
             ):
                 return bar, "snap_contract", None
-            # try continuous fields only if same contract stamped
-            if want and bar_c == want:
-                return bar, "snap_same_contract_cont_fields", None
-            if want and bar_c and bar_c != want:
-                return None, "snap_proxied_contract", "skipped_proxied"
-        else:
-            return bar, "snap_continuous", None
+            # Exact-contract cache
+            if want:
+                cbar = _bar_by_date(_load_cache_contract(root, want), day)
+                if cbar is not None:
+                    return cbar, "cache_contract", None
+            # Engine proxy: continuous + last basis_off (must match manage_bar_fixed)
+            off = _basis_off_before(snap_bars or [], day=day, fill_contract=want) if want else None
+            if off is not None:
+                try:
+                    proxied = {
+                        "date": day,
+                        "open": float(bar["open"]) + off,
+                        "high": float(bar["high"]) + off,
+                        "low": float(bar["low"]) + off,
+                        "close": float(bar["close"]) + off,
+                    }
+                    return proxied, "snap_proxied", None
+                except (TypeError, ValueError, KeyError):
+                    pass
+            return None, "contract_unpriced", "skipped_no_bar"
 
     # Snapshot missing / unusable → cache fallback
     if basis == "continuous_proxy":
@@ -124,7 +170,7 @@ def resolve_day_bar(
             return None, "cache_history_missing", "skipped_no_bar"
         return bar, "cache_history", None
 
-    # contract basis
+    # contract basis without snap
     if not fill_contract:
         return None, "no_fill_contract", "skipped_no_bar"
     bars = _load_cache_contract(root, fill_contract)
@@ -174,6 +220,10 @@ def audit_bt(
     checked = 0
     skipped_proxied = 0
     skipped_no_bar = 0
+    try:
+        from research.data_quality.rolls import is_roll_day
+    except Exception:  # noqa: BLE001
+        is_roll_day = None  # type: ignore[assignment]
     for t in bt.get("closed_pnls") or []:
         reason = str(t.get("reason") or "")
         if reason not in ("stop", "target"):
@@ -198,9 +248,10 @@ def audit_bt(
         if skip == "skipped_no_bar" or bar is None:
             skipped_no_bar += 1
             continue
-        ohlc = _ohlc(bar, basis=basis if source.startswith("snap") or source == "cache_contract" else "continuous")
-        if ohlc is None:
-            # continuous fields for cache_history / snap_continuous
+        # snap_contract uses contract_*; cache_contract / snap_proxied / continuous use plain OHLC
+        if source == "snap_contract":
+            ohlc = _ohlc(bar, basis="contract")
+        else:
             ohlc = _ohlc(bar, basis="continuous")
         if ohlc is None:
             skipped_no_bar += 1
@@ -215,6 +266,12 @@ def audit_bt(
         except (TypeError, ValueError):
             skipped_no_bar += 1
             continue
+        exit_px = None
+        try:
+            if t.get("exit") is not None:
+                exit_px = float(t["exit"])
+        except (TypeError, ValueError):
+            exit_px = None
         checked += 1
         ok = exit_touches_daily(
             direction=str(t.get("direction") or ""),
@@ -225,7 +282,44 @@ def audit_bt(
             low=low,
             tol=tol,
         )
-        if not ok:
+        # R6: exit on a roll day priced off the new main (continuous open) while
+        # holding a different exact contract → always a mismatch.
+        roll_bad = False
+        if (
+            exit_px is not None
+            and is_roll_day is not None
+            and snap
+            and isinstance(snap.get("bars"), dict)
+        ):
+            hist = snap["bars"].get(code) or []
+            cur = _bar_by_date(hist, day)
+            prev = None
+            for b in hist:
+                if str(b.get("date") or "")[:10] >= day:
+                    break
+                prev = b
+            if cur is not None and is_roll_day(prev, cur):
+                try:
+                    cont_open = float(cur["open"])
+                except (TypeError, ValueError, KeyError):
+                    cont_open = None
+                if cont_open is not None and abs(exit_px - cont_open) <= max(
+                    tol, abs(cont_open) * 1e-9
+                ):
+                    want = str(fill_contract or "").upper()
+                    cbar = _bar_by_date(_load_cache_contract(root, want), day) if want else None
+                    if cbar is not None:
+                        try:
+                            c_open = float(
+                                cbar.get("open") if cbar.get("open") is not None else cbar["close"]
+                            )
+                        except (TypeError, ValueError, KeyError):
+                            c_open = None
+                        if c_open is not None and abs(c_open - cont_open) > max(tol, 1e-6):
+                            roll_bad = True
+                    elif basis == "contract":
+                        roll_bad = True
+        if not ok or roll_bad:
             mismatches.append(
                 {
                     "date": day,
@@ -242,6 +336,7 @@ def audit_bt(
                     "fill_price_basis": basis,
                     "fill_contract": fill_contract,
                     "bar_source": source,
+                    "roll_new_main_exit": roll_bad,
                 }
             )
     return {

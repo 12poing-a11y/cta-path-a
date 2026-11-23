@@ -53,12 +53,12 @@ def test_manage_bar_fixed_uses_basis_when_contract_missing():
     p = {"fill_price_basis": "contract", "fill_contract": "L2601"}
     b1 = {"date": "d1", "contract": "L2601", "open": 100, "high": 110, "low": 90, "close": 105,
           "contract_open": 98, "contract_high": 108, "contract_low": 88, "contract_close": 103}
-    m, prox = hb.manage_bar_fixed(b1, p)
-    assert not prox and m["close"] == 103 and p["basis_off"] == -2
+    m, prox, fr = hb.manage_bar_fixed(b1, p)
+    assert not prox and fr is None and m["close"] == 103 and p["basis_off"] == -2
     b2 = {"date": "d2", "contract": "L2605", "open": 200, "high": 210, "low": 190, "close": 205,
           "contract_open": 300, "contract_high": 310, "contract_low": 290, "contract_close": 305}
-    m, prox = hb.manage_bar_fixed(b2, p)  # other month => continuous + last basis, never other-month OHLC
-    assert prox and m["close"] == 203 and m["high"] == 208 and m["low"] == 188
+    m, prox, fr = hb.manage_bar_fixed(b2, p)  # other month => continuous + last basis, never other-month OHLC
+    assert prox and fr is None and m["close"] == 203 and m["high"] == 208 and m["low"] == 188
 
 
 def test_legacy_reproduces_ee4476b_and_fix_has_no_cross_delivery():

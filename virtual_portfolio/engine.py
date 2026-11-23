@@ -570,6 +570,7 @@ def compute_account_state(root: Path, account_id: str) -> dict[str, Any]:
         "AUTO_OPEN_ALLOWED": bool(runtime.get("AUTO_OPEN_ALLOWED")),
         "AUTO_CLOSE_ALLOWED": bool(runtime.get("AUTO_CLOSE_ALLOWED")),
         "SIGNAL_INGEST_ALLOWED": bool(runtime.get("SIGNAL_INGEST_ALLOWED")),
+        "SIGNAL_READ_ALLOWED": bool(runtime.get("SIGNAL_READ_ALLOWED")),
     }
     return {
         "account": meta_out,

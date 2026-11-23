@@ -1,7 +1,7 @@
 # VP Phase 1B-0 — 实施规格（信号只读 / 独立收件箱 / 权限隔离）
 
 **日期**：2026-11-23  
-**性质**：**规格 only**；本文件**不授权**写业务代码，直至你明示开刀。  
+**性质**：规格；**已明示开刀并落地**（见 `VP_PHASE1B0_REPORT.md`）。实现完成即停，不自动进 1B-1。  
 **上游裁决**：GPT 对 `feature/vp-phase1a-fix` 复核 → 1A = PASS(RESEARCH_ONLY)；1B-0 = **CONDITIONAL GO**。  
 **依据**：`VIRTUAL_PORTFOLIO_DEPENDENCY_MAP.md`、`VP_PHASE1_GO_NO_GO.md` Q1、`permissions.py`、`daily_update.py` / `paper_book.py` 实路径。
 

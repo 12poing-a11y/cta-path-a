@@ -37,9 +37,9 @@
 
 ## 1. 当前姿态与锁定下一刀
 
-**姿态（2026-11-23）**：**VP-1A = PASS(RESEARCH_ONLY) 已合入 GitHub `main`**（PR [#30](https://github.com/12poing-a11y/cta-path-a/pull/30) → `d61ec7c`）；**1B-0 规格已备、实现未开**；期权轨继续积样；不自动开 1B-0/F2。
+**姿态（2026-11-23）**：**VP-1A** 已上 main；**VP-1B-0 已落地（只读收件箱）· 停**；不自动开 1B-1/F2；期权轨继续积样。
 
-**已完成旁轨**：**VP-Phase0**；**VP-Phase1-GoNoGo**；**VP-Phase1A**；**VP-1A-Acceptance**；**VP-1A-Fix**；**VP-1B-0-SPEC**；**VP-1A → main**  
+**已完成旁轨**：**VP-Phase0**；**VP-Phase1-GoNoGo**；**VP-Phase1A**；**VP-1A-Acceptance**；**VP-1A-Fix**；**VP-1B-0-SPEC**；**VP-1B-0**；**VP-1A → main**  
 **Vol-V1.4**：已**轻量入库** GitHub（Shadow only · **结果弱 · 不晋级**）；见规格头注 + `LOCAL_WIP_INVENTORY.md`。  
 
 **settle BT 现况**：`credit_vertical` put_credit · `--settle-only` → n_closed=17 · 胜率≈18% · 总 PnL≈−2185 元 · **WARN**
@@ -64,9 +64,8 @@
 | ✅ | 1A PASS(RESEARCH_ONLY) | **完成并上 GitHub** | 研究账本 + 人工模拟；≠ 自动交易验收 |
 | ✅ | 分支同步 + PR 合 main | **完成** | #30；无敏感账号/DB |
 | ✅ | 1B-0 实施规格 | **完成** | `docs/audit/VP_PHASE1B0_SPEC.md` |
-| ▶ | **VP-1B-0 实现** | **CONDITIONAL GO · 待你明示** | 只读 L1→独立 inbox；新建 `SIGNAL_READ_ALLOWED`；**禁止**全局开 `SIGNAL_INGEST` |
-| ⏸ | 1B-0 硬门槛测 | 随实现 | 污染哨兵、权限拆分、幂等、无改账户 |
-| 🚫 | 1B-1（订单意图） | NO-GO | 1B-0 通过后**另批**；不自动进入 |
+| ✅ | **VP-1B-0 实现** | **完成 · 停** | 只读 L1→inbox；`SIGNAL_READ_ALLOWED`；未开 `SIGNAL_INGEST` |
+| 🚫 | 1B-1（订单意图） | NO-GO | 须另批；不自动进入 |
 | 🚫 | 1B-2（模拟成交） | NO-GO | 同上 |
 | 📋 | 技术债（不挡 1A） | 挂账 | 投影版本一致性；`append_event` 文件锁；加权均价 vs FIFO 口径（执行阶段前定） |
 
@@ -165,8 +164,8 @@
 | **Phase 0** | **完成** | 四件套：AUDIT / DEPENDENCY_MAP / DATA_DICTIONARY / RISK_REGISTER |
 | **Go / No-Go** | **完成** | VP_PHASE1_GO_NO_GO.md；附账户规则 / 成交规范 / Paper 异常专项 |
 | **Phase 1A** | **完成 · 已上 main** | PASS(RESEARCH_ONLY)；PR #30 → `d61ec7c` |
-| **1B-0 规格** | **完成** | `VP_PHASE1B0_SPEC.md`（读口/收件箱/权限拆分）；**未写业务代码** |
-| **1B-0 实现** | **CONDITIONAL GO · 未开** | 须明示开刀；见规格 §6 |
+| **1B-0 规格** | **完成** | `VP_PHASE1B0_SPEC.md` |
+| **1B-0 实现** | **完成 · 停** | 报告 `VP_PHASE1B0_REPORT.md`；不进 1B-1 |
 | 1B-1 / 1B-2 | NO-GO | 订单意图 / 模拟成交；须 1B-0 另批 |
 | Phase 2+ | NO-GO | 诊断 / Desk |
 
@@ -194,7 +193,7 @@ ext_open。
 | 0 | （非刀） | F1b 日积盘口 CF/SR/MA | Tq 凭证 + 交易日续跑 | **运维中** |
 | **1 · 锁** | **F2** | Bid/Ask 信用价差研究 BT；对照 settle；最高 WARN；不写正式层 | gate `ready=true` **且** 你确认 | **等样本** |
 | — | **VP-Phase1A** | 虚拟账户 + 手工成交账本（不接 L1） | 已确认执行 | **完成 · main** |
-| — | **VP-1B-0** | 信号只读 + inbox + `SIGNAL_READ_ALLOWED` | 规格已备 **且** 你明示开刀 | **待明示** |
+| — | **VP-1B-0** | 信号只读 + inbox + `SIGNAL_READ_ALLOWED` | 已明示并落地 | **完成 · 停** |
 | 2 | Vol-V1.6 | TVS 风险预算硬化（审计 P0；旁路可加深） | 你明示（可与 F2 并行旁轨，仍一刀一开） | 封闭 |
 | 3 | Vol-V1.5 | VRP / Gamma Scalping 研究（Shadow） | V1.4 已完成 + 决议 | 封闭 |
 | 4 | Vol-V1.7 | 真实执行成本账本（研究） | 决议 | 封闭 |
@@ -296,6 +295,14 @@ ext_open。
 - **验证**：`pytest tests/test_vol_engine_v14.py` 绿；CF 2026-11-23 快照跑通（surface ok≈61，ATM Shadow 腿 6）；`live_trading=false` / `promote_path_a=false`  
 - **风险/未做**：反馈偏弱 → **禁止晋级**；未开 SABR/VRP/奇异；F2 不够样  
 - **建议下一刀**：**停 · 积样本**；够样后确认 **F2**；或明示 **Vol-V1.6**（勿把 V1.4 当可交易）  
+
+### VP-1B-0（2026-11-23）
+
+- **做了**：L1 只读适配器；`signal_inbox`；`SIGNAL_READ_ALLOWED` 与 `SIGNAL_INGEST`/AUTO 解耦；Desk 收件箱；硬门槛测  
+- **产物**：`virtual_portfolio/adapters/l1.py`；`signal_inbox.py`；`tests/test_vp_phase1b0.py`；`VP_PHASE1B0_REPORT.md`  
+- **验证**：pytest 1A+1B-0 → 25 passed  
+- **风险/未做**：无下单/无改账户；未开 1B-1；Desk 须手动开只读开关再摄入  
+- **建议下一刀**：**停**；观察收件箱后再明示 **1B-1**，或积样 **F2**  
 
 ### Vol-V1.4 轻量入库（2026-11-23）
 

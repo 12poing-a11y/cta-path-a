@@ -10,6 +10,8 @@ DEFAULT_MARGIN_STATUS = "UNVERIFIED"
 DEFAULT_AUTO_OPEN_ALLOWED = False
 DEFAULT_AUTO_CLOSE_ALLOWED = False
 DEFAULT_SIGNAL_INGEST_ALLOWED = False
+# 1B-0 read/archive only — must NOT unlock auto-open.
+DEFAULT_SIGNAL_READ_ALLOWED = False
 
 ALLOWED_ACCOUNT_MODES = frozenset({"RESEARCH_ONLY", "PAPER_SIM", "LIVE_SHADOW"})
 
@@ -25,6 +27,7 @@ def default_runtime_flags() -> dict[str, Any]:
         "AUTO_OPEN_ALLOWED": DEFAULT_AUTO_OPEN_ALLOWED,
         "AUTO_CLOSE_ALLOWED": DEFAULT_AUTO_CLOSE_ALLOWED,
         "SIGNAL_INGEST_ALLOWED": DEFAULT_SIGNAL_INGEST_ALLOWED,
+        "SIGNAL_READ_ALLOWED": DEFAULT_SIGNAL_READ_ALLOWED,
     }
 
 
@@ -64,6 +67,9 @@ def resolve_runtime(meta: dict[str, Any] | None) -> dict[str, Any]:
         "SIGNAL_INGEST_ALLOWED": coerce_bool(
             m.get("SIGNAL_INGEST_ALLOWED"), default=DEFAULT_SIGNAL_INGEST_ALLOWED
         ),
+        "SIGNAL_READ_ALLOWED": coerce_bool(
+            m.get("SIGNAL_READ_ALLOWED"), default=DEFAULT_SIGNAL_READ_ALLOWED
+        ),
     }
 
 
@@ -91,6 +97,12 @@ def assert_auto_close_allowed(runtime: dict[str, Any]) -> None:
 def assert_signal_ingest_allowed(runtime: dict[str, Any]) -> None:
     if not runtime.get("SIGNAL_INGEST_ALLOWED"):
         raise VpPermissionError("SIGNAL_INGEST_ALLOWED=false (fail-closed)")
+
+
+def assert_signal_read_allowed(runtime: dict[str, Any]) -> None:
+    """1B-0: read L1 → VP inbox only. Does not imply SIGNAL_INGEST or AUTO_OPEN."""
+    if not runtime.get("SIGNAL_READ_ALLOWED"):
+        raise VpPermissionError("SIGNAL_READ_ALLOWED=false (fail-closed)")
 
 
 def derive_margin_status(flags: list[str] | set[str], *, verified_any: bool) -> str:

@@ -83,6 +83,7 @@ DESK_PAGES = (
     "状态评分",
     "情绪",
     "期权机会",
+    "虚拟组合",
     "Gamma 结构",
     "套利观察",
     "LSP 扫荡研究",
@@ -839,6 +840,15 @@ def main() -> None:
             render_options_research_panel(st, ROOT)
         except Exception as exc:
             st.warning(f"上市期权研究面板暂不可用: {exc}")
+
+    if page == "虚拟组合":
+        render_freshness_header(ROOT, "虚拟组合")
+        try:
+            from desk.virtual_portfolio_panel import render_virtual_portfolio_panel
+
+            render_virtual_portfolio_panel(ROOT)
+        except Exception as exc:  # noqa: BLE001
+            st.warning(f"虚拟组合面板暂不可用: {exc}")
 
     if page == "Gamma 结构":
         render_freshness_header(ROOT, "Gamma 结构")

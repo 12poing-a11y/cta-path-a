@@ -7,11 +7,11 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "MA2701",
-    "n_snapshots": 8,
-    "n_events": 14,
+    "n_snapshots": 9,
+    "n_events": 16,
     "label_counts": {
-      "unchanged": 12,
-      "new_or_shifted_wall": 2
+      "unchanged": 13,
+      "new_or_shifted_wall": 3
     },
     "live_trading": false,
     "note": "Display GEX convention; OI does not identify dealer side.",
@@ -169,6 +169,28 @@
         "gex_change_pct": -0.0193,
         "futures_price": 3071.0,
         "dist_pct": -2.312
+      },
+      {
+        "date": "2026-11-23",
+        "side": "call",
+        "from": 3500.0,
+        "to": 3500.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.0081,
+        "futures_price": 3030.0,
+        "dist_pct": 15.512
+      },
+      {
+        "date": "2026-11-23",
+        "side": "put",
+        "from": 3000.0,
+        "to": 2800.0,
+        "move": -200.0,
+        "label": "new_or_shifted_wall",
+        "gex_change_pct": 0.087,
+        "futures_price": 3030.0,
+        "dist_pct": -7.591
       }
     ]
   },

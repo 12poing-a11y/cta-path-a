@@ -120,6 +120,47 @@ def exit_condition_text(
     )
 
 
+def _local_daily_bar(root: Path, code: str, asof_iso: str) -> dict | None:
+    """Read ``.cache/history/{CODE}0.json`` for the bar with date == asof_iso."""
+    code = str(code or "").upper()
+    day = _ymd(asof_iso)
+    if not code or not day:
+        return None
+    path = Path(root) / ".cache" / "history" / f"{code}0.json"
+    if not path.is_file():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if isinstance(data, dict):
+        rows = data.get("bars") or data.get("hist") or []
+    else:
+        rows = data if isinstance(data, list) else []
+    for b in rows:
+        if not isinstance(b, dict):
+            continue
+        if str(b.get("date") or "")[:10] == day:
+            return b
+    return None
+
+
+def _tick_map(root: Path | None = None) -> dict[str, float]:
+    cfg = _load(Path(root or ROOT) / "universe.json") or {}
+    out: dict[str, float] = {}
+    for row in cfg.get("symbols") or []:
+        if not isinstance(row, dict):
+            continue
+        code = str(row.get("code") or "").upper()
+        try:
+            tick = float(row.get("tick") or 0)
+        except (TypeError, ValueError):
+            continue
+        if code:
+            out[code] = tick
+    return out
+
+
 def _intraday_stop_exit(
     pos: dict, *, root: Path, asof_iso: str
 ) -> tuple[str | None, float | None]:
@@ -132,7 +173,7 @@ def _intraday_stop_exit(
     if entry_day and entry_day == _ymd(asof_iso):
         return None, None
     try:
-        from minute_data import load_minute_bars_on_date
+        from minute_data import day_session_bars, load_minute_bars_on_date
         from wyckoff_pullback import apply_stop_target_intraday
     except Exception:  # noqa: BLE001
         return None, None
@@ -141,16 +182,22 @@ def _intraday_stop_exit(
     direction = str(pos.get("direction") or "")
     if stop is None or target is None or entry is None or direction not in ("多", "空"):
         return None, None
+    code = str(pos.get("code") or "")
     try:
-        bars = load_minute_bars_on_date(
-            root, str(pos.get("code") or ""), asof_iso, period="15"
-        )
+        bars = load_minute_bars_on_date(root, code, asof_iso, period="15")
     except Exception:  # noqa: BLE001
         return None, None
     if not bars:
         return None, None
-    from wyckoff_pullback import minute_bars_aligned_with_entry
+    bars = day_session_bars(bars)
+    if not bars:
+        return None, None
+    day_bar = _local_daily_bar(root, code, asof_iso)
+    tick = float((_tick_map(root).get(code.upper()) or 0))
+    from wyckoff_pullback import minute_bars_aligned_with_entry, minute_bars_match_daily
 
+    if day_bar is None or not minute_bars_match_daily(bars, day_bar, tick=tick):
+        return None, None
     if not minute_bars_aligned_with_entry(float(entry), bars):
         return None, None
     reason, px = apply_stop_target_intraday(

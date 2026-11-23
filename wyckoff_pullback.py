@@ -496,6 +496,28 @@ def minute_bars_aligned_with_entry(
     return abs(mid - entry_f) / entry_f <= float(max_rel_diff)
 
 
+def minute_bars_match_daily(minute_bars, day_bar, *, tick, tol_ticks=2) -> bool:
+    """分钟线必须和同口径日线是同一个合约：
+    (a) 分钟线高低点落在日线 [low, high] ± tol 内；
+    (b) 15:00 及以前最后一根分钟线的收盘价与日线收盘价相差 <= tol。
+    两条都要：实测有月份合约的包络碰巧落在主连区间内、但收盘对不上的情况。"""
+    if not minute_bars or not day_bar:
+        return False
+    try:
+        tol = float(tol_ticks) * float(tick or 0)
+        hi = max(float(b["high"]) for b in minute_bars)
+        lo = min(float(b["low"]) for b in minute_bars)
+        if hi > float(day_bar["high"]) + tol or lo < float(day_bar["low"]) - tol:
+            return False
+        day = [b for b in minute_bars if str(b.get("datetime") or "")[11:16] <= "15:00"]
+        if not day:
+            return False
+        last = max(day, key=lambda b: str(b.get("datetime") or ""))
+        return abs(float(last["close"]) - float(day_bar["close"])) <= tol
+    except (KeyError, TypeError, ValueError):
+        return False
+
+
 def apply_stop_target_intraday(
     direction: str,
     entry: float,

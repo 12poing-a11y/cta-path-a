@@ -239,6 +239,18 @@ def load_minute_bars_series(
     return [by_dt[k] for k in sorted(by_dt)]
 
 
+def day_session_bars(bars):
+    """去掉 >=20:00 的夜盘 K 线：它们属于下一个交易日（完整的交易日归属在 R2 处理）。
+    只有日期、没有时间的 bar 原样保留。"""
+    out = []
+    for b in bars or []:
+        hm = str(b.get("datetime") or "")[11:16]
+        if hm and hm >= "20:00":
+            continue
+        out.append(b)
+    return out
+
+
 def load_minute_bars_on_date(
     root: Path,
     code: str,

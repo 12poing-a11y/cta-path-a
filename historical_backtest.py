@@ -42,6 +42,7 @@ from wyckoff_pullback import (  # noqa: E402
     apply_stop_target,
     apply_stop_target_intraday,
     minute_bars_aligned_with_entry,
+    minute_bars_match_daily,
 )
 
 LOOKBACK_DAYS = 260
@@ -1293,11 +1294,13 @@ def simulate(
     bypass_counts: dict[str, int] = {}
     vol_bypass_counts: dict[str, int] = {}
     minute_exit_n = 0
+    minute_rejected_mismatch = 0
     daily_exit_fallback_n = 0
     try:
-        from minute_data import load_minute_bars_on_date
+        from minute_data import day_session_bars, load_minute_bars_on_date
     except Exception:  # noqa: BLE001
         load_minute_bars_on_date = None  # type: ignore[assignment]
+        day_session_bars = None  # type: ignore[assignment]
     for di, d in enumerate(trade_dates):
         price_pnl = 0.0
         day_cost = 0.0
@@ -1348,6 +1351,13 @@ def simulate(
                         for b in m_bars
                         if str(b.get("datetime") or b.get("date") or "") >= cutoff
                     ]
+                if day_session_bars is not None:
+                    m_bars = day_session_bars(m_bars)
+                if m_bars and not minute_bars_match_daily(
+                    m_bars, mbar, tick=float(series[code]["meta"].get("tick") or 0)
+                ):
+                    minute_rejected_mismatch += 1
+                    m_bars = []
                 # Month-contract minute vs continuous entry → reject (false stops).
                 if m_bars and not minute_bars_aligned_with_entry(p["entry"], m_bars):
                     m_bars = []
@@ -1997,6 +2007,7 @@ def simulate(
         "exit_check": "minute_15",
         "exit_minute_period": EXIT_MINUTE_PERIOD,
         "minute_stop_exits": minute_exit_n,
+        "minute_rejected_mismatch": minute_rejected_mismatch,
         "daily_exit_fallback_checks": daily_exit_fallback_n,
         "slippage_ticks": slippage_ticks,
         "git_sha": _git_sha(ROOT),

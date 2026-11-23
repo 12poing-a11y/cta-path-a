@@ -11,9 +11,11 @@ Soft-fails on network / empty responses; never fabricates bars.
 """
 from __future__ import annotations
 
+import bisect
 import json
 import re
 import time
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -248,6 +250,54 @@ def day_session_bars(bars):
         if hm and hm >= "20:00":
             continue
         out.append(b)
+    return out
+
+
+def trading_day_of(dt: str, sessions: list[str], session_set: set[str]) -> str | None:
+    """sessions：升序 'YYYY-MM-DD' 交易日。≥20:00 的夜盘和 <03:00 的凌晨盘归属下一交易日。"""
+    raw = str(dt or "")
+    day, hm = raw[:10], raw[11:16]
+    if len(day) != 10:
+        return None
+    if hm and hm >= "20:00":
+        k = bisect.bisect_right(sessions, day)  # 严格晚于 day 的第一个交易日
+    elif hm and hm < "03:00":
+        prev = (date.fromisoformat(day) - timedelta(days=1)).isoformat()
+        k = bisect.bisect_right(sessions, prev)
+    else:
+        return day if day in session_set else None
+    return sessions[k] if k < len(sessions) else None
+
+
+def load_minute_bars_on_trading_day(
+    root: Path,
+    code: str,
+    day: str,
+    period: str = "15",
+    *,
+    sessions: list[str],
+) -> list[dict]:
+    """Minute bars whose trading_day_of(...) == day (night session → next session).
+
+    ``sessions`` must be an ascending list of 'YYYY-MM-DD' trading days supplied
+    by the caller (simulate: per-code hist dates; paper_book: history cache).
+    Does not change ``load_minute_bars_on_date`` calendar-day behaviour.
+    """
+    root = Path(root)
+    code = str(code or "").upper()
+    day_iso = str(day or "")[:10]
+    period = str(period or "15")
+    if not code or len(day_iso) != 10 or period not in PERIODS or not sessions:
+        return []
+    session_set = set(sessions)
+    rows = load_minute_bars_series(root, code, period, asof=day_iso)
+    out = [
+        b
+        for b in rows
+        if trading_day_of(str(b.get("datetime") or b.get("date") or ""), sessions, session_set)
+        == day_iso
+    ]
+    out.sort(key=lambda b: str(b.get("datetime") or b.get("date") or ""))
     return out
 
 

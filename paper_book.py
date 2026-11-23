@@ -120,29 +120,44 @@ def exit_condition_text(
     )
 
 
-def _local_daily_bar(root: Path, code: str, asof_iso: str) -> dict | None:
-    """Read ``.cache/history/{CODE}0.json`` for the bar with date == asof_iso."""
+def _history_rows(root: Path, code: str) -> list[dict]:
+    """Read ``.cache/history/{CODE}0.json`` rows (list[dict])."""
     code = str(code or "").upper()
-    day = _ymd(asof_iso)
-    if not code or not day:
-        return None
+    if not code:
+        return []
     path = Path(root) / ".cache" / "history" / f"{code}0.json"
     if not path.is_file():
-        return None
+        return []
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
-        return None
+        return []
     if isinstance(data, dict):
         rows = data.get("bars") or data.get("hist") or []
     else:
         rows = data if isinstance(data, list) else []
-    for b in rows:
-        if not isinstance(b, dict):
-            continue
+    return [b for b in rows if isinstance(b, dict)]
+
+
+def _local_daily_bar(root: Path, code: str, asof_iso: str) -> dict | None:
+    """Read ``.cache/history/{CODE}0.json`` for the bar with date == asof_iso."""
+    day = _ymd(asof_iso)
+    if not day:
+        return None
+    for b in _history_rows(root, code):
         if str(b.get("date") or "")[:10] == day:
             return b
     return None
+
+
+def _session_dates(root: Path, code: str) -> list[str]:
+    """Ascending trading-day dates from local continuous history."""
+    out: list[str] = []
+    for b in _history_rows(root, code):
+        d = str(b.get("date") or "")[:10]
+        if len(d) == 10:
+            out.append(d)
+    return out
 
 
 def _tick_map(root: Path | None = None) -> dict[str, float]:
@@ -164,16 +179,18 @@ def _tick_map(root: Path | None = None) -> dict[str, float]:
 def _intraday_stop_exit(
     pos: dict, *, root: Path, asof_iso: str
 ) -> tuple[str | None, float | None]:
-    """Check cached 15m bars for stop/target touch on asof day.
+    """Check cached 15m bars for stop/target touch on asof trading day.
 
     Skip when ``entry_date == asof``: same-day opens must not be judged against
     pre-entry (or full-day) minute bars — that made double daily runs non-idempotent.
+    R2: load by trading day (night session → next session); sina daily open is the
+    night open so entry-day skip remains the only entry-day guard (no 09:00 cutoff).
     """
     entry_day = _ymd(str(pos.get("entry_date") or ""))
     if entry_day and entry_day == _ymd(asof_iso):
         return None, None
     try:
-        from minute_data import day_session_bars, load_minute_bars_on_date
+        from minute_data import load_minute_bars_on_trading_day
         from wyckoff_pullback import apply_stop_target_intraday
     except Exception:  # noqa: BLE001
         return None, None
@@ -183,13 +200,15 @@ def _intraday_stop_exit(
     if stop is None or target is None or entry is None or direction not in ("多", "空"):
         return None, None
     code = str(pos.get("code") or "")
+    sessions = _session_dates(root, code)
+    if not sessions:
+        return None, None
     try:
-        bars = load_minute_bars_on_date(root, code, asof_iso, period="15")
+        bars = load_minute_bars_on_trading_day(
+            root, code, asof_iso, period="15", sessions=sessions
+        )
     except Exception:  # noqa: BLE001
         return None, None
-    if not bars:
-        return None, None
-    bars = day_session_bars(bars)
     if not bars:
         return None, None
     day_bar = _local_daily_bar(root, code, asof_iso)

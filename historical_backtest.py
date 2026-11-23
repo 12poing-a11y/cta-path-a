@@ -1295,12 +1295,22 @@ def simulate(
     vol_bypass_counts: dict[str, int] = {}
     minute_exit_n = 0
     minute_rejected_mismatch = 0
+    minute_manage_checks = 0
     daily_exit_fallback_n = 0
+    # R2 (B): sina daily open ≈ night-session open → entry day uses full trading-day
+    # minute bars (no 09:00 cutoff). R2 (A): daily H/L includes night → match_daily
+    # on the full trading-day minute envelope.
     try:
-        from minute_data import day_session_bars, load_minute_bars_on_date
+        from minute_data import load_minute_bars_on_trading_day
     except Exception:  # noqa: BLE001
-        load_minute_bars_on_date = None  # type: ignore[assignment]
-        day_session_bars = None  # type: ignore[assignment]
+        load_minute_bars_on_trading_day = None  # type: ignore[assignment]
+    _sessions_by_code: dict[str, list[str]] = {}
+    for _code, _pack in series.items():
+        _sessions_by_code[_code] = [
+            str(b.get("date") or "")[:10]
+            for b in (_pack.get("hist") or [])
+            if str(b.get("date") or "")[:10]
+        ]
     for di, d in enumerate(trade_dates):
         price_pnl = 0.0
         day_cost = 0.0
@@ -1334,25 +1344,22 @@ def simulate(
             sign = 1 if p["direction"] == "多" else -1
             # Prefer 15m first-touch only for continuous_proxy fills (minute cache
             # is continuous/month-mixed). Contract fills use same-basis daily OHLC.
-            # On entry day, ignore minute bars before ~day-session open (next_open fill).
+            # R2: load by trading day (prev-evening night session belongs to today).
             reason, px = None, mbar["close"]
             used_minute = False
-            if fill_basis != "contract" and load_minute_bars_on_date is not None:
+            if fill_basis != "contract" and load_minute_bars_on_trading_day is not None:
                 try:
-                    m_bars = load_minute_bars_on_date(
-                        ROOT, code, d, period=EXIT_MINUTE_PERIOD
+                    m_bars = load_minute_bars_on_trading_day(
+                        ROOT,
+                        code,
+                        d,
+                        period=EXIT_MINUTE_PERIOD,
+                        sessions=_sessions_by_code.get(code) or [],
                     )
                 except Exception:  # noqa: BLE001
                     m_bars = []
-                if m_bars and str(p.get("entry_date") or "")[:10] == str(d)[:10]:
-                    cutoff = f"{str(d)[:10]} 09:00:00"
-                    m_bars = [
-                        b
-                        for b in m_bars
-                        if str(b.get("datetime") or b.get("date") or "") >= cutoff
-                    ]
-                if day_session_bars is not None:
-                    m_bars = day_session_bars(m_bars)
+                # R2 (B): daily open is night open → keep full trading-day bars on
+                # entry day (no natural-time 09:00 cutoff; night bars are prev calendar).
                 if m_bars and not minute_bars_match_daily(
                     m_bars, mbar, tick=float(series[code]["meta"].get("tick") or 0)
                 ):
@@ -1366,6 +1373,7 @@ def simulate(
                         p["direction"], p["entry"], p["stop"], p["target"], m_bars
                     )
                     used_minute = True
+                    minute_manage_checks += 1
                     if m_reason:
                         reason, px = m_reason, m_px
             if not used_minute:
@@ -2008,6 +2016,7 @@ def simulate(
         "exit_minute_period": EXIT_MINUTE_PERIOD,
         "minute_stop_exits": minute_exit_n,
         "minute_rejected_mismatch": minute_rejected_mismatch,
+        "minute_manage_checks": minute_manage_checks,
         "daily_exit_fallback_checks": daily_exit_fallback_n,
         "slippage_ticks": slippage_ticks,
         "git_sha": _git_sha(ROOT),

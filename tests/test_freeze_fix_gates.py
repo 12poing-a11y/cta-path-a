@@ -67,8 +67,8 @@ def test_legacy_reproduces_ee4476b_and_fix_has_no_cross_delivery():
 
     p, pack = R.make_pack()
     legacy = R.run(p, pack, freeze_fix=False, min_seat_days=0)
-    # R1: minute↔daily match rejects month-contract minute bars → exit path changes KPI.
-    assert (legacy["ret_pct"], legacy["max_dd_pct"], legacy["closed_trades"]) == (3.679, 4.859, 40)
+    # R1→R2: minute trading-day attribution changes exit path → KPI lock drifts.
+    assert (legacy["ret_pct"], legacy["max_dd_pct"], legacy["closed_trades"]) == (4.362, 4.184, 42)
     assert len(RC.cross_delivery(legacy)) == 2  # L2601 / FG2605 frozen across delivery month
     p, pack = R.make_pack()
     fixed = R.run(p, pack)

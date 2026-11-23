@@ -2,15 +2,15 @@
   "ok": true,
   "schema": "cta-desk-daily-refresh-v1",
   "pack": "core",
-  "generated_at": "2026-11-20 18:34:15",
+  "generated_at": "2026-11-23 16:59:34",
   "n_ok": 5,
   "n_fail": 2,
-  "seconds_total": 2.3,
+  "seconds_total": 1.51,
   "steps": [
     {
       "id": "lsp",
       "ok": true,
-      "at": "2026-11-20 18:34:13",
+      "at": "2026-11-23 16:59:32",
       "pack": "core",
       "writes": [
         "lab/research/lsp/lsp_*_{15m,60m}_{latest,events}.json"
@@ -21,12 +21,12 @@
         "n_ok": 24,
         "n_skip": 0
       },
-      "seconds": 0.84
+      "seconds": 0.89
     },
     {
       "id": "p4_light",
       "ok": true,
-      "at": "2026-11-20 18:34:14",
+      "at": "2026-11-23 16:59:33",
       "pack": "core",
       "writes": [
         "lab/research/ml/p4_light_latest.json"
@@ -39,17 +39,17 @@
           "lsp_rows": 181,
           "trend_rows": 1104,
           "breakout_rows": 218,
-          "daily_bars": 5323
+          "daily_bars": 5324
         },
         "path": "lab/research/ml/p4_light_latest.json"
       },
       "path": "lab/research/ml/p4_light_latest.json",
-      "seconds": 1.12
+      "seconds": 0.28
     },
     {
       "id": "gamma_research",
       "ok": true,
-      "at": "2026-11-20 18:34:15",
+      "at": "2026-11-23 16:59:33",
       "pack": "core",
       "writes": [
         "lab/research/gamma/gamma_*_latest.json"
@@ -76,7 +76,7 @@
     {
       "id": "ic_groups",
       "ok": false,
-      "at": "2026-11-20 18:34:15",
+      "at": "2026-11-23 16:59:33",
       "pack": "core",
       "writes": [
         "lab/research/ic/ic_groups_latest.json"
@@ -89,7 +89,7 @@
     {
       "id": "oos_vs_path_a",
       "ok": false,
-      "at": "2026-11-20 18:34:15",
+      "at": "2026-11-23 16:59:33",
       "pack": "core",
       "writes": [
         "lab/research/oos/oos_vs_path_a_latest.json",
@@ -98,12 +98,12 @@
       "mutates_formal": false,
       "error": "lab/scripts/run_oos_vs_path_a.py exit=1: /scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
       "trace": "scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/cta-path-a/cta-path-a/lab/data/factors/panel_daily.jsonl'\n\n",
-      "seconds": 0.05
+      "seconds": 0.04
     },
     {
       "id": "portfolio_risk",
       "ok": true,
-      "at": "2026-11-20 18:34:15",
+      "at": "2026-11-23 16:59:33",
       "pack": "core",
       "writes": [
         "lab/research/portfolio/portfolio_risk_latest.json"
@@ -119,7 +119,7 @@
     {
       "id": "npd_reminders",
       "ok": true,
-      "at": "2026-11-20 18:34:15",
+      "at": "2026-11-23 16:59:33",
       "pack": "core",
       "writes": [
         "data/cotton/npd_reminders_latest.json"
@@ -129,10 +129,10 @@
         "ok": true,
         "n": 0,
         "path": "data/cotton/npd_reminders_latest.json",
-        "asof": "2026-11-20"
+        "asof": "2026-11-23"
       },
       "path": "data/cotton/npd_reminders_latest.json",
-      "seconds": 0.1
+      "seconds": 0.11
     }
   ],
   "write_bounds": {

@@ -260,7 +260,7 @@
     "lsp_rows": 181,
     "trend_rows": 1104,
     "breakout_rows": 218,
-    "daily_bars": 5323
+    "daily_bars": 5324
   },
   "note": "Trained on CF2701; Research only."
 }

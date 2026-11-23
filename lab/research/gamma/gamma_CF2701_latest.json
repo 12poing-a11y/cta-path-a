@@ -7,11 +7,11 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "CF2701",
-    "n_snapshots": 9,
-    "n_events": 16,
+    "n_snapshots": 10,
+    "n_events": 18,
     "label_counts": {
-      "unchanged": 13,
-      "new_or_shifted_wall": 3
+      "unchanged": 14,
+      "new_or_shifted_wall": 4
     },
     "live_trading": false,
     "note": "Display GEX convention; OI does not identify dealer side.",
@@ -191,6 +191,28 @@
         "gex_change_pct": 0.2358,
         "futures_price": 15455.0,
         "dist_pct": -2.944
+      },
+      {
+        "date": "2026-11-20",
+        "side": "call",
+        "from": 15600.0,
+        "to": 16000.0,
+        "move": 400.0,
+        "label": "new_or_shifted_wall",
+        "gex_change_pct": 0.1581,
+        "futures_price": 15520.0,
+        "dist_pct": 3.093
+      },
+      {
+        "date": "2026-11-20",
+        "side": "put",
+        "from": 15000.0,
+        "to": 15000.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.0967,
+        "futures_price": 15520.0,
+        "dist_pct": -3.351
       }
     ]
   },
@@ -198,13 +220,15 @@
     "ok": true,
     "schema": "cta-gamma-touch-v1",
     "contract": "CF2701",
-    "n_events": 8,
+    "n_events": 19,
     "touch_atr": 3.0,
     "outcome_counts": {
-      "stay": 8
+      "stay": 17,
+      "bounce": 2
     },
     "outcome_probs": {
-      "stay": 1.0
+      "stay": 0.8947,
+      "bounce": 0.1053
     },
     "live_trading": false,
     "note": "Sparse when gamma history is short; not a trade signal.",
@@ -216,11 +240,11 @@
         "futures": 15340.0,
         "dist_atr": -2.8607,
         "outcome": "stay",
-        "mfe_atr": 0.3251,
-        "mae_atr": 0.7368,
+        "mfe_atr": 0.3901,
+        "mae_atr": 1.0402,
         "ret_1": -0.002934,
         "ret_3": -0.001956,
-        "ret_5": null
+        "ret_5": -0.012712
       },
       {
         "date": "2026-11-05",
@@ -229,11 +253,11 @@
         "futures": 15340.0,
         "dist_atr": 1.4737,
         "outcome": "stay",
-        "mfe_atr": 0.7368,
-        "mae_atr": 0.3251,
+        "mfe_atr": 1.0402,
+        "mae_atr": 0.3901,
         "ret_1": 0.002934,
         "ret_3": 0.001956,
-        "ret_5": null
+        "ret_5": 0.012712
       },
       {
         "date": "2026-11-06",
@@ -242,11 +266,11 @@
         "futures": 15345.0,
         "dist_atr": -2.8567,
         "outcome": "stay",
-        "mfe_atr": 0.0,
-        "mae_atr": 0.7196,
+        "mfe_atr": 0.4143,
+        "mae_atr": 1.0685,
         "ret_1": -0.001955,
         "ret_3": -0.006843,
-        "ret_5": null
+        "ret_5": -0.013685
       },
       {
         "date": "2026-11-06",
@@ -255,11 +279,11 @@
         "futures": 15345.0,
         "dist_atr": 1.5047,
         "outcome": "stay",
-        "mfe_atr": 0.7196,
-        "mae_atr": 0.0,
+        "mfe_atr": 1.0685,
+        "mae_atr": 0.4143,
         "ret_1": 0.001955,
         "ret_3": 0.006843,
-        "ret_5": null
+        "ret_5": 0.013685
       },
       {
         "date": "2026-11-09",
@@ -268,11 +292,11 @@
         "futures": 15395.0,
         "dist_atr": -2.759,
         "outcome": "stay",
-        "mfe_atr": 0.1824,
-        "mae_atr": 0.5244,
+        "mfe_atr": 0.6612,
+        "mae_atr": 1.1173,
         "ret_1": 0.001624,
-        "ret_3": null,
-        "ret_5": null
+        "ret_3": -0.009094,
+        "ret_5": -0.007795
       },
       {
         "date": "2026-11-09",
@@ -281,11 +305,11 @@
         "futures": 15395.0,
         "dist_atr": 1.8013,
         "outcome": "stay",
-        "mfe_atr": 0.5244,
-        "mae_atr": 0.1824,
+        "mfe_atr": 1.1173,
+        "mae_atr": 0.6612,
         "ret_1": -0.001624,
-        "ret_3": null,
-        "ret_5": null
+        "ret_3": 0.009094,
+        "ret_5": 0.007795
       },
       {
         "date": "2026-11-10",
@@ -294,11 +318,11 @@
         "futures": 15395.0,
         "dist_atr": -2.9257,
         "outcome": "stay",
-        "mfe_atr": 0.1451,
-        "mae_atr": 0.5561,
+        "mfe_atr": 0.7012,
+        "mae_atr": 1.1848,
         "ret_1": -0.003573,
-        "ret_3": null,
-        "ret_5": null
+        "ret_3": -0.010393,
+        "ret_5": -0.011043
       },
       {
         "date": "2026-11-10",
@@ -307,9 +331,152 @@
         "futures": 15395.0,
         "dist_atr": 1.9102,
         "outcome": "stay",
-        "mfe_atr": 0.5561,
-        "mae_atr": 0.1451,
+        "mfe_atr": 1.1848,
+        "mae_atr": 0.7012,
         "ret_1": 0.003573,
+        "ret_3": 0.010393,
+        "ret_5": 0.011043
+      },
+      {
+        "date": "2026-11-12",
+        "side": "call",
+        "wall": 16000.0,
+        "futures": 15525.0,
+        "dist_atr": -2.2428,
+        "outcome": "stay",
+        "mfe_atr": 0.8735,
+        "mae_atr": 0.543,
+        "ret_1": -0.001932,
+        "ret_3": -0.002576,
+        "ret_5": 0.0
+      },
+      {
+        "date": "2026-11-12",
+        "side": "put",
+        "wall": 15000.0,
+        "futures": 15525.0,
+        "dist_atr": 2.4789,
+        "outcome": "stay",
+        "mfe_atr": 0.543,
+        "mae_atr": 0.8735,
+        "ret_1": 0.001932,
+        "ret_3": 0.002576,
+        "ret_5": 0.0
+      },
+      {
+        "date": "2026-11-13",
+        "side": "call",
+        "wall": 16000.0,
+        "futures": 15555.0,
+        "dist_atr": -2.229,
+        "outcome": "stay",
+        "mfe_atr": 1.0769,
+        "mae_atr": 0.4258,
+        "ret_1": 0.002572,
+        "ret_3": 0.003857,
+        "ret_5": 0.006429
+      },
+      {
+        "date": "2026-11-13",
+        "side": "put",
+        "wall": 15000.0,
+        "futures": 15555.0,
+        "dist_atr": 2.78,
+        "outcome": "stay",
+        "mfe_atr": 0.4258,
+        "mae_atr": 1.0769,
+        "ret_1": -0.002572,
+        "ret_3": -0.003857,
+        "ret_5": -0.006429
+      },
+      {
+        "date": "2026-11-17",
+        "side": "call",
+        "wall": 15600.0,
+        "futures": 15480.0,
+        "dist_atr": -0.628,
+        "outcome": "bounce",
+        "mfe_atr": 0.7327,
+        "mae_atr": 0.8112,
+        "ret_1": -0.000969,
+        "ret_3": 0.001615,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-17",
+        "side": "put",
+        "wall": 15000.0,
+        "futures": 15480.0,
+        "dist_atr": 2.5121,
+        "outcome": "stay",
+        "mfe_atr": 0.8112,
+        "mae_atr": 0.7327,
+        "ret_1": 0.000969,
+        "ret_3": -0.001615,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-18",
+        "side": "call",
+        "wall": 16000.0,
+        "futures": 15555.0,
+        "dist_atr": -2.4241,
+        "outcome": "stay",
+        "mfe_atr": 1.1712,
+        "mae_atr": 0.3813,
+        "ret_1": 0.001929,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-19",
+        "side": "call",
+        "wall": 15600.0,
+        "futures": 15455.0,
+        "dist_atr": -0.7992,
+        "outcome": "bounce",
+        "mfe_atr": 0.2205,
+        "mae_atr": 0.937,
+        "ret_1": 0.0,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-19",
+        "side": "put",
+        "wall": 15000.0,
+        "futures": 15455.0,
+        "dist_atr": 2.5079,
+        "outcome": "stay",
+        "mfe_atr": 0.937,
+        "mae_atr": 0.2205,
+        "ret_1": 0.0,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-20",
+        "side": "call",
+        "wall": 16000.0,
+        "futures": 15520.0,
+        "dist_atr": -2.6148,
+        "outcome": "stay",
+        "mfe_atr": 0.0,
+        "mae_atr": 0.0,
+        "ret_1": null,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-20",
+        "side": "put",
+        "wall": 15000.0,
+        "futures": 15520.0,
+        "dist_atr": 2.8327,
+        "outcome": "stay",
+        "mfe_atr": 0.0,
+        "mae_atr": 0.0,
+        "ret_1": null,
         "ret_3": null,
         "ret_5": null
       }
@@ -325,7 +492,7 @@
     "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
     "changes_tail": []
   },
-  "n_daily_bars": 5287,
+  "n_daily_bars": 5323,
   "live_trading": false,
   "status": "Research",
   "disclaimer": "Call+/Put− GEX 为展示约定；OI 不能识别做市商方向。本模块只做结构观察，不生成 Path-A 多空信号。"

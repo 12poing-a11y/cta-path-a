@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "asof": "2026-11-24 17:59",
+  "asof": "2026-11-25 03:04",
   "disclaimer": "纸面研究：A=离散资金配比，B=消融上下文只读；代理曲线无 Path-A 成本/席位/ATR，跨族不可直接当实盘预期；观察袖套权重硬帽≤10%；全表仅保留收益>0且最大回撤≤15%的组合；不改 entry_filter / paper_book。",
   "observe_id": "proxy_observe_f_short_mom",
   "observe_cap": 0.1,
@@ -16,7 +16,7 @@
   "n_common_days": 205,
   "b_context": {
     "available": true,
-    "asof": "2026-11-24 17:59",
+    "asof": "2026-11-25 03:04",
     "grid_mode": "ablation",
     "top_pairs_by_ret": [
       {

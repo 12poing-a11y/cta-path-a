@@ -2,15 +2,15 @@
   "ok": true,
   "schema": "cta-desk-daily-refresh-v1",
   "pack": "heavy",
-  "generated_at": "2026-11-24 17:59:48",
+  "generated_at": "2026-11-25 03:06:36",
   "n_ok": 3,
   "n_fail": 0,
-  "seconds_total": 57.53,
+  "seconds_total": 138.06,
   "steps": [
     {
       "id": "ablation",
       "ok": true,
-      "at": "2026-11-24 17:58:51",
+      "at": "2026-11-25 03:04:18",
       "pack": "heavy",
       "writes": [
         "data/ablation/strategy_indicator_ablation_latest.json"
@@ -21,12 +21,12 @@
         "path": "scripts/strategy_indicator_ablation.py"
       },
       "path": "scripts/strategy_indicator_ablation.py",
-      "seconds": 13.11
+      "seconds": 15.91
     },
     {
       "id": "strategy_blend",
       "ok": true,
-      "at": "2026-11-24 17:59:04",
+      "at": "2026-11-25 03:04:34",
       "pack": "heavy",
       "writes": [
         "data/ablation/strategy_blend_latest.json"
@@ -37,12 +37,12 @@
         "path": "scripts/strategy_blend_grid.py"
       },
       "path": "scripts/strategy_blend_grid.py",
-      "seconds": 0.44
+      "seconds": 0.5
     },
     {
       "id": "gamma_wall_collect",
       "ok": true,
-      "at": "2026-11-24 17:59:04",
+      "at": "2026-11-25 03:04:35",
       "pack": "heavy",
       "writes": [
         "data/gamma_wall/<contract>/<asof>.json",
@@ -54,7 +54,7 @@
         "path": "scripts/gamma_wall_daily_collect.py"
       },
       "path": "scripts/gamma_wall_daily_collect.py",
-      "seconds": 43.97
+      "seconds": 121.64
     }
   ],
   "write_bounds": {

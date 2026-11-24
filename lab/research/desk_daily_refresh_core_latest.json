@@ -2,15 +2,15 @@
   "ok": true,
   "schema": "cta-desk-daily-refresh-v1",
   "pack": "core",
-  "generated_at": "2026-11-24 17:58:51",
+  "generated_at": "2026-11-25 03:04:18",
   "n_ok": 5,
   "n_fail": 2,
-  "seconds_total": 2.05,
+  "seconds_total": 2.36,
   "steps": [
     {
       "id": "lsp",
       "ok": true,
-      "at": "2026-11-24 17:58:49",
+      "at": "2026-11-25 03:04:16",
       "pack": "core",
       "writes": [
         "lab/research/lsp/lsp_*_{15m,60m}_{latest,events}.json"
@@ -21,12 +21,12 @@
         "n_ok": 24,
         "n_skip": 0
       },
-      "seconds": 0.71
+      "seconds": 0.82
     },
     {
       "id": "p4_light",
       "ok": true,
-      "at": "2026-11-24 17:58:50",
+      "at": "2026-11-25 03:04:17",
       "pack": "core",
       "writes": [
         "lab/research/ml/p4_light_latest.json"
@@ -44,12 +44,12 @@
         "path": "lab/research/ml/p4_light_latest.json"
       },
       "path": "lab/research/ml/p4_light_latest.json",
-      "seconds": 1.02
+      "seconds": 1.17
     },
     {
       "id": "gamma_research",
       "ok": true,
-      "at": "2026-11-24 17:58:51",
+      "at": "2026-11-25 03:04:18",
       "pack": "core",
       "writes": [
         "lab/research/gamma/gamma_*_latest.json"
@@ -71,12 +71,12 @@
         ]
       },
       "path": "lab/research/gamma/gamma_OI2701_latest.json",
-      "seconds": 0.1
+      "seconds": 0.12
     },
     {
       "id": "ic_groups",
       "ok": false,
-      "at": "2026-11-24 17:58:51",
+      "at": "2026-11-25 03:04:18",
       "pack": "core",
       "writes": [
         "lab/research/ic/ic_groups_latest.json"
@@ -89,7 +89,7 @@
     {
       "id": "oos_vs_path_a",
       "ok": false,
-      "at": "2026-11-24 17:58:51",
+      "at": "2026-11-25 03:04:18",
       "pack": "core",
       "writes": [
         "lab/research/oos/oos_vs_path_a_latest.json",
@@ -103,7 +103,7 @@
     {
       "id": "portfolio_risk",
       "ok": true,
-      "at": "2026-11-24 17:58:51",
+      "at": "2026-11-25 03:04:18",
       "pack": "core",
       "writes": [
         "lab/research/portfolio/portfolio_risk_latest.json"
@@ -114,12 +114,12 @@
         "path": "lab/scripts/run_portfolio_risk.py"
       },
       "path": "lab/scripts/run_portfolio_risk.py",
-      "seconds": 0.04
+      "seconds": 0.05
     },
     {
       "id": "npd_reminders",
       "ok": true,
-      "at": "2026-11-24 17:58:51",
+      "at": "2026-11-25 03:04:18",
       "pack": "core",
       "writes": [
         "data/cotton/npd_reminders_latest.json"
@@ -129,10 +129,10 @@
         "ok": true,
         "n": 0,
         "path": "data/cotton/npd_reminders_latest.json",
-        "asof": "2026-11-24"
+        "asof": "2026-11-25"
       },
       "path": "data/cotton/npd_reminders_latest.json",
-      "seconds": 0.1
+      "seconds": 0.11
     }
   ],
   "write_bounds": {

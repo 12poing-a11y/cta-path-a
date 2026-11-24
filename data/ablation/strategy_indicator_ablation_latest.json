@@ -1,10 +1,10 @@
 {
   "ok": true,
-  "asof": "2026-11-24 17:59",
+  "asof": "2026-11-25 03:04",
   "grid_mode": "ablation",
   "disclaimer": "纸面研究：本地代理非东证原版因子库；W(权证)本地恒为0不可辨识；不改正式 entry_filter / universe.json；不构成交易建议。",
   "n_rows": 20,
-  "elapsed_sec": 12.9,
+  "elapsed_sec": 15.7,
   "rows": [
     {
       "strategy_id": "proxy_cwft",
@@ -47,7 +47,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "F",
         "T"
@@ -71,7 +71,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "T"
@@ -95,7 +95,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "F"
@@ -120,7 +120,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "T"
       ]
@@ -141,7 +141,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "F",
@@ -167,7 +167,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "F",
         "LONG_MOM",
@@ -192,7 +192,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "LONG_MOM",
@@ -217,7 +217,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "F",
@@ -242,7 +242,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "F",
@@ -265,7 +265,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C",
         "ST"
@@ -289,7 +289,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "ST"
       ]
@@ -312,7 +312,7 @@
       "end": "2026-11-24",
       "ok": true,
       "error": "",
-      "elapsed_sec": 0.02,
+      "elapsed_sec": 0.03,
       "kept": [
         "C"
       ]
@@ -337,7 +337,7 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 4.6
+      "elapsed_sec": 5.45
     },
     {
       "strategy_id": "path_a",
@@ -361,7 +361,7 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 1.15
+      "elapsed_sec": 1.41
     },
     {
       "strategy_id": "path_a",
@@ -385,7 +385,7 @@
       "min_r20": 0.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 1.2
+      "elapsed_sec": 1.48
     },
     {
       "strategy_id": "path_a",
@@ -409,7 +409,7 @@
       "min_r20": 4.0,
       "min_r60": 0.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 1.15
+      "elapsed_sec": 1.43
     },
     {
       "strategy_id": "path_a",
@@ -433,7 +433,7 @@
       "min_r20": 0.0,
       "min_r60": 0.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 1.25
+      "elapsed_sec": 1.55
     },
     {
       "strategy_id": "path_a",
@@ -457,7 +457,7 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": false,
-      "elapsed_sec": 1.32
+      "elapsed_sec": 1.61
     },
     {
       "strategy_id": "path_a",
@@ -481,7 +481,7 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "carry_bypass_enabled": true,
-      "elapsed_sec": 1.13
+      "elapsed_sec": 1.41
     }
   ],
   "summary": {

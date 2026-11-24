@@ -414,6 +414,8 @@ def compute_signals(
     observe_min_lots: int | None = None,
     errors: dict[str, str] | None = None,
     data_sources: dict[str, str] | None = None,
+    day: str | None = None,
+    inputs: tuple | None = None,
 ) -> tuple[list[dict], dict]:
     """Today's Path-A report rows, computed by the SAME code as ``historical_backtest.simulate``.
 
@@ -424,6 +426,8 @@ def compute_signals(
     * the filter order, stop / target distance and lots formula live in ``signal_core``.
     ``curves`` is the raw (un-lagged) curve book ``{code: {"carry": {day: pair}}}``; ``member_loader(dates, codes)``
     returns the raw seat book ``{code: {day: {inst, foreign, holder}}}`` (member-change book for mode ``member``).
+    ``day`` (R5b): the session being signalled — peers without a bar on ``day`` are left out (as in
+    simulate); ``inputs`` = prebuilt ``(main_map, adj)`` for these bars (shared with the paper engine).
     """
     import bisect
 
@@ -441,7 +445,7 @@ def compute_signals(
 
         hits = Counter(h["date"] for s in series.values() for h in s["hist"])
         dates = sorted(hits)[-hb.LOOKBACK_DAYS :]
-    main_map, adj = build_signal_inputs(series, root=root)
+    main_map, adj = inputs if inputs is not None else build_signal_inputs(series, root=root)
     curves_l = hb.lag_curves_carry(curves or {}, dates, lag)
     member_raw = member_loader(dates, [c for c in series]) if member_loader is not None else {}
     member_l = hb.lag_member(member_raw or {}, dates, lag)
@@ -478,6 +482,8 @@ def compute_signals(
             out = []
             for oc, os_ in series.items():
                 if oc == code or os_["meta"].get("bucket") != u.get("bucket"):
+                    continue
+                if day is not None and os_["hist"][-1]["date"] != day:
                     continue
                 a_ = adj.get(oc)
                 oi = len(os_["hist"]) - 1
@@ -683,13 +689,8 @@ def _load_paper_held() -> dict | None:
     return pos if isinstance(pos, dict) else None
 
 
-def _apply_caps(signals: list[dict], *, sizing_equity: float, held: dict | None = None) -> dict:
-    """Portfolio caps for today's candidates.
-
-    ``held`` (R4): open book (``paper_book_latest.json`` positions, read-only).  Its notional /
-    ATR risk is deducted from the gross / risk budget, its sectors from the bucket cap and its
-    count from the position cap; held codes do not compete as new candidates.
-    ``held=None`` keeps the original behaviour exactly."""
+def _caps_on_rows(signals: list[dict], *, sizing_equity: float, held: dict | None) -> tuple[list[dict], dict]:
+    """Legacy caps (book = ``paper_book_latest.json`` positions as of the previous run)."""
     held_codes: set[str] = set(held or {})
     held_book = held is not None
     if held_book:
@@ -751,8 +752,29 @@ def _apply_caps(signals: list[dict], *, sizing_equity: float, held: dict | None 
             "gross_left_pct": round(gross_cap_pct, 2),
             "risk_left_pct": round(risk_cap_pct, 2),
             "held_buckets": held_buckets,
-            "note": "日报先于 refresh_paper_book 运行；held 含当天可能平掉的仓位，偏保守",
+            "note": "日报先于 refresh_paper_book 运行；held 含当天可能平掉的仓位，偏保守（旧格式账本；R5b 引擎账本按回测同序）",
         }
+    return selected, meta
+
+
+def _apply_caps(
+    signals: list[dict], *, sizing_equity: float, held: dict | None = None, engine_pick: tuple | None = None
+) -> dict:
+    """Portfolio caps for today's candidates.
+
+    ``held`` (R4): open book (``paper_book_latest.json`` positions, read-only).  Its notional /
+    ATR risk is deducted from the gross / risk budget, its sectors from the bucket cap and its
+    count from the position cap; held codes do not compete as new candidates.
+    ``held=None`` keeps the original behaviour exactly.
+    ``engine_pick`` (R5b) = ``(selected, meta)`` from ``paper_book.plan_entries`` (caps already applied
+    on the book after today's exits); only the report rows are labelled here."""
+    held_codes: set[str] = set(held or {})
+    held_book = held is not None
+    if engine_pick is not None:
+        selected = [dict(c) for c in engine_pick[0]]
+        meta = dict(engine_pick[1])
+    else:
+        selected, meta = _caps_on_rows(signals, sizing_equity=sizing_equity, held=held)
     by_code = {c["code"]: c for c in selected}
     weak = set(meta.get("weak_filtered") or [])
     bucket_skip = set(meta.get("bucket_skipped") or [])
@@ -822,10 +844,79 @@ def _parse_args(argv=None):
         default="core",
         help="core = shared signal_core path (R5a, default); legacy = pre-R5a raw path (comparison only)",
     )
+    ap.add_argument(
+        "--paper-book",
+        default=None,
+        help="paper book to run (default: root paper_book_latest.json); an R5b engine book is advanced "
+        "with the backtest engine, a legacy book keeps the legacy refresh",
+    )
+    ap.add_argument(
+        "--paper-out",
+        default=None,
+        help="with --dry-run: write the advanced R5b book here (never the root paper_book_latest.json)",
+    )
     args, _unknown = ap.parse_known_args(argv)
     if args.out and not args.dry_run:
         ap.error("--out requires --dry-run")
+    if args.paper_out and not args.dry_run:
+        ap.error("--paper-out requires --dry-run")
+    if args.paper_out and Path(args.paper_out).resolve() == (ROOT / "paper_book_latest.json").resolve():
+        ap.error("--paper-out must not be the root paper_book_latest.json")
     return args
+
+
+def _engine_book_context(book_path: Path, bars: dict, curves: dict | None) -> dict | None:
+    """R5b: advance an engine book (``"engine": "R5b"``) to today's session with the backtest engine.
+
+    Stamps the delivery calendar / contract-fill overlay on today's bars (cache only, as simulate
+    does), builds the shared engine and rolls the book: yesterday's pending orders fill at today's
+    open, then every position is managed on today's bar.  Returns None for a legacy book."""
+    import bisect
+
+    import historical_backtest as hb
+    import numpy as np
+    import paper_book as pb
+    from signal_core import build_signal_inputs, covered_dates
+
+    book = pb._load(Path(book_path))
+    if not pb.is_engine_book(book):
+        return None
+    settings = pb.engine_settings()
+    series = {u["code"]: {"meta": dict(u), "hist": bars[u["code"]]} for u in UNIVERSE if bars.get(u["code"])}
+    contract_pack = hb.prepare_pack_for_execution((series, {}, {}), root=ROOT)
+    dates = covered_dates(series)
+    day = dates[-1]
+    main_map, adj = build_signal_inputs(series, root=ROOT)
+    eng = pb.build_engine(
+        series, settings, main_map=main_map, adj=adj, curves=curves, contract_root=ROOT, minute_root=ROOT
+    )
+
+    def _prev(d):
+        k = bisect.bisect_left(dates, d)
+        return dates[k - 1] if k > 0 else None
+
+    def _next(d):
+        k = bisect.bisect_right(dates, d)
+        if k < len(dates):
+            return dates[k]
+        return str(np.busday_offset(d, 1, roll="forward"))  # weekday calendar (CN holidays not modelled)
+
+    def _between(a, b):
+        return [x for x in dates if (not a or x > a) and x <= b]
+
+    rolled = pb.roll_engine_book(
+        book, day, engine_for_day=lambda d: eng, prev_day_fn=_prev, next_day_fn=_next, days_between=_between
+    )
+    return {
+        "book": book,
+        "path": Path(book_path),
+        "settings": settings,
+        "day": day,
+        "eng": eng,
+        "inputs": (main_map, adj),
+        "rolled": rolled,
+        "contract_pack": {k: (contract_pack or {}).get(k) for k in ("fill_series", "ok", "error")},
+    }
 
 
 def _refresh_side_data() -> tuple[dict, dict]:
@@ -947,6 +1038,9 @@ def main(argv=None):
     need_curves = mode not in ("base", "seats") or bool(bypass.get("enabled"))
     curves = load_curves([u["code"] for u in UNIVERSE]) if need_curves else {}
     signal_path = args.signal_path
+    paper_book_path = Path(args.paper_book) if args.paper_book else ROOT / "paper_book_latest.json"
+    engine_ctx = None
+    engine_error = None
     vbypass = _vol_bypass()
     signals = []
     snaps = []
@@ -1014,6 +1108,21 @@ def main(argv=None):
             f"[contracts] requests={contract_stats['requests']} seconds={contract_stats['seconds']} "
             f"fetched={len(contract_stats['fetched'])} failed={len(contract_stats['failed'])}"
         )
+        try:
+            engine_ctx = _engine_book_context(paper_book_path, bars, curves)
+        except Exception as exc:  # noqa: BLE001
+            engine_ctx = None
+            engine_error = str(exc)[:300]
+            print(f"::warning title=R5b paper book not advanced::{exc}")
+        if engine_ctx is not None:
+            import paper_book as _pb
+
+            sizing_eq, risk_budget = _pb.sizing_for(engine_ctx["rolled"]["sizing_equity"], engine_ctx["settings"])
+            print(
+                f"[paper-R5b] book={engine_ctx['path'].name} day={engine_ctx['day']} "
+                f"rolled={engine_ctx['rolled']['days_rolled']} filled={engine_ctx['rolled']['opened_n']} "
+                f"closed={engine_ctx['rolled']['closed_n']} sizing={sizing_eq} risk={risk_budget}"
+            )
         # placeholder rows until compute_signals (after the seat ensure stage)
         signals = [
             {"code": u["code"], "name": u["name"], "bar_date": (bars.get(u["code"]) or [{}])[-1].get("date")}
@@ -1129,6 +1238,8 @@ def main(argv=None):
             contract_root=ROOT,
             errors=fetch_errors,
             data_sources=data_sources,
+            day=None if engine_ctx is None else engine_ctx["day"],
+            inputs=None if engine_ctx is None else engine_ctx["inputs"],
         )
         if core_info.get("adj_fallback_codes"):
             print(f"[cta] adj_fallback (roll spreads in signal): {core_info['adj_fallback_codes']}")
@@ -1220,7 +1331,24 @@ def main(argv=None):
                     f"（观察袖套抬至{OBSERVE_MIN_LOTS}手·待组合帽）"
                 )
 
-    port_meta = _apply_caps(signals, sizing_equity=sizing_eq, held=_load_paper_held())
+    engine_pick = None
+    if engine_ctx is not None:
+        import paper_book as _pb
+
+        engine_pick = _pb.plan_entries(
+            core_info["core"],
+            eng=engine_ctx["eng"],
+            pos=engine_ctx["rolled"]["positions"],
+            day=engine_ctx["day"],
+            sizing_equity=sizing_eq,
+            settings=engine_ctx["settings"],
+            exclude={str(s.get("code")) for s in signals if s.get("block")},
+        )
+        port_meta = _apply_caps(
+            signals, sizing_equity=sizing_eq, held=engine_ctx["rolled"]["positions"], engine_pick=engine_pick
+        )
+    else:
+        port_meta = _apply_caps(signals, sizing_equity=sizing_eq, held=_load_paper_held())
     port_meta["sizing_equity"] = round(sizing_eq, 2)
     port_meta["equity_compound"] = EQUITY_COMPOUND
     print(
@@ -1272,6 +1400,32 @@ def main(argv=None):
             f"[cta] quality ok session={session_iso} "
             f"checked={quality.get('checked')} bad_n={quality.get('bad_n')}"
         )
+    engine_book = None
+    engine_summary = None
+    if engine_ctx is not None:
+        import paper_book as _pb
+
+        pending = list(engine_pick[0]) if quality.get("ok") else []
+        engine_book = _pb.attach_pending(engine_ctx["book"], engine_ctx["rolled"], pending, engine_pick[1])
+        engine_summary = {
+            "engine": _pb.ENGINE_TAG,
+            "book": str(engine_ctx["path"]),
+            "asof": engine_book.get("asof"),
+            "days_rolled": engine_book.get("days_rolled"),
+            "noop": bool(engine_book.get("noop")),
+            "sizing_equity_raw": engine_ctx["rolled"]["sizing_equity"],
+            "equity_mtm": engine_book.get("equity_mtm"),
+            "filled": [(r["code"], r["direction"], r["lots"], r["entry"]) for r in engine_book.get("opened_today") or []],
+            "closed": [(r["code"], r["reason"], r["exit"]) for r in engine_book.get("closed_today") or []],
+            "held": sorted(engine_book.get("positions") or {}),
+            "pending": [
+                (c["code"], c["direction"], int(c["lots"]), c.get("signal_date"))
+                for c in engine_book.get("pending") or []
+            ],
+            "contract_pack": engine_ctx["contract_pack"],
+        }
+    elif engine_error:
+        engine_summary = {"engine": "R5b", "error": engine_error}
 
     # Paper-only MDS+EHI sentiment sleeve (ChatGPT share); never sizes Path-A lots.
     sentiment_meta: dict = {"ok": False}
@@ -1411,8 +1565,14 @@ def main(argv=None):
             }
         ),
         "adj_fallback_codes": [s.get("code") for s in signals if s.get("adj_fallback")],
+        "paper_book_engine": engine_summary,
     }
     if args.dry_run:
+        if engine_book is not None and args.paper_out:
+            from paper_book import _atomic_write_json
+
+            _atomic_write_json(Path(args.paper_out), engine_book)
+            print(f"[paper-R5b] dry-run: wrote {args.paper_out}")
         blob = json.dumps(report, ensure_ascii=False, indent=2)
         if args.out:
             Path(args.out).parent.mkdir(parents=True, exist_ok=True)
@@ -1447,19 +1607,29 @@ def main(argv=None):
             f"seats={len(observe_coverage.get('seats_ok') or [])}"
         )
     if quality.get("ok"):
-        try:
-            from paper_book import refresh_paper_book
+        if engine_book is not None:
+            from paper_book import _atomic_write_json
 
-            paper = refresh_paper_book(ROOT, report=report)
-            if paper.get("ok"):
-                print(
-                    f"[paper] asof={paper.get('asof')} held={paper.get('held_n')} "
-                    f"opened={paper.get('opened_n')} closed={paper.get('closed_n')}"
-                )
-            else:
-                print("[paper] skip:", paper.get("error"))
-        except Exception as exc:
-            print(f"[paper] refresh failed: {exc}")
+            if not engine_book.get("noop"):
+                _atomic_write_json(engine_ctx["path"], engine_book)
+            print(
+                f"[paper-R5b] asof={engine_book.get('asof')} held={len(engine_book.get('positions') or {})} "
+                f"pending={engine_book.get('pending_n')} noop={bool(engine_book.get('noop'))}"
+            )
+        elif not engine_error:
+            try:
+                from paper_book import refresh_paper_book
+
+                paper = refresh_paper_book(ROOT, report=report)
+                if paper.get("ok"):
+                    print(
+                        f"[paper] asof={paper.get('asof')} held={paper.get('held_n')} "
+                        f"opened={paper.get('opened_n')} closed={paper.get('closed_n')}"
+                    )
+                else:
+                    print("[paper] skip:", paper.get("error"))
+            except Exception as exc:
+                print(f"[paper] refresh failed: {exc}")
         try:
             from desk.tech_score import write_tech_score_snapshot
 

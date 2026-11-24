@@ -46,7 +46,7 @@
 
 - **结论**：审计发现正式回测引擎至少有 5 类错误（分钟线合约错配造成 3 笔假止损、夜盘交易日归属、跳空止损按止损价成交、组合帽不计已有持仓、模拟账本缺日线兜底），现行 +5.78% / DD 6.74% 不可信。详见 `docs/UPGRADE_R_TRACK.md` §0–§2。
 - **优先级**：**轨 R 阶段 A（R0–R7）排在 F2 之前**。F2 仍按原门槛等样本，不受影响；但说「继续/升级」时，**先念轨 R 的下一刀，再念 F2 是否够样**。
-- **下一刀候选**：**R5b 模拟账本对齐**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b/c、R4（组合帽计入已有持仓）、R4b（缩手后补手）与 R5a（日报信号与回测同口径）已完成，R5b 未开。
+- **下一刀候选**：**R7**（v14 重跑签字 + 模拟账本正式修复方案 A/B 二选一，待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b/c、R4（组合帽计入已有持仓）、R4b（缩手后补手）、R5a（日报信号与回测同口径）与 R5b（模拟账本共用回测持仓引擎）已完成，R7 未开。
 - **硬围栏（轨 R 追加）**：R1–R7 完成前不提交 `historical_backtest_latest.json`、`paper_book_latest.json`；R7 重跑并签字后才更新 `configs/formal_rule_lock.json`；结果变差也不回退修复。
 - **对齐**：§3.2「组合帽 / next_open 纸面完全对齐」原为低优延后，现由轨 R 的 R4、R5 接手。
 
@@ -113,7 +113,7 @@
 | **S 会话** | Session brief | 多时段盘中 brief | 交 Grokbot | 本仓不做 |
 | **R 研究台旧项** | P1–P4 / A1–A3 | PBO/LSP/Gamma/组合风险/轻量 ML / 主力映射 | **主路径完成** | 封闭 |
 | **R 研究台旧项** | 官历/因子注册/聚类 | `UPGRADE_PLAN`「下次剩余」 | **低优延后** | 封闭 |
-| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R5a 完成 · 下一刀候选 R5b（模拟账本对齐，待明示）** |
+| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R5 完成 · 下一刀候选 R7（待明示）** |
 | **R 审计升级** | R8–R12（阶段 B） | 长样本入口、出场预注册 5 组、风险预算生效、波动目标 + 回撤刹车、品种池 | **封闭** | 依赖 R7 |
 | **R 审计升级** | R13（阶段 C） | 席位因子长样本验证（回补 2019+） | **封闭** | 依赖 R8 |
 | **R 审计升级** | **R14 / K0–K7（阶段 C）** | carry 独立袖套：分月库 → 可交易曲线 → 持有指数 → 预登记 10 试验 → 闸门 → Shadow | **封闭** | K0–K2 可与阶段 A 并行（需明示）；K4 起依赖 R6、R8 |
@@ -260,6 +260,17 @@ ext_open。
 ---
 
 ## 7. 近期迭代反馈（保留）
+
+### R5b 模拟账本共用回测持仓引擎（2026-11-24）
+
+- **问题**：旧模拟账本按 T 日收盘价入场、入场当天不管理、只看 15m 且无日线兜底（还依赖 CODE0 历史缓存取交易日和当日日线）、不换月、不扣成本、权益只加已实现；日报先于账本刷新，组合帽按"含当天可能平掉的仓"偏保守。P 空单（11-13 入场，止盈 8644.3）和 I 空单（11-17 入场，止损 650.0）价格早已穿过却一直挂着——当时提交的 `.cache/history/P0.json` 只到 11-09、`I0.json` 只到 11-11，旧检查拿不到当天日线就静默"不平仓"。
+- **做了**：① 新增 `book_core.PositionEngine`：simulate 的单仓管理段（换月/持有合约计价/跳空止损/15m 首触 + 日线兜底/复权信号失效/交割冻结/盯市/成本/平仓行）和 T+1 开仓段原样搬入，simulate 改为调用它（纯重构，四种开关组合与 replay 逐位一致）；simulate 新增 `state_log`，candidate_log 增 `selected_full`。② `paper_book` 新增 R5b 引擎账本（`"engine": "R5b"`）：T 日写 pending（方向、手数、止损/止盈、ATR、信号日及候选原字段），T+1 用共用逻辑开盘成交并平移止损/止盈；每天先成交 pending，再管理全部持仓（含刚成交的，去掉"入场当天跳过"）；成本和盯市权益与回测同口径；新仓手数用**账本自己的权益**（当天成交后、当天盈亏前），不再用 `equity_state.json`；同日重跑从 `base` 重算、结果指纹相同即 no-op；漏跑交易日逐日补管理。③ `daily_update`：账本是 R5b 格式时，先对当天 bars 做 `prepare_pack_for_execution`（仅缓存，补上 R5a 遗留缺口）→ roll 账本 → 用账本权益定手数 → 剩余持仓算组合帽（R4/R4b）→ 日报 selected 就是新 pending；新增 `--paper-book`/`--paper-out`（dry-run 预览，拒绝写根账本）。旧格式根账本仍走旧顺序与旧 refresh（含"偏保守"那条），直到 R7 换格式；`refresh_paper_book` 遇到 R5b 账本拒绝运行。④ `paper_book.py --rebuild-preview --out PATH`（冻结快照 + 本地缓存）。
+- **对账**（`tests/test_paper_vs_backtest_reconcile.py`，快照窗口末 40 个交易日，用回测前一日状态播种）：平仓交易 12 笔逐字段一致；40 天 pending 与回测当日选中一致（20 单），次日成交与回测新开仓一致（12 笔，含成交价/合约/held_contract）；同口径权益最大差 0（逐位相等），未扣未成交 pending 入场成本的原始权益差最大 2.94e-4（0.029%，验收线 0.5%）；同日重跑 no-op、缺分钟时日线兜底平仓均有测试。
+- **P / I 预览**（方案 A，`archive/R5/paper_rebuild_preview.json`）：P 空 11-18 15m 触及止盈 8644.312 平仓，净 +3101.88；I 空 11-19 15m 触及止损 650.012 平仓，净 −1064.11（两笔都按回测成本补扣开平成本）；修复后 11-23 盯市权益 192,370.09、空仓、pending P 空 1 手。方案 B（按回测期末状态重置）：权益 198,461.44、持 P 空 1 手（11-23 开盘 8278 入场）、无 pending。两者权益差 −6,091.35，选哪个留给 R7 签字。
+- **验证**：pytest 全量 524 项全绿（R5a 518 + 新增 6），金锁 legacy 4.189/4.294/42 未变；`_bitwise_refactor_check.py`（对 42cb2e9）四种配置 ALL_IDENTICAL；replay `archive/R5/replay_after_R5b.json` 与 R5a 除 git_sha/config_version 外逐位一致（−0.769 / 7.469 / 56）；`daily_update --dry-run --paper-book <方案A账本>` 一次：根目录 42 个 JSON 与 `archive/l1_report_*` 哈希不变，selected=[P 空 1] = 新 pending；未写根 `paper_book_latest.json`/`historical_backtest_latest.json`；未 push。
+- **风险/未做**：① 根账本仍是旧格式，正式修复（方案 A 回补 `backfill_R5` 或方案 B 重置）待 R7；② R5b 持仓 `fill_price_basis="continuous_proxy"` 会触发 `test_proxy_positions` 对根账本的"无 proxy 字样"断言，R7 写根账本前须处理；③ 引擎账本的权益与回测相差"当天 pending 的入场成本"（回测记在信号日，账本记在成交日）；④ 漏跑日只补管理不补信号；日报最后一天的"下一交易日"用工作日近似（不含节假日，仅影响交割月检查）；⑤ mode=roll 的 roll_carry 入场分支未接入（当前 seats 不触发）；⑥ lab_edge 若改为 action=block，会从 pending 候选中排除（已接入 exclude），observe 袖套 min_lots 仍为日报参数（对账用 0）。详见 `archive/R5/paper_path_diff.md`。
+- **产物**：`book_core.py`、`tests/test_paper_vs_backtest_reconcile.py`、`archive/R5/paper_path_diff.md`、`paper_rebuild_preview.json`（+ `_bookA.json`/`_bookB.json`）、`replay_after_R5b.json`、`l1_report_dryrun_R5b.json`、`paper_book_dryrun_R5b.json`、`dryrun_R5b.log`、`progress.md`。
+- **建议下一刀**：R7（v14 重跑签字 + 账本修复方案 A/B 二选一，待明示）；或停
 
 ### R5a 日报信号与回测同口径（2026-11-24）
 

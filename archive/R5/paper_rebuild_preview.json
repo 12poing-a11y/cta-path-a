@@ -1,0 +1,230 @@
+{
+  "generated_by": "paper_book.py --rebuild-preview (R5b)",
+  "snapshot": "bt_input_20261123_da9c8de64ab4.json",
+  "last_local_session": "2026-11-23",
+  "note": "预览，不写根目录 paper_book_latest.json；正式写入待 R7 签字。",
+  "legacy_book": {
+    "asof": "2026-11-23",
+    "equity_realized": 190332.32,
+    "equity_mark": 196082.32,
+    "positions": {
+      "P": {
+        "direction": "空",
+        "lots": 1,
+        "entry_date": "2026-11-13",
+        "entry": 8961.0,
+        "stop": 9119.344,
+        "target": 8644.312,
+        "mark": 8251.0
+      },
+      "I": {
+        "direction": "空",
+        "lots": 1,
+        "entry_date": "2026-11-17",
+        "entry": 640.5,
+        "stop": 650.012,
+        "target": 621.476,
+        "mark": 654.0
+      }
+    }
+  },
+  "scheme_A_repair": {
+    "asof": "2026-11-23",
+    "equity_mtm": 192370.09,
+    "equity_realized": 192370.09,
+    "equity_floating": 0.0,
+    "positions": {},
+    "pending": [
+      {
+        "code": "P",
+        "direction": "空",
+        "lots": 1,
+        "entry": 8251.0,
+        "stop": 8414.485714285714,
+        "target": 7924.028571428571,
+        "signal_date": "2026-11-23",
+        "reason": "path_a_rr2"
+      }
+    ],
+    "replayed_sessions": [
+      "2026-11-13",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-23"
+    ],
+    "closes": [
+      {
+        "code": "P",
+        "direction": "空",
+        "lots": 1,
+        "entry_date": "2026-11-13",
+        "entry": 8961.0,
+        "stop": 9119.344,
+        "target": 8644.312,
+        "exit_date": "2026-11-18",
+        "exit": 8644.312,
+        "reason": "target",
+        "pnl_net": 3101.88,
+        "minute_checks_that_day": 2,
+        "daily_fallback_that_day": 0,
+        "bar": {
+          "date": "2026-11-18",
+          "open": 8793.0,
+          "high": 8803.0,
+          "low": 8606.0,
+          "close": 8606.0,
+          "contract": "P2612"
+        }
+      },
+      {
+        "code": "I",
+        "direction": "空",
+        "lots": 1,
+        "entry_date": "2026-11-17",
+        "entry": 640.5,
+        "stop": 650.012,
+        "target": 621.476,
+        "exit_date": "2026-11-19",
+        "exit": 650.012,
+        "reason": "stop",
+        "pnl_net": -1064.11,
+        "minute_checks_that_day": 1,
+        "daily_fallback_that_day": 0,
+        "bar": {
+          "date": "2026-11-19",
+          "open": 648.0,
+          "high": 653.0,
+          "low": 646.0,
+          "close": 648.0,
+          "contract": "I2701"
+        }
+      }
+    ],
+    "ledger_rows_added": [
+      {
+        "trade_id": "平仓|P|2026-11-18|2026-11-13",
+        "event": "平仓",
+        "code": "P",
+        "date": "2026-11-18",
+        "entry_date": "2026-11-13",
+        "exit_date": "2026-11-18",
+        "direction": "空",
+        "lots": 1,
+        "entry": 8961.0,
+        "exit": 8644.312,
+        "mark": 8644.312,
+        "mult": 10.0,
+        "stop": 9119.344,
+        "target": 8644.312,
+        "atr": 204.36,
+        "stop_atr_mult": 0.8,
+        "reward_rr": 2.0,
+        "entry_reason": "daily_selected",
+        "strategy": "Path-A 日信号组合入选",
+        "tp_sl_scheme": "止损=0.8×ATR；止盈=RR×2（止损距）；ATR=204.4；止损价=9119；止盈价=8644",
+        "exit_condition": "平仓条件：止损=0.8×ATR；止盈=RR×2（止损距）；ATR=204.4；止损价=9119；止盈价=8644；盘中15m触及即平；否则收盘信号/趋势失效平仓。",
+        "reason": "target",
+        "R": 2.0000000000000115,
+        "equity_delta": 3101.88,
+        "equity_after": 193434.2,
+        "r20": -13.3025,
+        "r60": -18.7894,
+        "bucket": "农产品",
+        "fill_price_basis": "continuous_proxy",
+        "fill_contract": "P2612",
+        "held_contract": "P2701",
+        "engine": "R5b",
+        "tag": "backfill_R5"
+      },
+      {
+        "trade_id": "平仓|I|2026-11-19|2026-11-17",
+        "event": "平仓",
+        "code": "I",
+        "date": "2026-11-19",
+        "entry_date": "2026-11-17",
+        "exit_date": "2026-11-19",
+        "direction": "空",
+        "lots": 1,
+        "entry": 640.5,
+        "exit": 650.012,
+        "mark": 650.012,
+        "mult": 100.0,
+        "stop": 650.012,
+        "target": 621.476,
+        "atr": 11.75,
+        "stop_atr_mult": 0.8,
+        "reward_rr": 2.0,
+        "entry_reason": "daily_selected_observe",
+        "strategy": "Path-A 日信号组合入选（观察袖套）",
+        "tp_sl_scheme": "止损=0.8×ATR；止盈=RR×2（止损距）；ATR=11.75；止损价=650；止盈价=621.5",
+        "exit_condition": "平仓条件：止损=0.8×ATR；止盈=RR×2（止损距）；ATR=11.75；止损价=650；止盈价=621.5；盘中15m触及即平；否则收盘信号/趋势失效平仓。",
+        "reason": "stop",
+        "R": -1.0,
+        "equity_delta": -1064.11,
+        "equity_after": 192370.09,
+        "r20": -2.6061,
+        "r60": -7.5618,
+        "bucket": "黑色",
+        "fill_price_basis": "continuous_proxy",
+        "fill_contract": "I2701",
+        "held_contract": "I2701",
+        "engine": "R5b",
+        "tag": "backfill_R5"
+      }
+    ],
+    "engine_stats": {
+      "minute_exit_n": 2,
+      "daily_exit_fallback_n": 0,
+      "minute_rejected_mismatch": 0
+    },
+    "costs_note": "旧账本从未扣成本；回补时对 P/I 按回测成本模型扣开仓+平仓成本。",
+    "book_file": "paper_rebuild_preview_bookA.json"
+  },
+  "scheme_B_reseed": {
+    "asof": "2026-11-23",
+    "equity_mtm": 198461.44,
+    "equity_realized": 198191.44,
+    "equity_floating": 270.0,
+    "positions": {
+      "P": {
+        "direction": "空",
+        "lots": 1,
+        "entry_date": "2026-11-23",
+        "entry": 8278.0,
+        "stop": 8438.285714285714,
+        "target": 7957.428571428572,
+        "last_mark": 8251.0,
+        "fill_price_basis": "continuous_proxy",
+        "held_contract": "P2701",
+        "pnl_net": 270.0
+      }
+    },
+    "pending": [],
+    "backtest_window": [
+      "2025-12-31",
+      "2026-11-23"
+    ],
+    "backtest_ret_pct": -0.769,
+    "backtest_closed_n": 56,
+    "ledger_note": "账本历史不继承（旧 trade_ledger 归档保留，另起 R5b 账本）",
+    "book_file": "paper_rebuild_preview_bookB.json"
+  },
+  "comparison": {
+    "equity_mtm_A_minus_B": -6091.35,
+    "positions_A": [],
+    "positions_B": [
+      "P"
+    ],
+    "pending_A": [
+      [
+        "P",
+        "空",
+        1
+      ]
+    ],
+    "pending_B": []
+  }
+}

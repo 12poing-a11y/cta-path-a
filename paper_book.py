@@ -675,6 +675,12 @@ def refresh_paper_book(
             }
 
     prev_paper = _load(paper_path) or {}
+    if prev_paper.get("engine") == "R5b":
+        return {
+            "ok": False,
+            "error": "R5b engine book: advanced by daily_update's engine path, not the legacy refresh",
+            "path": str(paper_path),
+        }
     prev_asof = _norm_asof(prev_paper.get("asof_ymd") or prev_paper.get("asof"))
     if prev_asof and asof and asof < prev_asof:
         return {
@@ -884,6 +890,835 @@ def refresh_paper_book(
     return out
 
 
+# --------------------------------------------------------------------------- R5b engine book
+#
+# A book with ``"engine": "R5b"`` is run through ``book_core.PositionEngine`` — the same position
+# management and T+1 fill code as ``historical_backtest.simulate``:
+#   day T  : fill the pending orders of T-1 at T's open (next_open_fill), manage every open
+#            position on T (incl. the ones just filled; 15m first touch, daily-OHLC fallback,
+#            roll, signal exit, delivery / freeze), then caps on the remaining book → new pending.
+#   equity : mark-to-market, net of every fill cost (= simulate's equity, except that the entry
+#            costs of today's pending orders are charged when they fill tomorrow).
+# Books without the tag (the legacy root book) keep using ``refresh_paper_book``.
+
+ENGINE_TAG = "R5b"
+BACKFILL_TAG = "backfill_R5"
+STRATEGY_ZH.setdefault("path_a_rr2", "Path-A 日信号组合入选")
+
+
+def is_engine_book(book: dict | None) -> bool:
+    return isinstance(book, dict) and book.get("engine") == ENGINE_TAG
+
+
+def engine_settings(p: dict | None = None) -> dict[str, Any]:
+    """Engine / caps / sizing parameters exactly as ``historical_backtest._simulate_cfg`` passes them."""
+    import historical_backtest as hb
+
+    p = p or hb._load_cfg()
+    cost_scenario = str(p.get("cost_scenario") or "base").strip().lower()
+    slip = p.get("slippage_ticks")
+    if slip is None:
+        try:
+            slip = hb.load_slippage_ticks(hb.ROOT, scenario=cost_scenario)
+        except Exception:  # noqa: BLE001
+            slip = hb.load_slippage_ticks(hb.ROOT)
+    fee_mult = abs(float(p.get("fee_mult") if p.get("fee_mult") is not None else 1.0))
+    if fee_mult == 1.0 and cost_scenario != "base":
+        try:
+            from research.execution.cost_model import load_cost_scenario as _lcs
+
+            fee_mult = float(_lcs(cost_scenario, root=hb.ROOT).get("fee_mult") or 1.0)
+        except Exception:  # noqa: BLE001
+            pass
+    freeze_fix = bool(p.get("freeze_fix", True))
+    fill_price = str(p.get("fill_price") or hb.DEFAULT_FILL_PRICE)
+    if fill_price != "next_open":
+        raise ValueError(f"R5b paper book needs fill_price=next_open (got {fill_price})")
+    mode = p["entry_filter"]
+    return {
+        "engine": {
+            "mode": mode,
+            "freeze_fix": freeze_fix,
+            "delivery_guard": bool(p.get("delivery_guard", True)),
+            "max_stale_days": p.get("max_stale_days", hb.MAX_STALE_DAYS),
+            "fill_price": fill_price,
+            "slippage_ticks": float(slip),
+            "fee_mult": fee_mult,
+            "enforce_tradability": bool(p.get("enforce_tradability", True)),
+            "entry_delivery_buffer": p.get("entry_delivery_buffer", hb.ENTRY_DELIVERY_BUFFER),
+            "entry_delivery_action": str(p.get("entry_delivery_action", hb.ENTRY_DELIVERY_ACTION)),
+            "option_hedge": bool(p.get("option_hedge")),
+            "premium_atr_mult": float(p.get("premium_atr_mult") or 0.0),
+            "strike_atr_mult": float(p.get("strike_atr_mult") or 0.0),
+            "max_positions": int(p["max_positions"]),
+            "max_per_bucket": int(p["max_per_bucket"]),
+        },
+        "caps": {
+            "mode": mode,
+            "max_positions": int(p["max_positions"]),
+            "max_gross_pct": float(p["max_gross_pct"]),
+            "max_port_risk": float(p["max_port_risk"]),
+            "max_per_bucket": int(p["max_per_bucket"]),
+            "min_r20": float(p["min_r20"]),
+            "min_r60": float(p["min_r60"]),
+            "min_lots": int(p.get("min_lots") or 0),
+            "use_book_caps": freeze_fix,
+        },
+        "sizing": {
+            "equity0": float(p["equity0"]),
+            "compound": bool(p["compound"]),
+            "risk_pct": float(p["risk_pct"]),
+            "l1_mult": float(p["l1_mult"]),
+        },
+        "stop_atr_mult": float(p["stop_atr_mult"]),
+        "reward_rr": float(p["reward_rr"]),
+    }
+
+
+def build_engine(
+    series: dict,
+    settings: dict,
+    *,
+    main_map: Any = None,
+    adj: dict | None = None,
+    curves: dict | None = None,
+    contract_root: Path | None = None,
+    minute_root: Path | None = None,
+):
+    from book_core import PositionEngine
+
+    return PositionEngine(
+        series=series,
+        main_map=main_map,
+        adj=adj,
+        curves=curves,
+        contract_root=contract_root,
+        minute_root=minute_root,
+        **settings["engine"],
+    )
+
+
+def sizing_for(equity: float, settings: dict) -> tuple[float, float]:
+    """(sizing equity, daily risk budget) like simulate: compound_equity → risk_budget_yuan."""
+    from position_rules import compound_equity, risk_budget_yuan
+
+    s = settings["sizing"]
+    eq = compound_equity(equity, s["equity0"], s["compound"])
+    return eq, risk_budget_yuan(eq, s["risk_pct"], s["l1_mult"])
+
+
+def roll_book(
+    state: dict,
+    eng: Any,
+    day: str,
+    *,
+    prev_day: str | None,
+    next_day: str | None,
+) -> dict[str, Any]:
+    """One trading day of the engine book (fills of the pending orders, then management).
+
+    ``state``: ``{"positions": {code: pos}, "pending": [cand], "equity": float}`` (not mutated).
+    ``sizing_equity`` in the result = equity after today's fills, before today's PnL (what
+    simulate sizes ``day``'s signals with)."""
+    import historical_backtest as hb
+
+    pos: dict[str, dict] = deepcopy(state.get("positions") or {})
+    pending = [dict(c) for c in (state.get("pending") or [])]
+    equity0 = float(state["equity"])
+    fill_cost = 0.0
+    filled: list[dict] = []
+    rejected: list[dict] = []
+    waiting: list[dict] = []
+    groups: dict[str, list[dict]] = {}
+    for c in pending:
+        groups.setdefault(str(c.get("signal_date") or ""), []).append(c)
+    for sd in sorted(groups):
+        ready: list[dict] = []
+        for c in groups[sd]:
+            code = str(c.get("code") or "")
+            ix = eng.idx.get(code) or {}
+            if code not in eng.series or sd not in ix:
+                rejected.append({"code": code, "signal_date": sd, "why": "signal_bar_missing"})
+            elif ix[sd] + 1 >= len(eng.series[code]["hist"]):
+                waiting.append(c)  # no bar after the signal day yet (code not traded / data late)
+            else:
+                ready.append(c)
+        if not ready:
+            continue
+        why_by: dict[str, str] = {}
+        acc = {"price_pnl": 0.0, "day_cost": 0.0}
+        entered, _ = eng.fill_selected(
+            ready, pos, sd, acc=acc, on_reject=lambda c_, why: why_by.__setitem__(c_["code"], why)
+        )
+        fill_cost += eng.last_fill_cost
+        for c in ready:
+            code = c["code"]
+            if code in entered:
+                p = pos[code]
+                meta = eng.series[code]["meta"]
+                cost = hb.fill_cost(
+                    meta, p["entry"], p["lots"], slippage_ticks=eng.slippage_ticks, fee_mult=eng.fee_mult
+                ) + float(p.get("opt_premium") or 0.0)
+                p["signal_date"] = sd
+                p["pnl_net"] = -cost
+                filled.append({"code": code, "signal_date": sd, "entry_cost": cost, "pos": dict(p)})
+            else:
+                rejected.append(
+                    {"code": code, "signal_date": sd, "why": why_by.get(code) or "not_filled(positions_full/no_open)"}
+                )
+    sizing_equity = equity0 - fill_cost
+    acc = {"price_pnl": 0.0, "day_cost": 0.0}
+    closed: list[dict] = []
+    for code, p in list(pos.items()):
+        pp, pc = acc["price_pnl"], acc["day_cost"]
+        row = eng.manage(code, p, day, prev_d=prev_day, nxt=next_day, acc=acc)
+        p["pnl_net"] = float(p.get("pnl_net") or 0.0) + (acc["price_pnl"] - pp) - (acc["day_cost"] - pc)
+        if row is not None:
+            closed.append({"row": dict(row), "pos": dict(p)})
+            del pos[code]
+        elif p.get("last_mark") is not None:
+            p["mark"] = p["last_mark"]
+    equity = sizing_equity + (acc["price_pnl"] - acc["day_cost"])
+    return {
+        "day": day,
+        "positions": pos,
+        "waiting": waiting,
+        "filled": filled,
+        "rejected": rejected,
+        "closed": closed,
+        "fill_cost": fill_cost,
+        "mgmt_pnl": acc["price_pnl"],
+        "mgmt_cost": acc["day_cost"],
+        "sizing_equity": sizing_equity,
+        "equity": equity,
+    }
+
+
+def plan_entries(
+    core: dict[str, dict],
+    *,
+    eng: Any,
+    pos: dict,
+    day: str,
+    sizing_equity: float,
+    settings: dict,
+    exclude: set[str] | None = None,
+) -> tuple[list[dict], dict[str, Any]]:
+    """New pending orders for ``day`` (simulate step 2): candidates from ``signal_core`` results
+    (``core[code]`` = ``path_a_candidate`` output), caps on the book that survived today's exits.
+    ``sizing_equity`` is already compounded (``sizing_for``)."""
+    import historical_backtest as hb
+    from position_rules import apply_portfolio_caps
+
+    caps = settings["caps"]
+    slots_left = max(0, int(caps["max_positions"]) - len(pos))
+    meta: dict[str, Any] = {"slots_left": slots_left, "sizing_equity": sizing_equity, "candidates": []}
+    if slots_left <= 0:
+        return [], meta
+    cands: list[dict] = []
+    for code in eng.series:
+        if code in pos or code in (exclude or set()):
+            continue
+        i = eng.idx[code].get(day)
+        if i is None or i < hb.WARMUP:
+            continue
+        res = core.get(code)
+        if not res or res.get("status") != "ok" or not res.get("candidate"):
+            continue
+        cands.append(res["candidate"])
+    meta["candidates"] = [c["code"] for c in cands]
+    used_g, used_r, held_buckets = eng.book_usage(pos, day)
+    eq_ = sizing_equity if sizing_equity > 0 else 1.0
+    kw = dict(
+        equity=sizing_equity,
+        max_positions=slots_left,
+        max_per_bucket=int(caps["max_per_bucket"]),
+        min_r20_pct=0.0 if caps["mode"] == "ctf" else float(caps["min_r20"]),
+        min_r60_pct=0.0 if caps["mode"] == "ctf" else float(caps["min_r60"]),
+        min_lots=int(caps["min_lots"]),
+    )
+    if caps["use_book_caps"]:
+        selected, cmeta = apply_portfolio_caps(
+            cands,
+            max_gross_exposure_pct=max(0.0, float(caps["max_gross_pct"]) - used_g / eq_ * 100.0),
+            max_portfolio_risk_pct=max(0.0, float(caps["max_port_risk"]) - used_r / eq_ * 100.0),
+            existing_buckets=held_buckets,
+            topup=True,
+            **kw,
+        )
+    else:
+        selected, cmeta = apply_portfolio_caps(
+            cands,
+            max_gross_exposure_pct=float(caps["max_gross_pct"]),
+            max_portfolio_risk_pct=float(caps["max_port_risk"]),
+            topup=False,
+            **kw,
+        )
+    meta.update(cmeta)
+    meta["held_book"] = {
+        "held_n": len(pos),
+        "used_gross_pct": round(used_g / eq_ * 100.0, 2),
+        "used_atr_risk_pct": round(used_r / eq_ * 100.0, 2),
+        "held_buckets": held_buckets,
+        "note": "R5b：先平今天该平的仓，再用剩余持仓算组合上限（与回测同序）",
+    }
+    out = []
+    for c in selected:
+        row = dict(c)
+        row["signal_date"] = day
+        out.append(row)
+    return out, meta
+
+
+def _engine_pos_view(code: str, p: dict, params: dict, mults: dict | None = None) -> dict:
+    """Engine position + the display fields older readers expect (mark, mult, equity_delta…)."""
+    v = dict(p)
+    v["code"] = code
+    v["mult"] = v.get("mult") or (mults or {}).get(code)
+    if v.get("mark") is None:
+        v["mark"] = v.get("last_mark", v.get("entry"))
+    v["equity_delta"] = round(float(v.get("pnl_net") or 0.0), 2)
+    v["stop_atr_mult"] = v.get("stop_atr_mult", params.get("stop_atr_mult"))
+    v["reward_rr"] = v.get("reward_rr", params.get("reward_rr"))
+    v["exit_condition"] = (
+        exit_condition_text(v, stop_atr_mult=v["stop_atr_mult"], reward_rr=v["reward_rr"])
+        .replace("盘中15m触及即平；否则收盘信号/趋势失效平仓。", "")
+        + "盘中15m首次触及即平（分钟缺失/与日线不符时按日线高低价判断）；否则收盘信号/趋势失效、交割/冻结平仓。"
+    )
+    return v
+
+
+def _state_hash(state: dict) -> str:
+    raw = json.dumps(state, ensure_ascii=False, sort_keys=True, default=str)
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+
+
+def seed_engine_book(
+    *,
+    asof: str,
+    positions: dict,
+    pending: list,
+    equity: float,
+    equity_realized: float | None = None,
+    source: str,
+    settings: dict | None = None,
+    ledger: list | None = None,
+) -> dict[str, Any]:
+    """A fresh R5b book (``equity`` = mark-to-market equity incl. unfilled pending orders' costs)."""
+    params = {
+        "stop_atr_mult": (settings or {}).get("stop_atr_mult"),
+        "reward_rr": (settings or {}).get("reward_rr"),
+    }
+    mults = _mult_map()
+    pos = {}
+    floating = 0.0
+    for code, p in positions.items():
+        q = dict(p)
+        if q.get("pnl_net") is None:
+            mark = q.get("last_mark", q.get("entry"))
+            sign = 1 if q.get("direction") == "多" else -1
+            q["pnl_net"] = (float(mark) - float(q["entry"])) * sign * float(q["lots"]) * float(mults.get(code) or 0)
+        floating += float(q["pnl_net"])
+        pos[code] = _engine_pos_view(code, q, params, mults)
+    eq_real = float(equity) - floating if equity_realized is None else float(equity_realized)
+    return {
+        "ok": True,
+        "engine": ENGINE_TAG,
+        "asof": _ymd(asof),
+        "asof_ymd": _norm_asof(asof),
+        "source": "paper_book",
+        "seed": source,
+        "batch": "pathA",
+        "stop_atr_mult": params["stop_atr_mult"],
+        "reward_rr": params["reward_rr"],
+        "equity": round(eq_real, 2),
+        "equity_floating": round(floating, 2),
+        "equity_mark": round(float(equity), 2),
+        "equity_mtm": float(equity),
+        "equity_realized": eq_real,
+        "positions": pos,
+        "pending": [dict(c) for c in pending],
+        "closed_today": [],
+        "opened_today": [],
+        "skipped_today": [],
+        "trade_ledger": list(ledger or []),
+        "opened_n": 0,
+        "closed_n": 0,
+        "held_n": len(pos),
+        "pending_n": len(pending),
+        "ledger_n": len(ledger or []),
+        "noop": False,
+    }
+
+
+def _book_state(book: dict) -> dict:
+    return {
+        "positions": deepcopy(book.get("positions") or {}),
+        "pending": [dict(c) for c in (book.get("pending") or [])],
+        "equity": float(book.get("equity_mtm", book.get("equity_mark", book.get("equity")))),
+        "equity_realized": float(book.get("equity_realized", book.get("equity") or 0.0)),
+    }
+
+
+def advance_engine_book(
+    book: dict,
+    day: str,
+    *,
+    engine_for_day,
+    plan_for_day,
+    prev_day_fn,
+    next_day_fn,
+    days_between=None,
+    tag: str | None = None,
+) -> dict[str, Any]:
+    """Advance an R5b book to ``day`` and return the new book (pure; nothing written).
+
+    * same ``day`` as the book → recomputed from ``book["base"]`` (the state before ``day``); if the
+      result is unchanged the old book is returned with ``noop=True`` (double run never re-books);
+    * missed sessions between the book and ``day`` (``days_between(book_asof, day)``) are managed
+      day by day; new pending orders are generated for ``day`` only;
+    * ``engine_for_day(d)`` → PositionEngine on the bars up to ``d``;
+      ``plan_for_day(eng, pos, d, sizing_equity_raw)`` → (pending list, meta)."""
+    rolled = roll_engine_book(
+        book, day, engine_for_day=engine_for_day, prev_day_fn=prev_day_fn, next_day_fn=next_day_fn,
+        days_between=days_between, tag=tag,
+    )
+    pending, meta = plan_for_day(rolled["_engine"], rolled["positions"], rolled["asof"], rolled["sizing_equity"])
+    return attach_pending(book, rolled, pending, meta)
+
+
+def roll_engine_book(
+    book: dict,
+    day: str,
+    *,
+    engine_for_day,
+    prev_day_fn,
+    next_day_fn,
+    days_between=None,
+    tag: str | None = None,
+) -> dict[str, Any]:
+    """Fills + management up to ``day`` (no new pending yet); see ``advance_engine_book``.
+    The result carries the transient ``_engine`` (dropped by ``attach_pending``)."""
+    if not is_engine_book(book):
+        raise ValueError("not an R5b engine book")
+    params = {"stop_atr_mult": book.get("stop_atr_mult"), "reward_rr": book.get("reward_rr")}
+    day = _ymd(day)
+    asof = _ymd(book.get("asof"))
+    if asof and day < asof:
+        raise ValueError(f"day {day} < book asof {asof}")
+    same_day = asof == day
+    if same_day and not isinstance(book.get("base"), dict):
+        # a seeded book is already at the close of ``day`` (managed + pending): nothing to redo
+        out = dict(book)
+        out["_engine"] = engine_for_day(day)
+        out["noop"] = True
+        out["sizing_equity"] = float(book.get("sizing_equity", out.get("equity_mtm")))
+        return out
+    if same_day:
+        base = book.get("base")
+        state = {
+            "positions": deepcopy(base["positions"]),
+            "pending": [dict(c) for c in base["pending"]],
+            "equity": float(base["equity"]),
+            "equity_realized": float(base["equity_realized"]),
+        }
+        base_asof = base.get("asof")
+        today_ids = set(book.get("today_trade_ids") or [])
+        ledger = [dict(r) for r in (book.get("trade_ledger") or []) if str(r.get("trade_id") or "") not in today_ids]
+    else:
+        state = _book_state(book)
+        base_asof = asof
+        ledger = [dict(r) for r in (book.get("trade_ledger") or [])]
+    base_snapshot = {"asof": base_asof, **deepcopy(state)}
+    seq = list(days_between(base_asof, day)) if days_between is not None else [day]
+    if not seq or seq[-1] != day:
+        seq.append(day)
+    mults = _mult_map()
+    realized = float(state["equity_realized"])
+    closed_today: list[dict] = []
+    opened_today: list[dict] = []
+    skipped_today: list[dict] = []
+    today_ids: list[str] = []
+    roll = None
+    eng = None
+    for d in seq:
+        eng = engine_for_day(d)
+        roll = roll_book(state, eng, d, prev_day=prev_day_fn(d), next_day=next_day_fn(d))
+        for f in roll["filled"]:
+            p = f["pos"]
+            v = _engine_pos_view(p["code"], p, params, mults)
+            row = _detail_row(
+                event="建仓", code=p["code"], date=str(p.get("entry_date") or d), pos=v, params=params,
+                equity_before=realized, mults=mults,
+            )
+            row.update(
+                {
+                    "signal_date": f["signal_date"],
+                    "fill_price_basis": p.get("fill_price_basis"),
+                    "fill_contract": p.get("fill_contract"),
+                    "held_contract": p.get("held_contract"),
+                    "entry_cost": round(f["entry_cost"], 2),
+                    "engine": ENGINE_TAG,
+                }
+            )
+            if tag:
+                row["tag"] = tag
+            if _append_ledger(ledger, row):
+                today_ids.append(row["trade_id"])
+            opened_today.append(row)
+        for c in roll["closed"]:
+            r, p = c["row"], c["pos"]
+            v = _engine_pos_view(r["code"], p, params, mults)
+            v["entry"] = r["entry"]
+            row = _detail_row(
+                event="平仓", code=r["code"], date=d, pos=v, params=params, exit_px=r["exit"],
+                exit_reason=r["reason"], equity_before=realized, mults=mults,
+            )
+            realized += float(p["pnl_net"])
+            row.update(
+                {
+                    "equity_delta": round(float(p["pnl_net"]), 2),
+                    "equity_after": round(realized, 2),
+                    "fill_price_basis": r.get("fill_price_basis"),
+                    "fill_contract": r.get("fill_contract"),
+                    "held_contract": r.get("held_contract"),
+                    "roll_events": r.get("roll_events"),
+                    "entry_orig": r.get("entry_orig"),
+                    "engine": ENGINE_TAG,
+                }
+            )
+            if tag:
+                row["tag"] = tag
+            if _append_ledger(ledger, row):
+                today_ids.append(row["trade_id"])
+            closed_today.append(row)
+        skipped_today += [dict(x, day=d) for x in roll["rejected"]]
+        state = {
+            "positions": roll["positions"],
+            "pending": roll["waiting"],
+            "equity": roll["equity"],
+            "equity_realized": realized,
+        }
+    floating = sum(float(p.get("pnl_net") or 0.0) for p in state["positions"].values())
+    out = seed_engine_book(
+        asof=day,
+        positions=state["positions"],
+        pending=state["pending"],
+        equity=state["equity"],
+        equity_realized=state["equity_realized"],
+        source=str(book.get("seed") or "paper_book"),
+        settings={"stop_atr_mult": params["stop_atr_mult"], "reward_rr": params["reward_rr"]},
+        ledger=ledger,
+    )
+    out.update(
+        {
+            "batch": book.get("batch") or "pathA",
+            "parent_backtest_end": book.get("parent_backtest_end"),
+            "equity_floating": round(floating, 2),
+            "sizing_equity": roll["sizing_equity"],
+            "closed_today": closed_today,
+            "opened_today": opened_today,
+            "skipped_today": skipped_today,
+            "opened_n": len(opened_today),
+            "closed_n": len(closed_today),
+            "pending_n": len(state["pending"]),
+            "base": base_snapshot,
+            "today_trade_ids": today_ids,
+            "days_rolled": seq,
+            "notes": (
+                "R5b 引擎账本：与回测共用持仓管理与 T+1 开仓（book_core）。T 日收盘生成 pending，T+1 开盘成交；"
+                "每日先成交 pending，再管理全部持仓（含当日新开）；15m 首触，缺分钟或分钟与日线不符时按日线高低价；"
+                "equity_mark/equity_mtm 为逐日盯市扣成本权益；equity 为已实现（equity_mtm − 浮动），equity_floating 为未平仓净盈亏。"
+            ),
+        }
+    )
+    out["_engine"] = eng
+    return out
+
+
+def attach_pending(prev_book: dict, rolled: dict, pending: list[dict], meta: dict | None = None) -> dict[str, Any]:
+    """Add ``day``'s new pending orders to the rolled book; same day + same state as ``prev_book``
+    → ``prev_book`` unchanged with ``noop=True``."""
+    if rolled.get("noop"):
+        prev = dict(prev_book)
+        prev["noop"] = True
+        return prev
+    out = {k: v for k, v in rolled.items() if k != "_engine"}
+    out["pending"] = list(out.get("pending") or []) + [dict(c) for c in pending]
+    out["pending_n"] = len(out["pending"])
+    meta = meta or {}
+    out["plan"] = {k: meta.get(k) for k in ("slots_left", "sizing_equity", "candidates", "held_book", "selected")}
+    out["state_fingerprint"] = _state_hash(
+        {"asof": out["asof"], "positions": out["positions"], "pending": out["pending"], "equity": out["equity_mtm"],
+         "base": out.get("base")}
+    )
+    if (
+        is_engine_book(prev_book)
+        and _ymd(prev_book.get("asof")) == out["asof"]
+        and prev_book.get("state_fingerprint") == out["state_fingerprint"]
+    ):
+        prev = dict(prev_book)
+        prev["noop"] = True
+        return prev
+    return out
+
+
+class SnapshotWorld:
+    """Offline replay inputs from a frozen ``bt_input_*.json`` snapshot (bars already stamped with
+    the contract overlay, seat / carry books already lagged) + the repo contract / minute caches."""
+
+    def __init__(self, snap_path: Path, *, root: Path | None = None):
+        import historical_backtest as hb
+        from signal_core import covered_dates
+
+        self.hb = hb
+        self.root = Path(root or ROOT)
+        self.snap_path = Path(snap_path)
+        self.snap = json.loads(self.snap_path.read_text(encoding="utf-8"))
+        self.p = hb._load_cfg()
+        self.settings = engine_settings(self.p)
+        self.meta = {u["code"]: dict(u) for u in self.p["cfg"]["symbols"] if u["code"] in self.snap["bars"]}
+        self.curves = {
+            c: ({"carry": v} if not (isinstance(v, dict) and "carry" in v) else v)
+            for c, v in (self.snap.get("carry") or {}).items()
+        }
+        full = {c: {"meta": m, "hist": self.snap["bars"][c]} for c, m in self.meta.items()}
+        self.days = covered_dates(full)[hb.WARMUP:]
+
+    def bars_upto(self, day: str) -> dict:
+        out = {}
+        for c in self.meta:
+            hist = self.snap["bars"][c]
+            k = max((j for j, b in enumerate(hist) if b["date"] <= day), default=None)
+            if k is not None:
+                out[c] = deepcopy(hist[: k + 1])
+        return out
+
+    def engine_for_day(self, day: str):
+        from signal_core import build_signal_inputs
+
+        bars = self.bars_upto(day)
+        series = {c: {"meta": dict(m), "hist": bars[c]} for c, m in self.meta.items() if c in bars}
+        main_map, adj = build_signal_inputs(series, root=self.root)
+        eng = build_engine(series, self.settings, main_map=main_map, adj=adj, contract_root=self.root,
+                           minute_root=self.root)
+        eng._bars = bars
+        return eng
+
+    def plan_for_day(self, eng, pos: dict, day: str, sizing_raw: float):
+        import daily_update as du
+
+        hb, p = self.hb, self.p
+        sizing_eq, risk = sizing_for(sizing_raw, self.settings)
+        universe = [dict(m) for c, m in self.meta.items() if c in eng._bars]
+        member = self.snap.get("member") or {}
+        _sigs, info = du.compute_signals(
+            universe, eng._bars, mode=p["entry_filter"], bypass=hb.carry_bypass_cfg(p.get("carry_bypass")),
+            vbypass=hb.vol_bypass_cfg(p.get("vol_bypass")), curves=self.curves,
+            member_loader=lambda dates, codes: member, risk_budget=risk, lag=0, contract_root=self.root,
+            min_seat_days=p.get("min_seat_days", hb.MIN_SEAT_DAYS), observe_min_lots=0, day=day,
+            inputs=(eng.main_map, eng.adj),
+        )
+        return plan_entries(info["core"], eng=eng, pos=pos, day=day, sizing_equity=sizing_eq,
+                            settings=self.settings)
+
+    def prev_day(self, d: str):
+        k = self.days.index(d)
+        return self.days[k - 1] if k > 0 else None
+
+    def next_day(self, d: str):
+        k = self.days.index(d)
+        return self.days[k + 1] if k + 1 < len(self.days) else None
+
+    def simulate(self, state_log: list | None = None) -> dict:
+        """``simulate`` over the snapshot with the snapshot's books (no network)."""
+        hb = self.hb
+        snap = self.snap
+        saved = {k: getattr(hb, k) for k in ("prepare_pack_for_execution", "load_member_seats",
+                                              "load_member_changes", "lag_member", "load_curves",
+                                              "lag_curves_carry")}
+        try:
+            hb.prepare_pack_for_execution = lambda pack, root=None: {"fill_series": "snapshot_stamped"}
+            hb.load_member_seats = lambda dates, codes: snap["member"]
+            hb.load_member_changes = lambda dates, codes: snap["member"]
+            hb.lag_member = lambda mm, dates, lag: mm
+            hb.load_curves = lambda codes: self.curves
+            hb.lag_curves_carry = lambda cv, dates, lag: cv
+            series = {c: {"meta": dict(m), "hist": deepcopy(snap["bars"][c])} for c, m in self.meta.items()}
+            pack = (series, dict(snap.get("errors") or {}), dict(snap.get("sources") or {}))
+            return hb._simulate_cfg(self.p, self.p["entry_filter"], pack=pack, contract_root=self.root,
+                                    state_log=state_log)
+        finally:
+            for k, v in saved.items():
+                setattr(hb, k, v)
+
+
+def _legacy_to_engine_pos(code: str, lp: dict, eng: Any, day: str) -> dict:
+    """A legacy paper position (entered at the signal close of ``entry_date``) as an engine
+    position joining the book at that close: managed from the next session, marked from ``entry``."""
+    i = eng.idx[code][day]
+    bar = eng.series[code]["hist"][i]
+    p = {
+        "code": code,
+        "direction": lp["direction"],
+        "lots": int(lp["lots"]),
+        "entry": float(lp["entry"]),
+        "entry_date": day,
+        "stop": float(lp["stop"]),
+        "target": float(lp["target"]),
+        "atr": lp.get("atr"),
+        "r20": lp.get("r20"),
+        "r60": lp.get("r60"),
+        "bucket": lp.get("bucket"),
+        "reason": lp.get("reason"),
+        "fill_price_basis": "continuous_proxy",
+        "last_mark": float(lp["entry"]),
+        "stale_days": 0,
+    }
+    if bar.get("contract"):
+        p["fill_contract"] = bar["contract"]
+    if eng.main_map is not None and eng.main_map.usable(code):
+        p["held_contract"] = eng.main_map.main(code, day)
+    for k in ("sleeve",):
+        if lp.get(k) is not None:
+            p[k] = lp[k]
+    return p
+
+
+def rebuild_preview(book: dict, world: SnapshotWorld) -> dict[str, Any]:
+    """R5b repair preview (nothing written to the root book).
+
+    Scheme A (repair): keep the book's history and its open lots (legacy entries at the signal
+    close), re-run their management with the shared engine from the session after each entry to
+    the last local session (15m first touch + daily fallback, roll, signal / delivery exits, costs);
+    closes are tagged ``backfill_R5``; pending orders for the next session from the current code.
+    Scheme B (reseed): the backtest's own state on the last local session (open positions, the
+    orders selected that day as pending, equity)."""
+    hb = world.hb
+    params = {"stop_atr_mult": world.settings["stop_atr_mult"], "reward_rr": world.settings["reward_rr"]}
+    legacy = {str(k).upper(): dict(v) for k, v in (book.get("positions") or {}).items() if isinstance(v, dict)}
+    last = world.days[-1]
+    mults = _mult_map()
+    # ---- scheme A
+    entry_days = sorted({_ymd(v.get("entry_date")) for v in legacy.values()})
+    start = entry_days[0] if entry_days else last
+    days = [d for d in world.days if start <= d <= last]
+    realized0 = float(book.get("equity") or 0.0)
+    state = {"positions": {}, "pending": [], "equity": realized0}
+    realized = realized0
+    ledger = [dict(r) for r in (book.get("trade_ledger") or [])]
+    closes: list[dict] = []
+    added: list[dict] = []
+    stats = {k: 0 for k in ("minute_exit_n", "daily_exit_fallback_n", "minute_rejected_mismatch")}
+    eng = None
+    for d in days:
+        eng = world.engine_for_day(d)
+        roll = roll_book(state, eng, d, prev_day=world.prev_day(d), next_day=world.next_day(d))
+        for k in stats:
+            stats[k] += eng.stats[k]
+        for c in roll["closed"]:
+            r, p = c["row"], c["pos"]
+            v = _engine_pos_view(r["code"], p, params, mults)
+            v["entry"] = r["entry"]
+            row = _detail_row(event="平仓", code=r["code"], date=d, pos=v, params=params, exit_px=r["exit"],
+                              exit_reason=r["reason"], equity_before=realized, mults=mults)
+            realized += float(p["pnl_net"])
+            row.update({"equity_delta": round(float(p["pnl_net"]), 2), "equity_after": round(realized, 2),
+                        "fill_price_basis": r.get("fill_price_basis"), "fill_contract": r.get("fill_contract"),
+                        "held_contract": r.get("held_contract"), "engine": ENGINE_TAG, "tag": BACKFILL_TAG})
+            _append_ledger(ledger, row)
+            added.append(row)
+            closes.append({
+                "code": r["code"], "direction": r["direction"], "lots": r["lots"], "entry_date": r["entry_date"],
+                "entry": r["entry"], "stop": r["stop"], "target": r["target"], "exit_date": d, "exit": r["exit"],
+                "reason": r["reason"], "pnl_net": round(float(p["pnl_net"]), 2),
+                "minute_checks_that_day": eng.stats["minute_manage_checks"],
+                "daily_fallback_that_day": eng.stats["daily_exit_fallback_n"],
+                "bar": {k: eng.series[r["code"]]["hist"][eng.idx[r["code"]][d]].get(k)
+                        for k in ("date", "open", "high", "low", "close", "contract")},
+            })
+        positions = roll["positions"]
+        equity = roll["equity"]
+        for code, lp in legacy.items():
+            if _ymd(lp.get("entry_date")) != d:
+                continue
+            p = _legacy_to_engine_pos(code, lp, eng, d)
+            cost = hb.fill_cost(eng.series[code]["meta"], p["entry"], p["lots"],
+                                slippage_ticks=eng.slippage_ticks, fee_mult=eng.fee_mult)
+            p["pnl_net"] = -cost
+            p["entry_cost_backfill"] = cost
+            positions[code] = p
+            equity -= cost
+        state = {"positions": positions, "pending": [], "equity": equity}
+    pend_a, meta_a = world.plan_for_day(eng, state["positions"], last, state["equity"])
+    book_a = seed_engine_book(asof=last, positions=state["positions"], pending=pend_a, equity=state["equity"],
+                              equity_realized=realized, source="rebuild_preview:A_repair", settings=params,
+                              ledger=ledger)
+    book_a.update({"batch": book.get("batch") or "pathA", "parent_backtest_end": book.get("parent_backtest_end"),
+                   "sizing_equity": state["equity"], "plan": {k: meta_a.get(k) for k in ("slots_left", "candidates", "held_book")}})
+    # ---- scheme B
+    slog: list = []
+    res = world.simulate(state_log=slog)
+    e = slog[-1]
+    assert e["date"] == last, (e["date"], last)
+    pos_b = {c: deepcopy(q) for c, q in e["pos"].items() if str(q.get("entry_date") or "") <= last}
+    pend_b = [dict(c, signal_date=last) for c in e["selected"]]
+    book_b = seed_engine_book(asof=last, positions=pos_b, pending=pend_b, equity=e["equity"] + e["entry_cost"],
+                              source="rebuild_preview:B_reseed_backtest", settings=params, ledger=[])
+    book_b.update({"batch": "pathA", "parent_backtest_end": last, "sizing_equity": e["equity"] + e["entry_cost"]})
+
+    def _summ(b):
+        return {
+            "asof": b["asof"],
+            "equity_mtm": round(b["equity_mtm"], 2),
+            "equity_realized": round(b["equity_realized"], 2),
+            "equity_floating": b["equity_floating"],
+            "positions": {c: {k: q.get(k) for k in ("direction", "lots", "entry_date", "entry", "stop", "target",
+                                                   "last_mark", "fill_price_basis", "held_contract", "pnl_net")}
+                          for c, q in b["positions"].items()},
+            "pending": [{k: c.get(k) for k in ("code", "direction", "lots", "entry", "stop", "target", "signal_date",
+                                                "reason")} for c in b["pending"]],
+        }
+
+    sa, sb = _summ(book_a), _summ(book_b)
+    return {
+        "generated_by": "paper_book.py --rebuild-preview (R5b)",
+        "snapshot": str(world.snap_path.name),
+        "last_local_session": last,
+        "note": "预览，不写根目录 paper_book_latest.json；正式写入待 R7 签字。",
+        "legacy_book": {
+            "asof": book.get("asof"),
+            "equity_realized": book.get("equity"),
+            "equity_mark": book.get("equity_mark"),
+            "positions": {c: {k: v.get(k) for k in ("direction", "lots", "entry_date", "entry", "stop", "target",
+                                                   "mark")} for c, v in legacy.items()},
+        },
+        "scheme_A_repair": {
+            **sa,
+            "replayed_sessions": days,
+            "closes": closes,
+            "ledger_rows_added": added,
+            "engine_stats": stats,
+            "costs_note": "旧账本从未扣成本；回补时对 P/I 按回测成本模型扣开仓+平仓成本。",
+        },
+        "scheme_B_reseed": {
+            **sb,
+            "backtest_window": [world.days[0], last],
+            "backtest_ret_pct": res.get("ret_pct"),
+            "backtest_closed_n": len(res.get("closed_pnls") or []),
+            "ledger_note": "账本历史不继承（旧 trade_ledger 归档保留，另起 R5b 账本）",
+        },
+        "comparison": {
+            "equity_mtm_A_minus_B": round(sa["equity_mtm"] - sb["equity_mtm"], 2),
+            "positions_A": sorted(sa["positions"]),
+            "positions_B": sorted(sb["positions"]),
+            "pending_A": [(c["code"], c["direction"], c["lots"]) for c in sa["pending"]],
+            "pending_B": [(c["code"], c["direction"], c["lots"]) for c in sb["pending"]],
+        },
+        "_books": {"A": book_a, "B": book_b},
+    }
+
+
 def load_paper_positions(root: Path | None = None) -> dict[str, Any]:
     """Desk/Notion helper: paper_book_latest first, else backtest final_positions."""
     root = Path(root or ROOT)
@@ -910,6 +1745,8 @@ def load_paper_positions(root: Path | None = None) -> dict[str, Any]:
             "closed_today": list(paper.get("closed_today") or []),
             "opened_today": list(paper.get("opened_today") or []),
             "trade_ledger": ledger,
+            "engine": paper.get("engine"),
+            "pending": [dict(c) for c in (paper.get("pending") or []) if isinstance(c, dict)],
         }
 
     bt = _load(root / "historical_backtest_latest.json")
@@ -947,7 +1784,44 @@ def load_paper_positions(root: Path | None = None) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def _rebuild_cli(argv: list[str]) -> int:
+    import argparse
+
+    ap = argparse.ArgumentParser(description="R5b paper book rebuild preview (never writes the root book)")
+    ap.add_argument("--rebuild-preview", action="store_true")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--book", default=str(PAPER_PATH), help="book to repair (read-only)")
+    ap.add_argument("--snapshot", default=None, help="bt_input snapshot (default: newest archive/snapshots/bt_input_*.json)")
+    args = ap.parse_args(argv)
+    out = Path(args.out)
+    if out.resolve() == PAPER_PATH.resolve():
+        ap.error("--out must not be the root paper_book_latest.json")
+    snap = Path(args.snapshot) if args.snapshot else max((ROOT / "archive/snapshots").glob("bt_input_*.json"))
+    book = _load(Path(args.book))
+    if not book:
+        ap.error(f"cannot read {args.book}")
+    prev = rebuild_preview(book, SnapshotWorld(snap))
+    books = prev.pop("_books")
+    for k, b in books.items():
+        path = out.with_name(f"{out.stem}_book{k}.json")
+        _atomic_write_json(path, b)
+        prev[f"scheme_{'A_repair' if k == 'A' else 'B_reseed'}"]["book_file"] = str(path.name)
+    _atomic_write_json(out, prev)
+    a, b = prev["scheme_A_repair"], prev["scheme_B_reseed"]
+    print(f"[rebuild] last session {prev['last_local_session']} → {out}")
+    for c in a["closes"]:
+        print(f"  A close {c['code']} {c['direction']} {c['exit_date']} @{c['exit']} {c['reason']} pnl={c['pnl_net']}")
+    print(f"  A equity_mtm={a['equity_mtm']} held={sorted(a['positions'])} pending={prev['comparison']['pending_A']}")
+    print(f"  B equity_mtm={b['equity_mtm']} held={sorted(b['positions'])} pending={prev['comparison']['pending_B']}")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    import sys
+
+    argv = sys.argv[1:] if argv is None else argv
+    if "--rebuild-preview" in argv:
+        return _rebuild_cli(argv)
     out = refresh_paper_book(ROOT)
     if not out.get("ok"):
         print("[paper] fail:", out.get("error"))

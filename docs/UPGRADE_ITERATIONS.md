@@ -46,7 +46,7 @@
 
 - **结论**：审计发现正式回测引擎至少有 5 类错误（分钟线合约错配造成 3 笔假止损、夜盘交易日归属、跳空止损按止损价成交、组合帽不计已有持仓、模拟账本缺日线兜底），现行 +5.78% / DD 6.74% 不可信。详见 `docs/UPGRADE_R_TRACK.md` §0–§2。
 - **优先级**：**轨 R 阶段 A（R0–R7）排在 F2 之前**。F2 仍按原门槛等样本，不受影响；但说「继续/升级」时，**先念轨 R 的下一刀，再念 F2 是否够样**。
-- **下一刀候选**：**R5 账本对齐**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b/c、R4（组合帽计入已有持仓）与 R4b（缩手后补手）已完成，R5 未开。
+- **下一刀候选**：**R5b 模拟账本对齐**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b/c、R4（组合帽计入已有持仓）、R4b（缩手后补手）与 R5a（日报信号与回测同口径）已完成，R5b 未开。
 - **硬围栏（轨 R 追加）**：R1–R7 完成前不提交 `historical_backtest_latest.json`、`paper_book_latest.json`；R7 重跑并签字后才更新 `configs/formal_rule_lock.json`；结果变差也不回退修复。
 - **对齐**：§3.2「组合帽 / next_open 纸面完全对齐」原为低优延后，现由轨 R 的 R4、R5 接手。
 
@@ -113,7 +113,7 @@
 | **S 会话** | Session brief | 多时段盘中 brief | 交 Grokbot | 本仓不做 |
 | **R 研究台旧项** | P1–P4 / A1–A3 | PBO/LSP/Gamma/组合风险/轻量 ML / 主力映射 | **主路径完成** | 封闭 |
 | **R 研究台旧项** | 官历/因子注册/聚类 | `UPGRADE_PLAN`「下次剩余」 | **低优延后** | 封闭 |
-| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R4b 完成 · 下一刀候选 R5（待明示）** |
+| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R5a 完成 · 下一刀候选 R5b（模拟账本对齐，待明示）** |
 | **R 审计升级** | R8–R12（阶段 B） | 长样本入口、出场预注册 5 组、风险预算生效、波动目标 + 回撤刹车、品种池 | **封闭** | 依赖 R7 |
 | **R 审计升级** | R13（阶段 C） | 席位因子长样本验证（回补 2019+） | **封闭** | 依赖 R8 |
 | **R 审计升级** | **R14 / K0–K7（阶段 C）** | carry 独立袖套：分月库 → 可交易曲线 → 持有指数 → 预登记 10 试验 → 闸门 → Shadow | **封闭** | K0–K2 可与阶段 A 并行（需明示）；K4 起依赖 R6、R8 |
@@ -260,6 +260,19 @@ ext_open。
 ---
 
 ## 7. 近期迭代反馈（保留）
+
+### R5a 日报信号与回测同口径（2026-11-24）
+
+- **问题**：R6c 把回测改成无换月价差的 roll-free 序列，日报仍用 120 根原始连续价、当天席位/升贴水、无 vol_bypass；同一天两边可能给出相反的方向（旧日报 r60 与 roll-free 相差可达 10+ 个百分点甚至变号）。
+- **做了**：① 新增 `signal_core.py::path_a_candidate`（r20/r60/ATR → 动量门槛 → seats（含 `min_seat_days`）→ carry → vol_bypass → ATR 止损距离 → 手数），`simulate` 与 `daily_update.compute_signals` 都调它；simulate 纯重构，replay 与 R4b 逐位一致（−0.769 / 7.469 / 56），`adjusted_signals=False`、`caps_include_book=False`、`freeze_fix=False` 三个对照配置与 1cfe6fc 的 `simulate` 完整结果也逐位一致。② 日报 `fetch_history(n=LOOKBACK_DAYS)`（实测 275 根）；新增 `research/data_quality/contract_cache.py::ensure_contract_bars(code, upto, root)`：先读 `.cache/contracts`，只补缺：上一主力 + 近 150 天内到期的合约（窗口内曾是主力）+ 最近三个上市月，写回缓存并统计请求数/耗时；拉取失败走 R6c 回退，品种级 `adj_fallback` + `adj_note="本日信号含换月价差…"`，顶层 `contract_cache` / `adj_fallback_codes`。③ 席位、升贴水现在在日报里也按回测的 `lag_member`/`lag_curves_carry`（前一交易日簿）使用；vol_bypass 读 universe.json 同一配置（action=observe 不拦）。④ `daily_update.py --dry-run [--out PATH] [--signal-path core|legacy]`：只算不写（不写根目录 `l1_report*.json`、`archive/l1_report_*`、paper_book、Notion、分钟线、桌面研究、IV、sentiment 影子）；`legacy` 保留旧路径仅用于对比。⑤ 新测试 `tests/test_daily_vs_backtest_signals.py`（冻结快照、无网络，窗口末 40 个交易日，r20/r60/ATR/止损距离/手数/各过滤结果逐项 ≤1e-9 一致，注入回测当日持仓后组合帽选中列表一致；仓库缓存与空缓存两种）、`tests/test_contract_cache.py`。
+- **不能统一**：lab_edge（依赖当日 live 实验室面板，历史无逐日序列，回测无法调用，仍只在日报）；observe 袖套 `min_lots`（日报独有的账本规则，回测配置 `min_lots=0`，以参数传入 core，仅 observe 袖套且 ATR<25%×收盘才抬）。详见 `archive/R5/signal_path_diff.md`。
+- **接口开销（本机实测）**：热缓存下日报 0–12 次合约请求、<0.1 s；**冷缓存（CI 空 `.cache/contracts`）**：27 品种 191 次请求、19.1 s（Sina ~0.09 s/次），第二次 0 请求。冷拉取后的信号与本地完整缓存逐品种一致（0 个差异）；**若什么都不拉**（空缓存且不调 ensure），27 个品种全部 `adj_fallback`，5 个品种方向与 roll-free 不同（EG、EB、JD、FU、BU）。
+- **CI 方案建议（磊定）**：`.cache/contracts` 被 `.gitignore` 忽略，当前 CI 不带；本刀没动 `.gitignore`/workflows。ensure 已能在 CI 冷启动自愈（约 19 s，191 次请求），所以**不加也能用**。推荐在 `daily.yml` 加 `actions/cache`（key 用固定前缀 + 日期，`restore-keys` 回退到前缀）保存 `.cache/contracts`，缓存命中后每天只补当天几十个请求；不建议把缓存提交进仓库（341 个文件 ≈ 11.9 MB，且每天增量，会让仓库膨胀）。
+- **日报旧 vs 新（`archive/R5/dryrun_old_vs_new.json`，同一时刻两次 dry-run）**：27 品种中 21 个有数值变化；方向变化 5（EG、EB、JD、FU、BU：旧"空"→新"空仓"，r60 变号）；手数变化 8（L、RB、CF、RU、AL、I、JM 由 0 变正，FU 1→0）；block 变化 11（旧口径对弱信号也写席位/升贴水 block，新口径弱信号不再带 block）；`selected` 两边都为空（P 已在账本持仓、SR 同板块、gross 额度已满），无变化。
+- **验证**：pytest 全绿（全量 518 项（R4b 499 + R5a 新增 19），另有 `test_no_lookahead_bt` 等通过 hook 保持 `historical_backtest.entry_block` 等 monkeypatch 点有效）；金锁 legacy 4.189/4.294/42 未变；replay `archive/R5/replay_after_R5a.json` 与 `archive/R4/replay_after_R4b.json` 除 git_sha/config_version 外逐位一致；未写根目录 formal latest；未 push。
+- **产物**：`archive/R5/signal_path_diff.md`、`replay_after_R5a.json`、`l1_report_dryrun.json`、`l1_report_dryrun_legacy.json`、`dryrun_old_vs_new.json`、`contract_fetch_cold.json`、`_bitwise_refactor_check.py`、`_cold_contract_fetch.py`、`_compare_dryrun.py`、`progress.md`。
+- **风险/未做**：① 新测试依赖的快照 `archive/snapshots/bt_input_20261123_da9c8de64ab4.json` 与 `archive/R0/fresh_bt.json` 目前未被 git 跟踪（R0–R3 的 archive 目录均未跟踪），干净检出时这批测试会 skip，需磊决定是否提交；② 日报 `held` 仍是 paper_book 持仓（连续价估值，偏保守），本刀不动账本；③ lab_edge 口径差无法消除；④ 席位/升贴水改为前一交易日簿，日报 block 文案会比旧版晚一天；⑤ 本地 dry-run 里日报的 R6c 回退只在缓存缺口时出现，CI 冷启动若 Sina 限流，会退回原始序列并在报告里标出。
+- **建议下一刀**：R5b（模拟账本按回测逻辑逐日记账、T+1 成交、补记历史平仓、对账测试，待明示）
 
 ### R4b 组合帽缩手后补手，修掉取整误杀（2026-11-24）
 

@@ -1,0 +1,381 @@
+{
+  "cold": {
+    "requests": 191,
+    "seconds": 19.134,
+    "wall_seconds": 19.18,
+    "cached_n": 0,
+    "fetched_n": 191,
+    "failed": []
+  },
+  "warm_second_run": {
+    "requests": 0,
+    "seconds": 0.089,
+    "wall_seconds": 0.29,
+    "cached_n": 188
+  },
+  "n_codes": 27,
+  "fidelity_vs_repo_cache": {
+    "cold_fetched_vs_repo": {
+      "n_codes_differing": 0,
+      "directions_differ": [],
+      "rows": []
+    },
+    "empty_vs_repo": {
+      "n_codes_differing": 27,
+      "directions_differ": [
+        "EG",
+        "EB",
+        "JD",
+        "FU",
+        "BU"
+      ],
+      "rows": [
+        {
+          "code": "MA",
+          "r60": [
+            17.057,
+            3.85
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "V",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "EG",
+          "direction": [
+            "空仓",
+            "空"
+          ],
+          "r60": [
+            7.169,
+            -7.747
+          ],
+          "lots_raw": [
+            0,
+            2
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "M",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "FG",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "EB",
+          "direction": [
+            "空仓",
+            "空"
+          ],
+          "r20": [
+            -18.46,
+            -21.987
+          ],
+          "r60": [
+            6.12,
+            -6.239
+          ],
+          "atr": [
+            328.21,
+            343.86
+          ],
+          "block": [
+            null,
+            "机构席位反向"
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "TA",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "SA",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "PP",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "L",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "JD",
+          "direction": [
+            "空仓",
+            "空"
+          ],
+          "r20": [
+            7.09,
+            -3.903
+          ],
+          "r60": [
+            -5.641,
+            -17.162
+          ],
+          "atr": [
+            87.21,
+            107.21
+          ],
+          "lots_raw": [
+            0,
+            3
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "P",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "RB",
+          "r60": [
+            -2.592,
+            -1.152
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "FU",
+          "direction": [
+            "空仓",
+            "空"
+          ],
+          "r60": [
+            11.353,
+            -2.627
+          ],
+          "lots_raw": [
+            0,
+            1
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "CF",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "BU",
+          "direction": [
+            "空仓",
+            "空"
+          ],
+          "r60": [
+            10.611,
+            -6.566
+          ],
+          "block": [
+            null,
+            "机构席位反向"
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "RU",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "AG",
+          "r20": [
+            -22.274,
+            -22.048
+          ],
+          "r60": [
+            -39.709,
+            -39.389
+          ],
+          "atr": [
+            575.86,
+            577.29
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "SP",
+          "r60": [
+            -9.46,
+            -6.46
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "SR",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "AU",
+          "r20": [
+            -9.748,
+            -9.481
+          ],
+          "r60": [
+            -21.365,
+            -20.927
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "CU",
+          "r20": [
+            -12.307,
+            -14.578
+          ],
+          "r60": [
+            -10.786,
+            -14.109
+          ],
+          "atr": [
+            2376.43,
+            2522.86
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "AL",
+          "r20": [
+            -6.327,
+            -7.889
+          ],
+          "r60": [
+            -5.88,
+            -8.899
+          ],
+          "atr": [
+            442.14,
+            445.71
+          ],
+          "lots_raw": [
+            1,
+            0
+          ],
+          "block": [
+            null,
+            "机构席位反向"
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "NI",
+          "r20": [
+            -0.805,
+            -0.668
+          ],
+          "r60": [
+            -9.483,
+            -9.048
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "I",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "JM",
+          "adj_fallback": [
+            false,
+            true
+          ]
+        },
+        {
+          "code": "SS",
+          "r20": [
+            0.637,
+            0.886
+          ],
+          "r60": [
+            -3.895,
+            -3.768
+          ],
+          "adj_fallback": [
+            false,
+            true
+          ]
+        }
+      ]
+    }
+  }
+}

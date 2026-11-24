@@ -2,6 +2,7 @@
 """CTA L1 Path-A daily paper update. Sina/Tencent bars, iFinD only if those are short."""
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import sys
@@ -32,6 +33,7 @@ from lab_signal import (  # noqa: E402
     refresh_latest as refresh_lab_signals,
 )
 from public_curve import load_curves  # noqa: E402
+from vol_factor_combo import vol_bypass_cfg  # noqa: E402
 from position_rules import (  # noqa: E402
     apply_portfolio_caps,
     book_usage_from_positions,
@@ -139,15 +141,27 @@ def _carry_bypass() -> dict:
     return carry_bypass_cfg(_universe_cfg().get("carry_bypass"))
 
 
+def _vol_bypass() -> dict:
+    return vol_bypass_cfg(_universe_cfg().get("vol_bypass"))
+
+
 def _lab_edge_bypass() -> dict:
     return lab_edge_bypass_cfg(_universe_cfg().get("lab_edge_bypass"))
 
 
 def _fetch_snapshot(u: dict, curves: dict, mode: str) -> dict:
-    """OHLCV from Sina and Tencent. iFinD runs only when that history is short or stale."""
-    from historical_backtest import atr14, fetch_history, ret_n
+    """LEGACY (pre-R5a) snapshot: raw continuous series, 120 bars.  Kept only for the
+    ``--signal-path legacy`` comparison; the daily report uses ``compute_signals`` (signal_core)."""
+    from historical_backtest import fetch_history
 
     hist, meta = fetch_history(u, n=120)
+    return _snapshot_from_hist(u, hist, meta, curves, mode)
+
+
+def _snapshot_from_hist(u: dict, hist: list, meta: dict, curves: dict, mode: str) -> dict:
+    """LEGACY r20/r60/ATR on the raw continuous bars (roll spreads included)."""
+    from historical_backtest import atr14, ret_n
+
     if len(hist) < 61:
         raise RuntimeError(f"bars {len(hist)} source={meta.get('source')}")
     i = len(hist) - 1
@@ -287,6 +301,366 @@ def _signal(u: dict, snap: dict, *, risk_budget: float) -> dict:
     }
 
 
+def _hist_ret_1d(hist: list) -> float | None:
+    try:
+        c0 = float(hist[-2]["close"])
+        c1 = float(hist[-1]["close"])
+        return (c1 / c0) - 1.0 if c0 > 0 else None
+    except (TypeError, ValueError, KeyError, IndexError):
+        return None
+
+
+def _signal_from_core(u: dict, hist: list, res: dict, *, data_source, observe_min_lots: int) -> dict:
+    """Report row for one code from ``signal_core.path_a_candidate`` (R5a)."""
+    i = len(hist) - 1
+    close = hist[i]["close"]
+    aligned = bool(res["aligned"])
+    direction = res["direction"] if aligned else "空仓"
+    sz = res.get("sizing")
+    lots = int(sz["lots"]) if sz is not None else 0
+    bumped = bool(sz["min_lots_bumped"]) if sz is not None else False
+    stop = sz["stop"] if sz is not None else None
+    target = sz["target"] if sz is not None else None
+    risk_per_lot = sz["risk_per_lot"] if sz is not None else None
+    r20, r60, atr = res["r20"], res["r60"], res["atr"]
+    if not aligned:
+        action = "空仓（20日与60日不同向）"
+    elif lots <= 0:
+        action = f"有{direction}向，1.5%仍不足1手（每手约{round(risk_per_lot, 1) if risk_per_lot is not None else None}）"
+    elif bumped:
+        action = (
+            f"候选：{direction}{lots}手（观察袖套抬至{observe_min_lots}手·"
+            f"待门槛/板块/Top{MAX_POSITIONS}/"
+            f"名义≤{MAX_GROSS_PCT}%/风险≤{MAX_PORT_RISK_PCT}%）"
+        )
+    else:
+        action = (
+            f"候选：{direction}{lots}手（待门槛/板块/Top{MAX_POSITIONS}/"
+            f"名义≤{MAX_GROSS_PCT}%/风险≤{MAX_PORT_RISK_PCT}%）"
+        )
+    sig = {
+        "code": u["code"],
+        "name": u["name"],
+        "ticker": u["ticker"],
+        "bucket": u["bucket"],
+        "mult": u["mult"],
+        "sleeve": str(u.get("sleeve") or "").strip() or None,
+        "date": datetime.now(TZ).strftime("%Y%m%d"),
+        "close": close,
+        "atr": round(atr, 2) if atr is not None else None,
+        "risk_per_lot": round(risk_per_lot, 1) if risk_per_lot is not None else None,
+        "stop_atr_mult": STOP_ATR_MULT,
+        "reward_rr": REWARD_RR,
+        "stop": round(stop, 4) if stop is not None else None,
+        "target": round(target, 4) if target is not None else None,
+        # R5a: unrounded ATR distances (what the backtest sizes with)
+        "stop_dist": sz["stop_dist"] if sz is not None else None,
+        "target_dist": sz["target_dist"] if sz is not None else None,
+        "r20": round(r20, 3) if r20 is not None else None,
+        "r60": round(r60, 3) if r60 is not None else None,
+        "ret_1d": None,
+        "volume": hist[i].get("volume"),
+        "oi": hist[i].get("oi") or hist[i].get("open_interest"),
+        "align": "同向" if aligned else "冲突/不足",
+        "direction": direction if aligned else "空仓",
+        "lots_raw": lots,
+        "min_lots_bumped": bumped,
+        "data_source": data_source,
+        "price_basis": "continuous",
+        "bar_date": hist[i]["date"],
+        "lots_l1": lots,
+        "lots_full": lots,
+        "selected": False,
+        "action": action,
+        "signal_path": "signal_core",
+        "core_status": res["status"],
+    }
+    r1 = _hist_ret_1d(hist)
+    sig["ret_1d"] = round(r1, 6) if r1 is not None else None
+    if res.get("seat_label") is not None:
+        sig["seat"] = res["seat_label"]
+    if res.get("seat_short"):
+        sig["seat_short"] = True
+    cy = res.get("carry")
+    if cy is not None:
+        gap = cy.get("gap_pct")
+        sig["carry_gap_pct"] = None if gap is None else round(gap, 4)
+        sig["carry_bypass"] = cy.get("label")
+        if cy.get("mult") is not None and 0 < cy["mult"] < 1.0 and not cy.get("reason"):
+            sig["carry_scale"] = cy["mult"]
+            if res["status"] == "lots0":
+                sig["block"] = f"{cy.get('label')}后不足1手"
+    if res.get("blocked"):
+        sig["block"] = res["blocked"]
+        sig["block_kind"] = res.get("block_kind")
+    if res.get("vol_reason"):
+        sig["vol_block"] = res["vol_reason"]
+    return sig
+
+
+def compute_signals(
+    universe: list[dict],
+    bars: dict[str, list],
+    *,
+    mode: str,
+    bypass: dict,
+    vbypass: dict,
+    curves: dict | None,
+    member_loader=None,
+    risk_budget: float,
+    lag: int | None = None,
+    contract_root: Path | str | None = None,
+    min_seat_days: int | None = None,
+    observe_min_lots: int | None = None,
+    errors: dict[str, str] | None = None,
+    data_sources: dict[str, str] | None = None,
+) -> tuple[list[dict], dict]:
+    """Today's Path-A report rows, computed by the SAME code as ``historical_backtest.simulate``.
+
+    * r20 / r60 / ATR / vol come from the roll-free series (``main_map`` + ``adjusted``) built on
+      the injected ``bars`` and the contract cache under ``contract_root`` (no network here);
+    * seats / carry books are lagged by ``lag`` sessions exactly like the backtest
+      (``lag_member`` / ``lag_curves_carry`` over the covered session dates);
+    * the filter order, stop / target distance and lots formula live in ``signal_core``.
+    ``curves`` is the raw (un-lagged) curve book ``{code: {"carry": {day: pair}}}``; ``member_loader(dates, codes)``
+    returns the raw seat book ``{code: {day: {inst, foreign, holder}}}`` (member-change book for mode ``member``).
+    """
+    import bisect
+
+    import historical_backtest as hb
+    from signal_core import build_signal_inputs, covered_dates, path_a_candidate
+
+    root = Path(contract_root) if contract_root else ROOT
+    lag = hb.DEFAULT_AVAILABILITY_LAG if lag is None else int(lag)
+    min_seat_days = hb.MIN_SEAT_DAYS if min_seat_days is None else int(min_seat_days)
+    omin = int(OBSERVE_MIN_LOTS if observe_min_lots is None else observe_min_lots)
+    series = {u["code"]: {"meta": dict(u), "hist": bars[u["code"]]} for u in universe if bars.get(u["code"])}
+    dates = covered_dates(series)
+    if len(dates) < hb.WARMUP + 5:
+        from collections import Counter
+
+        hits = Counter(h["date"] for s in series.values() for h in s["hist"])
+        dates = sorted(hits)[-hb.LOOKBACK_DAYS :]
+    main_map, adj = build_signal_inputs(series, root=root)
+    curves_l = hb.lag_curves_carry(curves or {}, dates, lag)
+    member_raw = member_loader(dates, [c for c in series]) if member_loader is not None else {}
+    member_l = hb.lag_member(member_raw or {}, dates, lag)
+    seat_dates = {
+        c: sorted(str(k) for k, v in (m or {}).items() if isinstance(v, dict)) for c, m in member_l.items()
+    }
+
+    def _seat_days_upto(code_: str, day_: str) -> int:
+        return bisect.bisect_right(seat_dates.get(code_) or [], str(day_))
+
+    signals: list[dict] = []
+    info: dict = {"dates_n": len(dates), "adj_fallback_codes": [], "main_map_none_last_day": [], "core": {}}
+    for u in universe:
+        code = u["code"]
+        hist = bars.get(code)
+        if not hist:
+            signals.append(
+                {
+                    "code": code,
+                    "name": u["name"],
+                    "error": str((errors or {}).get(code) or "no bars")[:300],
+                    "lots_l1": 0,
+                    "lots_raw": 0,
+                    "selected": False,
+                    "direction": "空仓",
+                    "action": f"拉取失败: {(errors or {}).get(code) or 'no bars'}",
+                }
+            )
+            continue
+        i = len(hist) - 1
+        sleeve = str(u.get("sleeve") or "").strip()
+
+        def _peers(code=code):
+            out = []
+            for oc, os_ in series.items():
+                if oc == code or os_["meta"].get("bucket") != u.get("bucket"):
+                    continue
+                a_ = adj.get(oc)
+                oi = len(os_["hist"]) - 1
+                out.append(a_.ret_n(oi, 20) if a_ is not None else hb.ret_n(os_["hist"], oi, 20))
+            return [p for p in out if p is not None]
+
+        res = path_a_candidate(
+            code,
+            hist,
+            i,
+            adj=adj.get(code),
+            meta=u,
+            params={
+                "mode": mode,
+                "min_r20": MIN_R20_PCT,
+                "min_r60": MIN_R60_PCT,
+                "stop_atr_mult": STOP_ATR_MULT,
+                "reward_rr": REWARD_RR,
+                "day_risk": risk_budget,
+                "min_lots": omin if sleeve == "observe" else 0,
+                "min_lots_guard_frac": 0.25,
+                "bypass": bypass,
+                "vbypass": vbypass,
+            },
+            ctx={
+                "day": hist[i]["date"],
+                "curves": curves_l,
+                "member": member_l,
+                "min_seat_days": min_seat_days,
+                "seat_days_upto": _seat_days_upto,
+                "peer_r20_fn": _peers,
+            },
+            composite_trend_fn=hb.composite_trend,
+        )
+        info["core"][code] = res
+        sig = _signal_from_core(
+            u, hist, res, data_source=(data_sources or {}).get(code), observe_min_lots=omin
+        )
+        a_ = adj.get(code)
+        if a_ is not None:
+            lo = max(1, i - 59)
+            fb = sum(1 for j in range(lo, i + 1) if a_.fallback[j])
+            rl = sum(1 for j in range(lo, i + 1) if a_.roll[j])
+            sig["adj_fallback"] = fb > 0
+            sig["adj_fallback_days_60"] = fb
+            sig["adj_roll_days_60"] = rl
+            sig["adj_last_day_fallback"] = bool(a_.fallback[i])
+            sig["adj_note"] = (
+                f"本日信号含换月价差（近60日有{fb}天缺主力合约日线，该品种按原始连续序列计算）" if fb > 0 else None
+            )
+            if fb > 0:
+                info["adj_fallback_codes"].append(code)
+        if main_map.main(code, hist[i]["date"]) is None:
+            info["main_map_none_last_day"].append(code)
+        signals.append(sig)
+    info["main_map_usable"] = {c: main_map.usable(c) for c in series}
+    return signals, info
+
+
+def _ensure_contracts(universe: list[dict], bars: dict[str, list], *, root: Path | None = None) -> dict:
+    """R5a: make sure the contract daily files behind today's ``main_map`` exist (see
+    ``research.data_quality.contract_cache``).  Returns request / timing statistics."""
+    from research.data_quality.contract_cache import ensure_contract_bars
+    from research.data_quality.main_map import build_main_map
+
+    root = Path(root or ROOT)
+    series = {u["code"]: {"meta": dict(u), "hist": bars[u["code"]]} for u in universe if bars.get(u["code"])}
+    try:
+        prelim = build_main_map(series, root=root)
+    except Exception as exc:  # noqa: BLE001
+        prelim = None
+        print(f"[contracts] prelim main_map soft-fail: {exc}")
+    stats = {"requests": 0, "seconds": 0.0, "fetched": [], "failed": [], "cached_n": 0, "codes": {}}
+    for code, pack in series.items():
+        hist = pack["hist"]
+        upto = str(hist[-1]["date"])[:10]
+        prev_main = None
+        if prelim is not None:
+            for b in reversed(hist[:-1]):
+                m = prelim.main(code, str(b["date"])[:10])
+                if m:
+                    prev_main = m
+                    break
+        try:
+            r = ensure_contract_bars(code, upto, root, prev_main=prev_main)
+        except Exception as exc:  # noqa: BLE001
+            r = {"requests": 0, "seconds": 0.0, "fetched": [], "failed": [{"error": str(exc)[:120]}], "cached": []}
+        stats["requests"] += int(r.get("requests") or 0)
+        stats["seconds"] += float(r.get("seconds") or 0.0)
+        stats["fetched"] += r.get("fetched") or []
+        stats["failed"] += [dict(f, code=code) for f in (r.get("failed") or [])]
+        stats["cached_n"] += len(r.get("cached") or [])
+        stats["codes"][code] = {k: r.get(k) for k in ("wanted", "fetched", "requests", "seconds")}
+    stats["seconds"] = round(stats["seconds"], 3)
+    return stats
+
+
+def _legacy_postfilters(
+    signals: list[dict], snaps: list[dict], *, mode: str, bypass: dict, curves: dict, seat_days: list[str]
+) -> None:
+    """LEGACY (pre-R5a) member / seats / climax / carry / observe-floor passes on the raw rows.
+    Seat and carry books are NOT lagged here (same-day), unlike the backtest."""
+    if mode == "member":
+        days = sorted({s.get("prev_date") or s.get("bar_date") for s in snaps if s.get("bar_date")})
+        member = load_member_changes(days, [u["code"] for u in UNIVERSE]) if days else {}
+        for sig in signals:
+            if sig.get("block") or sig.get("direction") not in ("多", "空"):
+                continue
+            reason = member_reason(sig["direction"], (member.get(sig["code"]) or {}).get(sig.get("bar_date")))
+            if reason:
+                sig["block"] = reason
+    if mode == "seats":
+        seats = load_member_seats(seat_days, [u["code"] for u in UNIVERSE]) if seat_days else {}
+        for sig in signals:
+            if sig.get("direction") not in ("多", "空"):
+                continue
+            reason, label = seat_decision(
+                sig["direction"], (seats.get(sig["code"]) or {}).get(sig.get("bar_date"))
+            )
+            sig["seat"] = label
+            if reason and not sig.get("block"):
+                sig["block"] = reason
+    if mode == "climax":
+        for sig in signals:
+            if sig.get("block") or sig.get("direction") not in ("多", "空"):
+                continue
+            peers = [
+                other.get("r20")
+                for other in signals
+                if other.get("code") != sig.get("code") and other.get("bucket") == sig.get("bucket")
+            ]
+            reason = bucket_reason(sig["direction"], [p for p in peers if p is not None])
+            if reason:
+                sig["block"] = reason
+    if bypass.get("enabled"):
+        for sig in signals:
+            if sig.get("direction") not in ("多", "空"):
+                continue
+            day = sig.get("bar_date") or sig.get("date")
+            pair = ((curves.get(sig["code"]) or {}).get("carry") or {}).get(day)
+            reason, mult, label, gap = carry_bypass_decision(
+                sig["direction"],
+                pair,
+                extreme_gap_pct=float(bypass["extreme_gap_pct"]),
+                action=str(bypass["action"]),
+                scale=float(bypass["scale"]),
+            )
+            sig["carry_gap_pct"] = None if gap is None else round(gap, 4)
+            sig["carry_bypass"] = label
+            if reason and not sig.get("block"):
+                sig["block"] = reason
+            elif not sig.get("block") and mult < 1.0 and mult > 0:
+                for key in ("lots_raw", "lots_l1", "lots_full"):
+                    if sig.get(key):
+                        sig[key] = int(math.floor(float(sig[key]) * mult))
+                sig["carry_scale"] = mult
+                if int(sig.get("lots_l1") or 0) <= 0:
+                    sig["block"] = f"{label}后不足1手"
+    for sig in signals:
+        if sig.get("block"):
+            sig["lots_raw"] = 0
+            sig["lots_l1"] = 0
+            sig["lots_full"] = 0
+    # observe min_lots re-applied after the blocks
+    for sig in signals:
+        if sig.get("block") or sig.get("sleeve") != "observe":
+            continue
+        if sig.get("align") != "同向" or sig.get("direction") not in ("多", "空"):
+            continue
+        if OBSERVE_MIN_LOTS <= 0:
+            continue
+        try:
+            atr_f = float(sig.get("atr") or 0.0)
+            close_f = float(sig.get("close") or 0.0)
+        except (TypeError, ValueError):
+            continue
+        if atr_f <= 0 or close_f <= 0 or atr_f >= close_f * 0.25:
+            continue
+        if int(sig.get("lots_raw") or 0) < OBSERVE_MIN_LOTS:
+            sig["lots_raw"] = sig["lots_l1"] = sig["lots_full"] = int(OBSERVE_MIN_LOTS)
+            sig["min_lots_bumped"] = True
+
+
 def is_weekday_cn() -> bool:
     return datetime.now(TZ).weekday() < 5
 
@@ -420,7 +794,116 @@ def _apply_caps(signals: list[dict], *, sizing_equity: float, held: dict | None 
     return meta
 
 
-def main():
+
+def _member_loader(mode: str):
+    """Raw (un-lagged) member books over the window dates, same loaders as ``simulate``."""
+
+    def _load(dates: list[str], codes: list[str]) -> dict:
+        if mode == "member":
+            return load_member_changes(dates, codes)
+        if mode in ("seats", "roll"):
+            return load_member_seats(dates, codes)
+        return {}
+
+    return _load
+
+
+def _parse_args(argv=None):
+    ap = argparse.ArgumentParser(description="Daily Path-A report")
+    ap.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="compute the report only: no root l1_report*.json / archive / paper_book / Notion / minute / desk / IV / sentiment writes",
+    )
+    ap.add_argument("--out", default=None, help="with --dry-run: write the report JSON here")
+    ap.add_argument(
+        "--signal-path",
+        choices=("core", "legacy"),
+        default="core",
+        help="core = shared signal_core path (R5a, default); legacy = pre-R5a raw path (comparison only)",
+    )
+    args, _unknown = ap.parse_known_args(argv)
+    if args.out and not args.dry_run:
+        ap.error("--out requires --dry-run")
+    return args
+
+
+def _refresh_side_data() -> tuple[dict, dict]:
+    """Minute bars, desk research and option-IV refreshes (network / cache writers; skipped by --dry-run)."""
+    # Batch 15m/60m into .cache/akshare/minute (CI commits; local desk git pull).
+    minute_summary: dict = {"ok": 0, "fail": 0, "periods": ["15", "60"], "rows": []}
+    try:
+        from minute_data import refresh_universe_minutes
+
+        print("[cta] refresh minute 15/60...")
+        minute_summary = refresh_universe_minutes(
+            ROOT,
+            [u["code"] for u in UNIVERSE],
+            periods=("15", "60"),
+            force=True,
+            verify_em=False,
+        )
+        print(
+            f"[cta] minute ok={minute_summary.get('ok')} fail={minute_summary.get('fail')}"
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[cta] minute soft-fail: {exc}")
+        minute_summary = {
+            "ok": 0,
+            "fail": len(UNIVERSE) * 2,
+            "periods": ["15", "60"],
+            "error": str(exc)[:300],
+            "rows": [],
+        }
+
+    # Desk research soft refresh — split packs so slow/network (heavy) cannot
+    # block fast desk pages (core). Never paper_book / formal BT / seats.
+    try:
+        from research.desk_daily_refresh import refresh_desk_research_split
+
+        print("[cta] refresh desk research (core then heavy)...")
+        desk_r = refresh_desk_research_split(ROOT)
+        print(
+            f"[desk-research] ok={desk_r.get('ok')} "
+            f"seconds={desk_r.get('seconds_total')} → {desk_r.get('path')}"
+        )
+        for label in ("core", "heavy"):
+            sub = desk_r.get(label) or {}
+            print(
+                f"[desk-research:{label}] n_ok={sub.get('n_ok')} "
+                f"n_fail={sub.get('n_fail')} {sub.get('seconds_total')}s"
+            )
+            for step in sub.get("steps") or []:
+                if not step.get("ok"):
+                    print(
+                        f"::warning title=desk research {label}/{step.get('id')} soft-fail::"
+                        f"{step.get('error') or 'failed'}"
+                    )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[desk-research] soft-fail: {exc}")
+        print(f"::warning title=desk research soft-fail::{exc}")
+
+    # Option IV daily backfill (CZCE/SHFE). Soft: asof empty not poison-cached.
+    iv_summary: dict = {"ok": False}
+    try:
+        from iv_breakout import refresh_option_iv
+
+        print("[cta] refresh option IV...")
+        iv_summary = refresh_option_iv(ROOT)
+        print(
+            f"[cta] option_iv asof={iv_summary.get('asof')} "
+            f"fetched={iv_summary.get('fetched')} cached={iv_summary.get('cached')} "
+            f"missing={iv_summary.get('missing')} soft_empty={iv_summary.get('soft_empty')}"
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[cta] option_iv soft-fail: {exc}")
+        print(f"::warning title=option IV refresh failed::{exc}")
+        iv_summary = {"ok": False, "error": str(exc)[:300]}
+    return minute_summary, iv_summary
+
+
+def main(argv=None):
+    args = _parse_args(argv)
     now = datetime.now(TZ)
     live, state = _load_live_equity(EQUITY_BASE)
     sizing_eq = compound_equity(live, EQUITY_BASE, EQUITY_COMPOUND)
@@ -434,6 +917,10 @@ def main():
     if not is_weekday_cn():
         print("[cta] skip: weekend")
         out = {"asof": now.strftime("%Y%m%d"), "skipped": "weekend"}
+        if args.dry_run:
+            if args.out:
+                Path(args.out).write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+            return 0
         (ROOT / "l1_report_risk15.json").write_text(
             json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8"
         )
@@ -447,7 +934,7 @@ def main():
         f"lab_edge={lab_bypass.get('enabled')}"
     )
     lab_pack = {}
-    if lab_bypass.get("enabled"):
+    if lab_bypass.get("enabled") and not args.dry_run:
         try:
             lab_pack = refresh_lab_signals(root=ROOT, cfg=lab_bypass)
             print(
@@ -459,37 +946,79 @@ def main():
             lab_pack = {}
     need_curves = mode not in ("base", "seats") or bool(bypass.get("enabled"))
     curves = load_curves([u["code"] for u in UNIVERSE]) if need_curves else {}
+    signal_path = args.signal_path
+    vbypass = _vol_bypass()
     signals = []
     snaps = []
-    for u in UNIVERSE:
-        print(f"[cta] fetch {u['code']}...")
-        try:
-            snap = _fetch_snapshot(u, curves, mode)
-            snaps.append(snap)
-            sig = _signal(u, snap, risk_budget=risk_budget)
-            if snap.get("block"):
-                sig["block"] = snap["block"]
-            signals.append(sig)
-            print(
-                f"  {u['code']} src={snap.get('source')} date={snap.get('bar_date')} "
-                f"close={sig['close']} r20={sig['r20']} r60={sig['r60']} "
-                f"atr={sig['atr']} lots={sig['lots_l1']} {sig['direction']}"
-            )
-        except Exception as e:
-            signals.append(
-                {
-                    "code": u["code"],
-                    "name": u["name"],
-                    "error": str(e)[:300],
-                    "lots_l1": 0,
-                    "lots_raw": 0,
-                    "selected": False,
-                    "direction": "空仓",
-                    "action": f"拉取失败: {e}",
-                }
-            )
-            print(f"  ERR {u['code']}: {e}")
-            snaps.append({})
+    bars: dict = {}
+    fetch_errors: dict = {}
+    data_sources: dict = {}
+    contract_stats = None
+    if signal_path == "legacy":
+        for u in UNIVERSE:
+            print(f"[cta] fetch {u['code']}...")
+            try:
+                snap = _fetch_snapshot(u, curves, mode)
+                snaps.append(snap)
+                sig = _signal(u, snap, risk_budget=risk_budget)
+                if snap.get("block"):
+                    sig["block"] = snap["block"]
+                sig["signal_path"] = "legacy"
+                signals.append(sig)
+                print(
+                    f"  {u['code']} src={snap.get('source')} date={snap.get('bar_date')} "
+                    f"close={sig['close']} r20={sig['r20']} r60={sig['r60']} "
+                    f"atr={sig['atr']} lots={sig['lots_l1']} {sig['direction']}"
+                )
+            except Exception as e:
+                signals.append(
+                    {
+                        "code": u["code"],
+                        "name": u["name"],
+                        "error": str(e)[:300],
+                        "lots_l1": 0,
+                        "lots_raw": 0,
+                        "selected": False,
+                        "direction": "空仓",
+                        "action": f"拉取失败: {e}",
+                    }
+                )
+                print(f"  ERR {u['code']}: {e}")
+                snaps.append({})
+    else:
+        from historical_backtest import LOOKBACK_DAYS, fetch_history
+
+        for u in UNIVERSE:
+            print(f"[cta] fetch {u['code']}...")
+            try:
+                hist, meta = fetch_history(u, n=LOOKBACK_DAYS)
+                if len(hist) < 61:
+                    raise RuntimeError(f"bars {len(hist)} source={meta.get('source')}")
+                bars[u["code"]] = hist
+                data_sources[u["code"]] = meta.get("source")
+                snaps.append(
+                    {
+                        "source": meta.get("source"),
+                        "bar_date": hist[-1]["date"],
+                        "prev_date": hist[-2]["date"],
+                        "n": len(hist),
+                    }
+                )
+                print(f"  {u['code']} src={meta.get('source')} date={hist[-1]['date']} bars={len(hist)}")
+            except Exception as e:
+                fetch_errors[u["code"]] = f"{e}"
+                snaps.append({})
+                print(f"  ERR {u['code']}: {e}")
+        contract_stats = _ensure_contracts(UNIVERSE, bars)
+        print(
+            f"[contracts] requests={contract_stats['requests']} seconds={contract_stats['seconds']} "
+            f"fetched={len(contract_stats['fetched'])} failed={len(contract_stats['failed'])}"
+        )
+        # placeholder rows until compute_signals (after the seat ensure stage)
+        signals = [
+            {"code": u["code"], "name": u["name"], "bar_date": (bars.get(u["code"]) or [{}])[-1].get("date")}
+            for u in UNIVERSE
+        ]
 
     observe_coverage: dict = {
         "complete": False,
@@ -500,6 +1029,7 @@ def main():
         "seat_fill": {},
     }
     bar_ok = [s["code"] for s in signals if s.get("bar_date") and not str(s.get("error") or "")]
+    bar_ok = [c for c in bar_ok if c not in fetch_errors]
     bar_miss = [u["code"] for u in UNIVERSE if u["code"] not in set(bar_ok)]
     observe_coverage["bars_ok"] = bar_ok
     observe_coverage["bars_missing"] = bar_miss
@@ -582,27 +1112,26 @@ def main():
     else:
         observe_coverage["seats_missing"] = [u["code"] for u in UNIVERSE]
 
-    if mode == "member":
-        days = sorted({s.get("prev_date") or s.get("bar_date") for s in snaps if s.get("bar_date")})
-        member = load_member_changes(days, [u["code"] for u in UNIVERSE]) if days else {}
-        for sig in signals:
-            if sig.get("block") or sig.get("direction") not in ("多", "空"):
-                continue
-            reason = member_reason(sig["direction"], (member.get(sig["code"]) or {}).get(sig.get("bar_date")))
-            if reason:
-                sig["block"] = reason
-    if mode == "seats":
-        days = seat_days
-        seats = load_member_seats(days, [u["code"] for u in UNIVERSE]) if days else {}
-        for sig in signals:
-            if sig.get("direction") not in ("多", "空"):
-                continue
-            reason, label = seat_decision(
-                sig["direction"], (seats.get(sig["code"]) or {}).get(sig.get("bar_date"))
-            )
-            sig["seat"] = label
-            if reason and not sig.get("block"):
-                sig["block"] = reason
+    if signal_path == "legacy":
+        _legacy_postfilters(
+            signals, snaps, mode=mode, bypass=bypass, curves=curves, seat_days=seat_days
+        )
+    else:
+        signals, core_info = compute_signals(
+            UNIVERSE,
+            bars,
+            mode=mode,
+            bypass=bypass,
+            vbypass=vbypass,
+            curves=curves,
+            member_loader=_member_loader(mode),
+            risk_budget=risk_budget,
+            contract_root=ROOT,
+            errors=fetch_errors,
+            data_sources=data_sources,
+        )
+        if core_info.get("adj_fallback_codes"):
+            print(f"[cta] adj_fallback (roll spreads in signal): {core_info['adj_fallback_codes']}")
     seats_ready = (
         not observe_coverage["seats_missing"] or observe_coverage.get("seats_deferred")
     )
@@ -621,113 +1150,12 @@ def main():
             f"seats_missing={observe_coverage['seats_missing']}"
         )
 
-    # Batch 15m/60m into .cache/akshare/minute (CI commits; local desk git pull).
-    minute_summary: dict = {"ok": 0, "fail": 0, "periods": ["15", "60"], "rows": []}
-    try:
-        from minute_data import refresh_universe_minutes
+    if args.dry_run:
+        minute_summary = {"ok": 0, "fail": 0, "periods": ["15", "60"], "skipped": "dry-run", "rows": []}
+        iv_summary = {"ok": False, "skipped": "dry-run"}
+    else:
+        minute_summary, iv_summary = _refresh_side_data()
 
-        print("[cta] refresh minute 15/60...")
-        minute_summary = refresh_universe_minutes(
-            ROOT,
-            [u["code"] for u in UNIVERSE],
-            periods=("15", "60"),
-            force=True,
-            verify_em=False,
-        )
-        print(
-            f"[cta] minute ok={minute_summary.get('ok')} fail={minute_summary.get('fail')}"
-        )
-    except Exception as exc:  # noqa: BLE001
-        print(f"[cta] minute soft-fail: {exc}")
-        minute_summary = {
-            "ok": 0,
-            "fail": len(UNIVERSE) * 2,
-            "periods": ["15", "60"],
-            "error": str(exc)[:300],
-            "rows": [],
-        }
-
-    # Desk research soft refresh — split packs so slow/network (heavy) cannot
-    # block fast desk pages (core). Never paper_book / formal BT / seats.
-    try:
-        from research.desk_daily_refresh import refresh_desk_research_split
-
-        print("[cta] refresh desk research (core then heavy)...")
-        desk_r = refresh_desk_research_split(ROOT)
-        print(
-            f"[desk-research] ok={desk_r.get('ok')} "
-            f"seconds={desk_r.get('seconds_total')} → {desk_r.get('path')}"
-        )
-        for label in ("core", "heavy"):
-            sub = desk_r.get(label) or {}
-            print(
-                f"[desk-research:{label}] n_ok={sub.get('n_ok')} "
-                f"n_fail={sub.get('n_fail')} {sub.get('seconds_total')}s"
-            )
-            for step in sub.get("steps") or []:
-                if not step.get("ok"):
-                    print(
-                        f"::warning title=desk research {label}/{step.get('id')} soft-fail::"
-                        f"{step.get('error') or 'failed'}"
-                    )
-    except Exception as exc:  # noqa: BLE001
-        print(f"[desk-research] soft-fail: {exc}")
-        print(f"::warning title=desk research soft-fail::{exc}")
-
-    # Option IV daily backfill (CZCE/SHFE). Soft: asof empty not poison-cached.
-    iv_summary: dict = {"ok": False}
-    try:
-        from iv_breakout import refresh_option_iv
-
-        print("[cta] refresh option IV...")
-        iv_summary = refresh_option_iv(ROOT)
-        print(
-            f"[cta] option_iv asof={iv_summary.get('asof')} "
-            f"fetched={iv_summary.get('fetched')} cached={iv_summary.get('cached')} "
-            f"missing={iv_summary.get('missing')} soft_empty={iv_summary.get('soft_empty')}"
-        )
-    except Exception as exc:  # noqa: BLE001
-        print(f"[cta] option_iv soft-fail: {exc}")
-        print(f"::warning title=option IV refresh failed::{exc}")
-        iv_summary = {"ok": False, "error": str(exc)[:300]}
-
-    if mode == "climax":
-        for sig in signals:
-            if sig.get("block") or sig.get("direction") not in ("多", "空"):
-                continue
-            peers = [
-                other.get("r20")
-                for other in signals
-                if other.get("code") != sig.get("code") and other.get("bucket") == sig.get("bucket")
-            ]
-            reason = bucket_reason(sig["direction"], [p for p in peers if p is not None])
-            if reason:
-                sig["block"] = reason
-    # Soft carry extreme bypass: after seats/entry_filter; missing gap does not block.
-    if bypass.get("enabled"):
-        for sig in signals:
-            if sig.get("direction") not in ("多", "空"):
-                continue
-            day = sig.get("bar_date") or sig.get("date")
-            pair = ((curves.get(sig["code"]) or {}).get("carry") or {}).get(day)
-            reason, mult, label, gap = carry_bypass_decision(
-                sig["direction"],
-                pair,
-                extreme_gap_pct=float(bypass["extreme_gap_pct"]),
-                action=str(bypass["action"]),
-                scale=float(bypass["scale"]),
-            )
-            sig["carry_gap_pct"] = None if gap is None else round(gap, 4)
-            sig["carry_bypass"] = label
-            if reason and not sig.get("block"):
-                sig["block"] = reason
-            elif not sig.get("block") and mult < 1.0 and mult > 0:
-                for key in ("lots_raw", "lots_l1", "lots_full"):
-                    if sig.get(key):
-                        sig[key] = int(math.floor(float(sig[key]) * mult))
-                sig["carry_scale"] = mult
-                if int(sig.get("lots_l1") or 0) <= 0:
-                    sig["block"] = f"{label}后不足1手"
     # Lab edge: annotate only under action=observe (decision page vetoes).
     # action=block also tags block reason but does not replace seats filter alone.
     if lab_bypass.get("enabled"):
@@ -848,6 +1276,8 @@ def main():
     # Paper-only MDS+EHI sentiment sleeve (ChatGPT share); never sizes Path-A lots.
     sentiment_meta: dict = {"ok": False}
     try:
+        if args.dry_run:
+            raise RuntimeError("skipped (dry-run: shadow snapshot not written)")
         from sentiment_mds import OUT as _SENT_OUT, build_snapshot, write_snapshot
 
         seat_rows = []
@@ -967,7 +1397,30 @@ def main():
             "peak": state.get("peak"),
         },
         "signals": signals,
+        "signal_path": signal_path,
+        "dry_run": bool(args.dry_run),
+        "contract_cache": (
+            None
+            if contract_stats is None
+            else {
+                "requests": contract_stats["requests"],
+                "seconds": contract_stats["seconds"],
+                "fetched_n": len(contract_stats["fetched"]),
+                "cached_n": contract_stats["cached_n"],
+                "failed": contract_stats["failed"],
+            }
+        ),
+        "adj_fallback_codes": [s.get("code") for s in signals if s.get("adj_fallback")],
     }
+    if args.dry_run:
+        blob = json.dumps(report, ensure_ascii=False, indent=2)
+        if args.out:
+            Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+            Path(args.out).write_text(blob, encoding="utf-8")
+            print(f"[cta] dry-run: wrote {args.out} (no root / archive / paper_book writes)")
+        else:
+            print("[cta] dry-run: no --out given; report not written")
+        return 0 if quality.get("ok") else 3
     # Formal report only when quality passes; otherwise write quarantine artifact.
     arch = ROOT / "archive"
     arch.mkdir(exist_ok=True)

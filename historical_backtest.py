@@ -26,6 +26,7 @@ from path_a_filters import (  # noqa: E402
     seat_decision,
 )
 from public_curve import curve_coverage, load_curves  # noqa: E402
+from signal_core import path_a_candidate  # noqa: E402
 from vol_factor_combo import vol_bypass_cfg, vol_entry_block  # noqa: E402
 from option_hedge import (  # noqa: E402
     attach_hedge_to_position,
@@ -1279,6 +1280,8 @@ def simulate(
     entry_delivery_action=ENTRY_DELIVERY_ACTION,
     adjusted_signals=None,
     caps_include_book=None,
+    candidate_log=None,
+    contract_root=None,
 ):
     if fill_price not in FILL_PRICES:
         raise ValueError(f"fill_price must be one of {FILL_PRICES}")
@@ -1304,6 +1307,7 @@ def simulate(
         pack = (series, errors, sources)
     else:
         series, errors, sources = pack
+    _croot = Path(contract_root) if contract_root else ROOT  # R5a: injectable contract cache root
     contract_pack_report = prepare_pack_for_execution(pack, root=ROOT)
     series, errors, sources = pack
     _LAST_PACK.clear()
@@ -1454,7 +1458,7 @@ def simulate(
         load_contract_bar = None  # type: ignore[assignment]
     main_map = None
     if freeze_fix and build_main_map is not None:
-        main_map = build_main_map(series, root=ROOT, start=trade_dates[0])
+        main_map = build_main_map(series, root=_croot, start=trade_dates[0])
     # R6c: roll-free r20/r60, same-contract ATR14 and vol for SIGNALS only (fills, stops,
     # target tests and mark-to-market keep using real prices).  ``adjusted_signals=False``
     # reproduces the R6b-fix signal inputs (raw continuous series).
@@ -1463,7 +1467,7 @@ def simulate(
     if use_adjusted and main_map is not None:
         from research.data_quality.adjusted import build_adjusted_pack
 
-        adj = build_adjusted_pack(series, main_map, root=ROOT)
+        adj = build_adjusted_pack(series, main_map, root=_croot)
     signal_candidates_n = 0
     # R4: portfolio caps (gross / ATR risk / bucket) count the open book.  ``False`` reproduces
     # the R6c behaviour (caps applied to the day's candidates only) but still measures usage.
@@ -1483,7 +1487,7 @@ def simulate(
             and load_contract_bar is not None
         ):
             b_ = load_contract_bar(
-                str(p_["fill_contract"]), d_, root=ROOT, snap_bar=series[code_]["hist"][i_]
+                str(p_["fill_contract"]), d_, root=_croot, snap_bar=series[code_]["hist"][i_]
             )
             if b_ is not None:
                 return float(b_["close"])
@@ -1507,7 +1511,7 @@ def simulate(
         Falls back to the continuous bar only when the actual main contract of
         ``day`` IS this contract (the continuous bar then is that contract)."""
         if load_contract_bar is not None:
-            b_ = load_contract_bar(str(contract), day, root=ROOT, snap_bar=cont_bar)
+            b_ = load_contract_bar(str(contract), day, root=_croot, snap_bar=cont_bar)
             if b_ is not None:
                 return b_
         if main_now is not None and str(main_now) == str(contract):
@@ -1619,12 +1623,12 @@ def simulate(
                 contract_ohlc = load_contract_bar(
                     str(p["fill_contract"]),
                     d,
-                    root=ROOT,
+                    root=_croot,
                     snap_bar=bar,
                 )
                 if contract_ohlc is None and last_contract_bar is not None:
                     lcb = last_contract_bar(
-                        str(p["fill_contract"]), on_or_before=str(prev_d or d)[:10], root=ROOT
+                        str(p["fill_contract"]), on_or_before=str(prev_d or d)[:10], root=_croot
                     )
                     _ed = str(p.get("entry_date") or "")[:10]
                     if lcb is not None and (not _ed or lcb["date"] >= _ed):
@@ -1839,6 +1843,7 @@ def simulate(
 
         # 2) Path-A entries with ATR stop/target (RR=reward_rr)
         cands = []
+        _verd: dict = {}
         sizing_eq = compound_equity(equity, equity0, compound)
         day_risk = risk_budget_yuan(sizing_eq, risk_pct, l1_mult)
         slots_left = max(0, int(max_positions) - len(pos))
@@ -1850,130 +1855,80 @@ def simulate(
                 if i is None or i < WARMUP:
                     continue
                 hist = s["hist"]
-                a = _atr(code, hist, i)
-                if a is None or a <= 0:
-                    continue
-                fac = None
-                if mode == "ctf":
-                    fac = composite_trend(hist, i)
-                    if fac is None or fac["f"] == 0:
-                        continue
-                    direction = "多" if fac["f"] > 0 else "空"
-                    score = abs(fac["f"]) * 100.0
-                    r20, r60 = score, score
-                else:
-                    r20, r60 = _ret(code, hist, i, 20), _ret(code, hist, i, 60)
-                    if r20 is None or r60 is None:
-                        continue
-                    if abs(r20) < min_r20 or abs(r60) < min_r60:
-                        continue
-                    if not ((r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0)):
-                        continue
-                    direction = "多" if r20 > 0 else "空"
-                signal_candidates_n += 1
-                peers = []
-                if mode == "climax":
-                    bucket = s["meta"].get("bucket")
+                def _peer_r20(code=code, s=s):
+                    bucket_ = s["meta"].get("bucket")
+                    out_ = []
                     for other, other_s in series.items():
-                        if other == code or other_s["meta"].get("bucket") != bucket:
+                        if other == code or other_s["meta"].get("bucket") != bucket_:
                             continue
                         oi = idx[other].get(d)
                         if oi is None:
                             continue
-                        peers.append(_ret(other, other_s["hist"], oi, 20))
-                block_mode = "seats" if mode == "roll" else mode
-                member_used = member
-                if (
-                    mode in ("seats", "roll")
-                    and min_seat_days
-                    and _seat_days_upto(code, d) < int(min_seat_days)
-                ):
-                    member_used = {}
-                    seat_short[code] = seat_short.get(code, 0) + 1
-                blocked = None if mode == "ctf" else entry_block(
-                    block_mode,
+                        out_.append(_ret(other, other_s["hist"], oi, 20))
+                    return [p for p in out_ if p is not None]
+
+                # R5a: candidate construction is shared with daily_update (signal_core).
+                _res = path_a_candidate(
+                    code,
                     hist,
                     i,
-                    direction,
-                    d,
-                    code,
-                    a,
-                    curves,
-                    member_used,
-                    [p for p in peers if p is not None],
+                    adj=adj.get(code),
+                    meta=s["meta"],
+                    params={
+                        "mode": mode,
+                        "min_r20": min_r20,
+                        "min_r60": min_r60,
+                        "stop_atr_mult": stop_atr_mult,
+                        "reward_rr": reward_rr,
+                        "day_risk": day_risk,
+                        "min_lots": min_lots,
+                        "bypass": bypass,
+                        "vbypass": vbypass,
+                    },
+                    ctx={
+                        "day": d,
+                        "curves": curves,
+                        "member": member,
+                        "min_seat_days": min_seat_days,
+                        "seat_days_upto": _seat_days_upto,
+                        "peer_r20_fn": _peer_r20,
+                    },
+                    composite_trend_fn=composite_trend,
+                    entry_block_fn=entry_block,
+                    seat_decision_fn=seat_decision,
+                    carry_decision_fn=carry_bypass_decision,
+                    vol_block_fn=vol_entry_block,
                 )
-                if mode in ("seats", "roll") and not blocked:
-                    _reason, label = seat_decision(direction, (member_used.get(code) or {}).get(d))
-                    seat_follows[label] = seat_follows.get(label, 0) + 1
-                if blocked:
-                    block_counts[blocked] = block_counts.get(blocked, 0) + 1
-                    continue
-                carry_mult = 1.0
-                if bypass.get("enabled"):
-                    pair = ((curves.get(code) or {}).get("carry") or {}).get(d)
-                    by_reason, carry_mult, by_label, _gap = carry_bypass_decision(
-                        direction,
-                        pair,
-                        extreme_gap_pct=float(bypass["extreme_gap_pct"]),
-                        action=str(bypass["action"]),
-                        scale=float(bypass["scale"]),
-                    )
-                    if by_reason:
-                        bypass_counts[by_reason] = bypass_counts.get(by_reason, 0) + 1
-                        block_counts[by_reason] = block_counts.get(by_reason, 0) + 1
-                        continue
-                    if carry_mult < 1.0:
-                        bypass_counts[by_label] = bypass_counts.get(by_label, 0) + 1
-                if vbypass.get("enabled"):
-                    vol_reason = vol_entry_block(
-                        _vol_hist(code, hist),
-                        i,
-                        enabled=True,
-                        action=str(vbypass.get("action") or "observe"),
-                        short_n=int(vbypass["short_n"]),
-                        mid_n=int(vbypass["mid_n"]),
-                        long_n=int(vbypass["long_n"]),
-                        expand_ratio=float(vbypass["expand_ratio"]),
-                        compress_ratio=float(vbypass["compress_ratio"]),
-                    )
-                    if vol_reason:
-                        vol_bypass_counts[vol_reason] = vol_bypass_counts.get(vol_reason, 0) + 1
-                        block_counts[vol_reason] = block_counts.get(vol_reason, 0) + 1
-                        continue
-                close = hist[i]["close"]
-                stop_dist = stop_atr_mult * a
-                if direction == "多":
-                    stop = close - stop_dist
-                    target = close + reward_rr * stop_dist
-                else:
-                    stop = close + stop_dist
-                    target = close - reward_rr * stop_dist
-                risk_per_lot = stop_dist * s["meta"]["mult"]
-                lots = int(math.floor(day_risk / risk_per_lot)) if risk_per_lot > 0 else 0
-                if carry_mult < 1.0 and lots > 0:
-                    lots = int(math.floor(lots * carry_mult))
-                if min_lots > 0 and lots < min_lots:
-                    lots = int(min_lots)
-                if lots <= 0:
-                    continue
-                cands.append(
-                    {
-                        "code": code,
-                        "direction": direction,
-                        "lots": lots,
-                        "close": close,
-                        "mult": s["meta"]["mult"],
-                        "r20": round(r20, 3),
-                        "r60": round(r60, 3),
-                        "atr": round(a, 2),
-                        "bucket": s["meta"].get("bucket"),
-                        "entry": close,
-                        "stop": stop,
-                        "target": target,
-                        "reason": "composite_trend" if mode == "ctf" else "path_a_rr2",
-                        "factor": None if fac is None else round(fac["f"], 6),
+                _st = _res["status"]
+                if candidate_log is not None:
+                    _verd[code] = {
+                        k_: _res.get(k_)
+                        for k_ in ("status", "r20", "r60", "atr", "direction", "aligned", "gate_ok", "blocked", "block_kind", "seat_label", "seat_short", "vol_reason", "lots")
                     }
-                )
+                    _verd[code]["carry"] = None if _res["carry"] is None else _res["carry"]["label"]
+                    _verd[code]["stop_dist"] = None if _res["sizing"] is None else _res["sizing"]["stop_dist"]
+                    _verd[code]["target_dist"] = None if _res["sizing"] is None else _res["sizing"]["target_dist"]
+                if _st in ("no_atr", "no_ret", "no_signal"):
+                    continue
+                signal_candidates_n += 1
+                if _res["seat_short"]:
+                    seat_short[code] = seat_short.get(code, 0) + 1
+                if _res["seat_label"] is not None:
+                    seat_follows[_res["seat_label"]] = seat_follows.get(_res["seat_label"], 0) + 1
+                _cy = _res["carry"]
+                if _cy is not None and not _cy["reason"] and _cy["mult"] < 1.0:
+                    bypass_counts[_cy["label"]] = bypass_counts.get(_cy["label"], 0) + 1
+                if _st == "blocked":
+                    _why = _res["blocked"]
+                    if _res["block_kind"] == "carry":
+                        bypass_counts[_why] = bypass_counts.get(_why, 0) + 1
+                    elif _res["block_kind"] == "vol":
+                        vol_bypass_counts[_why] = vol_bypass_counts.get(_why, 0) + 1
+                    block_counts[_why] = block_counts.get(_why, 0) + 1
+                    continue
+                if _st != "ok":
+                    continue
+                cands.append(_res["candidate"])
             # R4: usage of the open book on d's close (adjusted ATR; held contract's real close)
             used_g, used_r, held_buckets = _book_usage(
                 pos, idx, series, d, atr_fn=_atr, close_fn=_held_close
@@ -2021,6 +1976,26 @@ def simulate(
                     max_portfolio_risk_pct=max_port_risk,
                     topup=False,  # caps_include_book=False reproduces the pre-R4 caps exactly
                     **_caps_kw,
+                )
+            if candidate_log is not None:
+                candidate_log.append(
+                    {
+                        "date": d,
+                        "sizing_eq": sizing_eq,
+                        "day_risk": day_risk,
+                        "slots_left": slots_left,
+                        "verdicts": _verd,
+                        "cands": [dict(c_) for c_ in cands],
+                        "held": {
+                            k_: {
+                                "lots": p_.get("lots"), "direction": p_.get("direction"), "bucket": p_.get("bucket"),
+                                "entry": p_.get("entry"), "atr": p_.get("atr"),
+                                "fill_price_basis": p_.get("fill_price_basis"), "fill_contract": p_.get("fill_contract"),
+                            }
+                            for k_, p_ in pos.items()
+                        },
+                        "selected": [(c_["code"], int(c_["lots"])) for c_ in selected],
+                    }
                 )
             # order-time check on d's close: open book + new orders within the caps
             _new_g = sum(
@@ -2617,6 +2592,8 @@ def _simulate_cfg(
     entry_delivery_action=None,
     adjusted_signals=None,
     caps_include_book=None,
+    candidate_log=None,
+    contract_root=None,
 ):
     cfg = p["cfg"]
     print(f"[bt] mode={mode} ifind_so_far={usage_report()['count']}")
@@ -2656,6 +2633,8 @@ def _simulate_cfg(
         entry_delivery_action=str(p.get("entry_delivery_action", ENTRY_DELIVERY_ACTION) if entry_delivery_action is None else entry_delivery_action),
         adjusted_signals=adjusted_signals,
         caps_include_book=caps_include_book,
+        candidate_log=candidate_log,
+        contract_root=contract_root,
     )
 
 

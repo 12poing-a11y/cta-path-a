@@ -1,5 +1,11 @@
 # Cursor 执行指令：R0 冻结基线 + R1 修复假止损
 
+> **2026-11-24 R0 结果后对 R1 的补充（优先于下文）**
+> - R0 走的是 3B：比较基线 `<BT>` = `archive/R0/fresh_bt.json`，`<SNAP>` = `archive/snapshots/bt_input_20261123_da9c8de64ab4.json`；基线重放 `archive/R0/baseline_replay.json`（7.253% / 6.739% / 65 笔）。
+> - 运行 pytest 和脚本前设置 `$env:PYTHONUTF8 = "1"`。
+> - `archive/R0/audit_replay.json` 有 4 笔不符：2 笔连续口径（FU 2026-09-28、PP 2026-10-20，是 R1 要修的假止损），2 笔合约口径（I 2026-04-16 空单 stop，P 2026-11-18 空单 target）。
+> - 合约口径这 2 笔有疑点：审计读到的“合约”日线和 `.cache/history` 主连日线完全相同（I 04-16：764/783.5/764/782.5；P 11-18：8793/8803/8606/8606），但两笔的入场价不在主连价位上（I 04-14 入场 783，而 I0 当日开盘 765）。可能是快照里的 `contract_*` 字段被主连值填充，也可能是引擎在代理日用了 `basis_off` 平移。**R1 第 0 步先诊断这 2 笔，只报告原因，不改代码**。R1 的验收只要求连续口径 0 笔不符；这 2 笔照实保留、写进反馈，留给 R7 前单独处理。禁止为了凑 0 而放宽审计脚本的判定。
+
 > **用法**：一次只粘贴一段给 Cursor。R0 做完、你看过反馈以后，再粘贴 R1。
 > **授权**：粘贴 R1 就算你明示开 R1（🔒 刀）。R1 只改代码和重放结果，不写正式 KPI；正式重跑和签字在 R7。
 > **依据**：`docs/UPGRADE_R_TRACK.md` 的 R0、R1 两节（2026-11-23 修订版）。
@@ -112,6 +118,14 @@
 ```text
 【开刀 R1：修复分钟线合约错配导致的假止损】（轨 R · 🔒 · 磊已明示开刀）
 
+0. 先诊断（只读，不改代码）：archive/R0/audit_replay.json 里合约口径的 2 笔不符——I 2026-04-16 空单 stop（入场 2026-04-14，fill_contract I2605），P 2026-11-18 空单 target（fill_contract P2612）。
+   用 <SNAP> 打印入场日到平仓日每天的 bar：date、contract、contract_open/high/low/close、open/high/low/close；
+   再在重放里给 manage_bar_fixed 加临时打印（不提交），记录这两笔每天的 mbar、proxied、basis_off。
+   回答：引擎平仓时用的是哪根 bar？快照里的 contract_* 是不是被主连值填充了？这 2 笔该算引擎错还是审计错？
+   结论写进反馈。本刀不修这 2 笔，审计脚本也不改。
+   （<BT> = archive/R0/fresh_bt.json，<SNAP> = archive/snapshots/bt_input_20261123_da9c8de64ab4.json；先设 $env:PYTHONUTF8 = "1"）
+
+
 先读：
 - docs/UPGRADE_R_TRACK.md 的 R1 节（2026-11-23 修订版：改用“同口径日线校验”；不再“只读 CODE0 分钟线”；不收紧 aligned_with_entry）
 - R0 的反馈和 archive/R0/ 下的基线产物（记下基线快照路径，下面记作 <SNAP>，对应结果 JSON 记作 <BT>）
@@ -214,7 +228,7 @@
 
 验收：
 - pytest 全绿；
-- audit_after_R1.json 的不符笔数为 0；
+- audit_after_R1.json 里连续口径（continuous_proxy）不符为 0；合约口径不符照实列出，附第 0 步的诊断结论（不要求为 0）。--fail-on-mismatch 只用于确认连续口径，若因合约口径非 0 而退出码为 1，照实报告即可；
 - FU 2026-09-23 那笔不再在 2026-09-28 记为止损；
 - minute_rejected_mismatch > 0，minute_stop_exits 比 R0 少；
 - git diff -- historical_backtest_latest.json paper_book_latest.json 为空。

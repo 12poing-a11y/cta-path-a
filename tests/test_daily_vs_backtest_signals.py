@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """R5a: the daily report and the backtest must derive the same entry candidates.
 
-Offline: bars, seat / carry books come from the frozen snapshot, the contract caches are the repo's
-``.cache/contracts`` (variant ``repo_cache``) or an empty directory (variant ``empty_cache`` = a CI
-checkout; both sides then fall back to the raw continuous series).  Nothing is fetched.
+Offline: bars, seat / carry books come from the frozen snapshot; month-contract bars come from the
+snapshot's frozen contract bundle (variant ``bundle``: the backtest sees the whole bundle, the daily
+run of day T sees it cut at T) or from an empty directory (variant ``empty_cache``: both sides fall
+back to the raw continuous series).  No local cache is read and nothing is fetched.
 
 For each of the last 40 trading days of the window, ``daily_update.compute_signals`` sees ONLY the
 bars up to that day (what the real daily run would have) and its per-code result must equal
@@ -38,7 +39,7 @@ def _close(a, b):
     return abs(float(a) - float(b)) <= TOL
 
 
-@pytest.fixture(scope="module", params=["repo_cache", "empty_cache"])
+@pytest.fixture(scope="module", params=["bundle", "empty_cache"])
 def world(request, tmp_path_factory):
     import historical_backtest as hb
 
@@ -62,7 +63,13 @@ def world(request, tmp_path_factory):
     import market_data
 
     mp.setattr(market_data, "fetch_sina_exact_contract", _no_net, raising=False)
-    root = ROOT if request.param == "repo_cache" else tmp_path_factory.mktemp("empty_root")
+    if request.param == "bundle":
+        from research.data_quality.contract_store import snapshot_store
+
+        root = snapshot_store(snap, SNAP)
+        assert root is not None, "snapshot contract bundle missing"
+    else:
+        root = tmp_path_factory.mktemp("empty_root")
     p = hb._load_cfg()
     series = {}
     for u in p["cfg"]["symbols"]:
@@ -71,7 +78,8 @@ def world(request, tmp_path_factory):
     pack = (series, dict(snap.get("errors") or {}), dict(snap.get("sources") or {}))
     log: list = []
     hb._simulate_cfg(p, p["entry_filter"], pack=pack, candidate_log=log, contract_root=root)
-    yield {"hb": hb, "p": p, "series": series, "log": log, "root": root, "snap": snap, "curves": curves}
+    yield {"hb": hb, "p": p, "series": series, "log": log, "root": root, "snap": snap, "curves": curves,
+           "variant": request.param}
     mp.undo()
 
 
@@ -99,7 +107,7 @@ def _daily(world, day, *, observe_min_lots=0):
         curves=world["curves"],
         member_loader=lambda dates, codes: snapm,
         risk_budget=entry["day_risk"],
-        contract_root=world["root"],
+        contract_root=world["root"].with_cutoff(day) if world["variant"] == "bundle" else world["root"],
         min_seat_days=p.get("min_seat_days", hb.MIN_SEAT_DAYS),
         observe_min_lots=observe_min_lots,
     )
@@ -232,7 +240,7 @@ def test_empty_contract_cache_falls_back_not_crashes(world):
     day = _days(world)[-1]
     sigs, info, bars, entry = _daily(world, day)
     flagged = [s["code"] for s in sigs if s.get("adj_fallback")]
-    if world["root"] != ROOT:  # CI-like checkout: nothing cached -> raw-series fallback for everything
+    if world["variant"] == "empty_cache":  # nothing cached -> raw-series fallback for everything
         assert flagged, "empty contract cache must surface adj_fallback"
         for s in sigs:
             if s.get("adj_fallback"):

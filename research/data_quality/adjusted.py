@@ -136,7 +136,7 @@ def build_adjusted_series(
     *,
     root: Path | None = None,
 ) -> AdjustedSeries:
-    root = Path(root or ROOT)
+    root = root or ROOT  # root path or ContractStore
     n = len(hist)
     ret: list[float | None] = [None] * n
     tr: list[float | None] = [None] * n

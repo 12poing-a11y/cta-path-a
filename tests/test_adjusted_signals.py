@@ -60,6 +60,8 @@ def _world(n=120, roll_at=(50, 90), spread=SPREAD):
 
 def _patch(monkeypatch, store):
     monkeypatch.setattr(mm, "cached_contracts_for", lambda code, root=None: sorted(store))
+    # R7a-D: main_map candidates come from the listing calendar; the fake contracts are "listed" every day
+    monkeypatch.setattr(mm, "listed_contracts_on", lambda code, day, root=None: sorted(store))
     monkeypatch.setattr(mm, "contract_bars_by_date", lambda c, root=None: store.get(c, {}))
     monkeypatch.setattr(rolls, "contract_bars_by_date", lambda c, root=None: store.get(c, {}))
 

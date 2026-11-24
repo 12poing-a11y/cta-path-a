@@ -341,7 +341,7 @@ def roll_position_at_open(
     return pnl
 
 
-def prepare_pack_for_execution(pack, *, root: Path | None = None) -> dict:
+def prepare_pack_for_execution(pack, *, root=None) -> dict:
     """Stamp delivery calendar + optional contract-fill overlay onto a backtest pack."""
     series, errors, sources = pack
     root = root or ROOT
@@ -563,6 +563,19 @@ def write_input_snapshot(out: dict, argv: list[str], root: Path | None = None) -
         "carry": carry,
         "note": note,
     }
+    # R7a-D: every listing-calendar candidate of the window, bars <= snapshot end, so replays need
+    # no local contract cache.
+    try:
+        from research.data_quality.contract_cache import listed_candidates
+        from research.data_quality.contract_store import build_bundle, resolve_store
+
+        wanted = sorted({c for v in listed_candidates(series).values() for c in v})
+        snap["contract_bars"] = build_bundle(
+            resolve_store(_LAST_PACK.get("contract_root") or root), wanted, end=out.get("end"),
+            meta={"source": "historical_backtest.write_input_snapshot"},
+        )
+    except Exception as exc:  # noqa: BLE001
+        snap["contract_bars"] = {"error": str(exc)[:200]}
     blob = json.dumps(snap, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8")
     sha = _stable_sha256(snap)
     d = root / "archive" / "snapshots"
@@ -577,6 +590,8 @@ def write_input_snapshot(out: dict, argv: list[str], root: Path | None = None) -
         "member_sha256": _stable_sha256(member),
         "seats_sha256": _stable_sha256(member),
         "carry_sha256": _stable_sha256(carry),
+        "contract_bars_sha256": _stable_sha256(snap.get("contract_bars") or {}),
+        "contract_bars_n": (snap.get("contract_bars") or {}).get("n_contracts"),
         "symbols": len(series),
     }
 
@@ -1309,8 +1324,14 @@ def simulate(
         pack = (series, errors, sources)
     else:
         series, errors, sources = pack
-    _croot = Path(contract_root) if contract_root else ROOT  # R5a: injectable contract cache root
-    contract_pack_report = prepare_pack_for_execution(pack, root=ROOT)
+    from research.data_quality.contract_store import ContractStore
+
+    # R5a / R7a-D: injectable contract source (a cache root or a ContractStore, e.g. a snapshot bundle)
+    _croot = (
+        contract_root if isinstance(contract_root, ContractStore)
+        else (Path(contract_root) if contract_root else ROOT)
+    )
+    contract_pack_report = prepare_pack_for_execution(pack, root=_croot)
     series, errors, sources = pack
     _LAST_PACK.clear()
     _LAST_PACK.update(
@@ -1321,6 +1342,7 @@ def simulate(
             "member": {},
             "carry": {},
             "contract_pack": contract_pack_report,
+            "contract_root": _croot,
         }
     )
 
@@ -2480,7 +2502,20 @@ def main():
         mode = "ctf" if ctf else (
             p["entry_filter"] if p["entry_filter"] in ("base", "p0", "carry", "oi", "member", "climax", "seats") else "base"
         )
-        out = _simulate_cfg(p, mode)
+        # R7a-D: fill the contract cache for every listing-calendar main_map candidate first.
+        pack = _fetch_pack(cfg["symbols"])
+        try:
+            from research.data_quality.contract_cache import ensure_listed_contract_bars
+
+            prefetch = ensure_listed_contract_bars(pack[0], ROOT)
+        except Exception as exc:  # noqa: BLE001
+            prefetch = {"error": str(exc)[:200]}
+        print(
+            f"[bt] contract prefetch requests={prefetch.get('requests')} seconds={prefetch.get('seconds')} "
+            f"fetched={len(prefetch.get('fetched') or [])} failed={len(prefetch.get('failed') or [])}"
+        )
+        out = _simulate_cfg(p, mode, pack=pack)
+        out["contract_prefetch"] = prefetch
         out["entry_filter"] = mode
         if prior_cmp:
             out["comparison"] = prior_cmp

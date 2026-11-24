@@ -124,7 +124,7 @@ def overlay_contract_fills(
     series: dict[str, dict[str, Any]],
     *,
     month: str | None = None,
-    root: Path | None = None,
+    root=None,
     min_coverage: float = 0.3,
     historical: bool = True,
     max_basis_rel: float = DEFAULT_MAX_BASIS_REL,
@@ -141,10 +141,11 @@ def overlay_contract_fills(
     are forced to ``continuous_proxy`` (no contract_* stamps) so simulate cannot mix
     contract entry with continuous stop/target management.
     """
-    root = root or ROOT
     from research.data_quality.calendar import active_front_contract_on_date, load_delivery_rules
+    from research.data_quality.contract_store import resolve_store, store_root
 
-    rules = load_delivery_rules(root)
+    store = resolve_store(root)
+    rules = load_delivery_rules(store_root(root))
     max_basis = float(max_basis_rel)
     report: dict[str, Any] = {
         "month": month or ("historical" if historical else "per_product"),
@@ -160,8 +161,7 @@ def overlay_contract_fills(
 
     def _bars_by_date(contract: str) -> dict[str, dict]:
         if contract not in contract_cache:
-            rows = load_exact_contract_daily(contract, root=root)
-            contract_cache[contract] = {b["date"]: b for b in rows}
+            contract_cache[contract] = store.by_date(contract)
         return contract_cache[contract]
 
     for code, pack in series.items():
@@ -263,7 +263,7 @@ def annotate_pack_calendar(
     series: dict[str, dict[str, Any]],
     *,
     month: str | None = None,
-    root: Path | None = None,
+    root=None,
 ) -> None:
     from research.data_quality.calendar import annotate_bars_with_calendar
 

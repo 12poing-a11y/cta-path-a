@@ -409,7 +409,7 @@ def compute_signals(
     member_loader=None,
     risk_budget: float,
     lag: int | None = None,
-    contract_root: Path | str | None = None,
+    contract_root=None,
     min_seat_days: int | None = None,
     observe_min_lots: int | None = None,
     errors: dict[str, str] | None = None,
@@ -420,7 +420,8 @@ def compute_signals(
     """Today's Path-A report rows, computed by the SAME code as ``historical_backtest.simulate``.
 
     * r20 / r60 / ATR / vol come from the roll-free series (``main_map`` + ``adjusted``) built on
-      the injected ``bars`` and the contract cache under ``contract_root`` (no network here);
+      the injected ``bars`` and the contract store ``contract_root`` (a cache root or a
+      ``ContractStore``, e.g. a snapshot bundle cut at ``day``; no network here);
     * seats / carry books are lagged by ``lag`` sessions exactly like the backtest
       (``lag_member`` / ``lag_curves_carry`` over the covered session dates);
     * the filter order, stop / target distance and lots formula live in ``signal_core``.
@@ -434,7 +435,9 @@ def compute_signals(
     import historical_backtest as hb
     from signal_core import build_signal_inputs, covered_dates, path_a_candidate
 
-    root = Path(contract_root) if contract_root else ROOT
+    from research.data_quality.contract_store import ContractStore
+
+    root = contract_root if isinstance(contract_root, ContractStore) else (Path(contract_root) if contract_root else ROOT)
     lag = hb.DEFAULT_AVAILABILITY_LAG if lag is None else int(lag)
     min_seat_days = hb.MIN_SEAT_DAYS if min_seat_days is None else int(min_seat_days)
     omin = int(OBSERVE_MIN_LOTS if observe_min_lots is None else observe_min_lots)
@@ -543,13 +546,23 @@ def compute_signals(
     return signals, info
 
 
-def _ensure_contracts(universe: list[dict], bars: dict[str, list], *, root: Path | None = None) -> dict:
+def _liquid_listed(code: str, day: str, n: int = 6) -> list[str]:
+    """Listed contracts on ``day`` in the liquid curve months (``public_curve.MONTHS``), nearest ``n``.
+    Sina's main often sits beyond the three calendar-nearest months (MA main 2609 vs near month 2605)."""
+    from public_curve import MONTHS
+    from research.data_quality.calendar import listed_contracts_on
+
+    months = set(MONTHS.get(str(code).upper(), range(1, 13)))
+    return [c for c in listed_contracts_on(code, day) if int(c[-2:]) in months][:n]
+
+
+def _ensure_contracts(universe: list[dict], bars: dict[str, list], *, root=None) -> dict:
     """R5a: make sure the contract daily files behind today's ``main_map`` exist (see
     ``research.data_quality.contract_cache``).  Returns request / timing statistics."""
     from research.data_quality.contract_cache import ensure_contract_bars
     from research.data_quality.main_map import build_main_map
 
-    root = Path(root or ROOT)
+    root = root or _contract_source()
     series = {u["code"]: {"meta": dict(u), "hist": bars[u["code"]]} for u in universe if bars.get(u["code"])}
     try:
         prelim = build_main_map(series, root=root)
@@ -568,7 +581,7 @@ def _ensure_contracts(universe: list[dict], bars: dict[str, list], *, root: Path
                     prev_main = m
                     break
         try:
-            r = ensure_contract_bars(code, upto, root, prev_main=prev_main)
+            r = ensure_contract_bars(code, upto, root, prev_main=prev_main, extra=_liquid_listed(code, upto))
         except Exception as exc:  # noqa: BLE001
             r = {"requests": 0, "seconds": 0.0, "fetched": [], "failed": [{"error": str(exc)[:120]}], "cached": []}
         stats["requests"] += int(r.get("requests") or 0)
@@ -830,6 +843,13 @@ def _member_loader(mode: str):
     return _load
 
 
+_CONTRACT_SOURCE = None  # R7a-D: --contract-bundle store (None = the local cache under ROOT)
+
+
+def _contract_source():
+    return _CONTRACT_SOURCE if _CONTRACT_SOURCE is not None else ROOT
+
+
 def _parse_args(argv=None):
     ap = argparse.ArgumentParser(description="Daily Path-A report")
     ap.add_argument(
@@ -854,6 +874,12 @@ def _parse_args(argv=None):
         "--paper-out",
         default=None,
         help="with --dry-run: write the advanced R5b book here (never the root paper_book_latest.json)",
+    )
+    ap.add_argument(
+        "--contract-bundle",
+        default=None,
+        help="read month-contract bars from this frozen bundle (*.contracts.json[.gz]) instead of the local "
+        "cache; nothing is fetched",
     )
     args, _unknown = ap.parse_known_args(argv)
     if args.out and not args.dry_run:
@@ -883,12 +909,13 @@ def _engine_book_context(book_path: Path, bars: dict, curves: dict | None) -> di
         return None
     settings = pb.engine_settings()
     series = {u["code"]: {"meta": dict(u), "hist": bars[u["code"]]} for u in UNIVERSE if bars.get(u["code"])}
-    contract_pack = hb.prepare_pack_for_execution((series, {}, {}), root=ROOT)
+    csrc = _contract_source()
+    contract_pack = hb.prepare_pack_for_execution((series, {}, {}), root=csrc)
     dates = covered_dates(series)
     day = dates[-1]
-    main_map, adj = build_signal_inputs(series, root=ROOT)
+    main_map, adj = build_signal_inputs(series, root=csrc)
     eng = pb.build_engine(
-        series, settings, main_map=main_map, adj=adj, curves=curves, contract_root=ROOT, minute_root=ROOT
+        series, settings, main_map=main_map, adj=adj, curves=curves, contract_root=csrc, minute_root=ROOT
     )
 
     def _prev(d):
@@ -1038,6 +1065,13 @@ def main(argv=None):
     need_curves = mode not in ("base", "seats") or bool(bypass.get("enabled"))
     curves = load_curves([u["code"] for u in UNIVERSE]) if need_curves else {}
     signal_path = args.signal_path
+    global _CONTRACT_SOURCE
+    _CONTRACT_SOURCE = None
+    if args.contract_bundle:
+        from research.data_quality.contract_store import load_bundle
+
+        _CONTRACT_SOURCE = load_bundle(args.contract_bundle)
+        print(f"[contracts] source = bundle {args.contract_bundle} ({len(_CONTRACT_SOURCE.known_contracts())} contracts)")
     paper_book_path = Path(args.paper_book) if args.paper_book else ROOT / "paper_book_latest.json"
     engine_ctx = None
     engine_error = None
@@ -1235,7 +1269,7 @@ def main(argv=None):
             curves=curves,
             member_loader=_member_loader(mode),
             risk_budget=risk_budget,
-            contract_root=ROOT,
+            contract_root=_contract_source(),
             errors=fetch_errors,
             data_sources=data_sources,
             day=None if engine_ctx is None else engine_ctx["day"],

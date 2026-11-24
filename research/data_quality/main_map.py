@@ -23,41 +23,28 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 
-_BY_DATE_CACHE: dict[tuple[str, str, int], dict[str, dict]] = {}
+
+def contract_bars_by_date(contract: str, root=None) -> dict[str, dict]:
+    """Exact-contract daily bars keyed by date from the contract store behind ``root``
+    (``None`` / a root path = local cache, or a :class:`ContractStore`)."""
+    from research.data_quality.contract_store import resolve_store
+
+    return resolve_store(root).by_date(contract)
 
 
-def contract_bars_by_date(contract: str, root: Path | None = None) -> dict[str, dict]:
-    """Exact-contract daily bars keyed by date (cached; refreshed when the cache file changes)."""
-    root = Path(root or ROOT)
-    contract = str(contract or "").upper()
-    stable = root / ".cache" / "contracts" / f"{contract}.json"
-    try:
-        mt = stable.stat().st_mtime_ns if stable.is_file() else 0
-    except OSError:
-        mt = 0
-    key = (str(root), contract, mt)
-    hit = _BY_DATE_CACHE.get(key)
-    if hit is not None:
-        return hit
-    try:
-        from research.execution.contract_pack import load_exact_contract_daily
+def listed_contracts_on(code: str, day: str, root=None) -> list[str]:
+    """Calendar candidates of ``code`` on ``day`` (see ``calendar.listed_contracts_on``)."""
+    from research.data_quality.calendar import listed_contracts_on as _listed
 
-        rows = load_exact_contract_daily(contract, root=root)
-    except Exception:  # noqa: BLE001
-        rows = []
-    by = {str(b["date"])[:10]: b for b in rows}
-    _BY_DATE_CACHE[key] = by
-    return by
+    return _listed(code, day)
 
 
-def cached_contracts_for(code: str, root: Path | None = None) -> list[str]:
-    """Contract ids (``CODEYYMM``) available under ``.cache/contracts``."""
-    root = Path(root or ROOT)
-    d = root / ".cache" / "contracts"
-    if not d.is_dir():
-        return []
+def cached_contracts_for(code: str, root=None) -> list[str]:
+    """Contract ids (``CODEYYMM``) the store behind ``root`` can enumerate (diagnostics only)."""
+    from research.data_quality.contract_store import resolve_store
+
     pat = re.compile(rf"^{re.escape(str(code).upper())}\d{{4}}$")
-    return sorted(p.stem for p in d.glob("*.json") if pat.match(p.stem))
+    return [c for c in (resolve_store(root).known_contracts() or []) if pat.match(c)]
 
 
 def _snap_contract_bar(b: dict) -> dict | None:
@@ -148,7 +135,9 @@ def build_main_map(
     start: str | None = None,
 ) -> MainMap:
     """Build main_map for every code in ``series`` (post-overlay continuous packs)."""
-    root = Path(root or ROOT)
+    from research.data_quality.contract_store import resolve_store
+
+    store = resolve_store(root)
     out = MainMap()
     for code, pack in series.items():
         hist = pack.get("hist") or []
@@ -157,12 +146,8 @@ def build_main_map(
             tick = float(meta.get("tick") or 0.0)
         except (TypeError, ValueError):
             tick = 0.0
-        contracts = set(cached_contracts_for(code, root))
-        for b in hist:
-            c = str(b.get("contract") or "").upper()
-            if c and _snap_contract_bar(b) is not None:
-                contracts.add(c)
-        by_contract = {c: contract_bars_by_date(c, root) for c in sorted(contracts)}
+        by_contract: dict[str, dict[str, dict]] = {}
+        seen: set[str] = set()
         m: dict[str, str | None] = {}
         n = matched = none_n = ambiguous = no_cand = no_match = 0
         none_dates: list[str] = []
@@ -171,14 +156,22 @@ def build_main_map(
             d = str(b.get("date") or "")[:10]
             if not d:
                 continue
+            # R7a-D: candidates depend on d alone — every contract listed on d (calendar) that
+            # has a bar on d; nothing is taken from other bars of ``hist``.
             cands: dict[str, dict] = {}
             own = str(b.get("contract") or "").upper()
             snap_c = _snap_contract_bar(b)
-            for c, rows in by_contract.items():
+            for c in listed_contracts_on(code, d, root):
                 if c == own and snap_c is not None:
                     cands[c] = snap_c  # snapshot contract_* first
-                elif d in rows:
+                    seen.add(c)
+                    continue
+                rows = by_contract.get(c)
+                if rows is None:
+                    rows = by_contract[c] = contract_bars_by_date(c, store)
+                if d in rows:
                     cands[c] = rows[d]
+                    seen.add(c)
             main, status = match_main_contract(b, cands, tick=tick, prev_main=prev_main)
             m[d] = main
             in_window = (start is None) or d >= str(start)[:10]
@@ -207,7 +200,7 @@ def build_main_map(
             "none_no_match_within_tick": no_match,
             "none_ambiguous": ambiguous,
             "none_dates": none_dates,
-            "candidates": sorted(by_contract),
+            "candidates": sorted(seen),
             "tick": tick,
         }
     return out

@@ -61,9 +61,29 @@ def test_manage_bar_fixed_uses_basis_when_contract_missing():
     assert prox and fr is None and m["close"] == 203 and m["high"] == 208 and m["low"] == 188
 
 
-def test_legacy_reproduces_ee4476b_and_fix_has_no_cross_delivery():
+MINUTE_FIXTURE = ROOT / "tests/fixtures/freeze_fix_1113_minute.json"
+
+
+def _fixture_minutes(monkeypatch):
+    """Serve the minute bars these replays read from a frozen fixture (the KPI lock was measured on a
+    minute cache newer than the committed ``.cache/akshare/minute`` files)."""
+    import json
+
+    import minute_data
+
+    calls = json.loads(MINUTE_FIXTURE.read_text(encoding="utf-8"))["calls"]
+    monkeypatch.setattr(
+        minute_data,
+        "load_minute_bars_on_trading_day",
+        lambda root, code, day, period="15", *, sessions: list(calls.get(f"{code}|{day}|{period}") or []),
+    )
+
+
+def test_legacy_reproduces_ee4476b_and_fix_has_no_cross_delivery(monkeypatch):
     import replay as R
     import recompute as RC
+
+    _fixture_minutes(monkeypatch)
 
     p, pack = R.make_pack()
     legacy = R.run(p, pack, freeze_fix=False, min_seat_days=0)

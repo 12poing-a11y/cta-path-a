@@ -13,6 +13,11 @@ The backtest builds ``main_map`` / the roll-free signal series from the monthly 
   and the time spent so the caller can log it.
 
 Nothing here raises: a failed fetch is recorded and the caller falls back (R6c ``adj_fallback``).
+
+``root`` may also be a :class:`~research.data_quality.contract_store.ContractStore`: a cache store
+fetches into its root, a frozen bundle never fetches (missing contracts are reported, not filled).
+The formal backtest calls :func:`ensure_listed_contract_bars` (R7a-D) for every contract the listing
+calendar makes a ``main_map`` candidate on any day of the window.
 """
 from __future__ import annotations
 
@@ -145,7 +150,7 @@ def _write_cache(path: Path, contract: str, bars: list[dict]) -> None:
 def ensure_contract_bars(
     code: str,
     upto: str | date,
-    root: Path | None = None,
+    root=None,
     *,
     prev_main: str | None = None,
     fetcher: Callable[[str], list[dict]] | None = None,
@@ -158,7 +163,9 @@ def ensure_contract_bars(
     Returns ``{"code", "upto", "wanted", "cached", "fetched", "failed", "requests", "seconds"}``.
     ``fetcher(contract) -> list[bar]`` defaults to ``market_data.fetch_sina_exact_contract``.
     """
-    root = Path(root or ROOT)
+    from research.data_quality.contract_store import resolve_store
+
+    store = resolve_store(root)
     d = _parse_day(upto)
     upto_s = d.isoformat()
     wanted: list[str] = []
@@ -181,6 +188,15 @@ def ensure_contract_bars(
         "requests": 0,
         "seconds": 0.0,
     }
+    if store.cache_root is None:  # frozen bundle: read-only
+        for contract in wanted:
+            by = store.by_date(contract)
+            if by and max(by) >= upto_s or by and _contract_expired(contract, d):
+                report["cached"].append(contract)
+            else:
+                report["failed"].append({"contract": contract, "error": "not in bundle"})
+        return report
+    root = store.cache_root
     if fetcher is None:
         from market_data import fetch_sina_exact_contract as fetcher  # type: ignore[assignment]
     t0 = time.perf_counter()
@@ -215,3 +231,94 @@ def ensure_contract_bars(
         report["fetched"].append(contract)
     report["seconds"] = round(time.perf_counter() - t0, 3)
     return report
+
+
+def listed_candidates(series: dict[str, dict[str, Any]]) -> dict[str, list[str]]:
+    """Per code: every contract the listing calendar makes a ``main_map`` candidate on a bar date."""
+    from research.data_quality.calendar import listed_contracts_on, load_delivery_rules
+
+    rules = load_delivery_rules()
+    out: dict[str, list[str]] = {}
+    for code, pack in series.items():
+        got: set[str] = set()
+        for b in pack.get("hist") or []:
+            d = str(b.get("date") or "")[:10]
+            if d:
+                got.update(listed_contracts_on(code, d, rules=rules))
+            c = str(b.get("contract") or "").upper()
+            if re.fullmatch(r"[A-Z]+\d{4}", c):
+                got.add(c)
+        out[code] = sorted(got)
+    return out
+
+
+def ensure_listed_contract_bars(
+    series: dict[str, dict[str, Any]],
+    root=None,
+    *,
+    fetcher: Callable[[str], list[dict]] | None = None,
+) -> dict[str, Any]:
+    """Fill the cache for every listing-calendar candidate of the window (formal backtest, R7a-D).
+
+    A contract is fetched unless its cached bars already reach ``min(window end, last trade day)``
+    or it has expired with bars cached.  Returns requests / seconds / fetched / failed / cached_n."""
+    from research.data_quality.calendar import contract_last_trade_day, load_delivery_rules
+    from research.data_quality.contract_store import resolve_store
+
+    store = resolve_store(root)
+    rules = load_delivery_rules()
+    cands = listed_candidates(series)
+    rep: dict[str, Any] = {
+        "wanted_n": sum(len(v) for v in cands.values()),
+        "requests": 0,
+        "seconds": 0.0,
+        "fetched": [],
+        "failed": [],
+        "cached_n": 0,
+        "by_code": {},
+    }
+    if store.cache_root is None:
+        rep["skipped"] = "store is a frozen bundle"
+        return rep
+    root_p = store.cache_root
+    if fetcher is None:
+        from market_data import fetch_sina_exact_contract as fetcher  # type: ignore[assignment]
+    t0 = time.perf_counter()
+    for code, contracts in cands.items():
+        hist = series[code].get("hist") or []
+        end = max((str(b.get("date") or "")[:10] for b in hist), default=None)
+        if not end:
+            continue
+        end_d = _parse_day(end)
+        n_req = 0
+        for contract in contracts:
+            path = root_p / ".cache" / "contracts" / f"{contract}.json"
+            rows = _read_cached(path)
+            last = max((str(b["date"])[:10] for b in rows), default=None)
+            ltd = contract_last_trade_day(contract, rules)
+            need = min(end, ltd.isoformat()) if ltd is not None else end
+            if last is not None and (last >= need or (ltd is not None and ltd < end_d)):
+                rep["cached_n"] += 1
+                continue
+            rep["requests"] += 1
+            n_req += 1
+            try:
+                got = fetcher(contract) or []
+            except Exception as exc:  # noqa: BLE001
+                rep["failed"].append({"code": code, "contract": contract, "error": str(exc)[:120]})
+                continue
+            if not got:
+                rep["failed"].append({"code": code, "contract": contract, "error": "empty"})
+                continue
+            by = {str(b["date"])[:10]: b for b in rows}
+            for b in got:
+                by[str(b["date"])[:10]] = b
+            try:
+                _write_cache(path, contract, [by[k] for k in sorted(by)])
+            except OSError as exc:
+                rep["failed"].append({"code": code, "contract": contract, "error": f"write: {exc}"[:120]})
+                continue
+            rep["fetched"].append(contract)
+        rep["by_code"][code] = {"candidates": len(contracts), "requests": n_req}
+    rep["seconds"] = round(time.perf_counter() - t0, 3)
+    return rep

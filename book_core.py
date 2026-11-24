@@ -83,7 +83,12 @@ class PositionEngine:
         self.adj = adj if adj is not None else {}
         self.curves = curves or {}
         self.mode = mode
-        self.croot = Path(contract_root) if contract_root else hb.ROOT
+        from research.data_quality.contract_store import ContractStore
+
+        self.croot = (
+            contract_root if isinstance(contract_root, ContractStore)
+            else (Path(contract_root) if contract_root else hb.ROOT)
+        )
         self.minute_root = Path(minute_root) if minute_root else hb.ROOT
         self.freeze_fix = bool(freeze_fix)
         self.delivery_guard = bool(delivery_guard)

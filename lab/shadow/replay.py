@@ -91,6 +91,16 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="Write full run() result JSON (optional)",
     )
+    ap.add_argument(
+        "--contracts",
+        default=None,
+        help="contract bundle (default: the snapshot's embedded contract_bars, else its *.contracts.json[.gz])",
+    )
+    ap.add_argument(
+        "--contract-root",
+        default=None,
+        help="read month contracts from the local cache under this root instead of a bundle",
+    )
     args = ap.parse_args(argv)
 
     bt_path = Path(args.bt)
@@ -116,7 +126,19 @@ def main(argv: list[str] | None = None) -> int:
     # Keep module globals in sync for any nested callers.
     snap, formal = snap_obj, bt_obj
     p, pack = make_pack(snap_obj=snap_obj)
-    out = run(p, pack)
+    from research.data_quality.contract_store import CacheContractStore, load_bundle, snapshot_store
+
+    if args.contract_root:
+        store = CacheContractStore(Path(args.contract_root))
+    elif args.contracts:
+        store = load_bundle(args.contracts)
+    else:
+        store = snapshot_store(snap_obj, snap_path)
+        if store is None:
+            print("[replay] snapshot has no contract bundle; falling back to the local contract cache", file=sys.stderr)
+            store = CacheContractStore(ROOT)
+    print(f"[replay] contracts: {store!r}")
+    out = run(p, pack, contract_root=store)
     keys = [
         "ret_pct",
         "max_dd_pct",
@@ -139,6 +161,7 @@ def main(argv: list[str] | None = None) -> int:
             out_path = ROOT / out_path
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out.setdefault("input_snapshot", bt_obj.get("input_snapshot"))
+        out["replay_contract_source"] = repr(store)
         out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"[replay] wrote {out_path}")
     return 0

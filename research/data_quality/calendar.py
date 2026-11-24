@@ -156,6 +156,89 @@ def active_front_contract_on_date(
     return None
 
 
+LISTING_LEAD_MONTHS = 12
+
+
+def listed_delivery_months(code: str, rules: dict[str, Any] | None = None) -> tuple[int, ...]:
+    """Delivery months that list for ``code``: ``public_curve.MONTHS`` (all 12 when absent) united
+    with the curated ``delivery_rules`` months (all 12 when absent).
+
+    ``public_curve.MONTHS`` keeps only the liquid curve months (MA/EG: 1/5/9) while the exchange
+    lists every month and Sina's main does sit on e.g. MA2610 / EG2611."""
+    code_u = str(code or "").upper()
+    try:
+        from public_curve import MONTHS
+    except Exception:  # noqa: BLE001
+        MONTHS = {}
+    months = set(MONTHS.get(code_u, range(1, 13)))
+    months |= set(product_rule(code_u, rules).get("months") or range(1, 13))
+    return tuple(sorted(months))
+
+
+def contract_last_trade_day(contract: str, rules: dict[str, Any] | None = None) -> date | None:
+    parsed = parse_contract_month(contract)
+    if parsed is None:
+        return None
+    code, y, m = parsed
+    rules = rules or load_delivery_rules()
+    explicit = (rules.get("last_trade_dates") or {}).get(str(contract).upper())
+    if explicit:
+        got = _parse_ymd(explicit)
+        if got is not None:
+            return got
+    return estimate_last_trade_day(y, m, product_rule(code, rules).get("last_trade_rule") or "month_day_10")
+
+
+def listed_contracts_on(
+    code: str,
+    bar_date: str | date,
+    *,
+    rules: dict[str, Any] | None = None,
+) -> list[str]:
+    """Every month contract of ``code`` in listed status on ``bar_date`` (calendar only, no data).
+
+    Listed = delivery month in :func:`listed_delivery_months`, already listed and
+    ``bar_date <= last trade day``.  No listing dates are curated in the rules, so listing is the
+    conservative ``LISTING_LEAD_MONTHS`` before the 1st of the delivery month (real listings are
+    later; the caller keeps only contracts that have a bar on ``bar_date``).
+    """
+    d = _parse_ymd(bar_date)
+    if d is None:
+        return []
+    code_u = str(code or "").upper()
+    if rules is None:
+        try:
+            mt = RULES_PATH.stat().st_mtime_ns
+        except OSError:
+            mt = 0
+        key = (code_u, d, mt)
+        hit = _LISTED_MEMO.get(key)
+        if hit is None:
+            hit = _LISTED_MEMO[key] = tuple(_listed_on(code_u, d, load_delivery_rules()))
+        return list(hit)
+    return _listed_on(code_u, d, rules)
+
+
+_LISTED_MEMO: dict[tuple[str, date, int], tuple[str, ...]] = {}
+
+
+def _listed_on(code_u: str, d: date, rules: dict[str, Any]) -> list[str]:
+    months = listed_delivery_months(code_u, rules)
+    out: list[str] = []
+    y, m = d.year, d.month
+    for _ in range(LISTING_LEAD_MONTHS + 1):
+        if m in months:
+            contract = f"{code_u}{y % 100:02d}{m:02d}"
+            ltd = contract_last_trade_day(contract, rules)
+            if ltd is not None and d <= ltd:
+                out.append(contract)
+        m += 1
+        if m > 12:
+            m = 1
+            y += 1
+    return out
+
+
 def delivery_flags_for_date(
     code: str,
     bar_date: str | date,

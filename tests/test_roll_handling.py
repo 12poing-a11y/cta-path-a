@@ -44,6 +44,8 @@ def _bar(d, c, *, h=None, lo=None, calendar=None):
 def _patch_contracts(monkeypatch, store: dict[str, dict[str, dict]]):
     """In-memory contract daily store: {contract: {date: bar}}."""
     monkeypatch.setattr(mm, "cached_contracts_for", lambda code, root=None: sorted(store))
+    # R7a-D: main_map candidates come from the listing calendar; the fake contracts are "listed" every day
+    monkeypatch.setattr(mm, "listed_contracts_on", lambda code, day, root=None: sorted(store))
     monkeypatch.setattr(mm, "contract_bars_by_date", lambda c, root=None: store.get(c, {}))
     monkeypatch.setattr(rolls, "contract_bars_by_date", lambda c, root=None: store.get(c, {}))
 
@@ -362,7 +364,7 @@ def test_exit_before_entry_guard_raises(monkeypatch):
 # ───────────────────────── audit: R6b-fix checks ─────────────────────────
 
 
-def _audit_fixture(tmp_path):
+def _audit_fixture(tmp_path, monkeypatch):
     import json
 
     from scripts.audit_exit_vs_daily import audit_bt
@@ -383,6 +385,8 @@ def _audit_fixture(tmp_path):
     # continuous = old for the first three days, new (main moved) on the 4th
     cont = old[:3] + new[3:]
     snap = {"bars": {"AA": [dict(b) for b in cont]}}
+    # R7a-D: fake contract ids are not on the listing calendar of these dates
+    monkeypatch.setattr(mm, "listed_contracts_on", lambda code, day, root=None: ["AA2505", "AA2506"])
 
     def run(trades):
         return audit_bt({"closed_pnls": trades}, root=tmp_path, snap=snap, tick_by_code={"AA": 1.0})
@@ -408,30 +412,30 @@ def _t(**kw):
     return t
 
 
-def test_audit_accepts_roll_day_exit_priced_on_held_contract(tmp_path):
-    run = _audit_fixture(tmp_path)
+def test_audit_accepts_roll_day_exit_priced_on_held_contract(tmp_path, monkeypatch):
+    run = _audit_fixture(tmp_path, monkeypatch)
     # held AA2505 on the day main moved to AA2506: exit 1000 lies in AA2505's 03-05 bar
     rep = run([_t(exit=1005.0, target=1005.0)])
     assert rep["mismatches"] == 0
     assert rep["checks"]["roll_day_exits_checked"] == 1
 
 
-def test_audit_flags_roll_day_exit_priced_from_new_main(tmp_path):
-    run = _audit_fixture(tmp_path)
+def test_audit_flags_roll_day_exit_priced_from_new_main(tmp_path, monkeypatch):
+    run = _audit_fixture(tmp_path, monkeypatch)
     rep = run([_t(exit=1301.0, target=1301.0)])
     assert rep["mismatches"] == 1
     probs = rep["mismatch_trades"][0]["problems"]
     assert "roll_day_exit_from_new_main" in probs and "exit_outside_held_bar_range" in probs
 
 
-def test_audit_flags_exit_before_entry(tmp_path):
-    run = _audit_fixture(tmp_path)
+def test_audit_flags_exit_before_entry(tmp_path, monkeypatch):
+    run = _audit_fixture(tmp_path, monkeypatch)
     rep = run([_t(entry_date="2026-03-05", date="2026-03-03", exit=1001.0, target=1001.0)])
     assert any("exit_before_entry" in m["problems"] for m in rep["mismatch_trades"])
 
 
-def test_audit_flags_continuous_exit_outside_held_bar_range(tmp_path):
-    run = _audit_fixture(tmp_path)
+def test_audit_flags_continuous_exit_outside_held_bar_range(tmp_path, monkeypatch):
+    run = _audit_fixture(tmp_path, monkeypatch)
     # signal exit (no stop/target check) at a price the held contract never traded that day
     rep = run([_t(reason="signal", exit=1200.0, date="2026-03-04")])
     assert rep["mismatches"] == 1

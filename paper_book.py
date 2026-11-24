@@ -982,7 +982,7 @@ def build_engine(
     main_map: Any = None,
     adj: dict | None = None,
     curves: dict | None = None,
-    contract_root: Path | None = None,
+    contract_root=None,
     minute_root: Path | None = None,
 ):
     from book_core import PositionEngine
@@ -1465,9 +1465,11 @@ def attach_pending(prev_book: dict, rolled: dict, pending: list[dict], meta: dic
 
 class SnapshotWorld:
     """Offline replay inputs from a frozen ``bt_input_*.json`` snapshot (bars already stamped with
-    the contract overlay, seat / carry books already lagged) + the repo contract / minute caches."""
+    the contract overlay, seat / carry books already lagged) + its frozen contract bundle (R7a-D;
+    the local contract cache only when the snapshot has none) + the repo minute cache.
+    The daily side of day T sees the bundle cut at T."""
 
-    def __init__(self, snap_path: Path, *, root: Path | None = None):
+    def __init__(self, snap_path: Path, *, root: Path | None = None, store=None):
         import historical_backtest as hb
         from signal_core import covered_dates
 
@@ -1475,6 +1477,9 @@ class SnapshotWorld:
         self.root = Path(root or ROOT)
         self.snap_path = Path(snap_path)
         self.snap = json.loads(self.snap_path.read_text(encoding="utf-8"))
+        from research.data_quality.contract_store import CacheContractStore, snapshot_store
+
+        self.store = store or snapshot_store(self.snap, self.snap_path) or CacheContractStore(self.root)
         self.p = hb._load_cfg()
         self.settings = engine_settings(self.p)
         self.meta = {u["code"]: dict(u) for u in self.p["cfg"]["symbols"] if u["code"] in self.snap["bars"]}
@@ -1499,8 +1504,9 @@ class SnapshotWorld:
 
         bars = self.bars_upto(day)
         series = {c: {"meta": dict(m), "hist": bars[c]} for c, m in self.meta.items() if c in bars}
-        main_map, adj = build_signal_inputs(series, root=self.root)
-        eng = build_engine(series, self.settings, main_map=main_map, adj=adj, contract_root=self.root,
+        cut = self.store.with_cutoff(day)
+        main_map, adj = build_signal_inputs(series, root=cut)
+        eng = build_engine(series, self.settings, main_map=main_map, adj=adj, contract_root=cut,
                            minute_root=self.root)
         eng._bars = bars
         return eng
@@ -1515,7 +1521,7 @@ class SnapshotWorld:
         _sigs, info = du.compute_signals(
             universe, eng._bars, mode=p["entry_filter"], bypass=hb.carry_bypass_cfg(p.get("carry_bypass")),
             vbypass=hb.vol_bypass_cfg(p.get("vol_bypass")), curves=self.curves,
-            member_loader=lambda dates, codes: member, risk_budget=risk, lag=0, contract_root=self.root,
+            member_loader=lambda dates, codes: member, risk_budget=risk, lag=0, contract_root=eng.croot,
             min_seat_days=p.get("min_seat_days", hb.MIN_SEAT_DAYS), observe_min_lots=0, day=day,
             inputs=(eng.main_map, eng.adj),
         )
@@ -1546,7 +1552,7 @@ class SnapshotWorld:
             hb.lag_curves_carry = lambda cv, dates, lag: cv
             series = {c: {"meta": dict(m), "hist": deepcopy(snap["bars"][c])} for c, m in self.meta.items()}
             pack = (series, dict(snap.get("errors") or {}), dict(snap.get("sources") or {}))
-            return hb._simulate_cfg(self.p, self.p["entry_filter"], pack=pack, contract_root=self.root,
+            return hb._simulate_cfg(self.p, self.p["entry_filter"], pack=pack, contract_root=self.store,
                                     state_log=state_log)
         finally:
             for k, v in saved.items():
@@ -1796,7 +1802,7 @@ def _rebuild_cli(argv: list[str]) -> int:
     out = Path(args.out)
     if out.resolve() == PAPER_PATH.resolve():
         ap.error("--out must not be the root paper_book_latest.json")
-    snap = Path(args.snapshot) if args.snapshot else max((ROOT / "archive/snapshots").glob("bt_input_*.json"))
+    snap = Path(args.snapshot) if args.snapshot else max(q for q in (ROOT / "archive/snapshots").glob("bt_input_*.json") if not q.name.endswith(".contracts.json"))
     book = _load(Path(args.book))
     if not book:
         ap.error(f"cannot read {args.book}")

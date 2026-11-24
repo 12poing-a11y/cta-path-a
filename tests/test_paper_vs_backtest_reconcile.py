@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """R5b: the paper book, run day by day, must book exactly what ``simulate`` books.
 
-Offline (frozen snapshot bars / seat / carry books, repo contract + minute caches, no network).
+Offline (frozen snapshot bars / seat / carry books, the snapshot's frozen contract bundle — cut at
+the session for the paper side — and the repo minute cache; no network).
 ``simulate`` runs over the full window with ``state_log``; the paper book is seeded with the
 backtest's state at the close of the day before the last ``N_DAYS`` sessions (open positions, the
 orders selected that day as pending, equity) and then advanced one session at a time with ONLY the
@@ -62,6 +63,10 @@ def world():
     import market_data
 
     mp.setattr(market_data, "fetch_sina_exact_contract", _no_net, raising=False)
+    from research.data_quality.contract_store import snapshot_store
+
+    store = snapshot_store(snap, SNAP)
+    assert store is not None, "snapshot contract bundle missing"
     p = hb._load_cfg()
     series = {}
     for u in p["cfg"]["symbols"]:
@@ -70,10 +75,10 @@ def world():
     pack = (series, dict(snap.get("errors") or {}), dict(snap.get("sources") or {}))
     clog: list = []
     slog: list = []
-    res = hb._simulate_cfg(p, p["entry_filter"], pack=pack, candidate_log=clog, contract_root=ROOT, state_log=slog)
+    res = hb._simulate_cfg(p, p["entry_filter"], pack=pack, candidate_log=clog, contract_root=store, state_log=slog)
     assert res.get("ok"), res.get("error")
     yield {"hb": hb, "p": p, "snap": snap, "curves": curves, "res": res, "clog": clog, "slog": slog,
-           "meta": {c: s["meta"] for c, s in series.items()}}
+           "meta": {c: s["meta"] for c, s in series.items()}, "store": store}
     mp.undo()
 
 
@@ -105,8 +110,9 @@ class PaperRunner:
 
         bars = self.bars_upto(day)
         series = {c: {"meta": dict(m), "hist": bars[c]} for c, m in self.w["meta"].items() if c in bars}
-        main_map, adj = build_signal_inputs(series, root=ROOT)
-        eng = self.pb.build_engine(series, self.settings, main_map=main_map, adj=adj, contract_root=ROOT,
+        cut = self.w["store"].with_cutoff(day)  # the paper side of day T sees contract bars <= T only
+        main_map, adj = build_signal_inputs(series, root=cut)
+        eng = self.pb.build_engine(series, self.settings, main_map=main_map, adj=adj, contract_root=cut,
                                    minute_root=ROOT)
         if self.load_minute is not None:
             eng._load_minute = self.load_minute
@@ -128,7 +134,7 @@ class PaperRunner:
             curves=self.w["curves"],
             member_loader=lambda dates, codes: snapm,
             risk_budget=risk,
-            contract_root=ROOT,
+            contract_root=eng.croot,
             min_seat_days=p.get("min_seat_days", hb.MIN_SEAT_DAYS),
             observe_min_lots=0,
             day=day,

@@ -56,7 +56,8 @@ def load_contract_bar(
     root: Path | None = None,
     snap_bar: dict | None = None,
 ) -> dict | None:
-    """Exact-contract OHLC for ``day``: snapshot ``contract_*`` first, then ``.cache/contracts``."""
+    """Exact-contract OHLC for ``day``: snapshot ``contract_*`` first, then the contract store
+    behind ``root`` (a root path = local cache, or a ``ContractStore``)."""
     day = str(day or "")[:10]
     contract = str(contract or "").upper()
     if snap_bar is not None:

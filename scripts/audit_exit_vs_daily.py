@@ -1,6 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Audit stop/target exits against same-basis daily OHLC (R0 baseline tool)."""
+"""Audit exits against same-basis daily OHLC (R0 tool; R6b-fix adds roll checks).
+
+Checks (every one must mirror the engine, never be loosened to reach 0):
+
+* stop/target exits touch the daily bar the engine priced them on
+  (continuous bar, or the held contract's own bar when the actual main moved
+  off it, or the real contract bar for contract fills);
+* (i)   exit date earlier than entry date → mismatch;
+* (ii)  continuous_proxy exit price must lie inside [low, high] of the HELD
+        contract's exit-day bar;
+* (iii) exit on an actual-main roll day priced off the NEW main although the
+        position holds the old contract → mismatch;
+* contract fills priced by ``continuous + basis_off`` are only legitimate while
+  the actual main of that day equals the main on the day ``basis_off`` was taken.
+"""
 from __future__ import annotations
 
 import argparse
@@ -10,6 +24,11 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+# Float slack for [low, high] membership only (exit prices are rounded to 4 dp).
+_EPS = 1e-6
 
 
 def _load_json(path: Path) -> Any:
@@ -87,28 +106,81 @@ def _ohlc(bar: dict, *, basis: str) -> tuple[float, float, float, float] | None:
         return None
 
 
-def _basis_off_before(
-    snap_bars: list[dict],
+def _contract_day_ohlc(
     *,
+    root: Path,
+    snap_bars: list[dict] | None,
+    code: str,
+    contract: str,
     day: str,
+    main_map: Any,
+) -> tuple[tuple[float, float, float, float] | None, str]:
+    """(o,h,l,c), source for ``contract`` on ``day`` — mirrors engine ``_contract_day_bar``."""
+    contract = str(contract or "").upper()
+    b = _bar_by_date(snap_bars, day)
+    if (
+        b is not None
+        and b.get("contract_high") is not None
+        and b.get("contract_low") is not None
+        and b.get("contract_close") is not None
+        and str(b.get("contract") or "").upper() in ("", contract)
+    ):
+        o = _ohlc(b, basis="contract")
+        if o is not None:
+            return o, "snap_contract"
+    if contract:
+        cb = _bar_by_date(_load_cache_contract(root, contract), day)
+        if cb is not None:
+            o = _ohlc(cb, basis="continuous")
+            if o is not None:
+                return o, "cache_contract"
+    if main_map is not None and b is not None and main_map.main(code, day) == contract:
+        o = _ohlc(b, basis="continuous")
+        if o is not None:
+            return o, "continuous_is_main"
+    return None, "missing"
+
+
+def _basis_off_before(
+    *,
+    root: Path,
+    snap_bars: list[dict],
+    code: str,
     fill_contract: str,
-) -> float | None:
-    """Last known (contract_close − continuous close) on/before day for fill_contract."""
+    day: str,
+    main_map: Any,
+) -> tuple[float | None, str | None]:
+    """Engine's last (contract_close − continuous close) before ``day`` and its main.
+
+    The engine refreshes ``basis_off`` on every day it holds a real bar for the fill
+    contract — snapshot ``contract_*`` first, otherwise ``.cache/contracts``.
+    """
     want = fill_contract.upper()
+    cache_by_day = {
+        str(r.get("date") or "")[:10]: r for r in _load_cache_contract(root, want)
+    }
     off = None
+    off_main = None
     for b in snap_bars:
         d = str(b.get("date") or "")[:10]
-        if d > day:
+        if d >= day:
             break
-        if str(b.get("contract") or "").upper() not in ("", want):
-            continue
-        if b.get("contract_close") is None:
+        close_c = None
+        if (
+            b.get("contract_close") is not None
+            and str(b.get("contract") or "").upper() in ("", want)
+        ):
+            close_c = b.get("contract_close")
+        elif d in cache_by_day:
+            close_c = cache_by_day[d].get("close")
+        if close_c is None:
             continue
         try:
-            off = float(b["contract_close"]) - float(b["close"])
-        except (TypeError, ValueError):
+            off = float(close_c) - float(b["close"])
+            off_main = main_map.main(code, d) if main_map is not None else None
+        except (TypeError, ValueError, KeyError):
             continue
-    return off
+    return off, off_main
 
 
 def resolve_day_bar(
@@ -119,10 +191,13 @@ def resolve_day_bar(
     day: str,
     basis: str,
     fill_contract: str | None,
+    held_contract: str | None = None,
+    main_map: Any = None,
 ) -> tuple[dict | None, str, str | None]:
     """
     Return (bar, source, skip_reason).
-    skip_reason is set when the trade should be skipped (not counted as mismatch).
+    skip_reason is set when the trade should be skipped (not counted as mismatch);
+    ``"mismatch_*"`` skip reasons are reported as mismatches by the caller.
     """
     snap_bars = None
     if snap and isinstance(snap.get("bars"), dict):
@@ -131,6 +206,26 @@ def resolve_day_bar(
         if bar is None and basis == "continuous_proxy":
             return None, "snap_missing_day", "skipped_no_bar"
         if basis == "continuous_proxy" and bar is not None:
+            # Engine: while the actual main differs from the held contract, the day is
+            # priced on the HELD contract's own bar; otherwise on the continuous bar.
+            held = str(held_contract or "").upper()
+            cur_main = main_map.main(code, day) if main_map is not None else None
+            if held and cur_main is not None and cur_main != held:
+                o4, src = _contract_day_ohlc(
+                    root=root,
+                    snap_bars=snap_bars,
+                    code=code,
+                    contract=held,
+                    day=day,
+                    main_map=main_map,
+                )
+                if o4 is None:
+                    return None, "held_bar_missing", "skipped_no_bar"
+                return (
+                    {"date": day, "open": o4[0], "high": o4[1], "low": o4[2], "close": o4[3]},
+                    f"held_{src}",
+                    None,
+                )
             return bar, "snap_continuous", None
         if basis == "contract" and bar is not None:
             want = str(fill_contract or "").strip().upper()
@@ -146,9 +241,25 @@ def resolve_day_bar(
                 cbar = _bar_by_date(_load_cache_contract(root, want), day)
                 if cbar is not None:
                     return cbar, "cache_contract", None
-            # Engine proxy: continuous + last basis_off (must match manage_bar_fixed)
-            off = _basis_off_before(snap_bars or [], day=day, fill_contract=want) if want else None
+            # Engine proxy: continuous + last basis_off — only while the actual main of
+            # ``day`` equals the main on the day basis_off was measured (R6b-fix).
+            off, off_main = (
+                _basis_off_before(
+                    root=root,
+                    snap_bars=snap_bars or [],
+                    code=code,
+                    fill_contract=want,
+                    day=day,
+                    main_map=main_map,
+                )
+                if want
+                else (None, None)
+            )
             if off is not None:
+                if main_map is not None and main_map.usable(code):
+                    cur_main = main_map.main(code, day)
+                    if cur_main is None or cur_main != off_main:
+                        return None, "proxy_across_roll", "mismatch_proxy_across_roll"
                 try:
                     proxied = {
                         "date": day,
@@ -207,6 +318,20 @@ def exit_touches_daily(
     return True
 
 
+def _build_audit_main_map(root: Path, snap: dict | None, ticks: dict[str, float]):
+    if not snap or not isinstance(snap.get("bars"), dict):
+        return None
+    try:
+        from research.data_quality.main_map import build_main_map
+    except Exception:  # noqa: BLE001
+        return None
+    series = {
+        code: {"meta": {"tick": ticks.get(code) or 0.0}, "hist": bars}
+        for code, bars in snap["bars"].items()
+    }
+    return build_main_map(series, root=root)
+
+
 def audit_bt(
     bt: dict,
     *,
@@ -216,110 +341,170 @@ def audit_bt(
 ) -> dict:
     root = Path(root) if root is not None else ROOT
     ticks = tick_by_code or _tick_map(root)
+    main_map = _build_audit_main_map(root, snap, ticks)
     mismatches: list[dict] = []
     checked = 0
     skipped_proxied = 0
     skipped_no_bar = 0
-    try:
-        from research.data_quality.rolls import is_roll_day
-    except Exception:  # noqa: BLE001
-        is_roll_day = None  # type: ignore[assignment]
+    n_order = n_range = n_roll = 0
+    range_skipped = 0
     for t in bt.get("closed_pnls") or []:
         reason = str(t.get("reason") or "")
-        if reason not in ("stop", "target"):
-            continue
         code = str(t.get("code") or "")
         day = str(t.get("date") or "")[:10]
+        entry_day = str(t.get("entry_date") or "")[:10]
         basis = str(t.get("fill_price_basis") or "continuous_proxy").strip().lower()
         if basis not in ("continuous_proxy", "contract"):
             basis = "continuous_proxy"
         fill_contract = t.get("fill_contract")
-        bar, source, skip = resolve_day_bar(
-            root=root,
-            snap=snap,
-            code=code,
-            day=day,
-            basis=basis,
-            fill_contract=str(fill_contract) if fill_contract else None,
-        )
-        if skip == "skipped_proxied":
-            skipped_proxied += 1
-            continue
-        if skip == "skipped_no_bar" or bar is None:
-            skipped_no_bar += 1
-            continue
-        # snap_contract uses contract_*; cache_contract / snap_proxied / continuous use plain OHLC
-        if source == "snap_contract":
-            ohlc = _ohlc(bar, basis="contract")
-        else:
-            ohlc = _ohlc(bar, basis="continuous")
-        if ohlc is None:
-            skipped_no_bar += 1
-            continue
-        _o, high, low, _c = ohlc
-        tol = float(ticks.get(code) or 0) * 1.0
-        stop = t.get("stop")
-        target = t.get("target")
+        held_contract = t.get("held_contract")
+        problems: list[str] = []
         try:
-            stop_f = float(stop) if stop is not None else None
-            target_f = float(target) if target is not None else None
-        except (TypeError, ValueError):
-            skipped_no_bar += 1
-            continue
-        exit_px = None
-        try:
-            if t.get("exit") is not None:
-                exit_px = float(t["exit"])
+            exit_px = float(t["exit"]) if t.get("exit") is not None else None
         except (TypeError, ValueError):
             exit_px = None
-        checked += 1
-        ok = exit_touches_daily(
-            direction=str(t.get("direction") or ""),
-            reason=reason,
-            stop=stop_f,
-            target=target_f,
-            high=high,
-            low=low,
-            tol=tol,
+
+        # (i) exit before entry
+        if entry_day and day:
+            n_order += 1
+            if day < entry_day:
+                problems.append("exit_before_entry")
+
+        bar = None
+        source = ""
+        stop_f = target_f = None
+        o_h_l_c: tuple[float, float, float, float] | None = None
+        need_bar = reason in ("stop", "target") or (
+            basis == "continuous_proxy" and exit_px is not None
         )
-        # R6: exit on a roll day priced off the new main (continuous open) while
-        # holding a different exact contract → always a mismatch.
-        roll_bad = False
+        if need_bar and day:
+            bar, source, skip = resolve_day_bar(
+                root=root,
+                snap=snap,
+                code=code,
+                day=day,
+                basis=basis,
+                fill_contract=str(fill_contract) if fill_contract else None,
+                held_contract=str(held_contract) if held_contract else None,
+                main_map=main_map,
+            )
+            if skip == "mismatch_proxy_across_roll":
+                problems.append("proxy_across_roll")
+            elif skip == "skipped_proxied":
+                skipped_proxied += 1
+            elif skip == "skipped_no_bar" or bar is None:
+                if reason in ("stop", "target"):
+                    skipped_no_bar += 1
+                else:
+                    range_skipped += 1
+            else:
+                # snap_contract uses contract_*; cache / proxied / continuous use plain OHLC
+                o_h_l_c = _ohlc(bar, basis="contract" if source == "snap_contract" else "continuous")
+                if o_h_l_c is None:
+                    if reason in ("stop", "target"):
+                        skipped_no_bar += 1
+                    else:
+                        range_skipped += 1
+
+        tol = float(ticks.get(code) or 0) * 1.0
+        did_check = False
+        conservative_target_gap = False
+        if o_h_l_c is not None and reason in ("stop", "target"):
+            try:
+                stop_f = float(t["stop"]) if t.get("stop") is not None else None
+                target_f = float(t["target"]) if t.get("target") is not None else None
+            except (TypeError, ValueError):
+                stop_f = target_f = None
+                skipped_no_bar += 1
+            else:
+                did_check = True
+                checked += 1
+                if not exit_touches_daily(
+                    direction=str(t.get("direction") or ""),
+                    reason=reason,
+                    stop=stop_f,
+                    target=target_f,
+                    high=o_h_l_c[1],
+                    low=o_h_l_c[2],
+                    tol=tol,
+                ):
+                    problems.append("stop_target_not_touched")
+
+        # (ii) continuous_proxy exit price inside the held contract's [low, high]
+        if (
+            basis == "continuous_proxy"
+            and exit_px is not None
+            and o_h_l_c is not None
+            and (source in ("snap_continuous", "cache_history") or source.startswith("held_"))
+        ):
+            n_range += 1
+            if not (o_h_l_c[2] - _EPS <= exit_px <= o_h_l_c[1] + _EPS):
+                problems.append("exit_outside_held_bar_range")
+                # Informational only (still counted as a mismatch): R3 convention fills a
+                # target that the bar gapped through AT the target, i.e. at a price worse
+                # than anything the bar traded — never better than reality.
+                d_ = str(t.get("direction") or "")
+                if reason == "target" and (
+                    (d_ == "多" and exit_px < o_h_l_c[2] - _EPS)
+                    or (d_ == "空" and exit_px > o_h_l_c[1] + _EPS)
+                ):
+                    conservative_target_gap = True
+
+        # (iii) roll day: exit priced off the NEW main while holding the old contract
         if (
             exit_px is not None
-            and is_roll_day is not None
-            and snap
-            and isinstance(snap.get("bars"), dict)
+            and main_map is not None
+            and day
+            and entry_day
+            and entry_day < day
         ):
-            hist = snap["bars"].get(code) or []
-            cur = _bar_by_date(hist, day)
-            prev = None
-            for b in hist:
-                if str(b.get("date") or "")[:10] >= day:
+            prev_main = None
+            hist = (snap or {}).get("bars", {}).get(code) or []
+            for hb in hist:
+                hd = str(hb.get("date") or "")[:10]
+                if hd >= day:
                     break
-                prev = b
-            if cur is not None and is_roll_day(prev, cur):
-                try:
-                    cont_open = float(cur["open"])
-                except (TypeError, ValueError, KeyError):
-                    cont_open = None
-                if cont_open is not None and abs(exit_px - cont_open) <= max(
-                    tol, abs(cont_open) * 1e-9
-                ):
-                    want = str(fill_contract or "").upper()
-                    cbar = _bar_by_date(_load_cache_contract(root, want), day) if want else None
-                    if cbar is not None:
-                        try:
-                            c_open = float(
-                                cbar.get("open") if cbar.get("open") is not None else cbar["close"]
-                            )
-                        except (TypeError, ValueError, KeyError):
-                            c_open = None
-                        if c_open is not None and abs(c_open - cont_open) > max(tol, 1e-6):
-                            roll_bad = True
-                    elif basis == "contract":
-                        roll_bad = True
-        if not ok or roll_bad:
+                prev_main = main_map.main(code, hd) or prev_main
+            new_main = main_map.main(code, day)
+            held = str(
+                (held_contract if basis == "continuous_proxy" else fill_contract) or ""
+            ).upper()
+            if (
+                prev_main is not None
+                and new_main is not None
+                and prev_main != new_main
+                and held
+                and held != new_main
+            ):
+                n_roll += 1
+                snap_bars = (snap or {}).get("bars", {}).get(code) or []
+                new_ohlc, _s1 = _contract_day_ohlc(
+                    root=root,
+                    snap_bars=snap_bars,
+                    code=code,
+                    contract=new_main,
+                    day=day,
+                    main_map=main_map,
+                )
+                old_ohlc, _s2 = _contract_day_ohlc(
+                    root=root,
+                    snap_bars=snap_bars,
+                    code=code,
+                    contract=held,
+                    day=day,
+                    main_map=main_map,
+                )
+                in_new = new_ohlc is not None and (
+                    new_ohlc[2] - _EPS <= exit_px <= new_ohlc[1] + _EPS
+                )
+                in_old = old_ohlc is not None and (
+                    old_ohlc[2] - _EPS <= exit_px <= old_ohlc[1] + _EPS
+                )
+                if in_new and not in_old:
+                    problems.append("roll_day_exit_from_new_main")
+
+        if problems:
+            o_, h_, l_, c_ = o_h_l_c if o_h_l_c is not None else (None, None, None, None)
             mismatches.append(
                 {
                     "date": day,
@@ -327,29 +512,46 @@ def audit_bt(
                     "direction": t.get("direction"),
                     "lots": t.get("lots"),
                     "reason": reason,
+                    "entry_date": entry_day or None,
+                    "exit": exit_px,
                     "stop": stop_f,
                     "target": target_f,
-                    "open": _o,
-                    "high": high,
-                    "low": low,
-                    "close": _c,
+                    "open": o_,
+                    "high": h_,
+                    "low": l_,
+                    "close": c_,
                     "fill_price_basis": basis,
                     "fill_contract": fill_contract,
+                    "held_contract": held_contract,
                     "bar_source": source,
-                    "roll_new_main_exit": roll_bad,
+                    "problems": problems,
+                    "roll_new_main_exit": "roll_day_exit_from_new_main" in problems,
+                    "conservative_target_gap_fill": conservative_target_gap,
                 }
             )
+        _ = did_check
     return {
         "checked": checked,
         "mismatches": len(mismatches),
+        "mismatches_excluding_conservative_target_gap": sum(
+            1
+            for m in mismatches
+            if not (m["conservative_target_gap_fill"] and m["problems"] == ["exit_outside_held_bar_range"])
+        ),
         "skipped_proxied": skipped_proxied,
         "skipped_no_bar": skipped_no_bar,
+        "checks": {
+            "entry_order_checked": n_order,
+            "continuous_range_checked": n_range,
+            "continuous_range_skipped_no_bar": range_skipped,
+            "roll_day_exits_checked": n_roll,
+        },
         "mismatch_trades": mismatches,
     }
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description="Audit stop/target exits vs daily OHLC")
+    ap = argparse.ArgumentParser(description="Audit exits vs daily OHLC")
     ap.add_argument("--bt", default=str(ROOT / "historical_backtest_latest.json"))
     ap.add_argument("--snap", default=None, help="Input snapshot (default: --bt input_snapshot.path)")
     ap.add_argument("--out", default=None)
@@ -393,13 +595,14 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[audit] wrote {out_path}")
     print(
         f"[audit] checked={report['checked']} mismatches={report['mismatches']} "
-        f"skipped_proxied={report['skipped_proxied']} skipped_no_bar={report['skipped_no_bar']}"
+        f"skipped_proxied={report['skipped_proxied']} skipped_no_bar={report['skipped_no_bar']} "
+        f"checks={report['checks']}"
     )
     for m in report["mismatch_trades"]:
         print(
             f"  MISMATCH {m['date']} {m['code']} {m['direction']} {m['reason']} "
             f"stop={m['stop']} target={m['target']} OHLC={m['open']}/{m['high']}/{m['low']}/{m['close']} "
-            f"basis={m['fill_price_basis']} src={m['bar_source']}"
+            f"basis={m['fill_price_basis']} src={m['bar_source']} problems={m['problems']}"
         )
     if args.fail_on_mismatch and report["mismatches"] > 0:
         return 1

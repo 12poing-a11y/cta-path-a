@@ -1,0 +1,42 @@
+{
+  "checked": 61,
+  "mismatches": 1,
+  "mismatches_excluding_conservative_target_gap": 0,
+  "skipped_proxied": 0,
+  "skipped_no_bar": 0,
+  "checks": {
+    "entry_order_checked": 66,
+    "continuous_range_checked": 36,
+    "continuous_range_skipped_no_bar": 0,
+    "roll_day_exits_checked": 3
+  },
+  "mismatch_trades": [
+    {
+      "date": "2026-05-06",
+      "code": "CF",
+      "direction": "多",
+      "lots": 1,
+      "reason": "target",
+      "entry_date": "2026-04-23",
+      "exit": 16623.7143,
+      "stop": 16033.1429,
+      "target": 16623.7143,
+      "open": 16840.0,
+      "high": 16955.0,
+      "low": 16680.0,
+      "close": 16715.0,
+      "fill_price_basis": "continuous_proxy",
+      "fill_contract": "CF2605",
+      "held_contract": "CF2609",
+      "bar_source": "snap_continuous",
+      "problems": [
+        "exit_outside_held_bar_range"
+      ],
+      "roll_new_main_exit": false,
+      "conservative_target_gap_fill": true
+    }
+  ],
+  "bt_path": "D:\\AI\\cta-path-a\\archive\\R6\\replay_after_R6b_fix.json",
+  "snap_path": "D:\\AI\\cta-path-a\\archive\\snapshots\\bt_input_20261123_da9c8de64ab4.json",
+  "snap_loaded": true
+}

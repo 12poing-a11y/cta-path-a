@@ -46,7 +46,7 @@
 
 - **结论**：审计发现正式回测引擎至少有 5 类错误（分钟线合约错配造成 3 笔假止损、夜盘交易日归属、跳空止损按止损价成交、组合帽不计已有持仓、模拟账本缺日线兜底），现行 +5.78% / DD 6.74% 不可信。详见 `docs/UPGRADE_R_TRACK.md` §0–§2。
 - **优先级**：**轨 R 阶段 A（R0–R7）排在 F2 之前**。F2 仍按原门槛等样本，不受影响；但说「继续/升级」时，**先念轨 R 的下一刀，再念 F2 是否够样**。
-- **下一刀候选**：**R6c 复权信号/ATR**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；本刀只完成 R6a/b（换月假盈亏/假止损），R6c 与 R4 均未开。
+- **下一刀候选**：**R6c 复权信号/ATR**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b 已完成（R6b 经 R6b-fix 按真实主力合约返工），R6c 与 R4 均未开。
 - **硬围栏（轨 R 追加）**：R1–R7 完成前不提交 `historical_backtest_latest.json`、`paper_book_latest.json`；R7 重跑并签字后才更新 `configs/formal_rule_lock.json`；结果变差也不回退修复。
 - **对齐**：§3.2「组合帽 / next_open 纸面完全对齐」原为低优延后，现由轨 R 的 R4、R5 接手。
 
@@ -261,7 +261,18 @@ ext_open。
 
 ## 7. 近期迭代反馈（保留）
 
-### R6a/b 换月不得产生假盈亏和假止损（2026-11-24）
+### R6b-fix 按真实主力合约处理换月（2026-11-24）
+
+- **替代说明**：b195c25 的 R6b（日历合约字段 / OI+gap 换月、`roll_exit`）**已被本次返工取代**；R6a 保留并按新规则收口。b195c25 保留在历史中，未 amend。
+- **三个错误**：(1) roll_exit 在建仓日用建仓前一根收盘价平仓（TA 01-12 / JD 06-11 / L 09-11）；(2) 日历合约字段每月翻转被当成换月（MA 10-12 止损→止盈）；(3) 价差仍记入盈亏（last_mark 未平移）。
+- **做了**：新增 `research/data_quality/main_map.py`（某合约自己的日收盘与新浪连续收盘差 ≤1 tick 才记为主力，否则 None；仅用当日及之前数据）；`rolls.py` 重写；`simulate`：换月只认 `main_map[d]≠main_map[d−1]`；continuous_proxy 持 `held_contract`，主力已变则用持仓合约自己的 bar 判 stop/target/PnL，d+1 开盘旧合约开盘平、新合约开盘开，stop/target 与 last_mark 平移，成本 2×；取不到价格走不会变好的处理并计数；删除 roll_exit；断言：出场日≥入场日、入场日只能用成交 bar 起；审计 +3 项（出场早于入场 / continuous_proxy 出场价在持仓合约出场日 [low,high] 内 / 换月日出场价取自持仓合约），口径与引擎一致。补抓 222+80 个合约日线（`.cache/contracts/`，gitignore）。
+- **产物**：`archive/R6/replay_after_R6b_fix.json`、`audit_after_R6b_fix.json`、`R3_vs_R6ab_vs_R6bfix.json`、`_build_compare.py`、回填日志
+- **结果**：R3 10.026 / dd 6.904 / 65 → R6ab 12.449 / 4.64 / 64 → **R6b-fix 12.244 / 5.923 / 66**；main_map 5805 天 0 天为 None；真实数据里无 continuous_proxy 持仓被换月穿越（roll_shifted=0，平移逻辑由合成测试覆盖）
+- **验证**：pytest 475 全绿；金锁 legacy 仍 4.189/4.294/42 未改；audit checked=61 mismatches=1（CF 05-06 目标跳空按目标价保守成交，R3 约定，未放宽审计）；未写 formal latest；未 push
+- **风险/未做**：信号（含 signal 出场）仍基于带价差的连续序列，MA 04-14 的 signal 出场即由连续序列换月日假下跌触发（R6c）；R4 未做
+- **建议下一刀**：R6c（待明示）；或停
+
+### R6a/b 换月不得产生假盈亏和假止损（2026-11-24）· 已被 R6b-fix 取代（R6a 保留）
 
 - **做了**：磊决定 R6 提前到 R4 前；本刀只做 R6a/b。`rolls.is_roll_day`（合约字段变化或 OI≥15%+gap≥0.5%，仅 T−1）；`manage_bar_fixed` 换月废旧 basis_off→真合约 OHLC / `roll_unpriced`；continuous_proxy 移仓平移或 `roll_exit`；审计加换月不符 + `snap_proxied` 与引擎同口径；补抓 FG2605/MA2605/EG2609/EG2610 至 `.cache/contracts/`（gitignore）
 - **产物**：`archive/R6/replay_after_R6ab.json`、`audit_after_R6ab.json`、`R3_vs_R6ab.json`；R3→R6ab：10.026→12.449 / dd 6.904→4.64 / 65→64；roll_shifted=6、roll_exit=3、roll_unpriced=0；gap_stop 4→1（仅 EG 08-26 真实 −1.12R）；R<−2 止损=0

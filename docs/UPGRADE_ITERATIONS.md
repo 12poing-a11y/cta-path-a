@@ -46,7 +46,7 @@
 
 - **结论**：审计发现正式回测引擎至少有 5 类错误（分钟线合约错配造成 3 笔假止损、夜盘交易日归属、跳空止损按止损价成交、组合帽不计已有持仓、模拟账本缺日线兜底），现行 +5.78% / DD 6.74% 不可信。详见 `docs/UPGRADE_R_TRACK.md` §0–§2。
 - **优先级**：**轨 R 阶段 A（R0–R7）排在 F2 之前**。F2 仍按原门槛等样本，不受影响；但说「继续/升级」时，**先念轨 R 的下一刀，再念 F2 是否够样**。
-- **下一刀候选**：**R6c 复权信号/ATR**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b 已完成（R6b 经 R6b-fix 按真实主力合约返工），R6c 与 R4 均未开。
+- **下一刀候选**：**R4 组合帽**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b/c 已完成（R6b 经 R6b-fix 按真实主力合约返工，R6c 信号/ATR 去换月影响），R4 未开。
 - **硬围栏（轨 R 追加）**：R1–R7 完成前不提交 `historical_backtest_latest.json`、`paper_book_latest.json`；R7 重跑并签字后才更新 `configs/formal_rule_lock.json`；结果变差也不回退修复。
 - **对齐**：§3.2「组合帽 / next_open 纸面完全对齐」原为低优延后，现由轨 R 的 R4、R5 接手。
 
@@ -113,7 +113,7 @@
 | **S 会话** | Session brief | 多时段盘中 brief | 交 Grokbot | 本仓不做 |
 | **R 研究台旧项** | P1–P4 / A1–A3 | PBO/LSP/Gamma/组合风险/轻量 ML / 主力映射 | **主路径完成** | 封闭 |
 | **R 研究台旧项** | 官历/因子注册/聚类 | `UPGRADE_PLAN`「下次剩余」 | **低优延后** | 封闭 |
-| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R6a/b 完成 · 下一刀候选 R6c（复权信号/ATR）（待明示）** |
+| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R6 完成 · 下一刀候选 R4（待明示）** |
 | **R 审计升级** | R8–R12（阶段 B） | 长样本入口、出场预注册 5 组、风险预算生效、波动目标 + 回撤刹车、品种池 | **封闭** | 依赖 R7 |
 | **R 审计升级** | R13（阶段 C） | 席位因子长样本验证（回补 2019+） | **封闭** | 依赖 R8 |
 | **R 审计升级** | **R14 / K0–K7（阶段 C）** | carry 独立袖套：分月库 → 可交易曲线 → 持有指数 → 预登记 10 试验 → 闸门 → Shadow | **封闭** | K0–K2 可与阶段 A 并行（需明示）；K4 起依赖 R6、R8 |
@@ -260,6 +260,18 @@ ext_open。
 ---
 
 ## 7. 近期迭代反馈（保留）
+
+### R6c 信号和 ATR 不受换月影响 + 审计例外（2026-11-24）
+
+- **审计例外**：`audit_exit_vs_daily.py` 新增 `gap_through_target_conservative`——reason=target、当日开盘已越过止盈价（多 open≥target，空 open≤target）、成交价=止盈价（±0.5 跳）时，不再报 `exit_outside_held_bar_range`，单独计数并列出；止损及其他情形判定不变。CF 05-06 即此例（引擎按目标价保守成交，未改引擎）。
+- **做了**：新增 `research/data_quality/adjusted.py`（不做全样本向后复权价格水平，只用 ≤T 数据）：roll-free 日收益（换月日 = 新合约自己 close_d / close_{d−1} − 1，其余日 = 连续合约收益）；`ret_n` = 最近 n 个日收益连乘 −1（窗口内无换月/无回退时与原序列逐位相同）；同合约 TR（C*_{d−1} = 当天主力合约 d−1 收盘）、ATR14 = 最近 14 个 TR 均值；`vol_hist()` 给 vol_bypass 用的前向构建收益指数；价格缺失（main_map 为 None 或新合约 d−1 无价）退回原始连续口径并计数 `adj_fallback_days`。`simulate` 的入场 r20/r60 及门槛、信号失效出场、ATR14（止损止盈距离、手数、组合风险占用、roll_carry 候选）、vol_bypass 波动率改用该序列；成交、止损止盈判定、盯市仍用真实价格（R6b 的 held_contract 逻辑不变）；新参数 `adjusted_signals`（默认随 `freeze_fix`，=False 逐位复现 R6b-fix）；carry/席位等不动。
+- **main_map 全历史**：覆盖每个品种 hist 全部 275 根 bar（含 WARMUP）共 7425 个品种日，补抓 JD/SP 2510、2511、2512 六个合约（`backfill_R6c.log`）后 7425/7425 全部匹配，0 天 None（补抓前 JD 15 天、SP 3 天 None）。
+- **daily_update 信号位置**：`daily_update.py::_fetch_snapshot`（约 145–185 行）对 `fetch_history(u, n=120)` 的新浪原始连续序列直接调用 `historical_backtest.ret_n` / `atr14`，得 r20/r60/ATR，随后在同一函数里判方向与 `entry_block`。与回测的差异：无 main_map、无换月复权（换月日的价差仍计入 r20/r60/ATR），只有 120 根历史；回测 R6c 起用 roll-free 序列。本刀未改，留待后续对齐。
+- **产物**：`archive/R6/replay_after_R6c.json`、`audit_after_R6c.json`、`R6bfix_vs_R6c.json`（对比表、167 个换月日 raw/adj 差异、63 条逐笔变化含 K 线）、`_build_compare_R6c.py`、`_replay_R6bfix_rawsignals.json`（adjusted_signals=False 复现 R6b-fix，用于候选数对比）、`backfill_R6c.log`。
+- **结果**：R6b-fix 12.244 / dd 5.923 / 66 笔 → **R6c 12.744 / dd 4.124 / 64 笔**（target 26→23、stop 35→37、signal 5→4）；过门槛候选 1528→1612；adj_fallback_days=0；窗口内换月日 125 个，r20 方向翻转 28 次、r60 翻转 11 次；63 条逐笔变化里直接由信号变化造成的是入场门槛 13 笔 + 假 signal 出场 2 笔（MA 04-13、SA 08-14，均为换月日原始 r20 假翻转），ATR 变化 9 笔，其余为手数/路径连锁。
+- **验证**：pytest 484 全绿；金锁 legacy 4.189/4.294/42 未变；audit checked=60 mismatches=0（`gap_through_target_conservative`=1）；未写 formal latest；未 push
+- **风险/未做**：真实数据里仍无 continuous_proxy 持仓被换月穿越；daily_update 未对齐；R4 未做；逐笔「路径连锁」归因按"门槛判定一致→受前序权益/名额影响"推断，未逐笔重放证明
+- **建议下一刀**：R4（待明示）；或停
 
 ### R6b-fix 按真实主力合约处理换月（2026-11-24）
 

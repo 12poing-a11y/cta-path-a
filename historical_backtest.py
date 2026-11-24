@@ -1242,6 +1242,7 @@ def simulate(
     min_seat_days=MIN_SEAT_DAYS,
     entry_delivery_buffer=ENTRY_DELIVERY_BUFFER,
     entry_delivery_action=ENTRY_DELIVERY_ACTION,
+    adjusted_signals=None,
 ):
     if fill_price not in FILL_PRICES:
         raise ValueError(f"fill_price must be one of {FILL_PRICES}")
@@ -1418,6 +1419,28 @@ def simulate(
     main_map = None
     if freeze_fix and build_main_map is not None:
         main_map = build_main_map(series, root=ROOT, start=trade_dates[0])
+    # R6c: roll-free r20/r60, same-contract ATR14 and vol for SIGNALS only (fills, stops,
+    # target tests and mark-to-market keep using real prices).  ``adjusted_signals=False``
+    # reproduces the R6b-fix signal inputs (raw continuous series).
+    use_adjusted = bool(freeze_fix if adjusted_signals is None else adjusted_signals)
+    adj: dict = {}
+    if use_adjusted and main_map is not None:
+        from research.data_quality.adjusted import build_adjusted_pack
+
+        adj = build_adjusted_pack(series, main_map, root=ROOT)
+    signal_candidates_n = 0
+
+    def _ret(code_, hist_, i_, n_):
+        a_ = adj.get(code_)
+        return a_.ret_n(i_, n_) if a_ is not None else ret_n(hist_, i_, n_)
+
+    def _atr(code_, hist_, i_):
+        a_ = adj.get(code_)
+        return a_.atr14(i_) if a_ is not None else atr14(hist_, i_)
+
+    def _vol_hist(code_, hist_):
+        a_ = adj.get(code_)
+        return a_.vol_hist() if a_ is not None else hist_
 
     def _contract_day_bar(contract, day, cont_bar, main_now):
         """Real daily bar of ``contract`` on ``day`` (snapshot contract_*, then cache).
@@ -1649,7 +1672,7 @@ def simulate(
                         elif p["direction"] == "空" and fac["f"] >= 0:
                             reason, px = "signal", mbar["close"]
                 else:
-                    r20, r60 = ret_n(hist, i1, 20), ret_n(hist, i1, 60)
+                    r20, r60 = _ret(code, hist, i1, 20), _ret(code, hist, i1, 60)
                     if r20 is not None and r60 is not None:
                         long_ok = r20 > 0 and r60 > 0
                         short_ok = r20 < 0 and r60 < 0
@@ -1768,7 +1791,7 @@ def simulate(
                 if i is None or i < WARMUP:
                     continue
                 hist = s["hist"]
-                a = atr14(hist, i)
+                a = _atr(code, hist, i)
                 if a is None or a <= 0:
                     continue
                 fac = None
@@ -1780,7 +1803,7 @@ def simulate(
                     score = abs(fac["f"]) * 100.0
                     r20, r60 = score, score
                 else:
-                    r20, r60 = ret_n(hist, i, 20), ret_n(hist, i, 60)
+                    r20, r60 = _ret(code, hist, i, 20), _ret(code, hist, i, 60)
                     if r20 is None or r60 is None:
                         continue
                     if abs(r20) < min_r20 or abs(r60) < min_r60:
@@ -1788,6 +1811,7 @@ def simulate(
                     if not ((r20 > 0 and r60 > 0) or (r20 < 0 and r60 < 0)):
                         continue
                     direction = "多" if r20 > 0 else "空"
+                signal_candidates_n += 1
                 peers = []
                 if mode == "climax":
                     bucket = s["meta"].get("bucket")
@@ -1797,7 +1821,7 @@ def simulate(
                         oi = idx[other].get(d)
                         if oi is None:
                             continue
-                        peers.append(ret_n(other_s["hist"], oi, 20))
+                        peers.append(_ret(other, other_s["hist"], oi, 20))
                 block_mode = "seats" if mode == "roll" else mode
                 member_used = member
                 if (
@@ -1843,7 +1867,7 @@ def simulate(
                         bypass_counts[by_label] = bypass_counts.get(by_label, 0) + 1
                 if vbypass.get("enabled"):
                     vol_reason = vol_entry_block(
-                        hist,
+                        _vol_hist(code, hist),
                         i,
                         enabled=True,
                         action=str(vbypass.get("action") or "observe"),
@@ -2017,7 +2041,7 @@ def simulate(
                     if gap is None or abs(gap) < 0.5:
                         continue
                     hist = s["hist"]
-                    a = atr14(hist, i)
+                    a = _atr(code, hist, i)
                     if a is None or a <= 0:
                         continue
                     direction = "空" if gap > 0 else "多"
@@ -2061,7 +2085,7 @@ def simulate(
                     hm = float(series[held_code]["meta"]["mult"])
                     hl = abs(int(held["lots"]))
                     used_gross += hl * hx * hm
-                    ha = atr14(series[held_code]["hist"], hi) or float(held.get("atr") or 0)
+                    ha = _atr(held_code, series[held_code]["hist"], hi) or float(held.get("atr") or 0)
                     used_risk += hl * float(ha) * hm
                 eq_base = sizing_eq if sizing_eq > 0 else 1.0
                 gross_left = max(0.0, float(max_gross_pct) - used_gross / eq_base * 100.0)
@@ -2300,6 +2324,40 @@ def simulate(
         "held_contract_missing": held_missing_n,
         "roll_held_bar_days": roll_held_bar_days_n,
         "roll_open_gap_stops": roll_open_gap_stops_n,
+        "adjusted_signals": bool(adj),
+        "signal_candidates": signal_candidates_n,
+        "adj_fallback_days": sum(a_.fallback_days() for a_ in adj.values()) if adj else None,
+        "adj_fallback_days_in_window": (
+            sum(a_.fallback_days(since=trade_dates[0]) for a_ in adj.values()) if adj else None
+        ),
+        "adj_roll_days": (
+            {c_: a_.roll_days() for c_, a_ in sorted(adj.items()) if a_.roll_days()} if adj else None
+        ),
+        "adj_roll_days_in_window": (
+            {
+                c_: a_.roll_days(since=trade_dates[0])
+                for c_, a_ in sorted(adj.items())
+                if a_.roll_days(since=trade_dates[0])
+            }
+            if adj
+            else None
+        ),
+        "main_map_full_history": None
+        if main_map is None
+        else {
+            "days_total": sum(len(m_) for m_ in main_map.maps.values()),
+            "none_days_total": sum(1 for m_ in main_map.maps.values() for v_ in m_.values() if v_ is None),
+            "coverage": {
+                c_: {
+                    "days": len(m_),
+                    "none_days": sum(1 for v_ in m_.values() if v_ is None),
+                    "coverage": round(sum(1 for v_ in m_.values() if v_ is not None) / len(m_), 4)
+                    if m_
+                    else None,
+                }
+                for c_, m_ in sorted(main_map.maps.items())
+            },
+        },
         "main_map": None
         if main_map is None
         else {
@@ -2416,6 +2474,7 @@ def _simulate_cfg(
     min_seat_days=None,
     entry_delivery_buffer=None,
     entry_delivery_action=None,
+    adjusted_signals=None,
 ):
     cfg = p["cfg"]
     print(f"[bt] mode={mode} ifind_so_far={usage_report()['count']}")
@@ -2453,6 +2512,7 @@ def _simulate_cfg(
         min_seat_days=(p.get("min_seat_days", MIN_SEAT_DAYS) if min_seat_days is None else min_seat_days),
         entry_delivery_buffer=(p.get("entry_delivery_buffer", ENTRY_DELIVERY_BUFFER) if entry_delivery_buffer is None else entry_delivery_buffer),
         entry_delivery_action=str(p.get("entry_delivery_action", ENTRY_DELIVERY_ACTION) if entry_delivery_action is None else entry_delivery_action),
+        adjusted_signals=adjusted_signals,
     )
 
 

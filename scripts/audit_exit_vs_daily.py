@@ -49,6 +49,41 @@ def _tick_map(root: Path) -> dict[str, float]:
     return out
 
 
+def gap_through_target_conservative(
+    *,
+    direction: str,
+    reason: str,
+    target: Any,
+    open_px: float | None,
+    exit_px: float | None,
+    tick: float,
+) -> bool:
+    """R6c audit exemption (``gap_through_target_conservative``).
+
+    ``reason == target``, the day already OPENED through the target (long: open >= target,
+    short: open <= target) and the recorded fill is the target price (+-0.5 tick).
+    The engine fills such a gap at the target, which is worse than the real open, so the
+    price is outside the bar's [low, high] by construction.  Never applies to stops.
+    """
+    if reason != "target" or target is None or open_px is None or exit_px is None:
+        return False
+    try:
+        tgt = float(target)
+        op = float(open_px)
+        ex = float(exit_px)
+    except (TypeError, ValueError):
+        return False
+    tol = max(0.5 * float(tick or 0.0), _EPS)
+    if abs(ex - tgt) > tol + _EPS:
+        return False
+    d = str(direction or "")
+    if d == "多":
+        return op >= tgt - _EPS
+    if d == "空":
+        return op <= tgt + _EPS
+    return False
+
+
 def _bar_by_date(bars: list[dict] | None, day: str) -> dict | None:
     if not bars:
         return None
@@ -348,6 +383,8 @@ def audit_bt(
     skipped_no_bar = 0
     n_order = n_range = n_roll = 0
     range_skipped = 0
+    n_gap_through = 0
+    gap_through_trades: list[dict] = []
     for t in bt.get("closed_pnls") or []:
         reason = str(t.get("reason") or "")
         code = str(t.get("code") or "")
@@ -439,16 +476,20 @@ def audit_bt(
         ):
             n_range += 1
             if not (o_h_l_c[2] - _EPS <= exit_px <= o_h_l_c[1] + _EPS):
-                problems.append("exit_outside_held_bar_range")
-                # Informational only (still counted as a mismatch): R3 convention fills a
-                # target that the bar gapped through AT the target, i.e. at a price worse
-                # than anything the bar traded — never better than reality.
-                d_ = str(t.get("direction") or "")
-                if reason == "target" and (
-                    (d_ == "多" and exit_px < o_h_l_c[2] - _EPS)
-                    or (d_ == "空" and exit_px > o_h_l_c[1] + _EPS)
+                # R6c exemption (the ONLY one): R3 convention fills a target that the day
+                # opened through AT the target price — worse than the open, never better.
+                # Stops and every other case keep the strict range test.
+                if gap_through_target_conservative(
+                    direction=str(t.get("direction") or ""),
+                    reason=reason,
+                    target=t.get("target"),
+                    open_px=o_h_l_c[0],
+                    exit_px=exit_px,
+                    tick=float(ticks.get(code) or 0),
                 ):
                     conservative_target_gap = True
+                else:
+                    problems.append("exit_outside_held_bar_range")
 
         # (iii) roll day: exit priced off the NEW main while holding the old contract
         if (
@@ -503,6 +544,23 @@ def audit_bt(
                 if in_new and not in_old:
                     problems.append("roll_day_exit_from_new_main")
 
+        if conservative_target_gap:
+            n_gap_through += 1
+            gap_through_trades.append(
+                {
+                    "date": day,
+                    "code": code,
+                    "direction": t.get("direction"),
+                    "entry_date": entry_day or None,
+                    "target": t.get("target"),
+                    "exit": exit_px,
+                    "open": o_h_l_c[0] if o_h_l_c else None,
+                    "high": o_h_l_c[1] if o_h_l_c else None,
+                    "low": o_h_l_c[2] if o_h_l_c else None,
+                    "close": o_h_l_c[3] if o_h_l_c else None,
+                    "bar_source": source,
+                }
+            )
         if problems:
             o_, h_, l_, c_ = o_h_l_c if o_h_l_c is not None else (None, None, None, None)
             mismatches.append(
@@ -526,18 +584,14 @@ def audit_bt(
                     "bar_source": source,
                     "problems": problems,
                     "roll_new_main_exit": "roll_day_exit_from_new_main" in problems,
-                    "conservative_target_gap_fill": conservative_target_gap,
                 }
             )
         _ = did_check
     return {
         "checked": checked,
         "mismatches": len(mismatches),
-        "mismatches_excluding_conservative_target_gap": sum(
-            1
-            for m in mismatches
-            if not (m["conservative_target_gap_fill"] and m["problems"] == ["exit_outside_held_bar_range"])
-        ),
+        "gap_through_target_conservative": n_gap_through,
+        "gap_through_target_conservative_trades": gap_through_trades,
         "skipped_proxied": skipped_proxied,
         "skipped_no_bar": skipped_no_bar,
         "checks": {

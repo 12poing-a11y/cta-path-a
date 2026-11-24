@@ -1,0 +1,1 @@
+{"kind": "deposit", "asof": null, "amount": 1000000.0, "source": "MANUAL", "client_event_id": "bootstrap:A01", "note": "initial_cash", "schema": "cta-vp-ledger-v1", "account_id": "A01", "recorded_at": "2026-11-23T21:29:54+08:00", "event_id": "ba48ce522d246338e034"}

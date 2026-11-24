@@ -496,11 +496,61 @@
     "ok": true,
     "schema": "cta-gamma-iv-oi-v1",
     "product": "TA",
-    "n_days": 0,
-    "regime_counts": {},
+    "n_days": 6,
+    "regime_counts": {
+      "iv_down_oi_up": 1,
+      "iv_up_oi_up": 3,
+      "iv_down_oi_down": 1
+    },
     "live_trading": false,
     "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
-    "changes_tail": []
+    "changes_tail": [
+      {
+        "date": "2026-11-06",
+        "d_iv": -0.020858,
+        "d_oi": 7470.0,
+        "regime": "iv_down_oi_up",
+        "call_put_oi_same_sign": false,
+        "iv": 0.437115,
+        "oi": 414314.0
+      },
+      {
+        "date": "2026-11-10",
+        "d_iv": 0.094154,
+        "d_oi": 58438.0,
+        "regime": "iv_up_oi_up",
+        "call_put_oi_same_sign": true,
+        "iv": 0.531269,
+        "oi": 472752.0
+      },
+      {
+        "date": "2026-11-19",
+        "d_iv": -0.199961,
+        "d_oi": -168290.0,
+        "regime": "iv_down_oi_down",
+        "call_put_oi_same_sign": true,
+        "iv": 0.331308,
+        "oi": 304462.0
+      },
+      {
+        "date": "2026-11-20",
+        "d_iv": 0.006608,
+        "d_oi": 11379.0,
+        "regime": "iv_up_oi_up",
+        "call_put_oi_same_sign": true,
+        "iv": 0.337916,
+        "oi": 315841.0
+      },
+      {
+        "date": "2026-11-23",
+        "d_iv": 0.021579,
+        "d_oi": 8157.0,
+        "regime": "iv_up_oi_up",
+        "call_put_oi_same_sign": true,
+        "iv": 0.359495,
+        "oi": 323998.0
+      }
+    ]
   },
   "n_daily_bars": 4840,
   "live_trading": false,

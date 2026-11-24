@@ -1,0 +1,17 @@
+{
+  "schema": "cta-vp-account-v1",
+  "account_id": "A01",
+  "name": "模拟",
+  "currency": "CNY",
+  "status": "active",
+  "initial_cash": 1000000.0,
+  "created_event_id": "ba48ce522d246338e034",
+  "ACCOUNT_MODE": "RESEARCH_ONLY",
+  "MARGIN_STATUS": "UNVERIFIED",
+  "AUTO_OPEN_ALLOWED": false,
+  "AUTO_CLOSE_ALLOWED": false,
+  "SIGNAL_INGEST_ALLOWED": false,
+  "margin_complete": true,
+  "flags": [],
+  "n_events": 1
+}

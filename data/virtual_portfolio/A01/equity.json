@@ -1,0 +1,14 @@
+{
+  "schema": "cta-vp-equity-v1",
+  "account_id": "A01",
+  "asof": null,
+  "cash": 1000000.0,
+  "unrealized_pnl": 0.0,
+  "realized_pnl": 0.0,
+  "equity": 1000000.0,
+  "margin_used": 0.0,
+  "available": 1000000.0,
+  "margin_complete": true,
+  "flags": [],
+  "MARGIN_STATUS": "UNVERIFIED"
+}

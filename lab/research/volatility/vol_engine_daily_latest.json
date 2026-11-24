@@ -2,7 +2,7 @@
   "schema": "cta-vol-engine-daily-v1",
   "model_version": "vol_engine_v1.4",
   "ok": true,
-  "built_at": "2026-11-23T21:24:55+08:00",
+  "built_at": "2026-11-24T15:48:46+08:00",
   "asof_requested": null,
   "codes": [
     "CF"

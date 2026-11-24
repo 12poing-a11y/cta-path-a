@@ -1,6 +1,6 @@
 {
   "schema": "cta-options-upgrade-gate-v1",
-  "built_at": "2026-11-22T21:59:36+08:00",
+  "built_at": "2026-11-23T21:20:09+08:00",
   "ready": false,
   "next_upgrade_id": "F2",
   "next_upgrade_title": "含 Bid/Ask 的信用价差研究 BT",
@@ -18,33 +18,38 @@
   "by_code": {
     "CF": {
       "code": "CF",
-      "n_snapshots": 7,
-      "n_bidask_days": 1,
+      "n_snapshots": 12,
+      "n_bidask_days": 2,
       "bidask_dates": [
-        "2026-11-15"
+        "2026-11-15",
+        "2026-11-23"
       ],
-      "latest_bidask": "2026-11-15"
+      "latest_bidask": "2026-11-23"
     },
     "SR": {
       "code": "SR",
-      "n_snapshots": 1,
-      "n_bidask_days": 0,
-      "bidask_dates": [],
-      "latest_bidask": null
+      "n_snapshots": 4,
+      "n_bidask_days": 1,
+      "bidask_dates": [
+        "2026-11-23"
+      ],
+      "latest_bidask": "2026-11-23"
     },
     "MA": {
       "code": "MA",
-      "n_snapshots": 1,
-      "n_bidask_days": 0,
-      "bidask_dates": [],
-      "latest_bidask": null
+      "n_snapshots": 4,
+      "n_bidask_days": 1,
+      "bidask_dates": [
+        "2026-11-23"
+      ],
+      "latest_bidask": "2026-11-23"
     }
   },
   "gap_reasons": [
-    "CF bidask_days=1/10",
-    "CF bidask_days=1/5",
-    "SR bidask_days=0/5",
-    "MA bidask_days=0/5"
+    "CF bidask_days=2/10",
+    "CF bidask_days=2/5",
+    "SR bidask_days=1/5",
+    "MA bidask_days=1/5"
   ],
-  "reminder": "【待升级】下次确定开 F2：含 Bid/Ask 的信用价差研究 BT。样本未够：CF bidask_days=1/10; CF bidask_days=1/5; SR bidask_days=0/5; MA bidask_days=0/5。内容预告：用已落盘的活链 Bid/Ask 快照跑 credit_vertical 研究回测（pricing_mode=bid_ask），与 settle_discount 对照；策略状态仍最高 WARN，待人工评审；不写 Path-A paper_book / 正式 BT / seats。"
+  "reminder": "【待升级】下次确定开 F2：含 Bid/Ask 的信用价差研究 BT。样本未够：CF bidask_days=2/10; CF bidask_days=2/5; SR bidask_days=1/5; MA bidask_days=1/5。内容预告：用已落盘的活链 Bid/Ask 快照跑 credit_vertical 研究回测（pricing_mode=bid_ask），与 settle_discount 对照；策略状态仍最高 WARN，待人工评审；不写 Path-A paper_book / 正式 BT / seats。"
 }

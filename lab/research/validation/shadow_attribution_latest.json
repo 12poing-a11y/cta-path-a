@@ -1,33 +1,33 @@
 {
   "ok": true,
   "schema": "cta-shadow-attribution-v1",
-  "built_at": "2026-11-22T22:06:16+08:00",
+  "built_at": "2026-11-23T21:19:48+08:00",
   "live_trading": false,
   "source_bt": "historical_backtest_latest.json",
   "bt_window": {
-    "start": "2025-12-23",
-    "end": "2026-11-13"
+    "start": "2025-12-30",
+    "end": "2026-11-20"
   },
-  "n_trades": 69,
+  "n_trades": 66,
   "min_cell": 5,
-  "proxy_entry_share": 0.5942,
-  "cost_yuan": 5219.61,
+  "proxy_entry_share": 0.6061,
+  "cost_yuan": 5134.02,
   "tables": {
     "by_code": [
       {
         "key": "M",
-        "n": 10,
-        "win_rate": 0.2,
-        "avg_R": -0.4,
-        "sum_R": -4.0,
+        "n": 9,
+        "win_rate": 0.2222,
+        "avg_R": -0.3333,
+        "sum_R": -3.0,
         "enough": true
       },
       {
         "key": "I",
-        "n": 8,
-        "win_rate": 0.25,
-        "avg_R": -0.25,
-        "sum_R": -2.0,
+        "n": 7,
+        "win_rate": 0.4286,
+        "avg_R": 0.2857,
+        "sum_R": 2.0,
         "enough": true
       },
       {
@@ -39,19 +39,19 @@
         "enough": true
       },
       {
-        "key": "EB",
-        "n": 6,
-        "win_rate": 0.6667,
-        "avg_R": 0.8433,
-        "sum_R": 5.06,
-        "enough": true
-      },
-      {
         "key": "SA",
         "n": 6,
         "win_rate": 0.8333,
         "avg_R": 1.2867,
         "sum_R": 7.72,
+        "enough": true
+      },
+      {
+        "key": "EB",
+        "n": 5,
+        "win_rate": 0.8,
+        "avg_R": 1.084,
+        "sum_R": 5.42,
         "enough": true
       },
       {
@@ -63,27 +63,19 @@
         "enough": true
       },
       {
+        "key": "P",
+        "n": 4,
+        "win_rate": 0.25,
+        "avg_R": -0.25,
+        "sum_R": -1.0,
+        "enough": false
+      },
+      {
         "key": "CF",
         "n": 3,
         "win_rate": 0.6667,
         "avg_R": 1.0,
         "sum_R": 3.0,
-        "enough": false
-      },
-      {
-        "key": "P",
-        "n": 3,
-        "win_rate": 0.0,
-        "avg_R": -1.0,
-        "sum_R": -3.0,
-        "enough": false
-      },
-      {
-        "key": "JM",
-        "n": 3,
-        "win_rate": 1.0,
-        "avg_R": 1.3433,
-        "sum_R": 4.03,
         "enough": false
       },
       {
@@ -95,6 +87,14 @@
         "enough": false
       },
       {
+        "key": "BU",
+        "n": 3,
+        "win_rate": 1.0,
+        "avg_R": 2.0,
+        "sum_R": 6.0,
+        "enough": false
+      },
+      {
         "key": "PP",
         "n": 3,
         "win_rate": 0.0,
@@ -103,11 +103,11 @@
         "enough": false
       },
       {
-        "key": "L",
-        "n": 2,
+        "key": "EG",
+        "n": 3,
         "win_rate": 0.0,
         "avg_R": -1.0,
-        "sum_R": -2.0,
+        "sum_R": -3.0,
         "enough": false
       },
       {
@@ -119,19 +119,11 @@
         "enough": false
       },
       {
-        "key": "BU",
+        "key": "JM",
         "n": 2,
         "win_rate": 1.0,
-        "avg_R": 2.0,
-        "sum_R": 4.0,
-        "enough": false
-      },
-      {
-        "key": "EG",
-        "n": 2,
-        "win_rate": 0.0,
-        "avg_R": -1.0,
-        "sum_R": -2.0,
+        "avg_R": 1.015,
+        "sum_R": 2.03,
         "enough": false
       },
       {
@@ -170,96 +162,96 @@
     "by_bucket": [
       {
         "key": "能化",
-        "n": 35,
-        "win_rate": 0.4,
-        "avg_R": 0.1366,
-        "sum_R": 4.78,
+        "n": 34,
+        "win_rate": 0.4412,
+        "avg_R": 0.2394,
+        "sum_R": 8.14,
         "enough": true
       },
       {
         "key": "农产品",
         "n": 22,
-        "win_rate": 0.3182,
-        "avg_R": -0.0455,
-        "sum_R": -1.0,
+        "win_rate": 0.3636,
+        "avg_R": 0.0909,
+        "sum_R": 2.0,
         "enough": true
       },
       {
         "key": "黑色",
-        "n": 12,
-        "win_rate": 0.5,
-        "avg_R": 0.3358,
-        "sum_R": 4.03,
+        "n": 10,
+        "win_rate": 0.6,
+        "avg_R": 0.603,
+        "sum_R": 6.03,
         "enough": true
       }
     ],
     "by_side": [
       {
         "key": "long",
-        "n": 43,
-        "win_rate": 0.3953,
-        "avg_R": 0.1493,
-        "sum_R": 6.42,
+        "n": 44,
+        "win_rate": 0.3864,
+        "avg_R": 0.1232,
+        "sum_R": 5.42,
         "enough": true
       },
       {
         "key": "short",
-        "n": 26,
-        "win_rate": 0.3846,
-        "avg_R": 0.0535,
-        "sum_R": 1.39,
+        "n": 22,
+        "win_rate": 0.5455,
+        "avg_R": 0.4886,
+        "sum_R": 10.75,
         "enough": true
       }
     ],
     "by_exit_reason": [
       {
         "key": "stop",
-        "n": 41,
+        "n": 37,
         "win_rate": 0.0,
         "avg_R": -1.0,
-        "sum_R": -41.0,
+        "sum_R": -37.0,
         "enough": true
       },
       {
         "key": "target",
-        "n": 24,
+        "n": 26,
         "win_rate": 1.0,
         "avg_R": 2.0,
-        "sum_R": 48.0,
+        "sum_R": 52.0,
         "enough": true
       },
       {
         "key": "signal",
-        "n": 4,
-        "win_rate": 0.75,
-        "avg_R": 0.2025,
-        "sum_R": 0.81,
+        "n": 3,
+        "win_rate": 1.0,
+        "avg_R": 0.39,
+        "sum_R": 1.17,
         "enough": false
       }
     ],
     "by_hold_bucket": [
       {
         "key": "0-1d",
-        "n": 32,
-        "win_rate": 0.3125,
-        "avg_R": -0.1025,
-        "sum_R": -3.28,
+        "n": 34,
+        "win_rate": 0.3529,
+        "avg_R": 0.0212,
+        "sum_R": 0.72,
         "enough": true
       },
       {
         "key": "4-7d",
-        "n": 19,
-        "win_rate": 0.4737,
-        "avg_R": 0.4547,
-        "sum_R": 8.64,
+        "n": 17,
+        "win_rate": 0.5294,
+        "avg_R": 0.5882,
+        "sum_R": 10.0,
         "enough": true
       },
       {
         "key": "2-3d",
-        "n": 13,
-        "win_rate": 0.2308,
-        "avg_R": -0.3077,
-        "sum_R": -4.0,
+        "n": 10,
+        "win_rate": 0.3,
+        "avg_R": -0.1,
+        "sum_R": -1.0,
         "enough": true
       },
       {
@@ -282,62 +274,62 @@
     "by_fill_basis": [
       {
         "key": "continuous_proxy",
-        "n": 41,
-        "win_rate": 0.4146,
-        "avg_R": 0.2127,
-        "sum_R": 8.72,
+        "n": 40,
+        "win_rate": 0.45,
+        "avg_R": 0.318,
+        "sum_R": 12.72,
         "enough": true
       },
       {
         "key": "contract",
-        "n": 28,
-        "win_rate": 0.3571,
-        "avg_R": -0.0325,
-        "sum_R": -0.91,
+        "n": 26,
+        "win_rate": 0.4231,
+        "avg_R": 0.1327,
+        "sum_R": 3.45,
         "enough": true
       }
     ],
     "by_sleeve": [
       {
         "key": "path_a_rr2",
-        "n": 69,
-        "win_rate": 0.3913,
-        "avg_R": 0.1132,
-        "sum_R": 7.81,
+        "n": 66,
+        "win_rate": 0.4394,
+        "avg_R": 0.245,
+        "sum_R": 16.17,
         "enough": true
       }
     ],
     "by_regime": [
       {
         "key": "trend_up",
-        "n": 28,
-        "win_rate": 0.4286,
-        "avg_R": 0.2857,
-        "sum_R": 8.0,
+        "n": 29,
+        "win_rate": 0.4138,
+        "avg_R": 0.2414,
+        "sum_R": 7.0,
         "enough": true
       },
       {
         "key": "vol_expand",
-        "n": 21,
-        "win_rate": 0.2857,
-        "avg_R": -0.279,
-        "sum_R": -5.86,
+        "n": 19,
+        "win_rate": 0.3684,
+        "avg_R": -0.0453,
+        "sum_R": -0.86,
         "enough": true
       },
       {
         "key": "trend_down",
-        "n": 17,
-        "win_rate": 0.4706,
-        "avg_R": 0.2959,
-        "sum_R": 5.03,
+        "n": 15,
+        "win_rate": 0.6,
+        "avg_R": 0.6687,
+        "sum_R": 10.03,
         "enough": true
       },
       {
         "key": "chop",
         "n": 3,
         "win_rate": 0.3333,
-        "avg_R": 0.2133,
-        "sum_R": 0.64,
+        "avg_R": 0.0,
+        "sum_R": 0.0,
         "enough": false
       }
     ],
@@ -347,35 +339,35 @@
         "regime": "chop",
         "n": 3,
         "win_rate": 0.3333,
-        "avg_R": 0.2133,
-        "sum_R": 0.64,
+        "avg_R": 0.0,
+        "sum_R": 0.0,
         "enough": false
       },
       {
         "sleeve": "path_a_rr2",
         "regime": "trend_down",
-        "n": 17,
-        "win_rate": 0.4706,
-        "avg_R": 0.2959,
-        "sum_R": 5.03,
+        "n": 15,
+        "win_rate": 0.6,
+        "avg_R": 0.6687,
+        "sum_R": 10.03,
         "enough": true
       },
       {
         "sleeve": "path_a_rr2",
         "regime": "trend_up",
-        "n": 28,
-        "win_rate": 0.4286,
-        "avg_R": 0.2857,
-        "sum_R": 8.0,
+        "n": 29,
+        "win_rate": 0.4138,
+        "avg_R": 0.2414,
+        "sum_R": 7.0,
         "enough": true
       },
       {
         "sleeve": "path_a_rr2",
         "regime": "vol_expand",
-        "n": 21,
-        "win_rate": 0.2857,
-        "avg_R": -0.279,
-        "sum_R": -5.86,
+        "n": 19,
+        "win_rate": 0.3684,
+        "avg_R": -0.0453,
+        "sum_R": -0.86,
         "enough": true
       }
     ]

@@ -1,0 +1,701 @@
+{
+  "ok": true,
+  "asof": "20261123",
+  "generated_at": "2026-11-24T07:48:43.366896+00:00",
+  "model_tag": "desk_total_board_v1",
+  "live_trading": false,
+  "n": 16,
+  "portfolio": {
+    "结论": "偏空研究",
+    "note": "总盘面偏空 2 vs 偏多 0；观望 14；情绪震荡",
+    "label": "偏空研究 · 2",
+    "counts": {
+      "观望": 14,
+      "偏空研究": 2
+    }
+  },
+  "sentiment": {
+    "direction": "震荡",
+    "conviction_pct": 14.1,
+    "label": "震荡 · 把握 14%",
+    "p3": -0.1284,
+    "n_long": 2,
+    "n_short": 8,
+    "breadth": 0.6
+  },
+  "predictions": [
+    {
+      "id": "PRED-20261123-AG",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "AG",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "—",
+        "align": "—",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 13608.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-AL",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "AL",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "多",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-CF",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "CF",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "—",
+        "align": "—",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 15780.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-FG",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "FG",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 836.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-FU",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "FU",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 4911.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-I",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "I",
+      "direction": "空",
+      "conclusion": "偏空研究",
+      "conviction_pct": 14.1,
+      "note": "仅Path-A有方向；波动观望",
+      "falsify": "预测方向空被证伪：；或到期收益符号相反",
+      "sources": {
+        "path_a": "空",
+        "sentiment": "—",
+        "align": "仅Path-A",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-L",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "L",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 8725.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-MA",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "MA",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "—",
+        "align": "—",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 3191.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-P",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "P",
+      "direction": "空",
+      "conclusion": "偏空研究",
+      "conviction_pct": 14.1,
+      "note": "Path-A与情绪同向；波动未给独立方向",
+      "falsify": "预测方向空被证伪：；或到期收益符号相反",
+      "sources": {
+        "path_a": "空",
+        "sentiment": "空",
+        "align": "同向",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 9556.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-RB",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "RB",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "多",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 3059.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-RU",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "RU",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "—",
+        "align": "—",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 19530.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-SA",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "SA",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 935.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-SR",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "SR",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 5383.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-SS",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "SS",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": null,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-TA",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "TA",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "—",
+        "align": "—",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 6458.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    },
+    {
+      "id": "PRED-20261123-V",
+      "asof": "20261123",
+      "asof_iso": "2026-11-23",
+      "code": "V",
+      "direction": "观望",
+      "conclusion": "观望",
+      "conviction_pct": 14.1,
+      "note": "Path-A与波动均无清晰方向",
+      "falsify": "出现同向Path-A+情绪且波动非硬否决时方可改方向",
+      "sources": {
+        "path_a": "—",
+        "sentiment": "空",
+        "align": "仅情绪",
+        "vol": "观望"
+      },
+      "horizons": [
+        1,
+        3,
+        5
+      ],
+      "entry_close": 5016.0,
+      "scores": {
+        "1": {
+          "status": "pending",
+          "horizon_days": 1
+        },
+        "3": {
+          "status": "pending",
+          "horizon_days": 3
+        },
+        "5": {
+          "status": "pending",
+          "horizon_days": 5
+        }
+      },
+      "model_tag": "desk_total_board_v1",
+      "git_sha": "42cb2e9",
+      "live_trading": false,
+      "created_at": "2026-11-24T07:48:43.294574+00:00",
+      "updated_at": "2026-11-24T07:48:43.294574+00:00"
+    }
+  ],
+  "note": "纸面预测日志；不改 Path-A 入场。到期由 prediction_score 归因。"
+}

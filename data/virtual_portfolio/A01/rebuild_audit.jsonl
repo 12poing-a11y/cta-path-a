@@ -1,0 +1,2 @@
+{"ts": "2026-11-23T21:29:54+08:00", "account_id": "A01", "n_events": 1, "equity": 1000000.0, "note": "create_account"}
+{"ts": "2026-11-23T21:29:57+08:00", "account_id": "A01", "n_events": 1, "equity": 1000000.0, "note": "desk_manual_rebuild"}

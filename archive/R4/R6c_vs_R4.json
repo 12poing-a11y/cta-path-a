@@ -1,0 +1,2670 @@
+{
+  "table": {
+    "R6c": {
+      "ret_pct": 12.744,
+      "gross_ret_pct": 15.434,
+      "max_dd_pct": 4.124,
+      "closed_trades": 64,
+      "exits": {
+        "target": 23,
+        "stop": 37,
+        "signal": 4
+      },
+      "cost_yuan": 5379.74,
+      "gross_pct_median": 19.08,
+      "gross_pct_max": 113.64,
+      "gross_pct_days_gt50": 43,
+      "gross_pct_days_gt55": 35,
+      "avg_held": 0.94,
+      "median_trade_risk_pct": 0.458,
+      "caps_entry_gross_max": 113.52,
+      "caps_entry_risk_max": 3.17,
+      "caps_scaled_n": null,
+      "caps_drift_days_gt55": 35,
+      "entry_days_gross_gt50": 17,
+      "entry_days_risk_gt8": 0
+    },
+    "R4": {
+      "ret_pct": -1.053,
+      "gross_ret_pct": 1.005,
+      "max_dd_pct": 4.552,
+      "closed_trades": 56,
+      "exits": {
+        "target": 18,
+        "stop": 34,
+        "signal": 4
+      },
+      "cost_yuan": 4114.88,
+      "gross_pct_median": 19.24,
+      "gross_pct_max": 49.96,
+      "gross_pct_days_gt50": 0,
+      "gross_pct_days_gt55": 0,
+      "avg_held": 0.83,
+      "median_trade_risk_pct": 0.436,
+      "caps_entry_gross_max": 49.65,
+      "caps_entry_risk_max": 2.64,
+      "caps_scaled_n": 52,
+      "caps_drift_days_gt55": 0,
+      "entry_days_gross_gt50": 0,
+      "entry_days_risk_gt8": 0
+    },
+    "audit_mismatches_R4": 0,
+    "audit_checked_R4": 52
+  },
+  "changes_R6c_to_R4": [
+    {
+      "trade": {
+        "code": "CF",
+        "direction": "多",
+        "entry_date": "2026-01-13",
+        "signal_day": "2026-01-12",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 14625.0,
+        "exit": 14441.0,
+        "date": "2026-01-20",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 14441.0,
+        "target": 14993.0
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "CF",
+          "TA"
+        ],
+        "gross_pct": 49.42,
+        "risk_pct": 0.89
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -920.0,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "P",
+        "direction": "多",
+        "entry_date": "2026-01-30",
+        "signal_day": "2026-01-29",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 9362.0,
+        "exit": 9248.6286,
+        "date": "2026-01-30",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 9248.6286,
+        "target": 9588.7429
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "EB",
+          "P"
+        ],
+        "gross_pct": 66.72,
+        "risk_pct": 1.22
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -1133.71,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 66.7% gross (>50%): the entry only fitted because the old call ignored held positions"
+      ]
+    },
+    {
+      "trade": {
+        "code": "JM",
+        "direction": "空",
+        "entry_date": "2026-02-12",
+        "signal_day": "2026-02-11",
+        "bucket": "黑色"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 1127.0,
+        "exit": 1126.0,
+        "date": "2026-02-25",
+        "reason": "signal",
+        "R": 0.03,
+        "stop": 1162.0857,
+        "target": 1056.8286
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "EB",
+          "JM"
+        ],
+        "gross_pct": 52.67,
+        "risk_pct": 1.91
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": 60.0,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 52.7% gross (>50%): the entry only fitted because the old call ignored held positions"
+      ]
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-03-16",
+        "signal_day": "2026-03-13",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 3123.0,
+        "exit": 3069.1714,
+        "date": "2026-03-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3069.1714,
+        "target": 3230.6571
+      },
+      "R4": {
+        "lots": 1,
+        "entry": 3123.0,
+        "exit": 3069.1714,
+        "date": "2026-03-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3069.1714,
+        "target": 3230.6571
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-03-13",
+        "new": [
+          "M"
+        ],
+        "held_before": [
+          "V"
+        ],
+        "gross_pct": 29.85,
+        "risk_pct": 0.89
+      },
+      "pnl_yuan": {
+        "R6c": -1076.57,
+        "R4": -538.29
+      },
+      "kind": "scaled",
+      "why": [
+        "lots 2 -> 1 to fit remaining gross/risk quota after the already-open book"
+      ]
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-03-17",
+        "signal_day": "2026-03-16",
+        "bucket": "农产品"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 2,
+        "entry": 3055.0,
+        "exit": 2997.1714,
+        "date": "2026-03-23",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2997.1714,
+        "target": 3170.6571
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "M",
+          "TA",
+          "V"
+        ],
+        "gross_pct": 62.65,
+        "risk_pct": 2.3
+      },
+      "R4_entry_log": {
+        "date": "2026-03-16",
+        "new": [
+          "V",
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 44.73,
+        "risk_pct": 1.31
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -1156.57
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "TA",
+        "direction": "多",
+        "entry_date": "2026-03-17",
+        "signal_day": "2026-03-16",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 6844.0,
+        "exit": 6533.3714,
+        "date": "2026-03-20",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 6533.3714,
+        "target": 7465.2571
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "M",
+          "TA",
+          "V"
+        ],
+        "gross_pct": 62.65,
+        "risk_pct": 2.3
+      },
+      "R4_entry_log": {
+        "date": "2026-03-16",
+        "new": [
+          "V",
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 44.73,
+        "risk_pct": 1.31
+      },
+      "pnl_yuan": {
+        "R6c": -1553.14,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 62.6% gross (>50%): the entry only fitted because the old call ignored held positions",
+        "bucket 能化 already occupied by V in the book (max_per_bucket=1)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "V",
+        "direction": "多",
+        "entry_date": "2026-03-17",
+        "signal_day": "2026-03-16",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 5780.0,
+        "exit": 6168.1143,
+        "date": "2026-03-23",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 5585.9429,
+        "target": 6168.1143
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "M",
+          "TA",
+          "V"
+        ],
+        "gross_pct": 62.65,
+        "risk_pct": 2.3
+      },
+      "R4_entry_log": {
+        "date": "2026-03-16",
+        "new": [
+          "V",
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 44.73,
+        "risk_pct": 1.31
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": 1940.57
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-03-23",
+        "signal_day": "2026-03-20",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 3020.0,
+        "exit": 2956.4,
+        "date": "2026-03-24",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2956.4,
+        "target": 3147.2
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "M",
+          "TA"
+        ],
+        "gross_pct": 31.65,
+        "risk_pct": 1.52
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -636.0,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-03-24",
+        "signal_day": "2026-03-23",
+        "bucket": "农产品"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 2985.0,
+        "exit": 2920.6571,
+        "date": "2026-03-27",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2920.6571,
+        "target": 3113.6857
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "M",
+          "MA"
+        ],
+        "gross_pct": 31.92,
+        "risk_pct": 1.57
+      },
+      "R4_entry_log": {
+        "date": "2026-03-23",
+        "new": [
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 14.77,
+        "risk_pct": 0.4
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -643.43
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-03-24",
+        "signal_day": "2026-03-23",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 3116.0,
+        "exit": 2930.4571,
+        "date": "2026-03-25",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2930.4571,
+        "target": 3487.0857
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "M",
+          "MA"
+        ],
+        "gross_pct": 31.92,
+        "risk_pct": 1.57
+      },
+      "R4_entry_log": {
+        "date": "2026-03-23",
+        "new": [
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 14.77,
+        "risk_pct": 0.4
+      },
+      "pnl_yuan": {
+        "R6c": -1855.43,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-03-25",
+        "signal_day": "2026-03-24",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 2,
+        "entry": 3175.0,
+        "exit": 2991.5714,
+        "date": "2026-03-25",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2991.5714,
+        "target": 3541.8571
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-03-24",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 45.22,
+        "risk_pct": 2.64
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -3668.57
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "EB",
+        "direction": "多",
+        "entry_date": "2026-03-26",
+        "signal_day": "2026-03-25",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 10056.0,
+        "exit": 9971.0,
+        "date": "2026-04-13",
+        "reason": "signal",
+        "R": -0.13,
+        "stop": 9416.6286,
+        "target": 11334.7429
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-03-25",
+        "new": [
+          "EB"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 39.14,
+        "risk_pct": 2.36
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -425.0
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-03-26",
+        "signal_day": "2026-03-25",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 3120.0,
+        "exit": 3500.9143,
+        "date": "2026-04-07",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 2929.5429,
+        "target": 3500.9143
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-03-25",
+        "new": [
+          "EB"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 39.14,
+        "risk_pct": 2.36
+      },
+      "pnl_yuan": {
+        "R6c": 3809.14,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-04-13",
+        "signal_day": "2026-04-10",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 3089.0,
+        "exit": 3085.0,
+        "date": "2026-04-21",
+        "reason": "signal",
+        "R": -0.02,
+        "stop": 2895.2286,
+        "target": 3476.5429
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "MA"
+        ],
+        "gross_pct": 15.54,
+        "risk_pct": 1.21
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -40.0,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-04-14",
+        "signal_day": "2026-04-13",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 2860.0,
+        "exit": 2824.0,
+        "date": "2026-04-21",
+        "reason": "signal",
+        "R": -0.19,
+        "stop": 2667.0286,
+        "target": 3245.9429
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-04-13",
+        "new": [
+          "MA"
+        ],
+        "held_before": [],
+        "gross_pct": 15.93,
+        "risk_pct": 1.21
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -360.0
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "JM",
+        "direction": "空",
+        "entry_date": "2026-04-15",
+        "signal_day": "2026-04-14",
+        "bucket": "黑色"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 1065.0,
+        "exit": 1096.4571,
+        "date": "2026-04-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 1096.4571,
+        "target": 1002.0857
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-04-14",
+        "new": [
+          "JM"
+        ],
+        "held_before": [
+          "MA"
+        ],
+        "gross_pct": 46.23,
+        "risk_pct": 2.35
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -1887.43
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "CF",
+        "direction": "多",
+        "entry_date": "2026-04-23",
+        "signal_day": "2026-04-22",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 16230.0,
+        "exit": 16616.8571,
+        "date": "2026-05-06",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 16036.5714,
+        "target": 16616.8571
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "CF",
+          "FG"
+        ],
+        "gross_pct": 51.38,
+        "risk_pct": 0.82
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": 1934.29,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 51.4% gross (>50%): the entry only fitted because the old call ignored held positions"
+      ]
+    },
+    {
+      "trade": {
+        "code": "BU",
+        "direction": "多",
+        "entry_date": "2026-05-13",
+        "signal_day": "2026-05-12",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 4479.0,
+        "exit": 4389.8571,
+        "date": "2026-05-13",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 4389.8571,
+        "target": 4657.2857
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "BU",
+          "JD"
+        ],
+        "gross_pct": 43.78,
+        "risk_pct": 0.87
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -891.43,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-05-19",
+        "signal_day": "2026-05-18",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 2949.0,
+        "exit": 2883.1143,
+        "date": "2026-05-25",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2883.1143,
+        "target": 3080.7714
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "JD",
+          "MA"
+        ],
+        "gross_pct": 36.93,
+        "risk_pct": 0.78
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -658.86,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "PP",
+        "direction": "多",
+        "entry_date": "2026-05-20",
+        "signal_day": "2026-05-19",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 8968.0,
+        "exit": 8805.8857,
+        "date": "2026-05-22",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 8805.8857,
+        "target": 9292.2286
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-05-19",
+        "new": [
+          "JD",
+          "PP"
+        ],
+        "held_before": [],
+        "gross_pct": 45.22,
+        "risk_pct": 0.9
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -810.57
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "FG",
+        "direction": "空",
+        "entry_date": "2026-05-25",
+        "signal_day": "2026-05-22",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 2,
+        "entry": 1023.0,
+        "exit": 1042.2571,
+        "date": "2026-05-25",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 1042.2571,
+        "target": 984.4857
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-05-22",
+        "new": [
+          "JD",
+          "FG"
+        ],
+        "held_before": [],
+        "gross_pct": 43.58,
+        "risk_pct": 0.9
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -770.28
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "多",
+        "entry_date": "2026-05-26",
+        "signal_day": "2026-05-25",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 3813.0,
+        "exit": 3771.0,
+        "date": "2026-05-29",
+        "reason": "signal",
+        "R": -0.3,
+        "stop": 3672.3143,
+        "target": 4094.3714
+      },
+      "R4": {
+        "lots": 1,
+        "entry": 3813.0,
+        "exit": 3771.0,
+        "date": "2026-05-29",
+        "reason": "signal",
+        "R": -0.3,
+        "stop": 3672.3143,
+        "target": 4094.3714
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "FU",
+          "JD",
+          "MA"
+        ],
+        "gross_pct": 74.07,
+        "risk_pct": 2.59
+      },
+      "R4_entry_log": {
+        "date": "2026-05-25",
+        "new": [
+          "FU"
+        ],
+        "held_before": [
+          "JD"
+        ],
+        "gross_pct": 41.97,
+        "risk_pct": 1.33
+      },
+      "pnl_yuan": {
+        "R6c": -840.0,
+        "R4": -420.0
+      },
+      "kind": "scaled",
+      "why": [
+        "lots 2 -> 1 to fit remaining gross/risk quota after the already-open book"
+      ]
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "空",
+        "entry_date": "2026-06-16",
+        "signal_day": "2026-06-15",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 3415.0,
+        "exit": 3137.9714,
+        "date": "2026-06-18",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 3553.5143,
+        "target": 3137.9714
+      },
+      "R4": {
+        "lots": 1,
+        "entry": 3415.0,
+        "exit": 3137.9714,
+        "date": "2026-06-18",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 3553.5143,
+        "target": 3137.9714
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "FU",
+          "JD",
+          "V"
+        ],
+        "gross_pct": 80.4,
+        "risk_pct": 2.8
+      },
+      "R4_entry_log": {
+        "date": "2026-06-15",
+        "new": [
+          "FU"
+        ],
+        "held_before": [
+          "JD"
+        ],
+        "gross_pct": 41.21,
+        "risk_pct": 1.51
+      },
+      "pnl_yuan": {
+        "R6c": 5540.57,
+        "R4": 2770.29
+      },
+      "kind": "scaled",
+      "why": [
+        "lots 2 -> 1 to fit remaining gross/risk quota after the already-open book"
+      ]
+    },
+    {
+      "trade": {
+        "code": "I",
+        "direction": "空",
+        "entry_date": "2026-06-24",
+        "signal_day": "2026-06-23",
+        "bucket": "黑色"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 740.0,
+        "exit": 748.7143,
+        "date": "2026-06-25",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 748.7143,
+        "target": 722.5714
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "FU",
+          "I"
+        ],
+        "gross_pct": 64.69,
+        "risk_pct": 2.12
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -871.43,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 64.7% gross (>50%): the entry only fitted because the old call ignored held positions"
+      ]
+    },
+    {
+      "trade": {
+        "code": "SA",
+        "direction": "空",
+        "entry_date": "2026-07-17",
+        "signal_day": "2026-07-16",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 5,
+        "entry": 1035.0,
+        "exit": 1003.1143,
+        "date": "2026-07-21",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 1050.9429,
+        "target": 1003.1143
+      },
+      "R4": {
+        "lots": 4,
+        "entry": 1035.0,
+        "exit": 1003.1143,
+        "date": "2026-07-21",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 1050.9429,
+        "target": 1003.1143
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-07-16",
+        "new": [
+          "SA"
+        ],
+        "held_before": [],
+        "gross_pct": 41.21,
+        "risk_pct": 0.79
+      },
+      "pnl_yuan": {
+        "R6c": 3188.57,
+        "R4": 2550.86
+      },
+      "kind": "scaled",
+      "why": [
+        "lots 5 -> 4 to fit remaining gross/risk quota after the already-open book"
+      ]
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-07-24",
+        "signal_day": "2026-07-23",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 3180.0,
+        "exit": 3147.8857,
+        "date": "2026-07-28",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3147.8857,
+        "target": 3244.2286
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "M",
+          "SA"
+        ],
+        "gross_pct": 77.98,
+        "risk_pct": 1.4
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -642.29,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 78.0% gross (>50%): the entry only fitted because the old call ignored held positions"
+      ]
+    },
+    {
+      "trade": {
+        "code": "SA",
+        "direction": "空",
+        "entry_date": "2026-08-12",
+        "signal_day": "2026-08-11",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 3,
+        "entry": 994.0,
+        "exit": 959.3714,
+        "date": "2026-08-13",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 1011.3143,
+        "target": 959.3714
+      },
+      "R4": {
+        "lots": 2,
+        "entry": 994.0,
+        "exit": 959.3714,
+        "date": "2026-08-13",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 1011.3143,
+        "target": 959.3714
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-08-11",
+        "new": [
+          "SA"
+        ],
+        "held_before": [],
+        "gross_pct": 19.3,
+        "risk_pct": 0.42
+      },
+      "pnl_yuan": {
+        "R6c": 2077.72,
+        "R4": 1385.14
+      },
+      "kind": "scaled",
+      "why": [
+        "lots 3 -> 2 to fit remaining gross/risk quota after the already-open book"
+      ]
+    },
+    {
+      "trade": {
+        "code": "JM",
+        "direction": "多",
+        "entry_date": "2026-08-17",
+        "signal_day": "2026-08-14",
+        "bucket": "黑色"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 1515.0,
+        "exit": 1576.2571,
+        "date": "2026-08-19",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 1484.3714,
+        "target": 1576.2571
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "JM",
+          "SA"
+        ],
+        "gross_pct": 61.96,
+        "risk_pct": 1.51
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": 3675.43,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 62.0% gross (>50%): the entry only fitted because the old call ignored held positions"
+      ]
+    },
+    {
+      "trade": {
+        "code": "EG",
+        "direction": "多",
+        "entry_date": "2026-08-25",
+        "signal_day": "2026-08-24",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 5418.0,
+        "exit": 5250.0,
+        "date": "2026-08-26",
+        "reason": "stop",
+        "R": -1.15,
+        "stop": 5272.4571,
+        "target": 5709.0857
+      },
+      "R4": {
+        "lots": 1,
+        "entry": 5418.0,
+        "exit": 5250.0,
+        "date": "2026-08-26",
+        "reason": "stop",
+        "R": -1.15,
+        "stop": 5272.4571,
+        "target": 5709.0857
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "EG",
+          "SA"
+        ],
+        "gross_pct": 69.47,
+        "risk_pct": 2.15
+      },
+      "R4_entry_log": {
+        "date": "2026-08-24",
+        "new": [
+          "EG"
+        ],
+        "held_before": [],
+        "gross_pct": 26.27,
+        "risk_pct": 0.88
+      },
+      "pnl_yuan": {
+        "R6c": -3360.0,
+        "R4": -1680.0
+      },
+      "kind": "scaled",
+      "why": [
+        "lots 2 -> 1 to fit remaining gross/risk quota after the already-open book"
+      ]
+    },
+    {
+      "trade": {
+        "code": "TA",
+        "direction": "多",
+        "entry_date": "2026-09-11",
+        "signal_day": "2026-09-10",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 6370.0,
+        "exit": 6210.0,
+        "date": "2026-09-14",
+        "reason": "stop",
+        "R": -1.06,
+        "stop": 6219.3714,
+        "target": 6671.2571
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "M"
+        ],
+        "gross_pct": 16.04,
+        "risk_pct": 0.26
+      },
+      "R4_entry_log": {
+        "date": "2026-09-10",
+        "new": [
+          "M",
+          "TA"
+        ],
+        "held_before": [],
+        "gross_pct": 32.06,
+        "risk_pct": 0.74
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -800.0
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "BU",
+        "direction": "多",
+        "entry_date": "2026-09-14",
+        "signal_day": "2026-09-11",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 5065.0,
+        "exit": 5354.6,
+        "date": "2026-09-16",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 4920.2,
+        "target": 5354.6
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "BU",
+          "M"
+        ],
+        "gross_pct": 40.11,
+        "risk_pct": 1.13
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": 2896.0,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-09-15",
+        "signal_day": "2026-09-14",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 3337.0,
+        "exit": 3434.1429,
+        "date": "2026-09-16",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 3288.4286,
+        "target": 3434.1429
+      },
+      "R4": {
+        "lots": 1,
+        "entry": 3337.0,
+        "exit": 3434.1429,
+        "date": "2026-09-16",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 3288.4286,
+        "target": 3434.1429
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-09-14",
+        "new": [
+          "M",
+          "TA"
+        ],
+        "held_before": [],
+        "gross_pct": 32.29,
+        "risk_pct": 0.79
+      },
+      "pnl_yuan": {
+        "R6c": 1942.86,
+        "R4": 971.43
+      },
+      "kind": "scaled",
+      "why": [
+        "lots 2 -> 1 to fit remaining gross/risk quota after the already-open book"
+      ]
+    },
+    {
+      "trade": {
+        "code": "TA",
+        "direction": "多",
+        "entry_date": "2026-09-15",
+        "signal_day": "2026-09-14",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 6400.0,
+        "exit": 6240.4571,
+        "date": "2026-09-18",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 6240.4571,
+        "target": 6719.0857
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-09-14",
+        "new": [
+          "M",
+          "TA"
+        ],
+        "held_before": [],
+        "gross_pct": 32.29,
+        "risk_pct": 0.79
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -797.71
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-09-17",
+        "signal_day": "2026-09-16",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 3450.0,
+        "exit": 3402.0571,
+        "date": "2026-09-18",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3402.0571,
+        "target": 3545.8857
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -479.43,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "BU",
+        "direction": "多",
+        "entry_date": "2026-09-18",
+        "signal_day": "2026-09-17",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 5350.0,
+        "exit": 5187.1429,
+        "date": "2026-09-22",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 5187.1429,
+        "target": 5675.7143
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -3257.14,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-09-21",
+        "signal_day": "2026-09-18",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 2977.0,
+        "exit": 2876.7143,
+        "date": "2026-09-23",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2876.7143,
+        "target": 3177.5714
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-09-18",
+        "new": [
+          "M",
+          "MA"
+        ],
+        "held_before": [],
+        "gross_pct": 48.05,
+        "risk_pct": 1.24
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -1002.86
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "BU",
+        "direction": "多",
+        "entry_date": "2026-09-23",
+        "signal_day": "2026-09-22",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 4979.0,
+        "exit": 5300.7143,
+        "date": "2026-09-29",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 4818.1429,
+        "target": 5300.7143
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": 6434.29,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-09-24",
+        "signal_day": "2026-09-23",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 2850.0,
+        "exit": 3036.5143,
+        "date": "2026-10-08",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 2756.7429,
+        "target": 3036.5143
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-09-23",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 47.56,
+        "risk_pct": 1.11
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": 1865.14
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "CF",
+        "direction": "空",
+        "entry_date": "2026-10-08",
+        "signal_day": "2026-09-30",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 15530.0,
+        "exit": 15712.2857,
+        "date": "2026-10-12",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 15712.2857,
+        "target": 15165.4286
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "CF"
+        ],
+        "gross_pct": 35.85,
+        "risk_pct": 0.52
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -911.43,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "FG",
+        "direction": "空",
+        "entry_date": "2026-10-12",
+        "signal_day": "2026-10-09",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 858.0,
+        "exit": 873.8857,
+        "date": "2026-10-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 873.8857,
+        "target": 826.2286
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "CF",
+          "I",
+          "MA"
+        ],
+        "gross_pct": 113.52,
+        "risk_pct": 2.45
+      },
+      "R4_entry_log": {
+        "date": "2026-10-09",
+        "new": [
+          "FG"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 42.48,
+        "risk_pct": 0.72
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -317.71
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-10-12",
+        "signal_day": "2026-10-09",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 3,
+        "entry": 3327.0,
+        "exit": 3242.3714,
+        "date": "2026-10-12",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3242.3714,
+        "target": 3496.2571
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "CF",
+          "I",
+          "MA"
+        ],
+        "gross_pct": 113.52,
+        "risk_pct": 2.45
+      },
+      "R4_entry_log": {
+        "date": "2026-10-09",
+        "new": [
+          "FG"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 42.48,
+        "risk_pct": 0.72
+      },
+      "pnl_yuan": {
+        "R6c": -2538.86,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 113.5% gross (>50%): the entry only fitted because the old call ignored held positions"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-10-13",
+        "signal_day": "2026-10-12",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 3255.0,
+        "exit": 3164.9429,
+        "date": "2026-10-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3164.9429,
+        "target": 3435.1143
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -900.57,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "多",
+        "entry_date": "2026-10-19",
+        "signal_day": "2026-10-16",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 4855.0,
+        "exit": 4672.2571,
+        "date": "2026-10-21",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 4672.2571,
+        "target": 5220.4857
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "FU",
+          "I",
+          "MA"
+        ],
+        "gross_pct": 91.23,
+        "risk_pct": 3.17
+      },
+      "R4_entry_log": {
+        "date": "2026-10-16",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 48.91,
+        "risk_pct": 1.1
+      },
+      "pnl_yuan": {
+        "R6c": -3654.86,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 91.2% gross (>50%): the entry only fitted because the old call ignored held positions",
+        "bucket 能化 already occupied by MA in the book (max_per_bucket=1)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-10-19",
+        "signal_day": "2026-10-16",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 3200.0,
+        "exit": 3107.1429,
+        "date": "2026-10-20",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3107.1429,
+        "target": 3385.7143
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "FU",
+          "I",
+          "MA"
+        ],
+        "gross_pct": 91.23,
+        "risk_pct": 3.17
+      },
+      "R4_entry_log": {
+        "date": "2026-10-16",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 48.91,
+        "risk_pct": 1.1
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -928.57
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-10-21",
+        "signal_day": "2026-10-20",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 3170.0,
+        "exit": 3074.7429,
+        "date": "2026-10-21",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3074.7429,
+        "target": 3360.5143
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-10-20",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 49.65,
+        "risk_pct": 1.14
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -952.57
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "多",
+        "entry_date": "2026-10-22",
+        "signal_day": "2026-10-21",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 4700.0,
+        "exit": 5107.7714,
+        "date": "2026-10-23",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 4496.1143,
+        "target": 5107.7714
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": 8155.43,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "多",
+        "entry_date": "2026-10-26",
+        "signal_day": "2026-10-23",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 5155.0,
+        "exit": 5579.9143,
+        "date": "2026-10-29",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 4942.5429,
+        "target": 5579.9143
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-10-23",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 49.6,
+        "risk_pct": 1.2
+      },
+      "pnl_yuan": {
+        "R6c": 8498.29,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "not selected in R4: slot/quota used by earlier book changes (path effect)"
+      ]
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-10-26",
+        "signal_day": "2026-10-23",
+        "bucket": "能化"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 3235.0,
+        "exit": 3437.5143,
+        "date": "2026-10-27",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 3133.7429,
+        "target": 3437.5143
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-10-23",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 49.6,
+        "risk_pct": 1.2
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": 2025.14
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    },
+    {
+      "trade": {
+        "code": "EG",
+        "direction": "多",
+        "entry_date": "2026-11-16",
+        "signal_day": "2026-11-13",
+        "bucket": "能化"
+      },
+      "R6c": {
+        "lots": 2,
+        "entry": 5197.0,
+        "exit": 5041.8,
+        "date": "2026-11-17",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 5041.8,
+        "target": 5507.4
+      },
+      "R4": {
+        "lots": 1,
+        "entry": 5197.0,
+        "exit": 5041.8,
+        "date": "2026-11-17",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 5041.8,
+        "target": 5507.4
+      },
+      "R6c_book_on_signal_day": {
+        "held": [
+          "EG"
+        ],
+        "gross_pct": 46.24,
+        "risk_pct": 1.73
+      },
+      "R4_entry_log": {
+        "date": "2026-11-13",
+        "new": [
+          "EG"
+        ],
+        "held_before": [],
+        "gross_pct": 25.95,
+        "risk_pct": 0.97
+      },
+      "pnl_yuan": {
+        "R6c": -3104.0,
+        "R4": -1552.0
+      },
+      "kind": "scaled",
+      "why": [
+        "lots 2 -> 1 to fit remaining gross/risk quota after the already-open book"
+      ]
+    },
+    {
+      "trade": {
+        "code": "P",
+        "direction": "空",
+        "entry_date": "2026-11-17",
+        "signal_day": "2026-11-16",
+        "bucket": "农产品"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 8989.0,
+        "exit": 8692.2,
+        "date": "2026-11-18",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 9137.4,
+        "target": 8692.2
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "EG",
+          "P"
+        ],
+        "gross_pct": 86.69,
+        "risk_pct": 2.52
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": 2968.0,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 86.7% gross (>50%): the entry only fitted because the old call ignored held positions"
+      ]
+    },
+    {
+      "trade": {
+        "code": "I",
+        "direction": "空",
+        "entry_date": "2026-11-18",
+        "signal_day": "2026-11-17",
+        "bucket": "黑色"
+      },
+      "R6c": {
+        "lots": 1,
+        "entry": 641.5,
+        "exit": 651.0143,
+        "date": "2026-11-19",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 651.0143,
+        "target": 622.4714
+      },
+      "R4": null,
+      "R6c_book_on_signal_day": {
+        "held": [
+          "EG",
+          "I",
+          "P"
+        ],
+        "gross_pct": 112.2,
+        "risk_pct": 3.03
+      },
+      "R4_entry_log": null,
+      "pnl_yuan": {
+        "R6c": -951.43,
+        "R4": null
+      },
+      "kind": "dropped",
+      "why": [
+        "R6c book on the signal day was 112.2% gross (>50%): the entry only fitted because the old call ignored held positions"
+      ]
+    },
+    {
+      "trade": {
+        "code": "I",
+        "direction": "空",
+        "entry_date": "2026-11-19",
+        "signal_day": "2026-11-18",
+        "bucket": "黑色"
+      },
+      "R6c": null,
+      "R4": {
+        "lots": 1,
+        "entry": 648.0,
+        "exit": 657.3143,
+        "date": "2026-11-20",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 657.3143,
+        "target": 629.3714
+      },
+      "R6c_book_on_signal_day": null,
+      "R4_entry_log": {
+        "date": "2026-11-18",
+        "new": [
+          "I"
+        ],
+        "held_before": [],
+        "gross_pct": 32.51,
+        "risk_pct": 0.59
+      },
+      "pnl_yuan": {
+        "R6c": null,
+        "R4": -931.43
+      },
+      "kind": "new",
+      "why": [
+        "path effect: earlier R4 sizing/drops changed the book, equity and free slots; entry gate itself unchanged"
+      ]
+    }
+  ],
+  "change_kinds": {
+    "dropped": 26,
+    "scaled": 8,
+    "new": 18
+  },
+  "prefix_over_limit_days": [
+    {
+      "signal_day": "2026-01-19",
+      "R6c_added": [
+        "EB"
+      ],
+      "R6c_held": [
+        "CF",
+        "EB"
+      ],
+      "R6c_gross_pct": 54.95,
+      "R6c_risk_pct": 0.92,
+      "R4_entry_log": {
+        "date": "2026-01-19",
+        "new": [
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 18.42,
+        "risk_pct": 0.34
+      },
+      "R4_handling": [
+        {
+          "code": "EB",
+          "direction": "多",
+          "entry_date": "2026-01-20",
+          "how": "kept 1 lots"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-01-29",
+      "R6c_added": [
+        "P"
+      ],
+      "R6c_held": [
+        "EB",
+        "P"
+      ],
+      "R6c_gross_pct": 66.72,
+      "R6c_risk_pct": 1.22,
+      "R4_entry_log": null,
+      "R4_handling": [
+        {
+          "code": "P",
+          "direction": "多",
+          "entry_date": "2026-01-30",
+          "how": "dropped (R6c had 1 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-02-11",
+      "R6c_added": [
+        "JM"
+      ],
+      "R6c_held": [
+        "EB",
+        "JM"
+      ],
+      "R6c_gross_pct": 52.67,
+      "R6c_risk_pct": 1.91,
+      "R4_entry_log": null,
+      "R4_handling": [
+        {
+          "code": "JM",
+          "direction": "空",
+          "entry_date": "2026-02-12",
+          "how": "dropped (R6c had 1 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-03-16",
+      "R6c_added": [
+        "TA"
+      ],
+      "R6c_held": [
+        "M",
+        "TA",
+        "V"
+      ],
+      "R6c_gross_pct": 62.65,
+      "R6c_risk_pct": 2.3,
+      "R4_entry_log": {
+        "date": "2026-03-16",
+        "new": [
+          "V",
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 44.73,
+        "risk_pct": 1.31
+      },
+      "R4_handling": [
+        {
+          "code": "M",
+          "direction": "多",
+          "entry_date": "2026-03-17",
+          "how": "new in R4 (2 lots)"
+        },
+        {
+          "code": "TA",
+          "direction": "多",
+          "entry_date": "2026-03-17",
+          "how": "dropped (R6c had 1 lots)"
+        },
+        {
+          "code": "V",
+          "direction": "多",
+          "entry_date": "2026-03-17",
+          "how": "new in R4 (1 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-04-22",
+      "R6c_added": [
+        "CF"
+      ],
+      "R6c_held": [
+        "CF",
+        "FG"
+      ],
+      "R6c_gross_pct": 51.38,
+      "R6c_risk_pct": 0.82,
+      "R4_entry_log": null,
+      "R4_handling": [
+        {
+          "code": "CF",
+          "direction": "多",
+          "entry_date": "2026-04-23",
+          "how": "dropped (R6c had 1 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-05-13",
+      "R6c_added": [
+        "PP"
+      ],
+      "R6c_held": [
+        "BU",
+        "JD",
+        "PP"
+      ],
+      "R6c_gross_pct": 65.05,
+      "R6c_risk_pct": 1.31,
+      "R4_entry_log": {
+        "date": "2026-05-13",
+        "new": [
+          "PP"
+        ],
+        "held_before": [],
+        "gross_pct": 22.42,
+        "risk_pct": 0.46
+      },
+      "R4_handling": [
+        {
+          "code": "PP",
+          "direction": "多",
+          "entry_date": "2026-05-14",
+          "how": "kept 1 lots"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-05-25",
+      "R6c_added": [
+        "FU"
+      ],
+      "R6c_held": [
+        "FU",
+        "JD",
+        "MA"
+      ],
+      "R6c_gross_pct": 74.07,
+      "R6c_risk_pct": 2.59,
+      "R4_entry_log": {
+        "date": "2026-05-25",
+        "new": [
+          "FU"
+        ],
+        "held_before": [
+          "JD"
+        ],
+        "gross_pct": 41.97,
+        "risk_pct": 1.33
+      },
+      "R4_handling": [
+        {
+          "code": "FU",
+          "direction": "多",
+          "entry_date": "2026-05-26",
+          "how": "scaled 2 -> 1 lots"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-06-15",
+      "R6c_added": [
+        "FU"
+      ],
+      "R6c_held": [
+        "FU",
+        "JD",
+        "V"
+      ],
+      "R6c_gross_pct": 80.4,
+      "R6c_risk_pct": 2.8,
+      "R4_entry_log": {
+        "date": "2026-06-15",
+        "new": [
+          "FU"
+        ],
+        "held_before": [
+          "JD"
+        ],
+        "gross_pct": 41.21,
+        "risk_pct": 1.51
+      },
+      "R4_handling": [
+        {
+          "code": "FU",
+          "direction": "空",
+          "entry_date": "2026-06-16",
+          "how": "scaled 2 -> 1 lots"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-06-23",
+      "R6c_added": [
+        "I"
+      ],
+      "R6c_held": [
+        "FU",
+        "I"
+      ],
+      "R6c_gross_pct": 64.69,
+      "R6c_risk_pct": 2.12,
+      "R4_entry_log": null,
+      "R4_handling": [
+        {
+          "code": "I",
+          "direction": "空",
+          "entry_date": "2026-06-24",
+          "how": "dropped (R6c had 1 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-07-23",
+      "R6c_added": [
+        "M"
+      ],
+      "R6c_held": [
+        "M",
+        "SA"
+      ],
+      "R6c_gross_pct": 77.98,
+      "R6c_risk_pct": 1.4,
+      "R4_entry_log": null,
+      "R4_handling": [
+        {
+          "code": "M",
+          "direction": "多",
+          "entry_date": "2026-07-24",
+          "how": "dropped (R6c had 2 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-08-14",
+      "R6c_added": [
+        "JM"
+      ],
+      "R6c_held": [
+        "JM",
+        "SA"
+      ],
+      "R6c_gross_pct": 61.96,
+      "R6c_risk_pct": 1.51,
+      "R4_entry_log": null,
+      "R4_handling": [
+        {
+          "code": "JM",
+          "direction": "多",
+          "entry_date": "2026-08-17",
+          "how": "dropped (R6c had 1 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-08-24",
+      "R6c_added": [
+        "EG"
+      ],
+      "R6c_held": [
+        "EG",
+        "SA"
+      ],
+      "R6c_gross_pct": 69.47,
+      "R6c_risk_pct": 2.15,
+      "R4_entry_log": {
+        "date": "2026-08-24",
+        "new": [
+          "EG"
+        ],
+        "held_before": [],
+        "gross_pct": 26.27,
+        "risk_pct": 0.88
+      },
+      "R4_handling": [
+        {
+          "code": "EG",
+          "direction": "多",
+          "entry_date": "2026-08-25",
+          "how": "scaled 2 -> 1 lots"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-10-08",
+      "R6c_added": [
+        "I"
+      ],
+      "R6c_held": [
+        "CF",
+        "I"
+      ],
+      "R6c_gross_pct": 67.42,
+      "R6c_risk_pct": 1.03,
+      "R4_entry_log": {
+        "date": "2026-10-08",
+        "new": [
+          "I"
+        ],
+        "held_before": [],
+        "gross_pct": 33.93,
+        "risk_pct": 0.55
+      },
+      "R4_handling": [
+        {
+          "code": "I",
+          "direction": "空",
+          "entry_date": "2026-10-09",
+          "how": "kept 1 lots"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-10-09",
+      "R6c_added": [
+        "MA"
+      ],
+      "R6c_held": [
+        "CF",
+        "I",
+        "MA"
+      ],
+      "R6c_gross_pct": 113.52,
+      "R6c_risk_pct": 2.45,
+      "R4_entry_log": {
+        "date": "2026-10-09",
+        "new": [
+          "FG"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 42.48,
+        "risk_pct": 0.72
+      },
+      "R4_handling": [
+        {
+          "code": "FG",
+          "direction": "空",
+          "entry_date": "2026-10-12",
+          "how": "new in R4 (1 lots)"
+        },
+        {
+          "code": "MA",
+          "direction": "多",
+          "entry_date": "2026-10-12",
+          "how": "dropped (R6c had 3 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-10-16",
+      "R6c_added": [
+        "FU"
+      ],
+      "R6c_held": [
+        "FU",
+        "I",
+        "MA"
+      ],
+      "R6c_gross_pct": 91.23,
+      "R6c_risk_pct": 3.17,
+      "R4_entry_log": {
+        "date": "2026-10-16",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 48.91,
+        "risk_pct": 1.1
+      },
+      "R4_handling": [
+        {
+          "code": "FU",
+          "direction": "多",
+          "entry_date": "2026-10-19",
+          "how": "dropped (R6c had 2 lots)"
+        },
+        {
+          "code": "MA",
+          "direction": "多",
+          "entry_date": "2026-10-19",
+          "how": "new in R4 (1 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-11-16",
+      "R6c_added": [
+        "P"
+      ],
+      "R6c_held": [
+        "EG",
+        "P"
+      ],
+      "R6c_gross_pct": 86.69,
+      "R6c_risk_pct": 2.52,
+      "R4_entry_log": null,
+      "R4_handling": [
+        {
+          "code": "P",
+          "direction": "空",
+          "entry_date": "2026-11-17",
+          "how": "dropped (R6c had 1 lots)"
+        }
+      ]
+    },
+    {
+      "signal_day": "2026-11-17",
+      "R6c_added": [
+        "I"
+      ],
+      "R6c_held": [
+        "EG",
+        "I",
+        "P"
+      ],
+      "R6c_gross_pct": 112.2,
+      "R6c_risk_pct": 3.03,
+      "R4_entry_log": null,
+      "R4_handling": [
+        {
+          "code": "I",
+          "direction": "空",
+          "entry_date": "2026-11-18",
+          "how": "dropped (R6c had 1 lots)"
+        }
+      ]
+    }
+  ]
+}

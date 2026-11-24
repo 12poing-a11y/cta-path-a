@@ -1112,6 +1112,41 @@ def ret_n(hist, i, n):
     return (b / a - 1.0) * 100.0
 
 
+def _book_usage(pos, idx, series, d, *, atr_fn=None, close_fn=None):
+    """Open-book usage on day ``d`` (R4): (used_gross, used_risk, held_buckets).
+
+    * notional = lots × close × mult.  ``close_fn(code, p, i, d)`` may supply the held
+      contract's real close (contract positions); default = continuous close.
+    * risk = lots × ATR × mult with ``atr_fn(code, hist, i)`` (simulate passes the R6c
+      adjusted ATR); falls back to the position's entry ATR.
+    * a position with no bar on ``d`` is still counted (last mark / entry price) —
+      leaving it out would only under-state the book.
+    """
+    used_gross = used_risk = 0.0
+    buckets: dict[str, int] = {}
+    for code_, p_ in pos.items():
+        b_ = str(p_.get("bucket") or "_")
+        buckets[b_] = buckets.get(b_, 0) + 1
+        h_ = series[code_]["hist"]
+        m_ = float(series[code_]["meta"]["mult"])
+        n_ = abs(int(p_["lots"]))
+        i_ = idx[code_].get(d)
+        if i_ is None:
+            px_ = p_.get("last_mark") or p_.get("entry") or 0.0
+            used_gross += n_ * float(px_) * m_
+            used_risk += n_ * float(p_.get("atr") or 0.0) * m_
+            continue
+        px_ = None
+        if close_fn is not None:
+            px_ = close_fn(code_, p_, i_, d)
+        if px_ is None:
+            px_ = h_[i_]["close"]
+        used_gross += n_ * float(px_) * m_
+        a_ = (atr_fn(code_, h_, i_) if atr_fn is not None else atr14(h_, i_)) or float(p_.get("atr") or 0.0)
+        used_risk += n_ * float(a_) * m_
+    return used_gross, used_risk, buckets
+
+
 def _downsample_weekly(curve: list[dict]) -> list[dict]:
     if not curve:
         return []
@@ -1243,6 +1278,7 @@ def simulate(
     entry_delivery_buffer=ENTRY_DELIVERY_BUFFER,
     entry_delivery_action=ENTRY_DELIVERY_ACTION,
     adjusted_signals=None,
+    caps_include_book=None,
 ):
     if fill_price not in FILL_PRICES:
         raise ValueError(f"fill_price must be one of {FILL_PRICES}")
@@ -1429,6 +1465,27 @@ def simulate(
 
         adj = build_adjusted_pack(series, main_map, root=ROOT)
     signal_candidates_n = 0
+    # R4: portfolio caps (gross / ATR risk / bucket) count the open book.  ``False`` reproduces
+    # the R6c behaviour (caps applied to the day's candidates only) but still measures usage.
+    use_book_caps = bool(freeze_fix if caps_include_book is None else caps_include_book)
+    caps_entry_gross_max = 0.0
+    caps_entry_risk_max = 0.0
+    caps_scaled_n = 0
+    caps_entry_days = 0
+    caps_entry_log: list[dict] = []
+
+    def _held_close(code_, p_, i_, d_):
+        if (
+            str(p_.get("fill_price_basis") or "") == "contract"
+            and p_.get("fill_contract")
+            and load_contract_bar is not None
+        ):
+            b_ = load_contract_bar(
+                str(p_["fill_contract"]), d_, root=ROOT, snap_bar=series[code_]["hist"][i_]
+            )
+            if b_ is not None:
+                return float(b_["close"])
+        return None
 
     def _ret(code_, hist_, i_, n_):
         a_ = adj.get(code_)
@@ -1915,17 +1972,72 @@ def simulate(
                         "factor": None if fac is None else round(fac["f"], 6),
                     }
                 )
-            selected, _meta = apply_portfolio_caps(
-                cands,
+            # R4: usage of the open book on d's close (adjusted ATR; held contract's real close)
+            used_g, used_r, held_buckets = _book_usage(
+                pos, idx, series, d, atr_fn=_atr, close_fn=_held_close
+            )
+            eq_ = sizing_eq if sizing_eq > 0 else 1.0
+            _caps_kw = dict(
                 equity=sizing_eq,
                 max_positions=slots_left,
-                max_gross_exposure_pct=max_gross_pct,
-                max_portfolio_risk_pct=max_port_risk,
                 max_per_bucket=max_per_bucket,
                 min_r20_pct=0.0 if mode == "ctf" else min_r20,
                 min_r60_pct=0.0 if mode == "ctf" else min_r60,
                 min_lots=min_lots,
             )
+            if use_book_caps:
+                gross_left_main = max(0.0, float(max_gross_pct) - used_g / eq_ * 100.0)
+                risk_left_main = max(0.0, float(max_port_risk) - used_r / eq_ * 100.0)
+                selected, _meta = apply_portfolio_caps(
+                    cands,
+                    max_gross_exposure_pct=gross_left_main,
+                    max_portfolio_risk_pct=risk_left_main,
+                    existing_buckets=held_buckets,
+                    **_caps_kw,
+                )
+                # counterfactual with the full caps (no book): how many candidates the book scaled/dropped
+                if cands and used_g + used_r > 0:
+                    _sel_old, _ = apply_portfolio_caps(
+                        cands,
+                        max_gross_exposure_pct=max_gross_pct,
+                        max_portfolio_risk_pct=max_port_risk,
+                        existing_buckets=held_buckets,
+                        **_caps_kw,
+                    )
+                    _new_lots = {c_["code"]: int(c_["lots"]) for c_ in selected}
+                    for c_ in _sel_old:
+                        if _new_lots.get(c_["code"], 0) < int(c_["lots"]):
+                            caps_scaled_n += 1
+            else:
+                selected, _meta = apply_portfolio_caps(
+                    cands,
+                    max_gross_exposure_pct=max_gross_pct,
+                    max_portfolio_risk_pct=max_port_risk,
+                    **_caps_kw,
+                )
+            # order-time check on d's close: open book + new orders within the caps
+            _new_g = sum(
+                int(c_["lots"]) * float(c_["close"]) * float(c_["mult"]) for c_ in selected
+            )
+            _new_r = sum(
+                int(c_["lots"]) * float(c_.get("atr") or 0.0) * float(c_["mult"]) for c_ in selected
+            )
+            _sel_usage = {
+                c_["code"]: (
+                    int(c_["lots"]) * float(c_["close"]) * float(c_["mult"]),
+                    int(c_["lots"]) * float(c_.get("atr") or 0.0) * float(c_["mult"]),
+                )
+                for c_ in selected
+            }
+            _ent_g = _ent_r = 0.0
+            _ent_codes: list[str] = []
+            if selected and use_book_caps:
+                assert (used_g + _new_g) / eq_ * 100.0 <= float(max_gross_pct) + 1e-6, (
+                    f"R4 order-time gross {(used_g + _new_g) / eq_ * 100.0:.2f}% > {max_gross_pct}% on {d}"
+                )
+                assert (used_r + _new_r) / eq_ * 100.0 <= float(max_port_risk) + 1e-6, (
+                    f"R4 order-time ATR risk {(used_r + _new_r) / eq_ * 100.0:.2f}% > {max_port_risk}% on {d}"
+                )
             open_buckets = {}
             for p in pos.values():
                 b = str(p.get("bucket") or "_")
@@ -2026,6 +2138,25 @@ def simulate(
                     fee_mult=fee_mult,
                 )
                 open_buckets[bucket] = open_buckets.get(bucket, 0) + 1
+                _g_, _r_ = _sel_usage.get(c["code"], (0.0, 0.0))
+                _ent_g += _g_
+                _ent_r += _r_
+                _ent_codes.append(c["code"])
+            if _ent_codes:
+                _tot_g = (used_g + _ent_g) / eq_ * 100.0
+                _tot_r = (used_r + _ent_r) / eq_ * 100.0
+                caps_entry_days += 1
+                caps_entry_gross_max = max(caps_entry_gross_max, _tot_g)
+                caps_entry_risk_max = max(caps_entry_risk_max, _tot_r)
+                caps_entry_log.append(
+                    {
+                        "date": d,
+                        "new": _ent_codes,
+                        "held_before": sorted(set(pos) - set(_ent_codes)),
+                        "gross_pct": round(_tot_g, 2),
+                        "risk_pct": round(_tot_r, 2),
+                    }
+                )
 
             # Idle slots earn short-end roll: long backwardation, short contango.
             if mode == "roll" and len(pos) < int(max_positions):
@@ -2075,18 +2206,9 @@ def simulate(
                             "reason": "roll_carry",
                         }
                     )
-                used_gross = 0.0
-                used_risk = 0.0
-                for held_code, held in pos.items():
-                    hi = idx[held_code].get(d)
-                    if hi is None:
-                        continue
-                    hx = series[held_code]["hist"][hi]["close"]
-                    hm = float(series[held_code]["meta"]["mult"])
-                    hl = abs(int(held["lots"]))
-                    used_gross += hl * hx * hm
-                    ha = _atr(held_code, series[held_code]["hist"], hi) or float(held.get("atr") or 0)
-                    used_risk += hl * float(ha) * hm
+                used_gross, used_risk, _held_b = _book_usage(
+                    pos, idx, series, d, atr_fn=_atr, close_fn=_held_close if use_book_caps else None
+                )
                 eq_base = sizing_eq if sizing_eq > 0 else 1.0
                 gross_left = max(0.0, float(max_gross_pct) - used_gross / eq_base * 100.0)
                 risk_left = max(0.0, float(max_port_risk) - used_risk / eq_base * 100.0)
@@ -2324,6 +2446,13 @@ def simulate(
         "held_contract_missing": held_missing_n,
         "roll_held_bar_days": roll_held_bar_days_n,
         "roll_open_gap_stops": roll_open_gap_stops_n,
+        "caps_include_book": use_book_caps,
+        "caps_entry_days": caps_entry_days,
+        "caps_entry_gross_max": round(caps_entry_gross_max, 2),
+        "caps_entry_risk_max": round(caps_entry_risk_max, 2),
+        "caps_scaled_n": caps_scaled_n,
+        "caps_drift_days_gt55": sum(1 for c_ in curve if float(c_.get("gross_pct") or 0) > 55.0),
+        "caps_entry_log": caps_entry_log,
         "adjusted_signals": bool(adj),
         "signal_candidates": signal_candidates_n,
         "adj_fallback_days": sum(a_.fallback_days() for a_ in adj.values()) if adj else None,
@@ -2475,6 +2604,7 @@ def _simulate_cfg(
     entry_delivery_buffer=None,
     entry_delivery_action=None,
     adjusted_signals=None,
+    caps_include_book=None,
 ):
     cfg = p["cfg"]
     print(f"[bt] mode={mode} ifind_so_far={usage_report()['count']}")
@@ -2513,6 +2643,7 @@ def _simulate_cfg(
         entry_delivery_buffer=(p.get("entry_delivery_buffer", ENTRY_DELIVERY_BUFFER) if entry_delivery_buffer is None else entry_delivery_buffer),
         entry_delivery_action=str(p.get("entry_delivery_action", ENTRY_DELIVERY_ACTION) if entry_delivery_action is None else entry_delivery_action),
         adjusted_signals=adjusted_signals,
+        caps_include_book=caps_include_book,
     )
 
 

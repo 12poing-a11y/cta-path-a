@@ -61,6 +61,58 @@ def _exec_params() -> dict[str, float]:
     }
 
 
+def _cap_params() -> dict[str, float]:
+    """Portfolio caps from universe.json (same keys / defaults as ``daily_update``)."""
+    cfg = _load(UNI_PATH) or {}
+
+    def _num(key: str, default: float) -> float:
+        try:
+            return float(cfg.get(key) if cfg.get(key) is not None else default)
+        except (TypeError, ValueError):
+            return float(default)
+
+    return {
+        "max_positions": int(_num("max_positions", 3)),
+        "max_gross_pct": _num("max_gross_exposure_pct", 50.0),
+        "max_port_risk_pct": _num("max_portfolio_risk_pct", 10.0),
+        "max_per_bucket": int(_num("max_per_bucket", 1)),
+    }
+
+
+def caps_book_check(
+    kept: dict[str, dict],
+    fresh: dict,
+    *,
+    equity: float,
+    caps: dict[str, float],
+    mult: float | None,
+) -> str | None:
+    """R4: may ``fresh`` join ``kept``?  Returns None when allowed, else a short reason.
+
+    Checks position count, sector bucket, gross notional and ATR risk of (book + new) at the
+    signal close, against ``equity``.  Does not touch entry prices."""
+    from position_rules import book_usage_from_positions
+
+    if len(kept) >= int(caps["max_positions"]):
+        return f"positions {len(kept)}>={int(caps['max_positions'])}"
+    bucket = str(fresh.get("bucket") or "_")
+    _g0, _r0, buckets = book_usage_from_positions(kept)
+    if int(caps["max_per_bucket"]) > 0 and buckets.get(bucket, 0) >= int(caps["max_per_bucket"]):
+        return f"bucket {bucket} full"
+    if not equity or equity <= 0 or not mult:
+        return "no equity/mult to size caps"
+    lots = abs(int(fresh.get("lots") or 0))
+    new_g = lots * float(fresh.get("entry") or 0) * float(mult)
+    new_r = lots * float(fresh.get("atr") or 0) * float(mult)
+    gross_pct = (_g0 + new_g) / float(equity) * 100.0
+    risk_pct = (_r0 + new_r) / float(equity) * 100.0
+    if gross_pct > float(caps["max_gross_pct"]) + 1e-9:
+        return f"gross {gross_pct:.1f}%>{caps['max_gross_pct']:g}%"
+    if risk_pct > float(caps["max_port_risk_pct"]) + 1e-9:
+        return f"atr_risk {risk_pct:.1f}%>{caps['max_port_risk_pct']:g}%"
+    return None
+
+
 def strategy_label(reason: str | None) -> str:
     r = str(reason or "").strip()
     return STRATEGY_ZH.get(r, r or "Path-A")
@@ -751,6 +803,8 @@ def refresh_paper_book(
         kept[code] = pos
 
     opened = 0
+    skipped_today: list[dict] = []
+    cap_params = _cap_params()
     for code, sig in sigs.items():
         if code in kept:
             continue
@@ -760,6 +814,14 @@ def refresh_paper_book(
             reward_rr=params["reward_rr"],
         )
         if fresh:
+            # R4: re-check the caps against the book that survived today's exits.
+            _mult = mults.get(code) or sig.get("mult")
+            _why = caps_book_check(kept, fresh, equity=equity, caps=cap_params, mult=_mult)
+            if _why:
+                skipped_today.append(
+                    {"code": code, "skip_reason": "caps_book", "detail": _why, "lots": fresh.get("lots")}
+                )
+                continue
             if not fresh.get("entry_date"):
                 fresh["entry_date"] = asof_iso
             fresh["mult"] = mults.get(code) or sig.get("mult")
@@ -799,6 +861,7 @@ def refresh_paper_book(
         "positions": kept,
         "closed_today": closed_today,
         "opened_today": opened_today,
+        "skipped_today": skipped_today,
         "trade_ledger": ledger,
         "opened_n": opened,
         "closed_n": len(closed_today),

@@ -36,6 +36,39 @@ def _atr_risk(lots: int, atr: float | None, mult: float) -> float:
     return abs(lots) * float(atr) * float(mult)
 
 
+def book_usage_from_positions(
+    positions: dict[str, dict] | None,
+    *,
+    price_by_code: dict[str, float] | None = None,
+    atr_by_code: dict[str, float] | None = None,
+) -> tuple[float, float, dict[str, int]]:
+    """Gross notional, ATR risk and bucket counts of an open book (paper book / daily report).
+
+    Price = ``price_by_code`` → position ``mark`` → ``entry``; ATR = ``atr_by_code`` →
+    position ``atr``.  Positions without lots / mult are still counted in the buckets.
+    """
+    gross = risk = 0.0
+    buckets: dict[str, int] = {}
+    for code, p in (positions or {}).items():
+        if not isinstance(p, dict):
+            continue
+        b = str(p.get("bucket") or "_")
+        buckets[b] = buckets.get(b, 0) + 1
+        try:
+            lots = abs(int(p.get("lots") or 0))
+            mult = float(p.get("mult") or 0)
+        except (TypeError, ValueError):
+            continue
+        px = (price_by_code or {}).get(code) or p.get("mark") or p.get("entry")
+        atr = (atr_by_code or {}).get(code) or p.get("atr")
+        try:
+            gross += _notional(lots, float(px) if px is not None else None, mult)
+            risk += _atr_risk(lots, float(atr) if atr is not None else None, mult)
+        except (TypeError, ValueError):
+            continue
+    return gross, risk, buckets
+
+
 def apply_portfolio_caps(
     candidates: list[dict[str, Any]],
     *,
@@ -47,8 +80,14 @@ def apply_portfolio_caps(
     min_r20_pct: float = 3.0,
     min_r60_pct: float = 5.0,
     min_lots: int = 0,
+    existing_buckets: dict[str, int] | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """
+    ``existing_buckets``: sector-bucket counts of positions already open (R4). The per-bucket
+    cap in steps 2–3 and in the refill pass starts from these counts; ``None`` = old behaviour.
+    Callers pass the *remaining* gross / risk budget in ``max_gross_exposure_pct`` /
+    ``max_portfolio_risk_pct`` (cap minus the open book's usage).
+
     Pipeline:
       1) Drop weak momentum (|r20|<min_r20 or |r60|<min_r60)
       2) Rank by |r20|+|r60|
@@ -96,7 +135,7 @@ def apply_portfolio_caps(
     # 2–3) rank + bucket dedupe + N cap
     ranked = sorted(strong, key=_strength, reverse=True)
     selected: list[dict[str, Any]] = []
-    bucket_counts: dict[str, int] = {}
+    bucket_counts: dict[str, int] = dict(existing_buckets or {})
     for c in ranked:
         if len(selected) >= max(0, int(max_positions)):
             meta["dropped"].append(c.get("code"))
@@ -155,7 +194,7 @@ def apply_portfolio_caps(
     # Refill from ranked if room after scaling zeros (respect bucket + caps)
     have = {c.get("code") for c in selected}
     if len(selected) < int(max_positions):
-        bucket_counts = {}
+        bucket_counts = dict(existing_buckets or {})
         for c in selected:
             b = str(c.get("bucket") or "_")
             bucket_counts[b] = bucket_counts.get(b, 0) + 1

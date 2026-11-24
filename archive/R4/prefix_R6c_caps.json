@@ -1,0 +1,1556 @@
+{
+  "source": "archive/R6/replay_after_R6c.json",
+  "entry_days": 41,
+  "caps": {
+    "gross_pct": 50.0,
+    "risk_pct": 8.0
+  },
+  "days_gross_gt50_sizing_eq": 17,
+  "days_gross_gt50_curve": 15,
+  "days_risk_gt8": 0,
+  "days_either_gt": 17,
+  "max_gross_pct_sizing_eq": 113.52,
+  "max_gross_pct_curve": 113.64,
+  "max_atr_risk_pct": 3.17,
+  "worst_days": [
+    {
+      "date": "2026-10-09",
+      "added": [
+        "MA"
+      ],
+      "held_codes": [
+        "CF",
+        "I",
+        "MA"
+      ],
+      "sizing_equity": 217887.59,
+      "curve_gross_pct": 113.64,
+      "gross_pct_sizing_eq": 113.52,
+      "atr_risk_pct_sizing_eq": 2.45,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "CF",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 36.23,
+          "risk_pct": 0.51
+        },
+        {
+          "code": "MA",
+          "lots": 3,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 45.96,
+          "risk_pct": 1.46
+        },
+        {
+          "code": "I",
+          "lots": 1,
+          "new": false,
+          "bucket": "黑色",
+          "notional_pct": 31.32,
+          "risk_pct": 0.48
+        }
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "added": [
+        "I"
+      ],
+      "held_codes": [
+        "EG",
+        "I",
+        "P"
+      ],
+      "sizing_equity": 225513.9,
+      "curve_gross_pct": 68.02,
+      "gross_pct_sizing_eq": 112.2,
+      "atr_risk_pct_sizing_eq": 3.03,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "EG",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 44.8,
+          "risk_pct": 1.65
+        },
+        {
+          "code": "P",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 39.0,
+          "risk_pct": 0.86
+        },
+        {
+          "code": "I",
+          "lots": 1,
+          "new": true,
+          "bucket": "黑色",
+          "notional_pct": 28.4,
+          "risk_pct": 0.53
+        }
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "added": [
+        "FU"
+      ],
+      "held_codes": [
+        "FU",
+        "I",
+        "MA"
+      ],
+      "sizing_equity": 214355.99,
+      "curve_gross_pct": 76.41,
+      "gross_pct_sizing_eq": 91.23,
+      "atr_risk_pct_sizing_eq": 3.17,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "MA",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 14.89,
+          "risk_pct": 0.54
+        },
+        {
+          "code": "FU",
+          "lots": 2,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 44.96,
+          "risk_pct": 2.13
+        },
+        {
+          "code": "I",
+          "lots": 1,
+          "new": false,
+          "bucket": "黑色",
+          "notional_pct": 31.37,
+          "risk_pct": 0.5
+        }
+      ]
+    },
+    {
+      "date": "2026-11-16",
+      "added": [
+        "P"
+      ],
+      "held_codes": [
+        "EG",
+        "P"
+      ],
+      "sizing_equity": 224746.4,
+      "curve_gross_pct": 86.39,
+      "gross_pct_sizing_eq": 86.69,
+      "atr_risk_pct_sizing_eq": 2.52,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "EG",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 46.6,
+          "risk_pct": 1.69
+        },
+        {
+          "code": "P",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 40.09,
+          "risk_pct": 0.83
+        }
+      ]
+    },
+    {
+      "date": "2026-06-15",
+      "added": [
+        "FU"
+      ],
+      "held_codes": [
+        "FU",
+        "JD",
+        "V"
+      ],
+      "sizing_equity": 200750.32,
+      "curve_gross_pct": 56.97,
+      "gross_pct_sizing_eq": 80.4,
+      "atr_risk_pct_sizing_eq": 2.8,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "V",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 23.37,
+          "risk_pct": 0.46
+        },
+        {
+          "code": "JD",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 23.46,
+          "risk_pct": 0.61
+        },
+        {
+          "code": "FU",
+          "lots": 2,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 33.57,
+          "risk_pct": 1.72
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "date": "2026-01-09",
+      "added": [
+        "TA"
+      ],
+      "held_codes": [
+        "TA"
+      ],
+      "sizing_equity": 200000.0,
+      "curve_gross_pct": 12.77,
+      "gross_pct_sizing_eq": 12.77,
+      "atr_risk_pct_sizing_eq": 0.32,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "TA",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 12.77,
+          "risk_pct": 0.32
+        }
+      ]
+    },
+    {
+      "date": "2026-01-12",
+      "added": [
+        "CF"
+      ],
+      "held_codes": [
+        "CF",
+        "TA"
+      ],
+      "sizing_equity": 199975.0,
+      "curve_gross_pct": 49.39,
+      "gross_pct_sizing_eq": 49.42,
+      "atr_risk_pct_sizing_eq": 0.89,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "TA",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 12.86,
+          "risk_pct": 0.32
+        },
+        {
+          "code": "CF",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 36.57,
+          "risk_pct": 0.58
+        }
+      ]
+    },
+    {
+      "date": "2026-01-19",
+      "added": [
+        "EB"
+      ],
+      "held_codes": [
+        "CF",
+        "EB"
+      ],
+      "sizing_equity": 199219.36,
+      "curve_gross_pct": 55.01,
+      "gross_pct_sizing_eq": 54.95,
+      "atr_risk_pct_sizing_eq": 0.92,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "CF",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 36.5,
+          "risk_pct": 0.59
+        },
+        {
+          "code": "EB",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 18.44,
+          "risk_pct": 0.34
+        }
+      ]
+    },
+    {
+      "date": "2026-01-29",
+      "added": [
+        "P"
+      ],
+      "held_codes": [
+        "EB",
+        "P"
+      ],
+      "sizing_equity": 199603.14,
+      "curve_gross_pct": 66.52,
+      "gross_pct_sizing_eq": 66.72,
+      "atr_risk_pct_sizing_eq": 1.22,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "EB",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 19.82,
+          "risk_pct": 0.51
+        },
+        {
+          "code": "P",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 46.9,
+          "risk_pct": 0.71
+        }
+      ]
+    },
+    {
+      "date": "2026-02-10",
+      "added": [
+        "EB"
+      ],
+      "held_codes": [
+        "EB"
+      ],
+      "sizing_equity": 199072.0,
+      "curve_gross_pct": 18.77,
+      "gross_pct_sizing_eq": 18.77,
+      "atr_risk_pct_sizing_eq": 0.62,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "EB",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 18.77,
+          "risk_pct": 0.62
+        }
+      ]
+    },
+    {
+      "date": "2026-02-11",
+      "added": [
+        "JM"
+      ],
+      "held_codes": [
+        "EB",
+        "JM"
+      ],
+      "sizing_equity": 199062.0,
+      "curve_gross_pct": 52.64,
+      "gross_pct_sizing_eq": 52.67,
+      "atr_risk_pct_sizing_eq": 1.91,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "JM",
+          "lots": 1,
+          "new": true,
+          "bucket": "黑色",
+          "notional_pct": 33.86,
+          "risk_pct": 1.32
+        },
+        {
+          "code": "EB",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 18.81,
+          "risk_pct": 0.58
+        }
+      ]
+    },
+    {
+      "date": "2026-03-11",
+      "added": [
+        "M"
+      ],
+      "held_codes": [
+        "M"
+      ],
+      "sizing_equity": 199458.48,
+      "curve_gross_pct": 30.77,
+      "gross_pct_sizing_eq": 30.76,
+      "atr_risk_pct_sizing_eq": 0.55,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "M",
+          "lots": 2,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 30.76,
+          "risk_pct": 0.55
+        }
+      ]
+    },
+    {
+      "date": "2026-03-12",
+      "added": [
+        "V"
+      ],
+      "held_codes": [
+        "M",
+        "V"
+      ],
+      "sizing_equity": 199423.48,
+      "curve_gross_pct": 44.93,
+      "gross_pct_sizing_eq": 44.72,
+      "atr_risk_pct_sizing_eq": 1.11,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "M",
+          "lots": 2,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 30.63,
+          "risk_pct": 0.58
+        },
+        {
+          "code": "V",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 14.09,
+          "risk_pct": 0.53
+        }
+      ]
+    },
+    {
+      "date": "2026-03-16",
+      "added": [
+        "TA"
+      ],
+      "held_codes": [
+        "M",
+        "TA",
+        "V"
+      ],
+      "sizing_equity": 200432.05,
+      "curve_gross_pct": 17.39,
+      "gross_pct_sizing_eq": 62.65,
+      "atr_risk_pct_sizing_eq": 2.3,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "V",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 14.59,
+          "risk_pct": 0.61
+        },
+        {
+          "code": "M",
+          "lots": 2,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 30.64,
+          "risk_pct": 0.72
+        },
+        {
+          "code": "TA",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 17.42,
+          "risk_pct": 0.97
+        }
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "added": [
+        "M"
+      ],
+      "held_codes": [
+        "M",
+        "TA"
+      ],
+      "sizing_equity": 200754.62,
+      "curve_gross_pct": 15.21,
+      "gross_pct_sizing_eq": 31.65,
+      "atr_risk_pct_sizing_eq": 1.52,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "TA",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 16.56,
+          "risk_pct": 1.12
+        },
+        {
+          "code": "M",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 15.09,
+          "risk_pct": 0.4
+        }
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "added": [
+        "MA"
+      ],
+      "held_codes": [
+        "M",
+        "MA"
+      ],
+      "sizing_equity": 199208.98,
+      "curve_gross_pct": 31.94,
+      "gross_pct_sizing_eq": 31.92,
+      "atr_risk_pct_sizing_eq": 1.57,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "M",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 15.09,
+          "risk_pct": 0.4
+        },
+        {
+          "code": "MA",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 16.82,
+          "risk_pct": 1.16
+        }
+      ]
+    },
+    {
+      "date": "2026-04-10",
+      "added": [
+        "MA"
+      ],
+      "held_codes": [
+        "MA"
+      ],
+      "sizing_equity": 200405.86,
+      "curve_gross_pct": 15.54,
+      "gross_pct_sizing_eq": 15.54,
+      "atr_risk_pct_sizing_eq": 1.21,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "MA",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 15.54,
+          "risk_pct": 1.21
+        }
+      ]
+    },
+    {
+      "date": "2026-04-21",
+      "added": [
+        "FG"
+      ],
+      "held_codes": [
+        "FG",
+        "MA"
+      ],
+      "sizing_equity": 200710.41,
+      "curve_gross_pct": 10.75,
+      "gross_pct_sizing_eq": 24.8,
+      "atr_risk_pct_sizing_eq": 1.23,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "MA",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 14.07,
+          "risk_pct": 1.01
+        },
+        {
+          "code": "FG",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 10.73,
+          "risk_pct": 0.22
+        }
+      ]
+    },
+    {
+      "date": "2026-04-22",
+      "added": [
+        "CF"
+      ],
+      "held_codes": [
+        "CF",
+        "FG"
+      ],
+      "sizing_equity": 200284.99,
+      "curve_gross_pct": 51.45,
+      "gross_pct_sizing_eq": 51.38,
+      "atr_risk_pct_sizing_eq": 0.82,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "FG",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 10.86,
+          "risk_pct": 0.22
+        },
+        {
+          "code": "CF",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 40.52,
+          "risk_pct": 0.6
+        }
+      ]
+    },
+    {
+      "date": "2026-05-11",
+      "added": [
+        "JD"
+      ],
+      "held_codes": [
+        "JD"
+      ],
+      "sizing_equity": 201741.99,
+      "curve_gross_pct": 21.6,
+      "gross_pct_sizing_eq": 21.59,
+      "atr_risk_pct_sizing_eq": 0.33,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "JD",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 21.59,
+          "risk_pct": 0.33
+        }
+      ]
+    },
+    {
+      "date": "2026-05-12",
+      "added": [
+        "BU"
+      ],
+      "held_codes": [
+        "BU",
+        "JD"
+      ],
+      "sizing_equity": 201699.36,
+      "curve_gross_pct": 43.78,
+      "gross_pct_sizing_eq": 43.78,
+      "atr_risk_pct_sizing_eq": 0.87,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "JD",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 21.59,
+          "risk_pct": 0.32
+        },
+        {
+          "code": "BU",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 22.2,
+          "risk_pct": 0.55
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "added": [
+        "PP"
+      ],
+      "held_codes": [
+        "BU",
+        "JD",
+        "PP"
+      ],
+      "sizing_equity": 201718.17,
+      "curve_gross_pct": 22.02,
+      "gross_pct_sizing_eq": 65.05,
+      "atr_risk_pct_sizing_eq": 1.31,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "JD",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 21.4,
+          "risk_pct": 0.33
+        },
+        {
+          "code": "BU",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 21.79,
+          "risk_pct": 0.54
+        },
+        {
+          "code": "PP",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 21.86,
+          "risk_pct": 0.45
+        }
+      ]
+    },
+    {
+      "date": "2026-05-15",
+      "added": [
+        "JD"
+      ],
+      "held_codes": [
+        "JD"
+      ],
+      "sizing_equity": 199459.53,
+      "curve_gross_pct": 21.65,
+      "gross_pct_sizing_eq": 21.64,
+      "atr_risk_pct_sizing_eq": 0.33,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "JD",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 21.64,
+          "risk_pct": 0.33
+        }
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "added": [
+        "MA"
+      ],
+      "held_codes": [
+        "JD",
+        "MA"
+      ],
+      "sizing_equity": 199417.27,
+      "curve_gross_pct": 36.78,
+      "gross_pct_sizing_eq": 36.93,
+      "atr_risk_pct_sizing_eq": 0.78,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "JD",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 21.99,
+          "risk_pct": 0.36
+        },
+        {
+          "code": "MA",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 14.94,
+          "risk_pct": 0.41
+        }
+      ]
+    },
+    {
+      "date": "2026-05-25",
+      "added": [
+        "FU"
+      ],
+      "held_codes": [
+        "FU",
+        "JD",
+        "MA"
+      ],
+      "sizing_equity": 201272.25,
+      "curve_gross_pct": 60.21,
+      "gross_pct_sizing_eq": 74.07,
+      "atr_risk_pct_sizing_eq": 2.59,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "MA",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 14.13,
+          "risk_pct": 0.43
+        },
+        {
+          "code": "JD",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 21.99,
+          "risk_pct": 0.42
+        },
+        {
+          "code": "FU",
+          "lots": 2,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 37.95,
+          "risk_pct": 1.75
+        }
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "added": [
+        "V"
+      ],
+      "held_codes": [
+        "V"
+      ],
+      "sizing_equity": 201155.13,
+      "curve_gross_pct": 23.4,
+      "gross_pct_sizing_eq": 23.39,
+      "atr_risk_pct_sizing_eq": 0.47,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "V",
+          "lots": 2,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 23.39,
+          "risk_pct": 0.47
+        }
+      ]
+    },
+    {
+      "date": "2026-06-12",
+      "added": [
+        "JD"
+      ],
+      "held_codes": [
+        "JD",
+        "V"
+      ],
+      "sizing_equity": 201045.13,
+      "curve_gross_pct": 46.98,
+      "gross_pct_sizing_eq": 46.91,
+      "atr_risk_pct_sizing_eq": 1.08,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "V",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 23.58,
+          "risk_pct": 0.46
+        },
+        {
+          "code": "JD",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 23.33,
+          "risk_pct": 0.62
+        }
+      ]
+    },
+    {
+      "date": "2026-06-15",
+      "added": [
+        "FU"
+      ],
+      "held_codes": [
+        "FU",
+        "JD",
+        "V"
+      ],
+      "sizing_equity": 200750.32,
+      "curve_gross_pct": 56.97,
+      "gross_pct_sizing_eq": 80.4,
+      "atr_risk_pct_sizing_eq": 2.8,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "V",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 23.37,
+          "risk_pct": 0.46
+        },
+        {
+          "code": "JD",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 23.46,
+          "risk_pct": 0.61
+        },
+        {
+          "code": "FU",
+          "lots": 2,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 33.57,
+          "risk_pct": 1.72
+        }
+      ]
+    },
+    {
+      "date": "2026-06-23",
+      "added": [
+        "I"
+      ],
+      "held_codes": [
+        "FU",
+        "I"
+      ],
+      "sizing_equity": 206581.51,
+      "curve_gross_pct": 64.01,
+      "gross_pct_sizing_eq": 64.69,
+      "atr_risk_pct_sizing_eq": 2.12,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "FU",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 28.94,
+          "risk_pct": 1.59
+        },
+        {
+          "code": "I",
+          "lots": 1,
+          "new": true,
+          "bucket": "黑色",
+          "notional_pct": 35.75,
+          "risk_pct": 0.53
+        }
+      ]
+    },
+    {
+      "date": "2026-07-10",
+      "added": [
+        "FU"
+      ],
+      "held_codes": [
+        "FU"
+      ],
+      "sizing_equity": 208244.68,
+      "curve_gross_pct": 15.03,
+      "gross_pct_sizing_eq": 15.03,
+      "atr_risk_pct_sizing_eq": 0.49,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "FU",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 15.03,
+          "risk_pct": 0.49
+        }
+      ]
+    },
+    {
+      "date": "2026-07-14",
+      "added": [
+        "SA"
+      ],
+      "held_codes": [
+        "FU",
+        "SA"
+      ],
+      "sizing_equity": 207377.3,
+      "curve_gross_pct": 30.93,
+      "gross_pct_sizing_eq": 47.68,
+      "atr_risk_pct_sizing_eq": 1.13,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "FU",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 16.9,
+          "risk_pct": 0.57
+        },
+        {
+          "code": "SA",
+          "lots": 3,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 30.78,
+          "risk_pct": 0.57
+        }
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "added": [
+        "M"
+      ],
+      "held_codes": [
+        "M",
+        "SA"
+      ],
+      "sizing_equity": 210553.91,
+      "curve_gross_pct": 77.78,
+      "gross_pct_sizing_eq": 77.98,
+      "atr_risk_pct_sizing_eq": 1.4,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "SA",
+          "lots": 5,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 47.83,
+          "risk_pct": 1.02
+        },
+        {
+          "code": "M",
+          "lots": 2,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 30.16,
+          "risk_pct": 0.38
+        }
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "added": [
+        "SR"
+      ],
+      "held_codes": [
+        "SR"
+      ],
+      "sizing_equity": 213349.94,
+      "curve_gross_pct": 23.69,
+      "gross_pct_sizing_eq": 23.68,
+      "atr_risk_pct_sizing_eq": 0.21,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "SR",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 23.68,
+          "risk_pct": 0.21
+        }
+      ]
+    },
+    {
+      "date": "2026-08-10",
+      "added": [
+        "SA"
+      ],
+      "held_codes": [
+        "SA"
+      ],
+      "sizing_equity": 212955.09,
+      "curve_gross_pct": 45.39,
+      "gross_pct_sizing_eq": 45.36,
+      "atr_risk_pct_sizing_eq": 1.0,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "SA",
+          "lots": 5,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 45.36,
+          "risk_pct": 1.0
+        }
+      ]
+    },
+    {
+      "date": "2026-08-14",
+      "added": [
+        "JM"
+      ],
+      "held_codes": [
+        "JM",
+        "SA"
+      ],
+      "sizing_equity": 212798.69,
+      "curve_gross_pct": 61.82,
+      "gross_pct_sizing_eq": 61.96,
+      "atr_risk_pct_sizing_eq": 1.51,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "JM",
+          "lots": 1,
+          "new": true,
+          "bucket": "黑色",
+          "notional_pct": 42.73,
+          "risk_pct": 1.08
+        },
+        {
+          "code": "SA",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 19.23,
+          "risk_pct": 0.43
+        }
+      ]
+    },
+    {
+      "date": "2026-08-24",
+      "added": [
+        "EG"
+      ],
+      "held_codes": [
+        "EG",
+        "SA"
+      ],
+      "sizing_equity": 216275.57,
+      "curve_gross_pct": 50.14,
+      "gross_pct_sizing_eq": 69.47,
+      "atr_risk_pct_sizing_eq": 2.15,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "SA",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 19.49,
+          "risk_pct": 0.47
+        },
+        {
+          "code": "EG",
+          "lots": 2,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 49.97,
+          "risk_pct": 1.68
+        }
+      ]
+    },
+    {
+      "date": "2026-09-10",
+      "added": [
+        "M"
+      ],
+      "held_codes": [
+        "M"
+      ],
+      "sizing_equity": 212149.92,
+      "curve_gross_pct": 16.04,
+      "gross_pct_sizing_eq": 16.04,
+      "atr_risk_pct_sizing_eq": 0.26,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "M",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 16.04,
+          "risk_pct": 0.26
+        }
+      ]
+    },
+    {
+      "date": "2026-09-11",
+      "added": [
+        "BU"
+      ],
+      "held_codes": [
+        "BU",
+        "M"
+      ],
+      "sizing_equity": 212132.42,
+      "curve_gross_pct": 40.15,
+      "gross_pct_sizing_eq": 40.11,
+      "atr_risk_pct_sizing_eq": 1.13,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "M",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 16.04,
+          "risk_pct": 0.28
+        },
+        {
+          "code": "BU",
+          "lots": 1,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 24.07,
+          "risk_pct": 0.85
+        }
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "added": [
+        "CF"
+      ],
+      "held_codes": [
+        "CF"
+      ],
+      "sizing_equity": 217790.93,
+      "curve_gross_pct": 35.86,
+      "gross_pct_sizing_eq": 35.85,
+      "atr_risk_pct_sizing_eq": 0.52,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "CF",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 35.85,
+          "risk_pct": 0.52
+        }
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "added": [
+        "I"
+      ],
+      "held_codes": [
+        "CF",
+        "I"
+      ],
+      "sizing_equity": 217744.43,
+      "curve_gross_pct": 67.37,
+      "gross_pct_sizing_eq": 67.42,
+      "atr_risk_pct_sizing_eq": 1.03,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "CF",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 36.07,
+          "risk_pct": 0.52
+        },
+        {
+          "code": "I",
+          "lots": 1,
+          "new": true,
+          "bucket": "黑色",
+          "notional_pct": 31.34,
+          "risk_pct": 0.51
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "added": [
+        "MA"
+      ],
+      "held_codes": [
+        "CF",
+        "I",
+        "MA"
+      ],
+      "sizing_equity": 217887.59,
+      "curve_gross_pct": 113.64,
+      "gross_pct_sizing_eq": 113.52,
+      "atr_risk_pct_sizing_eq": 2.45,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "CF",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 36.23,
+          "risk_pct": 0.51
+        },
+        {
+          "code": "MA",
+          "lots": 3,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 45.96,
+          "risk_pct": 1.46
+        },
+        {
+          "code": "I",
+          "lots": 1,
+          "new": false,
+          "bucket": "黑色",
+          "notional_pct": 31.32,
+          "risk_pct": 0.48
+        }
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "added": [
+        "FU"
+      ],
+      "held_codes": [
+        "FU",
+        "I",
+        "MA"
+      ],
+      "sizing_equity": 214355.99,
+      "curve_gross_pct": 76.41,
+      "gross_pct_sizing_eq": 91.23,
+      "atr_risk_pct_sizing_eq": 3.17,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "MA",
+          "lots": 1,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 14.89,
+          "risk_pct": 0.54
+        },
+        {
+          "code": "FU",
+          "lots": 2,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 44.96,
+          "risk_pct": 2.13
+        },
+        {
+          "code": "I",
+          "lots": 1,
+          "new": false,
+          "bucket": "黑色",
+          "notional_pct": 31.37,
+          "risk_pct": 0.5
+        }
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "added": [
+        "P"
+      ],
+      "held_codes": [
+        "P"
+      ],
+      "sizing_equity": 226469.4,
+      "curve_gross_pct": 38.55,
+      "gross_pct_sizing_eq": 38.54,
+      "atr_risk_pct_sizing_eq": 0.89,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "P",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 38.54,
+          "risk_pct": 0.89
+        }
+      ]
+    },
+    {
+      "date": "2026-11-13",
+      "added": [
+        "EG"
+      ],
+      "held_codes": [
+        "EG"
+      ],
+      "sizing_equity": 224796.4,
+      "curve_gross_pct": 46.25,
+      "gross_pct_sizing_eq": 46.24,
+      "atr_risk_pct_sizing_eq": 1.73,
+      "gross_gt50": false,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "EG",
+          "lots": 2,
+          "new": true,
+          "bucket": "能化",
+          "notional_pct": 46.24,
+          "risk_pct": 1.73
+        }
+      ]
+    },
+    {
+      "date": "2026-11-16",
+      "added": [
+        "P"
+      ],
+      "held_codes": [
+        "EG",
+        "P"
+      ],
+      "sizing_equity": 224746.4,
+      "curve_gross_pct": 86.39,
+      "gross_pct_sizing_eq": 86.69,
+      "atr_risk_pct_sizing_eq": 2.52,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "EG",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 46.6,
+          "risk_pct": 1.69
+        },
+        {
+          "code": "P",
+          "lots": 1,
+          "new": true,
+          "bucket": "农产品",
+          "notional_pct": 40.09,
+          "risk_pct": 0.83
+        }
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "added": [
+        "I"
+      ],
+      "held_codes": [
+        "EG",
+        "I",
+        "P"
+      ],
+      "sizing_equity": 225513.9,
+      "curve_gross_pct": 68.02,
+      "gross_pct_sizing_eq": 112.2,
+      "atr_risk_pct_sizing_eq": 3.03,
+      "gross_gt50": true,
+      "risk_gt8": false,
+      "positions": [
+        {
+          "code": "EG",
+          "lots": 2,
+          "new": false,
+          "bucket": "能化",
+          "notional_pct": 44.8,
+          "risk_pct": 1.65
+        },
+        {
+          "code": "P",
+          "lots": 1,
+          "new": false,
+          "bucket": "农产品",
+          "notional_pct": 39.0,
+          "risk_pct": 0.86
+        },
+        {
+          "code": "I",
+          "lots": 1,
+          "new": true,
+          "bucket": "黑色",
+          "notional_pct": 28.4,
+          "risk_pct": 0.53
+        }
+      ]
+    }
+  ]
+}

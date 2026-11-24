@@ -34,6 +34,7 @@ from lab_signal import (  # noqa: E402
 from public_curve import load_curves  # noqa: E402
 from position_rules import (  # noqa: E402
     apply_portfolio_caps,
+    book_usage_from_positions,
     compound_equity,
     risk_budget_yuan,
 )
@@ -290,10 +291,53 @@ def is_weekday_cn() -> bool:
     return datetime.now(TZ).weekday() < 5
 
 
-def _apply_caps(signals: list[dict], *, sizing_equity: float) -> dict:
+def _load_paper_held() -> dict | None:
+    """Read-only: open positions of ``paper_book_latest.json`` (None when absent / not ok).
+
+    The daily report runs BEFORE ``refresh_paper_book``, so this book still contains
+    positions that today's refresh may close — the quota it blocks is conservative."""
+    try:
+        path = ROOT / "paper_book_latest.json"
+        if not path.is_file():
+            return None
+        book = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(book, dict) or not book.get("ok"):
+        return None
+    pos = book.get("positions")
+    return pos if isinstance(pos, dict) else None
+
+
+def _apply_caps(signals: list[dict], *, sizing_equity: float, held: dict | None = None) -> dict:
+    """Portfolio caps for today's candidates.
+
+    ``held`` (R4): open book (``paper_book_latest.json`` positions, read-only).  Its notional /
+    ATR risk is deducted from the gross / risk budget, its sectors from the bucket cap and its
+    count from the position cap; held codes do not compete as new candidates.
+    ``held=None`` keeps the original behaviour exactly."""
+    held_codes: set[str] = set(held or {})
+    held_book = held is not None
+    if held_book:
+        sig_close = {str(s.get("code")): s.get("close") for s in signals if s.get("close")}
+        sig_atr = {str(s.get("code")): s.get("atr") for s in signals if s.get("atr")}
+        used_g, used_r, held_buckets = book_usage_from_positions(
+            held, price_by_code=sig_close, atr_by_code=sig_atr
+        )
+        eq_ = float(sizing_equity) if float(sizing_equity) > 0 else 1.0
+        gross_cap_pct = max(0.0, float(MAX_GROSS_PCT) - used_g / eq_ * 100.0)
+        risk_cap_pct = max(0.0, float(MAX_PORT_RISK_PCT) - used_r / eq_ * 100.0)
+        max_pos = max(0, int(MAX_POSITIONS) - len(held_codes))
+    else:
+        held_buckets = None
+        gross_cap_pct = MAX_GROSS_PCT
+        risk_cap_pct = MAX_PORT_RISK_PCT
+        max_pos = MAX_POSITIONS
     cands = []
     for s in signals:
         if s.get("align") != "同向":
+            continue
+        if held_book and str(s.get("code")) in held_codes:
             continue
         lots = int(s.get("lots_raw") or s.get("lots_l1") or 0)
         if lots <= 0 or not s.get("close"):
@@ -311,16 +355,30 @@ def _apply_caps(signals: list[dict], *, sizing_equity: float) -> dict:
                 "bucket": s.get("bucket"),
             }
         )
+    caps_kw: dict = {}
+    if held_book:
+        caps_kw["existing_buckets"] = held_buckets
     selected, meta = apply_portfolio_caps(
         cands,
         equity=sizing_equity,
-        max_positions=MAX_POSITIONS,
-        max_gross_exposure_pct=MAX_GROSS_PCT,
-        max_portfolio_risk_pct=MAX_PORT_RISK_PCT,
+        max_positions=max_pos,
+        max_gross_exposure_pct=gross_cap_pct,
+        max_portfolio_risk_pct=risk_cap_pct,
         max_per_bucket=MAX_PER_BUCKET,
         min_r20_pct=MIN_R20_PCT,
         min_r60_pct=MIN_R60_PCT,
+        **caps_kw,
     )
+    if held_book:
+        meta["held_book"] = {
+            "held_n": len(held_codes),
+            "used_gross_pct": round(used_g / eq_ * 100.0, 2),
+            "used_atr_risk_pct": round(used_r / eq_ * 100.0, 2),
+            "gross_left_pct": round(gross_cap_pct, 2),
+            "risk_left_pct": round(risk_cap_pct, 2),
+            "held_buckets": held_buckets,
+            "note": "日报先于 refresh_paper_book 运行；held 含当天可能平掉的仓位，偏保守",
+        }
     by_code = {c["code"]: c for c in selected}
     weak = set(meta.get("weak_filtered") or [])
     bucket_skip = set(meta.get("bucket_skipped") or [])
@@ -346,7 +404,9 @@ def _apply_caps(signals: list[dict], *, sizing_equity: float) -> dict:
                 s["lots_l1"] = 0
                 s["lots_full"] = 0
                 s["selected"] = False
-                if code in weak:
+                if held_book and code in held_codes:
+                    s["action"] = "已在模拟账本持仓（占用组合额度，不重复开仓）"
+                elif code in weak:
                     s["action"] = f"同向但动量不足（需|r20|≥{MIN_R20_PCT}%且|r60|≥{MIN_R60_PCT}%）"
                 elif code in bucket_skip:
                     s["action"] = f"同板块已有更强信号（每板块最多{MAX_PER_BUCKET}个）"
@@ -732,7 +792,7 @@ def main():
                     f"（观察袖套抬至{OBSERVE_MIN_LOTS}手·待组合帽）"
                 )
 
-    port_meta = _apply_caps(signals, sizing_equity=sizing_eq)
+    port_meta = _apply_caps(signals, sizing_equity=sizing_eq, held=_load_paper_held())
     port_meta["sizing_equity"] = round(sizing_eq, 2)
     port_meta["equity_compound"] = EQUITY_COMPOUND
     print(

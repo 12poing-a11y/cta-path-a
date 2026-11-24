@@ -46,7 +46,7 @@
 
 - **结论**：审计发现正式回测引擎至少有 5 类错误（分钟线合约错配造成 3 笔假止损、夜盘交易日归属、跳空止损按止损价成交、组合帽不计已有持仓、模拟账本缺日线兜底），现行 +5.78% / DD 6.74% 不可信。详见 `docs/UPGRADE_R_TRACK.md` §0–§2。
 - **优先级**：**轨 R 阶段 A（R0–R7）排在 F2 之前**。F2 仍按原门槛等样本，不受影响；但说「继续/升级」时，**先念轨 R 的下一刀，再念 F2 是否够样**。
-- **下一刀候选**：**R4 组合帽**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b/c 已完成（R6b 经 R6b-fix 按真实主力合约返工，R6c 信号/ATR 去换月影响），R4 未开。
+- **下一刀候选**：**R5 账本对齐**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b/c 与 R4（组合帽计入已有持仓）已完成，R5 未开。
 - **硬围栏（轨 R 追加）**：R1–R7 完成前不提交 `historical_backtest_latest.json`、`paper_book_latest.json`；R7 重跑并签字后才更新 `configs/formal_rule_lock.json`；结果变差也不回退修复。
 - **对齐**：§3.2「组合帽 / next_open 纸面完全对齐」原为低优延后，现由轨 R 的 R4、R5 接手。
 
@@ -113,7 +113,7 @@
 | **S 会话** | Session brief | 多时段盘中 brief | 交 Grokbot | 本仓不做 |
 | **R 研究台旧项** | P1–P4 / A1–A3 | PBO/LSP/Gamma/组合风险/轻量 ML / 主力映射 | **主路径完成** | 封闭 |
 | **R 研究台旧项** | 官历/因子注册/聚类 | `UPGRADE_PLAN`「下次剩余」 | **低优延后** | 封闭 |
-| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R6 完成 · 下一刀候选 R4（待明示）** |
+| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R4 完成 · 下一刀候选 R5（待明示）** |
 | **R 审计升级** | R8–R12（阶段 B） | 长样本入口、出场预注册 5 组、风险预算生效、波动目标 + 回撤刹车、品种池 | **封闭** | 依赖 R7 |
 | **R 审计升级** | R13（阶段 C） | 席位因子长样本验证（回补 2019+） | **封闭** | 依赖 R8 |
 | **R 审计升级** | **R14 / K0–K7（阶段 C）** | carry 独立袖套：分月库 → 可交易曲线 → 持有指数 → 预登记 10 试验 → 闸门 → Shadow | **封闭** | K0–K2 可与阶段 A 并行（需明示）；K4 起依赖 R6、R8 |
@@ -260,6 +260,18 @@ ext_open。
 ---
 
 ## 7. 近期迭代反馈（保留）
+
+### R4 组合帽计入已有持仓（2026-11-24）
+
+- **修前（R6c，只读统计，`archive/R4/prefix_R6c_caps.json`）**：41 个入场日里，名义占用 >50% 的有 **17 天**（曲线口径 15 天），最大 **113.52%**（2026-10-09 CF+I+MA；其次 11-17 EG+I+P 112.2%、10-16 FU+I+MA 91.2%）；ATR 风险 >8% 的 **0 天**（最大 3.17%）——风险帽从不起作用，名义帽才是约束。原因：`apply_portfolio_caps` 只看当日候选，不看已有持仓的名义/风险/bucket。
+- **做了（引擎）**：`historical_backtest._book_usage(pos, idx, series, d)` → `(used_gross, used_risk, held_buckets)`：continuous_proxy 持仓按连续合约 d 日收盘；合约口径持仓优先用持有合约的真实收盘（`load_contract_bar`），无则退连续；风险用 R6c 统一的调整后 ATR（不是原始 `atr14`）；无当日 bar 的持仓按最近盯市/入场价、入场 ATR（保守）。主入场分支与 roll_carry 分支共用。主分支传入剩余额度：`max_gross = max(0, 50 − used_gross/eq×100)`、`max_risk = max(0, 8 − used_risk/eq×100)`（eq=sizing_eq）与 `existing_buckets=held_buckets`；`position_rules.apply_portfolio_caps` 新增 `existing_buckets: dict|None=None`（主循环与 refill 的 bucket 计数从它起算；不传＝旧行为）。信号日收盘做 order-time 断言：已有+新单名义 ≤50%、ATR 风险 ≤8%。新增结果键 `caps_entry_gross_max`、`caps_entry_risk_max`、`caps_scaled_n`（与"不看持仓的满额度"反事实相比手数变少/被丢的候选数）、`caps_drift_days_gt55`（曲线 gross_pct>55 的天数，仅统计）、`caps_entry_log`、`caps_include_book`（默认随 `freeze_fix`；False 复现 R6c 的帽口径）。
+- **做了（日报）**：`daily_update._apply_caps(signals, *, sizing_equity, held=None)`；`held` 取只读 `paper_book_latest.json` 的持仓，同口径扣额度/占 bucket/占名额，已持有品种不再作为新候选，meta 加 `held_book`。**保守性**：日报在 `refresh_paper_book` 之前跑，所以 `held` 可能包含当天就会被平掉的仓位，会少给新单额度（宁少勿多）。`held=None` 与旧行为一致。
+- **做了（模拟账本）**：`paper_book.refresh_paper_book` 开仓循环——在当日平仓之后、新开仓之前，按已保留持仓校验：持仓数 ≤ max_positions、同 bucket ≤ max_per_bucket、名义 ≤50%、ATR 风险 ≤8%（signal 收盘价与乘数）；不通过则跳过并记 `skip_reason="caps_book"`（输出 `skipped_today`）。未改入场价口径、未做 pending/T+1、未补历史平仓（R5 的事）。
+- **结果（R6c → R4，不调参）**：ret 12.744 → **−1.053**，gross_ret 15.434 → 1.005，maxDD 4.124 → 4.552，笔数 64 → 56（target 23→18、stop 37→34、signal 4→4），成本 5379.74 → 4114.88；曲线 gross_pct 最大 113.64 → 49.96（中位数 19.08 → 19.24），入场日 >50% 17 天 → 0，`caps_entry_gross_max` 113.52 → 49.65，`caps_entry_risk_max` 3.17 → 2.64，`caps_scaled_n`=52，`caps_drift_days_gt55`=0（R6c 为 35 天），平均持仓 0.94 → 0.83，单笔实际风险中位数 0.458% → 0.436%。**收益变化的来源**：R6c 的 +12.7% 有相当一部分来自超限（最大 113%）持仓；逐笔 R6c→R4：26 笔被丢（其中 11 笔因 R6c 当日账本名义 >50%、2 笔含 bucket 占用、其余为前序变化的路径连锁）、8 笔手数缩小、18 笔路径连锁新增；被丢 26 笔 R6c 合计 +16 535 元，新增 18 笔合计 −9 622 元。
+- **验证**：pytest 493 全绿（新增 `tests/test_caps_include_book.py` 9 条）；金锁 legacy 4.189/4.294/42 未变；audit checked=52 mismatches=0；未写 formal latest；未 push
+- **产物**：`archive/R4/replay_after_R4.json`、`audit_after_R4.json`、`R6c_vs_R4.json`（对比表、逐笔变化、17 个修前超限日处理）、`_build_compare_R4.py`、`_step0_prefix.py`、`prefix_R6c_caps.json`、`_floor_artifact_diag.py`/`floor_artifact_diag.json`、`progress.md`
+- **风险/未做**：① `apply_portfolio_caps` 对剩余额度用"全体候选统一比例 + `floor`"缩手数，剩余额度较小时会把"其实够开 1 手"的候选缩成 0 手丢掉（例：2026-01-12 CF 4 手→比例 0.2008→0 手，而 1 手占 36.6% 仍低于剩余 37.1%）；诊断统计在整段回测的"账本感知"调用里有 19 个候选日属于此类（`floor_artifact_diag.json`），因此 R4 的收益下降里含一部分取整假象，未调、留待磊决定是否单开一刀（不是调参，是取整方式）；② 日报 `held` 偏保守（见上）；③ 被丢/新增的逐笔归因中"路径连锁"为推断；④ 首次 R4 指令因连接超时中断过一次，中途只留下 `archive/R4/` 的 Step 0 文件，无代码改动，已从头重做
+- **建议下一刀**：R5（待明示）；或先决定是否单开"取整/最小 1 手回填"一刀；或停
 
 ### R6c 信号和 ATR 不受换月影响 + 审计例外（2026-11-24）
 

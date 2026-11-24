@@ -1,0 +1,147 @@
+{
+  "candidate": "archive/R7/candidate_bt.json",
+  "snapshot": "archive\\snapshots\\bt_input_20261124_6574c6a4dbcd.json",
+  "store": "BundleContractStore(611 contracts, cutoff=None)",
+  "base_resim_diffs": {},
+  "stress_resim_vs_formal_row_diffs": {},
+  "base": {
+    "ret_pct": -1.068,
+    "gross_ret_pct": 1.575,
+    "max_dd_pct": 7.623,
+    "gross_max_dd_pct": 6.841,
+    "cost_yuan": 5286.24,
+    "closed_trades": 56,
+    "trade_win_rate": 33.93,
+    "expectancy_r": 0.03,
+    "avg_hold_sessions": 2.45,
+    "median_hold_sessions": 2.0,
+    "same_day_exit_n": 12,
+    "same_day_exit_share": 0.2143,
+    "proxy_entry_n": 25,
+    "proxy_entry_share": 0.4464,
+    "contract_entry_n": 31,
+    "exits": {
+      "target": 18,
+      "stop": 34,
+      "signal": 4
+    },
+    "exit_reasons": {
+      "stop": 34,
+      "target": 18,
+      "signal": 4
+    },
+    "gap_stops_n": 2,
+    "gap_stops": [
+      {
+        "code": "EG",
+        "date": "2026-08-26",
+        "direction": "多",
+        "stop": 5272.4571,
+        "exit": 5250.0,
+        "R": -1.15
+      },
+      {
+        "code": "MA",
+        "date": "2026-09-23",
+        "direction": "多",
+        "stop": 2891.9429,
+        "exit": 2886.0,
+        "R": -1.05
+      }
+    ],
+    "minute_stop_exits": 5,
+    "roll_open_gap_stops": 0,
+    "caps": {
+      "caps_entry_days": 49,
+      "caps_entry_gross_max": 49.83,
+      "caps_entry_risk_max": 2.33,
+      "caps_scaled_n": 64,
+      "caps_topup_lots": 114,
+      "caps_topup_revived": 29,
+      "caps_drift_days_gt55": 0
+    },
+    "median_trade_risk_pct": 0.555,
+    "roll_shifted": 0,
+    "equity_end": 197863.04
+  },
+  "stress": {
+    "ret_pct": -1.674,
+    "gross_ret_pct": 2.663,
+    "max_dd_pct": 7.032,
+    "gross_max_dd_pct": 5.842,
+    "cost_yuan": 8675.31,
+    "closed_trades": 56,
+    "trade_win_rate": 33.93,
+    "expectancy_r": 0.03,
+    "avg_hold_sessions": 2.45,
+    "median_hold_sessions": 2.0,
+    "same_day_exit_n": 12,
+    "same_day_exit_share": 0.2143,
+    "proxy_entry_n": 25,
+    "proxy_entry_share": 0.4464,
+    "contract_entry_n": 31,
+    "exits": {
+      "target": 18,
+      "stop": 34,
+      "signal": 4
+    },
+    "exit_reasons": {
+      "stop": 34,
+      "target": 18,
+      "signal": 4
+    },
+    "gap_stops_n": 2,
+    "gap_stops": [
+      {
+        "code": "EG",
+        "date": "2026-08-26",
+        "direction": "多",
+        "stop": 5272.4571,
+        "exit": 5250.0,
+        "R": -1.15
+      },
+      {
+        "code": "MA",
+        "date": "2026-09-23",
+        "direction": "多",
+        "stop": 2891.9429,
+        "exit": 2886.0,
+        "R": -1.05
+      }
+    ],
+    "minute_stop_exits": 5,
+    "roll_open_gap_stops": 0,
+    "caps": {
+      "caps_entry_days": 49,
+      "caps_entry_gross_max": 49.13,
+      "caps_entry_risk_max": 2.33,
+      "caps_scaled_n": 64,
+      "caps_topup_lots": 112,
+      "caps_topup_revived": 28,
+      "caps_drift_days_gt55": 0
+    },
+    "median_trade_risk_pct": 0.557,
+    "roll_shifted": 0,
+    "equity_end": 196651.12
+  },
+  "scheme_B_book": {
+    "asof": "2026-11-24",
+    "equity_mtm": 197863.04,
+    "equity_realized": 198193.04,
+    "positions": {
+      "P": {
+        "direction": "空",
+        "lots": 1,
+        "entry_date": "2026-11-23",
+        "entry": 8278.0,
+        "stop": 8438.285714285714,
+        "target": 7957.428571428572,
+        "last_mark": 8311.0,
+        "fill_price_basis": "continuous_proxy",
+        "fill_contract": "P2612",
+        "held_contract": "P2701"
+      }
+    },
+    "pending": []
+  }
+}

@@ -135,12 +135,13 @@ def main() -> int:
         print(f"[scorecard] PBO failed rc={rc}")
         return rc
 
+    bt_kpi = _snap_kpi(bt_path)
     after = {
         "captured_at": datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
         "git_head": _git_sha(),
-        "historical_backtest": _snap_kpi(bt_path),
+        "historical_backtest": bt_kpi,
         "pbo": _snap_pbo(pbo_path),
-        "code_schema": "cta-backtest-v13-tradability",
+        "code_schema": bt_kpi.get("schema_version"),
     }
     after_path = archive / f"after_{stamp}.json"
     after_path.write_text(json.dumps(after, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

@@ -1,0 +1,15 @@
+........................................................................ [ 13%]
+........................................................................ [ 27%]
+........................................................................ [ 40%]
+........................................................................ [ 54%]
+........................................................................ [ 68%]
+........................................................................ [ 81%]
+........................................................................ [ 95%]
+.........................                                                [100%]
+============================= slowest 5 durations =============================
+33.07s call     tests/test_freeze_fix_gates.py::test_locked_oos_train_only_selection_and_report
+17.72s setup    tests/test_paper_vs_backtest_reconcile.py::test_window
+16.51s call     tests/test_daily_vs_backtest_signals.py::test_selected_after_caps_equal_with_held_book[bundle]
+16.50s call     tests/test_daily_vs_backtest_signals.py::test_candidates_equal_per_day[bundle]
+16.35s call     tests/test_daily_vs_backtest_signals.py::test_candidates_equal_per_day[empty_cache]
+529 passed in 174.79s (0:02:54)

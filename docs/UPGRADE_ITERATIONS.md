@@ -113,7 +113,7 @@
 | **S 会话** | Session brief | 多时段盘中 brief | 交 Grokbot | 本仓不做 |
 | **R 研究台旧项** | P1–P4 / A1–A3 | PBO/LSP/Gamma/组合风险/轻量 ML / 主力映射 | **主路径完成** | 封闭 |
 | **R 研究台旧项** | 官历/因子注册/聚类 | `UPGRADE_PLAN`「下次剩余」 | **低优延后** | 封闭 |
-| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R5 完成 · 下一刀候选 R7（待明示）** |
+| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R7a 完成 · 待磊签字（R7b）** |
 | **R 审计升级** | R8–R12（阶段 B） | 长样本入口、出场预注册 5 组、风险预算生效、波动目标 + 回撤刹车、品种池 | **封闭** | 依赖 R7 |
 | **R 审计升级** | R13（阶段 C） | 席位因子长样本验证（回补 2019+） | **封闭** | 依赖 R8 |
 | **R 审计升级** | **R14 / K0–K7（阶段 C）** | carry 独立袖套：分月库 → 可交易曲线 → 持有指数 → 预登记 10 试验 → 闸门 → Shadow | **封闭** | K0–K2 可与阶段 A 并行（需明示）；K4 起依赖 R6、R8 |
@@ -260,6 +260,18 @@ ext_open。
 ---
 
 ## 7. 近期迭代反馈（保留）
+
+### R7a v14 候选正式重跑 + 签字报告（2026-11-24）
+
+- **R7a-D（6493f4e、198642a，磊已核对）**：main_map 候选改为按上市日历逐日取（月份 = public_curve.MONTHS ∪ 交割规则月份）；合约读取统一走 ContractStore（缓存或冻结合约包）；快照内嵌合约日线 `contract_bars`；正式运行先预取全部上市候选合约；测试改用冻结分钟线 fixture。11-23 快照新旧 main_map 0/7425 天不同，空缓存下用合约包 replay 与原结果逐位相同（−0.769 / 7.469 / 56）。
+- **做了（第 4 步）**：`SCHEMA_VERSION = "cta-backtest-v14-execfix"`；`n_trials_census` 取以下三者最大值：1+已归档参数数、PBO 矩阵试验数、`archive/shadow_strategy_*.json` 行数（当前 5 / 11 / 8 → **11**，R0 时按 5）。结果和验证包里写入 `n_trials_breakdown`，DSR 用新 n_trials 计算。`run_formal_scorecard.py` 的 `code_schema` 改为取自结果，不再写死 v13。`test_legacy_reproduces_ee4476b_…` 改名为 `test_legacy_path_kpi_lock_and_fix_has_no_cross_delivery`（注释同步，断言不变）。新增 `scripts/render_readme_kpi.py`（README KPI 标记块，本次只输出预览 `archive/R7/README_kpi_preview.md`）。`test_proxy_positions` 只写了修改方案（见报告第 9 节）。
+- **候选（第 5 步，数据到 11-24）**：Base 净 **−1.068%** / 毛 1.575% / 回撤 **7.623%** / 56 笔 / 胜率 33.93% / 0.03R / 成本 5286；Stress 净 −1.674% / 回撤 7.032%。PSR 0.460、DSR 0.043（n_trials=11）、PBO 0.386；WF 5 折正 Sharpe 占比 0.8，最后一折 −3.23。预取：619 个候选合约中 247 个已缓存，请求 372 次，8.1 s，成功 364、失败 8（EG/EB/JD2711、AU 单月均返回空数据）；缓存从 353 增到 615 个文件。
+- **核验**：出场审计 checked=52、不符 0（gap_through_target_conservative=1）；`.cache/contracts` 移走后，只用快照和合约包 replay，结果字段与候选逐项一致（只有 curve_coverage 来源标签和 ifind_slot 不同）；离线重跑的 Base 和 Stress 也一致；缓存已恢复，615 个文件。方案 B 账本 `archive/R7/paper_book_candidate.json`：盯市权益 197,863.04、持 P 空 1 手（11-23 入场 8278）、无 pending；旧根账本复制到 `paper_book_legacy_pre_R7.json`。日报 dry-run：selected=[]=pending，根目录 9 个受保护文件哈希不变。
+- **三方对比**：旧正式 +5.777 / 6.739 / 66 → 冻结重放 −0.769 / 7.469 / 56 → 候选 −1.068 / 7.623 / 56。新数据（旧引擎，旧正式 → R0）+1.48pp；引擎修复（R0 → R5b，同一份数据）−8.02pp；新增 11-24 一天 −0.30pp（P 空盯市 −600 元）。D 的预取让 8 笔从 continuous_proxy 改为合约成交（出场日和 R 值不变，+1.60 元）。在同一份缓存上 main_map 新旧算法 0/7452 天不同。
+- **发现并修复**：当天刚播种的 R5b 账本（asof 等于当天、没有 base）在日报里走 no-op 分支，`daily_update.main` 打印 roll 计数时报 `KeyError: 'days_rolled'`。改为 `.get`。R7b 写入根账本当天就会走这条路径。另外，`test_formal_write_dirty_exit2` 的驱动脚本自 R7a-D 起会真实联网（main 在 simulate 前先拉行情包并预取合约）；现在把这两步也换成离线替身，耗时 13 秒，断言不变。
+- **风险/未做**：① 晚间（19:25）跑时，当天合约日线还没发布，最后一天 27 个品种 main_map 都为 None，信号退回原始连续价（回测和日报一致）；② PBO 矩阵没有用 v14 重算；③ 只有 1 年样本，不能证明有正期望；④ `test_proxy_positions` 的修改须与根账本替换同一次提交；⑤ 本地 main 比 origin 多 20 个提交，push 前要先 fetch 再 rebase，运行产物取 CI 一方（见报告第 10 节）。
+- **产物**：`archive/R7/R7_signoff_report.md`、`candidate_bt.json`（+ `.log`/`_equity.svg`）、`audit_candidate.json`、`replay_candidate_empty_cache.json`、`candidate_kpis.json`、`_candidate_offline.py`、`paper_book_candidate.json`、`paper_book_legacy_pre_R7.json`、`l1_report_dryrun.json`、`paper_book_candidate_dryrun.json`、`main_map_compare_candidate.json`、`README_kpi_preview.md`、`progress.md`；`archive/snapshots/bt_input_20261124_6574c6a4dbcd.json`。
+- **建议下一刀**：R7b（磊签字后：正式重跑写根目录、方案 B 根账本、README KPI 块、scorecard、formal_rule_lock、test_proxy 修改）；或停
 
 ### R5b 模拟账本共用回测持仓引擎（2026-11-24）
 

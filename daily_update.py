@@ -1152,10 +1152,12 @@ def main(argv=None):
             import paper_book as _pb
 
             sizing_eq, risk_budget = _pb.sizing_for(engine_ctx["rolled"]["sizing_equity"], engine_ctx["settings"])
+            rolled = engine_ctx["rolled"]
+            # a freshly seeded book already at ``day`` comes back as a no-op without the roll counters
             print(
                 f"[paper-R5b] book={engine_ctx['path'].name} day={engine_ctx['day']} "
-                f"rolled={engine_ctx['rolled']['days_rolled']} filled={engine_ctx['rolled']['opened_n']} "
-                f"closed={engine_ctx['rolled']['closed_n']} sizing={sizing_eq} risk={risk_budget}"
+                f"rolled={rolled.get('days_rolled', [])} filled={rolled.get('opened_n', 0)} "
+                f"closed={rolled.get('closed_n', 0)} noop={bool(rolled.get('noop'))} sizing={sizing_eq} risk={risk_budget}"
             )
         # placeholder rows until compute_signals (after the seat ensure stage)
         signals = [

@@ -1,0 +1,151 @@
+[bt] pathA-rr2 equity0=200000.0 stopATR=0.8 compound=True n=27 max_pos=3 gross≤50.0% atr_risk≤8.0% bucket≤1 min_r=4.0/6.0 min_lots=0 observe=False optHedge=False premATR=0.0 strikeATR=0.0 ifind=primary compare=False hedge_grid=False rr_grid=False roll_grid=False
+[bt] fetch MA MAZL.CZC 甲醇...
+2026-11-24 19:24:59 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=2887 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch V VZL.DCE PVC...
+2026-11-24 19:25:08 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4244 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch EG EGZL.DCE 乙二醇...
+2026-11-24 19:25:17 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1927 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch M MZL.DCE 豆粕...
+2026-11-24 19:25:26 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5326 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch FG FGZL.CZC 玻璃...
+2026-11-24 19:25:35 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3383 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch EB EBZL.DCE 苯乙烯...
+2026-11-24 19:25:44 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1733 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch TA TAZL.CZC PTA...
+2026-11-24 19:25:53 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4841 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch SA SAZL.CZC 纯碱...
+2026-11-24 19:26:02 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1687 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch PP PPZL.DCE 聚丙烯...
+2026-11-24 19:26:11 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3095 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch L LZL.DCE 塑料...
+2026-11-24 19:26:20 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4698 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch JD JDZL.DCE 鸡蛋...
+2026-11-24 19:26:29 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3170 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch P PZL.DCE 棕榈油...
+2026-11-24 19:26:38 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4637 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch RB RBZL.SHF 螺纹钢...
+2026-11-24 19:26:48 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4287 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch FU FUZL.SHF 燃油...
+[ifind] switched to backup key (session): http 200 / {'id': 3, 'jsonrpc': '2.0', 'result': {'content': [{'text': '{"code":1,"msg":"success","subCode":null,"subMsg":null,"dat
+  source=sina+ifind sina=5298 tqsdk=False ifind=True bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch CF CFZL.CZC 棉花...
+2026-11-24 19:27:05 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5324 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch BU BUZL.SHF 沥青...
+2026-11-24 19:27:14 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3189 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch RU RUZL.SHF 橡胶...
+2026-11-24 19:27:23 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5321 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch AG AGZL.SHF 沪银...
+2026-11-24 19:27:32 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3537 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch SP SPZL.SHF 纸浆...
+2026-11-24 19:27:41 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1936 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch SR SRZL.CZC 白糖...
+2026-11-24 19:27:50 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5067 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch AU AUZL.SHF 沪金...
+2026-11-24 19:27:59 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4596 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch CU CUZL.SHF 沪铜...
+2026-11-24 19:28:08 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5323 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch AL ALZL.SHF 沪铝...
+2026-11-24 19:28:17 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5323 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch NI NIZL.SHF 沪镍...
+2026-11-24 19:28:26 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=2835 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch I IZL.DCE 铁矿石...
+2026-11-24 19:28:35 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3184 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch JM JMZL.DCE 焦煤...
+2026-11-24 19:28:44 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3316 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] fetch SS SSZL.SHF 不锈钢...
+2026-11-24 19:28:53 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1734 tqsdk=True ifind=False bars=276 last=2026-11-24
+  bars=276 range=2025-09-30→2026-11-24
+[bt] contract prefetch requests=372 seconds=8.129 fetched=364 failed=8
+[bt] mode=seats ifind_so_far=1
+  [curve] MA source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] V source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] EG source=sina contracts=7/8 roll=8 carry=437 back_days=460
+  [curve] FG source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] TA source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] SA source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] M source=sina contracts=19/21 roll=10 carry=527 back_days=460
+  [curve] PP source=sina contracts=7/8 roll=8 carry=444 back_days=460
+  [curve] L source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] P source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] EB source=sina contracts=27/30 roll=50 carry=511 back_days=460
+  [curve] RB source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] CF source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] JD source=sina contracts=27/30 roll=40 carry=521 back_days=460
+  [curve] RU source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] FU source=sina contracts=28/30 roll=24 carry=537 back_days=460
+  [curve] BU source=sina contracts=28/30 roll=80 carry=637 back_days=460
+  [curve] AG source=sina contracts=28/30 roll=18 carry=526 back_days=460
+  [curve] SR source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] SP source=sina contracts=19/20 roll=16 carry=520 back_days=460
+  [curve] AU source=sina contracts=24/30 roll=18 carry=526 back_days=460
+  [curve] CU source=sina contracts=28/30 roll=38 carry=526 back_days=460
+  [curve] I source=sina contracts=28/30 roll=10 carry=527 back_days=460
+  [curve] AL source=sina contracts=28/30 roll=46 carry=526 back_days=460
+  [curve] NI source=sina contracts=27/30 roll=34 carry=523 back_days=460
+  [curve] JM source=sina contracts=28/30 roll=12 carry=509 back_days=460
+  [curve] SS source=sina contracts=28/30 roll=41 carry=526 back_days=460
+  [seats] files 40/276
+  [seats] files 80/276
+  [seats] files 120/276
+  [seats] files 160/276
+  [seats] files 200/276
+  [seats] files 240/276
+  [seats] files 276/276
+  [seats] days MA:276 V:114 EG:112 M:115 FG:276 EB:113 TA:276 SA:276 PP:114 L:114 JD:113 P:115 RB:276 FU:276 CF:276 BU:276 RU:276 AG:276 SP:276 SR:276 AU:276 CU:276 AL:276 NI:276 I:115 JM:114 SS:276
+[bt] mode=seats ifind_so_far=1
+[ifind] calls=1
+[bt] chart D:\AI\cta-path-a\archive\R7\candidate_bt_equity.svg
+PathA seats 2025-12-31→2026-11-24 净权益 197863（-1.07%）毛权益 203149（+1.57%）成本 5286，净MaxDD 7.62% 毛MaxDD 6.84%，成交56笔，结论 继续L1
+[bt] wrote D:\AI\cta-path-a\archive\R7\candidate_bt.json

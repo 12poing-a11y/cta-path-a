@@ -1,0 +1,9 @@
+在使用天勤量化之前，默认您已经知晓并同意以下免责条款，如果不同意请立即停止使用：https://www.shinnytech.com/blog/disclaimer/
+Traceback (most recent call last):
+  File "D:\AI\cta-path-a\daily_update.py", line 1837, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "D:\AI\cta-path-a\daily_update.py", line 1157, in main
+    f"rolled={engine_ctx['rolled']['days_rolled']} filled={engine_ctx['rolled']['opened_n']} "
+              ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'days_rolled'

@@ -1,0 +1,6 @@
+.                                                                        [100%]
+============================= slowest 3 durations =============================
+13.43s call     tests/test_formal_write_dirty_exit2.py::test_formal_write_dirty_tree_exit2_and_clean_writes
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+1 passed in 13.91s

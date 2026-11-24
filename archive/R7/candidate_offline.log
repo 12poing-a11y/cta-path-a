@@ -1,0 +1,29 @@
+[offline] snapshot bt_input_20261124_6574c6a4dbcd.json store=BundleContractStore(611 contracts, cutoff=None) days 2025-12-31..2026-11-24
+[bt] mode=seats ifind_so_far=0
+[offline] base re-sim vs candidate diffs: none
+[bt] mode=seats ifind_so_far=0
+[offline] stress re-sim vs formal stress row diffs: none
+{
+ "base_resim_diffs": {},
+ "stress_resim_vs_formal_row_diffs": {},
+ "scheme_B_book": {
+  "asof": "2026-11-24",
+  "equity_mtm": 197863.04,
+  "equity_realized": 198193.04,
+  "positions": {
+   "P": {
+    "direction": "空",
+    "lots": 1,
+    "entry_date": "2026-11-23",
+    "entry": 8278.0,
+    "stop": 8438.285714285714,
+    "target": 7957.428571428572,
+    "last_mark": 8311.0,
+    "fill_price_basis": "continuous_proxy",
+    "fill_contract": "P2612",
+    "held_contract": "P2701"
+   }
+  },
+  "pending": []
+ }
+}

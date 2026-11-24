@@ -1,0 +1,9 @@
+﻿3002566B1FFDFBFA  historical_backtest_latest.json
+6A7845B5537FEAAF  paper_book_latest.json
+ACFD929C7DFBBEC4  README.md
+4B4F06A632CB356B  execution_rules.json
+7422CA4A79DD8FB9  universe.json
+8BCCD8B0DDF96929  configs/formal_rule_lock.json
+DBCD94613DB8AFA8  lab/research/validation/formal_scorecard_latest.json
+A47E46FF193C0F42  lab/research/validation/pbo_path_a_latest.json
+5F450E5D11461CA8  lab/research/validation/shadow_attribution_latest.json

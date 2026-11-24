@@ -1,0 +1,5 @@
+[replay] contracts: BundleContractStore(611 contracts, cutoff=None)
+[bt] mode=seats ifind_so_far=0
+{'ret_pct': -1.068, 'max_dd_pct': 7.623, 'closed_trades': 56, 'trade_win_rate': 33.93, 'expectancy_r': 0.03, 'exits': {'target': 18, 'stop': 34, 'signal': 4}, 'proxy_entry_n': 25, 'contract_entry_n': 31, 'same_day_exit_n': 12, 'minute_stop_exits': 5, 'daily_exit_fallback_checks': 173, 'conclusion': '继续L1'}
+ref_bt {'ret_pct': -1.068, 'max_dd_pct': 7.623, 'closed_trades': 56, 'trade_win_rate': 33.93, 'expectancy_r': 0.03, 'exits': {'target': 18, 'stop': 34, 'signal': 4}, 'proxy_entry_n': 25, 'contract_entry_n': 31, 'same_day_exit_n': 12, 'minute_stop_exits': 5, 'daily_exit_fallback_checks': 173, 'conclusion': '继续L1'}
+[replay] wrote D:\AI\cta-path-a\archive\R7\replay_candidate_empty_cache.json

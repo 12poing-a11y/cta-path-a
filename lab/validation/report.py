@@ -108,6 +108,8 @@ def validation_bundle_from_backtest(out: dict[str, Any], *, n_trials: int | None
         )
     else:
         bundle = validation_bundle_from_returns(rets, n_trials=n_trials)
+    if out.get("n_trials_breakdown"):
+        bundle["n_trials_breakdown"] = out["n_trials_breakdown"]
     bundle["source"] = {
         "schema_version": out.get("schema_version"),
         "mode": out.get("mode"),

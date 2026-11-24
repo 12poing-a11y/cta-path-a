@@ -1,0 +1,163 @@
+[cta] start 2026-11-24T19:42:19.855644+08:00 equity_base=200000.0 live=200000.0 sizing=200000.0 compound=True risk=4000.0 max_pos=3 gross≤50.0% atr_risk≤8.0% bucket≤1 min_r=4.0/6.0 ifind=primary
+[cta] entry_filter=seats carry_bypass=True lab_edge=True
+  [curve] MA source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] V source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] EG source=sina contracts=7/8 roll=8 carry=437 back_days=460
+  [curve] FG source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] TA source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] M source=sina contracts=19/21 roll=10 carry=527 back_days=460
+  [curve] SA source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] PP source=sina contracts=7/8 roll=8 carry=444 back_days=460
+  [curve] L source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] P source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] EB source=sina contracts=27/30 roll=50 carry=511 back_days=460
+  [curve] RB source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] CF source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] RU source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] JD source=sina contracts=27/30 roll=40 carry=521 back_days=460
+  [curve] FU source=sina contracts=28/30 roll=24 carry=537 back_days=460
+  [curve] BU source=sina contracts=28/30 roll=80 carry=637 back_days=460
+  [curve] SR source=sina contracts=7/8 roll=8 carry=447 back_days=460
+  [curve] SP source=sina contracts=19/20 roll=16 carry=520 back_days=460
+  [curve] AG source=sina contracts=28/30 roll=18 carry=526 back_days=460
+  [curve] AU source=sina contracts=24/30 roll=18 carry=526 back_days=460
+  [curve] CU source=sina contracts=28/30 roll=38 carry=526 back_days=460
+  [curve] AL source=sina contracts=28/30 roll=46 carry=526 back_days=460
+  [curve] NI source=sina contracts=27/30 roll=34 carry=523 back_days=460
+  [curve] JM source=sina contracts=28/30 roll=12 carry=509 back_days=460
+  [curve] I source=sina contracts=28/30 roll=10 carry=527 back_days=460
+  [curve] SS source=sina contracts=28/30 roll=41 carry=526 back_days=460
+[cta] fetch MA...
+2026-11-24 19:42:22 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=2887 tqsdk=True ifind=False bars=276 last=2026-11-24
+  MA src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch V...
+2026-11-24 19:42:31 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4244 tqsdk=True ifind=False bars=276 last=2026-11-24
+  V src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch EG...
+2026-11-24 19:42:40 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1927 tqsdk=True ifind=False bars=276 last=2026-11-24
+  EG src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch M...
+2026-11-24 19:42:49 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5326 tqsdk=True ifind=False bars=276 last=2026-11-24
+  M src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch FG...
+2026-11-24 19:42:58 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3383 tqsdk=True ifind=False bars=276 last=2026-11-24
+  FG src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch EB...
+2026-11-24 19:43:07 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1733 tqsdk=True ifind=False bars=276 last=2026-11-24
+  EB src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch TA...
+2026-11-24 19:43:16 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4841 tqsdk=True ifind=False bars=276 last=2026-11-24
+  TA src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch SA...
+2026-11-24 19:43:25 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1687 tqsdk=True ifind=False bars=276 last=2026-11-24
+  SA src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch PP...
+2026-11-24 19:43:34 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3095 tqsdk=True ifind=False bars=276 last=2026-11-24
+  PP src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch L...
+2026-11-24 19:43:43 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4698 tqsdk=True ifind=False bars=276 last=2026-11-24
+  L src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch JD...
+2026-11-24 19:43:52 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3170 tqsdk=True ifind=False bars=276 last=2026-11-24
+  JD src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch P...
+2026-11-24 19:44:01 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4637 tqsdk=True ifind=False bars=276 last=2026-11-24
+  P src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch RB...
+2026-11-24 19:44:10 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4287 tqsdk=True ifind=False bars=276 last=2026-11-24
+  RB src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch FU...
+[ifind] switched to backup key (session): http 200 / {'id': 3, 'jsonrpc': '2.0', 'result': {'content': [{'text': '{"code":1,"msg":"success","subCode":null,"subMsg":null,"dat
+  source=sina+ifind sina=5298 tqsdk=False ifind=True bars=282 last=2026-11-24
+  FU src=sina+ifind date=2026-11-24 bars=282
+[cta] fetch CF...
+2026-11-24 19:44:25 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5324 tqsdk=True ifind=False bars=276 last=2026-11-24
+  CF src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch BU...
+2026-11-24 19:44:34 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3189 tqsdk=True ifind=False bars=276 last=2026-11-24
+  BU src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch RU...
+2026-11-24 19:44:43 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5321 tqsdk=True ifind=False bars=276 last=2026-11-24
+  RU src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch AG...
+2026-11-24 19:44:52 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3537 tqsdk=True ifind=False bars=276 last=2026-11-24
+  AG src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch SP...
+2026-11-24 19:45:01 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1936 tqsdk=True ifind=False bars=276 last=2026-11-24
+  SP src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch SR...
+2026-11-24 19:45:10 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5067 tqsdk=True ifind=False bars=276 last=2026-11-24
+  SR src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch AU...
+2026-11-24 19:45:19 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=4596 tqsdk=True ifind=False bars=276 last=2026-11-24
+  AU src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch CU...
+2026-11-24 19:45:28 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5323 tqsdk=True ifind=False bars=276 last=2026-11-24
+  CU src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch AL...
+2026-11-24 19:45:37 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=5323 tqsdk=True ifind=False bars=276 last=2026-11-24
+  AL src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch NI...
+2026-11-24 19:45:46 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=2835 tqsdk=True ifind=False bars=276 last=2026-11-24
+  NI src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch I...
+2026-11-24 19:45:55 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3184 tqsdk=True ifind=False bars=276 last=2026-11-24
+  I src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch JM...
+2026-11-24 19:46:04 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=3316 tqsdk=True ifind=False bars=276 last=2026-11-24
+  JM src=sina+tqsdk date=2026-11-24 bars=276
+[cta] fetch SS...
+2026-11-24 19:46:13 -     INFO - 通知 : 与 wss://free-api.shinnytech.com/t/nfmd/front/mobile 的网络连接已建立
+  source=sina+tqsdk sina=1734 tqsdk=True ifind=False bars=276 last=2026-11-24
+  SS src=sina+tqsdk date=2026-11-24 bars=276
+[contracts] requests=147 seconds=0.239 fetched=145 failed=2
+[paper-R5b] book=paper_book_candidate.json day=2026-11-24 rolled=[] filled=0 closed=0 noop=True sizing=197863.04157142853 risk=3957.260831428571
+  [member] eastmoney 20261116 products=27
+  [member] eastmoney 20261117 products=27
+  [member] eastmoney 20261118 products=27
+  [member] eastmoney 20261119 products=27
+  [member] eastmoney 20261120 products=27
+  [member] eastmoney 20261123 products=27
+  [member] eastmoney 20261124 products=27
+[member] backfill 20261114→20261124 days=7 shfe=7 czce=7 dce=7 em=7 cov_ok=0
+  [observe] member lookback days=7 shfe=7 czce=7 dce=7 em=7
+  [observe] seats 27/27 missing=[] filled={}
+  [seats] files 40/276
+  [seats] files 80/276
+  [seats] files 120/276
+  [seats] files 160/276
+  [seats] files 200/276
+  [seats] files 240/276
+  [seats] files 276/276
+  [seats] days MA:276 V:115 EG:113 M:116 FG:276 EB:114 TA:276 SA:276 PP:115 L:115 JD:114 P:116 RB:276 FU:276 CF:276 BU:276 RU:276 AG:276 SP:276 SR:276 AU:276 CU:276 AL:276 NI:276 I:116 JM:115 SS:276
+[cta] adj_fallback (roll spreads in signal): ['MA', 'V', 'EG', 'M', 'FG', 'EB', 'TA', 'SA', 'PP', 'L', 'JD', 'P', 'RB', 'FU', 'CF', 'BU', 'RU', 'AG', 'SP', 'SR', 'AU', 'CU', 'AL', 'NI', 'I', 'JM', 'SS']
+[cta] portfolio selected=[] gross=0 (0.0%) atr_risk=0 (0.0%) scale=1.0 weak=[] bucket_skip=[]
+[cta] quality ok session=2026-11-24 checked=27 bad_n=0
+[sentiment] soft-fail: skipped (dry-run: shadow snapshot not written)
+[paper-R5b] dry-run: wrote archive/R7/paper_book_candidate_dryrun.json
+[cta] dry-run: wrote archive/R7/l1_report_dryrun.json (no root / archive / paper_book writes)

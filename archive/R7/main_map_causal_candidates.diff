@@ -1,0 +1,25 @@
+﻿diff --git a/research/data_quality/main_map.py "b/D:\\AI\\tmp_main_map_patched.py"
+index 666a619..b485a5d 100644
+--- a/research/data_quality/main_map.py
++++ "b/D:\\AI\\tmp_main_map_patched.py"
+@@ -158,6 +158,8 @@ def build_main_map(
+         except (TypeError, ValueError):
+             tick = 0.0
+         contracts = set(cached_contracts_for(code, root))
++        base = set(contracts)
++        seen: set[str] = set()
+         for b in hist:
+             c = str(b.get("contract") or "").upper()
+             if c and _snap_contract_bar(b) is not None:
+@@ -174,7 +176,11 @@ def build_main_map(
+             cands: dict[str, dict] = {}
+             own = str(b.get("contract") or "").upper()
+             snap_c = _snap_contract_bar(b)
++            if own and snap_c is not None:
++                seen.add(own)
+             for c, rows in by_contract.items():
++                if c not in base and c not in seen:
++                    continue
+                 if c == own and snap_c is not None:
+                     cands[c] = snap_c  # snapshot contract_* first
+                 elif d in rows:

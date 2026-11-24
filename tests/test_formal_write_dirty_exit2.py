@@ -28,10 +28,13 @@ sys.path.insert(0, "."); sys.path.insert(0, "lab/shadow")
 import historical_backtest as hb
 orig = hb._simulate_cfg
 import replay as R
+import research.data_quality.contract_cache as cc
 def fake(p, mode, **kw):
     pp, pack = R.make_pack()
     return orig(pp, pp["entry_filter"], pack=pack)
 hb._simulate_cfg = fake
+hb._fetch_pack = lambda symbols, *a, **k: R.make_pack()[1]
+cc.ensure_listed_contract_bars = lambda *a, **k: {"requests": 0, "seconds": 0.0, "fetched": [], "failed": []}
 sys.argv = ["historical_backtest.py", "--no-cost-stress"]
 sys.exit(hb.main())
 '''

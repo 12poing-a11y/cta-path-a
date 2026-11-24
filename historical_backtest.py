@@ -51,7 +51,7 @@ LOOKBACK_DAYS = 260
 WARMUP = 60
 BATCH_LABEL = "2026一年-pathA-nextOpen"
 CUTOFF_DAYS = 420
-SCHEMA_VERSION = "cta-backtest-v13-tradability"
+SCHEMA_VERSION = "cta-backtest-v14-execfix"
 DEFAULT_FILL_PRICE = "next_open"
 EXIT_MINUTE_PERIOD = "15"
 # Continuous main-series remains the Path-A fill proxy until contract-level packs land.
@@ -518,6 +518,40 @@ def _stable_sha256(obj) -> str:
 
     blob = json.dumps(obj, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8")
     return hashlib.sha256(blob).hexdigest()
+
+
+def n_trials_census(root: Path | None = None) -> dict:
+    """Trials searched so far (DSR deflation): the max of 1 + archived parameter sets, the Path-A PBO
+    trial matrix width and the rows summed over archive/shadow_strategy_*.json."""
+    root = root or ROOT
+    out: dict = {"archived_params_plus_current": 1, "pbo_matrix_n_trials": 0, "shadow_strategy_rows": 0,
+                 "shadow_strategy_files": {}}
+    try:
+        rules = json.loads((root / "execution_rules.json").read_text(encoding="utf-8"))
+        out["archived_params_plus_current"] = 1 + len(rules.get("archived_params") or [])
+    except Exception:  # noqa: BLE001
+        pass
+    vdir = root / "lab" / "research" / "validation"
+    for name in ("pbo_path_a_latest.json", "pbo_path_a_matrix.json"):
+        try:
+            obj = json.loads((vdir / name).read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            continue
+        k = (obj.get("matrix_meta") or {}).get("n_trials") or obj.get("n_trials")
+        if k:
+            out["pbo_matrix_n_trials"] = int(k)
+            out["pbo_matrix_source"] = f"lab/research/validation/{name}"
+            break
+    for f in sorted((root / "archive").glob("shadow_strategy_*.json")):
+        try:
+            rows = json.loads(f.read_text(encoding="utf-8")).get("rows") or []
+        except Exception:  # noqa: BLE001
+            continue
+        out["shadow_strategy_files"][f.name] = len(rows)
+        out["shadow_strategy_rows"] += len(rows)
+    out["n_trials"] = max(1, out["archived_params_plus_current"], out["pbo_matrix_n_trials"],
+                          out["shadow_strategy_rows"])
+    return out
 
 
 def _carry_subset(curves: dict) -> dict:
@@ -1949,14 +1983,8 @@ def simulate(
             "universe_sha256": _file_sha256(ROOT / "universe.json"),
             "research_cost_sha256": _file_sha256(ROOT / "research_cost.json"),
         }
-    n_trials_assumed = 1
-    try:
-        archived = json.loads((ROOT / "execution_rules.json").read_text(encoding="utf-8")).get(
-            "archived_params"
-        ) or []
-        n_trials_assumed = max(1, 1 + len(archived))
-    except Exception:
-        pass
+    n_trials_breakdown = n_trials_census(ROOT)
+    n_trials_assumed = n_trials_breakdown["n_trials"]
     return {
         "ok": True,
         "schema_version": SCHEMA_VERSION,
@@ -1971,6 +1999,7 @@ def simulate(
         "config_version": cfg_stamp,
         "quality_blocks": quality_blocks,
         "n_trials_assumed": n_trials_assumed,
+        "n_trials_breakdown": n_trials_breakdown,
         "data_source": "sina primary, TqSdk then iFinD fallback",
         "curve_coverage": curve_coverage(curves),
         "sources": sources,

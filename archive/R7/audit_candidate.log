@@ -1,0 +1,2 @@
+[audit] wrote D:\AI\cta-path-a\archive\R7\audit_candidate.json
+[audit] checked=52 mismatches=0 skipped_proxied=0 skipped_no_bar=0 checks={'entry_order_checked': 56, 'continuous_range_checked': 25, 'continuous_range_skipped_no_bar': 0, 'roll_day_exits_checked': 1}

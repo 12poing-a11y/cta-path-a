@@ -79,7 +79,7 @@ def _fixture_minutes(monkeypatch):
     )
 
 
-def test_legacy_reproduces_ee4476b_and_fix_has_no_cross_delivery(monkeypatch):
+def test_legacy_path_kpi_lock_and_fix_has_no_cross_delivery(monkeypatch):
     import replay as R
     import recompute as RC
 
@@ -87,7 +87,9 @@ def test_legacy_reproduces_ee4476b_and_fix_has_no_cross_delivery(monkeypatch):
 
     p, pack = R.make_pack()
     legacy = R.run(p, pack, freeze_fix=False, min_seat_days=0)
-    # R2→R3: gap-through stop fills at open → KPI lock drifts (same n=42).
+    # KPI lock of the legacy path (freeze_fix off) on the 11-13 snapshot.  It no longer reproduces the
+    # ee4476b formal JSON: R3's gap-through stop fills at the open moved it (same n=42), and the
+    # minutes come from the frozen fixture.
     assert (legacy["ret_pct"], legacy["max_dd_pct"], legacy["closed_trades"]) == (4.189, 4.294, 42)
     assert len(RC.cross_delivery(legacy)) == 2  # L2601 / FG2605 frozen across delivery month
     p, pack = R.make_pack()

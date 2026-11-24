@@ -1471,6 +1471,8 @@ def simulate(
     caps_entry_gross_max = 0.0
     caps_entry_risk_max = 0.0
     caps_scaled_n = 0
+    caps_topup_lots = 0
+    caps_topup_revived = 0
     caps_entry_days = 0
     caps_entry_log: list[dict] = []
 
@@ -1993,8 +1995,11 @@ def simulate(
                     max_gross_exposure_pct=gross_left_main,
                     max_portfolio_risk_pct=risk_left_main,
                     existing_buckets=held_buckets,
+                    topup=True,
                     **_caps_kw,
                 )
+                caps_topup_lots += int(_meta.get("topup_lots", 0) or 0)
+                caps_topup_revived += int(_meta.get("topup_revived", 0) or 0)
                 # counterfactual with the full caps (no book): how many candidates the book scaled/dropped
                 if cands and used_g + used_r > 0:
                     _sel_old, _ = apply_portfolio_caps(
@@ -2002,6 +2007,7 @@ def simulate(
                         max_gross_exposure_pct=max_gross_pct,
                         max_portfolio_risk_pct=max_port_risk,
                         existing_buckets=held_buckets,
+                        topup=True,
                         **_caps_kw,
                     )
                     _new_lots = {c_["code"]: int(c_["lots"]) for c_ in selected}
@@ -2013,6 +2019,7 @@ def simulate(
                     cands,
                     max_gross_exposure_pct=max_gross_pct,
                     max_portfolio_risk_pct=max_port_risk,
+                    topup=False,  # caps_include_book=False reproduces the pre-R4 caps exactly
                     **_caps_kw,
                 )
             # order-time check on d's close: open book + new orders within the caps
@@ -2229,7 +2236,10 @@ def simulate(
                         max_per_bucket=max_per_bucket,
                         min_r20_pct=0.0,
                         min_r60_pct=0.0,
+                        topup=use_book_caps,
                     )
+                    caps_topup_lots += int(_roll_meta.get("topup_lots", 0) or 0)
+                    caps_topup_revived += int(_roll_meta.get("topup_revived", 0) or 0)
                 for c in roll_selected:
                     if int(c.get("lots") or 0) <= 0 or len(pos) >= int(max_positions):
                         continue
@@ -2451,6 +2461,8 @@ def simulate(
         "caps_entry_gross_max": round(caps_entry_gross_max, 2),
         "caps_entry_risk_max": round(caps_entry_risk_max, 2),
         "caps_scaled_n": caps_scaled_n,
+        "caps_topup_lots": caps_topup_lots,
+        "caps_topup_revived": caps_topup_revived,
         "caps_drift_days_gt55": sum(1 for c_ in curve if float(c_.get("gross_pct") or 0) > 55.0),
         "caps_entry_log": caps_entry_log,
         "adjusted_signals": bool(adj),

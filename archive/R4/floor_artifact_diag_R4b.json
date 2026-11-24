@@ -1,0 +1,5056 @@
+{
+  "book_aware_call_candidate_shortfalls": 505,
+  "of_which_next_lot_still_fits_quota": 0,
+  "rows": [
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.42,
+      "one_more_lot_gross_pct": 36.58
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.42,
+      "one_more_lot_gross_pct": 61.65
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.42,
+      "one_more_lot_gross_pct": 41.14
+    },
+    {
+      "code": "SS",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.42,
+      "one_more_lot_gross_pct": 34.65
+    },
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.55,
+      "one_more_lot_gross_pct": 36.81
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.55,
+      "one_more_lot_gross_pct": 60.79
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.55,
+      "one_more_lot_gross_pct": 40.87
+    },
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.72,
+      "one_more_lot_gross_pct": 36.94
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.72,
+      "one_more_lot_gross_pct": 61.34
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.72,
+      "one_more_lot_gross_pct": 40.95
+    },
+    {
+      "code": "CF",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 12.16,
+      "one_more_lot_gross_pct": 36.67
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 12.16,
+      "one_more_lot_gross_pct": 60.91
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 12.16,
+      "one_more_lot_gross_pct": 40.63
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 12.53,
+      "one_more_lot_gross_pct": 61.65
+    },
+    {
+      "code": "TA",
+      "lots_requested": 8,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.09,
+      "one_more_lot_gross_pct": 13.75
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.09,
+      "one_more_lot_gross_pct": 61.31
+    },
+    {
+      "code": "TA",
+      "lots_requested": 8,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.22,
+      "one_more_lot_gross_pct": 13.69
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.22,
+      "one_more_lot_gross_pct": 60.96
+    },
+    {
+      "code": "TA",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 10.69,
+      "one_more_lot_gross_pct": 13.56
+    },
+    {
+      "code": "P",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.69,
+      "one_more_lot_gross_pct": 46.81
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.69,
+      "one_more_lot_gross_pct": 64.73
+    },
+    {
+      "code": "SS",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.69,
+      "one_more_lot_gross_pct": 36.52
+    },
+    {
+      "code": "P",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.32,
+      "one_more_lot_gross_pct": 46.95
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.32,
+      "one_more_lot_gross_pct": 64.17
+    },
+    {
+      "code": "SS",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.32,
+      "one_more_lot_gross_pct": 36.57
+    },
+    {
+      "code": "JM",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 12.65,
+      "one_more_lot_gross_pct": 33.58
+    },
+    {
+      "code": "JM",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 12.93,
+      "one_more_lot_gross_pct": 33.43
+    },
+    {
+      "code": "BU",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 13.31,
+      "one_more_lot_gross_pct": 16.35
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 13.31,
+      "one_more_lot_gross_pct": 33.53
+    },
+    {
+      "code": "TA",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.59,
+      "one_more_lot_gross_pct": 13.4
+    },
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.59,
+      "one_more_lot_gross_pct": 38.28
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 11.59,
+      "one_more_lot_gross_pct": 33.1
+    },
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 12.59,
+      "one_more_lot_gross_pct": 37.93
+    },
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 12.38,
+      "one_more_lot_gross_pct": 38.01
+    },
+    {
+      "code": "BU",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 12.38,
+      "one_more_lot_gross_pct": 16.63
+    },
+    {
+      "code": "MA",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.45,
+      "one_more_lot_gross_pct": 13.19
+    },
+    {
+      "code": "EG",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.45,
+      "one_more_lot_gross_pct": 22.71
+    },
+    {
+      "code": "M",
+      "lots_requested": 9,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 28.45,
+      "one_more_lot_gross_pct": 15.22
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.45,
+      "one_more_lot_gross_pct": 24.37
+    },
+    {
+      "code": "TA",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.45,
+      "one_more_lot_gross_pct": 16.52
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.45,
+      "one_more_lot_gross_pct": 20.34
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.45,
+      "one_more_lot_gross_pct": 20.23
+    },
+    {
+      "code": "P",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.45,
+      "one_more_lot_gross_pct": 47.27
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 13.66
+    },
+    {
+      "code": "EG",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 23.02
+    },
+    {
+      "code": "M",
+      "lots_requested": 7,
+      "lots_given": 2,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 15.23
+    },
+    {
+      "code": "EB",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 24.34
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 16.88
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 20.94
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 20.49
+    },
+    {
+      "code": "P",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 47.55
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 61.02
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 36.07,
+      "one_more_lot_gross_pct": 39.51
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.24,
+      "one_more_lot_gross_pct": 13.71
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.24,
+      "one_more_lot_gross_pct": 23.23
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.24,
+      "one_more_lot_gross_pct": 16.65
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.24,
+      "one_more_lot_gross_pct": 20.87
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.24,
+      "one_more_lot_gross_pct": 20.45
+    },
+    {
+      "code": "P",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.24,
+      "one_more_lot_gross_pct": 47.92
+    },
+    {
+      "code": "AL",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 6.24,
+      "one_more_lot_gross_pct": 60.15
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 6.24,
+      "one_more_lot_gross_pct": 39.31
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.15,
+      "one_more_lot_gross_pct": 13.96
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.15,
+      "one_more_lot_gross_pct": 23.24
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.15,
+      "one_more_lot_gross_pct": 16.27
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.15,
+      "one_more_lot_gross_pct": 20.68
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.15,
+      "one_more_lot_gross_pct": 20.2
+    },
+    {
+      "code": "P",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.15,
+      "one_more_lot_gross_pct": 46.45
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.15,
+      "one_more_lot_gross_pct": 21.09
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 7.15,
+      "one_more_lot_gross_pct": 38.87
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.48,
+      "one_more_lot_gross_pct": 15.36
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.48,
+      "one_more_lot_gross_pct": 25.2
+    },
+    {
+      "code": "EB",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.48,
+      "one_more_lot_gross_pct": 24.67
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.48,
+      "one_more_lot_gross_pct": 16.5
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.48,
+      "one_more_lot_gross_pct": 22.11
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.48,
+      "one_more_lot_gross_pct": 21.52
+    },
+    {
+      "code": "P",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.48,
+      "one_more_lot_gross_pct": 47.29
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.48,
+      "one_more_lot_gross_pct": 22.33
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 6.48,
+      "one_more_lot_gross_pct": 38.99
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.73,
+      "one_more_lot_gross_pct": 15.07
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.73,
+      "one_more_lot_gross_pct": 25.75
+    },
+    {
+      "code": "EB",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.73,
+      "one_more_lot_gross_pct": 24.42
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.73,
+      "one_more_lot_gross_pct": 16.0
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.73,
+      "one_more_lot_gross_pct": 21.69
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.73,
+      "one_more_lot_gross_pct": 21.21
+    },
+    {
+      "code": "P",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.73,
+      "one_more_lot_gross_pct": 46.75
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 6.73,
+      "one_more_lot_gross_pct": 21.44
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 6.73,
+      "one_more_lot_gross_pct": 39.23
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.23,
+      "one_more_lot_gross_pct": 15.06
+    },
+    {
+      "code": "V",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.23,
+      "one_more_lot_gross_pct": 14.04
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.23,
+      "one_more_lot_gross_pct": 24.56
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.23,
+      "one_more_lot_gross_pct": 16.06
+    },
+    {
+      "code": "PP",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.23,
+      "one_more_lot_gross_pct": 21.86
+    },
+    {
+      "code": "L",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.23,
+      "one_more_lot_gross_pct": 21.39
+    },
+    {
+      "code": "P",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.23,
+      "one_more_lot_gross_pct": 46.27
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.23,
+      "one_more_lot_gross_pct": 21.11
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.87,
+      "one_more_lot_gross_pct": 14.75
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.87,
+      "one_more_lot_gross_pct": 24.05
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.87,
+      "one_more_lot_gross_pct": 15.74
+    },
+    {
+      "code": "PP",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.87,
+      "one_more_lot_gross_pct": 21.43
+    },
+    {
+      "code": "L",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.87,
+      "one_more_lot_gross_pct": 20.81
+    },
+    {
+      "code": "P",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.87,
+      "one_more_lot_gross_pct": 45.42
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.87,
+      "one_more_lot_gross_pct": 21.06
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.73,
+      "one_more_lot_gross_pct": 15.36
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.73,
+      "one_more_lot_gross_pct": 24.27
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.73,
+      "one_more_lot_gross_pct": 16.26
+    },
+    {
+      "code": "PP",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.73,
+      "one_more_lot_gross_pct": 21.88
+    },
+    {
+      "code": "L",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.73,
+      "one_more_lot_gross_pct": 21.03
+    },
+    {
+      "code": "P",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.73,
+      "one_more_lot_gross_pct": 46.13
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.73,
+      "one_more_lot_gross_pct": 21.8
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.5,
+      "one_more_lot_gross_pct": 15.82
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.5,
+      "one_more_lot_gross_pct": 25.34
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.5,
+      "one_more_lot_gross_pct": 16.5
+    },
+    {
+      "code": "PP",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.5,
+      "one_more_lot_gross_pct": 22.35
+    },
+    {
+      "code": "L",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.5,
+      "one_more_lot_gross_pct": 21.29
+    },
+    {
+      "code": "P",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 24.5,
+      "one_more_lot_gross_pct": 46.89
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.5,
+      "one_more_lot_gross_pct": 21.76
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.42,
+      "one_more_lot_gross_pct": 15.74
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.42,
+      "one_more_lot_gross_pct": 25.41
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.42,
+      "one_more_lot_gross_pct": 16.05
+    },
+    {
+      "code": "PP",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.42,
+      "one_more_lot_gross_pct": 21.98
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.42,
+      "one_more_lot_gross_pct": 20.87
+    },
+    {
+      "code": "P",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 24.42,
+      "one_more_lot_gross_pct": 47.09
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.42,
+      "one_more_lot_gross_pct": 21.4
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.97,
+      "one_more_lot_gross_pct": 15.25
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.97,
+      "one_more_lot_gross_pct": 24.65
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.97,
+      "one_more_lot_gross_pct": 15.79
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.97,
+      "one_more_lot_gross_pct": 21.5
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.97,
+      "one_more_lot_gross_pct": 20.34
+    },
+    {
+      "code": "P",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 24.97,
+      "one_more_lot_gross_pct": 46.6
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.97,
+      "one_more_lot_gross_pct": 21.31
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.62,
+      "one_more_lot_gross_pct": 14.3
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.62,
+      "one_more_lot_gross_pct": 23.08
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.62,
+      "one_more_lot_gross_pct": 15.1
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.62,
+      "one_more_lot_gross_pct": 20.79
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.62,
+      "one_more_lot_gross_pct": 19.88
+    },
+    {
+      "code": "P",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 26.62,
+      "one_more_lot_gross_pct": 46.62
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.62,
+      "one_more_lot_gross_pct": 20.33
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.05,
+      "one_more_lot_gross_pct": 15.68
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.05,
+      "one_more_lot_gross_pct": 24.88
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.05,
+      "one_more_lot_gross_pct": 16.56
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.05,
+      "one_more_lot_gross_pct": 22.05
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.05,
+      "one_more_lot_gross_pct": 20.83
+    },
+    {
+      "code": "P",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 25.05,
+      "one_more_lot_gross_pct": 48.34
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.05,
+      "one_more_lot_gross_pct": 21.27
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.7,
+      "one_more_lot_gross_pct": 16.06
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.7,
+      "one_more_lot_gross_pct": 25.01
+    },
+    {
+      "code": "FG",
+      "lots_requested": 9,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.7,
+      "one_more_lot_gross_pct": 9.33
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.7,
+      "one_more_lot_gross_pct": 16.68
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.7,
+      "one_more_lot_gross_pct": 22.44
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.7,
+      "one_more_lot_gross_pct": 21.01
+    },
+    {
+      "code": "P",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 24.7,
+      "one_more_lot_gross_pct": 47.7
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.7,
+      "one_more_lot_gross_pct": 21.03
+    },
+    {
+      "code": "SP",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.7,
+      "one_more_lot_gross_pct": 24.34
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.69,
+      "one_more_lot_gross_pct": 16.86
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.69,
+      "one_more_lot_gross_pct": 27.08
+    },
+    {
+      "code": "FG",
+      "lots_requested": 9,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.69,
+      "one_more_lot_gross_pct": 9.2
+    },
+    {
+      "code": "TA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.69,
+      "one_more_lot_gross_pct": 16.34
+    },
+    {
+      "code": "PP",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.69,
+      "one_more_lot_gross_pct": 23.41
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.69,
+      "one_more_lot_gross_pct": 22.28
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.69,
+      "one_more_lot_gross_pct": 21.01
+    },
+    {
+      "code": "SP",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.69,
+      "one_more_lot_gross_pct": 23.88
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.52,
+      "one_more_lot_gross_pct": 14.79
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.52,
+      "one_more_lot_gross_pct": 24.02
+    },
+    {
+      "code": "FG",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.52,
+      "one_more_lot_gross_pct": 9.27
+    },
+    {
+      "code": "PP",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.52,
+      "one_more_lot_gross_pct": 21.08
+    },
+    {
+      "code": "L",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.52,
+      "one_more_lot_gross_pct": 20.13
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.52,
+      "one_more_lot_gross_pct": 19.13
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.47,
+      "one_more_lot_gross_pct": 15.46
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.47,
+      "one_more_lot_gross_pct": 24.85
+    },
+    {
+      "code": "FG",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.47,
+      "one_more_lot_gross_pct": 9.36
+    },
+    {
+      "code": "PP",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.47,
+      "one_more_lot_gross_pct": 20.57
+    },
+    {
+      "code": "L",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.47,
+      "one_more_lot_gross_pct": 20.69
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.47,
+      "one_more_lot_gross_pct": 20.09
+    },
+    {
+      "code": "SP",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.47,
+      "one_more_lot_gross_pct": 24.31
+    },
+    {
+      "code": "MA",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.17,
+      "one_more_lot_gross_pct": 14.93
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.17,
+      "one_more_lot_gross_pct": 23.69
+    },
+    {
+      "code": "FG",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.17,
+      "one_more_lot_gross_pct": 9.23
+    },
+    {
+      "code": "SA",
+      "lots_requested": 9,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.17,
+      "one_more_lot_gross_pct": 10.99
+    },
+    {
+      "code": "PP",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.17,
+      "one_more_lot_gross_pct": 20.06
+    },
+    {
+      "code": "SP",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.17,
+      "one_more_lot_gross_pct": 24.26
+    },
+    {
+      "code": "JM",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 26.17,
+      "one_more_lot_gross_pct": 30.37
+    },
+    {
+      "code": "FG",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 22.75,
+      "one_more_lot_gross_pct": 9.28
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 22.75,
+      "one_more_lot_gross_pct": 11.76
+    },
+    {
+      "code": "SP",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 22.75,
+      "one_more_lot_gross_pct": 24.17
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 22.75,
+      "one_more_lot_gross_pct": 30.79
+    },
+    {
+      "code": "FG",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 22.51,
+      "one_more_lot_gross_pct": 9.39
+    },
+    {
+      "code": "SA",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 22.51,
+      "one_more_lot_gross_pct": 11.85
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 22.51,
+      "one_more_lot_gross_pct": 31.4
+    },
+    {
+      "code": "SS",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 22.51,
+      "one_more_lot_gross_pct": 35.76
+    },
+    {
+      "code": "FG",
+      "lots_requested": 12,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.93,
+      "one_more_lot_gross_pct": 10.25
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 21.93,
+      "one_more_lot_gross_pct": 36.13
+    },
+    {
+      "code": "SS",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 21.93,
+      "one_more_lot_gross_pct": 35.76
+    },
+    {
+      "code": "FG",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 22.03,
+      "one_more_lot_gross_pct": 10.34
+    },
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 22.03,
+      "one_more_lot_gross_pct": 38.21
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 22.03,
+      "one_more_lot_gross_pct": 35.28
+    },
+    {
+      "code": "SS",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 22.03,
+      "one_more_lot_gross_pct": 36.17
+    },
+    {
+      "code": "FG",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 22.63,
+      "one_more_lot_gross_pct": 10.46
+    },
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 22.63,
+      "one_more_lot_gross_pct": 38.34
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 22.63,
+      "one_more_lot_gross_pct": 36.33
+    },
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 7.88,
+      "one_more_lot_gross_pct": 39.27
+    },
+    {
+      "code": "JD",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 10.17,
+      "one_more_lot_gross_pct": 21.24
+    },
+    {
+      "code": "FU",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.17,
+      "one_more_lot_gross_pct": 21.45
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.17,
+      "one_more_lot_gross_pct": 21.22
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.17,
+      "one_more_lot_gross_pct": 40.11
+    },
+    {
+      "code": "JD",
+      "lots_requested": 8,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 10.07,
+      "one_more_lot_gross_pct": 21.23
+    },
+    {
+      "code": "FU",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.07,
+      "one_more_lot_gross_pct": 21.89
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.07,
+      "one_more_lot_gross_pct": 21.83
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.07,
+      "one_more_lot_gross_pct": 39.62
+    },
+    {
+      "code": "PP",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 9.82,
+      "one_more_lot_gross_pct": 21.48
+    },
+    {
+      "code": "FU",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 9.82,
+      "one_more_lot_gross_pct": 21.32
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 9.82,
+      "one_more_lot_gross_pct": 21.41
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 9.82,
+      "one_more_lot_gross_pct": 39.95
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.08,
+      "one_more_lot_gross_pct": 21.31
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 10.08,
+      "one_more_lot_gross_pct": 39.69
+    },
+    {
+      "code": "MA",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.6,
+      "one_more_lot_gross_pct": 14.61
+    },
+    {
+      "code": "PP",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.6,
+      "one_more_lot_gross_pct": 21.93
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.6,
+      "one_more_lot_gross_pct": 22.01
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 7.6,
+      "one_more_lot_gross_pct": 39.39
+    },
+    {
+      "code": "PP",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 29.56,
+      "one_more_lot_gross_pct": 21.74
+    },
+    {
+      "code": "JD",
+      "lots_requested": 6,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 29.56,
+      "one_more_lot_gross_pct": 21.37
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 29.56,
+      "one_more_lot_gross_pct": 21.2
+    },
+    {
+      "code": "FG",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.84,
+      "one_more_lot_gross_pct": 9.87
+    },
+    {
+      "code": "PP",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.84,
+      "one_more_lot_gross_pct": 21.73
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.84,
+      "one_more_lot_gross_pct": 21.37
+    },
+    {
+      "code": "FG",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 29.97,
+      "one_more_lot_gross_pct": 9.99
+    },
+    {
+      "code": "PP",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 29.97,
+      "one_more_lot_gross_pct": 21.6
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 29.97,
+      "one_more_lot_gross_pct": 21.28
+    },
+    {
+      "code": "SP",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 29.97,
+      "one_more_lot_gross_pct": 23.96
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 29.97,
+      "one_more_lot_gross_pct": 34.7
+    },
+    {
+      "code": "FG",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.37,
+      "one_more_lot_gross_pct": 10.21
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 28.37,
+      "one_more_lot_gross_pct": 18.67
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.37,
+      "one_more_lot_gross_pct": 20.27
+    },
+    {
+      "code": "FG",
+      "lots_requested": 9,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 8.73,
+      "one_more_lot_gross_pct": 10.06
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 8.73,
+      "one_more_lot_gross_pct": 20.44
+    },
+    {
+      "code": "JD",
+      "lots_requested": 5,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 31.48,
+      "one_more_lot_gross_pct": 22.74
+    },
+    {
+      "code": "MA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.04,
+      "one_more_lot_gross_pct": 14.79
+    },
+    {
+      "code": "FG",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.04,
+      "one_more_lot_gross_pct": 9.69
+    },
+    {
+      "code": "SA",
+      "lots_requested": 12,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.04,
+      "one_more_lot_gross_pct": 11.32
+    },
+    {
+      "code": "FU",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.04,
+      "one_more_lot_gross_pct": 18.47
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.04,
+      "one_more_lot_gross_pct": 21.88
+    },
+    {
+      "code": "SP",
+      "lots_requested": 9,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.04,
+      "one_more_lot_gross_pct": 23.96
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.78,
+      "one_more_lot_gross_pct": 9.67
+    },
+    {
+      "code": "EB",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.78,
+      "one_more_lot_gross_pct": 20.77
+    },
+    {
+      "code": "JD",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.78,
+      "one_more_lot_gross_pct": 22.96
+    },
+    {
+      "code": "FU",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.78,
+      "one_more_lot_gross_pct": 17.67
+    },
+    {
+      "code": "V",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.33,
+      "one_more_lot_gross_pct": 11.42
+    },
+    {
+      "code": "FU",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 7.33,
+      "one_more_lot_gross_pct": 16.38
+    },
+    {
+      "code": "V",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 8.01,
+      "one_more_lot_gross_pct": 11.3
+    },
+    {
+      "code": "FU",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 8.01,
+      "one_more_lot_gross_pct": 15.56
+    },
+    {
+      "code": "V",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 19.64,
+      "one_more_lot_gross_pct": 11.1
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 19.64,
+      "one_more_lot_gross_pct": 9.56
+    },
+    {
+      "code": "EB",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 19.64,
+      "one_more_lot_gross_pct": 18.81
+    },
+    {
+      "code": "SA",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 19.64,
+      "one_more_lot_gross_pct": 11.04
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 19.64,
+      "one_more_lot_gross_pct": 36.2
+    },
+    {
+      "code": "V",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.0,
+      "one_more_lot_gross_pct": 10.78
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.0,
+      "one_more_lot_gross_pct": 9.38
+    },
+    {
+      "code": "EB",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.0,
+      "one_more_lot_gross_pct": 18.27
+    },
+    {
+      "code": "SA",
+      "lots_requested": 14,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.0,
+      "one_more_lot_gross_pct": 10.98
+    },
+    {
+      "code": "SP",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.0,
+      "one_more_lot_gross_pct": 22.92
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 21.0,
+      "one_more_lot_gross_pct": 35.82
+    },
+    {
+      "code": "V",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.89,
+      "one_more_lot_gross_pct": 10.77
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.89,
+      "one_more_lot_gross_pct": 9.34
+    },
+    {
+      "code": "EB",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.89,
+      "one_more_lot_gross_pct": 17.72
+    },
+    {
+      "code": "SA",
+      "lots_requested": 14,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.89,
+      "one_more_lot_gross_pct": 10.73
+    },
+    {
+      "code": "SP",
+      "lots_requested": 8,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.89,
+      "one_more_lot_gross_pct": 22.5
+    },
+    {
+      "code": "FG",
+      "lots_requested": 15,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 8.68,
+      "one_more_lot_gross_pct": 9.33
+    },
+    {
+      "code": "FG",
+      "lots_requested": 14,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 10.85,
+      "one_more_lot_gross_pct": 8.75
+    },
+    {
+      "code": "FG",
+      "lots_requested": 14,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.31,
+      "one_more_lot_gross_pct": 8.56
+    },
+    {
+      "code": "FU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.31,
+      "one_more_lot_gross_pct": 18.15
+    },
+    {
+      "code": "BU",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.31,
+      "one_more_lot_gross_pct": 20.63
+    },
+    {
+      "code": "FG",
+      "lots_requested": 14,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.31,
+      "one_more_lot_gross_pct": 8.78
+    },
+    {
+      "code": "BU",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.31,
+      "one_more_lot_gross_pct": 20.29
+    },
+    {
+      "code": "M",
+      "lots_requested": 12,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 1.51,
+      "one_more_lot_gross_pct": 15.29
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.51,
+      "one_more_lot_gross_pct": 8.66
+    },
+    {
+      "code": "BU",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.51,
+      "one_more_lot_gross_pct": 20.65
+    },
+    {
+      "code": "M",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 1.79,
+      "one_more_lot_gross_pct": 15.49
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.79,
+      "one_more_lot_gross_pct": 8.72
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 2.29,
+      "one_more_lot_gross_pct": 8.63
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 26.05,
+      "one_more_lot_gross_pct": 8.22
+    },
+    {
+      "code": "SA",
+      "lots_requested": 12,
+      "lots_given": 2,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 26.05,
+      "one_more_lot_gross_pct": 8.7
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 26.05,
+      "one_more_lot_gross_pct": 33.06
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 26.05,
+      "one_more_lot_gross_pct": 33.59
+    },
+    {
+      "code": "FG",
+      "lots_requested": 12,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 25.92,
+      "one_more_lot_gross_pct": 8.38
+    },
+    {
+      "code": "SA",
+      "lots_requested": 12,
+      "lots_given": 2,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 25.92,
+      "one_more_lot_gross_pct": 8.73
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 25.92,
+      "one_more_lot_gross_pct": 33.12
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 2.69,
+      "one_more_lot_gross_pct": 8.42
+    },
+    {
+      "code": "SP",
+      "lots_requested": 8,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 2.69,
+      "one_more_lot_gross_pct": 22.27
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 2.69,
+      "one_more_lot_gross_pct": 33.82
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 2.69,
+      "one_more_lot_gross_pct": 42.45
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 1.7,
+      "one_more_lot_gross_pct": 33.55
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 1.7,
+      "one_more_lot_gross_pct": 42.93
+    },
+    {
+      "code": "EG",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.62,
+      "one_more_lot_gross_pct": 24.27
+    },
+    {
+      "code": "I",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 1.62,
+      "one_more_lot_gross_pct": 33.16
+    },
+    {
+      "code": "EG",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.87,
+      "one_more_lot_gross_pct": 24.85
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.87,
+      "one_more_lot_gross_pct": 8.64
+    },
+    {
+      "code": "BU",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.87,
+      "one_more_lot_gross_pct": 20.32
+    },
+    {
+      "code": "JM",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 0.87,
+      "one_more_lot_gross_pct": 43.71
+    },
+    {
+      "code": "EG",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 2.06,
+      "one_more_lot_gross_pct": 25.16
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 2.06,
+      "one_more_lot_gross_pct": 8.55
+    },
+    {
+      "code": "L",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 2.06,
+      "one_more_lot_gross_pct": 18.58
+    },
+    {
+      "code": "BU",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 2.06,
+      "one_more_lot_gross_pct": 20.82
+    },
+    {
+      "code": "EG",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.77,
+      "one_more_lot_gross_pct": 24.85
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.77,
+      "one_more_lot_gross_pct": 8.56
+    },
+    {
+      "code": "BU",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.77,
+      "one_more_lot_gross_pct": 20.94
+    },
+    {
+      "code": "EG",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.01,
+      "one_more_lot_gross_pct": 24.53
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.01,
+      "one_more_lot_gross_pct": 8.55
+    },
+    {
+      "code": "L",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.01,
+      "one_more_lot_gross_pct": 18.54
+    },
+    {
+      "code": "BU",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.01,
+      "one_more_lot_gross_pct": 21.26
+    },
+    {
+      "code": "BU",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 24.43,
+      "one_more_lot_gross_pct": 21.71
+    },
+    {
+      "code": "MA",
+      "lots_requested": 3,
+      "lots_given": 2,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 33.76,
+      "one_more_lot_gross_pct": 14.5
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.76,
+      "one_more_lot_gross_pct": 24.12
+    },
+    {
+      "code": "TA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.76,
+      "one_more_lot_gross_pct": 15.02
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.76,
+      "one_more_lot_gross_pct": 21.35
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.76,
+      "one_more_lot_gross_pct": 20.66
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.76,
+      "one_more_lot_gross_pct": 24.54
+    },
+    {
+      "code": "JM",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 33.76,
+      "one_more_lot_gross_pct": 45.71
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 28.31
+    },
+    {
+      "code": "M",
+      "lots_requested": 8,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 16.28
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 24.45
+    },
+    {
+      "code": "TA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 15.39
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 21.5
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 20.78
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 21.28
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 25.36
+    },
+    {
+      "code": "JM",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 46.16
+    },
+    {
+      "code": "SS",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 20.77,
+      "one_more_lot_gross_pct": 32.79
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.49,
+      "one_more_lot_gross_pct": 29.56
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.49,
+      "one_more_lot_gross_pct": 24.67
+    },
+    {
+      "code": "TA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.49,
+      "one_more_lot_gross_pct": 15.65
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.49,
+      "one_more_lot_gross_pct": 21.5
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.49,
+      "one_more_lot_gross_pct": 20.68
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.49,
+      "one_more_lot_gross_pct": 21.68
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.49,
+      "one_more_lot_gross_pct": 25.64
+    },
+    {
+      "code": "SS",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 4.49,
+      "one_more_lot_gross_pct": 32.85
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.47,
+      "one_more_lot_gross_pct": 29.74
+    },
+    {
+      "code": "M",
+      "lots_requested": 8,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 20.47,
+      "one_more_lot_gross_pct": 16.83
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.47,
+      "one_more_lot_gross_pct": 24.09
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.47,
+      "one_more_lot_gross_pct": 15.86
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.47,
+      "one_more_lot_gross_pct": 21.74
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.47,
+      "one_more_lot_gross_pct": 20.77
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.47,
+      "one_more_lot_gross_pct": 21.71
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 20.47,
+      "one_more_lot_gross_pct": 26.36
+    },
+    {
+      "code": "SS",
+      "lots_requested": 6,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 20.47,
+      "one_more_lot_gross_pct": 32.75
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.61,
+      "one_more_lot_gross_pct": 29.29
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.61,
+      "one_more_lot_gross_pct": 15.35
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.61,
+      "one_more_lot_gross_pct": 21.06
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.61,
+      "one_more_lot_gross_pct": 20.2
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.61,
+      "one_more_lot_gross_pct": 20.71
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.61,
+      "one_more_lot_gross_pct": 25.87
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.48,
+      "one_more_lot_gross_pct": 29.02
+    },
+    {
+      "code": "M",
+      "lots_requested": 8,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 21.48,
+      "one_more_lot_gross_pct": 16.41
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.48,
+      "one_more_lot_gross_pct": 15.07
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.48,
+      "one_more_lot_gross_pct": 20.9
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.48,
+      "one_more_lot_gross_pct": 20.09
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 21.48,
+      "one_more_lot_gross_pct": 25.56
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 5.01,
+      "one_more_lot_gross_pct": 29.32
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 5.01,
+      "one_more_lot_gross_pct": 15.28
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 5.01,
+      "one_more_lot_gross_pct": 20.84
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 5.01,
+      "one_more_lot_gross_pct": 20.08
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 5.01,
+      "one_more_lot_gross_pct": 20.49
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 5.01,
+      "one_more_lot_gross_pct": 25.8
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.74,
+      "one_more_lot_gross_pct": 26.08
+    },
+    {
+      "code": "TA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.74,
+      "one_more_lot_gross_pct": 15.29
+    },
+    {
+      "code": "PP",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.74,
+      "one_more_lot_gross_pct": 20.91
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.74,
+      "one_more_lot_gross_pct": 20.08
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.74,
+      "one_more_lot_gross_pct": 20.72
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 4.74,
+      "one_more_lot_gross_pct": 24.84
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.52,
+      "one_more_lot_gross_pct": 13.78
+    },
+    {
+      "code": "TA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.52,
+      "one_more_lot_gross_pct": 14.88
+    },
+    {
+      "code": "PP",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.52,
+      "one_more_lot_gross_pct": 20.26
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.52,
+      "one_more_lot_gross_pct": 19.52
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 33.52,
+      "one_more_lot_gross_pct": 20.02
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.52,
+      "one_more_lot_gross_pct": 23.82
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.95,
+      "one_more_lot_gross_pct": 14.49
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.95,
+      "one_more_lot_gross_pct": 26.5
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.95,
+      "one_more_lot_gross_pct": 15.52
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.95,
+      "one_more_lot_gross_pct": 21.13
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.95,
+      "one_more_lot_gross_pct": 20.16
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.95,
+      "one_more_lot_gross_pct": 25.73
+    },
+    {
+      "code": "RU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 11.95,
+      "one_more_lot_gross_pct": 95.96
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.56,
+      "one_more_lot_gross_pct": 14.27
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.56,
+      "one_more_lot_gross_pct": 25.62
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.56,
+      "one_more_lot_gross_pct": 15.18
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.56,
+      "one_more_lot_gross_pct": 20.85
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.56,
+      "one_more_lot_gross_pct": 19.9
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.56,
+      "one_more_lot_gross_pct": 24.79
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.44,
+      "one_more_lot_gross_pct": 14.34
+    },
+    {
+      "code": "EG",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.44,
+      "one_more_lot_gross_pct": 25.46
+    },
+    {
+      "code": "FG",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.44,
+      "one_more_lot_gross_pct": 8.66
+    },
+    {
+      "code": "TA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.44,
+      "one_more_lot_gross_pct": 15.42
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.44,
+      "one_more_lot_gross_pct": 9.83
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.44,
+      "one_more_lot_gross_pct": 25.48
+    },
+    {
+      "code": "MA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.48,
+      "one_more_lot_gross_pct": 14.42
+    },
+    {
+      "code": "FG",
+      "lots_requested": 12,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.48,
+      "one_more_lot_gross_pct": 8.7
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.48,
+      "one_more_lot_gross_pct": 24.0
+    },
+    {
+      "code": "TA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.48,
+      "one_more_lot_gross_pct": 15.29
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.48,
+      "one_more_lot_gross_pct": 9.76
+    },
+    {
+      "code": "CF",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 28.48,
+      "one_more_lot_gross_pct": 37.89
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 28.48,
+      "one_more_lot_gross_pct": 24.33
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.02,
+      "one_more_lot_gross_pct": 16.13
+    },
+    {
+      "code": "FG",
+      "lots_requested": 13,
+      "lots_given": 2,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 17.02,
+      "one_more_lot_gross_pct": 8.43
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.02,
+      "one_more_lot_gross_pct": 25.5
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.02,
+      "one_more_lot_gross_pct": 16.11
+    },
+    {
+      "code": "SA",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.02,
+      "one_more_lot_gross_pct": 9.76
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.02,
+      "one_more_lot_gross_pct": 22.7
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.02,
+      "one_more_lot_gross_pct": 21.41
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.02,
+      "one_more_lot_gross_pct": 25.36
+    },
+    {
+      "code": "NI",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 17.02,
+      "one_more_lot_gross_pct": 57.55
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.41,
+      "one_more_lot_gross_pct": 15.6
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.41,
+      "one_more_lot_gross_pct": 24.91
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.41,
+      "one_more_lot_gross_pct": 15.91
+    },
+    {
+      "code": "SA",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.41,
+      "one_more_lot_gross_pct": 9.52
+    },
+    {
+      "code": "PP",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.41,
+      "one_more_lot_gross_pct": 22.66
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.41,
+      "one_more_lot_gross_pct": 21.43
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.41,
+      "one_more_lot_gross_pct": 24.69
+    },
+    {
+      "code": "RU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.41,
+      "one_more_lot_gross_pct": 99.71
+    },
+    {
+      "code": "NI",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 0.41,
+      "one_more_lot_gross_pct": 56.91
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.65,
+      "one_more_lot_gross_pct": 15.63
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.65,
+      "one_more_lot_gross_pct": 25.49
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.65,
+      "one_more_lot_gross_pct": 15.89
+    },
+    {
+      "code": "SA",
+      "lots_requested": 11,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.65,
+      "one_more_lot_gross_pct": 9.29
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.65,
+      "one_more_lot_gross_pct": 22.6
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.65,
+      "one_more_lot_gross_pct": 21.42
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.65,
+      "one_more_lot_gross_pct": 22.27
+    },
+    {
+      "code": "BU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.65,
+      "one_more_lot_gross_pct": 24.54
+    },
+    {
+      "code": "NI",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 0.65,
+      "one_more_lot_gross_pct": 57.27
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.89,
+      "one_more_lot_gross_pct": 15.72
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.89,
+      "one_more_lot_gross_pct": 25.48
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.89,
+      "one_more_lot_gross_pct": 15.87
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.89,
+      "one_more_lot_gross_pct": 9.1
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.89,
+      "one_more_lot_gross_pct": 22.89
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.89,
+      "one_more_lot_gross_pct": 21.57
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.89,
+      "one_more_lot_gross_pct": 23.17
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.05,
+      "one_more_lot_gross_pct": 15.26
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.05,
+      "one_more_lot_gross_pct": 24.74
+    },
+    {
+      "code": "TA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.05,
+      "one_more_lot_gross_pct": 15.62
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.05,
+      "one_more_lot_gross_pct": 8.97
+    },
+    {
+      "code": "PP",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.05,
+      "one_more_lot_gross_pct": 22.6
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.05,
+      "one_more_lot_gross_pct": 23.24
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 17.65,
+      "one_more_lot_gross_pct": 15.35
+    },
+    {
+      "code": "FG",
+      "lots_requested": 14,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.65,
+      "one_more_lot_gross_pct": 8.26
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.65,
+      "one_more_lot_gross_pct": 9.03
+    },
+    {
+      "code": "PP",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.65,
+      "one_more_lot_gross_pct": 22.47
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 17.65,
+      "one_more_lot_gross_pct": 23.18
+    },
+    {
+      "code": "FG",
+      "lots_requested": 14,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.91,
+      "one_more_lot_gross_pct": 8.29
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.91,
+      "one_more_lot_gross_pct": 24.69
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.91,
+      "one_more_lot_gross_pct": 9.18
+    },
+    {
+      "code": "PP",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.91,
+      "one_more_lot_gross_pct": 22.48
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.91,
+      "one_more_lot_gross_pct": 23.72
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 16.87,
+      "one_more_lot_gross_pct": 15.35
+    },
+    {
+      "code": "FG",
+      "lots_requested": 14,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.87,
+      "one_more_lot_gross_pct": 8.23
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.87,
+      "one_more_lot_gross_pct": 25.37
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.87,
+      "one_more_lot_gross_pct": 9.12
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.87,
+      "one_more_lot_gross_pct": 22.79
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.87,
+      "one_more_lot_gross_pct": 24.19
+    },
+    {
+      "code": "SP",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.87,
+      "one_more_lot_gross_pct": 22.81
+    },
+    {
+      "code": "FG",
+      "lots_requested": 14,
+      "lots_given": 2,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 16.82,
+      "one_more_lot_gross_pct": 8.21
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.82,
+      "one_more_lot_gross_pct": 25.45
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.82,
+      "one_more_lot_gross_pct": 9.24
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.82,
+      "one_more_lot_gross_pct": 22.64
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.82,
+      "one_more_lot_gross_pct": 23.44
+    },
+    {
+      "code": "SP",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 16.82,
+      "one_more_lot_gross_pct": 22.73
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.79,
+      "one_more_lot_gross_pct": 26.11
+    },
+    {
+      "code": "SA",
+      "lots_requested": 10,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.79,
+      "one_more_lot_gross_pct": 9.15
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.79,
+      "one_more_lot_gross_pct": 22.94
+    },
+    {
+      "code": "FU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.79,
+      "one_more_lot_gross_pct": 24.03
+    },
+    {
+      "code": "SP",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 33.79,
+      "one_more_lot_gross_pct": 22.67
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 1,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 33.79,
+      "one_more_lot_gross_pct": 32.74
+    },
+    {
+      "code": "MA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.07,
+      "one_more_lot_gross_pct": 15.6
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.07,
+      "one_more_lot_gross_pct": 26.16
+    },
+    {
+      "code": "SA",
+      "lots_requested": 9,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.07,
+      "one_more_lot_gross_pct": 9.34
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.07,
+      "one_more_lot_gross_pct": 23.34
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.07,
+      "one_more_lot_gross_pct": 21.43
+    },
+    {
+      "code": "FU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.07,
+      "one_more_lot_gross_pct": 24.91
+    },
+    {
+      "code": "SP",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.07,
+      "one_more_lot_gross_pct": 22.53
+    },
+    {
+      "code": "MA",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.98,
+      "one_more_lot_gross_pct": 16.5
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.98,
+      "one_more_lot_gross_pct": 25.66
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.98,
+      "one_more_lot_gross_pct": 16.07
+    },
+    {
+      "code": "SA",
+      "lots_requested": 9,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.98,
+      "one_more_lot_gross_pct": 9.41
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.98,
+      "one_more_lot_gross_pct": 24.38
+    },
+    {
+      "code": "L",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.98,
+      "one_more_lot_gross_pct": 22.27
+    },
+    {
+      "code": "FU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.98,
+      "one_more_lot_gross_pct": 25.78
+    },
+    {
+      "code": "SP",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.98,
+      "one_more_lot_gross_pct": 22.49
+    },
+    {
+      "code": "MA",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.29,
+      "one_more_lot_gross_pct": 16.77
+    },
+    {
+      "code": "EB",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.29,
+      "one_more_lot_gross_pct": 25.44
+    },
+    {
+      "code": "TA",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.29,
+      "one_more_lot_gross_pct": 16.15
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.29,
+      "one_more_lot_gross_pct": 24.89
+    },
+    {
+      "code": "L",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.29,
+      "one_more_lot_gross_pct": 22.51
+    },
+    {
+      "code": "FU",
+      "lots_requested": 1,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.29,
+      "one_more_lot_gross_pct": 26.19
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.29,
+      "one_more_lot_gross_pct": 24.14
+    },
+    {
+      "code": "SP",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 1.29,
+      "one_more_lot_gross_pct": 22.04
+    },
+    {
+      "code": "MA",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.85,
+      "one_more_lot_gross_pct": 16.8
+    },
+    {
+      "code": "EG",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.85,
+      "one_more_lot_gross_pct": 25.51
+    },
+    {
+      "code": "TA",
+      "lots_requested": 5,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.85,
+      "one_more_lot_gross_pct": 16.19
+    },
+    {
+      "code": "PP",
+      "lots_requested": 3,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.85,
+      "one_more_lot_gross_pct": 25.06
+    },
+    {
+      "code": "L",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.85,
+      "one_more_lot_gross_pct": 22.68
+    },
+    {
+      "code": "FU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.85,
+      "one_more_lot_gross_pct": 26.22
+    },
+    {
+      "code": "BU",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.85,
+      "one_more_lot_gross_pct": 24.52
+    },
+    {
+      "code": "SP",
+      "lots_requested": 7,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 0.85,
+      "one_more_lot_gross_pct": 21.94
+    },
+    {
+      "code": "NI",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 0.85,
+      "one_more_lot_gross_pct": 57.4
+    },
+    {
+      "code": "P",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 0.0,
+      "one_more_lot_gross_pct": 43.84
+    },
+    {
+      "code": "P",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 1.02,
+      "one_more_lot_gross_pct": 42.63
+    },
+    {
+      "code": "I",
+      "lots_requested": 4,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 1.02,
+      "one_more_lot_gross_pct": 31.05
+    },
+    {
+      "code": "P",
+      "lots_requested": 2,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": true,
+      "remaining_gross_pct": 17.47,
+      "one_more_lot_gross_pct": 42.36
+    },
+    {
+      "code": "SR",
+      "lots_requested": 8,
+      "lots_given": 0,
+      "next_lot_fits_remaining_quota": false,
+      "slot_ok": true,
+      "bucket_ok": false,
+      "remaining_gross_pct": 8.37,
+      "one_more_lot_gross_pct": 25.37
+    }
+  ]
+}

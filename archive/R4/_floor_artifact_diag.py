@@ -5,6 +5,7 @@ shrink although the remaining quota would fit the next lot?  (uniform `floor(lot
 Wraps historical_backtest.apply_portfolio_caps during an R4 replay; output archive/R4/floor_artifact_diag.json
 """
 import json
+import os
 import runpy
 import sys
 from pathlib import Path
@@ -79,5 +80,5 @@ summary = {
     "of_which_next_lot_still_fits_quota": len(fit),
     "rows": rows,
 }
-(ROOT / "archive/R4/floor_artifact_diag.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+(ROOT / "archive/R4" / os.environ.get("DIAG_OUT", "floor_artifact_diag.json")).write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 print("shortfalls", n, "next lot fits", len(fit))

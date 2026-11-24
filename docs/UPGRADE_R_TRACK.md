@@ -25,7 +25,7 @@
 | R2 | 夜盘交易日归属 | A | 🔒 | R1 | `minute_data.py` `historical_backtest.py` |
 | R3 | 跳空穿越止损按开盘价成交 | A | 🔒 | R0 | `wyckoff_pullback.py` |
 | R4 | 组合帽计入已有持仓 | A | 🔒 | R0 | `historical_backtest.py` `position_rules.py` `daily_update.py` `paper_book.py` |
-| R5 | 模拟账本与回测引擎对齐 | A | 🔒 | R1–R4 | `paper_book.py` |
+| R5 | 模拟账本与回测引擎对齐（含日报信号对齐） | A | 🔒 | R1–R4、R6 | `paper_book.py`、`daily_update.py` |
 | R6 | 换月复权（信号/ATR） | A | 🔒 | R0 | 新 `research/data_quality/adjusted.py`、`historical_backtest.py` |
 | R7 | 正式重跑 + v14 新基线 + n_trials 更正 | A | 🔒 签字点 | R1–R6 | `historical_backtest.py` `README.md` |
 | R8 | 长样本研究入口 | B | 否 | R7 | `historical_backtest.py`（新 CLI） |
@@ -245,6 +245,13 @@ selected, _meta = apply_portfolio_caps(
 ---
 
 ### R5 模拟账本与回测引擎对齐
+
+> **2026-11-24 R6c 核对后扩充（优先于下文）：日报信号必须与回测同口径。**
+> R6c 起，回测的 r20 / r60 / ATR / 波动率改用 roll-free 序列（`research/data_quality/adjusted.py` + `main_map.py`）。但 `daily_update.py::_fetch_snapshot`（约 145–185 行）仍然用 `fetch_history(u, n=120)` 取的新浪原始连续序列，直接调用 `historical_backtest.ret_n` / `atr14`：换月价差照样计入，而且只有 120 根 K 线。从 R6c 起，日报和回测在同一天可能给出相反的开仓结论。R5 追加以下要求：
+> 1. 日报信号改用与 `simulate` 完全相同的计算路径：同一个 `main_map` 构建函数、同一个 `adjusted` 序列、同一套门槛和 ATR。历史长度至少覆盖 `WARMUP` 加上 60 日动量所需的根数。
+> 2. 当天的 `main_map` 需要各月份合约当天的日线。缺失时，信号按 R6c 的 fallback 口径计算并计数，日报里注明“本日信号含换月价差”。
+> 3. 新增一致性测试：对同一份快照，日报在 T 日算出的 r20、r60、ATR、方向、手数，必须与回测在 T 日的候选完全相同。
+> 4. 验收追加：回放快照窗口里每一个交易日，日报和回测的入场候选清单逐日一致。
 
 **证据**（`paper_book_latest.json`，asof 2026-11-23）
 

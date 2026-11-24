@@ -46,7 +46,7 @@
 
 - **结论**：审计发现正式回测引擎至少有 5 类错误（分钟线合约错配造成 3 笔假止损、夜盘交易日归属、跳空止损按止损价成交、组合帽不计已有持仓、模拟账本缺日线兜底），现行 +5.78% / DD 6.74% 不可信。详见 `docs/UPGRADE_R_TRACK.md` §0–§2。
 - **优先级**：**轨 R 阶段 A（R0–R7）排在 F2 之前**。F2 仍按原门槛等样本，不受影响；但说「继续/升级」时，**先念轨 R 的下一刀，再念 F2 是否够样**。
-- **下一刀候选**：**R5 账本对齐**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b/c 与 R4（组合帽计入已有持仓）已完成，R5 未开。
+- **下一刀候选**：**R5 账本对齐**（待明示）。R3 核对后磊决定 **R6 提前到 R4 之前**；R6a/b/c、R4（组合帽计入已有持仓）与 R4b（缩手后补手）已完成，R5 未开。
 - **硬围栏（轨 R 追加）**：R1–R7 完成前不提交 `historical_backtest_latest.json`、`paper_book_latest.json`；R7 重跑并签字后才更新 `configs/formal_rule_lock.json`；结果变差也不回退修复。
 - **对齐**：§3.2「组合帽 / next_open 纸面完全对齐」原为低优延后，现由轨 R 的 R4、R5 接手。
 
@@ -113,7 +113,7 @@
 | **S 会话** | Session brief | 多时段盘中 brief | 交 Grokbot | 本仓不做 |
 | **R 研究台旧项** | P1–P4 / A1–A3 | PBO/LSP/Gamma/组合风险/轻量 ML / 主力映射 | **主路径完成** | 封闭 |
 | **R 研究台旧项** | 官历/因子注册/聚类 | `UPGRADE_PLAN`「下次剩余」 | **低优延后** | 封闭 |
-| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R4 完成 · 下一刀候选 R5（待明示）** |
+| **R 审计升级** | **R0–R7（阶段 A）** | 冻结基线 → 假止损 / 夜盘归属 / 跳空止损 / 组合帽 / 账本对齐 / 换月复权 → v14 重跑签字 | **优先于 F2** | **R4b 完成 · 下一刀候选 R5（待明示）** |
 | **R 审计升级** | R8–R12（阶段 B） | 长样本入口、出场预注册 5 组、风险预算生效、波动目标 + 回撤刹车、品种池 | **封闭** | 依赖 R7 |
 | **R 审计升级** | R13（阶段 C） | 席位因子长样本验证（回补 2019+） | **封闭** | 依赖 R8 |
 | **R 审计升级** | **R14 / K0–K7（阶段 C）** | carry 独立袖套：分月库 → 可交易曲线 → 持有指数 → 预登记 10 试验 → 闸门 → Shadow | **封闭** | K0–K2 可与阶段 A 并行（需明示）；K4 起依赖 R6、R8 |
@@ -260,6 +260,17 @@ ext_open。
 ---
 
 ## 7. 近期迭代反馈（保留）
+
+### R4b 组合帽缩手后补手，修掉取整误杀（2026-11-24）
+
+- **问题**：`apply_portfolio_caps` 对所有候选按同一比例缩手后 `floor`，剩余额度小时会把"其实够开 1 手"的候选缩成 0（2026-01-12 CF：剩余 37.14%，1 手 36.56%，4 手×0.2008→0 手）。R4 诊断 `floor_artifact_diag.json` 统计到 19 个这类候选日。
+- **做了**：只改 `position_rules.apply_portfolio_caps`。原有比例缩手 / hard trim / refill 不动；在 refill 之后、min_lots 之前新增 top-up：对象是动量过关后手数低于原始请求的所有候选（含被缩成 0 的），按 `_strength` 从强到弱多轮循环，每轮每个对象加 1 手；加之前检查加完后的选中组合名义 ≤ 名义额度、ATR 风险 ≤ 风险额度、持仓数 ≤ max_positions、每板块 ≤ max_per_bucket（含 `existing_buckets`），且不超过原始请求手数；一轮加不上任何一手即停；0 手补到 ≥1 手的重新加入 selected。新参数 `topup: bool = True`；`topup=False` 与 aa65cb1 逐位一致（meta 也不含新键）。meta 新增 `topup_lots`、`topup_revived`。`simulate` 主入场分支累加到结果 `caps_topup_lots` / `caps_topup_revived`（roll_carry 分支也计入）；`caps_include_book=False` 时传 `topup=False`，仍复现 R4 前的帽口径。daily_update / paper_book 调用不改，自动使用新逻辑；`scripts/shadow_*.py` 三个影子脚本也调用该函数，默认同样 `topup=True`（本刀未动）。
+- **结果（R6c / R4 / R4b，不调参）**：ret 12.744 / −1.053 / **−0.769**；gross_ret 15.434 / 1.005 / 1.875；maxDD 4.124 / 4.552 / 7.469；笔数 64 / 56 / 56（exits 23/37/4、18/34/4、18/34/4）；成本 5379.74 / 4114.88 / 5287.84；`caps_entry_gross_max` 113.52 / 49.65 / 49.83；`caps_entry_risk_max` 3.17 / 2.64 / 2.33；`caps_scaled_n` — / 52 / 64；`caps_topup_lots` 114、`caps_topup_revived` 29（按"调用日"累计，同一候选连续几天未成交会重复计入）；`caps_drift_days_gt55` 35 / 0 / 0（R4b 曲线 gross 最大 50.77%，为盯市漂移）；曲线 gross 中位数 19.08 / 19.24 / 36.76；平均持仓 0.94 / 0.83 / 0.91；单笔实际风险中位数 0.458% / 0.436% / 0.555%。R4→R4b 逐笔：手数变化 17 笔、新增 14 笔、移除 14 笔；这 45 笔 R4 合计 −8 034 元 → R4b −6 294 元。maxDD 明显上升（4.55→7.47）是因为同样的信号现在占满额度，个别大手数止损（EG 11-13 2 手 −3 136、MA 09-14 2 手 −2 280）放大回撤。
+- **诊断复跑**：`_floor_artifact_diag.py` 在 R4b 回放上"下一手仍放得下却被丢掉"的候选 **0**（R4 为 19）。
+- **验证**：pytest 499 全绿（新增 6 条 top-up 用例）；金锁 legacy 4.189/4.294/42 未变；audit checked=52 mismatches=0；未写 formal latest；未 push。为保持 R4 测试断言不变，`test_no_existing_buckets_gives_the_old_result_exactly` 里两处调用加了 `topup=False`（该测试断言的正是 aa65cb1 的旧结果）。
+- **产物**：`archive/R4/replay_after_R4b.json`、`audit_after_R4b.json`、`R4_vs_R4b.json`、`_build_compare_R4b.py`、`floor_artifact_diag_R4b.json`；`_floor_artifact_diag.py` 加 `DIAG_OUT` 环境变量选输出名。随本次提交一并带入磊对 `docs/UPGRADE_R_TRACK.md` 的 R5 节修改（正文未动）。
+- **风险/未做**：① 补手让仓位更满，回撤变大、收益仍为负，整体 R4b 仍明显低于 R6c；R6c 的 +12.7% 有相当部分来自超限持仓；② 逐笔变化大多是路径连锁（手数/名额变化改变权益与后续入场），未逐笔证明；③ 日报 `held` 偏保守；④ 影子脚本默认也变为 top-up
+- **建议下一刀**：R5（待明示）；或停
 
 ### R4 组合帽计入已有持仓（2026-11-24）
 

@@ -81,8 +81,14 @@ def apply_portfolio_caps(
     min_r60_pct: float = 5.0,
     min_lots: int = 0,
     existing_buckets: dict[str, int] | None = None,
+    topup: bool = True,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """
+    ``topup`` (R4b): after scaling / hard trim / refill, give back one lot at a time (strongest
+    first, repeated rounds) to candidates below their requested lots — including ones scaled to 0 —
+    as long as gross, ATR risk, max_positions and per-bucket caps still hold.  ``topup=False`` is
+    the pre-R4b behaviour.  ``meta["topup_lots"]`` / ``meta["topup_revived"]`` report the result.
+
     ``existing_buckets``: sector-bucket counts of positions already open (R4). The per-bucket
     cap in steps 2–3 and in the refill pass starts from these counts; ``None`` = old behaviour.
     Callers pass the *remaining* gross / risk budget in ``max_gross_exposure_pct`` /
@@ -134,6 +140,7 @@ def apply_portfolio_caps(
 
     # 2–3) rank + bucket dedupe + N cap
     ranked = sorted(strong, key=_strength, reverse=True)
+    req_lots: dict[Any, int] = {c.get("code"): int(c.get("lots") or 0) for c in ranked}
     selected: list[dict[str, Any]] = []
     bucket_counts: dict[str, int] = dict(existing_buckets or {})
     for c in ranked:
@@ -216,6 +223,57 @@ def apply_portfolio_caps(
                 selected.append(trial)
                 have.add(trial.get("code"))
                 bucket_counts[bucket] = bucket_counts.get(bucket, 0) + 1
+
+    # 5b) R4b top-up: the uniform scale + floor can round a candidate that still fits down to 0 (or
+    # below what fits).  Hand back one lot at a time, strongest first, while every cap still holds.
+    if topup:
+        meta["topup_lots"] = 0
+        meta["topup_revived"] = 0
+        cur_row = {c.get("code"): c for c in selected}
+
+        def _cur_lots(code: Any) -> int:
+            row = cur_row.get(code)
+            return int(row.get("lots") or 0) if row is not None else 0
+
+        targets = [c for c in ranked if _cur_lots(c.get("code")) < req_lots.get(c.get("code"), 0)]
+        while targets:
+            added_any = False
+            for c in targets:
+                code = c.get("code")
+                have_n = _cur_lots(code)
+                if have_n >= req_lots.get(code, 0):
+                    continue
+                if have_n == 0:
+                    if len(selected) >= max(0, int(max_positions)):
+                        continue
+                    bucket = str(c.get("bucket") or "_")
+                    held_b = dict(existing_buckets or {})
+                    for s_ in selected:
+                        sb = str(s_.get("bucket") or "_")
+                        held_b[sb] = held_b.get(sb, 0) + 1
+                    if int(max_per_bucket) > 0 and held_b.get(bucket, 0) >= int(max_per_bucket):
+                        continue
+                    row = dict(c)
+                    row["lots"] = 1
+                    trial_rows = selected + [row]
+                else:
+                    row = cur_row[code]
+                    trial_rows = [
+                        ({**s_, "lots": int(s_.get("lots") or 0) + 1} if s_ is row else s_)
+                        for s_ in selected
+                    ]
+                if _gross(trial_rows) > gross_cap + 1e-6 or _risk(trial_rows) > risk_cap + 1e-6:
+                    continue
+                if have_n == 0:
+                    selected.append(row)
+                    cur_row[code] = row
+                    meta["topup_revived"] += 1
+                else:
+                    row["lots"] = int(row.get("lots") or 0) + 1
+                meta["topup_lots"] += 1
+                added_any = True
+            if not added_any:
+                break
 
     # 6) min_lots floor for paper observe (keep only if still under caps)
     floor = max(0, int(min_lots or 0))

@@ -143,13 +143,13 @@ def test_no_existing_buckets_gives_the_old_result_exactly():
     kw = dict(equity=200000.0, max_positions=3, max_gross_exposure_pct=50.0, max_portfolio_risk_pct=8.0,
               max_per_bucket=1, min_r20_pct=3.0, min_r60_pct=5.0)
     for extra in ({}, {"existing_buckets": None}, {"existing_buckets": {}}):
-        sel, meta = apply_portfolio_caps(_REF, **kw, **extra)
+        sel, meta = apply_portfolio_caps(_REF, topup=False, **kw, **extra)  # R4b: reference = pre-top-up result
         assert [(c["code"], c["lots"]) for c in sel] == [("D", 1)]
         assert meta["gross_after"] == 45000.0 and meta["atr_risk_after"] == 600.0
         assert meta["scale"] == 0.2778 and meta["bucket_skipped"] == ["C"] and meta["weak_filtered"] == ["E"]
     kw2 = dict(equity=400000.0, max_positions=4, max_gross_exposure_pct=60.0, max_portfolio_risk_pct=3.0,
                max_per_bucket=2, min_r20_pct=3.0, min_r60_pct=5.0, min_lots=1)
-    sel, meta = apply_portfolio_caps(_REF[:4], **kw2)
+    sel, meta = apply_portfolio_caps(_REF[:4], topup=False, **kw2)
     assert [(c["code"], c["lots"]) for c in sel] == [("A", 1), ("B", 1), ("D", 2)]
     assert meta["gross_after"] == 180000.0 and meta["atr_risk_after"] == 3000.0 and meta["scale"] == 0.5455
 
@@ -244,3 +244,104 @@ def test_paper_book_caps_book_check():
     assert "atr_risk" in caps_book_check(kept, {**new, "atr": 2000.0}, equity=EQ, caps=caps, mult=10.0)
     full = {f"K{i}": _held(f"K{i}", lots=1, mark=100.0, mult=10.0, atr=1.0, bucket=f"b{i}") for i in range(3)}
     assert "positions" in caps_book_check(full, new, equity=EQ, caps=caps, mult=10.0)
+
+
+# ───────────────────────── R4b: top-up after proportional scaling ─────────────────────────
+
+_CF_GROSS_LEFT = 37.14339292411552  # remaining gross quota on 2026-01-12 (50% - TA book)
+
+
+def _lots(sel):
+    return {c["code"]: c["lots"] for c in sel}
+
+
+def test_topup_gives_the_cf_candidate_its_one_lot():
+    cf = [
+        _cand("CF", lots=4, close=14625.0, mult=5.0, atr=100.0, bucket="农产品"),  # 1 lot = 36.56%
+        _cand("AL", lots=1, close=24650.0, mult=5.0, atr=150.0, bucket="有色", r20=5.0, r60=8.0),  # 1 lot = 61.6%
+    ]
+    kw = dict(equity=EQ, max_positions=2, max_gross_exposure_pct=_CF_GROSS_LEFT, max_portfolio_risk_pct=7.68,
+              existing_buckets={"能化": 1})
+    off, off_meta = apply_portfolio_caps(cf, topup=False, **kw)
+    assert off == [] and "topup_lots" not in off_meta  # old floor-to-zero behaviour
+    on, meta = apply_portfolio_caps(cf, **kw)  # default topup=True
+    assert _lots(on) == {"CF": 1}
+    assert meta["topup_lots"] == 1 and meta["topup_revived"] == 1
+    assert meta["gross_after"] <= EQ * _CF_GROSS_LEFT / 100 + 1e-6
+
+
+def test_topup_never_breaks_caps_or_requested_lots():
+    for cap_g in (5.0, 12.0, 18.0, 25.0, 33.0, 45.0):
+        for cap_r in (0.3, 0.6, 1.0, 3.0):
+            cands = [
+                _cand("S", lots=6, close=1000.0, mult=10.0, atr=8.0, bucket="a", r20=20.0, r60=30.0),
+                _cand("W", lots=3, close=1500.0, mult=10.0, atr=12.0, bucket="b", r20=5.0, r60=8.0),
+                _cand("V", lots=1, close=900.0, mult=10.0, atr=6.0, bucket="c", r20=4.0, r60=7.0),
+            ]
+            req = {c["code"]: c["lots"] for c in cands}
+            sel, meta = apply_portfolio_caps(
+                cands, equity=EQ, max_positions=3, max_gross_exposure_pct=cap_g, max_portfolio_risk_pct=cap_r,
+                min_r20_pct=3.0, min_r60_pct=5.0,
+            )
+            assert meta["gross_after"] <= EQ * cap_g / 100 + 1e-6
+            assert meta["atr_risk_after"] <= EQ * cap_r / 100 + 1e-6
+            assert all(0 < c["lots"] <= req[c["code"]] for c in sel)
+            assert len(sel) <= 3
+            # nothing was left on the table: no under-requested candidate could take one more lot
+            for c in cands:
+                have = _lots(sel).get(c["code"], 0)
+                if have < req[c["code"]]:
+                    g = meta["gross_after"] + c["close"] * c["mult"]
+                    r = meta["atr_risk_after"] + c["atr"] * c["mult"]
+                    assert g > EQ * cap_g / 100 + 1e-6 or r > EQ * cap_r / 100 + 1e-6 or (
+                        have == 0 and len(sel) >= 3
+                    )
+
+
+def test_topup_goes_to_the_stronger_candidate_first():
+    # 5%-of-equity lots; uniform scale gives 2+2 lots (20%), the single spare lot (cap 25%) must go to S
+    cands = [
+        _cand("W", lots=6, close=1000.0, mult=10.0, atr=1.0, bucket="b", r20=5.0, r60=8.0),
+        _cand("S", lots=6, close=1000.0, mult=10.0, atr=1.0, bucket="a", r20=20.0, r60=30.0),
+    ]
+    kw = dict(equity=EQ, max_positions=3, max_gross_exposure_pct=25.0, max_portfolio_risk_pct=8.0)
+    off, _ = apply_portfolio_caps(cands, topup=False, **kw)
+    assert _lots(off) == {"S": 2, "W": 2}
+    on, meta = apply_portfolio_caps(cands, **kw)
+    assert _lots(on) == {"S": 3, "W": 2} and meta["topup_lots"] == 1 and meta["topup_revived"] == 0
+
+
+def test_topup_stops_at_the_atr_risk_cap():
+    cand = [_cand("R", lots=10, close=100.0, mult=10.0, atr=40.0)]  # 0.2% risk per lot
+    sel, meta = apply_portfolio_caps(
+        cand, equity=EQ, max_positions=2, max_gross_exposure_pct=50.0, max_portfolio_risk_pct=1.0
+    )
+    assert sel[0]["lots"] == 5 and meta["atr_risk_after"] <= EQ * 0.01 + 1e-6
+
+
+def test_topup_false_is_identical_to_the_previous_version():
+    kw = dict(equity=200000.0, max_positions=3, max_gross_exposure_pct=50.0, max_portfolio_risk_pct=8.0,
+              max_per_bucket=1, min_r20_pct=3.0, min_r60_pct=5.0)
+    sel, meta = apply_portfolio_caps(_REF, topup=False, **kw)  # reference values from aa65cb1
+    assert [(c["code"], c["lots"]) for c in sel] == [("D", 1)]
+    assert meta["gross_after"] == 45000.0 and meta["atr_risk_after"] == 600.0 and meta["scale"] == 0.2778
+    assert "topup_lots" not in meta
+    kw2 = dict(equity=400000.0, max_positions=4, max_gross_exposure_pct=60.0, max_portfolio_risk_pct=3.0,
+               max_per_bucket=2, min_r20_pct=3.0, min_r60_pct=5.0, min_lots=1)
+    sel, meta = apply_portfolio_caps(_REF[:4], topup=False, **kw2)
+    assert [(c["code"], c["lots"]) for c in sel] == [("A", 1), ("B", 1), ("D", 2)]
+
+
+def test_topup_respects_a_full_bucket():
+    kw = dict(equity=EQ, max_positions=3, max_gross_exposure_pct=_CF_GROSS_LEFT, max_portfolio_risk_pct=7.68)
+    # the bucket is already taken by the open book: a candidate there is never revived
+    cf = [_cand("CF", lots=4, close=14625.0, mult=5.0, atr=100.0, bucket="农产品")]
+    sel, meta = apply_portfolio_caps(cf, existing_buckets={"农产品": 1}, **kw)
+    assert sel == [] and meta["topup_lots"] == 0
+    # two candidates in one bucket: only the stronger one competes, the weaker is not topped up
+    two = [
+        _cand("CF", lots=4, close=14625.0, mult=5.0, atr=100.0, bucket="农产品", r20=20.0, r60=30.0),
+        _cand("CS", lots=4, close=14625.0, mult=5.0, atr=100.0, bucket="农产品", r20=5.0, r60=8.0),
+    ]
+    sel, meta = apply_portfolio_caps(two, **kw)
+    assert _lots(sel) == {"CF": 1} and "CS" in meta["bucket_skipped"]

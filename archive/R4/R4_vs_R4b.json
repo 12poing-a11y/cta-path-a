@@ -1,0 +1,2110 @@
+{
+  "table": {
+    "R6c": {
+      "ret_pct": 12.744,
+      "gross_ret_pct": 15.434,
+      "max_dd_pct": 4.124,
+      "closed_trades": 64,
+      "exits": {
+        "target": 23,
+        "stop": 37,
+        "signal": 4
+      },
+      "cost_yuan": 5379.74,
+      "gross_pct_median": 19.08,
+      "gross_pct_max": 113.64,
+      "avg_held": 0.94,
+      "median_trade_risk_pct": 0.458,
+      "caps_drift_days_gt55": 35,
+      "caps_entry_gross_max": 113.52,
+      "caps_entry_risk_max": 3.17,
+      "caps_scaled_n": null,
+      "caps_topup_lots": null,
+      "caps_topup_revived": null
+    },
+    "R4": {
+      "ret_pct": -1.053,
+      "gross_ret_pct": 1.005,
+      "max_dd_pct": 4.552,
+      "closed_trades": 56,
+      "exits": {
+        "target": 18,
+        "stop": 34,
+        "signal": 4
+      },
+      "cost_yuan": 4114.88,
+      "gross_pct_median": 19.24,
+      "gross_pct_max": 49.96,
+      "avg_held": 0.83,
+      "median_trade_risk_pct": 0.436,
+      "caps_drift_days_gt55": 0,
+      "caps_entry_gross_max": 49.65,
+      "caps_entry_risk_max": 2.64,
+      "caps_scaled_n": 52,
+      "caps_topup_lots": null,
+      "caps_topup_revived": null
+    },
+    "R4b": {
+      "ret_pct": -0.769,
+      "gross_ret_pct": 1.875,
+      "max_dd_pct": 7.469,
+      "closed_trades": 56,
+      "exits": {
+        "target": 18,
+        "stop": 34,
+        "signal": 4
+      },
+      "cost_yuan": 5287.84,
+      "gross_pct_median": 36.76,
+      "gross_pct_max": 50.77,
+      "avg_held": 0.91,
+      "median_trade_risk_pct": 0.555,
+      "caps_drift_days_gt55": 0,
+      "caps_entry_gross_max": 49.83,
+      "caps_entry_risk_max": 2.33,
+      "caps_scaled_n": 64,
+      "caps_topup_lots": 114,
+      "caps_topup_revived": 29
+    },
+    "audit_mismatches_R4b": 0,
+    "audit_checked_R4b": 52
+  },
+  "changes_R4_to_R4b": [
+    {
+      "trade": {
+        "code": "TA",
+        "direction": "多",
+        "entry_date": "2026-01-12",
+        "signal_day": "2026-01-09"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 5104.0,
+        "exit": 5002.1714,
+        "date": "2026-01-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 5002.1714,
+        "target": 5307.6571
+      },
+      "R4b": {
+        "lots": 3,
+        "entry": 5104.0,
+        "exit": 5002.1714,
+        "date": "2026-01-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 5002.1714,
+        "target": 5307.6571
+      },
+      "pnl_yuan": {
+        "R4": -509.14,
+        "R4b": -1527.43
+      },
+      "R4_entry_log": {
+        "date": "2026-01-09",
+        "new": [
+          "TA"
+        ],
+        "held_before": [],
+        "gross_pct": 12.77,
+        "risk_pct": 0.32
+      },
+      "R4b_entry_log": {
+        "date": "2026-01-09",
+        "new": [
+          "TA"
+        ],
+        "held_before": [],
+        "gross_pct": 38.31,
+        "risk_pct": 0.95
+      }
+    },
+    {
+      "trade": {
+        "code": "I",
+        "direction": "多",
+        "entry_date": "2026-01-19",
+        "signal_day": "2026-01-16"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 810.0,
+        "exit": 798.4286,
+        "date": "2026-01-19",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 798.4286,
+        "target": 833.1429
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -1157.14
+      },
+      "R4_entry_log": null,
+      "R4b_entry_log": {
+        "date": "2026-01-16",
+        "new": [
+          "I"
+        ],
+        "held_before": [],
+        "gross_pct": 40.79,
+        "risk_pct": 0.73
+      }
+    },
+    {
+      "trade": {
+        "code": "EB",
+        "direction": "多",
+        "entry_date": "2026-01-20",
+        "signal_day": "2026-01-19"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 7350.0,
+        "exit": 7242.2286,
+        "date": "2026-01-20",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 7242.2286,
+        "target": 7565.5429
+      },
+      "R4b": {
+        "lots": 2,
+        "entry": 7350.0,
+        "exit": 7242.2286,
+        "date": "2026-01-20",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 7242.2286,
+        "target": 7565.5429
+      },
+      "pnl_yuan": {
+        "R4": -538.86,
+        "R4b": -1077.71
+      },
+      "R4_entry_log": {
+        "date": "2026-01-19",
+        "new": [
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 18.42,
+        "risk_pct": 0.34
+      },
+      "R4b_entry_log": {
+        "date": "2026-01-19",
+        "new": [
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 37.06,
+        "risk_pct": 0.68
+      }
+    },
+    {
+      "trade": {
+        "code": "EB",
+        "direction": "多",
+        "entry_date": "2026-01-21",
+        "signal_day": "2026-01-20"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 7327.0,
+        "exit": 7548.8286,
+        "date": "2026-01-22",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 7216.0857,
+        "target": 7548.8286
+      },
+      "R4b": {
+        "lots": 2,
+        "entry": 7327.0,
+        "exit": 7548.8286,
+        "date": "2026-01-22",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 7216.0857,
+        "target": 7548.8286
+      },
+      "pnl_yuan": {
+        "R4": 1109.14,
+        "R4b": 2218.29
+      },
+      "R4_entry_log": {
+        "date": "2026-01-20",
+        "new": [
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 18.17,
+        "risk_pct": 0.35
+      },
+      "R4b_entry_log": {
+        "date": "2026-01-20",
+        "new": [
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 36.79,
+        "risk_pct": 0.7
+      }
+    },
+    {
+      "trade": {
+        "code": "EB",
+        "direction": "多",
+        "entry_date": "2026-01-23",
+        "signal_day": "2026-01-22"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 7654.0,
+        "exit": 7920.5143,
+        "date": "2026-01-30",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 7520.7429,
+        "target": 7920.5143
+      },
+      "R4b": {
+        "lots": 2,
+        "entry": 7654.0,
+        "exit": 7920.5143,
+        "date": "2026-01-30",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 7520.7429,
+        "target": 7920.5143
+      },
+      "pnl_yuan": {
+        "R4": 1332.57,
+        "R4b": 2665.14
+      },
+      "R4_entry_log": {
+        "date": "2026-01-22",
+        "new": [
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 19.34,
+        "risk_pct": 0.42
+      },
+      "R4b_entry_log": {
+        "date": "2026-01-22",
+        "new": [
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 39.25,
+        "risk_pct": 0.85
+      }
+    },
+    {
+      "trade": {
+        "code": "EB",
+        "direction": "多",
+        "entry_date": "2026-02-11",
+        "signal_day": "2026-02-10"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 7466.0,
+        "exit": 7550.0,
+        "date": "2026-02-27",
+        "reason": "signal",
+        "R": 0.42,
+        "stop": 7267.4857,
+        "target": 7863.0286
+      },
+      "R4b": {
+        "lots": 2,
+        "entry": 7466.0,
+        "exit": 7550.0,
+        "date": "2026-02-27",
+        "reason": "signal",
+        "R": 0.42,
+        "stop": 7267.4857,
+        "target": 7863.0286
+      },
+      "pnl_yuan": {
+        "R4": 420.0,
+        "R4b": 840.0
+      },
+      "R4_entry_log": {
+        "date": "2026-02-10",
+        "new": [
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 18.56,
+        "risk_pct": 0.62
+      },
+      "R4b_entry_log": {
+        "date": "2026-02-10",
+        "new": [
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 37.23,
+        "risk_pct": 1.24
+      }
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "多",
+        "entry_date": "2026-03-11",
+        "signal_day": "2026-03-10"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 4308.0,
+        "exit": 4752.2286,
+        "date": "2026-03-12",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 4085.8857,
+        "target": 4752.2286
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": 4442.29
+      },
+      "R4_entry_log": null,
+      "R4b_entry_log": {
+        "date": "2026-03-10",
+        "new": [
+          "FU"
+        ],
+        "held_before": [],
+        "gross_pct": 21.76,
+        "risk_pct": 1.38
+      }
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-03-12",
+        "signal_day": "2026-03-11"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 2,
+        "entry": 3097.0,
+        "exit": 3053.1714,
+        "date": "2026-03-12",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3053.1714,
+        "target": 3184.6571
+      },
+      "R4b": {
+        "lots": 1,
+        "entry": 3097.0,
+        "exit": 3053.1714,
+        "date": "2026-03-12",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3053.1714,
+        "target": 3184.6571
+      },
+      "pnl_yuan": {
+        "R4": -876.57,
+        "R4b": -438.29
+      },
+      "R4_entry_log": {
+        "date": "2026-03-11",
+        "new": [
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 30.42,
+        "risk_pct": 0.54
+      },
+      "R4b_entry_log": {
+        "date": "2026-03-11",
+        "new": [
+          "M"
+        ],
+        "held_before": [
+          "FU"
+        ],
+        "gross_pct": 36.78,
+        "risk_pct": 1.75
+      }
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-03-16",
+        "signal_day": "2026-03-13"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 3123.0,
+        "exit": 3069.1714,
+        "date": "2026-03-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3069.1714,
+        "target": 3230.6571
+      },
+      "R4b": {
+        "lots": 2,
+        "entry": 3123.0,
+        "exit": 3069.1714,
+        "date": "2026-03-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3069.1714,
+        "target": 3230.6571
+      },
+      "pnl_yuan": {
+        "R4": -538.29,
+        "R4b": -1076.57
+      },
+      "R4_entry_log": {
+        "date": "2026-03-13",
+        "new": [
+          "M"
+        ],
+        "held_before": [
+          "V"
+        ],
+        "gross_pct": 29.85,
+        "risk_pct": 0.89
+      },
+      "R4b_entry_log": {
+        "date": "2026-03-13",
+        "new": [
+          "M"
+        ],
+        "held_before": [
+          "V"
+        ],
+        "gross_pct": 44.39,
+        "risk_pct": 1.2
+      }
+    },
+    {
+      "trade": {
+        "code": "EB",
+        "direction": "多",
+        "entry_date": "2026-03-24",
+        "signal_day": "2026-03-23"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 10006.0,
+        "exit": 9971.0,
+        "date": "2026-04-13",
+        "reason": "signal",
+        "R": -0.06,
+        "stop": 9418.5143,
+        "target": 11180.9714
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -175.0
+      },
+      "R4_entry_log": {
+        "date": "2026-03-23",
+        "new": [
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 14.77,
+        "risk_pct": 0.4
+      },
+      "R4b_entry_log": {
+        "date": "2026-03-23",
+        "new": [
+          "M",
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 41.13,
+        "risk_pct": 2.16
+      }
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-03-25",
+        "signal_day": "2026-03-24"
+      },
+      "kind": "removed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 2,
+        "entry": 3175.0,
+        "exit": 2991.5714,
+        "date": "2026-03-25",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2991.5714,
+        "target": 3541.8571
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -3668.57,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-03-24",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 45.22,
+        "risk_pct": 2.64
+      },
+      "R4b_entry_log": null
+    },
+    {
+      "trade": {
+        "code": "EB",
+        "direction": "多",
+        "entry_date": "2026-03-26",
+        "signal_day": "2026-03-25"
+      },
+      "kind": "removed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 10056.0,
+        "exit": 9971.0,
+        "date": "2026-04-13",
+        "reason": "signal",
+        "R": -0.13,
+        "stop": 9416.6286,
+        "target": 11334.7429
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -425.0,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-03-25",
+        "new": [
+          "EB"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 39.14,
+        "risk_pct": 2.36
+      },
+      "R4b_entry_log": null
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-04-14",
+        "signal_day": "2026-04-13"
+      },
+      "kind": "lots_changed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 2860.0,
+        "exit": 2824.0,
+        "date": "2026-04-21",
+        "reason": "signal",
+        "R": -0.19,
+        "stop": 2667.0286,
+        "target": 3245.9429
+      },
+      "R4b": {
+        "lots": 2,
+        "entry": 2860.0,
+        "exit": 2824.0,
+        "date": "2026-04-21",
+        "reason": "signal",
+        "R": -0.19,
+        "stop": 2667.0286,
+        "target": 3245.9429
+      },
+      "pnl_yuan": {
+        "R4": -360.0,
+        "R4b": -720.0
+      },
+      "R4_entry_log": {
+        "date": "2026-04-13",
+        "new": [
+          "MA"
+        ],
+        "held_before": [],
+        "gross_pct": 15.93,
+        "risk_pct": 1.21
+      },
+      "R4b_entry_log": {
+        "date": "2026-04-13",
+        "new": [
+          "MA"
+        ],
+        "held_before": [],
+        "gross_pct": 30.61,
+        "risk_pct": 2.33
+      }
+    },
+    {
+      "trade": {
+        "code": "JM",
+        "direction": "空",
+        "entry_date": "2026-04-15",
+        "signal_day": "2026-04-14"
+      },
+      "kind": "removed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 1065.0,
+        "exit": 1096.4571,
+        "date": "2026-04-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 1096.4571,
+        "target": 1002.0857
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -1887.43,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-04-14",
+        "new": [
+          "JM"
+        ],
+        "held_before": [
+          "MA"
+        ],
+        "gross_pct": 46.23,
+        "risk_pct": 2.35
+      },
+      "R4b_entry_log": null
+    },
+    {
+      "trade": {
+        "code": "FG",
+        "direction": "空",
+        "entry_date": "2026-04-22",
+        "signal_day": "2026-04-21"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 1077.0,
+        "exit": 1094.7143,
+        "date": "2026-04-23",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 1094.7143,
+        "target": 1041.5714
+      },
+      "R4b": {
+        "lots": 4,
+        "entry": 1077.0,
+        "exit": 1094.7143,
+        "date": "2026-04-23",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 1094.7143,
+        "target": 1041.5714
+      },
+      "pnl_yuan": {
+        "R4": -354.29,
+        "R4b": -1417.14
+      },
+      "R4_entry_log": {
+        "date": "2026-04-21",
+        "new": [
+          "FG"
+        ],
+        "held_before": [],
+        "gross_pct": 10.91,
+        "risk_pct": 0.22
+      },
+      "R4b_entry_log": {
+        "date": "2026-04-21",
+        "new": [
+          "FG"
+        ],
+        "held_before": [],
+        "gross_pct": 41.53,
+        "risk_pct": 0.85
+      }
+    },
+    {
+      "trade": {
+        "code": "CF",
+        "direction": "多",
+        "entry_date": "2026-05-11",
+        "signal_day": "2026-05-08"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 16340.0,
+        "exit": 16117.1429,
+        "date": "2026-05-15",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 16117.1429,
+        "target": 16785.7143
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -1114.29
+      },
+      "R4_entry_log": null,
+      "R4b_entry_log": {
+        "date": "2026-05-08",
+        "new": [
+          "CF"
+        ],
+        "held_before": [],
+        "gross_pct": 39.76,
+        "risk_pct": 0.68
+      }
+    },
+    {
+      "trade": {
+        "code": "JD",
+        "direction": "多",
+        "entry_date": "2026-05-12",
+        "signal_day": "2026-05-11"
+      },
+      "kind": "removed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 4350.0,
+        "exit": 4297.5429,
+        "date": "2026-05-13",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 4297.5429,
+        "target": 4454.9143
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -524.57,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-05-11",
+        "new": [
+          "JD"
+        ],
+        "held_before": [],
+        "gross_pct": 22.15,
+        "risk_pct": 0.33
+      },
+      "R4b_entry_log": null
+    },
+    {
+      "trade": {
+        "code": "PP",
+        "direction": "多",
+        "entry_date": "2026-05-14",
+        "signal_day": "2026-05-13"
+      },
+      "kind": "removed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 8845.0,
+        "exit": 8701.1143,
+        "date": "2026-05-14",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 8701.1143,
+        "target": 9132.7714
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -719.43,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-05-13",
+        "new": [
+          "PP"
+        ],
+        "held_before": [],
+        "gross_pct": 22.42,
+        "risk_pct": 0.46
+      },
+      "R4b_entry_log": null
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "多",
+        "entry_date": "2026-05-18",
+        "signal_day": "2026-05-15"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 4159.0,
+        "exit": 4029.6857,
+        "date": "2026-05-22",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 4029.6857,
+        "target": 4417.6286
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -1293.14
+      },
+      "R4_entry_log": {
+        "date": "2026-05-15",
+        "new": [
+          "JD"
+        ],
+        "held_before": [],
+        "gross_pct": 22.1,
+        "risk_pct": 0.34
+      },
+      "R4b_entry_log": {
+        "date": "2026-05-15",
+        "new": [
+          "FU",
+          "JD"
+        ],
+        "held_before": [],
+        "gross_pct": 41.18,
+        "risk_pct": 1.11
+      }
+    },
+    {
+      "trade": {
+        "code": "PP",
+        "direction": "多",
+        "entry_date": "2026-05-20",
+        "signal_day": "2026-05-19"
+      },
+      "kind": "removed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 8968.0,
+        "exit": 8805.8857,
+        "date": "2026-05-22",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 8805.8857,
+        "target": 9292.2286
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -810.57,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-05-19",
+        "new": [
+          "JD",
+          "PP"
+        ],
+        "held_before": [],
+        "gross_pct": 45.22,
+        "risk_pct": 0.9
+      },
+      "R4b_entry_log": {
+        "date": "2026-05-19",
+        "new": [
+          "JD"
+        ],
+        "held_before": [
+          "FU"
+        ],
+        "gross_pct": 41.81,
+        "risk_pct": 1.15
+      }
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "空",
+        "entry_date": "2026-06-11",
+        "signal_day": "2026-06-10"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 2925.0,
+        "exit": 2949.4,
+        "date": "2026-06-15",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2949.4,
+        "target": 2876.2
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -244.0
+      },
+      "R4_entry_log": {
+        "date": "2026-06-10",
+        "new": [
+          "V"
+        ],
+        "held_before": [],
+        "gross_pct": 23.96,
+        "risk_pct": 0.48
+      },
+      "R4b_entry_log": {
+        "date": "2026-06-10",
+        "new": [
+          "V",
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 48.77,
+        "risk_pct": 0.84
+      }
+    },
+    {
+      "trade": {
+        "code": "V",
+        "direction": "空",
+        "entry_date": "2026-06-11",
+        "signal_day": "2026-06-10"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 2,
+        "entry": 4707.0,
+        "exit": 4782.4286,
+        "date": "2026-06-15",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 4782.4286,
+        "target": 4556.1429
+      },
+      "R4b": {
+        "lots": 3,
+        "entry": 4707.0,
+        "exit": 4782.4286,
+        "date": "2026-06-15",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 4782.4286,
+        "target": 4556.1429
+      },
+      "pnl_yuan": {
+        "R4": -754.29,
+        "R4b": -1131.43
+      },
+      "R4_entry_log": {
+        "date": "2026-06-10",
+        "new": [
+          "V"
+        ],
+        "held_before": [],
+        "gross_pct": 23.96,
+        "risk_pct": 0.48
+      },
+      "R4b_entry_log": {
+        "date": "2026-06-10",
+        "new": [
+          "V",
+          "M"
+        ],
+        "held_before": [],
+        "gross_pct": 48.77,
+        "risk_pct": 0.84
+      }
+    },
+    {
+      "trade": {
+        "code": "JD",
+        "direction": "多",
+        "entry_date": "2026-06-15",
+        "signal_day": "2026-06-12"
+      },
+      "kind": "removed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 4642.0,
+        "exit": 4541.7714,
+        "date": "2026-06-18",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 4541.7714,
+        "target": 4842.4571
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -1002.29,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-06-12",
+        "new": [
+          "JD"
+        ],
+        "held_before": [
+          "V"
+        ],
+        "gross_pct": 48.04,
+        "risk_pct": 1.11
+      },
+      "R4b_entry_log": null
+    },
+    {
+      "trade": {
+        "code": "EB",
+        "direction": "空",
+        "entry_date": "2026-06-16",
+        "signal_day": "2026-06-15"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 8180.0,
+        "exit": 7713.9429,
+        "date": "2026-06-18",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 8413.0286,
+        "target": 7713.9429
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": 2330.29
+      },
+      "R4_entry_log": {
+        "date": "2026-06-15",
+        "new": [
+          "FU"
+        ],
+        "held_before": [
+          "JD"
+        ],
+        "gross_pct": 41.21,
+        "risk_pct": 1.51
+      },
+      "R4b_entry_log": {
+        "date": "2026-06-15",
+        "new": [
+          "JD",
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 43.15,
+        "risk_pct": 1.32
+      }
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "空",
+        "entry_date": "2026-06-16",
+        "signal_day": "2026-06-15"
+      },
+      "kind": "removed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 3415.0,
+        "exit": 3137.9714,
+        "date": "2026-06-18",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 3553.5143,
+        "target": 3137.9714
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": 2770.29,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-06-15",
+        "new": [
+          "FU"
+        ],
+        "held_before": [
+          "JD"
+        ],
+        "gross_pct": 41.21,
+        "risk_pct": 1.51
+      },
+      "R4b_entry_log": {
+        "date": "2026-06-15",
+        "new": [
+          "JD",
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 43.15,
+        "risk_pct": 1.32
+      }
+    },
+    {
+      "trade": {
+        "code": "JD",
+        "direction": "多",
+        "entry_date": "2026-06-16",
+        "signal_day": "2026-06-15"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 4701.0,
+        "exit": 4602.6,
+        "date": "2026-06-18",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 4602.6,
+        "target": 4897.8
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -984.0
+      },
+      "R4_entry_log": {
+        "date": "2026-06-15",
+        "new": [
+          "FU"
+        ],
+        "held_before": [
+          "JD"
+        ],
+        "gross_pct": 41.21,
+        "risk_pct": 1.51
+      },
+      "R4b_entry_log": {
+        "date": "2026-06-15",
+        "new": [
+          "JD",
+          "EB"
+        ],
+        "held_before": [],
+        "gross_pct": 43.15,
+        "risk_pct": 1.32
+      }
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "空",
+        "entry_date": "2026-07-13",
+        "signal_day": "2026-07-10"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 3165.0,
+        "exit": 3246.3143,
+        "date": "2026-07-13",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3246.3143,
+        "target": 3002.3714
+      },
+      "R4b": {
+        "lots": 3,
+        "entry": 3165.0,
+        "exit": 3246.3143,
+        "date": "2026-07-13",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3246.3143,
+        "target": 3002.3714
+      },
+      "pnl_yuan": {
+        "R4": -813.14,
+        "R4b": -2439.43
+      },
+      "R4_entry_log": {
+        "date": "2026-07-10",
+        "new": [
+          "FU"
+        ],
+        "held_before": [],
+        "gross_pct": 15.51,
+        "risk_pct": 0.5
+      },
+      "R4b_entry_log": {
+        "date": "2026-07-10",
+        "new": [
+          "FU"
+        ],
+        "held_before": [],
+        "gross_pct": 44.97,
+        "risk_pct": 1.46
+      }
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "空",
+        "entry_date": "2026-07-14",
+        "signal_day": "2026-07-13"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 3285.0,
+        "exit": 3369.4,
+        "date": "2026-07-14",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3369.4,
+        "target": 3116.2
+      },
+      "R4b": {
+        "lots": 3,
+        "entry": 3285.0,
+        "exit": 3369.4,
+        "date": "2026-07-14",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3369.4,
+        "target": 3116.2
+      },
+      "pnl_yuan": {
+        "R4": -844.0,
+        "R4b": -2532.0
+      },
+      "R4_entry_log": {
+        "date": "2026-07-13",
+        "new": [
+          "FU"
+        ],
+        "held_before": [],
+        "gross_pct": 16.25,
+        "risk_pct": 0.52
+      },
+      "R4b_entry_log": {
+        "date": "2026-07-13",
+        "new": [
+          "FU"
+        ],
+        "held_before": [],
+        "gross_pct": 47.12,
+        "risk_pct": 1.52
+      }
+    },
+    {
+      "trade": {
+        "code": "SA",
+        "direction": "空",
+        "entry_date": "2026-07-15",
+        "signal_day": "2026-07-14"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 3,
+        "entry": 1064.0,
+        "exit": 1032.5714,
+        "date": "2026-07-16",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 1079.7143,
+        "target": 1032.5714
+      },
+      "R4b": {
+        "lots": 4,
+        "entry": 1064.0,
+        "exit": 1032.5714,
+        "date": "2026-07-16",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 1079.7143,
+        "target": 1032.5714
+      },
+      "pnl_yuan": {
+        "R4": 1885.72,
+        "R4b": 2514.29
+      },
+      "R4_entry_log": {
+        "date": "2026-07-14",
+        "new": [
+          "SA"
+        ],
+        "held_before": [],
+        "gross_pct": 31.77,
+        "risk_pct": 0.59
+      },
+      "R4b_entry_log": {
+        "date": "2026-07-14",
+        "new": [
+          "SA"
+        ],
+        "held_before": [],
+        "gross_pct": 41.28,
+        "risk_pct": 0.76
+      }
+    },
+    {
+      "trade": {
+        "code": "SA",
+        "direction": "空",
+        "entry_date": "2026-08-12",
+        "signal_day": "2026-08-11"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 2,
+        "entry": 994.0,
+        "exit": 959.3714,
+        "date": "2026-08-13",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 1011.3143,
+        "target": 959.3714
+      },
+      "R4b": {
+        "lots": 5,
+        "entry": 994.0,
+        "exit": 959.3714,
+        "date": "2026-08-13",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 1011.3143,
+        "target": 959.3714
+      },
+      "pnl_yuan": {
+        "R4": 1385.14,
+        "R4b": 3462.86
+      },
+      "R4_entry_log": {
+        "date": "2026-08-11",
+        "new": [
+          "SA"
+        ],
+        "held_before": [],
+        "gross_pct": 19.3,
+        "risk_pct": 0.42
+      },
+      "R4b_entry_log": {
+        "date": "2026-08-11",
+        "new": [
+          "SA"
+        ],
+        "held_before": [],
+        "gross_pct": 47.29,
+        "risk_pct": 1.03
+      }
+    },
+    {
+      "trade": {
+        "code": "SA",
+        "direction": "空",
+        "entry_date": "2026-08-14",
+        "signal_day": "2026-08-13"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 2,
+        "entry": 1036.0,
+        "exit": 1054.1143,
+        "date": "2026-08-24",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 1054.1143,
+        "target": 999.7714
+      },
+      "R4b": {
+        "lots": 5,
+        "entry": 1036.0,
+        "exit": 1054.1143,
+        "date": "2026-08-24",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 1054.1143,
+        "target": 999.7714
+      },
+      "pnl_yuan": {
+        "R4": -724.57,
+        "R4b": -1811.43
+      },
+      "R4_entry_log": {
+        "date": "2026-08-13",
+        "new": [
+          "SA"
+        ],
+        "held_before": [],
+        "gross_pct": 19.04,
+        "risk_pct": 0.44
+      },
+      "R4b_entry_log": {
+        "date": "2026-08-13",
+        "new": [
+          "SA"
+        ],
+        "held_before": [],
+        "gross_pct": 46.58,
+        "risk_pct": 1.08
+      }
+    },
+    {
+      "trade": {
+        "code": "BU",
+        "direction": "多",
+        "entry_date": "2026-09-11",
+        "signal_day": "2026-09-10"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 5285.0,
+        "exit": 5148.1429,
+        "date": "2026-09-11",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 5148.1429,
+        "target": 5558.7143
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -1368.57
+      },
+      "R4_entry_log": {
+        "date": "2026-09-10",
+        "new": [
+          "M",
+          "TA"
+        ],
+        "held_before": [],
+        "gross_pct": 32.06,
+        "risk_pct": 0.74
+      },
+      "R4b_entry_log": {
+        "date": "2026-09-10",
+        "new": [
+          "M",
+          "BU"
+        ],
+        "held_before": [],
+        "gross_pct": 40.78,
+        "risk_pct": 1.09
+      }
+    },
+    {
+      "trade": {
+        "code": "TA",
+        "direction": "多",
+        "entry_date": "2026-09-11",
+        "signal_day": "2026-09-10"
+      },
+      "kind": "removed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 6370.0,
+        "exit": 6210.0,
+        "date": "2026-09-14",
+        "reason": "stop",
+        "R": -1.06,
+        "stop": 6219.3714,
+        "target": 6671.2571
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -800.0,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-09-10",
+        "new": [
+          "M",
+          "TA"
+        ],
+        "held_before": [],
+        "gross_pct": 32.06,
+        "risk_pct": 0.74
+      },
+      "R4b_entry_log": {
+        "date": "2026-09-10",
+        "new": [
+          "M",
+          "BU"
+        ],
+        "held_before": [],
+        "gross_pct": 40.78,
+        "risk_pct": 1.09
+      }
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-09-14",
+        "signal_day": "2026-09-11"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 2,
+        "entry": 3000.0,
+        "exit": 2886.0,
+        "date": "2026-09-23",
+        "reason": "stop",
+        "R": -1.05,
+        "stop": 2891.9429,
+        "target": 3216.1143
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -2280.0
+      },
+      "R4_entry_log": null,
+      "R4b_entry_log": {
+        "date": "2026-09-11",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 45.23,
+        "risk_pct": 1.58
+      }
+    },
+    {
+      "trade": {
+        "code": "TA",
+        "direction": "多",
+        "entry_date": "2026-09-15",
+        "signal_day": "2026-09-14"
+      },
+      "kind": "removed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 6400.0,
+        "exit": 6240.4571,
+        "date": "2026-09-18",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 6240.4571,
+        "target": 6719.0857
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -797.71,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-09-14",
+        "new": [
+          "M",
+          "TA"
+        ],
+        "held_before": [],
+        "gross_pct": 32.29,
+        "risk_pct": 0.79
+      },
+      "R4b_entry_log": {
+        "date": "2026-09-14",
+        "new": [
+          "M"
+        ],
+        "held_before": [
+          "MA"
+        ],
+        "gross_pct": 45.51,
+        "risk_pct": 1.6
+      }
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-09-17",
+        "signal_day": "2026-09-16"
+      },
+      "kind": "added",
+      "in_R6c": true,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 3450.0,
+        "exit": 3402.0571,
+        "date": "2026-09-18",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3402.0571,
+        "target": 3545.8857
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -479.43
+      },
+      "R4_entry_log": null,
+      "R4b_entry_log": {
+        "date": "2026-09-16",
+        "new": [
+          "M"
+        ],
+        "held_before": [
+          "MA"
+        ],
+        "gross_pct": 46.36,
+        "risk_pct": 1.55
+      }
+    },
+    {
+      "trade": {
+        "code": "M",
+        "direction": "多",
+        "entry_date": "2026-09-21",
+        "signal_day": "2026-09-18"
+      },
+      "kind": "lots_changed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 2,
+        "entry": 3383.0,
+        "exit": 3332.7143,
+        "date": "2026-09-28",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3332.7143,
+        "target": 3483.5714
+      },
+      "R4b": {
+        "lots": 1,
+        "entry": 3383.0,
+        "exit": 3332.7143,
+        "date": "2026-09-28",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 3332.7143,
+        "target": 3483.5714
+      },
+      "pnl_yuan": {
+        "R4": -1005.71,
+        "R4b": -502.86
+      },
+      "R4_entry_log": {
+        "date": "2026-09-18",
+        "new": [
+          "M",
+          "MA"
+        ],
+        "held_before": [],
+        "gross_pct": 48.05,
+        "risk_pct": 1.24
+      },
+      "R4b_entry_log": {
+        "date": "2026-09-18",
+        "new": [
+          "M"
+        ],
+        "held_before": [
+          "MA"
+        ],
+        "gross_pct": 44.93,
+        "risk_pct": 1.51
+      }
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-09-21",
+        "signal_day": "2026-09-18"
+      },
+      "kind": "removed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 2977.0,
+        "exit": 2876.7143,
+        "date": "2026-09-23",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 2876.7143,
+        "target": 3177.5714
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -1002.86,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-09-18",
+        "new": [
+          "M",
+          "MA"
+        ],
+        "held_before": [],
+        "gross_pct": 48.05,
+        "risk_pct": 1.24
+      },
+      "R4b_entry_log": {
+        "date": "2026-09-18",
+        "new": [
+          "M"
+        ],
+        "held_before": [
+          "MA"
+        ],
+        "gross_pct": 44.93,
+        "risk_pct": 1.51
+      }
+    },
+    {
+      "trade": {
+        "code": "FU",
+        "direction": "多",
+        "entry_date": "2026-09-24",
+        "signal_day": "2026-09-23"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 1,
+        "entry": 4200.0,
+        "exit": 4535.6571,
+        "date": "2026-10-08",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 4032.1714,
+        "target": 4535.6571
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": 3356.57
+      },
+      "R4_entry_log": {
+        "date": "2026-09-23",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 47.56,
+        "risk_pct": 1.11
+      },
+      "R4b_entry_log": {
+        "date": "2026-09-23",
+        "new": [
+          "FU"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 36.5,
+        "risk_pct": 1.28
+      }
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-09-24",
+        "signal_day": "2026-09-23"
+      },
+      "kind": "removed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 2850.0,
+        "exit": 3036.5143,
+        "date": "2026-10-08",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 2756.7429,
+        "target": 3036.5143
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": 1865.14,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-09-23",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 47.56,
+        "risk_pct": 1.11
+      },
+      "R4b_entry_log": {
+        "date": "2026-09-23",
+        "new": [
+          "FU"
+        ],
+        "held_before": [
+          "M"
+        ],
+        "gross_pct": 36.5,
+        "risk_pct": 1.28
+      }
+    },
+    {
+      "trade": {
+        "code": "FG",
+        "direction": "空",
+        "entry_date": "2026-10-12",
+        "signal_day": "2026-10-09"
+      },
+      "kind": "lots_changed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 858.0,
+        "exit": 873.8857,
+        "date": "2026-10-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 873.8857,
+        "target": 826.2286
+      },
+      "R4b": {
+        "lots": 2,
+        "entry": 858.0,
+        "exit": 873.8857,
+        "date": "2026-10-16",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 873.8857,
+        "target": 826.2286
+      },
+      "pnl_yuan": {
+        "R4": -317.71,
+        "R4b": -635.43
+      },
+      "R4_entry_log": {
+        "date": "2026-10-09",
+        "new": [
+          "FG"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 42.48,
+        "risk_pct": 0.72
+      },
+      "R4b_entry_log": {
+        "date": "2026-10-09",
+        "new": [
+          "FG"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 49.83,
+        "risk_pct": 0.89
+      }
+    },
+    {
+      "trade": {
+        "code": "FG",
+        "direction": "空",
+        "entry_date": "2026-10-22",
+        "signal_day": "2026-10-21"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 2,
+        "entry": 840.0,
+        "exit": 854.5714,
+        "date": "2026-10-29",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 854.5714,
+        "target": 810.8571
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -582.86
+      },
+      "R4_entry_log": null,
+      "R4b_entry_log": {
+        "date": "2026-10-21",
+        "new": [
+          "FG"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 49.6,
+        "risk_pct": 0.89
+      }
+    },
+    {
+      "trade": {
+        "code": "MA",
+        "direction": "多",
+        "entry_date": "2026-10-26",
+        "signal_day": "2026-10-23"
+      },
+      "kind": "removed",
+      "in_R6c": false,
+      "R4": {
+        "lots": 1,
+        "entry": 3235.0,
+        "exit": 3437.5143,
+        "date": "2026-10-27",
+        "reason": "target",
+        "R": 2.0,
+        "stop": 3133.7429,
+        "target": 3437.5143
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": 2025.14,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-10-23",
+        "new": [
+          "MA"
+        ],
+        "held_before": [
+          "I"
+        ],
+        "gross_pct": 49.6,
+        "risk_pct": 1.2
+      },
+      "R4b_entry_log": null
+    },
+    {
+      "trade": {
+        "code": "EG",
+        "direction": "多",
+        "entry_date": "2026-11-13",
+        "signal_day": "2026-11-12"
+      },
+      "kind": "added",
+      "in_R6c": false,
+      "R4": null,
+      "R4b": {
+        "lots": 2,
+        "entry": 5045.0,
+        "exit": 4888.2,
+        "date": "2026-11-18",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 4888.2,
+        "target": 5358.6
+      },
+      "pnl_yuan": {
+        "R4": null,
+        "R4b": -3136.0
+      },
+      "R4_entry_log": null,
+      "R4b_entry_log": {
+        "date": "2026-11-12",
+        "new": [
+          "EG"
+        ],
+        "held_before": [],
+        "gross_pct": 49.75,
+        "risk_pct": 1.93
+      }
+    },
+    {
+      "trade": {
+        "code": "EG",
+        "direction": "多",
+        "entry_date": "2026-11-16",
+        "signal_day": "2026-11-13"
+      },
+      "kind": "removed",
+      "in_R6c": true,
+      "R4": {
+        "lots": 1,
+        "entry": 5197.0,
+        "exit": 5041.8,
+        "date": "2026-11-17",
+        "reason": "stop",
+        "R": -1.0,
+        "stop": 5041.8,
+        "target": 5507.4
+      },
+      "R4b": null,
+      "pnl_yuan": {
+        "R4": -1552.0,
+        "R4b": null
+      },
+      "R4_entry_log": {
+        "date": "2026-11-13",
+        "new": [
+          "EG"
+        ],
+        "held_before": [],
+        "gross_pct": 25.95,
+        "risk_pct": 0.97
+      },
+      "R4b_entry_log": null
+    }
+  ],
+  "change_kinds": {
+    "lots_changed": 17,
+    "added": 14,
+    "removed": 14
+  }
+}

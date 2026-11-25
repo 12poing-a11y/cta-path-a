@@ -2,15 +2,15 @@
   "ok": true,
   "schema": "cta-desk-daily-refresh-v1",
   "pack": "merged",
-  "generated_at": "2026-11-25 03:06:36",
+  "generated_at": "2026-11-25 16:38:21",
   "n_ok": 8,
   "n_fail": 2,
-  "seconds_total": 140.41,
+  "seconds_total": 730.18,
   "steps": [
     {
       "id": "lsp",
       "ok": true,
-      "at": "2026-11-25 03:04:16",
+      "at": "2026-11-25 16:26:11",
       "pack": "core",
       "writes": [
         "lab/research/lsp/lsp_*_{15m,60m}_{latest,events}.json"
@@ -21,12 +21,12 @@
         "n_ok": 24,
         "n_skip": 0
       },
-      "seconds": 0.82
+      "seconds": 0.52
     },
     {
       "id": "p4_light",
       "ok": true,
-      "at": "2026-11-25 03:04:17",
+      "at": "2026-11-25 16:26:12",
       "pack": "core",
       "writes": [
         "lab/research/ml/p4_light_latest.json"
@@ -44,12 +44,12 @@
         "path": "lab/research/ml/p4_light_latest.json"
       },
       "path": "lab/research/ml/p4_light_latest.json",
-      "seconds": 1.17
+      "seconds": 0.18
     },
     {
       "id": "gamma_research",
       "ok": true,
-      "at": "2026-11-25 03:04:18",
+      "at": "2026-11-25 16:26:12",
       "pack": "core",
       "writes": [
         "lab/research/gamma/gamma_*_latest.json"
@@ -71,12 +71,12 @@
         ]
       },
       "path": "lab/research/gamma/gamma_OI2701_latest.json",
-      "seconds": 0.12
+      "seconds": 0.07
     },
     {
       "id": "ablation",
       "ok": true,
-      "at": "2026-11-25 03:04:18",
+      "at": "2026-11-25 16:26:12",
       "pack": "heavy",
       "writes": [
         "data/ablation/strategy_indicator_ablation_latest.json"
@@ -87,12 +87,12 @@
         "path": "scripts/strategy_indicator_ablation.py"
       },
       "path": "scripts/strategy_indicator_ablation.py",
-      "seconds": 15.91
+      "seconds": 574.04
     },
     {
       "id": "strategy_blend",
       "ok": true,
-      "at": "2026-11-25 03:04:34",
+      "at": "2026-11-25 16:35:46",
       "pack": "heavy",
       "writes": [
         "data/ablation/strategy_blend_latest.json"
@@ -103,12 +103,12 @@
         "path": "scripts/strategy_blend_grid.py"
       },
       "path": "scripts/strategy_blend_grid.py",
-      "seconds": 0.5
+      "seconds": 0.34
     },
     {
       "id": "ic_groups",
       "ok": false,
-      "at": "2026-11-25 03:04:18",
+      "at": "2026-11-25 16:26:12",
       "pack": "core",
       "writes": [
         "lab/research/ic/ic_groups_latest.json"
@@ -116,12 +116,12 @@
       "mutates_formal": false,
       "error": "lab/scripts/run_ic_groups.py exit=1: /scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
       "trace": "scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/cta-path-a/cta-path-a/lab/data/factors/panel_daily.jsonl'\n\n",
-      "seconds": 0.05
+      "seconds": 0.03
     },
     {
       "id": "oos_vs_path_a",
       "ok": false,
-      "at": "2026-11-25 03:04:18",
+      "at": "2026-11-25 16:26:12",
       "pack": "core",
       "writes": [
         "lab/research/oos/oos_vs_path_a_latest.json",
@@ -130,12 +130,12 @@
       "mutates_formal": false,
       "error": "lab/scripts/run_oos_vs_path_a.py exit=1: /scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
       "trace": "scripts/lab_common.py\", line 74, in load_panel_rows\n    with path.open(encoding=\"utf-8\") as fh:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/cta-path-a/cta-path-a/lab/data/factors/panel_daily.jsonl'\n\n",
-      "seconds": 0.04
+      "seconds": 0.03
     },
     {
       "id": "portfolio_risk",
       "ok": true,
-      "at": "2026-11-25 03:04:18",
+      "at": "2026-11-25 16:26:12",
       "pack": "core",
       "writes": [
         "lab/research/portfolio/portfolio_risk_latest.json"
@@ -146,12 +146,12 @@
         "path": "lab/scripts/run_portfolio_risk.py"
       },
       "path": "lab/scripts/run_portfolio_risk.py",
-      "seconds": 0.05
+      "seconds": 0.03
     },
     {
       "id": "npd_reminders",
       "ok": true,
-      "at": "2026-11-25 03:04:18",
+      "at": "2026-11-25 16:26:12",
       "pack": "core",
       "writes": [
         "data/cotton/npd_reminders_latest.json"
@@ -164,12 +164,12 @@
         "asof": "2026-11-25"
       },
       "path": "data/cotton/npd_reminders_latest.json",
-      "seconds": 0.11
+      "seconds": 0.07
     },
     {
       "id": "gamma_wall_collect",
       "ok": true,
-      "at": "2026-11-25 03:04:35",
+      "at": "2026-11-25 16:35:46",
       "pack": "heavy",
       "writes": [
         "data/gamma_wall/<contract>/<asof>.json",
@@ -181,7 +181,7 @@
         "path": "scripts/gamma_wall_daily_collect.py"
       },
       "path": "scripts/gamma_wall_daily_collect.py",
-      "seconds": 121.64
+      "seconds": 154.87
     }
   ],
   "packs_run": [

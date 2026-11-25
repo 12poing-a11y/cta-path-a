@@ -38,16 +38,21 @@
       "date": "2026-11-24",
       "inventory": 14.0,
       "change": 6.0
+    },
+    {
+      "date": "2026-11-25",
+      "inventory": 6.0,
+      "change": -8.0
     }
   ],
   "error": null,
-  "n": 7,
+  "n": 8,
   "start": "2026-09-28",
-  "end": "2026-11-24",
+  "end": "2026-11-25",
   "last": {
-    "date": "2026-11-24",
-    "inventory": 14.0,
-    "change": 6.0
+    "date": "2026-11-25",
+    "inventory": 6.0,
+    "change": -8.0
   },
-  "fetched_at": "2026-11-24 19:07:04"
+  "fetched_at": "2026-11-25 08:44:30"
 }

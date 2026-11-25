@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "asof": "2026-11-25 03:04",
+  "asof": "2026-11-25 16:35",
   "disclaimer": "纸面研究：A=离散资金配比，B=消融上下文只读；代理曲线无 Path-A 成本/席位/ATR，跨族不可直接当实盘预期；观察袖套权重硬帽≤10%；全表仅保留收益>0且最大回撤≤15%的组合；不改 entry_filter / paper_book。",
   "observe_id": "proxy_observe_f_short_mom",
   "observe_cap": 0.1,
@@ -16,7 +16,7 @@
   "n_common_days": 205,
   "b_context": {
     "available": true,
-    "asof": "2026-11-25 03:04",
+    "asof": "2026-11-25 16:35",
     "grid_mode": "ablation",
     "top_pairs_by_ret": [
       {
@@ -27,22 +27,9 @@
           "C",
           "T"
         ],
-        "ret_pct": 37.836,
+        "ret_pct": 37.321,
         "max_dd_pct": 9.572,
-        "calmar": 4.122
-      },
-      {
-        "strategy_id": "proxy_long_short_cwft",
-        "variant": "no_long_mom",
-        "variant_label": "关长端动量",
-        "kept": [
-          "C",
-          "F",
-          "SHORT_MOM"
-        ],
-        "ret_pct": 37.507,
-        "max_dd_pct": 11.549,
-        "calmar": 3.385
+        "calmar": 4.076
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -53,9 +40,9 @@
           "LONG_MOM",
           "SHORT_MOM"
         ],
-        "ret_pct": 37.322,
+        "ret_pct": 36.809,
         "max_dd_pct": 10.706,
-        "calmar": 3.647
+        "calmar": 3.606
       },
       {
         "strategy_id": "proxy_cwft",
@@ -66,22 +53,34 @@
           "F",
           "T"
         ],
-        "ret_pct": 35.961,
+        "ret_pct": 35.453,
         "max_dd_pct": 10.154,
-        "calmar": 3.724
+        "calmar": 3.681
       },
       {
         "strategy_id": "proxy_long_short_cwft",
-        "variant": "no_short_mom",
-        "variant_label": "关短端动量",
+        "variant": "no_long_mom",
+        "variant_label": "关长端动量",
         "kept": [
           "C",
           "F",
-          "LONG_MOM"
+          "SHORT_MOM"
         ],
-        "ret_pct": 35.015,
-        "max_dd_pct": 10.373,
-        "calmar": 3.568
+        "ret_pct": 35.208,
+        "max_dd_pct": 11.549,
+        "calmar": 3.212
+      },
+      {
+        "strategy_id": "proxy_cwft",
+        "variant": "no_T",
+        "variant_label": "关T动量",
+        "kept": [
+          "C",
+          "F"
+        ],
+        "ret_pct": 34.276,
+        "max_dd_pct": 11.797,
+        "calmar": 3.068
       }
     ],
     "top_pairs_by_calmar": [
@@ -93,9 +92,9 @@
           "C",
           "T"
         ],
-        "ret_pct": 37.836,
+        "ret_pct": 37.321,
         "max_dd_pct": 9.572,
-        "calmar": 4.122
+        "calmar": 4.076
       },
       {
         "strategy_id": "proxy_cwft",
@@ -106,9 +105,9 @@
           "F",
           "T"
         ],
-        "ret_pct": 35.961,
+        "ret_pct": 35.453,
         "max_dd_pct": 10.154,
-        "calmar": 3.724
+        "calmar": 3.681
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -119,9 +118,9 @@
           "LONG_MOM",
           "SHORT_MOM"
         ],
-        "ret_pct": 37.322,
+        "ret_pct": 36.809,
         "max_dd_pct": 10.706,
-        "calmar": 3.647
+        "calmar": 3.606
       },
       {
         "strategy_id": "proxy_long_short_cwft",
@@ -132,9 +131,9 @@
           "F",
           "LONG_MOM"
         ],
-        "ret_pct": 35.015,
+        "ret_pct": 32.942,
         "max_dd_pct": 10.373,
-        "calmar": 3.568
+        "calmar": 3.392
       },
       {
         "strategy_id": "proxy_frontnext_st",
@@ -144,39 +143,39 @@
           "C",
           "ST"
         ],
-        "ret_pct": 33.331,
+        "ret_pct": 31.919,
         "max_dd_pct": 10.148,
-        "calmar": 3.507
+        "calmar": 3.383
       }
     ],
     "best_full_strategies": [
       {
         "strategy_id": "proxy_cwft",
         "strategy_name": "本地代理·CWFT",
-        "ret_pct": 35.961,
+        "ret_pct": 35.453,
         "max_dd_pct": 10.154,
-        "calmar": 3.724
-      },
-      {
-        "strategy_id": "proxy_frontnext_st",
-        "strategy_name": "本地代理·C_frontnext&ShortTrend",
-        "ret_pct": 33.331,
-        "max_dd_pct": 10.148,
-        "calmar": 3.507
+        "calmar": 3.681
       },
       {
         "strategy_id": "proxy_long_short_cwft",
         "strategy_name": "本地代理·Long/Short CWFT",
-        "ret_pct": 33.306,
+        "ret_pct": 32.766,
         "max_dd_pct": 10.439,
-        "calmar": 3.399
+        "calmar": 3.353
+      },
+      {
+        "strategy_id": "proxy_frontnext_st",
+        "strategy_name": "本地代理·C_frontnext&ShortTrend",
+        "ret_pct": 31.919,
+        "max_dd_pct": 10.148,
+        "calmar": 3.383
       },
       {
         "strategy_id": "path_a",
         "strategy_name": "路径A seats",
-        "ret_pct": 6.703,
+        "ret_pct": 7.197,
         "max_dd_pct": 6.739,
-        "calmar": 0.995
+        "calmar": 1.068
       }
     ]
   },

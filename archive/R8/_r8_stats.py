@@ -146,6 +146,11 @@ def run_stats(*, snap_path: Path, bt_path: Path, equity=None, max_gross=None, mi
                     "a signal that persists several days is counted once per day",
         },
         "lifted_to_min_lots": {
+            "pre_caps_candidate_days_lifted_by_sizing": sum(1 for r in cand_log if r["status"] == "ok" and r["bumped"]),
+            "pre_caps_lifted_by_code": dict(sorted(
+                {c: sum(1 for r in cand_log if r["status"] == "ok" and r["bumped"] and r["code"] == c)
+                 for c in {r["code"] for r in cand_log if r["status"] == "ok" and r["bumped"]}}.items(),
+                key=lambda kv: -kv[1])),
             "entered_candidates_lifted": len(bumped_entries),
             "by_sizing": sum(1 for r in bumped_entries if r["by_sizing"]),
             "by_caps_floor": sum(1 for r in bumped_entries if r["by_caps_floor"]),

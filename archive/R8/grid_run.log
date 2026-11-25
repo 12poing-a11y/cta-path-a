@@ -1,0 +1,7 @@
+A70 rc=0 elapsed=179s args=--max-gross 70
+A100 rc=0 elapsed=180s args=--max-gross 100
+B300 rc=0 elapsed=179s args=--equity 300000
+B500 rc=0 elapsed=179s args=--equity 500000
+B1000 rc=0 elapsed=74s args=--equity 1000000
+C1 rc=0 elapsed=50s args=--min-lots 1
+ALL_DONE

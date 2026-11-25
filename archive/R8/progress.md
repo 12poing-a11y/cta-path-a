@@ -51,3 +51,25 @@
 - `historical_backtest.py`：新增 `--max-gross PCT`、`--equity YUAN`、`--min-lots N`（解析函数 `r8_overrides_from_argv`）。**只在带 `--out` 时生效**；不带 → stderr 报错、退出码 2、在拉任何数据之前返回。缺值、非法值（≤0 / 非数字 / min-lots 为负或小数）、与 `--compare/--hedge-grid/--rr-grid/--ctf/--roll-grid/--observe` 同用 → 退出码 2。生效值写进结果 `r8_overrides = {applied, formal_values}`；Stress 行沿用同一份 `p`，自然带覆盖值。不带这三个旗标时行为不变（C0 自检会再验证）。
 - `tests/test_r8_overrides.py`：15 项（不带 `--out` 必须拒绝、`=` 形式、缺值/非法值、与其他模式互斥、合法组合进入运行头且不写文件、无旗标解析为空、仅 `--out` 不受影响）。
 - 相关既有测试（rule_lock / audit / freeze_fix_gates / r8）37 passed。
+
+## 第 4–6 步：实验（live，`--out archive/R8/<组>/result.json --fill next_open`，串行，无重跑、无换结果）
+
+- C0（`--min-lots 0`）自检：与 base 逐项一致（`_compare.py` 实测：131 个顶层键中 126 个相同；不同的 5 个为 `config_version`/`git_sha`（提交号）、`contract_prefetch`（仅耗时）、`input_snapshot`（仅文件路径/文件哈希）、`r8_overrides`（新增覆盖记录）；收益、回撤、成交、权益曲线全部相同），`bars_sha256` 等于 base 的。覆盖参数管线可信。
+- 运行记录：`archive/R8/grid_run.log`（A70/A100/B300/B500 约 180 秒；B1000 74 秒、C1 50 秒，全部 rc=0）。
+- 评估脚本 `archive/R8/_evaluate.py` 完全按 PREREG 口径；结果 `archive/R8/results_table.{json,md}`。每组还在 base 的冻结快照上做离线重放，`closed_pnls` 与 `equity_curve` 与 live 逐位一致（`离线=live` 列全部 True）。
+
+### ⚠ 相对预注册的一项偏离（如实记录）
+PREREG 写的是"实验组 `bars_sha256` 等于 base 的，不等就停下、不比较"。**B1000 和 C1 的 `bars_sha256` 与 base 不同**（A70/A100/B300/B500/C0 相同）。原因：live 运行会刷新本地缓存，这两组运行时 **仅 `oi`（持仓量）字段**有 13 / 17 个 bar-日与 base 不同（有值↔None）；OHLC、日期、席位、carry、合约包完全相同。核验：在 base 的冻结快照上离线重放，B1000、C1 的成交明细和权益曲线与 live **逐位一致**，说明这些 OI 差异对结果没有影响。因此我没有停下，而是以"同一份冻结数据上的离线重放等于 live"作为可比性依据继续，并在最终报告里标出。该偏离不改变任何组的通过结论（B1000、C1 都因其他标准未通过）。base 对照组本身与根目录正式结果也存在同类 OI 差异（见第 2 步）。
+
+### 结果（Base 成本为主；全部数字取自结果 JSON / 离线统计）
+见 `archive/R8/results_table.md`（含各组 Stress、回撤 B/S、跳过信号、抬手笔数、单笔风险最大/中位、曲线名义占用、PSR、DSR(n=18)、PBO(S=8,K=12)、走步正折数）。
+- 通过标准 1–5：**只有 B300 通过**；A70、A100、B500、B1000 的未通过项见下；C0（≡对照）、C1 未通过。
+- 各组未通过项：A70：PBO 0.886、走步 2/5；A100：PBO 0.700；B500：PBO 0.629；B1000：PBO 0.857；C1：Base/Stress 净收益为负（−1.322 / −2.026）、PBO 0.757、走步 2/5；C0 同 base。
+- 全族 PBO（参考，11 列 + 7 个 R8 组列，K=18，n_obs=208）：0.4286。
+- **不足一手（C）**：min_lots=1 时 base 里 125 个被跳过的信号日（AG 58、AU 31、CU 20、NI 14、RU 2）全部被 `sizing()` 抬到 1 手，但**全部被组合帽挡在入场之前（入选 0 笔）**，所以"抬手笔数"=0；C1 与 base 的差别（61 vs 57 笔，−1.322 vs −1.721）来自路径效应（被抬的候选先占排序名额并改变统一缩放比例），不是因为买入了那些高名义品种。
+- **名义帽（A）**：提高帽不会减少"算出 0 手"的信号（跳过数 125→125/118），因为 0 手来自 2% 风险预算买不起一手；提高帽主要增加同时持仓与笔数（57→69→86）。
+- **本金（B）**：本金增大，跳过数明显下降（125→88→64→23），笔数 57→76→86→99；净收益并不随本金单调（Base +8.754 / +3.219 / +4.967），PBO 也不单调（0.371 / 0.629 / 0.857）。
+
+### 第 8 步：审计与交叉组
+- 通过 1–5 的 B300：`scripts/audit_exit_vs_daily.py --fail-on-mismatch`：checked=73、mismatches=0（`B300/audit.json`，用其自身快照；用仓库已提交的正式快照复核 `B300/audit_committed_snapshot.json`，同为 0 不符）。→ B300 最终判为通过。
+- 交叉组：预注册规则要求"A 系列与 B（或 C）系列都有组通过"。A 系列无通过组 → **不加交叉组**；n_trials 保持 18。

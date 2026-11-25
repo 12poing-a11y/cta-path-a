@@ -712,5 +712,46 @@
     "live_trading": false,
     "note": "Compact daily returns only; full equity curves not stored.",
     "returns_sha_hint": "T=215xK=11"
+  },
+  "comparability_note": {
+    "schema": "cta-pbo-comparability-note-v1",
+    "added": "2026-11-25 (R7b follow-up; text only, numbers untouched)",
+    "this_pbo": {
+      "value": 0.728571,
+      "engine": "v14 (cta-backtest-v14-execfix)",
+      "matrix_T": 215,
+      "cscv_n_obs_used": 208,
+      "S_submatrices": 8,
+      "combos": 70,
+      "n_trials": 11
+    },
+    "signoff_pbo": {
+      "value": 0.385714,
+      "engine": "pre-fix (matrix committed in ee4476b)",
+      "matrix_T": 214,
+      "cscv_n_obs_used": 208,
+      "S_submatrices": 8,
+      "combos": 70,
+      "n_trials": 11
+    },
+    "sensitivity_by_n_groups": {
+      "pre_fix_ee4476b": {
+        "4": 0.166667,
+        "6": 0.25,
+        "8": 0.385714,
+        "10": 0.40873,
+        "12": 0.284632,
+        "16": 0.4456
+      },
+      "v14_this_file": {
+        "4": 1.0,
+        "6": 0.95,
+        "8": 0.728571,
+        "10": 0.892857,
+        "12": 0.944805,
+        "16": 0.7994
+      }
+    },
+    "note": "0.386 is the pre-fix engine matrix (T=214, 208 observations used by CSCV with 8 groups / 70 combos); 0.729 is v14 (T=215, 208 used, 8 groups / 70 combos). Not directly comparable; the whole sensitivity curve moved, so this is not a group-count artifact. Accepted as-is by user on 2026-11-25; item-by-item matrix comparison deferred to R8."
   }
 }

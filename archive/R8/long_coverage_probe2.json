@@ -1,0 +1,289 @@
+{
+ "contracts_by_code": {
+  "AG": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "AL": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "AU": {
+   "n_contracts": 21,
+   "first_delivery": "2510",
+   "last_delivery": "2710"
+  },
+  "BU": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "CF": {
+   "n_contracts": 13,
+   "first_delivery": "2511",
+   "last_delivery": "2711"
+  },
+  "CU": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "EB": {
+   "n_contracts": 25,
+   "first_delivery": "2510",
+   "last_delivery": "2710"
+  },
+  "EG": {
+   "n_contracts": 25,
+   "first_delivery": "2510",
+   "last_delivery": "2710"
+  },
+  "FG": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "FU": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "I": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "JD": {
+   "n_contracts": 25,
+   "first_delivery": "2510",
+   "last_delivery": "2710"
+  },
+  "JM": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "L": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "M": {
+   "n_contracts": 17,
+   "first_delivery": "2511",
+   "last_delivery": "2711"
+  },
+  "MA": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "NI": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "P": {
+   "n_contracts": 17,
+   "first_delivery": "2511",
+   "last_delivery": "2711"
+  },
+  "PP": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "RB": {
+   "n_contracts": 10,
+   "first_delivery": "2510",
+   "last_delivery": "2710"
+  },
+  "RU": {
+   "n_contracts": 7,
+   "first_delivery": "2601",
+   "last_delivery": "2709"
+  },
+  "SA": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "SP": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "SR": {
+   "n_contracts": 13,
+   "first_delivery": "2511",
+   "last_delivery": "2711"
+  },
+  "SS": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "TA": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  },
+  "V": {
+   "n_contracts": 26,
+   "first_delivery": "2510",
+   "last_delivery": "2711"
+  }
+ },
+ "earliest_contract_first_bar": {
+  "AG": {
+   "file": "AG2510.json",
+   "first_bar": "2024-10-16",
+   "n": 243
+  },
+  "AL": {
+   "file": "AL2510.json",
+   "first_bar": "2024-10-16",
+   "n": 243
+  },
+  "AU": {
+   "file": "AU2510.json",
+   "first_bar": "2024-09-19",
+   "n": 257
+  },
+  "BU": {
+   "file": "BU2510.json",
+   "first_bar": "2024-10-17",
+   "n": 218
+  },
+  "CF": {
+   "file": "CF2511.json",
+   "first_bar": "2024-11-18",
+   "n": 242
+  },
+  "CU": {
+   "file": "CU2510.json",
+   "first_bar": "2024-10-16",
+   "n": 243
+  },
+  "EB": {
+   "file": "EB2510.json",
+   "first_bar": "2024-10-29",
+   "n": 229
+  },
+  "EG": {
+   "file": "EG2510.json",
+   "first_bar": "2024-10-29",
+   "n": 219
+  },
+  "FG": {
+   "file": "FG2510.json",
+   "first_bar": "2024-10-22",
+   "n": 240
+  },
+  "FU": {
+   "file": "FU2510.json",
+   "first_bar": "2024-10-08",
+   "n": 244
+  },
+  "I": {
+   "file": "I2510.json",
+   "first_bar": "2024-10-22",
+   "n": 242
+  },
+  "JD": {
+   "file": "JD2510.json",
+   "first_bar": "2024-10-29",
+   "n": 243
+  },
+  "JM": {
+   "file": "JM2510.json",
+   "first_bar": "2024-10-22",
+   "n": 219
+  },
+  "L": {
+   "file": "L2510.json",
+   "first_bar": "2024-10-30",
+   "n": 232
+  },
+  "M": {
+   "file": "M2511.json",
+   "first_bar": "2024-11-15",
+   "n": 239
+  },
+  "MA": {
+   "file": "MA2510.json",
+   "first_bar": "2024-10-23",
+   "n": 237
+  },
+  "NI": {
+   "file": "NI2510.json",
+   "first_bar": "2024-10-16",
+   "n": 243
+  },
+  "P": {
+   "file": "P2511.json",
+   "first_bar": "2024-11-15",
+   "n": 237
+  },
+  "PP": {
+   "file": "PP2510.json",
+   "first_bar": "2024-10-30",
+   "n": 214
+  },
+  "RB": {
+   "file": "RB2510.json",
+   "first_bar": "2024-10-16",
+   "n": 243
+  },
+  "RU": {
+   "file": "RU2601.json",
+   "first_bar": "2025-01-16",
+   "n": 242
+  },
+  "SA": {
+   "file": "SA2510.json",
+   "first_bar": "2024-10-22",
+   "n": 244
+  },
+  "SP": {
+   "file": "SP2510.json",
+   "first_bar": "2024-10-16",
+   "n": 219
+  },
+  "SR": {
+   "file": "SR2511.json",
+   "first_bar": "2024-11-15",
+   "n": 241
+  },
+  "SS": {
+   "file": "SS2510.json",
+   "first_bar": "2024-10-17",
+   "n": 238
+  },
+  "TA": {
+   "file": "TA2510.json",
+   "first_bar": "2024-10-22",
+   "n": 235
+  },
+  "V": {
+   "file": "V2510.json",
+   "first_bar": "2024-10-22",
+   "n": 244
+  }
+ },
+ "member_txt_by_exchange": {
+  "czce": {
+   "n": 2157,
+   "first": "20180102",
+   "last": "20261125"
+  },
+  "shfe": {
+   "n": 2157,
+   "first": "20180102",
+   "last": "20261125"
+  }
+ },
+ "member_dce_dl_files": 0
+}

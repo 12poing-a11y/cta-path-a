@@ -1,0 +1,304 @@
+{
+ "F1": {
+  "hits_signal_days": 37,
+  "hits_by_half": {
+   "H1": 36,
+   "H2": 1
+  },
+  "hits_by_code_top": {
+   "CU": 16,
+   "AG": 13,
+   "AU": 8
+  },
+  "control_trades": 99,
+  "group_trades": 100,
+  "common_entry_keys": 97,
+  "common_but_different_lots_or_exit": 7,
+  "control_only": {
+   "n": 2,
+   "price_pnl": -8283,
+   "codes": {
+    "I": 1,
+    "AG": 1
+   }
+  },
+  "group_only": {
+   "n": 3,
+   "price_pnl": -640,
+   "codes": {
+    "I": 2,
+    "JD": 1
+   }
+  },
+  "price_pnl_total_control": 65787,
+  "price_pnl_total_group": 73145,
+  "equity_end": 1056928.1,
+  "top5_group_only_pnl": [
+   [
+    1309,
+    "JD",
+    "2026-05-25"
+   ],
+   [
+    -971,
+    "I",
+    "2026-05-15"
+   ],
+   [
+    -977,
+    "I",
+    "2026-05-19"
+   ]
+  ],
+  "bottom5_control_only_pnl": [
+   [
+    -6283,
+    "AG",
+    "2026-11-09"
+   ],
+   [
+    -2000,
+    "I",
+    "2026-05-18"
+   ]
+  ],
+  "hit_unit_notional_pct_of_cap": {
+   "min": 50.3,
+   "max": 224.6
+  }
+ },
+ "F2": {
+  "hits_signal_days": 233,
+  "hits_by_half": {
+   "H1": 198,
+   "H2": 35
+  },
+  "hits_by_code_top": {
+   "EG": 34,
+   "MA": 27,
+   "BU": 27,
+   "PP": 23,
+   "L": 22,
+   "TA": 20,
+   "P": 17,
+   "EB": 15
+  },
+  "control_trades": 99,
+  "group_trades": 82,
+  "common_entry_keys": 67,
+  "common_but_different_lots_or_exit": 34,
+  "control_only": {
+   "n": 32,
+   "price_pnl": 12567,
+   "codes": {
+    "FU": 2,
+    "M": 5,
+    "TA": 2,
+    "P": 4,
+    "I": 3,
+    "EB": 1,
+    "MA": 1,
+    "JM": 3,
+    "FG": 1,
+    "JD": 2,
+    "BU": 3,
+    "CF": 1,
+    "NI": 1,
+    "AG": 3
+   }
+  },
+  "group_only": {
+   "n": 15,
+   "price_pnl": 54157,
+   "codes": {
+    "I": 3,
+    "FG": 1,
+    "M": 3,
+    "SS": 2,
+    "FU": 3,
+    "NI": 1,
+    "EB": 1,
+    "AG": 1
+   }
+  },
+  "price_pnl_total_control": 65787,
+  "price_pnl_total_group": 124050,
+  "equity_end": 1109416.36,
+  "top5_group_only_pnl": [
+   [
+    40279,
+    "FU",
+    "2026-09-24"
+   ],
+   [
+    15157,
+    "FG",
+    "2026-04-13"
+   ],
+   [
+    12137,
+    "AG",
+    "2026-11-06"
+   ],
+   [
+    6994,
+    "I",
+    "2026-03-16"
+   ],
+   [
+    5561,
+    "M",
+    "2026-09-16"
+   ]
+  ],
+  "bottom5_control_only_pnl": [
+   [
+    -7766,
+    "TA",
+    "2026-03-17"
+   ],
+   [
+    -6336,
+    "P",
+    "2026-04-02"
+   ],
+   [
+    -6283,
+    "AG",
+    "2026-11-09"
+   ],
+   [
+    -5438,
+    "TA",
+    "2026-03-13"
+   ],
+   [
+    -5029,
+    "M",
+    "2026-09-21"
+   ]
+  ],
+  "hit_ratio_atr14_atr100": {
+   "median": 2.487,
+   "max": 3.603
+  },
+  "atr_spike_unavailable_days": 139
+ },
+ "F1F2": {
+  "hits_signal_days": 269,
+  "hits_by_half": {
+   "H1": 233,
+   "H2": 36
+  },
+  "hits_by_code_top": {
+   "EG": 34,
+   "MA": 27,
+   "BU": 27,
+   "PP": 23,
+   "L": 22,
+   "TA": 20,
+   "P": 17,
+   "CU": 16
+  },
+  "control_trades": 99,
+  "group_trades": 83,
+  "common_entry_keys": 66,
+  "common_but_different_lots_or_exit": 34,
+  "control_only": {
+   "n": 33,
+   "price_pnl": 10567,
+   "codes": {
+    "FU": 2,
+    "M": 5,
+    "TA": 2,
+    "P": 4,
+    "I": 4,
+    "EB": 1,
+    "MA": 1,
+    "JM": 3,
+    "FG": 1,
+    "JD": 2,
+    "BU": 3,
+    "CF": 1,
+    "NI": 1,
+    "AG": 3
+   }
+  },
+  "group_only": {
+   "n": 17,
+   "price_pnl": 52209,
+   "codes": {
+    "I": 5,
+    "FG": 1,
+    "M": 3,
+    "SS": 2,
+    "FU": 3,
+    "NI": 1,
+    "EB": 1,
+    "AG": 1
+   }
+  },
+  "price_pnl_total_control": 65787,
+  "price_pnl_total_group": 124860,
+  "equity_end": 1109970.09,
+  "top5_group_only_pnl": [
+   [
+    40279,
+    "FU",
+    "2026-09-24"
+   ],
+   [
+    15157,
+    "FG",
+    "2026-04-13"
+   ],
+   [
+    12137,
+    "AG",
+    "2026-11-06"
+   ],
+   [
+    6994,
+    "I",
+    "2026-03-16"
+   ],
+   [
+    5561,
+    "M",
+    "2026-09-16"
+   ]
+  ],
+  "bottom5_control_only_pnl": [
+   [
+    -7766,
+    "TA",
+    "2026-03-17"
+   ],
+   [
+    -6336,
+    "P",
+    "2026-04-02"
+   ],
+   [
+    -6283,
+    "AG",
+    "2026-11-09"
+   ],
+   [
+    -5438,
+    "TA",
+    "2026-03-13"
+   ],
+   [
+    -5029,
+    "M",
+    "2026-09-21"
+   ]
+  ],
+  "hit_ratio_atr14_atr100": {
+   "median": 2.472,
+   "max": 3.603
+  },
+  "atr_spike_unavailable_days": 106
+ }
+}

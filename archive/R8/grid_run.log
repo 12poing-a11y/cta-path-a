@@ -1,0 +1,9 @@
+E100k rc=0 elapsed=56s args=--equity 100000
+E300k rc=0 elapsed=55s args=--equity 300000
+E500k rc=0 elapsed=54s args=--equity 500000
+E1000k rc=0 elapsed=55s args=--equity 1000000
+DONE E100k,E300k,E500k,E1000k
+F1 rc=0 elapsed=57s args=--equity 1000000 --filter-unit-risk
+F2 rc=0 elapsed=52s args=--equity 1000000 --filter-atr-spike
+F1F2 rc=0 elapsed=57s args=--equity 1000000 --filter-unit-risk --filter-atr-spike
+DONE F1,F2,F1F2

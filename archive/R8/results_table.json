@@ -1,0 +1,828 @@
+{
+ "prereg": "archive/R8/PREREG.md",
+ "n_trials_main": 18,
+ "n_trials_disclosure": 21,
+ "r8b_control": "E1000k",
+ "trade_attr_missing_for_control_trades": 0,
+ "family_pbo_reference": {
+  "pbo": 0.442857,
+  "K": 18
+ },
+ "stop_rule_r8a": {
+  "all_base_le_0": false
+ },
+ "rows": {
+  "base": {
+   "group": "base",
+   "equity0": 200000.0,
+   "filters": [],
+   "ret_base": -1.721,
+   "ret_stress": -2.339,
+   "dd_base": 8.232,
+   "dd_stress": 7.66,
+   "trades": 57,
+   "trades_stress": 57,
+   "skips": {
+    "lots0": 125,
+    "gross_cap_to_0": 178,
+    "positions_full": 31,
+    "bucket_full": 626
+   },
+   "filter_hits": {},
+   "selected_entries": 145,
+   "days_positions_full": 0,
+   "held_distribution": {
+    "0": 70,
+    "1": 96,
+    "2": 50
+   },
+   "risk_max": 1.86,
+   "risk_median": 0.557,
+   "gross_curve_max": 50.77,
+   "caps_entry_gross_max": 49.83,
+   "psr": 0.427296,
+   "dsr18": 0.020818,
+   "dsr21": 0.01763,
+   "pbo": 0.842857,
+   "wf_fold_sharpes": [
+    2.7916,
+    -0.6232,
+    1.0083,
+    -0.3271,
+    -3.3042
+   ],
+   "wf_positive": 2,
+   "cost_yuan": 5318.74,
+   "same_bars_as_base": true,
+   "offline_equals_live": true,
+   "live_filter_hits": null,
+   "filters_hits_match_live": null,
+   "role": "control"
+  },
+  "E100k": {
+   "group": "E100k",
+   "equity0": 100000.0,
+   "filters": [],
+   "ret_base": -2.163,
+   "ret_stress": -3.455,
+   "dd_base": 7.144,
+   "dd_stress": 7.207,
+   "trades": 38,
+   "trades_stress": 38,
+   "skips": {
+    "lots0": 285,
+    "positions_full": 7,
+    "gross_cap_to_0": 222,
+    "bucket_full": 518
+   },
+   "filter_hits": {},
+   "selected_entries": 106,
+   "days_positions_full": 0,
+   "held_distribution": {
+    "0": 90,
+    "1": 126
+   },
+   "risk_max": 1.961,
+   "risk_median": 0.751,
+   "gross_curve_max": 49.54,
+   "caps_entry_gross_max": 49.53,
+   "psr": 0.420482,
+   "dsr18": 0.019962,
+   "dsr21": 0.016887,
+   "pbo": 0.857143,
+   "wf_fold_sharpes": [
+    0.4314,
+    0.9281,
+    -0.1943,
+    -2.2776,
+    -1.1316
+   ],
+   "wf_positive": 2,
+   "cost_yuan": 2368.5,
+   "same_bars_as_base": true,
+   "offline_equals_live": true,
+   "live_filter_hits": null,
+   "filters_hits_match_live": null,
+   "role": "R8a (diagnostic)",
+   "info_not_judged": {
+    "dd_le_10": true,
+    "risk_le_3": true,
+    "pbo_le_0.5": false,
+    "wf_ge_3": false
+   }
+  },
+  "E300k": {
+   "group": "E300k",
+   "equity0": 300000.0,
+   "filters": [],
+   "ret_base": 8.754,
+   "ret_stress": 1.604,
+   "dd_base": 5.381,
+   "dd_stress": 5.573,
+   "trades": 76,
+   "trades_stress": 81,
+   "skips": {
+    "lots0": 88,
+    "gross_cap_to_0": 142,
+    "positions_full": 74,
+    "bucket_full": 574
+   },
+   "filter_hits": {},
+   "selected_entries": 176,
+   "days_positions_full": 4,
+   "held_distribution": {
+    "0": 56,
+    "1": 71,
+    "2": 78,
+    "3": 11
+   },
+   "risk_max": 1.805,
+   "risk_median": 0.451,
+   "gross_curve_max": 51.47,
+   "caps_entry_gross_max": 50.0,
+   "psr": 0.884376,
+   "dsr18": 0.25568,
+   "dsr21": 0.23424,
+   "pbo": 0.371429,
+   "wf_fold_sharpes": [
+    3.0273,
+    -2.7082,
+    3.279,
+    -0.6658,
+    1.8413
+   ],
+   "wf_positive": 3,
+   "cost_yuan": 8245.09,
+   "same_bars_as_base": true,
+   "offline_equals_live": true,
+   "live_filter_hits": null,
+   "filters_hits_match_live": null,
+   "role": "R8a (diagnostic)",
+   "info_not_judged": {
+    "dd_le_10": true,
+    "risk_le_3": true,
+    "pbo_le_0.5": true,
+    "wf_ge_3": true
+   }
+  },
+  "E500k": {
+   "group": "E500k",
+   "equity0": 500000.0,
+   "filters": [],
+   "ret_base": 3.219,
+   "ret_stress": 2.136,
+   "dd_base": 4.601,
+   "dd_stress": 4.895,
+   "trades": 86,
+   "trades_stress": 86,
+   "skips": {
+    "lots0": 64,
+    "positions_full": 103,
+    "gross_cap_to_0": 96,
+    "bucket_full": 551
+   },
+   "filter_hits": {},
+   "selected_entries": 199,
+   "days_positions_full": 9,
+   "held_distribution": {
+    "0": 51,
+    "1": 55,
+    "2": 88,
+    "3": 22
+   },
+   "risk_max": 1.913,
+   "risk_median": 0.404,
+   "gross_curve_max": 55.79,
+   "caps_entry_gross_max": 49.97,
+   "psr": 0.654424,
+   "dsr18": 0.072616,
+   "dsr21": 0.063653,
+   "pbo": 0.628571,
+   "wf_fold_sharpes": [
+    2.8253,
+    -1.631,
+    2.188,
+    0.1833,
+    -1.2207
+   ],
+   "wf_positive": 3,
+   "cost_yuan": 14252.9,
+   "same_bars_as_base": true,
+   "offline_equals_live": true,
+   "live_filter_hits": null,
+   "filters_hits_match_live": null,
+   "role": "R8a (diagnostic)",
+   "info_not_judged": {
+    "dd_le_10": true,
+    "risk_le_3": true,
+    "pbo_le_0.5": false,
+    "wf_ge_3": true
+   }
+  },
+  "E1000k": {
+   "group": "E1000k",
+   "equity0": 1000000.0,
+   "filters": [],
+   "ret_base": 4.967,
+   "ret_stress": 3.479,
+   "dd_base": 5.248,
+   "dd_stress": 5.599,
+   "trades": 99,
+   "trades_stress": 98,
+   "skips": {
+    "lots0": 23,
+    "positions_full": 108,
+    "gross_cap_to_0": 39,
+    "bucket_full": 551
+   },
+   "filter_hits": {},
+   "selected_entries": 223,
+   "days_positions_full": 17,
+   "held_distribution": {
+    "0": 44,
+    "1": 54,
+    "2": 77,
+    "3": 41
+   },
+   "risk_max": 1.971,
+   "risk_median": 0.413,
+   "gross_curve_max": 50.61,
+   "caps_entry_gross_max": 50.0,
+   "psr": 0.712773,
+   "dsr18": 0.098114,
+   "dsr21": 0.08682,
+   "pbo": 0.857143,
+   "wf_fold_sharpes": [
+    1.5248,
+    -1.551,
+    1.7484,
+    -0.1074,
+    1.829
+   ],
+   "wf_positive": 3,
+   "cost_yuan": 26522.62,
+   "same_bars_as_base": true,
+   "offline_equals_live": true,
+   "live_filter_hits": null,
+   "filters_hits_match_live": null,
+   "role": "R8a (diagnostic)",
+   "info_not_judged": {
+    "dd_le_10": true,
+    "risk_le_3": true,
+    "pbo_le_0.5": false,
+    "wf_ge_3": true
+   }
+  },
+  "F1": {
+   "group": "F1",
+   "equity0": 1000000.0,
+   "filters": [
+    "filter_unit_risk"
+   ],
+   "ret_base": 5.693,
+   "ret_stress": 3.469,
+   "dd_base": 5.0,
+   "dd_stress": 5.554,
+   "trades": 100,
+   "trades_stress": 99,
+   "skips": {
+    "lots0": 23,
+    "positions_full": 92,
+    "gross_cap_to_0": 30,
+    "bucket_full": 538
+   },
+   "filter_hits": {
+    "unit_notional": 37,
+    "unit_risk": 0,
+    "atr_spike": 0,
+    "atr_spike_unavailable": 0,
+    "evaluated": 924
+   },
+   "selected_entries": 227,
+   "days_positions_full": 16,
+   "held_distribution": {
+    "0": 46,
+    "1": 50,
+    "2": 76,
+    "3": 44
+   },
+   "risk_max": 1.966,
+   "risk_median": 0.416,
+   "gross_curve_max": 50.47,
+   "caps_entry_gross_max": 49.89,
+   "psr": 0.738852,
+   "dsr18": 0.112362,
+   "dsr21": 0.099869,
+   "pbo": 0.785714,
+   "wf_fold_sharpes": [
+    1.5248,
+    -1.428,
+    1.8297,
+    -0.1075,
+    2.0803
+   ],
+   "wf_positive": 3,
+   "cost_yuan": 26626.47,
+   "same_bars_as_base": true,
+   "offline_equals_live": true,
+   "live_filter_hits": {
+    "unit_notional": 37,
+    "unit_risk": 0,
+    "atr_spike": 0,
+    "atr_spike_unavailable": 0,
+    "evaluated": 924
+   },
+   "filters_hits_match_live": true,
+   "role": "R8b",
+   "wf_vs_control": [
+    "equal",
+    "better",
+    "better",
+    "worse",
+    "better"
+   ],
+   "filtered_trades": {
+    "split_at_trade_date_index": 108,
+    "first_half_through": "2026-06-17",
+    "H1": {
+     "n": 0,
+     "pnl": 0.0,
+     "R": 0.0,
+     "trades": []
+    },
+    "H2": {
+     "n": 0,
+     "pnl": 0.0,
+     "R": 0.0,
+     "trades": []
+    },
+    "path_view_control_trades_absent_in_group": {
+     "n": 2,
+     "price_pnl": -8282.86
+    },
+    "path_view_new_trades_in_group": {
+     "n": 3,
+     "price_pnl": -640.0
+    }
+   },
+   "criteria": {
+    "1_returns": false,
+    "2_drawdown_le_10": true,
+    "3_single_trade_risk_le_3": true,
+    "4_pbo_le_0.5": false,
+    "5_walk_forward_ge_3": true,
+    "6_filtered_net_losing_both_halves": false
+   },
+   "numeric_pass_1_6": false
+  },
+  "F2": {
+   "group": "F2",
+   "equity0": 1000000.0,
+   "filters": [
+    "filter_atr_spike"
+   ],
+   "ret_base": 10.942,
+   "ret_stress": 9.032,
+   "dd_base": 3.072,
+   "dd_stress": 3.215,
+   "trades": 82,
+   "trades_stress": 84,
+   "skips": {
+    "lots0": 24,
+    "positions_full": 99,
+    "gross_cap_to_0": 38,
+    "bucket_full": 433
+   },
+   "filter_hits": {
+    "unit_notional": 0,
+    "unit_risk": 0,
+    "atr_spike": 233,
+    "atr_spike_unavailable": 139,
+    "evaluated": 1000
+   },
+   "selected_entries": 197,
+   "days_positions_full": 8,
+   "held_distribution": {
+    "0": 53,
+    "1": 61,
+    "2": 80,
+    "3": 22
+   },
+   "risk_max": 1.956,
+   "risk_median": 0.404,
+   "gross_curve_max": 55.99,
+   "caps_entry_gross_max": 49.97,
+   "psr": 0.925681,
+   "dsr18": 0.34108,
+   "dsr21": 0.316414,
+   "pbo": 0.385714,
+   "wf_fold_sharpes": [
+    0.3553,
+    0.5067,
+    2.7731,
+    0.5026,
+    2.2804
+   ],
+   "wf_positive": 5,
+   "cost_yuan": 25043.35,
+   "same_bars_as_base": true,
+   "offline_equals_live": true,
+   "live_filter_hits": {
+    "unit_notional": 0,
+    "unit_risk": 0,
+    "atr_spike": 233,
+    "atr_spike_unavailable": 139,
+    "evaluated": 1000
+   },
+   "filters_hits_match_live": true,
+   "role": "R8b",
+   "wf_vs_control": [
+    "worse",
+    "better",
+    "better",
+    "better",
+    "better"
+   ],
+   "filtered_trades": {
+    "split_at_trade_date_index": 108,
+    "first_half_through": "2026-06-17",
+    "H1": {
+     "n": 13,
+     "pnl": -6533.15,
+     "R": -2.44,
+     "trades": [
+      {
+       "code": "FU",
+       "entry_date": "2026-03-11",
+       "pnl": 13326.86,
+       "R": 2.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-03-13",
+       "pnl": 10258.28,
+       "R": 2.0
+      },
+      {
+       "code": "TA",
+       "entry_date": "2026-03-13",
+       "pnl": -5437.71,
+       "R": -1.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-03-16",
+       "pnl": -3768.0,
+       "R": -1.0
+      },
+      {
+       "code": "P",
+       "entry_date": "2026-03-17",
+       "pnl": -4016.0,
+       "R": -1.0
+      },
+      {
+       "code": "TA",
+       "entry_date": "2026-03-17",
+       "pnl": -7765.72,
+       "R": -1.0
+      },
+      {
+       "code": "P",
+       "entry_date": "2026-03-19",
+       "pnl": -4235.43,
+       "R": -1.0
+      },
+      {
+       "code": "P",
+       "entry_date": "2026-03-25",
+       "pnl": 14701.71,
+       "R": 2.0
+      },
+      {
+       "code": "P",
+       "entry_date": "2026-04-02",
+       "pnl": -6336.0,
+       "R": -1.0
+      },
+      {
+       "code": "EB",
+       "entry_date": "2026-03-23",
+       "pnl": -2780.0,
+       "R": -0.25
+      },
+      {
+       "code": "MA",
+       "entry_date": "2026-04-14",
+       "pnl": -2520.0,
+       "R": -0.19
+      },
+      {
+       "code": "JD",
+       "entry_date": "2026-06-11",
+       "pnl": -3952.0,
+       "R": -1.0
+      },
+      {
+       "code": "JD",
+       "entry_date": "2026-06-15",
+       "pnl": -4009.14,
+       "R": -1.0
+      }
+     ]
+    },
+    "H2": {
+     "n": 7,
+     "pnl": 3070.86,
+     "R": -0.38,
+     "trades": [
+      {
+       "code": "JM",
+       "entry_date": "2026-09-11",
+       "pnl": -3212.57,
+       "R": -1.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-09-15",
+       "pnl": 6800.0,
+       "R": 2.0
+      },
+      {
+       "code": "JM",
+       "entry_date": "2026-09-15",
+       "pnl": -1200.0,
+       "R": -0.38
+      },
+      {
+       "code": "BU",
+       "entry_date": "2026-09-17",
+       "pnl": -3200.0,
+       "R": -1.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-09-17",
+       "pnl": -3835.43,
+       "R": -1.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-09-21",
+       "pnl": -5028.57,
+       "R": -1.0
+      },
+      {
+       "code": "FU",
+       "entry_date": "2026-10-26",
+       "pnl": 12747.43,
+       "R": 2.0
+      }
+     ]
+    },
+    "path_view_control_trades_absent_in_group": {
+     "n": 32,
+     "price_pnl": 12567.41
+    },
+    "path_view_new_trades_in_group": {
+     "n": 15,
+     "price_pnl": 54157.15
+    }
+   },
+   "criteria": {
+    "1_returns": true,
+    "2_drawdown_le_10": true,
+    "3_single_trade_risk_le_3": true,
+    "4_pbo_le_0.5": true,
+    "5_walk_forward_ge_3": true,
+    "6_filtered_net_losing_both_halves": false
+   },
+   "numeric_pass_1_6": false
+  },
+  "F1F2": {
+   "group": "F1F2",
+   "equity0": 1000000.0,
+   "filters": [
+    "filter_unit_risk",
+    "filter_atr_spike"
+   ],
+   "ret_base": 10.997,
+   "ret_stress": 9.431,
+   "dd_base": 3.071,
+   "dd_stress": 3.203,
+   "trades": 83,
+   "trades_stress": 85,
+   "skips": {
+    "lots0": 24,
+    "positions_full": 87,
+    "gross_cap_to_0": 32,
+    "bucket_full": 415
+   },
+   "filter_hits": {
+    "unit_notional": 36,
+    "unit_risk": 0,
+    "atr_spike": 233,
+    "atr_spike_unavailable": 106,
+    "evaluated": 1003
+   },
+   "selected_entries": 200,
+   "days_positions_full": 7,
+   "held_distribution": {
+    "0": 53,
+    "1": 61,
+    "2": 78,
+    "3": 24
+   },
+   "risk_max": 1.955,
+   "risk_median": 0.401,
+   "gross_curve_max": 55.99,
+   "caps_entry_gross_max": 49.95,
+   "psr": 0.926041,
+   "dsr18": 0.342022,
+   "dsr21": 0.317328,
+   "pbo": 0.385714,
+   "wf_fold_sharpes": [
+    0.3553,
+    0.7044,
+    2.7093,
+    0.5026,
+    2.2804
+   ],
+   "wf_positive": 5,
+   "cost_yuan": 25299.91,
+   "same_bars_as_base": true,
+   "offline_equals_live": true,
+   "live_filter_hits": {
+    "unit_notional": 36,
+    "unit_risk": 0,
+    "atr_spike": 233,
+    "atr_spike_unavailable": 106,
+    "evaluated": 1003
+   },
+   "filters_hits_match_live": true,
+   "role": "R8b",
+   "wf_vs_control": [
+    "worse",
+    "better",
+    "better",
+    "better",
+    "better"
+   ],
+   "filtered_trades": {
+    "split_at_trade_date_index": 108,
+    "first_half_through": "2026-06-17",
+    "H1": {
+     "n": 13,
+     "pnl": -6533.15,
+     "R": -2.44,
+     "trades": [
+      {
+       "code": "FU",
+       "entry_date": "2026-03-11",
+       "pnl": 13326.86,
+       "R": 2.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-03-13",
+       "pnl": 10258.28,
+       "R": 2.0
+      },
+      {
+       "code": "TA",
+       "entry_date": "2026-03-13",
+       "pnl": -5437.71,
+       "R": -1.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-03-16",
+       "pnl": -3768.0,
+       "R": -1.0
+      },
+      {
+       "code": "P",
+       "entry_date": "2026-03-17",
+       "pnl": -4016.0,
+       "R": -1.0
+      },
+      {
+       "code": "TA",
+       "entry_date": "2026-03-17",
+       "pnl": -7765.72,
+       "R": -1.0
+      },
+      {
+       "code": "P",
+       "entry_date": "2026-03-19",
+       "pnl": -4235.43,
+       "R": -1.0
+      },
+      {
+       "code": "P",
+       "entry_date": "2026-03-25",
+       "pnl": 14701.71,
+       "R": 2.0
+      },
+      {
+       "code": "P",
+       "entry_date": "2026-04-02",
+       "pnl": -6336.0,
+       "R": -1.0
+      },
+      {
+       "code": "EB",
+       "entry_date": "2026-03-23",
+       "pnl": -2780.0,
+       "R": -0.25
+      },
+      {
+       "code": "MA",
+       "entry_date": "2026-04-14",
+       "pnl": -2520.0,
+       "R": -0.19
+      },
+      {
+       "code": "JD",
+       "entry_date": "2026-06-11",
+       "pnl": -3952.0,
+       "R": -1.0
+      },
+      {
+       "code": "JD",
+       "entry_date": "2026-06-15",
+       "pnl": -4009.14,
+       "R": -1.0
+      }
+     ]
+    },
+    "H2": {
+     "n": 7,
+     "pnl": 3070.86,
+     "R": -0.38,
+     "trades": [
+      {
+       "code": "JM",
+       "entry_date": "2026-09-11",
+       "pnl": -3212.57,
+       "R": -1.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-09-15",
+       "pnl": 6800.0,
+       "R": 2.0
+      },
+      {
+       "code": "JM",
+       "entry_date": "2026-09-15",
+       "pnl": -1200.0,
+       "R": -0.38
+      },
+      {
+       "code": "BU",
+       "entry_date": "2026-09-17",
+       "pnl": -3200.0,
+       "R": -1.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-09-17",
+       "pnl": -3835.43,
+       "R": -1.0
+      },
+      {
+       "code": "M",
+       "entry_date": "2026-09-21",
+       "pnl": -5028.57,
+       "R": -1.0
+      },
+      {
+       "code": "FU",
+       "entry_date": "2026-10-26",
+       "pnl": 12747.43,
+       "R": 2.0
+      }
+     ]
+    },
+    "path_view_control_trades_absent_in_group": {
+     "n": 33,
+     "price_pnl": 10567.41
+    },
+    "path_view_new_trades_in_group": {
+     "n": 17,
+     "price_pnl": 52208.58
+    }
+   },
+   "criteria": {
+    "1_returns": true,
+    "2_drawdown_le_10": true,
+    "3_single_trade_risk_le_3": true,
+    "4_pbo_le_0.5": true,
+    "5_walk_forward_ge_3": true,
+    "6_filtered_net_losing_both_halves": false
+   },
+   "numeric_pass_1_6": false
+  }
+ }
+}

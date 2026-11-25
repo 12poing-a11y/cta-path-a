@@ -1,0 +1,556 @@
+{
+ "unidentified_summary": {
+  "categories_excluding_FU": {
+   "3-20 ticks": 64,
+   "<=3 ticks": 62,
+   ">20 ticks": 7
+  }
+ },
+ "unidentified_total_excluding_FU": 133,
+ "unidentified_dates_shared_by_>=5_symbols": [
+  "2016-04-05",
+  "2017-10-09",
+  "2019-04-30",
+  "2021-01-07",
+  "2021-12-28",
+  "2021-12-30",
+  "2022-03-23",
+  "2023-08-28",
+  "2024-09-25"
+ ],
+ "unidentified_examples": {
+  "V": [
+   {
+    "date": "2019-04-30",
+    "cont_close": 7025.0,
+    "cont_vol": 342156.0,
+    "nearest_contract": "V1909",
+    "nearest_diff_ticks": 20.0
+   },
+   {
+    "date": "2020-10-29",
+    "cont_close": 6855.0,
+    "cont_vol": 272122.0,
+    "nearest_contract": "V2101",
+    "nearest_diff_ticks": 5.0
+   },
+   {
+    "date": "2020-11-18",
+    "cont_close": 7520.0,
+    "cont_vol": 291646.0,
+    "nearest_contract": "V2101",
+    "nearest_diff_ticks": 5.0
+   },
+   {
+    "date": "2020-12-11",
+    "cont_close": 8385.0,
+    "cont_vol": 286510.0,
+    "nearest_contract": "V2101",
+    "nearest_diff_ticks": 5.0
+   },
+   {
+    "date": "2020-12-14",
+    "cont_close": 7945.0,
+    "cont_vol": 372124.0,
+    "nearest_contract": "V2101",
+    "nearest_diff_ticks": 5.0
+   },
+   {
+    "date": "2021-01-07",
+    "cont_close": 7175.0,
+    "cont_vol": 310390.0,
+    "nearest_contract": "V2102",
+    "nearest_diff_ticks": 5.0
+   }
+  ],
+  "P": [
+   {
+    "date": "2019-04-30",
+    "cont_close": 4502.0,
+    "cont_vol": 274214.0,
+    "nearest_contract": "P1909",
+    "nearest_diff_ticks": 3.0
+   },
+   {
+    "date": "2020-08-06",
+    "cont_close": 5890.0,
+    "cont_vol": 452468.0,
+    "nearest_contract": "P2009",
+    "nearest_diff_ticks": 30.0
+   },
+   {
+    "date": "2020-12-03",
+    "cont_close": 6668.0,
+    "cont_vol": 732809.0,
+    "nearest_contract": "P2101",
+    "nearest_diff_ticks": 3.0
+   },
+   {
+    "date": "2020-12-10",
+    "cont_close": 6716.0,
+    "cont_vol": 385937.0,
+    "nearest_contract": "P2102",
+    "nearest_diff_ticks": 2.0
+   },
+   {
+    "date": "2020-12-11",
+    "cont_close": 7022.0,
+    "cont_vol": 391089.0,
+    "nearest_contract": "P2102",
+    "nearest_diff_ticks": 0.0
+   },
+   {
+    "date": "2020-12-16",
+    "cont_close": 6716.0,
+    "cont_vol": 669390.0,
+    "nearest_contract": "P2105",
+    "nearest_diff_ticks": 2.0
+   }
+  ],
+  "EB": [
+   {
+    "date": "2020-12-11",
+    "cont_close": 6810.0,
+    "cont_vol": 174415.0,
+    "nearest_contract": "EB2101",
+    "nearest_diff_ticks": 4.0
+   },
+   {
+    "date": "2020-12-14",
+    "cont_close": 6820.0,
+    "cont_vol": 162206.0,
+    "nearest_contract": "EB2101",
+    "nearest_diff_ticks": 2.0
+   },
+   {
+    "date": "2020-12-22",
+    "cont_close": 6490.0,
+    "cont_vol": 217391.0,
+    "nearest_contract": "EB2102",
+    "nearest_diff_ticks": 4.0
+   },
+   {
+    "date": "2020-12-23",
+    "cont_close": 6375.0,
+    "cont_vol": 225341.0,
+    "nearest_contract": "EB2102",
+    "nearest_diff_ticks": 2.0
+   },
+   {
+    "date": "2020-12-25",
+    "cont_close": 6447.0,
+    "cont_vol": 198499.0,
+    "nearest_contract": "EB2102",
+    "nearest_diff_ticks": 8.0
+   },
+   {
+    "date": "2021-01-07",
+    "cont_close": 6655.0,
+    "cont_vol": 255338.0,
+    "nearest_contract": "EB2102",
+    "nearest_diff_ticks": 5.0
+   }
+  ],
+  "NI": [
+   {
+    "date": "2016-04-05",
+    "cont_close": 66100.0,
+    "cont_vol": 0.0,
+    "nearest_contract": "NI1606",
+    "nearest_diff_ticks": 16.0
+   },
+   {
+    "date": "2017-10-09",
+    "cont_close": 84210.0,
+    "cont_vol": 0.0,
+    "nearest_contract": "NI1712",
+    "nearest_diff_ticks": 212.0
+   },
+   {
+    "date": "2019-04-30",
+    "cont_close": 97850.0,
+    "cont_vol": 573916.0,
+    "nearest_contract": "NI1905",
+    "nearest_diff_ticks": 2.0
+   },
+   {
+    "date": "2021-12-28",
+    "cont_close": 149150.0,
+    "cont_vol": 238962.0,
+    "nearest_contract": "NI2202",
+    "nearest_diff_ticks": 5.0
+   },
+   {
+    "date": "2021-12-30",
+    "cont_close": 150220.0,
+    "cont_vol": 282255.0,
+    "nearest_contract": "NI2202",
+    "nearest_diff_ticks": 23.0
+   },
+   {
+    "date": "2022-03-23",
+    "cont_close": 212150.0,
+    "cont_vol": 99376.0,
+    "nearest_contract": "NI2204",
+    "nearest_diff_ticks": 15.0
+   }
+  ],
+  "AU": [
+   {
+    "date": "2016-06-15",
+    "cont_close": 275.0,
+    "cont_vol": 246178.0,
+    "nearest_contract": "AU1607",
+    "nearest_diff_ticks": 10.0
+   },
+   {
+    "date": "2017-10-09",
+    "cont_close": 278.1,
+    "cont_vol": 6.0,
+    "nearest_contract": "AU1711",
+    "nearest_diff_ticks": 5.0
+   },
+   {
+    "date": "2018-01-16",
+    "cont_close": 281.85,
+    "cont_vol": 59212.0,
+    "nearest_contract": "AU1806",
+    "nearest_diff_ticks": 10.0
+   },
+   {
+    "date": "2019-04-30",
+    "cont_close": 281.6,
+    "cont_vol": 118084.0,
+    "nearest_contract": "AU1906",
+    "nearest_diff_ticks": 2.5
+   },
+   {
+    "date": "2021-04-22",
+    "cont_close": 376.1,
+    "cont_vol": 140171.0,
+    "nearest_contract": "AU2106",
+    "nearest_diff_ticks": 15.0
+   },
+   {
+    "date": "2021-12-28",
+    "cont_close": 374.54,
+    "cont_vol": 81814.0,
+    "nearest_contract": "AU2202",
+    "nearest_diff_ticks": 4.0
+   }
+  ]
+ },
+ "FU": {
+  "last_zero_volume_bar_in_cache_excl_2017-01-02": "2018-06-26",
+  "first_valid_bar_after": "2018-07-16",
+  "start_after_60_warmup_bars": "2018-10-16",
+  "days_from_new_start": 1752,
+  "main_identified_from_new_start": 1750,
+  "share": 0.99886,
+  "official_total_FU_volume_median_by_year": {
+   "2016": 8.0,
+   "2017": 12.0,
+   "2018": 685084.0
+  },
+  "cache_FU_zero_volume_bars_2016_2018": 450,
+  "cache_sample_2017-03": [
+   {
+    "date": "2017-03-01",
+    "open": 3862.0,
+    "high": 3920.0,
+    "low": 3862.0,
+    "close": 3920.0,
+    "volume": 8.0,
+    "open_interest": 82.0,
+    "settle": 3885.0
+   },
+   {
+    "date": "2017-03-02",
+    "open": 3862.0,
+    "high": 3920.0,
+    "low": 3920.0,
+    "close": 3920.0,
+    "volume": 0.0,
+    "open_interest": 82.0,
+    "settle": 3885.0
+   },
+   {
+    "date": "2017-03-03",
+    "open": 3827.0,
+    "high": 3920.0,
+    "low": 3702.0,
+    "close": 3755.0,
+    "volume": 20.0,
+    "open_interest": 80.0,
+    "settle": 3800.0
+   },
+   {
+    "date": "2017-03-07",
+    "open": 3347.0,
+    "high": 3347.0,
+    "low": 3347.0,
+    "close": 3347.0,
+    "volume": 0.0,
+    "open_interest": 4.0,
+    "settle": 3476.0
+   }
+  ],
+  "official_2017-03-01_contracts": {
+   "FU1704": {
+    "close": 3920.0,
+    "volume": 8.0
+   },
+   "FU1706": {
+    "close": 3815.0,
+    "volume": 2.0
+   },
+   "FU1801": {
+    "close": 4186.0,
+    "volume": 2.0
+   }
+  }
+ },
+ "vol_oi_mismatch": {
+  "shfe:volume": {
+   "n": 21381,
+   "rel_gt_0.1pct": 133,
+   "rel_gt_1pct": 50,
+   "rel_gt_10pct": 26,
+   "local_lower": 437,
+   "local_higher": 0,
+   "abs_eq_1": 63,
+   "top_dates": [
+    [
+     "2025-12-23",
+     21
+    ],
+    [
+     "2025-12-24",
+     19
+    ],
+    [
+     "2025-12-15",
+     15
+    ],
+    [
+     "2025-12-22",
+     15
+    ]
+   ],
+   "n_mismatch_days": 94
+  },
+  "shfe:oi": {
+   "n": 21381,
+   "rel_gt_0.1pct": 79,
+   "rel_gt_1pct": 24,
+   "rel_gt_10pct": 5,
+   "local_lower": 425,
+   "local_higher": 28,
+   "abs_eq_1": 141,
+   "top_dates": [
+    [
+     "2025-12-23",
+     19
+    ],
+    [
+     "2025-12-24",
+     14
+    ],
+    [
+     "2025-12-25",
+     13
+    ],
+    [
+     "2025-12-19",
+     12
+    ]
+   ],
+   "n_mismatch_days": 118
+  },
+  "czce:volume": {
+   "n": 10774,
+   "rel_gt_0.1pct": 140,
+   "rel_gt_1pct": 85,
+   "rel_gt_10pct": 42,
+   "local_lower": 410,
+   "local_higher": 0,
+   "abs_eq_1": 65,
+   "top_dates": [
+    [
+     "2025-08-19",
+     12
+    ],
+    [
+     "2025-12-23",
+     12
+    ],
+    [
+     "2025-12-15",
+     12
+    ],
+    [
+     "2025-11-11",
+     11
+    ]
+   ],
+   "n_mismatch_days": 109
+  },
+  "czce:oi": {
+   "n": 10774,
+   "rel_gt_0.1pct": 102,
+   "rel_gt_1pct": 58,
+   "rel_gt_10pct": 18,
+   "local_lower": 214,
+   "local_higher": 121,
+   "abs_eq_1": 95,
+   "top_dates": [
+    [
+     "2025-08-19",
+     11
+    ],
+    [
+     "2025-12-23",
+     10
+    ],
+    [
+     "2025-11-11",
+     10
+    ],
+    [
+     "2025-12-11",
+     9
+    ]
+   ],
+   "n_mismatch_days": 96
+  },
+  "dce:volume": {
+   "n": 19352,
+   "rel_gt_0.1pct": 76,
+   "rel_gt_1pct": 48,
+   "rel_gt_10pct": 27,
+   "local_lower": 148,
+   "local_higher": 0,
+   "abs_eq_1": 7,
+   "top_dates": [
+    [
+     "2025-12-16",
+     34
+    ],
+    [
+     "2025-09-16",
+     29
+    ],
+    [
+     "2025-11-18",
+     27
+    ],
+    [
+     "2025-10-24",
+     24
+    ]
+   ],
+   "n_mismatch_days": 13
+  },
+  "dce:oi": {
+   "n": 19352,
+   "rel_gt_0.1pct": 60,
+   "rel_gt_1pct": 34,
+   "rel_gt_10pct": 12,
+   "local_lower": 15,
+   "local_higher": 135,
+   "abs_eq_1": 8,
+   "top_dates": [
+    [
+     "2025-12-16",
+     35
+    ],
+    [
+     "2025-09-16",
+     29
+    ],
+    [
+     "2025-11-18",
+     27
+    ],
+    [
+     "2025-10-24",
+     25
+    ]
+   ],
+   "n_mismatch_days": 13
+  }
+ },
+ "price_mismatch_rows": {
+  "price_mismatch_rows": 97,
+  "of_which_official_volume_zero": 0,
+  "of_which_date_2024-09-25": 2
+ },
+ "shfe_curproduct_keys": {
+  "20160104": {
+   "n": 15,
+   "keys": [
+    "PRODUCTID",
+    "PRODUCTSORTNO",
+    "PRODUCTNAME",
+    "HIGHESTPRICE",
+    "LOWESTPRICE",
+    "AVGPRICE",
+    "VOLUME",
+    "TURNOVER",
+    "YEARVOLUME",
+    "YEARTURNOVER"
+   ],
+   "instr_has_TURNOVER": false
+  },
+  "20190102": {
+   "n": 17,
+   "keys": [
+    "PRODUCTID",
+    "PRODUCTSORTNO",
+    "PRODUCTNAME",
+    "HIGHESTPRICE",
+    "LOWESTPRICE",
+    "AVGPRICE",
+    "VOLUME",
+    "TURNOVER",
+    "YEARVOLUME",
+    "YEARTURNOVER"
+   ],
+   "instr_has_TURNOVER": false
+  },
+  "20201231": {
+   "n": 21,
+   "keys": [
+    "PRODUCTID",
+    "PRODUCTGROUPID",
+    "PRODUCTSORTNO",
+    "PRODUCTNAME",
+    "HIGHESTPRICE",
+    "LOWESTPRICE",
+    "AVGPRICE",
+    "VOLUME",
+    "TURNOVER",
+    "YEARVOLUME",
+    "YEARTURNOVER"
+   ],
+   "instr_has_TURNOVER": false
+  },
+  "20210104": {
+   "n": 21,
+   "keys": [
+    "PRODUCTID",
+    "PRODUCTGROUPID",
+    "PRODUCTSORTNO",
+    "PRODUCTNAME",
+    "HIGHESTPRICE",
+    "LOWESTPRICE",
+    "AVGPRICE",
+    "VOLUME",
+    "TURNOVER",
+    "YEARVOLUME",
+    "YEARTURNOVER"
+   ],
+   "instr_has_TURNOVER": false
+  }
+ }
+}

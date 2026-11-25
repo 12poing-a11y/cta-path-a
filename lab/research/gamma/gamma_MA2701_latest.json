@@ -220,15 +220,15 @@
     "ok": true,
     "schema": "cta-gamma-touch-v1",
     "contract": "MA2701",
-    "n_events": 13,
+    "n_events": 16,
     "touch_atr": 3.0,
     "outcome_counts": {
       "stay": 12,
-      "bounce": 1
+      "bounce": 4
     },
     "outcome_probs": {
-      "stay": 0.9231,
-      "bounce": 0.0769
+      "stay": 0.75,
+      "bounce": 0.25
     },
     "live_trading": false,
     "note": "Sparse when gamma history is short; not a trade signal.",
@@ -331,11 +331,11 @@
         "futures": 3140.0,
         "dist_atr": -2.495,
         "outcome": "stay",
-        "mfe_atr": 0.8733,
+        "mfe_atr": 1.2822,
         "mae_atr": 0.2911,
         "ret_1": 0.020382,
         "ret_3": 0.021338,
-        "ret_5": null
+        "ret_5": 0.031847
       },
       {
         "date": "2026-11-17",
@@ -345,10 +345,10 @@
         "dist_atr": 0.9703,
         "outcome": "stay",
         "mfe_atr": 0.2911,
-        "mae_atr": 0.8733,
+        "mae_atr": 1.2822,
         "ret_1": -0.020382,
         "ret_3": -0.021338,
-        "ret_5": null
+        "ret_5": -0.031847
       },
       {
         "date": "2026-11-18",
@@ -357,11 +357,11 @@
         "futures": 3129.0,
         "dist_atr": -2.5637,
         "outcome": "stay",
-        "mfe_atr": 0.7947,
+        "mfe_atr": 1.2024,
         "mae_atr": 0.0,
         "ret_1": 0.018856,
-        "ret_3": null,
-        "ret_5": null
+        "ret_3": 0.034516,
+        "ret_5": 0.020773
       },
       {
         "date": "2026-11-18",
@@ -369,12 +369,12 @@
         "wall": 3000.0,
         "futures": 3129.0,
         "dist_atr": 0.8914,
-        "outcome": "stay",
+        "outcome": "bounce",
         "mfe_atr": 0.0,
-        "mae_atr": 0.7947,
+        "mae_atr": 1.2024,
         "ret_1": -0.018856,
-        "ret_3": null,
-        "ret_5": null
+        "ret_3": -0.034516,
+        "ret_5": -0.020773
       },
       {
         "date": "2026-11-19",
@@ -382,11 +382,11 @@
         "wall": 3000.0,
         "futures": 3065.0,
         "dist_atr": 0.464,
-        "outcome": "stay",
+        "outcome": "bounce",
         "mfe_atr": 0.3213,
-        "mae_atr": 0.1642,
+        "mae_atr": 0.7853,
         "ret_1": 0.00261,
-        "ret_3": null,
+        "ret_3": -0.008157,
         "ret_5": null
       },
       {
@@ -395,10 +395,49 @@
         "wall": 3000.0,
         "futures": 3071.0,
         "dist_atr": 0.5248,
+        "outcome": "bounce",
+        "mfe_atr": 0.207,
+        "mae_atr": 0.8574,
+        "ret_1": -0.016281,
+        "ret_3": -0.002279,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-23",
+        "side": "put",
+        "wall": 2800.0,
+        "futures": 3030.0,
+        "dist_atr": 1.7849,
+        "outcome": "stay",
+        "mfe_atr": 0.5355,
+        "mae_atr": 0.582,
+        "ret_1": 0.0033,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-24",
+        "side": "call",
+        "wall": 3300.0,
+        "futures": 3001.0,
+        "dist_atr": -2.4523,
         "outcome": "stay",
         "mfe_atr": 0.0,
+        "mae_atr": 0.8037,
+        "ret_1": -0.020993,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-24",
+        "side": "put",
+        "wall": 2800.0,
+        "futures": 3001.0,
+        "dist_atr": 1.6485,
+        "outcome": "stay",
+        "mfe_atr": 0.8037,
         "mae_atr": 0.0,
-        "ret_1": null,
+        "ret_1": 0.020993,
         "ret_3": null,
         "ret_5": null
       }
@@ -445,7 +484,7 @@
       }
     ]
   },
-  "n_daily_bars": 2886,
+  "n_daily_bars": 2889,
   "live_trading": false,
   "status": "Research",
   "disclaimer": "Call+/Put− GEX 为展示约定；OI 不能识别做市商方向。本模块只做结构观察，不生成 Path-A 多空信号。"

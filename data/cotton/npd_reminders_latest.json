@@ -124,13 +124,13 @@
           "contrarian_mean": -0.0009689922480620172
         },
         "10": {
-          "n": 0,
-          "news_direction_win_rate": null,
-          "contrarian_win_rate": null,
-          "divergence_rate": null,
-          "directional_mean": null,
-          "directional_median": null,
-          "contrarian_mean": null
+          "n": 1,
+          "news_direction_win_rate": 0.0,
+          "contrarian_win_rate": 1.0,
+          "divergence_rate": 1.0,
+          "directional_mean": -0.00710594315245483,
+          "directional_median": -0.00710594315245483,
+          "contrarian_mean": 0.00710594315245483
         },
         "20": {
           "n": 0,
@@ -158,6 +158,11 @@
             "n": 1,
             "directional_mean": 0.0009689922480620172,
             "directional_win_rate": 1.0
+          },
+          "10": {
+            "n": 1,
+            "directional_mean": -0.00710594315245483,
+            "directional_win_rate": 0.0
           }
         }
       }
@@ -195,13 +200,13 @@
           "contrarian_mean": -0.019421576148465958
         },
         "10": {
-          "n": 1,
-          "news_direction_win_rate": 1.0,
-          "contrarian_win_rate": 0.0,
-          "divergence_rate": 0.0,
-          "directional_mean": 0.022602321319486918,
-          "directional_median": 0.022602321319486918,
-          "contrarian_mean": -0.022602321319486918
+          "n": 2,
+          "news_direction_win_rate": 0.5,
+          "contrarian_win_rate": 0.5,
+          "divergence_rate": 0.5,
+          "directional_mean": 0.007748189083516044,
+          "directional_median": 0.007748189083516044,
+          "contrarian_mean": -0.007748189083516044
         },
         "20": {
           "n": 1,
@@ -231,9 +236,9 @@
             "directional_win_rate": 1.0
           },
           "10": {
-            "n": 1,
-            "directional_mean": 0.022602321319486918,
-            "directional_win_rate": 1.0
+            "n": 2,
+            "directional_mean": 0.007748189083516044,
+            "directional_win_rate": 0.5
           },
           "20": {
             "n": 1,
@@ -254,7 +259,7 @@
     "CN_CUSTOMS_IMPORT": "海关棉花进口月度数据"
   },
   "schema": "cta-npd-reminders-v1",
-  "generated_at": "2026-11-25 03:04:18",
+  "generated_at": "2026-11-25 16:26:12",
   "status": "Research",
   "note": "Snapshot only; cotton_events.csv remains human-audited."
 }

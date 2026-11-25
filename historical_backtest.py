@@ -709,6 +709,38 @@ def _cli_str(flag: str, default: str) -> str:
     return v if v is not None else default
 
 
+# R8 research-only overrides. They only take effect together with --out (never on the formal path).
+R8_OVERRIDE_FLAGS = ("--max-gross", "--equity", "--min-lots")
+
+
+def _r8_flags_present() -> bool:
+    return any(a in R8_OVERRIDE_FLAGS or any(a.startswith(f + "=") for f in R8_OVERRIDE_FLAGS) for a in sys.argv)
+
+
+def r8_overrides_from_argv() -> dict:
+    """Parse --max-gross PCT / --equity YUAN / --min-lots N into p-keys (max_gross_pct / equity0 / min_lots).
+
+    Raises ValueError for a flag without a value or a malformed / non-positive value."""
+    spec = (("--max-gross", "max_gross_pct", float, False), ("--equity", "equity0", float, False),
+            ("--min-lots", "min_lots", int, True))
+    out: dict = {}
+    for flag, key, cast, allow_zero in spec:
+        present = any(a == flag or a.startswith(flag + "=") for a in sys.argv)
+        if not present:
+            continue
+        raw = _cli_val(flag)
+        if raw is None:
+            raise ValueError(f"{flag} needs a value")
+        try:
+            v = cast(raw)
+        except ValueError as exc:
+            raise ValueError(f"{flag}: bad value {raw!r}") from exc
+        if not (v >= 0 if allow_zero else v > 0):
+            raise ValueError(f"{flag}: {raw!r} must be {'>= 0' if allow_zero else '> 0'}")
+        out[key] = v
+    return out
+
+
 def _answer_text(res: dict) -> str:
     if not res.get("ok"):
         raise RuntimeError(json.dumps(res, ensure_ascii=False)[:400])
@@ -2344,6 +2376,25 @@ def main():
     ctf = "--ctf" in sys.argv
     roll_grid = "--roll-grid" in sys.argv
     p = _load_cfg()
+    # R8: research overrides need --out and the default single-run path; they never reach the formal write.
+    r8_rec: dict = {}
+    if _r8_flags_present():
+        if _cli_val("--out") is None:
+            print("[bt] --max-gross / --equity / --min-lots are research overrides and require --out PATH "
+                  "(refusing to run without it)", file=sys.stderr)
+            return 2
+        if compare or hedge_grid or rr_grid or ctf or roll_grid or p.get("observe_mode"):
+            print("[bt] R8 overrides are only supported for the default single run "
+                  "(not with --compare/--hedge-grid/--rr-grid/--ctf/--roll-grid/--observe)", file=sys.stderr)
+            return 2
+        try:
+            r8_new = r8_overrides_from_argv()
+        except ValueError as exc:
+            print(f"[bt] bad R8 override: {exc}", file=sys.stderr)
+            return 2
+        r8_rec = {"applied": dict(r8_new),
+                  "formal_values": {k: p.get(k) for k in r8_new}}
+        p.update(r8_new)
     if rr_grid:
         p["equity0"] = float(p["cfg"].get("equity") or 200_000)
         p["min_lots"] = 0
@@ -2546,6 +2597,8 @@ def main():
         out = _simulate_cfg(p, mode, pack=pack)
         out["contract_prefetch"] = prefetch
         out["entry_filter"] = mode
+        if r8_rec:
+            out["r8_overrides"] = r8_rec  # research-only run: never a formal result
         if prior_cmp:
             out["comparison"] = prior_cmp
         try:

@@ -38,3 +38,16 @@
 - 参考：`caps_entry_gross_max` 49.83、`caps_entry_risk_max` 2.33、`caps_scaled_n` 64、曲线 gross_pct 最大 50.77（盯市漂移）。
 
 产物：`archive/R8/_r8_stats.py`（离线重放 + 包装器统计，不改仓库代码）、`archive/R8/step0_base/stats_offline.json`、`run.log`。
+
+## 第 2 步：对照组复现（`--out archive/R8/base/result.json --fill next_open`，live，180 秒）
+
+- 说明：现有 `--out` 把参数当**文件**路径（传目录会生成名为 `base` 的无扩展名文件，并与后建的目录冲突），所以每组统一用 `--out archive/R8/<组名>/result.json`，产物仍在各组目录下。
+- 与根目录正式结果 `historical_backtest_latest.json` 逐键比较（`archive/R8/_compare.py`，全部 130 个顶层键）：**123 个完全一致**，含 `ret_pct`、`gross_ret_pct`、`max_dd_pct`、`cost_yuan`、`closed_trades`、`closed_pnls`（57 笔）、`equity_curve`、`exits`、`equity_end`、`cost_scenario_contrast`（Stress 行）、`caps_*`、`contract_pack`。
+- 7 个键不同：`git_sha` / `config_version.git_commit`（代码提交不同，预期）、`contract_prefetch.seconds`（耗时）、`input_snapshot.path` / `sha256`（argv 不同，预期）、`sources`（chart_cache 路径与 free_n 计数）、`input_snapshot.bars_sha256`、`adj_roll_days*`（AU 差 1）。
+- **输入数据的真实差异（需要如实记录）**：`bars_sha256` 不同是因为 10 个品种（AG AL AU CU I MA NI PP SS TA）从 2026-07-29 起共 80 天的 **`oi`（持仓量）字段**一边有值一边为 None（数据源补填变化；merge 进来的 CI 缓存与上次本机运行不同）。**OHLC、日期、席位、carry、合约包完全一致**；`adj_roll_days` 的 AU 差 1 是 OI 口径的信息性计数。所有成交相关输出逐位相同，因此判定对照组复现成立，继续。后续每个实验组都核对 `bars_sha256` 等于本次 base 的（预注册规则），不等就停。
+
+## 第 3 步：代码最小改动
+
+- `historical_backtest.py`：新增 `--max-gross PCT`、`--equity YUAN`、`--min-lots N`（解析函数 `r8_overrides_from_argv`）。**只在带 `--out` 时生效**；不带 → stderr 报错、退出码 2、在拉任何数据之前返回。缺值、非法值（≤0 / 非数字 / min-lots 为负或小数）、与 `--compare/--hedge-grid/--rr-grid/--ctf/--roll-grid/--observe` 同用 → 退出码 2。生效值写进结果 `r8_overrides = {applied, formal_values}`；Stress 行沿用同一份 `p`，自然带覆盖值。不带这三个旗标时行为不变（C0 自检会再验证）。
+- `tests/test_r8_overrides.py`：15 项（不带 `--out` 必须拒绝、`=` 形式、缺值/非法值、与其他模式互斥、合法组合进入运行头且不写文件、无旗标解析为空、仅 `--out` 不受影响）。
+- 相关既有测试（rule_lock / audit / freeze_fix_gates / r8）37 passed。

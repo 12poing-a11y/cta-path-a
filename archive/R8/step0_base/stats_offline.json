@@ -1,0 +1,69 @@
+{
+  "overrides": {
+    "equity0": 200000.0,
+    "max_gross_pct": 50.0,
+    "min_lots": 0
+  },
+  "replay_input": {
+    "snapshot": "archive\\snapshots\\bt_input_20261125_016deed19684.json"
+  },
+  "kpi": {
+    "ret_pct": -1.721,
+    "gross_ret_pct": 0.938,
+    "max_dd_pct": 8.232,
+    "cost_yuan": 5318.74,
+    "closed_trades": 57,
+    "trade_win_rate": 33.33,
+    "expectancy_r": 0.012,
+    "exits": {
+      "target": 18,
+      "stop": 35,
+      "signal": 4
+    },
+    "equity_end": 196557.68,
+    "caps_entry_gross_max": 49.83,
+    "caps_entry_risk_max": 2.33,
+    "caps_scaled_n": 64
+  },
+  "skipped_signals_lots0": {
+    "signal_days": 125,
+    "by_code": {
+      "AG": 58,
+      "AU": 31,
+      "CU": 20,
+      "NI": 14,
+      "RU": 2
+    },
+    "if_lifted_to_1_lot_risk_pct": {
+      "n": 125,
+      "min": 2.011,
+      "median": 5.808,
+      "max": 25.263,
+      "n_le_3pct": 28,
+      "n_gt_3pct": 97
+    },
+    "note": "signal_days = (code, day) evaluations that passed momentum/seats/carry/vol and computed 0 lots; a signal that persists several days is counted once per day"
+  },
+  "lifted_to_min_lots": {
+    "entered_candidates_lifted": 0,
+    "by_sizing": 0,
+    "by_caps_floor": 0,
+    "closed_trades_matched": 0,
+    "actual_risk_pct": {
+      "max": null,
+      "median": null,
+      "all": []
+    },
+    "entries": []
+  },
+  "trade_actual_risk_pct": {
+    "n": 57,
+    "max": 1.86,
+    "median": 0.557,
+    "n_gt_3pct": 0
+  },
+  "gross": {
+    "curve_gross_pct_max": 50.77
+  },
+  "equity_curve_returns_n": 215
+}

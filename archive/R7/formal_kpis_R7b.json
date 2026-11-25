@@ -1,0 +1,58 @@
+{
+  "formal": "historical_backtest_latest.json",
+  "snapshot": "archive\\snapshots\\bt_input_20261125_016deed19684.json",
+  "base_resim_diffs": {},
+  "stress_resim_vs_formal_row_diffs": {},
+  "base": {
+    "ret_pct": -1.721,
+    "gross_ret_pct": 0.938,
+    "max_dd_pct": 8.232,
+    "closed_trades": 57,
+    "trade_win_rate": 33.33,
+    "expectancy_r": 0.012,
+    "exits": {
+      "target": 18,
+      "stop": 35,
+      "signal": 4
+    }
+  },
+  "stress_row": {
+    "ok": true,
+    "cost_scenario": "stress",
+    "slippage_ticks": 2.0,
+    "fee_mult": 1.25,
+    "ret_pct": -2.339,
+    "gross_ret_pct": 2.027,
+    "max_dd_pct": 7.66,
+    "cost_yuan": 8730.93,
+    "equity_end": 195322.64,
+    "closed_trades": 57,
+    "quality_blocks": {
+      "quality:VALID_ONLY": 87,
+      "delivery_restricted,roll_or_position_blocked": 63,
+      "delivery_restricted": 24,
+      "missing_next_open": 1
+    },
+    "proxy_entry_share": 0.4561,
+    "contract_entry_share": 0.5439,
+    "same_day_exit_n": 12,
+    "fill_series": "mixed",
+    "conclusion": "继续L1"
+  },
+  "stress_resim": {
+    "ret_pct": -2.339,
+    "gross_ret_pct": 2.027,
+    "max_dd_pct": 7.66,
+    "cost_yuan": 8730.93,
+    "closed_trades": 57
+  },
+  "book": {
+    "asof": "2026-11-25",
+    "equity_mtm": 196557.68,
+    "equity_realized": 196557.68,
+    "positions": [],
+    "pending": [
+      "P"
+    ]
+  }
+}

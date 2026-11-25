@@ -1,7 +1,14 @@
 {
-  "note": "fix3 formal rule lock; change only with 磊 sign-off",
+  "note": "R7 v14 formal rule lock (execfix); change only with 磊 sign-off",
   "execution_rules_sha256_lf": "77999d44e490912762ee5d2ed035e2316963a52783805b3208a2748d87d8039c",
   "fill_series": "mixed",
   "stop_atr_mult": 0.8,
-  "reward_rr": 2.0
+  "reward_rr": 2.0,
+  "schema_version": "cta-backtest-v14-execfix",
+  "signed_off": "R7b 2026-11-25 磊 (option A: formal window end 2026-11-25)",
+  "formal_backtest": {
+    "git_commit": "18c7135",
+    "end": "2026-11-25",
+    "input_snapshot_sha256": "016deed19684fb1b3740e764e5e9018b3f9df287e5444fc76fa608459f8764f2"
+  }
 }

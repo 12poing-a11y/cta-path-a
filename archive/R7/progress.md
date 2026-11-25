@@ -84,3 +84,19 @@
 - git rebase origin/main(19cd660)：20 个提交全部重放，仅 c7f76c0（chore: snapshot run artifacts before R7）及其后一个提交处有 16 个运行产物冲突，全部取 CI 一方（--ours）；无代码/测试/docs 冲突。非运行产物路径与旧 HEAD 的树差异为 0。R7a 新哈希 921ce7b。
 - 全量 pytest 已在后台启动（日志在仓库外 D:\AI\cta-path-a_untracked_backup_20261124\pytest_post_rebase.log）。
 - 全量 pytest（rebase 后）：529 passed / 0 failed / 0 skipped（180.9 s）。已还原 pytest 改写的 lab/research/predictions/latest.json、lab/research/volatility/vol_engine_daily_latest.json。docs/R_TRACK_HANDOFF.md 已更新 HEAD=921ce7b 与备注（未提交）。
+
+## 2026-11-25 R7b 接续（磊指令：从 S1 开始）
+- S1: fetch 发现远端 543b3ef(日报 artifacts) + 1aad53d(gamma)；只改运行产物。本地 271 脏文件 -> 快照提交 9335875（备份分支 backup/pre-rebase-R7b-artifacts）-> rebase origin/main 19cd660 成功，冲突 43 个运行产物取 CI 一方；代码区 diff 为空。
+- S1 附注: 本地 8 个 gamma 2026-11-25 未跟踪文件（与远端不同）已移到 D:\AI\cta-path-a_untracked_backup_20261125\gamma_wall_local_20261125。
+- S2: 通过（MA2701/CF2701/SR2701 已有 11-24，MA0 11-25）。
+- S3: 交接文件移到 D:\AI\cta-path-a_untracked_backup_20261124\R_TRACK_HANDOFF.staging.md（哈希核对）；未跟踪 lab/research/runs/oos_20261125T083248 移到 D:\AI\cta-path-a_untracked_backup_20261125\oos_runs；dirty_paths=[]。
+- S4-2: 正式运行开始。
+- S4-3b: 有缓存重放 == 正式结果（ret -1.721 / dd 8.232 / 57）。空缓存重放期间 .cache/contracts 改名为 .cache/contracts_R7b_away，必须还原。
+- S4-3: 出场审计 0 不符；空缓存重放 == 正式（已还原 .cache/contracts）。
+- S4-2: 正式运行 exit 0；根目录 v14 window 2026-01-05..2026-11-25 216d，net -1.721 / gross +0.938 / dd 8.232 / 57 笔（候选为 11-24 窗口 -1.068 / 7.623 / 56）。
+- S4-3: 出场审计 0 不符；有缓存重放 == 正式；空缓存重放 == 正式（.cache/contracts 已还原）。
+- S4-4: run_pbo_path_a seats: PBO 0.7286（候选签字依据 0.386）；run_formal_scorecard：BT 复跑 KPI 一致，DSR 0.093（签字依据 0.043），gate pass=False hard=[human_approval]。
+- 提交 18c7135 R7b-1（本地，未 push）含正式结果与旧 PBO 值；scorecard 之后的改动（formal 元数据、validation 新 PBO、formal_scorecard_latest、registry）未提交。
+- 停在 S4 步骤 5 之前：等磊确认是否按 11-25 新结果与新 PBO/DSR 继续写方案 B 账本与规则锁。
+- 重放验证（用户规则）：candidate 冻结输入 + HEAD 重放 == 候选（56 笔逐笔一致、216 天权益逐日一致）。按 A 继续。
+- S4-5 开始：根目录 paper_book_latest.json 归档到 archive/R7/paper_book_legacy_desk_20261125.json（未覆盖 pre_R7 版本）。

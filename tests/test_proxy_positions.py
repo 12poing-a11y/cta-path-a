@@ -148,4 +148,5 @@ def test_repo_proxy_artifacts_have_own_holdings_and_paper_book_untouched():
             if not tdf.empty:
                 assert "原因" in tdf.columns
     book = json.loads((ROOT / "paper_book_latest.json").read_text(encoding="utf-8"))
-    assert not any("proxy" in json.dumps(book.get(k, "")) for k in ("positions", "open_positions"))
+    blob = json.dumps({k: book.get(k) for k in ("positions", "open_positions")}, ensure_ascii=False)
+    assert not any(pid in blob for pid in PROXY_IDS)  # R7b: check proxy sleeve IDs, not the price-basis substring

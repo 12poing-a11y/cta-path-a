@@ -26,7 +26,16 @@
 7. **正式回测成交**：T 日收盘算信号，**T+1 开盘成交**（`fill_price=next_open`）；席位/升贴水可用性滞后 1 个交易日。周度 KPI 与历史回测共用同一 `simulate` 引擎（含止损止盈与成本）。报告须标明配置版本（`execution_rules` sha + Git commit），见 `research.data_quality.config_version_stamp`。
 8. **研究升级**：数据有效性 / 可交易性双掩码与 Base·Stress·Extreme 成本情景见 `docs/UPGRADE_PLAN.md`（Research/Shadow 不得未经批准改正式参数）。
 
-正式 KPI 以 `historical_backtest_latest.json`（`schema_version=cta-backtest-v13-tradability`）为准，须与 `lab/research/validation/formal_scorecard_latest.json` 同次重跑对齐。当前 seats / next_open（**2025-12-23→2026-11-13**，`fill_series=mixed` / **historical_roll** + **混价锁死**）：净约 **+5.0%**、净回撤约 **3.3%**、成本约 3244（毛约 +6.6%；成交 43；结论「继续L1」）。合约–连续基差>3% 强制 proxy；`proxy_entry_share` / `same_day_exit_*` 写入主 KPI。并列归档：混价污染旧成绩约 −7.6%/20.5%（已否决）；旧 README v11 约 +2.25%/5.57%；A1 仅连续代理曾虚高至 +216%——**已否决**。PBO 为 Research 诊断（本次约 0.39），**不单独晋级**。成本：每边 1 跳滑点 + 申万公示手续费（毛/净并列）。
+<!-- KPI:BEGIN -->
+正式 KPI（由 `scripts/render_readme_kpi.py` 从 `historical_backtest_latest.json` 生成，勿手改）：`schema_version=cta-backtest-v14-execfix`，seats / next_open，窗口 **2026-01-05→2026-11-25**（216 个交易日），`fill_series=mixed`，代码 `18c7135`，execution_rules `4b4f06a632cb`。
+
+| 成本 | 净收益 | 毛收益 | 最大回撤 | 成本(元) | 交易 |
+|---|---|---|---|---|---|
+| Base | -1.72% | 0.94% | 8.23% | 5319 | 57 |
+| Stress | -2.34% | 2.03% | 7.66% | 8731 | 57 |
+
+胜率 33.33%，期望 0.012R，出场 止盈 18 / 止损 35 / 信号 4，proxy 入场占比 45.6%，当日平仓占比 21.1%。验证（Research 诊断，不单独晋级）：PSR 0.427，DSR 0.036（n_trials=11），PBO 0.729。结论「继续L1」。
+<!-- KPI:END -->
 
 旁路（不改 ATR、不切 `entry_filter`）：升贴水极端、多维波动观望、实验室 Gate / 软信号。详见下文与 `lab/README.md`。
 

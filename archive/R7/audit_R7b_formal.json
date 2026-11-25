@@ -1,0 +1,32 @@
+{
+  "checked": 53,
+  "mismatches": 0,
+  "gap_through_target_conservative": 1,
+  "gap_through_target_conservative_trades": [
+    {
+      "date": "2026-10-08",
+      "code": "FU",
+      "direction": "多",
+      "entry_date": "2026-09-24",
+      "target": 4535.6571,
+      "exit": 4535.6571,
+      "open": 4700.0,
+      "high": 5186.0,
+      "low": 4670.0,
+      "close": 5179.0,
+      "bar_source": "snap_continuous"
+    }
+  ],
+  "skipped_proxied": 0,
+  "skipped_no_bar": 0,
+  "checks": {
+    "entry_order_checked": 57,
+    "continuous_range_checked": 26,
+    "continuous_range_skipped_no_bar": 0,
+    "roll_day_exits_checked": 1
+  },
+  "mismatch_trades": [],
+  "bt_path": "D:\\AI\\cta-path-a\\historical_backtest_latest.json",
+  "snap_path": "D:\\AI\\cta-path-a\\archive\\snapshots\\bt_input_20261125_dc59464ac1f9.json",
+  "snap_loaded": true
+}

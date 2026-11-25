@@ -4,26 +4,26 @@
   "symbol": "MA",
   "contract": "MA2701",
   "timeframe": "60m",
-  "n_bars": 1138,
-  "n_events": 220,
+  "n_bars": 1149,
+  "n_events": 222,
   "stats": {
     "schema": "cta-lsp-stats-v1",
-    "n_events": 220,
+    "n_events": 222,
     "outcome_counts": {
-      "fake_break_reversal": 51,
+      "fake_break_reversal": 53,
       "invalid_sweep": 25,
       "true_break_continuation": 144
     },
     "outcome_probs": {
-      "fake_break_reversal": 0.2318,
-      "invalid_sweep": 0.1136,
-      "true_break_continuation": 0.6545
+      "fake_break_reversal": 0.2387,
+      "invalid_sweep": 0.1126,
+      "true_break_continuation": 0.6486
     },
     "by_direction": {
       "down": {
-        "fake_break_reversal": 0.3146,
-        "invalid_sweep": 0.1461,
-        "true_break_continuation": 0.5393
+        "fake_break_reversal": 0.3297,
+        "invalid_sweep": 0.1429,
+        "true_break_continuation": 0.5275
       },
       "up": {
         "fake_break_reversal": 0.1756,
@@ -33,16 +33,16 @@
     },
     "by_direction_detail": {
       "down": {
-        "n": 89,
+        "n": 91,
         "counts": {
-          "fake_break_reversal": 28,
+          "fake_break_reversal": 30,
           "invalid_sweep": 13,
           "true_break_continuation": 48
         },
         "probs": {
-          "fake_break_reversal": 0.3146,
-          "invalid_sweep": 0.1461,
-          "true_break_continuation": 0.5393
+          "fake_break_reversal": 0.3297,
+          "invalid_sweep": 0.1429,
+          "true_break_continuation": 0.5275
         }
       },
       "up": {
@@ -61,29 +61,29 @@
     },
     "by_timeframe": {
       "60m": {
-        "fake_break_reversal": 0.2318,
-        "invalid_sweep": 0.1136,
-        "true_break_continuation": 0.6545
+        "fake_break_reversal": 0.2387,
+        "invalid_sweep": 0.1126,
+        "true_break_continuation": 0.6486
       }
     },
     "high_volume_ge_1_2": {
-      "n": 69,
+      "n": 71,
       "probs": {
-        "fake_break_reversal": 0.2609,
-        "invalid_sweep": 0.1594,
-        "true_break_continuation": 0.5797
+        "fake_break_reversal": 0.2676,
+        "invalid_sweep": 0.169,
+        "true_break_continuation": 0.5634
       }
     },
     "low_volume_lt_1_2": {
       "n": 151,
       "probs": {
-        "fake_break_reversal": 0.2185,
-        "invalid_sweep": 0.0927,
+        "fake_break_reversal": 0.2252,
+        "invalid_sweep": 0.0861,
         "true_break_continuation": 0.6887
       }
     },
-    "avg_mfe_atr": 1.8971,
-    "avg_mae_atr": 2.1548,
+    "avg_mfe_atr": 1.8906,
+    "avg_mae_atr": 2.1538,
     "live_trading": false,
     "status": "Research",
     "note": "Conditional frequencies only; not Path-A entry rules."
@@ -91,66 +91,6 @@
   "live_trading": false,
   "status": "Research",
   "events_tail": [
-    {
-      "schema": "cta-lsp-event-v1",
-      "symbol": "MA",
-      "contract": "MA2701",
-      "timestamp": "2026-09-17 11:15:00",
-      "timeframe": "60m",
-      "bar_index": 892,
-      "level_type": "swing_high",
-      "level_price": 2688.0,
-      "distance_to_level": 9.5211,
-      "break_direction": "up",
-      "break_size_atr": 9.6338,
-      "volume_ratio": 1.1302,
-      "oi_change": null,
-      "vwap_deviation": null,
-      "reclaim_bars": null,
-      "post_sweep_return_1": -0.008923,
-      "post_sweep_return_3": -0.007931,
-      "post_sweep_return_5": -0.02115,
-      "post_sweep_return_10": -0.008923,
-      "mfe": 0.1972,
-      "mae": 2.338,
-      "outcome": "true_break_continuation",
-      "status": "Research",
-      "note": "Detected pierce; outcome filled by label_events().",
-      "level_index": 679,
-      "level_confirmed_index": 682,
-      "atr": 35.5,
-      "outside_hold_bars": 10
-    },
-    {
-      "schema": "cta-lsp-event-v1",
-      "symbol": "MA",
-      "contract": "MA2701",
-      "timestamp": "2026-09-18 10:00:00",
-      "timeframe": "60m",
-      "bar_index": 897,
-      "level_type": "swing_high",
-      "level_price": 2644.8313,
-      "distance_to_level": 9.062,
-      "break_direction": "up",
-      "break_size_atr": 10.5477,
-      "volume_ratio": 0.3356,
-      "oi_change": null,
-      "vwap_deviation": null,
-      "reclaim_bars": null,
-      "post_sweep_return_1": 0.003038,
-      "post_sweep_return_3": -0.003376,
-      "post_sweep_return_5": 0.012492,
-      "post_sweep_return_10": -0.008103,
-      "mfe": 1.2286,
-      "mae": 1.6286,
-      "outcome": "true_break_continuation",
-      "status": "Research",
-      "note": "Detected pierce; outcome filled by label_events().",
-      "level_index": 690,
-      "level_confirmed_index": 690,
-      "atr": 35.0,
-      "outside_hold_bars": 10
-    },
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "MA",
@@ -1520,8 +1460,8 @@
       "post_sweep_return_1": -0.001958,
       "post_sweep_return_3": -0.00261,
       "post_sweep_return_5": 0.000326,
-      "post_sweep_return_10": 0.025775,
-      "mfe": 1.9669,
+      "post_sweep_return_10": 0.022838,
+      "mfe": 2.5223,
       "mae": 1.0182,
       "outcome": "true_break_continuation",
       "status": "Research",
@@ -1549,9 +1489,9 @@
       "reclaim_bars": null,
       "post_sweep_return_1": 0.013708,
       "post_sweep_return_3": 0.014034,
-      "post_sweep_return_5": 0.025457,
-      "post_sweep_return_10": null,
-      "mfe": 1.9342,
+      "post_sweep_return_5": 0.02252,
+      "post_sweep_return_10": 0.007833,
+      "mfe": 2.4868,
       "mae": 0.1842,
       "outcome": "true_break_continuation",
       "status": "Research",
@@ -1559,7 +1499,7 @@
       "level_index": 954,
       "level_confirmed_index": 957,
       "atr": 43.4286,
-      "outside_hold_bars": 5
+      "outside_hold_bars": 10
     },
     {
       "schema": "cta-lsp-event-v1",
@@ -1569,28 +1509,88 @@
       "timeframe": "60m",
       "bar_index": 1137,
       "level_type": "swing_low",
-      "level_price": 3004.0,
-      "distance_to_level": -0.4599,
+      "level_price": 2980.0,
+      "distance_to_level": 0.3671,
       "break_direction": "down",
-      "break_size_atr": 0.6131,
-      "volume_ratio": 0.0013,
+      "break_size_atr": 0.5874,
+      "volume_ratio": 3.7375,
       "oi_change": null,
       "vwap_deviation": null,
-      "reclaim_bars": null,
-      "post_sweep_return_1": null,
-      "post_sweep_return_3": null,
-      "post_sweep_return_5": null,
+      "reclaim_bars": 1,
+      "post_sweep_return_1": -0.005342,
+      "post_sweep_return_3": -0.007679,
+      "post_sweep_return_5": -0.015025,
+      "post_sweep_return_10": -0.024374,
+      "mfe": 0.3182,
+      "mae": 2.521,
+      "outcome": "fake_break_reversal",
+      "status": "Research",
+      "note": "Detected pierce; outcome filled by label_events().",
+      "level_index": 869,
+      "level_confirmed_index": 872,
+      "atr": 40.8571,
+      "outside_hold_bars": 0
+    },
+    {
+      "schema": "cta-lsp-event-v1",
+      "symbol": "MA",
+      "contract": "MA2701",
+      "timestamp": "2026-11-24 15:00:00",
+      "timeframe": "60m",
+      "bar_index": 1142,
+      "level_type": "swing_low",
+      "level_price": 3004.0,
+      "distance_to_level": 0.866,
+      "break_direction": "down",
+      "break_size_atr": 0.2405,
+      "volume_ratio": 0.6832,
+      "oi_change": null,
+      "vwap_deviation": null,
+      "reclaim_bars": 1,
+      "post_sweep_return_1": -0.014145,
+      "post_sweep_return_3": 0.001316,
+      "post_sweep_return_5": -0.009211,
       "post_sweep_return_10": null,
-      "mfe": 0.0,
-      "mae": 0.0,
-      "outcome": "invalid_sweep",
+      "mfe": 0.5533,
+      "mae": 1.3952,
+      "outcome": "fake_break_reversal",
       "status": "Research",
       "note": "Detected pierce; outcome filled by label_events().",
       "level_index": 875,
       "level_confirmed_index": 878,
-      "atr": 39.1429,
+      "atr": 41.5714,
       "outside_hold_bars": 0
+    },
+    {
+      "schema": "cta-lsp-event-v1",
+      "symbol": "MA",
+      "contract": "MA2701",
+      "timestamp": "2026-11-25 14:15:00",
+      "timeframe": "60m",
+      "bar_index": 1147,
+      "level_type": "swing_low",
+      "level_price": 3193.0,
+      "distance_to_level": -2.9461,
+      "break_direction": "down",
+      "break_size_atr": 3.7946,
+      "volume_ratio": 1.3252,
+      "oi_change": null,
+      "vwap_deviation": null,
+      "reclaim_bars": null,
+      "post_sweep_return_1": 0.001304,
+      "post_sweep_return_3": null,
+      "post_sweep_return_5": null,
+      "post_sweep_return_10": null,
+      "mfe": 0.3535,
+      "mae": 0.165,
+      "outcome": "invalid_sweep",
+      "status": "Research",
+      "note": "Detected pierce; outcome filled by label_events().",
+      "level_index": 960,
+      "level_confirmed_index": 963,
+      "atr": 42.4286,
+      "outside_hold_bars": 1
     }
   ],
-  "events_n": 220
+  "events_n": 222
 }

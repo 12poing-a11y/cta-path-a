@@ -77,3 +77,10 @@
 - Step 6: R7_signoff_report.md written; docs §2/§7 updated.
 - Step 7: first full pytest stopped at ~30%: test_formal_write_dirty_exit2 driver went to network since D (main() fetches pack + prefetch before simulate). Stubbed hb._fetch_pack + ensure_listed_contract_bars in the driver (13 s, passes). Full pytest restarted (archive/R7/pytest_R7a.log).
 - Step 7: full pytest 529 passed / 0 failed / 0 skipped (174.8 s); restored lab/research/predictions/latest.json, pred_20261123.json, lab/research/volatility/vol_engine_daily_latest.json; dirty_paths = intended edits only. Committing R7a.
+
+## 2026-11-24 晚：rebase 到 origin/main（不 push）
+- 20:30 只读检查：远端新增 3 个 bot 提交（a8d6141, 129f91d, 19cd660），只改 .cache/data/lab/archive 根目录/根目录运行产物，无代码/测试/配置。
+- 备份：backup/pre-rebase-R7a = 3847d3c；archive/R0–R3 与 docs/R_TRACK_HANDOFF.md 已复制到 D:\AI\cta-path-a_untracked_backup_20261124。git restore -- .cache/ 后已跟踪文件无改动。
+- git rebase origin/main(19cd660)：20 个提交全部重放，仅 c7f76c0（chore: snapshot run artifacts before R7）及其后一个提交处有 16 个运行产物冲突，全部取 CI 一方（--ours）；无代码/测试/docs 冲突。非运行产物路径与旧 HEAD 的树差异为 0。R7a 新哈希 921ce7b。
+- 全量 pytest 已在后台启动（日志在仓库外 D:\AI\cta-path-a_untracked_backup_20261124\pytest_post_rebase.log）。
+- 全量 pytest（rebase 后）：529 passed / 0 failed / 0 skipped（180.9 s）。已还原 pytest 改写的 lab/research/predictions/latest.json、lab/research/volatility/vol_engine_daily_latest.json。docs/R_TRACK_HANDOFF.md 已更新 HEAD=921ce7b 与备注（未提交）。

@@ -243,15 +243,17 @@
     "ok": true,
     "schema": "cta-gamma-touch-v1",
     "contract": "SA2701",
-    "n_events": 15,
+    "n_events": 19,
     "touch_atr": 3.0,
     "outcome_counts": {
-      "stay": 12,
-      "bounce": 3
+      "stay": 16,
+      "bounce": 2,
+      "pierce": 1
     },
     "outcome_probs": {
-      "stay": 0.8,
-      "bounce": 0.2
+      "stay": 0.8421,
+      "bounce": 0.1053,
+      "pierce": 0.0526
     },
     "live_trading": false,
     "note": "Sparse when gamma history is short; not a trade signal.",
@@ -354,11 +356,11 @@
         "futures": 969.0,
         "dist_atr": -1.1793,
         "outcome": "stay",
-        "mfe_atr": 1.0652,
+        "mfe_atr": 1.2935,
         "mae_atr": 0.1522,
         "ret_1": 0.01032,
         "ret_3": 0.017544,
-        "ret_5": null
+        "ret_5": 0.014448
       },
       {
         "date": "2026-11-17",
@@ -366,12 +368,12 @@
         "wall": 950.0,
         "futures": 969.0,
         "dist_atr": 0.7228,
-        "outcome": "bounce",
+        "outcome": "pierce",
         "mfe_atr": 0.1522,
-        "mae_atr": 1.0652,
+        "mae_atr": 1.2935,
         "ret_1": -0.01032,
         "ret_3": -0.017544,
-        "ret_5": null
+        "ret_5": -0.014448
       },
       {
         "date": "2026-11-18",
@@ -380,11 +382,11 @@
         "futures": 963.0,
         "dist_atr": -1.4153,
         "outcome": "stay",
-        "mfe_atr": 0.8415,
-        "mae_atr": 0.3825,
+        "mfe_atr": 1.071,
+        "mae_atr": 0.459,
         "ret_1": 0.001038,
-        "ret_3": null,
-        "ret_5": null
+        "ret_3": 0.021807,
+        "ret_5": -0.007269
       },
       {
         "date": "2026-11-18",
@@ -393,11 +395,11 @@
         "futures": 963.0,
         "dist_atr": 2.4098,
         "outcome": "stay",
-        "mfe_atr": 0.3825,
-        "mae_atr": 0.8415,
+        "mfe_atr": 0.459,
+        "mae_atr": 1.071,
         "ret_1": -0.001038,
-        "ret_3": null,
-        "ret_5": null
+        "ret_3": -0.021807,
+        "ret_5": 0.007269
       },
       {
         "date": "2026-11-19",
@@ -406,10 +408,10 @@
         "futures": 963.0,
         "dist_atr": -1.451,
         "outcome": "stay",
-        "mfe_atr": 0.8627,
-        "mae_atr": 0.0,
+        "mfe_atr": 1.098,
+        "mae_atr": 0.4706,
         "ret_1": 0.011423,
-        "ret_3": null,
+        "ret_3": 0.008307,
         "ret_5": null
       },
       {
@@ -419,10 +421,10 @@
         "futures": 963.0,
         "dist_atr": 2.4706,
         "outcome": "stay",
-        "mfe_atr": 0.0,
-        "mae_atr": 0.8627,
+        "mfe_atr": 0.4706,
+        "mae_atr": 1.098,
         "ret_1": -0.011423,
-        "ret_3": null,
+        "ret_3": -0.008307,
         "ret_5": null
       },
       {
@@ -432,10 +434,10 @@
         "futures": 951.0,
         "dist_atr": -1.9769,
         "outcome": "stay",
-        "mfe_atr": 0.0,
-        "mae_atr": 0.0,
-        "ret_1": null,
-        "ret_3": null,
+        "mfe_atr": 0.6455,
+        "mae_atr": 0.9683,
+        "ret_1": 0.009464,
+        "ret_3": -0.019979,
         "ret_5": null
       },
       {
@@ -445,9 +447,61 @@
         "futures": 951.0,
         "dist_atr": 2.0576,
         "outcome": "stay",
+        "mfe_atr": 0.9683,
+        "mae_atr": 0.6455,
+        "ret_1": -0.009464,
+        "ret_3": 0.019979,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-23",
+        "side": "call",
+        "wall": 1000.0,
+        "futures": 945.0,
+        "dist_atr": -2.3193,
+        "outcome": "stay",
+        "mfe_atr": 0.253,
+        "mae_atr": 1.2651,
+        "ret_1": -0.010582,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-23",
+        "side": "put",
+        "wall": 900.0,
+        "futures": 945.0,
+        "dist_atr": 1.8976,
+        "outcome": "stay",
+        "mfe_atr": 1.2651,
+        "mae_atr": 0.253,
+        "ret_1": 0.010582,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-24",
+        "side": "call",
+        "wall": 1000.0,
+        "futures": 951.0,
+        "dist_atr": -2.0915,
+        "outcome": "stay",
         "mfe_atr": 0.0,
+        "mae_atr": 1.0244,
+        "ret_1": -0.019979,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-24",
+        "side": "put",
+        "wall": 900.0,
+        "futures": 951.0,
+        "dist_atr": 2.1768,
+        "outcome": "stay",
+        "mfe_atr": 1.0244,
         "mae_atr": 0.0,
-        "ret_1": null,
+        "ret_1": 0.019979,
         "ret_3": null,
         "ret_5": null
       }
@@ -503,7 +557,7 @@
       }
     ]
   },
-  "n_daily_bars": 1686,
+  "n_daily_bars": 1689,
   "live_trading": false,
   "status": "Research",
   "disclaimer": "Call+/Put− GEX 为展示约定；OI 不能识别做市商方向。本模块只做结构观察，不生成 Path-A 多空信号。"

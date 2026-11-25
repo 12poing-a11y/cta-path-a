@@ -10,8 +10,8 @@
       "ok": true,
       "task": "lsp_reversal",
       "backend": "lightgbm",
-      "n": 195,
-      "n_train": 126,
+      "n": 196,
+      "n_train": 127,
       "n_oos": 54,
       "features": [
         "atr",
@@ -24,62 +24,62 @@
         "volume_ratio"
       ],
       "is": {
-        "n": 126,
-        "pos_rate": 0.2777777777777778,
-        "accuracy": 0.9761904761904762,
-        "f1": 0.9565217391304348,
-        "brier": 0.041583270708052136,
-        "auc": 0.9987441130298272
+        "n": 127,
+        "pos_rate": 0.30708661417322836,
+        "accuracy": 0.9606299212598425,
+        "f1": 0.9333333333333333,
+        "brier": 0.048151830110566604,
+        "auc": 0.9976689976689976
       },
       "oos": {
         "n": 54,
-        "pos_rate": 0.3148148148148148,
-        "accuracy": 0.6666666666666666,
-        "f1": 0.35714285714285715,
-        "brier": 0.22878067181549688,
-        "auc": 0.6653418124006361
+        "pos_rate": 0.3888888888888889,
+        "accuracy": 0.5740740740740741,
+        "f1": 0.43902439024390244,
+        "brier": 0.25726014929881735,
+        "auc": 0.6652236652236653
       },
       "importance_top": [
         {
           "feature": "break_size_atr",
-          "importance": 179.0
+          "importance": 164.0
         },
         {
           "feature": "distance_to_level",
-          "importance": 149.0
+          "importance": 162.0
         },
         {
           "feature": "atr",
-          "importance": 139.0
+          "importance": 135.0
         },
         {
           "feature": "volume_ratio",
-          "importance": 136.0
+          "importance": 131.0
         },
         {
           "feature": "hour",
-          "importance": 42.0
+          "importance": 88.0
         },
         {
           "feature": "htf_resonance",
-          "importance": 25.0
+          "importance": 37.0
         },
         {
           "feature": "break_up",
-          "importance": 20.0
+          "importance": 8.0
         },
         {
           "feature": "level_is_high",
-          "importance": 3.0
+          "importance": 0.0
         }
       ],
       "oos_window": {
-        "start": "2026-11-06 09:30:00",
-        "end": "2026-11-23 21:15:00"
+        "start": "2026-11-10 09:30:00",
+        "end": "2026-11-25 14:45:00"
       },
       "is_window": {
-        "start": "2026-09-14 13:45:00",
-        "end": "2026-11-02 14:45:00"
+        "start": "2026-09-16 14:30:00",
+        "end": "2026-11-04 14:45:00"
       },
       "purge": 10,
       "embargo": 5,
@@ -256,8 +256,8 @@
     }
   },
   "sample_counts": {
-    "lsp_events": 195,
-    "lsp_rows": 195,
+    "lsp_events": 196,
+    "lsp_rows": 196,
     "trend_rows": 1104,
     "breakout_rows": 218,
     "daily_bars": 5325

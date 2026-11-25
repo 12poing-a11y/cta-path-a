@@ -1,36 +1,36 @@
 {
   "schema": "cta-options-risk-v1",
-  "built_at": "2026-11-23T21:20:09+08:00",
+  "built_at": "2026-11-25T16:41:43+08:00",
   "strategy_state": "RESEARCH",
   "bt_metrics": {
-    "n_closed": 17,
+    "n_closed": 20,
     "n_skipped": 3,
-    "win_rate": 0.2353,
-    "avg_credit_points": 39.0,
-    "avg_pnl_points": -18.5882,
-    "avg_pnl_cny": -133.53,
+    "win_rate": 0.25,
+    "avg_credit_points": 41.55,
+    "avg_pnl_points": -14.425,
+    "avg_pnl_cny": -96.5,
     "max_adverse_points": 66.0,
-    "total_pnl_cny": -2270.0,
-    "sum_margin_est_cny": 18115.0
+    "total_pnl_cny": -1930.0,
+    "sum_margin_est_cny": 21710.0
   },
   "ledger_n": 5,
   "ledger_open_ish": 0,
   "quality_reject_skips": 0,
   "by_code": {
     "CF": {
-      "n": 11,
-      "margin": 9255.0,
-      "pnl": -890.0
+      "n": 12,
+      "margin": 9980.0,
+      "pnl": -955.0
     },
     "MA": {
-      "n": 3,
-      "margin": 3805.0,
-      "pnl": -585.0
+      "n": 4,
+      "margin": 5150.0,
+      "pnl": -340.0
     },
     "SR": {
-      "n": 3,
-      "margin": 5055.0,
-      "pnl": -795.0
+      "n": 4,
+      "margin": 6580.0,
+      "pnl": -635.0
     }
   },
   "same_direction_counts": {

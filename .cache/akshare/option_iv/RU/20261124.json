@@ -1,1 +1,1 @@
-{"missing": true, "code": "RU", "date": "20261124", "error": "TypeError:option_vol_shfe() got an unexpected keyword argument 'trade_date'"}
+{"code": "RU", "date": "20261124", "product": "天胶期权", "venue": "shfe", "iv": 0.282944, "series": "ru2701", "volume": 78888.0, "source": "shfe"}

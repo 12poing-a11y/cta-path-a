@@ -264,7 +264,7 @@ ext_open。
 ### R7b v14 正式写入（阶段 A 收口，2026-11-25，本地未 push）
 
 - **做了**：先做候选冻结输入 + HEAD 重放（56 笔逐笔一致、216 天权益逐日一致，−1.068 / 7.623 / 56 复现）。按磊确认的方案 A：正式窗口末 11-25（`historical_backtest_latest.json`，v14，−1.721% / gross +0.938% / DD 8.232% / 57 笔；审计 0 不符；缓存与空缓存重放一致）；方案 B 账本根目录 `paper_book_latest.json`（asof 11-25，盯市权益 196,557.68，无持仓、P 待开 1 手；旧桌面版归档 `archive/R7/paper_book_legacy_desk_20261125.json`，`pre_R7` 未动）；`formal_rule_lock.json` 写入 end=2026-11-25、git_commit=18c7135、input_snapshot_sha256=016deed…；README KPI 标记块由 `render_readme_kpi.py` 生成；`test_proxy_positions` 改为检查代理袖套 ID。
-- **与候选的差异**：窗口滚动（+11-25，−12-31）；重叠 215 天权益逐日相同；11-25 当天 −1,305.36 元（P 空 1 手 11-23 入场 8278，11-25 止损 8438.29，R=−1，即第 57 笔）；回撤 7.623% → 8.232% 由该日造成。PBO 候选 0.386 为旧矩阵，正式 0.729 为当前引擎新矩阵（PBO 闸门 ≤0.3 未过）；DSR 0.043 → 0.093（`dsr_from_trial_matrix` 随矩阵变化）。
+- **与候选的差异**：窗口滚动（+11-25，−12-31）；重叠 215 天权益逐日相同；11-25 当天 −1,305.36 元（P 空 1 手 11-23 入场 8278，11-25 止损 8438.29，R=−1，即第 57 笔）；回撤 7.623% → 8.232% 由该日造成。PBO：候选签字 0.386（T=208、8 组、70 组合）→ 正式 0.729（T=215、K=11；分组参数未在日志记录，两版矩阵未逐项对比，待核）；闸门 ≤0.3 未过。DSR：签字报告 0.043；正式结果内验证块 0.0355（n_trials=11）；scorecard 试验矩阵口径 0.0927。三者均远低于阈值，结论不变。
 - **验证**：全量 pytest 529 passed（PYTHONUTF8=1）；`daily_update --dry-run` 不改根文件（4 个受保护文件哈希不变，paper noop）。
 - **风险/未做**：PBO 0.729 与 scorecard `human_approval` 硬闸未过，**未晋级**；未 push（15:30 CI 覆盖风险，push 前需 fetch/rebase 并暂停 daily.yml/historical_backtest.yml）；`docs/R_TRACK_HANDOFF.md` 已搬回。
 - **建议**：阶段 A 收口，停；推送与 PBO 结论待磊决定。R8+ 仍封闭。

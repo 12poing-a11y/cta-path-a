@@ -1,0 +1,162 @@
+﻿[bt] mode=seats ifind_so_far=0
+{
+ "formal": {
+  "ret_pct": -1.721,
+  "closed_trades": 57,
+  "max_dd_pct": 8.232,
+  "equity0": 200000.0,
+  "risk_pct": 2.0,
+  "max_gross_pct": 50.0,
+  "stop_atr_mult": 0.8,
+  "min_lots": 0,
+  "window": [
+   "2026-01-05",
+   "2026-11-25"
+  ],
+  "trading_days": 216,
+  "snapshot": "archive\\snapshots\\bt_input_20261125_016deed19684.json"
+ },
+ "b_floor": {
+  "ok_candidate_days": 980,
+  "ok_with_risk_per_lot_gt_day_risk": 0,
+  "lots0_candidate_days": 125,
+  "lots0_with_risk_per_lot_le_day_risk": 0,
+  "lots0_selected_by_caps_or_topup": 0,
+  "topup_counters_in_result": {
+   "caps_topup_lots": 113,
+   "caps_topup_revived": 28
+  }
+ },
+ "c_skips_base": {
+  "unit": "signal-days (a signal that persists several days is counted once per day)",
+  "categories": {
+   "lots0": 125,
+   "gross_cap_scaled_to_0": 178,
+   "positions_full(N cap, slots_left>0)": 31,
+   "bucket_full": 626
+  },
+  "by_code": {
+   "lots0": {
+    "AG": 58,
+    "AU": 31,
+    "CU": 20,
+    "NI": 14,
+    "RU": 2
+   },
+   "gross_cap_scaled_to_0": {
+    "JM": 35,
+    "NI": 22,
+    "I": 22,
+    "AL": 21,
+    "CF": 20,
+    "P": 20,
+    "FU": 12,
+    "SS": 8,
+    "EB": 6,
+    "BU": 4,
+    "EG": 2,
+    "TA": 2,
+    "M": 2,
+    "JD": 1,
+    "MA": 1
+   },
+   "positions_full(N cap, slots_left>0)": {
+    "I": 6,
+    "SS": 6,
+    "TA": 4,
+    "CF": 3,
+    "P": 2,
+    "FG": 2,
+    "SP": 2,
+    "JD": 2,
+    "FU": 1,
+    "JM": 1,
+    "L": 1,
+    "EB": 1
+   },
+   "bucket_full": {
+    "BU": 76,
+    "PP": 74,
+    "FG": 72,
+    "L": 58,
+    "TA": 50,
+    "EG": 50,
+    "MA": 49,
+    "EB": 45,
+    "SA": 43,
+    "SP": 36,
+    "V": 21,
+    "FU": 21,
+    "P": 10,
+    "AL": 6,
+    "I": 5,
+    "SS": 3,
+    "RU": 3,
+    "SR": 2,
+    "M": 1,
+    "JD": 1
+   }
+  },
+  "replication_checks": {
+   "bucket_skipped_matches_engine_meta": true,
+   "bucket_n": 648,
+   "ncap_n": 34
+  },
+  "days_with_candidates_evaluated(slots_left>0)": 216,
+  "days_positions_full_signals_not_evaluated": 0,
+  "slots_left_hist_on_candidate_days": {
+   "1": 28,
+   "2": 83,
+   "3": 105
+  },
+  "held_count_hist_on_candidate_days": {
+   "0": 105,
+   "1": 83,
+   "2": 28
+  },
+  "clog_entries": 216,
+  "curve_held_hist": {
+   "0": 70,
+   "1": 96,
+   "2": 50
+  },
+  "selected_entries_total": 145,
+  "closed_trades": 57
+ },
+ "equity_curve_row_keys": [
+  "codes",
+  "date",
+  "dd_pct",
+  "equity",
+  "gross_pct",
+  "held",
+  "pnl"
+ ]
+}
+AG 有色 n1_med%200k 124.215 r1_med%200k 4.5495 minEq med/max 993720.0 1853460.0 notional
+AL 有色 n1_med%200k 60.0 r1_med%200k 0.7014 minEq med/max 480000.0 512800.0 notional
+AU 有色 n1_med%200k 480.28 r1_med%200k 7.5851 minEq med/max 3842240.0 4996480.0 notional
+BU 能化 n1_med%200k 21.13 r1_med%200k 0.5254 minEq med/max 169040.0 222280.0 notional
+CF 农产品 n1_med%200k 39.475 r1_med%200k 0.4329 minEq med/max 315800.0 343600.0 notional
+CU 有色 n1_med%200k 260.7375 r1_med%200k 3.0314 minEq med/max 2085900.0 2244000.0 notional
+EB 能化 n1_med%200k 22.1375 r1_med%200k 0.5831 minEq med/max 177100.0 221400.0 notional
+EG 能化 n1_med%200k 24.1375 r1_med%200k 0.7226 minEq med/max 193100.0 245880.0 notional
+FG 能化 n1_med%200k 9.755 r1_med%200k 0.1814 minEq med/max 78040.0 93040.0 notional
+FU 能化 n1_med%200k 19.2425 r1_med%200k 0.6583 minEq med/max 153940.0 216720.0 notional
+I 黑色 n1_med%200k 37.55 r1_med%200k 0.4857 minEq med/max 300400.0 331200.0 notional
+JD 农产品 n1_med%200k 17.8675 r1_med%200k 0.294 minEq med/max 142940.0 195200.0 notional
+JM 黑色 n1_med%200k 38.19 r1_med%200k 1.0406 minEq med/max 305520.0 414960.0 notional
+L 能化 n1_med%200k 19.8813 r1_med%200k 0.4057 minEq med/max 159050.0 191920.0 notional
+M 农产品 n1_med%200k 15.1425 r1_med%200k 0.1483 minEq med/max 121140.0 139160.0 notional
+MA 能化 n1_med%200k 14.2775 r1_med%200k 0.3897 minEq med/max 114220.0 142280.0 notional
+NI 有色 n1_med%200k 66.5425 r1_med%200k 1.1376 minEq med/max 532340.0 618760.0 notional
+P 农产品 n1_med%200k 47.165 r1_med%200k 0.6624 minEq med/max 377320.0 416200.0 notional
+PP 能化 n1_med%200k 21.1525 r1_med%200k 0.4758 minEq med/max 169220.0 210240.0 notional
+RB 黑色 n1_med%200k 15.535 r1_med%200k 0.114 minEq med/max 124280.0 131440.0 notional
+RU 能化 n1_med%200k 86.975 r1_med%200k 1.3979 minEq med/max 695800.0 825800.0 notional
+SA 能化 n1_med%200k 11.34 r1_med%200k 0.1991 minEq med/max 90720.0 102160.0 notional
+SP 能化 n1_med%200k 24.385 r1_med%200k 0.2983 minEq med/max 195080.0 224480.0 notional
+SR 农产品 n1_med%200k 26.605 r1_med%200k 0.2027 minEq med/max 212840.0 220840.0 notional
+SS 黑色 n1_med%200k 35.675 r1_med%200k 0.4729 minEq med/max 285400.0 315600.0 notional
+TA 能化 n1_med%200k 15.0025 r1_med%200k 0.3674 minEq med/max 120020.0 142680.0 notional
+V 能化 n1_med%200k 12.2788 r1_med%200k 0.2279 minEq med/max 98230.0 125020.0 notional

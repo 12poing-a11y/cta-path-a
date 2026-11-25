@@ -1,0 +1,1540 @@
+{
+ "formal": {
+  "ret_pct": -1.721,
+  "closed_trades": 57,
+  "max_dd_pct": 8.232,
+  "equity0": 200000.0,
+  "risk_pct": 2.0,
+  "max_gross_pct": 50.0,
+  "stop_atr_mult": 0.8,
+  "min_lots": 0,
+  "window": [
+   "2026-01-05",
+   "2026-11-25"
+  ],
+  "trading_days": 216,
+  "snapshot": "archive\\snapshots\\bt_input_20261125_016deed19684.json"
+ },
+ "a_per_symbol": {
+  "AG": {
+   "days": 216,
+   "mult": 15.0,
+   "bucket": "有色",
+   "notional_1lot_yuan": {
+    "median": 248430.0,
+    "max": 463365.0
+   },
+   "risk_1lot_yuan": {
+    "median": 9099.0,
+    "max": 34799.1429
+   },
+   "notional_pct_of_200k": {
+    "median": 124.215,
+    "max": 231.6825
+   },
+   "risk_pct_of_200k": {
+    "median": 4.5495,
+    "max": 17.3996
+   },
+   "notional_pct_of_1m": {
+    "median": 24.843,
+    "max": 46.3365
+   },
+   "risk_pct_of_1m": {
+    "median": 0.9099,
+    "max": 3.4799
+   },
+   "min_equity_yuan": {
+    "median": 993720.0,
+    "p90": 1389600.0,
+    "max": 1853460.0,
+    "median_by_risk": 454950.0,
+    "median_by_notional": 993720.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.0,
+    "500k": 0.0,
+    "1000k": 0.505
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.495
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   }
+  },
+  "AL": {
+   "days": 216,
+   "mult": 5.0,
+   "bucket": "有色",
+   "notional_1lot_yuan": {
+    "median": 120000.0,
+    "max": 128200.0
+   },
+   "risk_1lot_yuan": {
+    "median": 1402.8571,
+    "max": 3258.5714
+   },
+   "notional_pct_of_200k": {
+    "median": 60.0,
+    "max": 64.1
+   },
+   "risk_pct_of_200k": {
+    "median": 0.7014,
+    "max": 1.6293
+   },
+   "notional_pct_of_1m": {
+    "median": 12.0,
+    "max": 12.82
+   },
+   "risk_pct_of_1m": {
+    "median": 0.1403,
+    "max": 0.3259
+   },
+   "min_equity_yuan": {
+    "median": 480000.0,
+    "p90": 496600.0,
+    "max": 512800.0,
+    "median_by_risk": 70142.8571,
+    "median_by_notional": 480000.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.0,
+    "500k": 0.949,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   }
+  },
+  "AU": {
+   "days": 216,
+   "mult": 1000.0,
+   "bucket": "有色",
+   "notional_1lot_yuan": {
+    "median": 960560.0,
+    "max": 1249120.0
+   },
+   "risk_1lot_yuan": {
+    "median": 15170.2857,
+    "max": 50712.0
+   },
+   "notional_pct_of_200k": {
+    "median": 480.28,
+    "max": 624.56
+   },
+   "risk_pct_of_200k": {
+    "median": 7.5851,
+    "max": 25.356
+   },
+   "notional_pct_of_1m": {
+    "median": 96.056,
+    "max": 124.912
+   },
+   "risk_pct_of_1m": {
+    "median": 1.517,
+    "max": 5.0712
+   },
+   "min_equity_yuan": {
+    "median": 3842240.0,
+    "p90": 4504120.0,
+    "max": 4996480.0,
+    "median_by_risk": 758514.2857,
+    "median_by_notional": 3842240.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.0,
+    "500k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 1.0,
+    "1000k": 1.0
+   }
+  },
+  "BU": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 42260.0,
+    "max": 55570.0
+   },
+   "risk_1lot_yuan": {
+    "median": 1050.8571,
+    "max": 2401.7143
+   },
+   "notional_pct_of_200k": {
+    "median": 21.13,
+    "max": 27.785
+   },
+   "risk_pct_of_200k": {
+    "median": 0.5254,
+    "max": 1.2009
+   },
+   "notional_pct_of_1m": {
+    "median": 4.226,
+    "max": 5.557
+   },
+   "risk_pct_of_1m": {
+    "median": 0.1051,
+    "max": 0.2402
+   },
+   "min_equity_yuan": {
+    "median": 169040.0,
+    "p90": 200840.0,
+    "max": 222280.0,
+    "median_by_risk": 52542.8571,
+    "median_by_notional": 169040.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.889,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.111,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "CF": {
+   "days": 216,
+   "mult": 5.0,
+   "bucket": "农产品",
+   "notional_1lot_yuan": {
+    "median": 78950.0,
+    "max": 85900.0
+   },
+   "risk_1lot_yuan": {
+    "median": 865.7143,
+    "max": 1187.1429
+   },
+   "notional_pct_of_200k": {
+    "median": 39.475,
+    "max": 42.95
+   },
+   "risk_pct_of_200k": {
+    "median": 0.4329,
+    "max": 0.5936
+   },
+   "notional_pct_of_1m": {
+    "median": 7.895,
+    "max": 8.59
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0866,
+    "max": 0.1187
+   },
+   "min_equity_yuan": {
+    "median": 315800.0,
+    "p90": 333550.0,
+    "max": 343600.0,
+    "median_by_risk": 43285.7143,
+    "median_by_notional": 315800.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.134,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "CU": {
+   "days": 216,
+   "mult": 5.0,
+   "bucket": "有色",
+   "notional_1lot_yuan": {
+    "median": 521475.0,
+    "max": 561000.0
+   },
+   "risk_1lot_yuan": {
+    "median": 6062.8571,
+    "max": 17125.7143
+   },
+   "notional_pct_of_200k": {
+    "median": 260.7375,
+    "max": 280.5
+   },
+   "risk_pct_of_200k": {
+    "median": 3.0314,
+    "max": 8.5629
+   },
+   "notional_pct_of_1m": {
+    "median": 52.1475,
+    "max": 56.1
+   },
+   "risk_pct_of_1m": {
+    "median": 0.6063,
+    "max": 1.7126
+   },
+   "min_equity_yuan": {
+    "median": 2085900.0,
+    "p90": 2184200.0,
+    "max": 2244000.0,
+    "median_by_risk": 303142.8571,
+    "median_by_notional": 2085900.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.0,
+    "500k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 1.0,
+    "1000k": 0.875
+   }
+  },
+  "EB": {
+   "days": 216,
+   "mult": 5.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 44275.0,
+    "max": 55350.0
+   },
+   "risk_1lot_yuan": {
+    "median": 1166.1429,
+    "max": 3196.8571
+   },
+   "notional_pct_of_200k": {
+    "median": 22.1375,
+    "max": 27.675
+   },
+   "risk_pct_of_200k": {
+    "median": 0.5831,
+    "max": 1.5984
+   },
+   "notional_pct_of_1m": {
+    "median": 4.4275,
+    "max": 5.535
+   },
+   "risk_pct_of_1m": {
+    "median": 0.1166,
+    "max": 0.3197
+   },
+   "min_equity_yuan": {
+    "median": 177100.0,
+    "p90": 206210.0,
+    "max": 221400.0,
+    "median_by_risk": 58307.1429,
+    "median_by_notional": 177100.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.819,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.181,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "EG": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 48275.0,
+    "max": 61470.0
+   },
+   "risk_1lot_yuan": {
+    "median": 1445.1429,
+    "max": 3408.0
+   },
+   "notional_pct_of_200k": {
+    "median": 24.1375,
+    "max": 30.735
+   },
+   "risk_pct_of_200k": {
+    "median": 0.7226,
+    "max": 1.704
+   },
+   "notional_pct_of_1m": {
+    "median": 4.8275,
+    "max": 6.147
+   },
+   "risk_pct_of_1m": {
+    "median": 0.1445,
+    "max": 0.3408
+   },
+   "min_equity_yuan": {
+    "median": 193100.0,
+    "p90": 214460.0,
+    "max": 245880.0,
+    "median_by_risk": 72257.1429,
+    "median_by_notional": 193100.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.662,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.338,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "FG": {
+   "days": 216,
+   "mult": 20.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 19510.0,
+    "max": 23260.0
+   },
+   "risk_1lot_yuan": {
+    "median": 362.8571,
+    "max": 616.0
+   },
+   "notional_pct_of_200k": {
+    "median": 9.755,
+    "max": 11.63
+   },
+   "risk_pct_of_200k": {
+    "median": 0.1814,
+    "max": 0.308
+   },
+   "notional_pct_of_1m": {
+    "median": 1.951,
+    "max": 2.326
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0363,
+    "max": 0.0616
+   },
+   "min_equity_yuan": {
+    "median": 78040.0,
+    "p90": 86800.0,
+    "max": 93040.0,
+    "median_by_risk": 18142.8571,
+    "median_by_notional": 78040.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 1.0,
+    "200k": 1.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "FU": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 38485.0,
+    "max": 54180.0
+   },
+   "risk_1lot_yuan": {
+    "median": 1316.5714,
+    "max": 3653.7143
+   },
+   "notional_pct_of_200k": {
+    "median": 19.2425,
+    "max": 27.09
+   },
+   "risk_pct_of_200k": {
+    "median": 0.6583,
+    "max": 1.8269
+   },
+   "notional_pct_of_1m": {
+    "median": 3.8485,
+    "max": 5.418
+   },
+   "risk_pct_of_1m": {
+    "median": 0.1317,
+    "max": 0.3654
+   },
+   "min_equity_yuan": {
+    "median": 153940.0,
+    "p90": 189900.0,
+    "max": 216720.0,
+    "median_by_risk": 65828.5714,
+    "median_by_notional": 153940.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.028,
+    "200k": 0.944,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.056,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "I": {
+   "days": 216,
+   "mult": 100.0,
+   "bucket": "黑色",
+   "notional_1lot_yuan": {
+    "median": 75100.0,
+    "max": 82800.0
+   },
+   "risk_1lot_yuan": {
+    "median": 971.4286,
+    "max": 1354.2857
+   },
+   "notional_pct_of_200k": {
+    "median": 37.55,
+    "max": 41.4
+   },
+   "risk_pct_of_200k": {
+    "median": 0.4857,
+    "max": 0.6771
+   },
+   "notional_pct_of_1m": {
+    "median": 7.51,
+    "max": 8.28
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0971,
+    "max": 0.1354
+   },
+   "min_equity_yuan": {
+    "median": 300400.0,
+    "p90": 324800.0,
+    "max": 331200.0,
+    "median_by_risk": 48571.4286,
+    "median_by_notional": 300400.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.495,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "JD": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "农产品",
+   "notional_1lot_yuan": {
+    "median": 35735.0,
+    "max": 48800.0
+   },
+   "risk_1lot_yuan": {
+    "median": 588.0,
+    "max": 1002.2857
+   },
+   "notional_pct_of_200k": {
+    "median": 17.8675,
+    "max": 24.4
+   },
+   "risk_pct_of_200k": {
+    "median": 0.294,
+    "max": 0.5011
+   },
+   "notional_pct_of_1m": {
+    "median": 3.5735,
+    "max": 4.88
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0588,
+    "max": 0.1002
+   },
+   "min_equity_yuan": {
+    "median": 142940.0,
+    "p90": 181860.0,
+    "max": 195200.0,
+    "median_by_risk": 29400.0,
+    "median_by_notional": 142940.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 1.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "JM": {
+   "days": 216,
+   "mult": 60.0,
+   "bucket": "黑色",
+   "notional_1lot_yuan": {
+    "median": 76380.0,
+    "max": 103740.0
+   },
+   "risk_1lot_yuan": {
+    "median": 2081.1429,
+    "max": 3387.4286
+   },
+   "notional_pct_of_200k": {
+    "median": 38.19,
+    "max": 51.87
+   },
+   "risk_pct_of_200k": {
+    "median": 1.0406,
+    "max": 1.6937
+   },
+   "notional_pct_of_1m": {
+    "median": 7.638,
+    "max": 10.374
+   },
+   "risk_pct_of_1m": {
+    "median": 0.2081,
+    "max": 0.3387
+   },
+   "min_equity_yuan": {
+    "median": 305520.0,
+    "p90": 376800.0,
+    "max": 414960.0,
+    "median_by_risk": 104057.1429,
+    "median_by_notional": 305520.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.412,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.014,
+    "1000k": 0.0
+   }
+  },
+  "L": {
+   "days": 216,
+   "mult": 5.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 39762.5,
+    "max": 47980.0
+   },
+   "risk_1lot_yuan": {
+    "median": 811.4286,
+    "max": 2260.0
+   },
+   "notional_pct_of_200k": {
+    "median": 19.8813,
+    "max": 23.99
+   },
+   "risk_pct_of_200k": {
+    "median": 0.4057,
+    "max": 1.13
+   },
+   "notional_pct_of_1m": {
+    "median": 3.9763,
+    "max": 4.798
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0811,
+    "max": 0.226
+   },
+   "min_equity_yuan": {
+    "median": 159050.0,
+    "p90": 175910.0,
+    "max": 191920.0,
+    "median_by_risk": 40571.4286,
+    "median_by_notional": 159050.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 1.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "M": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "农产品",
+   "notional_1lot_yuan": {
+    "median": 30285.0,
+    "max": 34790.0
+   },
+   "risk_1lot_yuan": {
+    "median": 296.5714,
+    "max": 658.2857
+   },
+   "notional_pct_of_200k": {
+    "median": 15.1425,
+    "max": 17.395
+   },
+   "risk_pct_of_200k": {
+    "median": 0.1483,
+    "max": 0.3291
+   },
+   "notional_pct_of_1m": {
+    "median": 3.0285,
+    "max": 3.479
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0297,
+    "max": 0.0658
+   },
+   "min_equity_yuan": {
+    "median": 121140.0,
+    "p90": 134480.0,
+    "max": 139160.0,
+    "median_by_risk": 14828.5714,
+    "median_by_notional": 121140.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 1.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "MA": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 28555.0,
+    "max": 35570.0
+   },
+   "risk_1lot_yuan": {
+    "median": 779.4286,
+    "max": 2067.4286
+   },
+   "notional_pct_of_200k": {
+    "median": 14.2775,
+    "max": 17.785
+   },
+   "risk_pct_of_200k": {
+    "median": 0.3897,
+    "max": 1.0337
+   },
+   "notional_pct_of_1m": {
+    "median": 2.8555,
+    "max": 3.557
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0779,
+    "max": 0.2067
+   },
+   "min_equity_yuan": {
+    "median": 114220.0,
+    "p90": 129280.0,
+    "max": 142280.0,
+    "median_by_risk": 38971.4286,
+    "median_by_notional": 114220.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.241,
+    "200k": 1.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "NI": {
+   "days": 216,
+   "mult": 1.0,
+   "bucket": "有色",
+   "notional_1lot_yuan": {
+    "median": 133085.0,
+    "max": 154690.0
+   },
+   "risk_1lot_yuan": {
+    "median": 2275.1429,
+    "max": 5898.2857
+   },
+   "notional_pct_of_200k": {
+    "median": 66.5425,
+    "max": 77.345
+   },
+   "risk_pct_of_200k": {
+    "median": 1.1376,
+    "max": 2.9491
+   },
+   "notional_pct_of_1m": {
+    "median": 13.3085,
+    "max": 15.469
+   },
+   "risk_pct_of_1m": {
+    "median": 0.2275,
+    "max": 0.5898
+   },
+   "min_equity_yuan": {
+    "median": 532340.0,
+    "p90": 577900.0,
+    "max": 618760.0,
+    "median_by_risk": 113757.1429,
+    "median_by_notional": 532340.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.0,
+    "500k": 0.208,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   }
+  },
+  "P": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "农产品",
+   "notional_1lot_yuan": {
+    "median": 94330.0,
+    "max": 104050.0
+   },
+   "risk_1lot_yuan": {
+    "median": 1324.8571,
+    "max": 2450.2857
+   },
+   "notional_pct_of_200k": {
+    "median": 47.165,
+    "max": 52.025
+   },
+   "risk_pct_of_200k": {
+    "median": 0.6624,
+    "max": 1.2251
+   },
+   "notional_pct_of_1m": {
+    "median": 9.433,
+    "max": 10.405
+   },
+   "risk_pct_of_1m": {
+    "median": 0.1325,
+    "max": 0.245
+   },
+   "min_equity_yuan": {
+    "median": 377320.0,
+    "p90": 399720.0,
+    "max": 416200.0,
+    "median_by_risk": 66242.8571,
+    "median_by_notional": 377320.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.097,
+    "1000k": 0.0
+   }
+  },
+  "PP": {
+   "days": 216,
+   "mult": 5.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 42305.0,
+    "max": 52560.0
+   },
+   "risk_1lot_yuan": {
+    "median": 951.5714,
+    "max": 2354.8571
+   },
+   "notional_pct_of_200k": {
+    "median": 21.1525,
+    "max": 26.28
+   },
+   "risk_pct_of_200k": {
+    "median": 0.4758,
+    "max": 1.1774
+   },
+   "notional_pct_of_1m": {
+    "median": 4.2305,
+    "max": 5.256
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0952,
+    "max": 0.2355
+   },
+   "min_equity_yuan": {
+    "median": 169220.0,
+    "p90": 186940.0,
+    "max": 210240.0,
+    "median_by_risk": 47578.5714,
+    "median_by_notional": 169220.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.963,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.037,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "RB": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "黑色",
+   "notional_1lot_yuan": {
+    "median": 31070.0,
+    "max": 32860.0
+   },
+   "risk_1lot_yuan": {
+    "median": 228.0,
+    "max": 297.1429
+   },
+   "notional_pct_of_200k": {
+    "median": 15.535,
+    "max": 16.43
+   },
+   "risk_pct_of_200k": {
+    "median": 0.114,
+    "max": 0.1486
+   },
+   "notional_pct_of_1m": {
+    "median": 3.107,
+    "max": 3.286
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0228,
+    "max": 0.0297
+   },
+   "min_equity_yuan": {
+    "median": 124280.0,
+    "p90": 127200.0,
+    "max": 131440.0,
+    "median_by_risk": 11400.0,
+    "median_by_notional": 124280.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 1.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "RU": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 173950.0,
+    "max": 206450.0
+   },
+   "risk_1lot_yuan": {
+    "median": 2795.7143,
+    "max": 4405.7143
+   },
+   "notional_pct_of_200k": {
+    "median": 86.975,
+    "max": 103.225
+   },
+   "risk_pct_of_200k": {
+    "median": 1.3979,
+    "max": 2.2029
+   },
+   "notional_pct_of_1m": {
+    "median": 17.395,
+    "max": 20.645
+   },
+   "risk_pct_of_1m": {
+    "median": 0.2796,
+    "max": 0.4406
+   },
+   "min_equity_yuan": {
+    "median": 695800.0,
+    "p90": 778200.0,
+    "max": 825800.0,
+    "median_by_risk": 139785.7143,
+    "median_by_notional": 695800.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.0,
+    "500k": 0.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   }
+  },
+  "SA": {
+   "days": 216,
+   "mult": 20.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 22680.0,
+    "max": 25540.0
+   },
+   "risk_1lot_yuan": {
+    "median": 398.2857,
+    "max": 685.7143
+   },
+   "notional_pct_of_200k": {
+    "median": 11.34,
+    "max": 12.77
+   },
+   "risk_pct_of_200k": {
+    "median": 0.1991,
+    "max": 0.3429
+   },
+   "notional_pct_of_1m": {
+    "median": 2.268,
+    "max": 2.554
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0398,
+    "max": 0.0686
+   },
+   "min_equity_yuan": {
+    "median": 90720.0,
+    "p90": 99120.0,
+    "max": 102160.0,
+    "median_by_risk": 19914.2857,
+    "median_by_notional": 90720.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.944,
+    "200k": 1.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "SP": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 48770.0,
+    "max": 56120.0
+   },
+   "risk_1lot_yuan": {
+    "median": 596.5714,
+    "max": 867.4286
+   },
+   "notional_pct_of_200k": {
+    "median": 24.385,
+    "max": 28.06
+   },
+   "risk_pct_of_200k": {
+    "median": 0.2983,
+    "max": 0.4337
+   },
+   "notional_pct_of_1m": {
+    "median": 4.877,
+    "max": 5.612
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0597,
+    "max": 0.0867
+   },
+   "min_equity_yuan": {
+    "median": 195080.0,
+    "p90": 212920.0,
+    "max": 224480.0,
+    "median_by_risk": 29828.5714,
+    "median_by_notional": 195080.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.602,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.398,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "SR": {
+   "days": 216,
+   "mult": 10.0,
+   "bucket": "农产品",
+   "notional_1lot_yuan": {
+    "median": 53210.0,
+    "max": 55210.0
+   },
+   "risk_1lot_yuan": {
+    "median": 405.4286,
+    "max": 591.4286
+   },
+   "notional_pct_of_200k": {
+    "median": 26.605,
+    "max": 27.605
+   },
+   "risk_pct_of_200k": {
+    "median": 0.2027,
+    "max": 0.2957
+   },
+   "notional_pct_of_1m": {
+    "median": 5.321,
+    "max": 5.521
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0405,
+    "max": 0.0591
+   },
+   "min_equity_yuan": {
+    "median": 212840.0,
+    "p90": 217640.0,
+    "max": 220840.0,
+    "median_by_risk": 20271.4286,
+    "median_by_notional": 212840.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "SS": {
+   "days": 216,
+   "mult": 5.0,
+   "bucket": "黑色",
+   "notional_1lot_yuan": {
+    "median": 71350.0,
+    "max": 78900.0
+   },
+   "risk_1lot_yuan": {
+    "median": 945.7143,
+    "max": 1722.8571
+   },
+   "notional_pct_of_200k": {
+    "median": 35.675,
+    "max": 39.45
+   },
+   "risk_pct_of_200k": {
+    "median": 0.4729,
+    "max": 0.8614
+   },
+   "notional_pct_of_1m": {
+    "median": 7.135,
+    "max": 7.89
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0946,
+    "max": 0.1723
+   },
+   "min_equity_yuan": {
+    "median": 285400.0,
+    "p90": 298050.0,
+    "max": 315600.0,
+    "median_by_risk": 47285.7143,
+    "median_by_notional": 285400.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 0.0,
+    "300k": 0.917,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 1.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "TA": {
+   "days": 216,
+   "mult": 5.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 30005.0,
+    "max": 35670.0
+   },
+   "risk_1lot_yuan": {
+    "median": 734.8571,
+    "max": 2011.4286
+   },
+   "notional_pct_of_200k": {
+    "median": 15.0025,
+    "max": 17.835
+   },
+   "risk_pct_of_200k": {
+    "median": 0.3674,
+    "max": 1.0057
+   },
+   "notional_pct_of_1m": {
+    "median": 3.0005,
+    "max": 3.567
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0735,
+    "max": 0.2011
+   },
+   "min_equity_yuan": {
+    "median": 120020.0,
+    "p90": 133420.0,
+    "max": 142680.0,
+    "median_by_risk": 36742.8571,
+    "median_by_notional": 120020.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.0,
+    "200k": 1.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  },
+  "V": {
+   "days": 216,
+   "mult": 5.0,
+   "bucket": "能化",
+   "notional_1lot_yuan": {
+    "median": 24557.5,
+    "max": 31255.0
+   },
+   "risk_1lot_yuan": {
+    "median": 455.7143,
+    "max": 1402.5714
+   },
+   "notional_pct_of_200k": {
+    "median": 12.2788,
+    "max": 15.6275
+   },
+   "risk_pct_of_200k": {
+    "median": 0.2279,
+    "max": 0.7013
+   },
+   "notional_pct_of_1m": {
+    "median": 2.4558,
+    "max": 3.1255
+   },
+   "risk_pct_of_1m": {
+    "median": 0.0456,
+    "max": 0.1403
+   },
+   "min_equity_yuan": {
+    "median": 98230.0,
+    "p90": 105980.0,
+    "max": 125020.0,
+    "median_by_risk": 22785.7143,
+    "median_by_notional": 98230.0
+   },
+   "binding_on_median_day": "notional",
+   "share_days_openable": {
+    "100k": 0.662,
+    "200k": 1.0,
+    "300k": 1.0,
+    "500k": 1.0,
+    "1000k": 1.0
+   },
+   "share_days_1lot_notional_gt_half_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   },
+   "share_days_1lot_notional_gt_full_cap": {
+    "200k": 0.0,
+    "1000k": 0.0
+   }
+  }
+ },
+ "b_floor": {
+  "ok_candidate_days": 980,
+  "ok_with_risk_per_lot_gt_day_risk": 0,
+  "lots0_candidate_days": 125,
+  "lots0_with_risk_per_lot_le_day_risk": 0,
+  "lots0_selected_by_caps_or_topup": 0,
+  "topup_counters_in_result": {
+   "caps_topup_lots": 113,
+   "caps_topup_revived": 28
+  }
+ },
+ "c_skips_base": {
+  "unit": "signal-days (a signal that persists several days is counted once per day)",
+  "categories": {
+   "lots0": 125,
+   "gross_cap_scaled_to_0": 178,
+   "positions_full(N cap, slots_left>0)": 31,
+   "bucket_full": 626
+  },
+  "by_code": {
+   "lots0": {
+    "AG": 58,
+    "AU": 31,
+    "CU": 20,
+    "NI": 14,
+    "RU": 2
+   },
+   "gross_cap_scaled_to_0": {
+    "JM": 35,
+    "NI": 22,
+    "I": 22,
+    "AL": 21,
+    "CF": 20,
+    "P": 20,
+    "FU": 12,
+    "SS": 8,
+    "EB": 6,
+    "BU": 4,
+    "EG": 2,
+    "TA": 2,
+    "M": 2,
+    "JD": 1,
+    "MA": 1
+   },
+   "positions_full(N cap, slots_left>0)": {
+    "I": 6,
+    "SS": 6,
+    "TA": 4,
+    "CF": 3,
+    "P": 2,
+    "FG": 2,
+    "SP": 2,
+    "JD": 2,
+    "FU": 1,
+    "JM": 1,
+    "L": 1,
+    "EB": 1
+   },
+   "bucket_full": {
+    "BU": 76,
+    "PP": 74,
+    "FG": 72,
+    "L": 58,
+    "TA": 50,
+    "EG": 50,
+    "MA": 49,
+    "EB": 45,
+    "SA": 43,
+    "SP": 36,
+    "V": 21,
+    "FU": 21,
+    "P": 10,
+    "AL": 6,
+    "I": 5,
+    "SS": 3,
+    "RU": 3,
+    "SR": 2,
+    "M": 1,
+    "JD": 1
+   }
+  },
+  "replication_checks": {
+   "bucket_skipped_matches_engine_meta": true,
+   "bucket_n": 648,
+   "ncap_n": 34
+  },
+  "days_with_candidates_evaluated(slots_left>0)": 216,
+  "days_positions_full_signals_not_evaluated": 0,
+  "slots_left_hist_on_candidate_days": {
+   "1": 28,
+   "2": 83,
+   "3": 105
+  },
+  "held_count_hist_on_candidate_days": {
+   "0": 105,
+   "1": 83,
+   "2": 28
+  },
+  "clog_entries": 216,
+  "curve_held_hist": {
+   "0": 70,
+   "1": 96,
+   "2": 50
+  },
+  "selected_entries_total": 145,
+  "closed_trades": 57
+ },
+ "equity_curve_row_keys": [
+  "codes",
+  "date",
+  "dd_pct",
+  "equity",
+  "gross_pct",
+  "held",
+  "pnl"
+ ]
+}

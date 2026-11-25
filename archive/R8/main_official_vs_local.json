@@ -1,0 +1,1896 @@
+{
+ "2024-09-01..2025-12-31": {
+  "totals": {
+   "symbol_days": 8721,
+   "identified_official_all": 8706,
+   "identified_official_on_local_set": 7658,
+   "identified_local": 7670,
+   "days_main_differs": 17,
+   "roll_events_official_on_local_set": 210,
+   "roll_events_local": 205,
+   "roll_events_not_in_both": 9
+  },
+  "per_symbol": {
+   "AG": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 8,
+    "roll_events_local": 8,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "AL": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 203,
+    "identified_local": 203,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 46,
+    "roll_events_local": 46,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "AU": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 166,
+    "identified_local": 166,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 3,
+    "roll_events_local": 3,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "BU": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 323,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 16,
+    "roll_events_local": 14,
+    "roll_only_official": [
+     [
+      "2024-09-25",
+      "BU2411",
+      "BU2505"
+     ],
+     [
+      "2024-09-26",
+      "BU2505",
+      "BU2411"
+     ]
+    ],
+    "roll_only_local": []
+   },
+   "CF": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "CU": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 160,
+    "identified_local": 160,
+    "main_differs_days": 2,
+    "roll_events_official_on_local_set": 13,
+    "roll_events_local": 14,
+    "roll_only_official": [
+     [
+      "2024-09-25",
+      "CU2508",
+      "CU2507"
+     ]
+    ],
+    "roll_only_local": [
+     [
+      "2024-09-18",
+      "CU2507",
+      "CU2508"
+     ],
+     [
+      "2024-10-11",
+      "CU2508",
+      "CU2507"
+     ]
+    ]
+   },
+   "EB": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 16,
+    "roll_events_local": 16,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "EG": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "FG": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "FU": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 7,
+    "roll_events_local": 7,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "I": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 185,
+    "identified_local": 185,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 2,
+    "roll_events_local": 2,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "JD": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 323,
+    "identified_local": 323,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 13,
+    "roll_events_local": 13,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "JM": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 178,
+    "identified_local": 178,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 2,
+    "roll_events_local": 2,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "L": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "M": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 323,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 6,
+    "roll_events_local": 4,
+    "roll_only_official": [
+     [
+      "2024-09-25",
+      "M2501",
+      "M2412"
+     ],
+     [
+      "2024-09-26",
+      "M2412",
+      "M2501"
+     ]
+    ],
+    "roll_only_local": []
+   },
+   "MA": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 323,
+    "identified_local": 323,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "NI": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 153,
+    "identified_local": 153,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 7,
+    "roll_events_local": 7,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "P": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "PP": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "RB": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 323,
+    "identified_local": 323,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 5,
+    "roll_events_local": 5,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "RU": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "SA": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 323,
+    "identified_local": 323,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "SP": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 323,
+    "identified_local": 323,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 7,
+    "roll_events_local": 7,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "SR": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 323,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 6,
+    "roll_events_local": 4,
+    "roll_only_official": [
+     [
+      "2024-09-25",
+      "SR2501",
+      "SR2505"
+     ],
+     [
+      "2024-09-26",
+      "SR2505",
+      "SR2501"
+     ]
+    ],
+    "roll_only_local": []
+   },
+   "SS": {
+    "days": 323,
+    "identified_official_all": 323,
+    "identified_official_on_local_set": 165,
+    "identified_local": 165,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 9,
+    "roll_events_local": 9,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "TA": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "V": {
+    "days": 323,
+    "identified_official_all": 322,
+    "identified_official_on_local_set": 322,
+    "identified_local": 323,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 4,
+    "roll_events_local": 4,
+    "roll_only_official": [],
+    "roll_only_local": []
+   }
+  },
+  "main_differs_rows": [
+   [
+    "AG",
+    "2024-09-25",
+    null,
+    "AG2412"
+   ],
+   [
+    "BU",
+    "2024-09-25",
+    "BU2505",
+    "BU2411"
+   ],
+   [
+    "CF",
+    "2024-09-25",
+    null,
+    "CF2501"
+   ],
+   [
+    "CU",
+    "2024-09-11",
+    null,
+    "CU2507"
+   ],
+   [
+    "CU",
+    "2024-09-25",
+    "CU2507",
+    null
+   ],
+   [
+    "EB",
+    "2024-09-25",
+    null,
+    "EB2411"
+   ],
+   [
+    "EG",
+    "2024-09-25",
+    null,
+    "EG2501"
+   ],
+   [
+    "FG",
+    "2024-09-25",
+    null,
+    "FG2501"
+   ],
+   [
+    "FU",
+    "2024-09-25",
+    null,
+    "FU2411"
+   ],
+   [
+    "L",
+    "2024-09-25",
+    null,
+    "L2501"
+   ],
+   [
+    "M",
+    "2024-09-25",
+    "M2412",
+    "M2501"
+   ],
+   [
+    "P",
+    "2024-09-25",
+    null,
+    "P2501"
+   ],
+   [
+    "PP",
+    "2024-09-25",
+    null,
+    "PP2501"
+   ],
+   [
+    "RU",
+    "2024-09-25",
+    null,
+    "RU2501"
+   ],
+   [
+    "SR",
+    "2024-09-25",
+    "SR2505",
+    "SR2501"
+   ],
+   [
+    "TA",
+    "2024-09-25",
+    null,
+    "TA2501"
+   ],
+   [
+    "V",
+    "2024-09-25",
+    null,
+    "V2501"
+   ]
+  ],
+  "roll_differs_rows": [
+   [
+    "BU",
+    "official_only",
+    "2024-09-25",
+    "BU2411",
+    "BU2505"
+   ],
+   [
+    "BU",
+    "official_only",
+    "2024-09-26",
+    "BU2505",
+    "BU2411"
+   ],
+   [
+    "CU",
+    "official_only",
+    "2024-09-25",
+    "CU2508",
+    "CU2507"
+   ],
+   [
+    "CU",
+    "local_only",
+    "2024-09-18",
+    "CU2507",
+    "CU2508"
+   ],
+   [
+    "CU",
+    "local_only",
+    "2024-10-11",
+    "CU2508",
+    "CU2507"
+   ],
+   [
+    "M",
+    "official_only",
+    "2024-09-25",
+    "M2501",
+    "M2412"
+   ],
+   [
+    "M",
+    "official_only",
+    "2024-09-26",
+    "M2412",
+    "M2501"
+   ],
+   [
+    "SR",
+    "official_only",
+    "2024-09-25",
+    "SR2501",
+    "SR2505"
+   ],
+   [
+    "SR",
+    "official_only",
+    "2024-09-26",
+    "SR2505",
+    "SR2501"
+   ]
+  ]
+ },
+ "2018-01-01..2025-12-31": {
+  "totals": {
+   "symbol_days": 50626,
+   "identified_official_all": 50391,
+   "identified_official_on_local_set": 34821,
+   "identified_local": 34948,
+   "days_main_differs": 135,
+   "roll_events_official_on_local_set": 628,
+   "roll_events_local": 619,
+   "roll_events_not_in_both": 19
+  },
+  "per_symbol": {
+   "AG": {
+    "days": 1941,
+    "identified_official_all": 1937,
+    "identified_official_on_local_set": 1735,
+    "identified_local": 1739,
+    "main_differs_days": 4,
+    "roll_events_official_on_local_set": 26,
+    "roll_events_local": 26,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "AL": {
+    "days": 1941,
+    "identified_official_all": 1938,
+    "identified_official_on_local_set": 203,
+    "identified_local": 203,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 46,
+    "roll_events_local": 46,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "AU": {
+    "days": 1941,
+    "identified_official_all": 1935,
+    "identified_official_on_local_set": 166,
+    "identified_local": 166,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 3,
+    "roll_events_local": 3,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "BU": {
+    "days": 1941,
+    "identified_official_all": 1936,
+    "identified_official_on_local_set": 1721,
+    "identified_local": 1726,
+    "main_differs_days": 6,
+    "roll_events_official_on_local_set": 47,
+    "roll_events_local": 45,
+    "roll_only_official": [
+     [
+      "2024-09-25",
+      "BU2411",
+      "BU2505"
+     ],
+     [
+      "2024-09-26",
+      "BU2505",
+      "BU2411"
+     ]
+    ],
+    "roll_only_local": []
+   },
+   "CF": {
+    "days": 1938,
+    "identified_official_all": 1936,
+    "identified_official_on_local_set": 1722,
+    "identified_local": 1723,
+    "main_differs_days": 1,
+    "roll_events_official_on_local_set": 21,
+    "roll_events_local": 21,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "CU": {
+    "days": 1941,
+    "identified_official_all": 1940,
+    "identified_official_on_local_set": 160,
+    "identified_local": 160,
+    "main_differs_days": 2,
+    "roll_events_official_on_local_set": 13,
+    "roll_events_local": 14,
+    "roll_only_official": [
+     [
+      "2024-09-25",
+      "CU2508",
+      "CU2507"
+     ]
+    ],
+    "roll_only_local": [
+     [
+      "2024-09-18",
+      "CU2507",
+      "CU2508"
+     ],
+     [
+      "2024-10-11",
+      "CU2508",
+      "CU2507"
+     ]
+    ]
+   },
+   "EB": {
+    "days": 1519,
+    "identified_official_all": 1507,
+    "identified_official_on_local_set": 1507,
+    "identified_local": 1519,
+    "main_differs_days": 12,
+    "roll_events_official_on_local_set": 64,
+    "roll_events_local": 64,
+    "roll_only_official": [
+     [
+      "2020-12-24",
+      "EB2101",
+      "EB2102"
+     ]
+    ],
+    "roll_only_local": [
+     [
+      "2020-12-22",
+      "EB2101",
+      "EB2102"
+     ]
+    ]
+   },
+   "EG": {
+    "days": 1713,
+    "identified_official_all": 1706,
+    "identified_official_on_local_set": 1611,
+    "identified_local": 1618,
+    "main_differs_days": 7,
+    "roll_events_official_on_local_set": 20,
+    "roll_events_local": 20,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "FG": {
+    "days": 1939,
+    "identified_official_all": 1937,
+    "identified_official_on_local_set": 1706,
+    "identified_local": 1708,
+    "main_differs_days": 2,
+    "roll_events_official_on_local_set": 21,
+    "roll_events_local": 21,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "FU": {
+    "days": 1928,
+    "identified_official_all": 1810,
+    "identified_official_on_local_set": 1726,
+    "identified_local": 1766,
+    "main_differs_days": 40,
+    "roll_events_official_on_local_set": 29,
+    "roll_events_local": 31,
+    "roll_only_official": [],
+    "roll_only_local": [
+     [
+      "2018-09-28",
+      "FU1905",
+      "FU1908"
+     ],
+     [
+      "2018-11-19",
+      "FU1908",
+      "FU1905"
+     ]
+    ]
+   },
+   "I": {
+    "days": 1941,
+    "identified_official_all": 1938,
+    "identified_official_on_local_set": 185,
+    "identified_local": 185,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 2,
+    "roll_events_local": 2,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "JD": {
+    "days": 1941,
+    "identified_official_all": 1938,
+    "identified_official_on_local_set": 1712,
+    "identified_local": 1715,
+    "main_differs_days": 4,
+    "roll_events_official_on_local_set": 49,
+    "roll_events_local": 47,
+    "roll_only_official": [
+     [
+      "2021-01-08",
+      "JD2105",
+      "JD2112"
+     ],
+     [
+      "2021-01-11",
+      "JD2112",
+      "JD2105"
+     ]
+    ],
+    "roll_only_local": []
+   },
+   "JM": {
+    "days": 1941,
+    "identified_official_all": 1933,
+    "identified_official_on_local_set": 178,
+    "identified_local": 178,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 2,
+    "roll_events_local": 2,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "L": {
+    "days": 1941,
+    "identified_official_all": 1934,
+    "identified_official_on_local_set": 1722,
+    "identified_local": 1729,
+    "main_differs_days": 7,
+    "roll_events_official_on_local_set": 21,
+    "roll_events_local": 21,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "M": {
+    "days": 1941,
+    "identified_official_all": 1940,
+    "identified_official_on_local_set": 1721,
+    "identified_local": 1722,
+    "main_differs_days": 2,
+    "roll_events_official_on_local_set": 23,
+    "roll_events_local": 21,
+    "roll_only_official": [
+     [
+      "2024-09-25",
+      "M2501",
+      "M2412"
+     ],
+     [
+      "2024-09-26",
+      "M2412",
+      "M2501"
+     ]
+    ],
+    "roll_only_local": []
+   },
+   "MA": {
+    "days": 1939,
+    "identified_official_all": 1939,
+    "identified_official_on_local_set": 1709,
+    "identified_local": 1709,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 21,
+    "roll_events_local": 21,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "NI": {
+    "days": 1940,
+    "identified_official_all": 1934,
+    "identified_official_on_local_set": 153,
+    "identified_local": 153,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 7,
+    "roll_events_local": 7,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "P": {
+    "days": 1941,
+    "identified_official_all": 1929,
+    "identified_official_on_local_set": 1706,
+    "identified_local": 1716,
+    "main_differs_days": 10,
+    "roll_events_official_on_local_set": 21,
+    "roll_events_local": 21,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "PP": {
+    "days": 1941,
+    "identified_official_all": 1932,
+    "identified_official_on_local_set": 1704,
+    "identified_local": 1715,
+    "main_differs_days": 11,
+    "roll_events_official_on_local_set": 21,
+    "roll_events_local": 21,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "RB": {
+    "days": 1941,
+    "identified_official_all": 1938,
+    "identified_official_on_local_set": 1718,
+    "identified_local": 1721,
+    "main_differs_days": 3,
+    "roll_events_official_on_local_set": 21,
+    "roll_events_local": 21,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "RU": {
+    "days": 1941,
+    "identified_official_all": 1938,
+    "identified_official_on_local_set": 1716,
+    "identified_local": 1719,
+    "main_differs_days": 3,
+    "roll_events_official_on_local_set": 21,
+    "roll_events_local": 21,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "SA": {
+    "days": 1473,
+    "identified_official_all": 1473,
+    "identified_official_on_local_set": 1473,
+    "identified_local": 1473,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 18,
+    "roll_events_local": 18,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "SP": {
+    "days": 1722,
+    "identified_official_all": 1719,
+    "identified_official_on_local_set": 1623,
+    "identified_local": 1626,
+    "main_differs_days": 4,
+    "roll_events_official_on_local_set": 32,
+    "roll_events_local": 30,
+    "roll_only_official": [
+     [
+      "2021-12-30",
+      "SP2205",
+      "SP2206"
+     ],
+     [
+      "2021-12-31",
+      "SP2206",
+      "SP2205"
+     ]
+    ],
+    "roll_only_local": []
+   },
+   "SR": {
+    "days": 1940,
+    "identified_official_all": 1938,
+    "identified_official_on_local_set": 1658,
+    "identified_local": 1659,
+    "main_differs_days": 2,
+    "roll_events_official_on_local_set": 26,
+    "roll_events_local": 24,
+    "roll_only_official": [
+     [
+      "2024-09-25",
+      "SR2501",
+      "SR2505"
+     ],
+     [
+      "2024-09-26",
+      "SR2505",
+      "SR2501"
+     ]
+    ],
+    "roll_only_local": []
+   },
+   "SS": {
+    "days": 1520,
+    "identified_official_all": 1517,
+    "identified_official_on_local_set": 165,
+    "identified_local": 165,
+    "main_differs_days": 0,
+    "roll_events_official_on_local_set": 9,
+    "roll_events_local": 9,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "TA": {
+    "days": 1940,
+    "identified_official_all": 1938,
+    "identified_official_on_local_set": 1716,
+    "identified_local": 1718,
+    "main_differs_days": 2,
+    "roll_events_official_on_local_set": 21,
+    "roll_events_local": 21,
+    "roll_only_official": [],
+    "roll_only_local": []
+   },
+   "V": {
+    "days": 1941,
+    "identified_official_all": 1931,
+    "identified_official_on_local_set": 1705,
+    "identified_local": 1717,
+    "main_differs_days": 13,
+    "roll_events_official_on_local_set": 23,
+    "roll_events_local": 21,
+    "roll_only_official": [
+     [
+      "2021-01-08",
+      "V2105",
+      "V2101"
+     ],
+     [
+      "2021-01-11",
+      "V2101",
+      "V2105"
+     ]
+    ],
+    "roll_only_local": []
+   }
+  },
+  "main_differs_rows": [
+   [
+    "AG",
+    "2021-12-30",
+    null,
+    "AG2206"
+   ],
+   [
+    "AG",
+    "2022-03-23",
+    null,
+    "AG2206"
+   ],
+   [
+    "AG",
+    "2023-08-28",
+    null,
+    "AG2310"
+   ],
+   [
+    "AG",
+    "2024-09-25",
+    null,
+    "AG2412"
+   ],
+   [
+    "BU",
+    "2019-04-30",
+    null,
+    "BU1906"
+   ],
+   [
+    "BU",
+    "2021-04-22",
+    null,
+    "BU2106"
+   ],
+   [
+    "BU",
+    "2021-12-28",
+    null,
+    "BU2206"
+   ],
+   [
+    "BU",
+    "2021-12-30",
+    null,
+    "BU2206"
+   ],
+   [
+    "BU",
+    "2023-08-28",
+    null,
+    "BU2311"
+   ],
+   [
+    "BU",
+    "2024-09-25",
+    "BU2505",
+    "BU2411"
+   ],
+   [
+    "CF",
+    "2024-09-25",
+    null,
+    "CF2501"
+   ],
+   [
+    "CU",
+    "2024-09-11",
+    null,
+    "CU2507"
+   ],
+   [
+    "CU",
+    "2024-09-25",
+    "CU2507",
+    null
+   ],
+   [
+    "EB",
+    "2020-12-11",
+    null,
+    "EB2101"
+   ],
+   [
+    "EB",
+    "2020-12-14",
+    null,
+    "EB2101"
+   ],
+   [
+    "EB",
+    "2020-12-22",
+    null,
+    "EB2102"
+   ],
+   [
+    "EB",
+    "2020-12-23",
+    null,
+    "EB2102"
+   ],
+   [
+    "EB",
+    "2020-12-25",
+    null,
+    "EB2102"
+   ],
+   [
+    "EB",
+    "2021-01-07",
+    null,
+    "EB2102"
+   ],
+   [
+    "EB",
+    "2021-02-09",
+    null,
+    "EB2103"
+   ],
+   [
+    "EB",
+    "2021-12-28",
+    null,
+    "EB2202"
+   ],
+   [
+    "EB",
+    "2021-12-30",
+    null,
+    "EB2202"
+   ],
+   [
+    "EB",
+    "2022-03-23",
+    null,
+    "EB2205"
+   ],
+   [
+    "EB",
+    "2023-08-28",
+    null,
+    "EB2310"
+   ],
+   [
+    "EB",
+    "2024-09-25",
+    null,
+    "EB2411"
+   ],
+   [
+    "EG",
+    "2020-11-18",
+    null,
+    "EG2101"
+   ],
+   [
+    "EG",
+    "2021-01-07",
+    null,
+    "EG2105"
+   ],
+   [
+    "EG",
+    "2021-01-18",
+    null,
+    "EG2105"
+   ],
+   [
+    "EG",
+    "2021-12-30",
+    null,
+    "EG2205"
+   ],
+   [
+    "EG",
+    "2022-03-23",
+    null,
+    "EG2205"
+   ],
+   [
+    "EG",
+    "2023-08-28",
+    null,
+    "EG2401"
+   ],
+   [
+    "EG",
+    "2024-09-25",
+    null,
+    "EG2501"
+   ],
+   [
+    "FG",
+    "2021-12-30",
+    null,
+    "FG2205"
+   ],
+   [
+    "FG",
+    "2024-09-25",
+    null,
+    "FG2501"
+   ],
+   [
+    "FU",
+    "2018-05-02",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-03",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-04",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-07",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-08",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-11",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-14",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-15",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-16",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-17",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-18",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-21",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-22",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-23",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-24",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-25",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-28",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-29",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-30",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-05-31",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-01",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-04",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-05",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-06",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-07",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-08",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-11",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-12",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-13",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-14",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-15",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-19",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-20",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-21",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-22",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-25",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-06-26",
+    null,
+    "FU1905"
+   ],
+   [
+    "FU",
+    "2018-09-28",
+    null,
+    "FU1908"
+   ],
+   [
+    "FU",
+    "2022-03-23",
+    null,
+    "FU2205"
+   ],
+   [
+    "FU",
+    "2024-09-25",
+    null,
+    "FU2411"
+   ],
+   [
+    "JD",
+    "2020-10-20",
+    null,
+    "JD2011"
+   ],
+   [
+    "JD",
+    "2020-12-03",
+    null,
+    "JD2101"
+   ],
+   [
+    "JD",
+    "2021-01-08",
+    "JD2112",
+    "JD2105"
+   ],
+   [
+    "JD",
+    "2021-12-30",
+    null,
+    "JD2205"
+   ],
+   [
+    "L",
+    "2020-12-22",
+    null,
+    "L2105"
+   ],
+   [
+    "L",
+    "2021-01-05",
+    null,
+    "L2105"
+   ],
+   [
+    "L",
+    "2021-01-07",
+    null,
+    "L2105"
+   ],
+   [
+    "L",
+    "2021-01-08",
+    null,
+    "L2105"
+   ],
+   [
+    "L",
+    "2021-01-26",
+    null,
+    "L2105"
+   ],
+   [
+    "L",
+    "2021-12-28",
+    null,
+    "L2205"
+   ],
+   [
+    "L",
+    "2024-09-25",
+    null,
+    "L2501"
+   ],
+   [
+    "M",
+    "2021-12-30",
+    null,
+    "M2205"
+   ],
+   [
+    "M",
+    "2024-09-25",
+    "M2412",
+    "M2501"
+   ],
+   [
+    "P",
+    "2019-04-30",
+    null,
+    "P1909"
+   ],
+   [
+    "P",
+    "2020-08-06",
+    null,
+    "P2009"
+   ],
+   [
+    "P",
+    "2020-12-03",
+    null,
+    "P2101"
+   ],
+   [
+    "P",
+    "2020-12-16",
+    null,
+    "P2105"
+   ],
+   [
+    "P",
+    "2020-12-22",
+    null,
+    "P2105"
+   ],
+   [
+    "P",
+    "2021-01-18",
+    null,
+    "P2105"
+   ],
+   [
+    "P",
+    "2021-01-22",
+    null,
+    "P2105"
+   ],
+   [
+    "P",
+    "2021-02-02",
+    null,
+    "P2105"
+   ],
+   [
+    "P",
+    "2021-12-30",
+    null,
+    "P2205"
+   ],
+   [
+    "P",
+    "2024-09-25",
+    null,
+    "P2501"
+   ],
+   [
+    "PP",
+    "2020-10-29",
+    null,
+    "PP2101"
+   ],
+   [
+    "PP",
+    "2020-11-20",
+    null,
+    "PP2101"
+   ],
+   [
+    "PP",
+    "2021-01-07",
+    null,
+    "PP2105"
+   ],
+   [
+    "PP",
+    "2021-01-18",
+    null,
+    "PP2105"
+   ],
+   [
+    "PP",
+    "2021-01-25",
+    null,
+    "PP2105"
+   ],
+   [
+    "PP",
+    "2021-02-01",
+    null,
+    "PP2105"
+   ],
+   [
+    "PP",
+    "2021-12-28",
+    null,
+    "PP2205"
+   ],
+   [
+    "PP",
+    "2021-12-30",
+    null,
+    "PP2205"
+   ],
+   [
+    "PP",
+    "2022-03-23",
+    null,
+    "PP2205"
+   ],
+   [
+    "PP",
+    "2023-08-28",
+    null,
+    "PP2401"
+   ],
+   [
+    "PP",
+    "2024-09-25",
+    null,
+    "PP2501"
+   ],
+   [
+    "RB",
+    "2021-12-28",
+    null,
+    "RB2205"
+   ],
+   [
+    "RB",
+    "2021-12-30",
+    null,
+    "RB2205"
+   ],
+   [
+    "RB",
+    "2022-03-23",
+    null,
+    "RB2205"
+   ],
+   [
+    "RU",
+    "2019-04-30",
+    null,
+    "RU1909"
+   ],
+   [
+    "RU",
+    "2021-12-30",
+    null,
+    "RU2205"
+   ],
+   [
+    "RU",
+    "2024-09-25",
+    null,
+    "RU2501"
+   ],
+   [
+    "SP",
+    "2019-04-30",
+    null,
+    "SP1906"
+   ],
+   [
+    "SP",
+    "2021-12-28",
+    null,
+    "SP2205"
+   ],
+   [
+    "SP",
+    "2021-12-30",
+    "SP2206",
+    "SP2205"
+   ],
+   [
+    "SP",
+    "2023-08-28",
+    null,
+    "SP2401"
+   ],
+   [
+    "SR",
+    "2021-12-30",
+    null,
+    "SR2205"
+   ],
+   [
+    "SR",
+    "2024-09-25",
+    "SR2505",
+    "SR2501"
+   ],
+   [
+    "TA",
+    "2021-12-30",
+    null,
+    "TA2205"
+   ],
+   [
+    "TA",
+    "2024-09-25",
+    null,
+    "TA2501"
+   ],
+   [
+    "V",
+    "2019-04-30",
+    null,
+    "V1909"
+   ],
+   [
+    "V",
+    "2020-10-29",
+    null,
+    "V2101"
+   ],
+   [
+    "V",
+    "2020-11-18",
+    null,
+    "V2101"
+   ],
+   [
+    "V",
+    "2020-12-11",
+    null,
+    "V2101"
+   ],
+   [
+    "V",
+    "2020-12-14",
+    null,
+    "V2101"
+   ],
+   [
+    "V",
+    "2020-12-22",
+    null,
+    "V2105"
+   ],
+   [
+    "V",
+    "2021-01-07",
+    null,
+    "V2105"
+   ],
+   [
+    "V",
+    "2021-01-08",
+    "V2101",
+    "V2105"
+   ],
+   [
+    "V",
+    "2021-01-25",
+    null,
+    "V2105"
+   ],
+   [
+    "V",
+    "2021-02-04",
+    null,
+    "V2105"
+   ],
+   [
+    "V",
+    "2021-12-28",
+    null,
+    "V2205"
+   ],
+   [
+    "V",
+    "2021-12-30",
+    null,
+    "V2205"
+   ],
+   [
+    "V",
+    "2024-09-25",
+    null,
+    "V2501"
+   ]
+  ],
+  "roll_differs_rows": [
+   [
+    "BU",
+    "official_only",
+    "2024-09-25",
+    "BU2411",
+    "BU2505"
+   ],
+   [
+    "BU",
+    "official_only",
+    "2024-09-26",
+    "BU2505",
+    "BU2411"
+   ],
+   [
+    "CU",
+    "official_only",
+    "2024-09-25",
+    "CU2508",
+    "CU2507"
+   ],
+   [
+    "CU",
+    "local_only",
+    "2024-09-18",
+    "CU2507",
+    "CU2508"
+   ],
+   [
+    "CU",
+    "local_only",
+    "2024-10-11",
+    "CU2508",
+    "CU2507"
+   ],
+   [
+    "EB",
+    "official_only",
+    "2020-12-24",
+    "EB2101",
+    "EB2102"
+   ],
+   [
+    "EB",
+    "local_only",
+    "2020-12-22",
+    "EB2101",
+    "EB2102"
+   ],
+   [
+    "FU",
+    "local_only",
+    "2018-09-28",
+    "FU1905",
+    "FU1908"
+   ],
+   [
+    "FU",
+    "local_only",
+    "2018-11-19",
+    "FU1908",
+    "FU1905"
+   ],
+   [
+    "JD",
+    "official_only",
+    "2021-01-08",
+    "JD2105",
+    "JD2112"
+   ],
+   [
+    "JD",
+    "official_only",
+    "2021-01-11",
+    "JD2112",
+    "JD2105"
+   ],
+   [
+    "M",
+    "official_only",
+    "2024-09-25",
+    "M2501",
+    "M2412"
+   ],
+   [
+    "M",
+    "official_only",
+    "2024-09-26",
+    "M2412",
+    "M2501"
+   ],
+   [
+    "SP",
+    "official_only",
+    "2021-12-30",
+    "SP2205",
+    "SP2206"
+   ],
+   [
+    "SP",
+    "official_only",
+    "2021-12-31",
+    "SP2206",
+    "SP2205"
+   ],
+   [
+    "SR",
+    "official_only",
+    "2024-09-25",
+    "SR2501",
+    "SR2505"
+   ],
+   [
+    "SR",
+    "official_only",
+    "2024-09-26",
+    "SR2505",
+    "SR2501"
+   ],
+   [
+    "V",
+    "official_only",
+    "2021-01-08",
+    "V2105",
+    "V2101"
+   ],
+   [
+    "V",
+    "official_only",
+    "2021-01-11",
+    "V2101",
+    "V2105"
+   ]
+  ]
+ }
+}

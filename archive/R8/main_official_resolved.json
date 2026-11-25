@@ -1,0 +1,2683 @@
+{
+ "window": [
+  "2016-01-04",
+  "2025-12-31"
+ ],
+ "fu_start": "2018-10-16",
+ "unidentified_symbol_days": 135,
+ "class_totals": {
+  "3_to_20_ticks": 52,
+  "cont_close_equals_settle": 12,
+  "within_3_ticks_of_nearest": 43,
+  "cont_close_equals_close_of_next_day": 8,
+  "cont_close_equals_close_of_prev_day": 13,
+  "over_20_ticks": 7
+ },
+ "per_symbol": {
+  "AG": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 4,
+   "unidentified": [
+    {
+     "date": "2021-12-30",
+     "carried_main": "AG2206",
+     "nearest": "AG2206",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 4788.0,
+     "nearest_close": 4783.0,
+     "nearest_settle": 4798.0,
+     "cls": "3_to_20_ticks",
+     "detail": "AG2206"
+    },
+    {
+     "date": "2022-03-23",
+     "carried_main": "AG2206",
+     "nearest": "AG2206",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 5084.0,
+     "nearest_close": 5082.0,
+     "nearest_settle": 5079.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "AG2207"
+    },
+    {
+     "date": "2023-08-28",
+     "carried_main": "AG2310",
+     "nearest": "AG2309",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 5839.0,
+     "nearest_close": 5837.0,
+     "nearest_settle": 5836.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "AG2309"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "AG2412",
+     "nearest": "AG2411",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 7782.0,
+     "nearest_close": 7778.0,
+     "nearest_settle": 7738.0,
+     "cls": "3_to_20_ticks",
+     "detail": "AG2411"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 36,
+   "roll_inside_unidentified_gap": []
+  },
+  "AL": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 3,
+   "unidentified": [
+    {
+     "date": "2021-12-28",
+     "carried_main": "AL2202",
+     "nearest": "AL2202",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 19850.0,
+     "nearest_close": 19860.0,
+     "nearest_settle": 19760.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "AL2205"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "AL2202",
+     "nearest": "AL2201",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 20445.0,
+     "nearest_close": 20435.0,
+     "nearest_settle": 20230.0,
+     "cls": "cont_close_equals_close_of_next_day",
+     "detail": "AL2209@2021-12-31"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "AL2411",
+     "nearest": "AL2411",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 20065.0,
+     "nearest_close": 20055.0,
+     "nearest_settle": 20160.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "AL2411"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 124,
+   "roll_inside_unidentified_gap": []
+  },
+  "AU": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 8,
+   "unidentified": [
+    {
+     "date": "2016-06-15",
+     "carried_main": "AU1612",
+     "nearest": "AU1607",
+     "nearest_close_diff_ticks": 10.0,
+     "cont_close": 275.0,
+     "nearest_close": 275.2,
+     "nearest_settle": 274.6,
+     "cls": "3_to_20_ticks",
+     "detail": "AU1607"
+    },
+    {
+     "date": "2017-10-09",
+     "carried_main": "AU1712",
+     "nearest": "AU1710",
+     "nearest_close_diff_ticks": 0.0,
+     "cont_close": 278.1,
+     "nearest_close": 278.1,
+     "nearest_settle": 278.1,
+     "cls": "cont_close_equals_settle",
+     "detail": "AU1710"
+    },
+    {
+     "date": "2018-01-16",
+     "carried_main": "AU1806",
+     "nearest": "AU1806",
+     "nearest_close_diff_ticks": 10.0,
+     "cont_close": 281.85,
+     "nearest_close": 281.65,
+     "nearest_settle": 281.9,
+     "cls": "3_to_20_ticks",
+     "detail": "AU1806"
+    },
+    {
+     "date": "2019-04-30",
+     "carried_main": "AU1906",
+     "nearest": "AU1906",
+     "nearest_close_diff_ticks": 2.5,
+     "cont_close": 281.6,
+     "nearest_close": 281.55,
+     "nearest_settle": 281.1,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "AU1906"
+    },
+    {
+     "date": "2021-04-22",
+     "carried_main": "AU2106",
+     "nearest": "AU2106",
+     "nearest_close_diff_ticks": 15.0,
+     "cont_close": 376.1,
+     "nearest_close": 376.4,
+     "nearest_settle": 376.7,
+     "cls": "3_to_20_ticks",
+     "detail": "AU2106"
+    },
+    {
+     "date": "2021-12-28",
+     "carried_main": "AU2202",
+     "nearest": "AU2202",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 374.54,
+     "nearest_close": 374.46,
+     "nearest_settle": 373.32,
+     "cls": "3_to_20_ticks",
+     "detail": "AU2202"
+    },
+    {
+     "date": "2022-03-23",
+     "carried_main": "AU2206",
+     "nearest": "AU2206",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 394.76,
+     "nearest_close": 394.72,
+     "nearest_settle": 394.42,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "AU2206"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "AU2412",
+     "nearest": "AU2412",
+     "nearest_close_diff_ticks": 19.0,
+     "cont_close": 598.74,
+     "nearest_close": 598.36,
+     "nearest_settle": 597.62,
+     "cls": "cont_close_equals_close_of_next_day",
+     "detail": "AU2411@2024-09-26"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 39,
+   "roll_inside_unidentified_gap": []
+  },
+  "BU": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 7,
+   "unidentified": [
+    {
+     "date": "2016-04-05",
+     "carried_main": "BU1606",
+     "nearest": "BU1605",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 1662.0,
+     "nearest_close": 1660.0,
+     "nearest_settle": 1658.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "BU1604@2016-04-01"
+    },
+    {
+     "date": "2016-07-29",
+     "carried_main": "BU1609",
+     "nearest": "BU1609",
+     "nearest_close_diff_ticks": 6.0,
+     "cont_close": 1888.0,
+     "nearest_close": 1882.0,
+     "nearest_settle": 1936.0,
+     "cls": "3_to_20_ticks",
+     "detail": "BU1609"
+    },
+    {
+     "date": "2019-04-30",
+     "carried_main": "BU1906",
+     "nearest": "BU1906",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 3606.0,
+     "nearest_close": 3608.0,
+     "nearest_settle": 3576.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "BU1910"
+    },
+    {
+     "date": "2021-04-22",
+     "carried_main": "BU2106",
+     "nearest": "BU2106",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 2866.0,
+     "nearest_close": 2868.0,
+     "nearest_settle": 2910.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "BU2106"
+    },
+    {
+     "date": "2021-12-28",
+     "carried_main": "BU2206",
+     "nearest": "BU2206",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 3242.0,
+     "nearest_close": 3244.0,
+     "nearest_settle": 3238.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "BU2206"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "BU2206",
+     "nearest": "BU2205",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 3288.0,
+     "nearest_close": 3292.0,
+     "nearest_settle": 3282.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "BU2206@2021-12-29"
+    },
+    {
+     "date": "2023-08-28",
+     "carried_main": "BU2311",
+     "nearest": "BU2311",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 3725.0,
+     "nearest_close": 3728.0,
+     "nearest_settle": 3748.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "BU2311"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 57,
+   "roll_inside_unidentified_gap": []
+  },
+  "CF": {
+   "start": "2016-01-04",
+   "trading_days": 2426,
+   "unidentified_n": 3,
+   "unidentified": [
+    {
+     "date": "2017-10-17",
+     "carried_main": "CF1801",
+     "nearest": "CF1801",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 15160.0,
+     "nearest_close": 15185.0,
+     "nearest_settle": 15175.0,
+     "cls": "cont_close_equals_close_of_next_day",
+     "detail": "CF1801@2017-10-18"
+    },
+    {
+     "date": "2018-06-25",
+     "carried_main": "CF1901",
+     "nearest": "CF1901",
+     "nearest_close_diff_ticks": 10.0,
+     "cont_close": 17025.0,
+     "nearest_close": 16975.0,
+     "nearest_settle": 17080.0,
+     "cls": "cont_close_equals_close_of_next_day",
+     "detail": "CF1903@2018-06-26"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "CF2501",
+     "nearest": "CF2501",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 14180.0,
+     "nearest_close": 14170.0,
+     "nearest_settle": 14250.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "CF2501"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 38,
+   "roll_inside_unidentified_gap": []
+  },
+  "CU": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 1,
+   "unidentified": [
+    {
+     "date": "2021-12-30",
+     "carried_main": "CU2202",
+     "nearest": "CU2201",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 69950.0,
+     "nearest_close": 69910.0,
+     "nearest_settle": 69920.0,
+     "cls": "3_to_20_ticks",
+     "detail": "CU2201"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 126,
+   "roll_inside_unidentified_gap": []
+  },
+  "EB": {
+   "start": "2019-12-26",
+   "trading_days": 1459,
+   "unidentified_n": 12,
+   "unidentified": [
+    {
+     "date": "2020-12-11",
+     "carried_main": "EB2101",
+     "nearest": "EB2101",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 6810.0,
+     "nearest_close": 6814.0,
+     "nearest_settle": 6776.0,
+     "cls": "3_to_20_ticks",
+     "detail": "EB2101"
+    },
+    {
+     "date": "2020-12-14",
+     "carried_main": "EB2101",
+     "nearest": "EB2101",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 6820.0,
+     "nearest_close": 6822.0,
+     "nearest_settle": 6817.0,
+     "cls": "cont_close_equals_close_of_next_day",
+     "detail": "EB2102@2020-12-15"
+    },
+    {
+     "date": "2020-12-22",
+     "carried_main": "EB2101",
+     "nearest": "EB2102",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 6490.0,
+     "nearest_close": 6486.0,
+     "nearest_settle": 6649.0,
+     "cls": "3_to_20_ticks",
+     "detail": "EB2102"
+    },
+    {
+     "date": "2020-12-23",
+     "carried_main": "EB2101",
+     "nearest": "EB2102",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 6375.0,
+     "nearest_close": 6377.0,
+     "nearest_settle": 6411.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "EB2102"
+    },
+    {
+     "date": "2020-12-25",
+     "carried_main": "EB2102",
+     "nearest": "EB2102",
+     "nearest_close_diff_ticks": 8.0,
+     "cont_close": 6447.0,
+     "nearest_close": 6455.0,
+     "nearest_settle": 6524.0,
+     "cls": "3_to_20_ticks",
+     "detail": "EB2102"
+    },
+    {
+     "date": "2021-01-07",
+     "carried_main": "EB2102",
+     "nearest": "EB2102",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 6655.0,
+     "nearest_close": 6660.0,
+     "nearest_settle": 6610.0,
+     "cls": "3_to_20_ticks",
+     "detail": "EB2102"
+    },
+    {
+     "date": "2021-02-09",
+     "carried_main": "EB2103",
+     "nearest": "EB2103",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 7914.0,
+     "nearest_close": 7918.0,
+     "nearest_settle": 7806.0,
+     "cls": "3_to_20_ticks",
+     "detail": "EB2103"
+    },
+    {
+     "date": "2021-12-28",
+     "carried_main": "EB2202",
+     "nearest": "EB2202",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 8309.0,
+     "nearest_close": 8304.0,
+     "nearest_settle": 8256.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "EB2204"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "EB2202",
+     "nearest": "EB2203",
+     "nearest_close_diff_ticks": 7.0,
+     "cont_close": 8471.0,
+     "nearest_close": 8478.0,
+     "nearest_settle": 8416.0,
+     "cls": "3_to_20_ticks",
+     "detail": "EB2203"
+    },
+    {
+     "date": "2022-03-23",
+     "carried_main": "EB2205",
+     "nearest": "EB2204",
+     "nearest_close_diff_ticks": 7.0,
+     "cont_close": 9775.0,
+     "nearest_close": 9782.0,
+     "nearest_settle": 9748.0,
+     "cls": "3_to_20_ticks",
+     "detail": "EB2204"
+    },
+    {
+     "date": "2023-08-28",
+     "carried_main": "EB2310",
+     "nearest": "EB2310",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 8349.0,
+     "nearest_close": 8347.0,
+     "nearest_settle": 8378.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "EB2310"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "EB2411",
+     "nearest": "EB2411",
+     "nearest_close_diff_ticks": 70.0,
+     "cont_close": 8440.0,
+     "nearest_close": 8370.0,
+     "nearest_settle": 8518.0,
+     "cls": "over_20_ticks",
+     "detail": "EB2411"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 64,
+   "roll_inside_unidentified_gap": [
+    {
+     "gap": [
+      "2020-12-22",
+      "2020-12-23"
+     ],
+     "main_before": "EB2101",
+     "next_identified_main": "EB2102"
+    }
+   ]
+  },
+  "EG": {
+   "start": "2019-03-13",
+   "trading_days": 1653,
+   "unidentified_n": 7,
+   "unidentified": [
+    {
+     "date": "2020-11-18",
+     "carried_main": "EG2101",
+     "nearest": "EG2101",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 3761.0,
+     "nearest_close": 3763.0,
+     "nearest_settle": 3713.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "EG2101"
+    },
+    {
+     "date": "2021-01-07",
+     "carried_main": "EG2105",
+     "nearest": "EG2105",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 4440.0,
+     "nearest_close": 4438.0,
+     "nearest_settle": 4453.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "EG2105"
+    },
+    {
+     "date": "2021-01-18",
+     "carried_main": "EG2105",
+     "nearest": "EG2104",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 4450.0,
+     "nearest_close": 4448.0,
+     "nearest_settle": 4411.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "EG2102@2021-01-15"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "EG2205",
+     "nearest": "EG2203",
+     "nearest_close_diff_ticks": 6.0,
+     "cont_close": 4891.0,
+     "nearest_close": 4885.0,
+     "nearest_settle": 4838.0,
+     "cls": "3_to_20_ticks",
+     "detail": "EG2203"
+    },
+    {
+     "date": "2022-03-23",
+     "carried_main": "EG2205",
+     "nearest": "EG2205",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 5153.0,
+     "nearest_close": 5151.0,
+     "nearest_settle": 5142.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "EG2205"
+    },
+    {
+     "date": "2023-08-28",
+     "carried_main": "EG2401",
+     "nearest": "EG2401",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 4102.0,
+     "nearest_close": 4100.0,
+     "nearest_settle": 4131.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "EG2401"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "EG2501",
+     "nearest": "EG2501",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 4498.0,
+     "nearest_close": 4493.0,
+     "nearest_settle": 4505.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "EG2412"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 21,
+   "roll_inside_unidentified_gap": []
+  },
+  "FG": {
+   "start": "2016-01-04",
+   "trading_days": 2425,
+   "unidentified_n": 3,
+   "unidentified": [
+    {
+     "date": "2016-09-02",
+     "carried_main": "FG1701",
+     "nearest": "FG1701",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 1195.0,
+     "nearest_close": 1191.0,
+     "nearest_settle": 1187.0,
+     "cls": "3_to_20_ticks",
+     "detail": "FG1701"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "FG2205",
+     "nearest": "FG2205",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 1737.0,
+     "nearest_close": 1735.0,
+     "nearest_settle": 1746.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "FG2205"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "FG2501",
+     "nearest": "FG2501",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 1134.0,
+     "nearest_close": 1129.0,
+     "nearest_settle": 1146.0,
+     "cls": "3_to_20_ticks",
+     "detail": "FG2501"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 34,
+   "roll_inside_unidentified_gap": []
+  },
+  "FU": {
+   "start": "2018-10-16",
+   "trading_days": 1752,
+   "unidentified_n": 2,
+   "unidentified": [
+    {
+     "date": "2022-03-23",
+     "carried_main": "FU2205",
+     "nearest": "FU2205",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 4079.0,
+     "nearest_close": 4076.0,
+     "nearest_settle": 4046.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "FU2205"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "FU2411",
+     "nearest": "FU2411",
+     "nearest_close_diff_ticks": 7.0,
+     "cont_close": 2875.0,
+     "nearest_close": 2882.0,
+     "nearest_settle": 2889.0,
+     "cls": "3_to_20_ticks",
+     "detail": "FU2411"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 30,
+   "roll_inside_unidentified_gap": []
+  },
+  "I": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 3,
+   "unidentified": [
+    {
+     "date": "2021-01-07",
+     "carried_main": "I2105",
+     "nearest": "I2105",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 1061.5,
+     "nearest_close": 1062.5,
+     "nearest_settle": 1043.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "I2105"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "I2205",
+     "nearest": "I2205",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 667.0,
+     "nearest_close": 669.5,
+     "nearest_settle": 674.0,
+     "cls": "3_to_20_ticks",
+     "detail": "I2205"
+    },
+    {
+     "date": "2023-08-28",
+     "carried_main": "I2401",
+     "nearest": "I2401",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 812.5,
+     "nearest_close": 811.0,
+     "nearest_settle": 819.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "I2401"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 36,
+   "roll_inside_unidentified_gap": []
+  },
+  "JD": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 4,
+   "unidentified": [
+    {
+     "date": "2016-07-29",
+     "carried_main": "JD1609",
+     "nearest": "JD1609",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 3805.0,
+     "nearest_close": 3810.0,
+     "nearest_settle": 3847.0,
+     "cls": "3_to_20_ticks",
+     "detail": "JD1609"
+    },
+    {
+     "date": "2020-10-20",
+     "carried_main": "JD2011",
+     "nearest": "JD2011",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 3562.0,
+     "nearest_close": 3565.0,
+     "nearest_settle": 3572.0,
+     "cls": "cont_close_equals_close_of_next_day",
+     "detail": "JD2011@2020-10-21"
+    },
+    {
+     "date": "2020-12-03",
+     "carried_main": "JD2101",
+     "nearest": "JD2101",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 3714.0,
+     "nearest_close": 3712.0,
+     "nearest_settle": 3697.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "JD2101"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "JD2205",
+     "nearest": "JD2205",
+     "nearest_close_diff_ticks": 6.0,
+     "cont_close": 4136.0,
+     "nearest_close": 4142.0,
+     "nearest_settle": 4136.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "JD2205"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 61,
+   "roll_inside_unidentified_gap": [
+    {
+     "gap": [
+      "2016-07-29",
+      "2016-07-29"
+     ],
+     "main_before": "JD1609",
+     "next_identified_main": "JD1701"
+    }
+   ]
+  },
+  "JM": {
+   "start": "2016-01-04",
+   "trading_days": 2428,
+   "unidentified_n": 8,
+   "unidentified": [
+    {
+     "date": "2019-04-30",
+     "carried_main": "JM1909",
+     "nearest": "JM1909",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 1351.0,
+     "nearest_close": 1352.0,
+     "nearest_settle": 1352.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "JM1909"
+    },
+    {
+     "date": "2020-12-25",
+     "carried_main": "JM2105",
+     "nearest": "JM2105",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 1687.5,
+     "nearest_close": 1689.0,
+     "nearest_settle": 1643.5,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "JM2105"
+    },
+    {
+     "date": "2021-02-01",
+     "carried_main": "JM2105",
+     "nearest": "JM2105",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 1501.0,
+     "nearest_close": 1499.5,
+     "nearest_settle": 1506.5,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "JM2106@2021-01-29"
+    },
+    {
+     "date": "2021-12-28",
+     "carried_main": "JM2205",
+     "nearest": "JM2205",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 2165.0,
+     "nearest_close": 2166.0,
+     "nearest_settle": 2157.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "JM2205"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "JM2205",
+     "nearest": "JM2202",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 2184.5,
+     "nearest_close": 2186.5,
+     "nearest_settle": 2186.5,
+     "cls": "3_to_20_ticks",
+     "detail": "JM2202"
+    },
+    {
+     "date": "2022-03-23",
+     "carried_main": "JM2205",
+     "nearest": "JM2205",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 2942.5,
+     "nearest_close": 2940.0,
+     "nearest_settle": 2920.0,
+     "cls": "3_to_20_ticks",
+     "detail": "JM2205"
+    },
+    {
+     "date": "2023-08-28",
+     "carried_main": "JM2401",
+     "nearest": "JM2401",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 1498.5,
+     "nearest_close": 1497.0,
+     "nearest_settle": 1506.5,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "JM2401"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "JM2501",
+     "nearest": "JM2505",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 1327.0,
+     "nearest_close": 1328.5,
+     "nearest_settle": 1337.5,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "JM2509@2024-09-24"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 39,
+   "roll_inside_unidentified_gap": []
+  },
+  "L": {
+   "start": "2016-01-04",
+   "trading_days": 2428,
+   "unidentified_n": 8,
+   "unidentified": [
+    {
+     "date": "2017-10-09",
+     "carried_main": "L1801",
+     "nearest": "L1710",
+     "nearest_close_diff_ticks": 0.0,
+     "cont_close": 9200.0,
+     "nearest_close": 9200.0,
+     "nearest_settle": 9200.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "L1710"
+    },
+    {
+     "date": "2020-12-22",
+     "carried_main": "L2105",
+     "nearest": "L2105",
+     "nearest_close_diff_ticks": 10.0,
+     "cont_close": 7760.0,
+     "nearest_close": 7770.0,
+     "nearest_settle": 7880.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "L2102@2020-12-21"
+    },
+    {
+     "date": "2021-01-05",
+     "carried_main": "L2105",
+     "nearest": "L2105",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 7705.0,
+     "nearest_close": 7710.0,
+     "nearest_settle": 7740.0,
+     "cls": "3_to_20_ticks",
+     "detail": "L2105"
+    },
+    {
+     "date": "2021-01-07",
+     "carried_main": "L2105",
+     "nearest": "L2105",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 7585.0,
+     "nearest_close": 7590.0,
+     "nearest_settle": 7660.0,
+     "cls": "3_to_20_ticks",
+     "detail": "L2105"
+    },
+    {
+     "date": "2021-01-08",
+     "carried_main": "L2105",
+     "nearest": "L2104",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 7455.0,
+     "nearest_close": 7460.0,
+     "nearest_settle": 7560.0,
+     "cls": "3_to_20_ticks",
+     "detail": "L2104"
+    },
+    {
+     "date": "2021-01-26",
+     "carried_main": "L2105",
+     "nearest": "L2105",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 7750.0,
+     "nearest_close": 7745.0,
+     "nearest_settle": 7790.0,
+     "cls": "3_to_20_ticks",
+     "detail": "L2105"
+    },
+    {
+     "date": "2021-12-28",
+     "carried_main": "L2205",
+     "nearest": "L2205",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 8503.0,
+     "nearest_close": 8505.0,
+     "nearest_settle": 8425.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "L2205"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "L2501",
+     "nearest": "L2411",
+     "nearest_close_diff_ticks": 24.0,
+     "cont_close": 7982.0,
+     "nearest_close": 8006.0,
+     "nearest_settle": 8061.0,
+     "cls": "over_20_ticks",
+     "detail": "L2411"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 30,
+   "roll_inside_unidentified_gap": []
+  },
+  "M": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 1,
+   "unidentified": [
+    {
+     "date": "2021-12-30",
+     "carried_main": "M2205",
+     "nearest": "M2205",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 3232.0,
+     "nearest_close": 3234.0,
+     "nearest_settle": 3221.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "M2205"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 36,
+   "roll_inside_unidentified_gap": []
+  },
+  "MA": {
+   "start": "2016-01-04",
+   "trading_days": 2425,
+   "unidentified_n": 1,
+   "unidentified": [
+    {
+     "date": "2016-09-02",
+     "carried_main": "MA1701",
+     "nearest": "MA1701",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 1966.0,
+     "nearest_close": 1962.0,
+     "nearest_settle": 1963.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "MA1703"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 36,
+   "roll_inside_unidentified_gap": []
+  },
+  "NI": {
+   "start": "2016-01-04",
+   "trading_days": 2428,
+   "unidentified_n": 8,
+   "unidentified": [
+    {
+     "date": "2016-04-05",
+     "carried_main": "NI1605",
+     "nearest": "NI1604",
+     "nearest_close_diff_ticks": 0.0,
+     "cont_close": 66100.0,
+     "nearest_close": 66100.0,
+     "nearest_settle": 66100.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "NI1604"
+    },
+    {
+     "date": "2017-10-09",
+     "carried_main": "NI1801",
+     "nearest": "NI1806",
+     "nearest_close_diff_ticks": 50.0,
+     "cont_close": 84210.0,
+     "nearest_close": 84710.0,
+     "nearest_settle": 84710.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "NI1710@2017-09-29"
+    },
+    {
+     "date": "2019-04-30",
+     "carried_main": "NI1906",
+     "nearest": "NI1905",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 97850.0,
+     "nearest_close": 97870.0,
+     "nearest_settle": 97920.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "NI1909@2019-04-29"
+    },
+    {
+     "date": "2021-12-28",
+     "carried_main": "NI2202",
+     "nearest": "NI2202",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 149150.0,
+     "nearest_close": 149200.0,
+     "nearest_settle": 148590.0,
+     "cls": "3_to_20_ticks",
+     "detail": "NI2202"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "NI2202",
+     "nearest": "NI2202",
+     "nearest_close_diff_ticks": 23.0,
+     "cont_close": 150220.0,
+     "nearest_close": 150450.0,
+     "nearest_settle": 150040.0,
+     "cls": "over_20_ticks",
+     "detail": "NI2202"
+    },
+    {
+     "date": "2022-03-23",
+     "carried_main": "NI2204",
+     "nearest": "NI2204",
+     "nearest_close_diff_ticks": 15.0,
+     "cont_close": 212150.0,
+     "nearest_close": 212000.0,
+     "nearest_settle": 210040.0,
+     "cls": "3_to_20_ticks",
+     "detail": "NI2204"
+    },
+    {
+     "date": "2023-08-28",
+     "carried_main": "NI2310",
+     "nearest": "NI2310",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 167030.0,
+     "nearest_close": 167070.0,
+     "nearest_settle": 168970.0,
+     "cls": "3_to_20_ticks",
+     "detail": "NI2310"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "NI2410",
+     "nearest": "NI2410",
+     "nearest_close_diff_ticks": 10.0,
+     "cont_close": 127560.0,
+     "nearest_close": 127460.0,
+     "nearest_settle": 127740.0,
+     "cls": "3_to_20_ticks",
+     "detail": "NI2410"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 85,
+   "roll_inside_unidentified_gap": []
+  },
+  "P": {
+   "start": "2016-01-04",
+   "trading_days": 2427,
+   "unidentified_n": 12,
+   "unidentified": [
+    {
+     "date": "2019-04-30",
+     "carried_main": "P1909",
+     "nearest": "P1909",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 4502.0,
+     "nearest_close": 4496.0,
+     "nearest_settle": 4496.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "P1909@2019-04-29"
+    },
+    {
+     "date": "2020-08-06",
+     "carried_main": "P2009",
+     "nearest": "P2009",
+     "nearest_close_diff_ticks": 30.0,
+     "cont_close": 5890.0,
+     "nearest_close": 5950.0,
+     "nearest_settle": 5908.0,
+     "cls": "over_20_ticks",
+     "detail": "P2009"
+    },
+    {
+     "date": "2020-12-03",
+     "carried_main": "P2101",
+     "nearest": "P2101",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 6668.0,
+     "nearest_close": 6662.0,
+     "nearest_settle": 6546.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "P2101"
+    },
+    {
+     "date": "2020-12-10",
+     "carried_main": "P2101",
+     "nearest": "P2101",
+     "nearest_close_diff_ticks": 15.0,
+     "cont_close": 6716.0,
+     "nearest_close": 6686.0,
+     "nearest_settle": 6720.0,
+     "cls": "3_to_20_ticks",
+     "detail": "P2101"
+    },
+    {
+     "date": "2020-12-11",
+     "carried_main": "P2101",
+     "nearest": "P2101",
+     "nearest_close_diff_ticks": 50.0,
+     "cont_close": 7022.0,
+     "nearest_close": 6922.0,
+     "nearest_settle": 6830.0,
+     "cls": "over_20_ticks",
+     "detail": "P2101"
+    },
+    {
+     "date": "2020-12-16",
+     "carried_main": "P2105",
+     "nearest": "P2105",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 6716.0,
+     "nearest_close": 6720.0,
+     "nearest_settle": 6662.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "P2105"
+    },
+    {
+     "date": "2020-12-22",
+     "carried_main": "P2105",
+     "nearest": "P2105",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 6568.0,
+     "nearest_close": 6572.0,
+     "nearest_settle": 6708.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "P2105"
+    },
+    {
+     "date": "2021-01-18",
+     "carried_main": "P2105",
+     "nearest": "P2105",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 6728.0,
+     "nearest_close": 6724.0,
+     "nearest_settle": 6678.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "P2105"
+    },
+    {
+     "date": "2021-01-22",
+     "carried_main": "P2105",
+     "nearest": "P2105",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 6474.0,
+     "nearest_close": 6468.0,
+     "nearest_settle": 6530.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "P2105"
+    },
+    {
+     "date": "2021-02-02",
+     "carried_main": "P2105",
+     "nearest": "P2105",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 6666.0,
+     "nearest_close": 6670.0,
+     "nearest_settle": 6670.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "P2105"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "P2205",
+     "nearest": "P2205",
+     "nearest_close_diff_ticks": 8.0,
+     "cont_close": 8454.0,
+     "nearest_close": 8470.0,
+     "nearest_settle": 8438.0,
+     "cls": "3_to_20_ticks",
+     "detail": "P2205"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "P2501",
+     "nearest": "P2501",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 8390.0,
+     "nearest_close": 8386.0,
+     "nearest_settle": 8380.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "P2501"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 30,
+   "roll_inside_unidentified_gap": [
+    {
+     "gap": [
+      "2020-12-10",
+      "2020-12-11"
+     ],
+     "main_before": "P2101",
+     "next_identified_main": "P2105"
+    }
+   ]
+  },
+  "PP": {
+   "start": "2016-01-04",
+   "trading_days": 2428,
+   "unidentified_n": 10,
+   "unidentified": [
+    {
+     "date": "2016-04-05",
+     "carried_main": "PP1609",
+     "nearest": "PP1605",
+     "nearest_close_diff_ticks": 67.0,
+     "cont_close": 7580.0,
+     "nearest_close": 7513.0,
+     "nearest_settle": 7498.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "PP1604@2016-04-01"
+    },
+    {
+     "date": "2020-10-29",
+     "carried_main": "PP2101",
+     "nearest": "PP2101",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 7788.0,
+     "nearest_close": 7791.0,
+     "nearest_settle": 7823.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "PP2101"
+    },
+    {
+     "date": "2020-11-20",
+     "carried_main": "PP2101",
+     "nearest": "PP2101",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 8519.0,
+     "nearest_close": 8523.0,
+     "nearest_settle": 8536.0,
+     "cls": "3_to_20_ticks",
+     "detail": "PP2101"
+    },
+    {
+     "date": "2021-01-07",
+     "carried_main": "PP2105",
+     "nearest": "PP2105",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 7904.0,
+     "nearest_close": 7906.0,
+     "nearest_settle": 7950.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "PP2105"
+    },
+    {
+     "date": "2021-01-18",
+     "carried_main": "PP2105",
+     "nearest": "PP2105",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 8215.0,
+     "nearest_close": 8213.0,
+     "nearest_settle": 8082.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "PP2105"
+    },
+    {
+     "date": "2021-01-25",
+     "carried_main": "PP2105",
+     "nearest": "PP2105",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 8055.0,
+     "nearest_close": 8057.0,
+     "nearest_settle": 8118.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "PP2105"
+    },
+    {
+     "date": "2021-02-01",
+     "carried_main": "PP2105",
+     "nearest": "PP2105",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 8163.0,
+     "nearest_close": 8166.0,
+     "nearest_settle": 8229.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "PP2105"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "PP2205",
+     "nearest": "PP2205",
+     "nearest_close_diff_ticks": 8.0,
+     "cont_close": 8157.0,
+     "nearest_close": 8165.0,
+     "nearest_settle": 8137.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "PP2202@2021-12-29"
+    },
+    {
+     "date": "2022-03-23",
+     "carried_main": "PP2205",
+     "nearest": "PP2205",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 8898.0,
+     "nearest_close": 8900.0,
+     "nearest_settle": 8817.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "PP2205"
+    },
+    {
+     "date": "2023-08-28",
+     "carried_main": "PP2401",
+     "nearest": "PP2401",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 7626.0,
+     "nearest_close": 7628.0,
+     "nearest_settle": 7660.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "PP2403@2023-08-25"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 34,
+   "roll_inside_unidentified_gap": []
+  },
+  "RB": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 3,
+   "unidentified": [
+    {
+     "date": "2021-12-28",
+     "carried_main": "RB2205",
+     "nearest": "RB2205",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 4324.0,
+     "nearest_close": 4319.0,
+     "nearest_settle": 4327.0,
+     "cls": "3_to_20_ticks",
+     "detail": "RB2205"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "RB2205",
+     "nearest": "RB2205",
+     "nearest_close_diff_ticks": 11.0,
+     "cont_close": 4271.0,
+     "nearest_close": 4282.0,
+     "nearest_settle": 4320.0,
+     "cls": "3_to_20_ticks",
+     "detail": "RB2205"
+    },
+    {
+     "date": "2022-03-23",
+     "carried_main": "RB2205",
+     "nearest": "RB2205",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 4985.0,
+     "nearest_close": 4983.0,
+     "nearest_settle": 4926.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "RB2205"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 34,
+   "roll_inside_unidentified_gap": []
+  },
+  "RU": {
+   "start": "2016-01-04",
+   "trading_days": 2429,
+   "unidentified_n": 5,
+   "unidentified": [
+    {
+     "date": "2016-04-05",
+     "carried_main": "RU1609",
+     "nearest": "RU1605",
+     "nearest_close_diff_ticks": 64.0,
+     "cont_close": 10970.0,
+     "nearest_close": 11290.0,
+     "nearest_settle": 11145.0,
+     "cls": "over_20_ticks",
+     "detail": "RU1605"
+    },
+    {
+     "date": "2017-10-09",
+     "carried_main": "RU1801",
+     "nearest": "RU1801",
+     "nearest_close_diff_ticks": 446.0,
+     "cont_close": 11120.0,
+     "nearest_close": 13350.0,
+     "nearest_settle": 13340.0,
+     "cls": "over_20_ticks",
+     "detail": "RU1801"
+    },
+    {
+     "date": "2019-04-30",
+     "carried_main": "RU1909",
+     "nearest": "RU1909",
+     "nearest_close_diff_ticks": 6.0,
+     "cont_close": 11670.0,
+     "nearest_close": 11700.0,
+     "nearest_settle": 11510.0,
+     "cls": "cont_close_equals_close_of_next_day",
+     "detail": "RU1909@2019-05-06"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "RU2205",
+     "nearest": "RU2205",
+     "nearest_close_diff_ticks": 6.0,
+     "cont_close": 14790.0,
+     "nearest_close": 14820.0,
+     "nearest_settle": 14765.0,
+     "cls": "3_to_20_ticks",
+     "detail": "RU2205"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "RU2501",
+     "nearest": "RU2505",
+     "nearest_close_diff_ticks": 14.0,
+     "cont_close": 18400.0,
+     "nearest_close": 18470.0,
+     "nearest_settle": 18685.0,
+     "cls": "3_to_20_ticks",
+     "detail": "RU2505"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 30,
+   "roll_inside_unidentified_gap": []
+  },
+  "SA": {
+   "start": "2020-03-10",
+   "trading_days": 1413,
+   "unidentified_n": 0,
+   "unidentified": [],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 18,
+   "roll_inside_unidentified_gap": []
+  },
+  "SP": {
+   "start": "2019-02-28",
+   "trading_days": 1662,
+   "unidentified_n": 3,
+   "unidentified": [
+    {
+     "date": "2019-04-30",
+     "carried_main": "SP1906",
+     "nearest": "SP2002",
+     "nearest_close_diff_ticks": 3.0,
+     "cont_close": 5260.0,
+     "nearest_close": 5266.0,
+     "nearest_settle": 5266.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "SP1906"
+    },
+    {
+     "date": "2021-12-28",
+     "carried_main": "SP2205",
+     "nearest": "SP2205",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 5822.0,
+     "nearest_close": 5818.0,
+     "nearest_settle": 5838.0,
+     "cls": "cont_close_equals_settle",
+     "detail": "SP2209"
+    },
+    {
+     "date": "2023-08-28",
+     "carried_main": "SP2401",
+     "nearest": "SP2401",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 5590.0,
+     "nearest_close": 5594.0,
+     "nearest_settle": 5614.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "SP2401"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 33,
+   "roll_inside_unidentified_gap": []
+  },
+  "SR": {
+   "start": "2016-01-04",
+   "trading_days": 2428,
+   "unidentified_n": 4,
+   "unidentified": [
+    {
+     "date": "2016-09-02",
+     "carried_main": "SR1701",
+     "nearest": "SR1701",
+     "nearest_close_diff_ticks": 6.0,
+     "cont_close": 6187.0,
+     "nearest_close": 6181.0,
+     "nearest_settle": 6178.0,
+     "cls": "3_to_20_ticks",
+     "detail": "SR1701"
+    },
+    {
+     "date": "2017-10-17",
+     "carried_main": "SR1801",
+     "nearest": "SR1801",
+     "nearest_close_diff_ticks": 14.0,
+     "cont_close": 6253.0,
+     "nearest_close": 6267.0,
+     "nearest_settle": 6251.0,
+     "cls": "3_to_20_ticks",
+     "detail": "SR1801"
+    },
+    {
+     "date": "2018-01-16",
+     "carried_main": "SR1805",
+     "nearest": "SR1805",
+     "nearest_close_diff_ticks": 6.0,
+     "cont_close": 5821.0,
+     "nearest_close": 5815.0,
+     "nearest_settle": 5818.0,
+     "cls": "3_to_20_ticks",
+     "detail": "SR1805"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "SR2205",
+     "nearest": "SR2205",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 5744.0,
+     "nearest_close": 5748.0,
+     "nearest_settle": 5733.0,
+     "cls": "3_to_20_ticks",
+     "detail": "SR2205"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 42,
+   "roll_inside_unidentified_gap": []
+  },
+  "SS": {
+   "start": "2019-12-25",
+   "trading_days": 1460,
+   "unidentified_n": 3,
+   "unidentified": [
+    {
+     "date": "2021-12-28",
+     "carried_main": "SS2202",
+     "nearest": "SS2202",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 16915.0,
+     "nearest_close": 16905.0,
+     "nearest_settle": 16810.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "SS2202"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "SS2202",
+     "nearest": "SS2201",
+     "nearest_close_diff_ticks": 8.0,
+     "cont_close": 17150.0,
+     "nearest_close": 17190.0,
+     "nearest_settle": 17070.0,
+     "cls": "3_to_20_ticks",
+     "detail": "SS2201"
+    },
+    {
+     "date": "2022-03-23",
+     "carried_main": "SS2204",
+     "nearest": "SS2204",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 20405.0,
+     "nearest_close": 20415.0,
+     "nearest_settle": 20320.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "SS2204"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 66,
+   "roll_inside_unidentified_gap": []
+  },
+  "TA": {
+   "start": "2016-01-04",
+   "trading_days": 2427,
+   "unidentified_n": 2,
+   "unidentified": [
+    {
+     "date": "2018-01-16",
+     "carried_main": "TA1805",
+     "nearest": "TA1803",
+     "nearest_close_diff_ticks": 7.0,
+     "cont_close": 5612.0,
+     "nearest_close": 5626.0,
+     "nearest_settle": 5656.0,
+     "cls": "3_to_20_ticks",
+     "detail": "TA1803"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "TA2501",
+     "nearest": "TA2501",
+     "nearest_close_diff_ticks": 4.0,
+     "cont_close": 4954.0,
+     "nearest_close": 4946.0,
+     "nearest_settle": 4992.0,
+     "cls": "cont_close_equals_close_of_prev_day",
+     "detail": "TA2502@2024-09-24"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 38,
+   "roll_inside_unidentified_gap": []
+  },
+  "V": {
+   "start": "2016-01-04",
+   "trading_days": 2428,
+   "unidentified_n": 10,
+   "unidentified": [
+    {
+     "date": "2019-04-30",
+     "carried_main": "V1909",
+     "nearest": "V2003",
+     "nearest_close_diff_ticks": 10.0,
+     "cont_close": 7025.0,
+     "nearest_close": 7015.0,
+     "nearest_settle": 7015.0,
+     "cls": "3_to_20_ticks",
+     "detail": "V2003"
+    },
+    {
+     "date": "2020-10-29",
+     "carried_main": "V2101",
+     "nearest": "V2101",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 6855.0,
+     "nearest_close": 6850.0,
+     "nearest_settle": 6900.0,
+     "cls": "3_to_20_ticks",
+     "detail": "V2101"
+    },
+    {
+     "date": "2020-11-18",
+     "carried_main": "V2101",
+     "nearest": "V2101",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 7520.0,
+     "nearest_close": 7515.0,
+     "nearest_settle": 7550.0,
+     "cls": "3_to_20_ticks",
+     "detail": "V2101"
+    },
+    {
+     "date": "2020-12-11",
+     "carried_main": "V2101",
+     "nearest": "V2101",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 8385.0,
+     "nearest_close": 8380.0,
+     "nearest_settle": 8325.0,
+     "cls": "3_to_20_ticks",
+     "detail": "V2101"
+    },
+    {
+     "date": "2020-12-14",
+     "carried_main": "V2101",
+     "nearest": "V2101",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 7945.0,
+     "nearest_close": 7950.0,
+     "nearest_settle": 8260.0,
+     "cls": "3_to_20_ticks",
+     "detail": "V2101"
+    },
+    {
+     "date": "2021-01-07",
+     "carried_main": "V2105",
+     "nearest": "V2102",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 7175.0,
+     "nearest_close": 7170.0,
+     "nearest_settle": 7230.0,
+     "cls": "3_to_20_ticks",
+     "detail": "V2102"
+    },
+    {
+     "date": "2021-01-25",
+     "carried_main": "V2105",
+     "nearest": "V2102",
+     "nearest_close_diff_ticks": 5.0,
+     "cont_close": 7270.0,
+     "nearest_close": 7275.0,
+     "nearest_settle": 7260.0,
+     "cls": "3_to_20_ticks",
+     "detail": "V2102"
+    },
+    {
+     "date": "2021-12-28",
+     "carried_main": "V2205",
+     "nearest": "V2205",
+     "nearest_close_diff_ticks": 13.0,
+     "cont_close": 8483.0,
+     "nearest_close": 8496.0,
+     "nearest_settle": 8362.0,
+     "cls": "cont_close_equals_close_of_next_day",
+     "detail": "V2205@2021-12-29"
+    },
+    {
+     "date": "2021-12-30",
+     "carried_main": "V2205",
+     "nearest": "V2202",
+     "nearest_close_diff_ticks": 2.0,
+     "cont_close": 8478.0,
+     "nearest_close": 8480.0,
+     "nearest_settle": 8448.0,
+     "cls": "within_3_ticks_of_nearest",
+     "detail": "V2202"
+    },
+    {
+     "date": "2024-09-25",
+     "carried_main": "V2501",
+     "nearest": "V2501",
+     "nearest_close_diff_ticks": 13.0,
+     "cont_close": 5428.0,
+     "nearest_close": 5415.0,
+     "nearest_settle": 5453.0,
+     "cls": "3_to_20_ticks",
+     "detail": "V2501"
+    }
+   ],
+   "no_previous_main_dates": [],
+   "roll_days_after_carry": 38,
+   "roll_inside_unidentified_gap": [
+    {
+     "gap": [
+      "2021-01-07",
+      "2021-01-07"
+     ],
+     "main_before": "V2105",
+     "next_identified_main": "V2101"
+    }
+   ]
+  }
+ },
+ "shared_dates_ge5": {
+  "2019-04-30": {
+   "n_symbols_unidentified": 8,
+   "n_symbols_eligible": 24,
+   "by_exchange": {
+    "shfe": 5,
+    "dce": 3
+   },
+   "classes": {
+    "within_3_ticks_of_nearest": 2,
+    "cont_close_equals_settle": 2,
+    "cont_close_equals_close_of_prev_day": 2,
+    "cont_close_equals_close_of_next_day": 1,
+    "3_to_20_ticks": 1
+   },
+   "per_symbol": {
+    "AU": {
+     "cont_close": 281.6,
+     "nearest": "AU1906",
+     "nearest_close": 281.55,
+     "diff_ticks": 2.5,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "BU": {
+     "cont_close": 3606.0,
+     "nearest": "BU1906",
+     "nearest_close": 3608.0,
+     "diff_ticks": 2.0,
+     "cls": "cont_close_equals_settle"
+    },
+    "JM": {
+     "cont_close": 1351.0,
+     "nearest": "JM1909",
+     "nearest_close": 1352.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "NI": {
+     "cont_close": 97850.0,
+     "nearest": "NI1905",
+     "nearest_close": 97870.0,
+     "diff_ticks": 2.0,
+     "cls": "cont_close_equals_close_of_prev_day"
+    },
+    "P": {
+     "cont_close": 4502.0,
+     "nearest": "P1909",
+     "nearest_close": 4496.0,
+     "diff_ticks": 3.0,
+     "cls": "cont_close_equals_close_of_prev_day"
+    },
+    "RU": {
+     "cont_close": 11670.0,
+     "nearest": "RU1909",
+     "nearest_close": 11700.0,
+     "diff_ticks": 6.0,
+     "cls": "cont_close_equals_close_of_next_day"
+    },
+    "SP": {
+     "cont_close": 5260.0,
+     "nearest": "SP2002",
+     "nearest_close": 5266.0,
+     "diff_ticks": 3.0,
+     "cls": "cont_close_equals_settle"
+    },
+    "V": {
+     "cont_close": 7025.0,
+     "nearest": "V2003",
+     "nearest_close": 7015.0,
+     "diff_ticks": 10.0,
+     "cls": "3_to_20_ticks"
+    }
+   }
+  },
+  "2021-01-07": {
+   "n_symbols_unidentified": 6,
+   "n_symbols_eligible": 27,
+   "by_exchange": {
+    "dce": 6
+   },
+   "classes": {
+    "3_to_20_ticks": 3,
+    "within_3_ticks_of_nearest": 3
+   },
+   "per_symbol": {
+    "EB": {
+     "cont_close": 6655.0,
+     "nearest": "EB2102",
+     "nearest_close": 6660.0,
+     "diff_ticks": 5.0,
+     "cls": "3_to_20_ticks"
+    },
+    "EG": {
+     "cont_close": 4440.0,
+     "nearest": "EG2105",
+     "nearest_close": 4438.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "I": {
+     "cont_close": 1061.5,
+     "nearest": "I2105",
+     "nearest_close": 1062.5,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "L": {
+     "cont_close": 7585.0,
+     "nearest": "L2105",
+     "nearest_close": 7590.0,
+     "diff_ticks": 5.0,
+     "cls": "3_to_20_ticks"
+    },
+    "PP": {
+     "cont_close": 7904.0,
+     "nearest": "PP2105",
+     "nearest_close": 7906.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "V": {
+     "cont_close": 7175.0,
+     "nearest": "V2102",
+     "nearest_close": 7170.0,
+     "diff_ticks": 5.0,
+     "cls": "3_to_20_ticks"
+    }
+   }
+  },
+  "2021-12-28": {
+   "n_symbols_unidentified": 11,
+   "n_symbols_eligible": 27,
+   "by_exchange": {
+    "shfe": 7,
+    "dce": 4
+   },
+   "classes": {
+    "cont_close_equals_settle": 3,
+    "3_to_20_ticks": 3,
+    "within_3_ticks_of_nearest": 4,
+    "cont_close_equals_close_of_next_day": 1
+   },
+   "per_symbol": {
+    "AL": {
+     "cont_close": 19850.0,
+     "nearest": "AL2202",
+     "nearest_close": 19860.0,
+     "diff_ticks": 2.0,
+     "cls": "cont_close_equals_settle"
+    },
+    "AU": {
+     "cont_close": 374.54,
+     "nearest": "AU2202",
+     "nearest_close": 374.46,
+     "diff_ticks": 4.0,
+     "cls": "3_to_20_ticks"
+    },
+    "BU": {
+     "cont_close": 3242.0,
+     "nearest": "BU2206",
+     "nearest_close": 3244.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "EB": {
+     "cont_close": 8309.0,
+     "nearest": "EB2202",
+     "nearest_close": 8304.0,
+     "diff_ticks": 5.0,
+     "cls": "cont_close_equals_settle"
+    },
+    "JM": {
+     "cont_close": 2165.0,
+     "nearest": "JM2205",
+     "nearest_close": 2166.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "L": {
+     "cont_close": 8503.0,
+     "nearest": "L2205",
+     "nearest_close": 8505.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "NI": {
+     "cont_close": 149150.0,
+     "nearest": "NI2202",
+     "nearest_close": 149200.0,
+     "diff_ticks": 5.0,
+     "cls": "3_to_20_ticks"
+    },
+    "RB": {
+     "cont_close": 4324.0,
+     "nearest": "RB2205",
+     "nearest_close": 4319.0,
+     "diff_ticks": 5.0,
+     "cls": "3_to_20_ticks"
+    },
+    "SP": {
+     "cont_close": 5822.0,
+     "nearest": "SP2205",
+     "nearest_close": 5818.0,
+     "diff_ticks": 2.0,
+     "cls": "cont_close_equals_settle"
+    },
+    "SS": {
+     "cont_close": 16915.0,
+     "nearest": "SS2202",
+     "nearest_close": 16905.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "V": {
+     "cont_close": 8483.0,
+     "nearest": "V2205",
+     "nearest_close": 8496.0,
+     "diff_ticks": 13.0,
+     "cls": "cont_close_equals_close_of_next_day"
+    }
+   }
+  },
+  "2021-12-30": {
+   "n_symbols_unidentified": 19,
+   "n_symbols_eligible": 27,
+   "by_exchange": {
+    "shfe": 8,
+    "dce": 9,
+    "czce": 2
+   },
+   "classes": {
+    "3_to_20_ticks": 11,
+    "cont_close_equals_close_of_next_day": 1,
+    "cont_close_equals_close_of_prev_day": 2,
+    "within_3_ticks_of_nearest": 3,
+    "cont_close_equals_settle": 1,
+    "over_20_ticks": 1
+   },
+   "per_symbol": {
+    "AG": {
+     "cont_close": 4788.0,
+     "nearest": "AG2206",
+     "nearest_close": 4783.0,
+     "diff_ticks": 5.0,
+     "cls": "3_to_20_ticks"
+    },
+    "AL": {
+     "cont_close": 20445.0,
+     "nearest": "AL2201",
+     "nearest_close": 20435.0,
+     "diff_ticks": 2.0,
+     "cls": "cont_close_equals_close_of_next_day"
+    },
+    "BU": {
+     "cont_close": 3288.0,
+     "nearest": "BU2205",
+     "nearest_close": 3292.0,
+     "diff_ticks": 4.0,
+     "cls": "cont_close_equals_close_of_prev_day"
+    },
+    "CU": {
+     "cont_close": 69950.0,
+     "nearest": "CU2201",
+     "nearest_close": 69910.0,
+     "diff_ticks": 4.0,
+     "cls": "3_to_20_ticks"
+    },
+    "EB": {
+     "cont_close": 8471.0,
+     "nearest": "EB2203",
+     "nearest_close": 8478.0,
+     "diff_ticks": 7.0,
+     "cls": "3_to_20_ticks"
+    },
+    "EG": {
+     "cont_close": 4891.0,
+     "nearest": "EG2203",
+     "nearest_close": 4885.0,
+     "diff_ticks": 6.0,
+     "cls": "3_to_20_ticks"
+    },
+    "FG": {
+     "cont_close": 1737.0,
+     "nearest": "FG2205",
+     "nearest_close": 1735.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "I": {
+     "cont_close": 667.0,
+     "nearest": "I2205",
+     "nearest_close": 669.5,
+     "diff_ticks": 5.0,
+     "cls": "3_to_20_ticks"
+    },
+    "JD": {
+     "cont_close": 4136.0,
+     "nearest": "JD2205",
+     "nearest_close": 4142.0,
+     "diff_ticks": 6.0,
+     "cls": "cont_close_equals_settle"
+    },
+    "JM": {
+     "cont_close": 2184.5,
+     "nearest": "JM2202",
+     "nearest_close": 2186.5,
+     "diff_ticks": 4.0,
+     "cls": "3_to_20_ticks"
+    },
+    "M": {
+     "cont_close": 3232.0,
+     "nearest": "M2205",
+     "nearest_close": 3234.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "NI": {
+     "cont_close": 150220.0,
+     "nearest": "NI2202",
+     "nearest_close": 150450.0,
+     "diff_ticks": 23.0,
+     "cls": "over_20_ticks"
+    },
+    "P": {
+     "cont_close": 8454.0,
+     "nearest": "P2205",
+     "nearest_close": 8470.0,
+     "diff_ticks": 8.0,
+     "cls": "3_to_20_ticks"
+    },
+    "PP": {
+     "cont_close": 8157.0,
+     "nearest": "PP2205",
+     "nearest_close": 8165.0,
+     "diff_ticks": 8.0,
+     "cls": "cont_close_equals_close_of_prev_day"
+    },
+    "RB": {
+     "cont_close": 4271.0,
+     "nearest": "RB2205",
+     "nearest_close": 4282.0,
+     "diff_ticks": 11.0,
+     "cls": "3_to_20_ticks"
+    },
+    "RU": {
+     "cont_close": 14790.0,
+     "nearest": "RU2205",
+     "nearest_close": 14820.0,
+     "diff_ticks": 6.0,
+     "cls": "3_to_20_ticks"
+    },
+    "SR": {
+     "cont_close": 5744.0,
+     "nearest": "SR2205",
+     "nearest_close": 5748.0,
+     "diff_ticks": 4.0,
+     "cls": "3_to_20_ticks"
+    },
+    "SS": {
+     "cont_close": 17150.0,
+     "nearest": "SS2201",
+     "nearest_close": 17190.0,
+     "diff_ticks": 8.0,
+     "cls": "3_to_20_ticks"
+    },
+    "V": {
+     "cont_close": 8478.0,
+     "nearest": "V2202",
+     "nearest_close": 8480.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    }
+   }
+  },
+  "2022-03-23": {
+   "n_symbols_unidentified": 10,
+   "n_symbols_eligible": 27,
+   "by_exchange": {
+    "shfe": 6,
+    "dce": 4
+   },
+   "classes": {
+    "cont_close_equals_settle": 1,
+    "within_3_ticks_of_nearest": 6,
+    "3_to_20_ticks": 3
+   },
+   "per_symbol": {
+    "AG": {
+     "cont_close": 5084.0,
+     "nearest": "AG2206",
+     "nearest_close": 5082.0,
+     "diff_ticks": 2.0,
+     "cls": "cont_close_equals_settle"
+    },
+    "AU": {
+     "cont_close": 394.76,
+     "nearest": "AU2206",
+     "nearest_close": 394.72,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "EB": {
+     "cont_close": 9775.0,
+     "nearest": "EB2204",
+     "nearest_close": 9782.0,
+     "diff_ticks": 7.0,
+     "cls": "3_to_20_ticks"
+    },
+    "EG": {
+     "cont_close": 5153.0,
+     "nearest": "EG2205",
+     "nearest_close": 5151.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "FU": {
+     "cont_close": 4079.0,
+     "nearest": "FU2205",
+     "nearest_close": 4076.0,
+     "diff_ticks": 3.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "JM": {
+     "cont_close": 2942.5,
+     "nearest": "JM2205",
+     "nearest_close": 2940.0,
+     "diff_ticks": 5.0,
+     "cls": "3_to_20_ticks"
+    },
+    "NI": {
+     "cont_close": 212150.0,
+     "nearest": "NI2204",
+     "nearest_close": 212000.0,
+     "diff_ticks": 15.0,
+     "cls": "3_to_20_ticks"
+    },
+    "PP": {
+     "cont_close": 8898.0,
+     "nearest": "PP2205",
+     "nearest_close": 8900.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "RB": {
+     "cont_close": 4985.0,
+     "nearest": "RB2205",
+     "nearest_close": 4983.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "SS": {
+     "cont_close": 20405.0,
+     "nearest": "SS2204",
+     "nearest_close": 20415.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    }
+   }
+  },
+  "2023-08-28": {
+   "n_symbols_unidentified": 9,
+   "n_symbols_eligible": 27,
+   "by_exchange": {
+    "shfe": 4,
+    "dce": 5
+   },
+   "classes": {
+    "within_3_ticks_of_nearest": 7,
+    "3_to_20_ticks": 1,
+    "cont_close_equals_close_of_prev_day": 1
+   },
+   "per_symbol": {
+    "AG": {
+     "cont_close": 5839.0,
+     "nearest": "AG2309",
+     "nearest_close": 5837.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "BU": {
+     "cont_close": 3725.0,
+     "nearest": "BU2311",
+     "nearest_close": 3728.0,
+     "diff_ticks": 3.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "EB": {
+     "cont_close": 8349.0,
+     "nearest": "EB2310",
+     "nearest_close": 8347.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "EG": {
+     "cont_close": 4102.0,
+     "nearest": "EG2401",
+     "nearest_close": 4100.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "I": {
+     "cont_close": 812.5,
+     "nearest": "I2401",
+     "nearest_close": 811.0,
+     "diff_ticks": 3.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "JM": {
+     "cont_close": 1498.5,
+     "nearest": "JM2401",
+     "nearest_close": 1497.0,
+     "diff_ticks": 3.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "NI": {
+     "cont_close": 167030.0,
+     "nearest": "NI2310",
+     "nearest_close": 167070.0,
+     "diff_ticks": 4.0,
+     "cls": "3_to_20_ticks"
+    },
+    "PP": {
+     "cont_close": 7626.0,
+     "nearest": "PP2401",
+     "nearest_close": 7628.0,
+     "diff_ticks": 2.0,
+     "cls": "cont_close_equals_close_of_prev_day"
+    },
+    "SP": {
+     "cont_close": 5590.0,
+     "nearest": "SP2401",
+     "nearest_close": 5594.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    }
+   }
+  },
+  "2024-09-25": {
+   "n_symbols_unidentified": 15,
+   "n_symbols_eligible": 27,
+   "by_exchange": {
+    "shfe": 6,
+    "czce": 3,
+    "dce": 6
+   },
+   "classes": {
+    "3_to_20_ticks": 6,
+    "within_3_ticks_of_nearest": 3,
+    "cont_close_equals_close_of_next_day": 1,
+    "over_20_ticks": 2,
+    "cont_close_equals_settle": 1,
+    "cont_close_equals_close_of_prev_day": 2
+   },
+   "per_symbol": {
+    "AG": {
+     "cont_close": 7782.0,
+     "nearest": "AG2411",
+     "nearest_close": 7778.0,
+     "diff_ticks": 4.0,
+     "cls": "3_to_20_ticks"
+    },
+    "AL": {
+     "cont_close": 20065.0,
+     "nearest": "AL2411",
+     "nearest_close": 20055.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "AU": {
+     "cont_close": 598.74,
+     "nearest": "AU2412",
+     "nearest_close": 598.36,
+     "diff_ticks": 19.0,
+     "cls": "cont_close_equals_close_of_next_day"
+    },
+    "CF": {
+     "cont_close": 14180.0,
+     "nearest": "CF2501",
+     "nearest_close": 14170.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "EB": {
+     "cont_close": 8440.0,
+     "nearest": "EB2411",
+     "nearest_close": 8370.0,
+     "diff_ticks": 70.0,
+     "cls": "over_20_ticks"
+    },
+    "EG": {
+     "cont_close": 4498.0,
+     "nearest": "EG2501",
+     "nearest_close": 4493.0,
+     "diff_ticks": 5.0,
+     "cls": "cont_close_equals_settle"
+    },
+    "FG": {
+     "cont_close": 1134.0,
+     "nearest": "FG2501",
+     "nearest_close": 1129.0,
+     "diff_ticks": 5.0,
+     "cls": "3_to_20_ticks"
+    },
+    "FU": {
+     "cont_close": 2875.0,
+     "nearest": "FU2411",
+     "nearest_close": 2882.0,
+     "diff_ticks": 7.0,
+     "cls": "3_to_20_ticks"
+    },
+    "JM": {
+     "cont_close": 1327.0,
+     "nearest": "JM2505",
+     "nearest_close": 1328.5,
+     "diff_ticks": 3.0,
+     "cls": "cont_close_equals_close_of_prev_day"
+    },
+    "L": {
+     "cont_close": 7982.0,
+     "nearest": "L2411",
+     "nearest_close": 8006.0,
+     "diff_ticks": 24.0,
+     "cls": "over_20_ticks"
+    },
+    "NI": {
+     "cont_close": 127560.0,
+     "nearest": "NI2410",
+     "nearest_close": 127460.0,
+     "diff_ticks": 10.0,
+     "cls": "3_to_20_ticks"
+    },
+    "P": {
+     "cont_close": 8390.0,
+     "nearest": "P2501",
+     "nearest_close": 8386.0,
+     "diff_ticks": 2.0,
+     "cls": "within_3_ticks_of_nearest"
+    },
+    "RU": {
+     "cont_close": 18400.0,
+     "nearest": "RU2505",
+     "nearest_close": 18470.0,
+     "diff_ticks": 14.0,
+     "cls": "3_to_20_ticks"
+    },
+    "TA": {
+     "cont_close": 4954.0,
+     "nearest": "TA2501",
+     "nearest_close": 4946.0,
+     "diff_ticks": 4.0,
+     "cls": "cont_close_equals_close_of_prev_day"
+    },
+    "V": {
+     "cont_close": 5428.0,
+     "nearest": "V2501",
+     "nearest_close": 5415.0,
+     "diff_ticks": 13.0,
+     "cls": "3_to_20_ticks"
+    }
+   }
+  }
+ },
+ "unidentified_by_date": {
+  "2016-04-05": [
+   "BU",
+   "NI",
+   "PP",
+   "RU"
+  ],
+  "2016-06-15": [
+   "AU"
+  ],
+  "2016-07-29": [
+   "BU",
+   "JD"
+  ],
+  "2016-09-02": [
+   "FG",
+   "MA",
+   "SR"
+  ],
+  "2017-10-09": [
+   "AU",
+   "L",
+   "NI",
+   "RU"
+  ],
+  "2017-10-17": [
+   "CF",
+   "SR"
+  ],
+  "2018-01-16": [
+   "AU",
+   "SR",
+   "TA"
+  ],
+  "2018-06-25": [
+   "CF"
+  ],
+  "2019-04-30": [
+   "AU",
+   "BU",
+   "JM",
+   "NI",
+   "P",
+   "RU",
+   "SP",
+   "V"
+  ],
+  "2020-08-06": [
+   "P"
+  ],
+  "2020-10-20": [
+   "JD"
+  ],
+  "2020-10-29": [
+   "PP",
+   "V"
+  ],
+  "2020-11-18": [
+   "EG",
+   "V"
+  ],
+  "2020-11-20": [
+   "PP"
+  ],
+  "2020-12-03": [
+   "JD",
+   "P"
+  ],
+  "2020-12-10": [
+   "P"
+  ],
+  "2020-12-11": [
+   "EB",
+   "P",
+   "V"
+  ],
+  "2020-12-14": [
+   "EB",
+   "V"
+  ],
+  "2020-12-16": [
+   "P"
+  ],
+  "2020-12-22": [
+   "EB",
+   "L",
+   "P"
+  ],
+  "2020-12-23": [
+   "EB"
+  ],
+  "2020-12-25": [
+   "EB",
+   "JM"
+  ],
+  "2021-01-05": [
+   "L"
+  ],
+  "2021-01-07": [
+   "EB",
+   "EG",
+   "I",
+   "L",
+   "PP",
+   "V"
+  ],
+  "2021-01-08": [
+   "L"
+  ],
+  "2021-01-18": [
+   "EG",
+   "P",
+   "PP"
+  ],
+  "2021-01-22": [
+   "P"
+  ],
+  "2021-01-25": [
+   "PP",
+   "V"
+  ],
+  "2021-01-26": [
+   "L"
+  ],
+  "2021-02-01": [
+   "JM",
+   "PP"
+  ],
+  "2021-02-02": [
+   "P"
+  ],
+  "2021-02-09": [
+   "EB"
+  ],
+  "2021-04-22": [
+   "AU",
+   "BU"
+  ],
+  "2021-12-28": [
+   "AL",
+   "AU",
+   "BU",
+   "EB",
+   "JM",
+   "L",
+   "NI",
+   "RB",
+   "SP",
+   "SS",
+   "V"
+  ],
+  "2021-12-30": [
+   "AG",
+   "AL",
+   "BU",
+   "CU",
+   "EB",
+   "EG",
+   "FG",
+   "I",
+   "JD",
+   "JM",
+   "M",
+   "NI",
+   "P",
+   "PP",
+   "RB",
+   "RU",
+   "SR",
+   "SS",
+   "V"
+  ],
+  "2022-03-23": [
+   "AG",
+   "AU",
+   "EB",
+   "EG",
+   "FU",
+   "JM",
+   "NI",
+   "PP",
+   "RB",
+   "SS"
+  ],
+  "2023-08-28": [
+   "AG",
+   "BU",
+   "EB",
+   "EG",
+   "I",
+   "JM",
+   "NI",
+   "PP",
+   "SP"
+  ],
+  "2024-09-25": [
+   "AG",
+   "AL",
+   "AU",
+   "CF",
+   "EB",
+   "EG",
+   "FG",
+   "FU",
+   "JM",
+   "L",
+   "NI",
+   "P",
+   "RU",
+   "TA",
+   "V"
+  ]
+ }
+}

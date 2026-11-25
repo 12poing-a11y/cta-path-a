@@ -1,57 +1,35 @@
 {
-  "ts": "2026-11-25T16:41:09+08:00",
-  "name": "shadow_perf_daily",
-  "kind": "shadow_attribution",
+  "ts": "2026-11-25T17:06:05+08:00",
+  "name": "formal_scorecard",
+  "kind": "formal_backtest",
   "params": {
-    "asof": "2026-11-25",
-    "horizons": [
-      1,
-      3,
-      5
-    ],
-    "n_ledger": 927,
-    "status": "Shadow"
+    "fill": "next_open",
+    "stamp": "20261125T090142Z",
+    "status": "Research"
   },
   "metrics": {
-    "by_strategy": [
-      {
-        "strategy_id": "path_a",
-        "strategy_label": "路径A seats",
-        "horizon": 1,
-        "n": 395,
-        "win_rate": 0.5241,
-        "win_rate_pct": 52.41,
-        "avg_ret_pct": 1.4505,
-        "avg_r": 0.0347,
-        "enough": true
+    "ret_pct": -1.721,
+    "max_dd_pct": 8.232,
+    "pbo": 0.728571,
+    "validation": {
+      "psr": {
+        "psr": 0.427296
       },
-      {
-        "strategy_id": "path_a_selected",
-        "strategy_label": "路径A·入选",
-        "horizon": 1,
-        "n": 11,
-        "win_rate": 0.3636,
-        "win_rate_pct": 36.36,
-        "avg_ret_pct": -0.2796,
-        "avg_r": -0.1274,
-        "enough": false
+      "dsr": {
+        "dsr": 0.092741
       },
-      {
-        "strategy_id": "sentiment_mds",
-        "strategy_label": "情绪MDS+EHI",
-        "horizon": 1,
-        "n": 495,
-        "win_rate": 0.4768,
-        "win_rate_pct": 47.68,
-        "avg_ret_pct": 0.0738,
-        "avg_r": null,
-        "enough": true
-      }
-    ],
-    "n_bucket_rows": 10
+      "pbo": {
+        "pbo": 0.728571,
+        "n_obs": 208,
+        "n_trials": 11
+      },
+      "source": "artifacts",
+      "bt_schema": "cta-backtest-v14-execfix",
+      "proxy_entry_share": 0.4561
+    }
   },
-  "artifact": "data\\shadow_perf\\summary_latest.json",
-  "notes": "影子归因台账日更；不计分、不改 Path-A",
+  "artifact": "lab\\research\\validation\\formal_scorecard_latest.json",
+  "notes": "gate_hard=['human_approval']",
   "live_trading": false,
   "git_hint": "see repo HEAD; CI pytest gates formal Path-A reports"
 }

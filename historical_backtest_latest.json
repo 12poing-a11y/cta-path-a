@@ -640,7 +640,7 @@
   },
   "config_version": {
     "schema": "cta-config-version-v1",
-    "git_commit": "d1d18e1",
+    "git_commit": "18c7135",
     "execution_rules_sha256": "4b4f06a632cb356ba9195542ec8d23ca83e4ed887e32b93535597322de86c0ea",
     "universe_sha256": "7422ca4a79dd8fb9c9df715373e67aec72d124edaef438abb659f89bbf0f9e05",
     "research_cost_sha256": "b0e27f3ef6233a042b0b4ad97ac7d737cd2943a19becd092f81ff427423461f1"
@@ -2190,7 +2190,7 @@
     }
   },
   "slippage_ticks": 1.0,
-  "git_sha": "d1d18e1abe6414f146533b85e2dfa1a750939df4",
+  "git_sha": "18c713559c026ecfda4df75664f6e4957f67dd72",
   "universe_sha256": "7422ca4a79dd8fb9c9df715373e67aec72d124edaef438abb659f89bbf0f9e05",
   "execution_rules_sha256": "4b4f06a632cb356ba9195542ec8d23ca83e4ed887e32b93535597322de86c0ea",
   "research_cost_sha256": "b0e27f3ef6233a042b0b4ad97ac7d737cd2943a19becd092f81ff427423461f1",
@@ -7513,164 +7513,44 @@
   "summary": "PathA seats 2026-01-05→2026-11-25 净权益 196558（-1.72%）毛权益 201876（+0.94%）成本 5319，净MaxDD 8.23% 毛MaxDD 7.42%，成交57笔，结论 继续L1",
   "contract_prefetch": {
     "wanted_n": 619,
-    "requests": 163,
-    "seconds": 6.147,
+    "requests": 43,
+    "seconds": 0.326,
     "fetched": [
-      "MA2703",
-      "MA2704",
       "MA2706",
-      "MA2707",
-      "MA2708",
-      "MA2710",
-      "MA2711",
-      "V2703",
-      "V2704",
-      "V2706",
-      "V2707",
-      "V2708",
-      "V2710",
-      "V2711",
       "EG2701",
-      "EG2703",
-      "EG2704",
-      "EG2706",
-      "EG2707",
-      "EG2708",
-      "EG2710",
       "M2705",
-      "M2709",
-      "M2711",
       "FG2701",
-      "FG2703",
-      "FG2704",
-      "FG2706",
-      "FG2707",
-      "FG2708",
-      "FG2710",
-      "FG2711",
       "EB2705",
-      "EB2706",
       "EB2707",
-      "EB2708",
-      "EB2709",
-      "EB2710",
-      "TA2703",
-      "TA2704",
       "TA2705",
-      "TA2706",
-      "TA2707",
-      "TA2708",
-      "TA2710",
-      "TA2711",
       "SA2701",
-      "SA2703",
-      "SA2704",
-      "SA2706",
-      "SA2707",
-      "SA2708",
-      "SA2710",
-      "SA2711",
-      "PP2703",
-      "PP2704",
-      "PP2706",
-      "PP2707",
       "PP2708",
-      "PP2710",
-      "PP2711",
       "L2701",
-      "L2703",
-      "L2704",
       "L2706",
-      "L2707",
-      "L2708",
-      "L2710",
-      "L2711",
       "JD2703",
-      "JD2706",
       "JD2707",
       "JD2708",
-      "JD2709",
-      "JD2710",
       "P2705",
-      "P2707",
-      "P2708",
-      "P2711",
       "RB2705",
       "FU2706",
-      "FU2707",
-      "FU2708",
       "FU2709",
-      "FU2710",
-      "FU2711",
       "CF2701",
       "CF2705",
-      "CF2707",
-      "CF2711",
       "BU2705",
-      "BU2706",
-      "BU2707",
-      "BU2708",
-      "BU2709",
-      "BU2710",
-      "BU2711",
       "RU2705",
-      "AG2706",
-      "AG2707",
-      "AG2708",
-      "AG2709",
-      "AG2710",
-      "AG2711",
       "SP2701",
-      "SP2704",
-      "SP2709",
-      "SP2710",
-      "SP2711",
       "SR2701",
       "SR2705",
-      "SR2707",
-      "SR2711",
-      "AU2706",
       "AU2708",
-      "AU2710",
       "CU2612",
       "CU2701",
-      "CU2706",
-      "CU2707",
-      "CU2708",
-      "CU2709",
-      "CU2710",
-      "CU2711",
       "AL2701",
       "AL2706",
-      "AL2707",
-      "AL2708",
-      "AL2709",
-      "AL2710",
-      "AL2711",
       "NI2701",
       "NI2706",
-      "NI2707",
       "NI2708",
-      "NI2709",
-      "NI2710",
-      "NI2711",
       "I2706",
-      "I2707",
-      "I2708",
-      "I2710",
-      "I2711",
-      "JM2705",
-      "JM2706",
-      "JM2707",
-      "JM2708",
-      "JM2710",
-      "JM2711",
-      "SS2706",
-      "SS2707",
-      "SS2708",
-      "SS2709",
-      "SS2710",
-      "SS2711"
+      "JM2705"
     ],
     "failed": [
       {
@@ -7714,55 +7594,55 @@
         "error": "empty"
       }
     ],
-    "cached_n": 456,
+    "cached_n": 576,
     "by_code": {
       "MA": {
         "candidates": 26,
-        "requests": 7
+        "requests": 1
       },
       "V": {
         "candidates": 26,
-        "requests": 7
+        "requests": 0
       },
       "EG": {
         "candidates": 26,
-        "requests": 8
+        "requests": 2
       },
       "M": {
         "candidates": 17,
-        "requests": 3
+        "requests": 1
       },
       "FG": {
         "candidates": 26,
-        "requests": 8
+        "requests": 1
       },
       "EB": {
         "candidates": 26,
-        "requests": 7
+        "requests": 3
       },
       "TA": {
         "candidates": 26,
-        "requests": 8
+        "requests": 1
       },
       "SA": {
         "candidates": 26,
-        "requests": 8
+        "requests": 1
       },
       "PP": {
         "candidates": 26,
-        "requests": 7
+        "requests": 1
       },
       "L": {
         "candidates": 26,
-        "requests": 8
+        "requests": 2
       },
       "JD": {
         "candidates": 26,
-        "requests": 7
+        "requests": 4
       },
       "P": {
         "candidates": 17,
-        "requests": 4
+        "requests": 1
       },
       "RB": {
         "candidates": 7,
@@ -7770,15 +7650,15 @@
       },
       "FU": {
         "candidates": 26,
-        "requests": 6
+        "requests": 2
       },
       "CF": {
         "candidates": 13,
-        "requests": 4
+        "requests": 2
       },
       "BU": {
         "candidates": 26,
-        "requests": 7
+        "requests": 1
       },
       "RU": {
         "candidates": 6,
@@ -7786,43 +7666,43 @@
       },
       "AG": {
         "candidates": 26,
-        "requests": 6
+        "requests": 0
       },
       "SP": {
         "candidates": 26,
-        "requests": 5
+        "requests": 1
       },
       "SR": {
         "candidates": 13,
-        "requests": 4
+        "requests": 2
       },
       "AU": {
         "candidates": 26,
-        "requests": 8
+        "requests": 6
       },
       "CU": {
         "candidates": 26,
-        "requests": 8
+        "requests": 2
       },
       "AL": {
         "candidates": 26,
-        "requests": 7
+        "requests": 2
       },
       "NI": {
         "candidates": 26,
-        "requests": 7
+        "requests": 3
       },
       "I": {
         "candidates": 26,
-        "requests": 5
+        "requests": 1
       },
       "JM": {
         "candidates": 26,
-        "requests": 6
+        "requests": 1
       },
       "SS": {
         "candidates": 26,
-        "requests": 6
+        "requests": 0
       }
     }
   },
@@ -7913,12 +7793,12 @@
     },
     "pbo": {
       "ok": true,
-      "pbo": 0.385714,
+      "pbo": 0.728571,
       "n_trials": 11,
       "n_obs": 208,
       "n_groups": 8,
       "combos_evaluated": 70,
-      "overfit_tokens": 27,
+      "overfit_tokens": 51,
       "rank_method": "average_rank_ties",
       "note": "High PBO → IS ranking poorly predicts OOS; report, do not hard-gate alone."
     },
@@ -7996,28 +7876,28 @@
     },
     "pbo_source": "lab/research/validation/pbo_path_a_latest.json",
     "pbo_matrix_meta": {
-      "n_obs": 214,
+      "n_obs": 215,
       "n_trials": 11,
-      "bytes_estimate": 18832,
+      "bytes_estimate": 18920,
       "mode": "seats"
     },
     "dsr_from_trial_matrix": {
       "ok": true,
-      "dsr": 0.331029,
-      "psr_vs_zero": 0.782973,
-      "sharpe": 0.808254,
-      "sr_benchmark_ann": 1.259844,
-      "n": 214,
+      "dsr": 0.092741,
+      "psr_vs_zero": 0.427296,
+      "sharpe": -0.198921,
+      "sr_benchmark_ann": 1.238264,
+      "n": 215,
       "n_trials": 11,
-      "n_eff": 5.2271,
-      "mean_abs_corr": 0.577291,
+      "n_eff": 4.596,
+      "mean_abs_corr": 0.640405,
       "note": "DSR corrects for multiple strategy attempts; do not admit solely because DSR>threshold."
     },
     "effective_trials": {
       "ok": true,
       "n_trials": 11,
-      "n_eff": 5.2271,
-      "mean_abs_corr": 0.577291,
+      "n_eff": 4.596,
+      "mean_abs_corr": 0.640405,
       "note": "Higher correlation among trials → fewer effective independent tries."
     }
   },
@@ -8037,8 +7917,8 @@
   },
   "quality_ok": true,
   "input_snapshot": {
-    "path": "archive\\snapshots\\bt_input_20261125_dc59464ac1f9.json",
-    "sha256": "dc59464ac1f9bdb598e15679cb7674bcd1060bbf2c5415470b70f70f47139ea5",
+    "path": "archive\\snapshots\\bt_input_20261125_016deed19684.json",
+    "sha256": "016deed19684fb1b3740e764e5e9018b3f9df287e5444fc76fa608459f8764f2",
     "bars_sha256": "5a50508f19f9dee5e175334885c79750131e6365310416bfc56183001e27a4c9",
     "member_sha256": "542575943d10f5e454b16b719ea320434655a9b6f33039d0f1c228fa11b6c3e1",
     "seats_sha256": "542575943d10f5e454b16b719ea320434655a9b6f33039d0f1c228fa11b6c3e1",

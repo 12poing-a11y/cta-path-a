@@ -3,8 +3,8 @@
   "schema": "cta-formal-scorecard-v1",
   "purpose": "A1 unify README / BT JSON / PBO under one code+data+cost stamp",
   "before": {
-    "captured_at": "20261114T170051Z",
-    "git_head": "9a29e8818f65719268549cbea63d103114f28560",
+    "captured_at": "20261125T090142Z",
+    "git_head": "18c713559c026ecfda4df75664f6e4957f67dd72",
     "readme": {
       "schema_version": "cta-backtest-v11-next-open",
       "window": "2025-12-17→2026-11-10",
@@ -16,23 +16,23 @@
     },
     "historical_backtest": {
       "path": "historical_backtest_latest.json",
-      "schema_version": "cta-backtest-v13-tradability",
+      "schema_version": "cta-backtest-v14-execfix",
       "batch": "2026一年-pathA-nextOpen",
-      "start": "2025-12-23",
-      "end": "2026-11-13",
-      "ret_pct": -7.614,
-      "max_dd_pct": 20.5,
-      "gross_ret_pct": -4.3,
-      "gross_max_dd_pct": 19.284,
-      "cost_yuan": 6628.43,
-      "equity_end": 184772.14,
-      "closed_trades": 91,
+      "start": "2026-01-05",
+      "end": "2026-11-25",
+      "ret_pct": -1.721,
+      "max_dd_pct": 8.232,
+      "gross_ret_pct": 0.938,
+      "gross_max_dd_pct": 7.424,
+      "cost_yuan": 5318.74,
+      "equity_end": 196557.68,
+      "closed_trades": 57,
       "entry_filter": "seats",
       "fill_price": "next_open",
       "stop_atr_mult": 0.8,
       "reward_rr": 2.0,
       "config_version": {
-        "git_commit": "c3e87c9",
+        "git_commit": "d1d18e1",
         "execution_rules_sha256": "4b4f06a632cb",
         "universe_sha256": "7422ca4a79dd",
         "research_cost_sha256": "b0e27f3ef623",
@@ -41,37 +41,37 @@
     },
     "pbo": {
       "path": "lab\\research\\validation\\pbo_path_a_latest.json",
-      "pbo": 0.457143,
-      "n_obs": 214,
+      "pbo": 0.728571,
+      "n_obs": 215,
       "n_trials": 11,
       "primary_trial_id": "s0.8_rr2_m4_6",
-      "psr": 0.207958,
-      "dsr": 0.041842,
-      "primary_ret_pct": -7.614
+      "psr": 0.427296,
+      "dsr": 0.092741,
+      "primary_ret_pct": -1.721
     }
   },
   "after": {
-    "captured_at": "20261114T170121Z",
-    "git_head": "9a29e8818f65719268549cbea63d103114f28560",
+    "captured_at": "20261125T090605Z",
+    "git_head": "18c713559c026ecfda4df75664f6e4957f67dd72",
     "historical_backtest": {
       "path": "historical_backtest_latest.json",
-      "schema_version": "cta-backtest-v13-tradability",
+      "schema_version": "cta-backtest-v14-execfix",
       "batch": "2026一年-pathA-nextOpen",
-      "start": "2025-12-23",
-      "end": "2026-11-13",
-      "ret_pct": 4.992,
-      "max_dd_pct": 3.262,
-      "gross_ret_pct": 6.614,
-      "gross_max_dd_pct": 3.027,
-      "cost_yuan": 3244.46,
-      "equity_end": 209983.69,
-      "closed_trades": 43,
+      "start": "2026-01-05",
+      "end": "2026-11-25",
+      "ret_pct": -1.721,
+      "max_dd_pct": 8.232,
+      "gross_ret_pct": 0.938,
+      "gross_max_dd_pct": 7.424,
+      "cost_yuan": 5318.74,
+      "equity_end": 196557.68,
+      "closed_trades": 57,
       "entry_filter": "seats",
       "fill_price": "next_open",
       "stop_atr_mult": 0.8,
       "reward_rr": 2.0,
       "config_version": {
-        "git_commit": "9a29e88",
+        "git_commit": "18c7135",
         "execution_rules_sha256": "4b4f06a632cb",
         "universe_sha256": "7422ca4a79dd",
         "research_cost_sha256": "b0e27f3ef623",
@@ -80,31 +80,31 @@
     },
     "pbo": {
       "path": "lab\\research\\validation\\pbo_path_a_latest.json",
-      "pbo": 0.385714,
-      "n_obs": 214,
+      "pbo": 0.728571,
+      "n_obs": 215,
       "n_trials": 11,
       "primary_trial_id": "s0.8_rr2_m4_6",
-      "psr": 0.782973,
-      "dsr": 0.331029,
-      "primary_ret_pct": 4.992
+      "psr": 0.427296,
+      "dsr": 0.092741,
+      "primary_ret_pct": -1.721
     },
-    "code_schema": "cta-backtest-v13-tradability"
+    "code_schema": "cta-backtest-v14-execfix"
   },
   "deltas": {
     "ret_pct": {
       "readme": 2.25,
-      "bt_before": -7.614,
-      "bt_after": 4.992,
-      "pbo_primary_after": 4.992
+      "bt_before": -1.721,
+      "bt_after": -1.721,
+      "pbo_primary_after": -1.721
     },
     "max_dd_pct": {
       "readme": 5.57,
-      "bt_before": 20.5,
-      "bt_after": 3.262
+      "bt_before": 8.232,
+      "bt_after": 8.232
     },
     "pbo": {
-      "before": 0.457143,
-      "after": 0.385714
+      "before": 0.728571,
+      "after": 0.728571
     }
   },
   "live_trading": false,
@@ -131,17 +131,17 @@
       {
         "id": "psr_reported",
         "ok": true,
-        "detail": "PSR=0.782973"
+        "detail": "PSR=0.427296"
       },
       {
         "id": "dsr_reported",
         "ok": true,
-        "detail": "DSR=0.331029"
+        "detail": "DSR=0.092741"
       },
       {
         "id": "pbo_reported_or_waived",
         "ok": true,
-        "detail": "PBO=0.385714 (None)"
+        "detail": "PBO=0.728571 (None)"
       },
       {
         "id": "incremental_vs_path_a",

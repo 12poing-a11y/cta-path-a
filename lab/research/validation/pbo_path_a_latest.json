@@ -3,12 +3,12 @@
   "schema": "cta-pbo-report-v1",
   "pbo": {
     "ok": true,
-    "pbo": 0.385714,
+    "pbo": 0.728571,
     "n_trials": 11,
     "n_obs": 208,
     "n_groups": 8,
     "combos_evaluated": 70,
-    "overfit_tokens": 27,
+    "overfit_tokens": 51,
     "rank_method": "average_rank_ties",
     "note": "High PBO → IS ranking poorly predicts OOS; report, do not hard-gate alone."
   },
@@ -18,143 +18,143 @@
       {
         "n_groups": 4,
         "ok": true,
-        "pbo": 0.166667,
+        "pbo": 1.0,
         "combos_evaluated": 6,
         "error": null
       },
       {
         "n_groups": 6,
         "ok": true,
-        "pbo": 0.25,
+        "pbo": 0.95,
         "combos_evaluated": 20,
         "error": null
       },
       {
         "n_groups": 8,
         "ok": true,
-        "pbo": 0.385714,
+        "pbo": 0.728571,
         "combos_evaluated": 70,
         "error": null
       },
       {
         "n_groups": 10,
         "ok": true,
-        "pbo": 0.40873,
+        "pbo": 0.892857,
         "combos_evaluated": 252,
         "error": null
       },
       {
         "n_groups": 12,
         "ok": true,
-        "pbo": 0.284632,
+        "pbo": 0.944805,
         "combos_evaluated": 924,
         "error": null
       },
       {
         "n_groups": 16,
         "ok": true,
-        "pbo": 0.4456,
+        "pbo": 0.7994,
         "combos_evaluated": 5000,
         "error": null
       }
     ],
-    "pbo_min": 0.166667,
-    "pbo_max": 0.4456,
-    "pbo_median": 0.385714,
+    "pbo_min": 0.728571,
+    "pbo_max": 1.0,
+    "pbo_median": 0.944805,
     "note": "Sensitivity across CSCV group counts; do not pick the lowest PBO."
   },
   "effective_trials": {
     "ok": true,
     "n_trials": 11,
-    "n_eff": 5.2271,
-    "mean_abs_corr": 0.577291,
+    "n_eff": 4.596,
+    "mean_abs_corr": 0.640405,
     "note": "Higher correlation among trials → fewer effective independent tries."
   },
   "primary_trial_id": "s0.8_rr2_m4_6",
   "psr_primary": {
     "ok": true,
-    "psr": 0.782973,
-    "z": 0.782272,
-    "n": 214,
-    "sharpe": 0.808254,
+    "psr": 0.427296,
+    "z": -0.183264,
+    "n": 215,
+    "sharpe": -0.198921,
     "sr_benchmark": 0.0,
-    "skew": 2.20403,
-    "kurtosis_excess": 20.427435,
+    "skew": 0.027224,
+    "kurtosis_excess": 2.37814,
     "note": "PSR is not an automatic admission gate; report alongside sample size."
   },
   "dsr_primary": {
     "ok": true,
-    "dsr": 0.331029,
-    "psr_vs_zero": 0.782973,
-    "sharpe": 0.808254,
-    "sr_benchmark_ann": 1.259844,
-    "n": 214,
+    "dsr": 0.092741,
+    "psr_vs_zero": 0.427296,
+    "sharpe": -0.198921,
+    "sr_benchmark_ann": 1.238264,
+    "n": 215,
     "n_trials": 11,
-    "n_eff": 5.2271,
-    "mean_abs_corr": 0.577291,
+    "n_eff": 4.596,
+    "mean_abs_corr": 0.640405,
     "note": "DSR corrects for multiple strategy attempts; do not admit solely because DSR>threshold."
   },
   "trial_sharpes": [
     {
       "trial_id": "s0.8_rr2_m4_6",
-      "sharpe": 0.8082539663682096,
-      "n": 214
+      "sharpe": -0.1989210598479736,
+      "n": 215
     },
     {
       "trial_id": "s0.8_rr2_m3_5",
-      "sharpe": 1.0461886520976023,
-      "n": 214
+      "sharpe": -0.11811345252563338,
+      "n": 215
     },
     {
       "trial_id": "s1_rr1.5_m4_6",
-      "sharpe": 0.20110551050944667,
-      "n": 214
+      "sharpe": -1.0418119423804868,
+      "n": 215
     },
     {
       "trial_id": "s1.2_rr1.5_m4_6",
-      "sharpe": 0.39862919767073784,
-      "n": 214
+      "sharpe": 0.05965584988695837,
+      "n": 215
     },
     {
       "trial_id": "s1_rr2_m4_6",
-      "sharpe": 0.5844548206254353,
-      "n": 214
+      "sharpe": -0.48667743152791504,
+      "n": 215
     },
     {
       "trial_id": "s0.8_rr1.5_m4_6",
-      "sharpe": 0.8660027487975648,
-      "n": 214
+      "sharpe": -0.304085672266724,
+      "n": 215
     },
     {
       "trial_id": "s0.8_rr2.5_m4_6",
-      "sharpe": 0.9080404962370024,
-      "n": 214
+      "sharpe": -0.2746841115313997,
+      "n": 215
     },
     {
       "trial_id": "s1_rr2.5_m4_6",
-      "sharpe": 0.8654430543445875,
-      "n": 214
+      "sharpe": -0.8422184435222079,
+      "n": 215
     },
     {
       "trial_id": "s1.2_rr2_m4_6",
-      "sharpe": 1.1217200358567658,
-      "n": 214
+      "sharpe": 0.04164176617733377,
+      "n": 215
     },
     {
       "trial_id": "s1.2_rr2.5_m4_6",
-      "sharpe": 1.8434727115838936,
-      "n": 214
+      "sharpe": -0.7919382364341487,
+      "n": 215
     },
     {
       "trial_id": "s0.8_rr2_m5_8",
-      "sharpe": 1.4836618961249148,
-      "n": 214
+      "sharpe": -0.7046835015276938,
+      "n": 215
     }
   ],
   "matrix_meta": {
-    "n_obs": 214,
+    "n_obs": 215,
     "n_trials": 11,
-    "bytes_estimate": 18832,
+    "bytes_estimate": 18920,
     "mode": "seats"
   },
   "trials": [
@@ -166,10 +166,10 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "ok": true,
-      "ret_pct": 4.992,
-      "max_dd_pct": 3.262,
-      "cost_yuan": 3244.46,
-      "closed_trades": 43,
+      "ret_pct": -1.721,
+      "max_dd_pct": 8.232,
+      "cost_yuan": 5318.74,
+      "closed_trades": 57,
       "sharpe_hint": null
     },
     {
@@ -180,10 +180,10 @@
       "min_r20": 3.0,
       "min_r60": 5.0,
       "ok": true,
-      "ret_pct": 7.273,
-      "max_dd_pct": 4.953,
-      "cost_yuan": 4042.39,
-      "closed_trades": 44,
+      "ret_pct": -1.068,
+      "max_dd_pct": 7.221,
+      "cost_yuan": 5766.0,
+      "closed_trades": 65,
       "sharpe_hint": null
     },
     {
@@ -194,10 +194,10 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "ok": true,
-      "ret_pct": 0.9,
-      "max_dd_pct": 4.987,
-      "cost_yuan": 2908.65,
-      "closed_trades": 41,
+      "ret_pct": -7.096,
+      "max_dd_pct": 10.697,
+      "cost_yuan": 3870.13,
+      "closed_trades": 49,
       "sharpe_hint": null
     },
     {
@@ -208,10 +208,10 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "ok": true,
-      "ret_pct": 1.851,
-      "max_dd_pct": 3.345,
-      "cost_yuan": 2096.68,
-      "closed_trades": 30,
+      "ret_pct": 0.121,
+      "max_dd_pct": 6.953,
+      "cost_yuan": 3709.71,
+      "closed_trades": 44,
       "sharpe_hint": null
     },
     {
@@ -222,10 +222,10 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "ok": true,
-      "ret_pct": 2.378,
-      "max_dd_pct": 3.77,
-      "cost_yuan": 1942.75,
-      "closed_trades": 24,
+      "ret_pct": -3.711,
+      "max_dd_pct": 7.769,
+      "cost_yuan": 3753.15,
+      "closed_trades": 44,
       "sharpe_hint": null
     },
     {
@@ -236,10 +236,10 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "ok": true,
-      "ret_pct": 4.678,
-      "max_dd_pct": 2.756,
-      "cost_yuan": 3410.55,
-      "closed_trades": 46,
+      "ret_pct": -1.924,
+      "max_dd_pct": 7.537,
+      "cost_yuan": 5473.77,
+      "closed_trades": 62,
       "sharpe_hint": null
     },
     {
@@ -250,10 +250,10 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "ok": true,
-      "ret_pct": 3.916,
-      "max_dd_pct": 2.821,
-      "cost_yuan": 2317.42,
-      "closed_trades": 29,
+      "ret_pct": -2.165,
+      "max_dd_pct": 8.136,
+      "cost_yuan": 4685.56,
+      "closed_trades": 55,
       "sharpe_hint": null
     },
     {
@@ -264,10 +264,10 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "ok": true,
-      "ret_pct": 3.864,
-      "max_dd_pct": 3.402,
-      "cost_yuan": 1865.53,
-      "closed_trades": 22,
+      "ret_pct": -6.839,
+      "max_dd_pct": 11.811,
+      "cost_yuan": 3340.22,
+      "closed_trades": 39,
       "sharpe_hint": null
     },
     {
@@ -278,10 +278,10 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "ok": true,
-      "ret_pct": 5.904,
-      "max_dd_pct": 2.112,
-      "cost_yuan": 2159.78,
-      "closed_trades": 28,
+      "ret_pct": -0.045,
+      "max_dd_pct": 7.062,
+      "cost_yuan": 3031.23,
+      "closed_trades": 37,
       "sharpe_hint": null
     },
     {
@@ -292,10 +292,10 @@
       "min_r20": 4.0,
       "min_r60": 6.0,
       "ok": true,
-      "ret_pct": 10.433,
-      "max_dd_pct": 2.027,
-      "cost_yuan": 2011.17,
-      "closed_trades": 27,
+      "ret_pct": -7.7,
+      "max_dd_pct": 13.412,
+      "cost_yuan": 2818.68,
+      "closed_trades": 33,
       "sharpe_hint": null
     },
     {
@@ -306,10 +306,10 @@
       "min_r20": 5.0,
       "min_r60": 8.0,
       "ok": true,
-      "ret_pct": 11.529,
-      "max_dd_pct": 3.82,
-      "cost_yuan": 3476.54,
-      "closed_trades": 50,
+      "ret_pct": -4.96,
+      "max_dd_pct": 7.396,
+      "cost_yuan": 5178.53,
+      "closed_trades": 54,
       "sharpe_hint": null
     }
   ],
@@ -320,7 +320,7 @@
     "ok": true,
     "schema": "cta-pbo-trial-matrix-v1",
     "mode": "seats",
-    "n_obs": 214,
+    "n_obs": 215,
     "n_trials": 11,
     "trial_ids": [
       "s0.8_rr2_m4_6",
@@ -336,13 +336,6 @@
       "s0.8_rr2_m5_8"
     ],
     "dates": [
-      "2025-12-24",
-      "2025-12-25",
-      "2025-12-26",
-      "2025-12-29",
-      "2025-12-30",
-      "2025-12-31",
-      "2026-01-05",
       "2026-01-06",
       "2026-01-07",
       "2026-01-08",
@@ -549,7 +542,15 @@
       "2026-11-10",
       "2026-11-11",
       "2026-11-12",
-      "2026-11-13"
+      "2026-11-13",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-23",
+      "2026-11-24",
+      "2026-11-25"
     ],
     "trials": [
       {
@@ -560,10 +561,10 @@
         "min_r20": 4.0,
         "min_r60": 6.0,
         "ok": true,
-        "ret_pct": 4.992,
-        "max_dd_pct": 3.262,
-        "cost_yuan": 3244.46,
-        "closed_trades": 43,
+        "ret_pct": -1.721,
+        "max_dd_pct": 8.232,
+        "cost_yuan": 5318.74,
+        "closed_trades": 57,
         "sharpe_hint": null
       },
       {
@@ -574,10 +575,10 @@
         "min_r20": 3.0,
         "min_r60": 5.0,
         "ok": true,
-        "ret_pct": 7.273,
-        "max_dd_pct": 4.953,
-        "cost_yuan": 4042.39,
-        "closed_trades": 44,
+        "ret_pct": -1.068,
+        "max_dd_pct": 7.221,
+        "cost_yuan": 5766.0,
+        "closed_trades": 65,
         "sharpe_hint": null
       },
       {
@@ -588,10 +589,10 @@
         "min_r20": 4.0,
         "min_r60": 6.0,
         "ok": true,
-        "ret_pct": 0.9,
-        "max_dd_pct": 4.987,
-        "cost_yuan": 2908.65,
-        "closed_trades": 41,
+        "ret_pct": -7.096,
+        "max_dd_pct": 10.697,
+        "cost_yuan": 3870.13,
+        "closed_trades": 49,
         "sharpe_hint": null
       },
       {
@@ -602,10 +603,10 @@
         "min_r20": 4.0,
         "min_r60": 6.0,
         "ok": true,
-        "ret_pct": 1.851,
-        "max_dd_pct": 3.345,
-        "cost_yuan": 2096.68,
-        "closed_trades": 30,
+        "ret_pct": 0.121,
+        "max_dd_pct": 6.953,
+        "cost_yuan": 3709.71,
+        "closed_trades": 44,
         "sharpe_hint": null
       },
       {
@@ -616,10 +617,10 @@
         "min_r20": 4.0,
         "min_r60": 6.0,
         "ok": true,
-        "ret_pct": 2.378,
-        "max_dd_pct": 3.77,
-        "cost_yuan": 1942.75,
-        "closed_trades": 24,
+        "ret_pct": -3.711,
+        "max_dd_pct": 7.769,
+        "cost_yuan": 3753.15,
+        "closed_trades": 44,
         "sharpe_hint": null
       },
       {
@@ -630,10 +631,10 @@
         "min_r20": 4.0,
         "min_r60": 6.0,
         "ok": true,
-        "ret_pct": 4.678,
-        "max_dd_pct": 2.756,
-        "cost_yuan": 3410.55,
-        "closed_trades": 46,
+        "ret_pct": -1.924,
+        "max_dd_pct": 7.537,
+        "cost_yuan": 5473.77,
+        "closed_trades": 62,
         "sharpe_hint": null
       },
       {
@@ -644,10 +645,10 @@
         "min_r20": 4.0,
         "min_r60": 6.0,
         "ok": true,
-        "ret_pct": 3.916,
-        "max_dd_pct": 2.821,
-        "cost_yuan": 2317.42,
-        "closed_trades": 29,
+        "ret_pct": -2.165,
+        "max_dd_pct": 8.136,
+        "cost_yuan": 4685.56,
+        "closed_trades": 55,
         "sharpe_hint": null
       },
       {
@@ -658,10 +659,10 @@
         "min_r20": 4.0,
         "min_r60": 6.0,
         "ok": true,
-        "ret_pct": 3.864,
-        "max_dd_pct": 3.402,
-        "cost_yuan": 1865.53,
-        "closed_trades": 22,
+        "ret_pct": -6.839,
+        "max_dd_pct": 11.811,
+        "cost_yuan": 3340.22,
+        "closed_trades": 39,
         "sharpe_hint": null
       },
       {
@@ -672,10 +673,10 @@
         "min_r20": 4.0,
         "min_r60": 6.0,
         "ok": true,
-        "ret_pct": 5.904,
-        "max_dd_pct": 2.112,
-        "cost_yuan": 2159.78,
-        "closed_trades": 28,
+        "ret_pct": -0.045,
+        "max_dd_pct": 7.062,
+        "cost_yuan": 3031.23,
+        "closed_trades": 37,
         "sharpe_hint": null
       },
       {
@@ -686,10 +687,10 @@
         "min_r20": 4.0,
         "min_r60": 6.0,
         "ok": true,
-        "ret_pct": 10.433,
-        "max_dd_pct": 2.027,
-        "cost_yuan": 2011.17,
-        "closed_trades": 27,
+        "ret_pct": -7.7,
+        "max_dd_pct": 13.412,
+        "cost_yuan": 2818.68,
+        "closed_trades": 33,
         "sharpe_hint": null
       },
       {
@@ -700,16 +701,16 @@
         "min_r20": 5.0,
         "min_r60": 8.0,
         "ok": true,
-        "ret_pct": 11.529,
-        "max_dd_pct": 3.82,
-        "cost_yuan": 3476.54,
-        "closed_trades": 50,
+        "ret_pct": -4.96,
+        "max_dd_pct": 7.396,
+        "cost_yuan": 5178.53,
+        "closed_trades": 54,
         "sharpe_hint": null
       }
     ],
-    "bytes_estimate": 18832,
+    "bytes_estimate": 18920,
     "live_trading": false,
     "note": "Compact daily returns only; full equity curves not stored.",
-    "returns_sha_hint": "T=214xK=11"
+    "returns_sha_hint": "T=215xK=11"
   }
 }

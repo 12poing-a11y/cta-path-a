@@ -709,6 +709,44 @@ def _cli_str(flag: str, default: str) -> str:
     return v if v is not None else default
 
 
+# R8 research-only overrides.  They only take effect together with --out (never on the formal path).
+R8_VALUE_FLAGS = ("--equity",)
+R8_SWITCH_FLAGS = ("--filter-unit-risk", "--filter-atr-spike")
+
+
+def _r8_flags_present() -> bool:
+    for a in sys.argv:
+        if a in R8_SWITCH_FLAGS:
+            return True
+        if any(a == f or a.startswith(f + "=") for f in R8_VALUE_FLAGS):
+            return True
+    return False
+
+
+def r8_overrides_from_argv() -> dict:
+    """Parse ``--equity YUAN`` / ``--filter-unit-risk`` / ``--filter-atr-spike`` into p-keys
+    (``equity0`` / ``filter_unit_risk`` / ``filter_atr_spike``).  Only flags that were given appear.
+
+    Raises ValueError for ``--equity`` without a value or with a malformed / non-positive value."""
+    out: dict = {}
+    if any(a == "--equity" or a.startswith("--equity=") for a in sys.argv):
+        raw = _cli_val("--equity")
+        if raw is None:
+            raise ValueError("--equity needs a value")
+        try:
+            v = float(raw)
+        except ValueError as exc:
+            raise ValueError(f"--equity: bad value {raw!r}") from exc
+        if not v > 0:
+            raise ValueError(f"--equity: {raw!r} must be > 0")
+        out["equity0"] = v
+    if "--filter-unit-risk" in sys.argv:
+        out["filter_unit_risk"] = True
+    if "--filter-atr-spike" in sys.argv:
+        out["filter_atr_spike"] = True
+    return out
+
+
 def _answer_text(res: dict) -> str:
     if not res.get("ok"):
         raise RuntimeError(json.dumps(res, ensure_ascii=False)[:400])
@@ -1333,6 +1371,9 @@ def simulate(
     candidate_log=None,
     contract_root=None,
     state_log=None,
+    filter_unit_risk=False,
+    filter_atr_spike=False,
+    filter_unit_risk_budget=False,
 ):
     if fill_price not in FILL_PRICES:
         raise ValueError(f"fill_price must be one of {FILL_PRICES}")
@@ -1478,6 +1519,12 @@ def simulate(
     caps_topup_revived = 0
     caps_entry_days = 0
     caps_entry_log: list[dict] = []
+    # R8b research-only entry filters (all OFF by default; see research/execution/entry_filters.py)
+    entry_filters_on = bool(filter_unit_risk or filter_atr_spike or filter_unit_risk_budget)
+    ef_hits = {"unit_notional": 0, "unit_risk": 0, "atr_spike": 0, "atr_spike_unavailable": 0, "evaluated": 0}
+    ef_log: list[dict] = []
+    if entry_filters_on:
+        from research.execution import entry_filters as _ef
 
     # R5b: position management and T+1 fills live in book_core (shared with paper_book).
     eng = PositionEngine(
@@ -1620,6 +1667,44 @@ def simulate(
                     continue
                 if _st != "ok":
                     continue
+                if entry_filters_on:
+                    # R8b: judged on T's close only (sizing equity, T's bar, ATR windows ending at T); T+1 fill.
+                    _cd, _sz = _res["candidate"], _res["sizing"]
+                    ef_hits["evaluated"] += 1
+                    _why = None
+                    _a14 = _res.get("atr")
+                    _a100 = _ef.long_atr(adj.get(code), hist, i) if filter_atr_spike else None
+                    if filter_unit_risk_budget and _ef.unit_risk_exceeds(_sz["risk_per_lot"], day_risk):
+                        _why = "unit_risk"
+                    elif filter_unit_risk and _ef.unit_notional_exceeds(
+                        _cd["close"], _cd["mult"], sizing_eq, max_gross_pct
+                    ):
+                        _why = "unit_notional"
+                    if _why is None and filter_atr_spike:
+                        _sp = _ef.atr_spike(_a14, _a100)
+                        if _sp is None:
+                            ef_hits["atr_spike_unavailable"] += 1
+                        elif _sp:
+                            _why = "atr_spike"
+                    if _why is not None:
+                        ef_hits[_why] += 1
+                        ef_log.append(
+                            {
+                                "date": d,
+                                "code": code,
+                                "reason": _why,
+                                "close": _cd["close"],
+                                "mult": _cd["mult"],
+                                "sizing_eq": sizing_eq,
+                                "unit_notional": _ef.unit_notional(_cd["close"], _cd["mult"]),
+                                "gross_cap_amount": _ef.gross_cap_amount(sizing_eq, max_gross_pct),
+                                "risk_per_lot": _sz["risk_per_lot"],
+                                "day_risk": day_risk,
+                                "atr14": _a14,
+                                "atr100": _a100,
+                            }
+                        )
+                        continue
                 cands.append(_res["candidate"])
             # R4: usage of the open book on d's close (adjusted ATR; held contract's real close)
             used_g, used_r, held_buckets = _book_usage(
@@ -2013,6 +2098,23 @@ def simulate(
         "min_r20_pct": min_r20,
         "min_r60_pct": min_r60,
         "min_lots": min_lots,
+        # present only when an R8b research filter was switched on (formal output keeps its exact key set)
+        **(
+            {
+                "entry_filters": {
+                    "filter_unit_risk": bool(filter_unit_risk),
+                    "filter_atr_spike": bool(filter_atr_spike),
+                    "filter_unit_risk_budget": bool(filter_unit_risk_budget),
+                    "unit_notional_frac": _ef.UNIT_NOTIONAL_FRAC,
+                    "atr_spike_ratio": _ef.ATR_SPIKE_RATIO,
+                    "atr_long_n": _ef.ATR_LONG_N,
+                    "hits": dict(ef_hits),
+                    "log": ef_log,
+                }
+            }
+            if entry_filters_on
+            else {}
+        ),
         "option_hedge": option_hedge,
         "premium_atr_mult": premium_atr_mult if option_hedge else None,
         "strike_atr_mult": strike_atr_mult if option_hedge else None,
@@ -2255,6 +2357,9 @@ def _simulate_cfg(
         candidate_log=candidate_log,
         contract_root=contract_root,
         state_log=state_log,
+        filter_unit_risk=bool(p.get("filter_unit_risk")),
+        filter_atr_spike=bool(p.get("filter_atr_spike")),
+        filter_unit_risk_budget=bool(p.get("filter_unit_risk_budget")),
     )
 
 
@@ -2344,6 +2449,25 @@ def main():
     ctf = "--ctf" in sys.argv
     roll_grid = "--roll-grid" in sys.argv
     p = _load_cfg()
+    # R8: research overrides need --out and the default single-run path; they never reach the formal write.
+    r8_rec: dict = {}
+    if _r8_flags_present():
+        if _cli_val("--out") is None:
+            print("[bt] --equity / --filter-unit-risk / --filter-atr-spike are research overrides and require "
+                  "--out PATH (refusing to run without it)", file=sys.stderr)
+            return 2
+        if compare or hedge_grid or rr_grid or ctf or roll_grid or p.get("observe_mode"):
+            print("[bt] R8 overrides are only supported for the default single run "
+                  "(not with --compare/--hedge-grid/--rr-grid/--ctf/--roll-grid/--observe)", file=sys.stderr)
+            return 2
+        try:
+            r8_new = r8_overrides_from_argv()
+        except ValueError as exc:
+            print(f"[bt] bad R8 override: {exc}", file=sys.stderr)
+            return 2
+        r8_rec = {"applied": dict(r8_new),
+                  "formal_values": {k: p.get(k) for k in r8_new}}
+        p.update(r8_new)
     if rr_grid:
         p["equity0"] = float(p["cfg"].get("equity") or 200_000)
         p["min_lots"] = 0
@@ -2359,6 +2483,11 @@ def main():
         f"observe={p.get('observe_mode')} optHedge={p.get('option_hedge')} "
         f"premATR={p.get('premium_atr_mult')} strikeATR={p.get('strike_atr_mult')} "
         f"ifind={active_slot()} compare={compare} hedge_grid={hedge_grid} rr_grid={rr_grid} roll_grid={roll_grid}"
+        + (
+            f" filter_unit_risk={bool(p.get('filter_unit_risk'))} filter_atr_spike={bool(p.get('filter_atr_spike'))}"
+            if (p.get("filter_unit_risk") or p.get("filter_atr_spike"))
+            else ""
+        )
     )
     if roll_grid:
         pack = _fetch_pack(p["cfg"]["symbols"])
@@ -2546,6 +2675,8 @@ def main():
         out = _simulate_cfg(p, mode, pack=pack)
         out["contract_prefetch"] = prefetch
         out["entry_filter"] = mode
+        if r8_rec:
+            out["r8_overrides"] = r8_rec  # research-only run: never a formal result
         if prior_cmp:
             out["comparison"] = prior_cmp
         try:

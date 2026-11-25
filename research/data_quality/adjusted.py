@@ -94,6 +94,27 @@ class AdjustedSeries:
             vals.append(t)
         return sum(vals) / 14.0
 
+    def atr_n(self, i: int, n: int) -> float | None:
+        """Mean of the last ``n`` same-contract true ranges ending at ``i`` (R8: ATR100 for the spike filter).
+
+        Same definition and same clean-window shortcut as :meth:`atr14` (``atr_n(i, 14) == atr14(i)``);
+        returns ``None`` when fewer than ``n`` bars precede ``i``.  Only bars ``<= i`` are read."""
+        if n < 1 or i < n or i >= len(self.hist):
+            return None
+        if self._window_clean(i - n, i):
+            trs = []
+            for j in range(i - n + 1, i + 1):
+                h, l, pc = self.hist[j]["high"], self.hist[j]["low"], self.hist[j - 1]["close"]
+                trs.append(max(h - l, abs(h - pc), abs(l - pc)))
+            return sum(trs) / float(n)
+        vals = []
+        for j in range(i - n + 1, i + 1):
+            t = self.tr[j]
+            if t is None:
+                return None
+            vals.append(t)
+        return sum(vals) / float(n)
+
     def vol_hist(self) -> list[dict]:
         """Bars carrying a roll-free close *index* (forward-built, so truncation-safe).
 

@@ -1,0 +1,3222 @@
+{
+ "counts": {
+  "A": 100,
+  "B": 139,
+  "C": 98,
+  "common_A_B": 71,
+  "only_B": 68,
+  "only_A": 29,
+  "B_not_in_C": 68
+ },
+ "only_B_why_absent_in_A": {
+  "fill_time_quality": 52,
+  "not_evaluated": 5,
+  "caps:not_selected": 8,
+  "no_free_slot": 3
+ },
+ "only_B_why_absent_in_C": {
+  "fill_time_quality": 53,
+  "not_evaluated": 6,
+  "caps:not_selected": 7,
+  "no_free_slot": 1,
+  "selected_but_not_filled": 1
+ },
+ "only_A_codes": [
+  [
+   "CF",
+   "2026-01-12"
+  ],
+  [
+   "TA",
+   "2026-01-12"
+  ],
+  [
+   "AL",
+   "2026-01-19"
+  ],
+  [
+   "JM",
+   "2026-03-03"
+  ],
+  [
+   "JD",
+   "2026-06-11"
+  ],
+  [
+   "V",
+   "2026-06-11"
+  ],
+  [
+   "JD",
+   "2026-06-15"
+  ],
+  [
+   "I",
+   "2026-06-24"
+  ],
+  [
+   "I",
+   "2026-06-26"
+  ],
+  [
+   "AG",
+   "2026-06-30"
+  ],
+  [
+   "FU",
+   "2026-07-13"
+  ],
+  [
+   "JM",
+   "2026-08-03"
+  ],
+  [
+   "SR",
+   "2026-08-03"
+  ],
+  [
+   "I",
+   "2026-08-06"
+  ],
+  [
+   "I",
+   "2026-08-10"
+  ],
+  [
+   "BU",
+   "2026-09-11"
+  ],
+  [
+   "JM",
+   "2026-09-11"
+  ],
+  [
+   "M",
+   "2026-09-11"
+  ],
+  [
+   "M",
+   "2026-09-15"
+  ],
+  [
+   "CF",
+   "2026-10-08"
+  ],
+  [
+   "NI",
+   "2026-10-13"
+  ],
+  [
+   "FU",
+   "2026-10-19"
+  ],
+  [
+   "AG",
+   "2026-10-26"
+  ],
+  [
+   "AG",
+   "2026-11-09"
+  ],
+  [
+   "P",
+   "2026-11-11"
+  ],
+  [
+   "AG",
+   "2026-11-11"
+  ],
+  [
+   "EG",
+   "2026-11-13"
+  ],
+  [
+   "P",
+   "2026-11-13"
+  ],
+  [
+   "AG",
+   "2026-11-18"
+  ]
+ ],
+ "only_A_why_absent_in_B": {
+  "not_evaluated": 13,
+  "caps:not_selected": 13,
+  "no_free_slot": 3
+ },
+ "rows_only_A": [
+  {
+   "code": "CF",
+   "dir": "多",
+   "signal_day": "2026-01-09",
+   "entry_date": "2026-01-12",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "TA",
+   "dir": "多",
+   "signal_day": "2026-01-09",
+   "entry_date": "2026-01-12",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "AL",
+   "dir": "多",
+   "signal_day": "2026-01-16",
+   "entry_date": "2026-01-19",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['AU', 'CU', 'AL', 'I'], held=['NI'])"
+   }
+  },
+  {
+   "code": "JM",
+   "dir": "空",
+   "signal_day": "2026-03-02",
+   "entry_date": "2026-03-03",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['PP', 'JM'], held=['CF'])"
+   }
+  },
+  {
+   "code": "JD",
+   "dir": "多",
+   "signal_day": "2026-06-10",
+   "entry_date": "2026-06-11",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "V",
+   "dir": "空",
+   "signal_day": "2026-06-10",
+   "entry_date": "2026-06-11",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=1, cands=['V', 'M', 'FG', 'EB', 'SA', 'FU', 'BU'], held=['SP', 'JD'])"
+   }
+  },
+  {
+   "code": "JD",
+   "dir": "多",
+   "signal_day": "2026-06-12",
+   "entry_date": "2026-06-15",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "I",
+   "dir": "空",
+   "signal_day": "2026-06-23",
+   "entry_date": "2026-06-24",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "I",
+   "dir": "空",
+   "signal_day": "2026-06-25",
+   "entry_date": "2026-06-26",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "AG",
+   "dir": "空",
+   "signal_day": "2026-06-29",
+   "entry_date": "2026-06-30",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['V', 'FG', 'EB', 'SA', 'AG', 'SP', 'AL', 'NI'], held=['FU'])"
+   }
+  },
+  {
+   "code": "FU",
+   "dir": "空",
+   "signal_day": "2026-07-10",
+   "entry_date": "2026-07-13",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=1, cands=['SA', 'FU', 'NI'], held=['I', 'EB'])"
+   }
+  },
+  {
+   "code": "JM",
+   "dir": "空",
+   "signal_day": "2026-07-31",
+   "entry_date": "2026-08-03",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['FG', 'AG', 'SR', 'JM'], held=['SA'])"
+   }
+  },
+  {
+   "code": "SR",
+   "dir": "空",
+   "signal_day": "2026-07-31",
+   "entry_date": "2026-08-03",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['FG', 'AG', 'SR', 'JM'], held=['SA'])"
+   }
+  },
+  {
+   "code": "I",
+   "dir": "空",
+   "signal_day": "2026-08-05",
+   "entry_date": "2026-08-06",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['FG', 'I'], held=['SA'])"
+   }
+  },
+  {
+   "code": "I",
+   "dir": "空",
+   "signal_day": "2026-08-07",
+   "entry_date": "2026-08-10",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['FG', 'SP', 'I'], held=['SA'])"
+   }
+  },
+  {
+   "code": "BU",
+   "dir": "多",
+   "signal_day": "2026-09-10",
+   "entry_date": "2026-09-11",
+   "B": {
+    "where": "no_free_slot",
+    "detail": "A had no free position slot on 2026-09-10 (held after day: ['BU', 'JM', 'M'])"
+   }
+  },
+  {
+   "code": "JM",
+   "dir": "多",
+   "signal_day": "2026-09-10",
+   "entry_date": "2026-09-11",
+   "B": {
+    "where": "no_free_slot",
+    "detail": "A had no free position slot on 2026-09-10 (held after day: ['BU', 'JM', 'M'])"
+   }
+  },
+  {
+   "code": "M",
+   "dir": "多",
+   "signal_day": "2026-09-10",
+   "entry_date": "2026-09-11",
+   "B": {
+    "where": "no_free_slot",
+    "detail": "A had no free position slot on 2026-09-10 (held after day: ['BU', 'JM', 'M'])"
+   }
+  },
+  {
+   "code": "M",
+   "dir": "多",
+   "signal_day": "2026-09-14",
+   "entry_date": "2026-09-15",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "CF",
+   "dir": "空",
+   "signal_day": "2026-09-30",
+   "entry_date": "2026-10-08",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['MA', 'FG', 'EB', 'TA', 'SA', 'CF', 'BU'], held=['FU'])"
+   }
+  },
+  {
+   "code": "NI",
+   "dir": "空",
+   "signal_day": "2026-10-12",
+   "entry_date": "2026-10-13",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['MA', 'FG', 'EB', 'TA', 'SA', 'PP', 'L', 'BU', 'RU', 'NI'], held=['I'])"
+   }
+  },
+  {
+   "code": "FU",
+   "dir": "多",
+   "signal_day": "2026-10-16",
+   "entry_date": "2026-10-19",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "AG",
+   "dir": "空",
+   "signal_day": "2026-10-23",
+   "entry_date": "2026-10-26",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "AG",
+   "dir": "空",
+   "signal_day": "2026-11-06",
+   "entry_date": "2026-11-09",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "P",
+   "dir": "空",
+   "signal_day": "2026-11-10",
+   "entry_date": "2026-11-11",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "AG",
+   "dir": "空",
+   "signal_day": "2026-11-10",
+   "entry_date": "2026-11-11",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "EG",
+   "dir": "多",
+   "signal_day": "2026-11-12",
+   "entry_date": "2026-11-13",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=1, cands=['EG'], held=['AG', 'P'])"
+   }
+  },
+  {
+   "code": "P",
+   "dir": "空",
+   "signal_day": "2026-11-12",
+   "entry_date": "2026-11-13",
+   "B": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "AG",
+   "dir": "空",
+   "signal_day": "2026-11-17",
+   "entry_date": "2026-11-18",
+   "B": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['EG', 'AG', 'I'], held=['P'])"
+   }
+  }
+ ],
+ "only_B_fill_flag_kinds": {
+  "hard_window(<=5 sessions)": 35,
+  "near_only(6-10 sessions)": 17
+ },
+ "quality_blocks": {
+  "A": {
+   "quality:VALID_ONLY": 122,
+   "delivery_restricted,roll_or_position_blocked": 86,
+   "delivery_restricted": 36,
+   "missing_next_open": 1
+  },
+  "B": {
+   "missing_next_open": 1
+  },
+  "C": {
+   "quality:VALID_ONLY": 123,
+   "delivery_restricted,roll_or_position_blocked": 87,
+   "delivery_restricted": 36,
+   "missing_next_open": 1
+  }
+ },
+ "bars_stamped_delivery_restricted": {
+  "A": 1548,
+  "B": 0,
+  "C": 1548
+ },
+ "entries_into_main_contract_inside_no_new_window": {
+  "A_trades": {
+   "outside": 100
+  },
+  "B_trades": {
+   "outside": 139
+  }
+ },
+ "seat_gate": {
+  "A": {
+   "seat_days_min": 113,
+   "skipped_seat_filter_signals": {
+    "EG": 55,
+    "L": 47,
+    "JM": 27,
+    "I": 27,
+    "EB": 51,
+    "P": 14,
+    "JD": 25,
+    "PP": 51,
+    "V": 42,
+    "M": 15
+   }
+  },
+  "B": {
+   "seat_days_min": 113,
+   "skipped_seat_filter_signals": {
+    "EG": 53,
+    "L": 47,
+    "JM": 29,
+    "I": 25,
+    "EB": 45,
+    "P": 13,
+    "JD": 19,
+    "PP": 50,
+    "V": 44,
+    "M": 15
+   }
+  },
+  "C": {
+   "seat_days_min": 113,
+   "skipped_seat_filter_signals": {
+    "EG": 55,
+    "L": 47,
+    "JM": 27,
+    "I": 27,
+    "EB": 51,
+    "P": 14,
+    "JD": 25,
+    "PP": 51,
+    "V": 42,
+    "M": 15
+   }
+  }
+ },
+ "dce_trades_without_seat_book": {
+  "A": 48,
+  "B": 59,
+  "C": 48
+ },
+ "silent_pass_among_trades": {
+  "A": {
+   "trades": 100,
+   "seat_filter_skipped_seat_short": 35
+  },
+  "B": {
+   "trades": 139,
+   "seat_filter_skipped_seat_short": 41
+  },
+  "B_only": {
+   "trades": 68,
+   "seat_filter_skipped_seat_short": 15
+  }
+ },
+ "alignment": {
+  "member_A_vs_B": {
+   "cells": 4821,
+   "differ": 0
+  },
+  "carry_A_vs_B": {
+   "cells": 5832,
+   "differ": 0
+  }
+ },
+ "carry_pair_vs_official_contracts": {
+  "all_pairs:n": 5805,
+  "all_pairs:near_identified": 5767,
+  "all_pairs:near_is_nearest_alive_official": 3522,
+  "all_pairs:near_is_official_main": 2173,
+  "all_pairs:far_is_official_main": 2252,
+  "all_pairs:pair_contains_official_main": 4407,
+  "carry_blocked_in_B:n": 140,
+  "carry_blocked_in_B:near_identified": 137,
+  "carry_blocked_in_B:near_is_nearest_alive_official": 59,
+  "carry_blocked_in_B:near_is_official_main": 77,
+  "carry_blocked_in_B:far_is_official_main": 21,
+  "carry_blocked_in_B:pair_contains_official_main": 98
+ },
+ "carry_blocked_examples": [
+  {
+   "code": "AG",
+   "day": "2026-01-05",
+   "why": "升水极端禁开多"
+  },
+  {
+   "code": "EB",
+   "day": "2026-03-18",
+   "why": "升水极端禁开多",
+   "src": "2026-03-17",
+   "near": [
+    "EB2603"
+   ],
+   "far": [
+    "EB2604"
+   ],
+   "official_main": "EB2604",
+   "nearest_two_alive": [
+    "EB2603",
+    "EB2604"
+   ]
+  },
+  {
+   "code": "JD",
+   "day": "2026-05-28",
+   "why": "升水极端禁开多",
+   "src": "2026-05-27",
+   "near": [
+    "JD2606"
+   ],
+   "far": [
+    "JD2607"
+   ],
+   "official_main": "JD2608",
+   "nearest_two_alive": [
+    "JD2606",
+    "JD2607"
+   ]
+  },
+  {
+   "code": "PP",
+   "day": "2026-06-17",
+   "why": "贴水极端禁开空",
+   "src": "2026-06-16",
+   "near": [
+    "PP2609"
+   ],
+   "far": [
+    "PP2701"
+   ],
+   "official_main": "PP2609",
+   "nearest_two_alive": [
+    "PP2607",
+    "PP2608"
+   ]
+  },
+  {
+   "code": "MA",
+   "day": "2026-06-25",
+   "why": "贴水极端禁开空",
+   "src": "2026-06-24",
+   "near": [
+    "MA2609"
+   ],
+   "far": [
+    "MA2610",
+    "MA2701"
+   ],
+   "official_main": "MA2609",
+   "nearest_two_alive": [
+    "MA2607",
+    "MA2608"
+   ]
+  },
+  {
+   "code": "EG",
+   "day": "2026-07-01",
+   "why": "贴水极端禁开空",
+   "src": "2026-06-30",
+   "near": [
+    "EG2609"
+   ],
+   "far": [
+    "EG2701"
+   ],
+   "official_main": "EG2609",
+   "nearest_two_alive": [
+    "EG2607",
+    "EG2608"
+   ]
+  },
+  {
+   "code": "L",
+   "day": "2026-07-08",
+   "why": "贴水极端禁开空",
+   "src": "2026-07-07",
+   "near": [
+    "L2609"
+   ],
+   "far": [
+    "L2701"
+   ],
+   "official_main": "L2609",
+   "nearest_two_alive": [
+    "L2607",
+    "L2608"
+   ]
+  },
+  {
+   "code": "M",
+   "day": "2026-08-26",
+   "why": "升水极端禁开多",
+   "src": "2026-08-25",
+   "near": [
+    "M2609"
+   ],
+   "far": [
+    "M2611"
+   ],
+   "official_main": "M2701",
+   "nearest_two_alive": [
+    "M2609",
+    "M2611"
+   ]
+  }
+ ],
+ "seat_info": {
+  "seat_days_B": {
+   "AG": 275,
+   "AL": 275,
+   "AU": 275,
+   "BU": 275,
+   "CF": 275,
+   "CU": 275,
+   "EB": 114,
+   "EG": 113,
+   "FG": 275,
+   "FU": 275,
+   "I": 116,
+   "JD": 114,
+   "JM": 115,
+   "L": 115,
+   "M": 116,
+   "MA": 275,
+   "NI": 275,
+   "P": 116,
+   "PP": 115,
+   "RB": 275,
+   "RU": 275,
+   "SA": 275,
+   "SP": 275,
+   "SR": 275,
+   "SS": 275,
+   "TA": 275,
+   "V": 115
+  },
+  "seat_first_date_B": {
+   "AG": "2025-10-10",
+   "AL": "2025-10-10",
+   "AU": "2025-10-10",
+   "BU": "2025-10-10",
+   "CF": "2025-10-10",
+   "CU": "2025-10-10",
+   "EB": "2026-06-02",
+   "EG": "2026-06-02",
+   "FG": "2025-10-10",
+   "FU": "2025-10-10",
+   "I": "2026-06-02",
+   "JD": "2026-06-02",
+   "JM": "2026-06-02",
+   "L": "2026-06-02",
+   "M": "2026-06-02",
+   "MA": "2025-10-10",
+   "NI": "2025-10-10",
+   "P": "2026-06-02",
+   "PP": "2026-06-02",
+   "RB": "2025-10-10",
+   "RU": "2025-10-10",
+   "SA": "2025-10-10",
+   "SP": "2025-10-10",
+   "SR": "2025-10-10",
+   "SS": "2025-10-10",
+   "TA": "2025-10-10",
+   "V": "2026-06-02"
+  }
+ },
+ "status_concordance_days_both_evaluated": {
+  "no_signal->no_signal": 3659,
+  "ok->ok": 821,
+  "blocked->blocked": 417,
+  "lots0->lots0": 19,
+  "not_evaluated->ok": 13,
+  "not_evaluated->no_signal": 3,
+  "not_evaluated->blocked": 2,
+  "ok->lots0": 1
+ },
+ "signal_candidates": {
+  "A": 1392,
+  "B": 1320,
+  "C": 1409
+ },
+ "blocks": {
+  "A": {
+   "升水极端禁开多": 58,
+   "机构席位反向": 302,
+   "贴水极端禁开空": 88,
+   "quality:VALID_ONLY": 122,
+   "quality:missing_next_open": 1
+  },
+  "B": {
+   "升水极端禁开多": 55,
+   "机构席位反向": 291,
+   "贴水极端禁开空": 87,
+   "quality:missing_next_open": 1
+  },
+  "C": {
+   "升水极端禁开多": 58,
+   "机构席位反向": 307,
+   "贴水极端禁开空": 90,
+   "quality:VALID_ONLY": 123,
+   "quality:missing_next_open": 1
+  }
+ },
+ "rows": [
+  {
+   "code": "EG",
+   "dir": "空",
+   "signal_day": "2026-01-05",
+   "entry_date": "2026-01-06",
+   "exit_date": "2026-01-06",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "升水+5.38%·放行",
+    "main_contract_on_fill_day": "EG2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 88,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-06 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-06 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "AL",
+   "dir": "多",
+   "signal_day": "2026-01-05",
+   "entry_date": "2026-01-06",
+   "exit_date": "2026-01-06",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-0.11%·放行",
+    "main_contract_on_fill_day": "AL2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 45,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-06 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-06 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "CF",
+   "dir": "多",
+   "signal_day": "2026-01-05",
+   "entry_date": "2026-01-06",
+   "exit_date": "2026-01-07",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-0.48%·放行",
+    "main_contract_on_fill_day": "CF2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 88,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-06 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-06 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "TA",
+   "dir": "多",
+   "signal_day": "2026-01-06",
+   "entry_date": "2026-01-07",
+   "exit_date": "2026-01-07",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.76%·放行",
+    "main_contract_on_fill_day": "TA2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 87,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-07 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-07 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "CF",
+   "dir": "多",
+   "signal_day": "2026-01-07",
+   "entry_date": "2026-01-08",
+   "exit_date": "2026-01-08",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-0.67%·放行",
+    "main_contract_on_fill_day": "CF2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 86,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-08 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-08 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "TA",
+   "dir": "多",
+   "signal_day": "2026-01-07",
+   "entry_date": "2026-01-08",
+   "exit_date": "2026-01-08",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.74%·放行",
+    "main_contract_on_fill_day": "TA2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 86,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-08 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-08 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "AL",
+   "dir": "多",
+   "signal_day": "2026-01-08",
+   "entry_date": "2026-01-09",
+   "exit_date": "2026-01-09",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.04%·放行",
+    "main_contract_on_fill_day": "AL2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 42,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "CF",
+   "dir": "多",
+   "signal_day": "2026-01-08",
+   "entry_date": "2026-01-09",
+   "exit_date": "2026-01-12",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-1.09%·放行",
+    "main_contract_on_fill_day": "CF2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 85,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "TA",
+   "dir": "多",
+   "signal_day": "2026-01-08",
+   "entry_date": "2026-01-09",
+   "exit_date": "2026-01-16",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.86%·放行",
+    "main_contract_on_fill_day": "TA2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 85,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "AL",
+   "dir": "多",
+   "signal_day": "2026-01-20",
+   "entry_date": "2026-01-21",
+   "exit_date": "2026-01-28",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.27%·放行",
+    "main_contract_on_fill_day": "AL2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 34,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   },
+   "C": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "SS",
+   "dir": "多",
+   "signal_day": "2026-01-28",
+   "entry_date": "2026-01-29",
+   "exit_date": "2026-01-30",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.14%·放行",
+    "main_contract_on_fill_day": "SS2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 28,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-29 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-29 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "AL",
+   "dir": "多",
+   "signal_day": "2026-01-28",
+   "entry_date": "2026-01-29",
+   "exit_date": "2026-01-30",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.31%·放行",
+    "main_contract_on_fill_day": "AL2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 28,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-29 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-01-29 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "EB",
+   "dir": "多",
+   "signal_day": "2026-01-30",
+   "entry_date": "2026-02-02",
+   "exit_date": "2026-02-02",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-1.33%·放行",
+    "main_contract_on_fill_day": "EB2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 26,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "SS",
+   "dir": "多",
+   "signal_day": "2026-01-30",
+   "entry_date": "2026-02-02",
+   "exit_date": "2026-02-02",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.83%·放行",
+    "main_contract_on_fill_day": "SS2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 26,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "NI",
+   "dir": "多",
+   "signal_day": "2026-01-30",
+   "entry_date": "2026-02-02",
+   "exit_date": "2026-02-02",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.33%·放行",
+    "main_contract_on_fill_day": "NI2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 26,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=3, cands=['EB', 'P', 'BU', 'CU', 'NI', 'SS'], held=[])"
+   },
+   "C": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=3, cands=['EB', 'P', 'BU', 'CU', 'NI', 'SS'], held=[])"
+   }
+  },
+  {
+   "code": "EB",
+   "dir": "多",
+   "signal_day": "2026-02-02",
+   "entry_date": "2026-02-03",
+   "exit_date": "2026-02-04",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-1.18%·放行",
+    "main_contract_on_fill_day": "EB2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 25,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-03 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-03 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "EB",
+   "dir": "多",
+   "signal_day": "2026-02-04",
+   "entry_date": "2026-02-05",
+   "exit_date": "2026-02-06",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-1.08%·放行",
+    "main_contract_on_fill_day": "EB2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 23,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "EB",
+   "dir": "多",
+   "signal_day": "2026-02-06",
+   "entry_date": "2026-02-09",
+   "exit_date": "2026-02-10",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-0.22%·放行",
+    "main_contract_on_fill_day": "EB2603",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 21,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "JD",
+   "dir": "空",
+   "signal_day": "2026-02-06",
+   "entry_date": "2026-02-09",
+   "exit_date": "2026-02-12",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "升水+2.88%·放行",
+    "main_contract_on_fill_day": "JD2604",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 44,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "CF",
+   "dir": "多",
+   "signal_day": "2026-02-24",
+   "entry_date": "2026-02-25",
+   "exit_date": "2026-02-26",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.41%·放行",
+    "main_contract_on_fill_day": "CF2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 52,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=1, cands=['TA', 'CF'], held=['JM', 'EB'])"
+   },
+   "C": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=1, cands=['TA', 'CF'], held=['JM', 'EB'])"
+   }
+  },
+  {
+   "code": "PP",
+   "dir": "多",
+   "signal_day": "2026-03-02",
+   "entry_date": "2026-03-03",
+   "exit_date": "2026-03-04",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "升水+0.24%·放行",
+    "main_contract_on_fill_day": "PP2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 48,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-03 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-03 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "EB",
+   "dir": "多",
+   "signal_day": "2026-03-04",
+   "entry_date": "2026-03-05",
+   "exit_date": "2026-03-05",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-0.66%·放行",
+    "main_contract_on_fill_day": "EB2604",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 26,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "CF",
+   "dir": "多",
+   "signal_day": "2026-02-26",
+   "entry_date": "2026-02-27",
+   "exit_date": "2026-03-09",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-0.62%·放行",
+    "main_contract_on_fill_day": "CF2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 50,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-27 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-02-27 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "EB",
+   "dir": "多",
+   "signal_day": "2026-03-05",
+   "entry_date": "2026-03-06",
+   "exit_date": "2026-03-09",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-0.34%·放行",
+    "main_contract_on_fill_day": "EB2604",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 25,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-06 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-06 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "TA",
+   "dir": "多",
+   "signal_day": "2026-03-09",
+   "entry_date": "2026-03-10",
+   "exit_date": "2026-03-10",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-3.29%·放行",
+    "main_contract_on_fill_day": "TA2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 43,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-10 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-10 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "P",
+   "dir": "多",
+   "signal_day": "2026-03-09",
+   "entry_date": "2026-03-10",
+   "exit_date": "2026-03-10",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-0.22%·放行",
+    "main_contract_on_fill_day": "P2605",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 43,
+    "seat_row_present": false,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-10 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-03-10 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "FG",
+   "dir": "空",
+   "signal_day": "2026-04-23",
+   "entry_date": "2026-04-24",
+   "exit_date": "2026-04-28",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+13.69%·放行",
+    "main_contract_on_fill_day": "FG2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 99,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-04-24 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-04-24 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "FG",
+   "dir": "空",
+   "signal_day": "2026-04-28",
+   "entry_date": "2026-04-29",
+   "exit_date": "2026-05-06",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+14.39%·放行",
+    "main_contract_on_fill_day": "FG2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 96,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-04-29 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-04-29 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "SS",
+   "dir": "多",
+   "signal_day": "2026-05-06",
+   "entry_date": "2026-05-07",
+   "exit_date": "2026-05-07",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-0.48%·放行",
+    "main_contract_on_fill_day": "SS2606",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 24,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-05-07 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-05-07 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "NI",
+   "dir": "多",
+   "signal_day": "2026-05-06",
+   "entry_date": "2026-05-07",
+   "exit_date": "2026-05-07",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.52%·放行",
+    "main_contract_on_fill_day": "NI2606",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 24,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-05-07 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-05-07 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "CF",
+   "dir": "多",
+   "signal_day": "2026-05-06",
+   "entry_date": "2026-05-07",
+   "exit_date": "2026-05-08",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.55%·放行",
+    "main_contract_on_fill_day": "CF2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 90,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-05-07 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-05-07 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "SS",
+   "dir": "多",
+   "signal_day": "2026-05-07",
+   "entry_date": "2026-05-08",
+   "exit_date": "2026-05-08",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.80%·放行",
+    "main_contract_on_fill_day": "SS2606",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 23,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-05-08 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-05-08 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "SP",
+   "dir": "空",
+   "signal_day": "2026-06-02",
+   "entry_date": "2026-06-03",
+   "exit_date": "2026-06-12",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.79%·放行",
+    "main_contract_on_fill_day": "SP2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 71,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-06-03 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-06-03 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "FU",
+   "dir": "空",
+   "signal_day": "2026-06-12",
+   "entry_date": "2026-06-15",
+   "exit_date": "2026-06-15",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.13%·放行",
+    "main_contract_on_fill_day": "FU2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 63,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['FG', 'EB', 'JD', 'FU', 'AG'], held=['V'])"
+   },
+   "C": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['FG', 'EB', 'JD', 'FU', 'AG'], held=['V'])"
+   }
+  },
+  {
+   "code": "JD",
+   "dir": "多",
+   "signal_day": "2026-06-04",
+   "entry_date": "2026-06-05",
+   "exit_date": "2026-06-18",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-0.65%·放行",
+    "main_contract_on_fill_day": "JD2608",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 46,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-06-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-06-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "I",
+   "dir": "空",
+   "signal_day": "2026-06-22",
+   "entry_date": "2026-06-23",
+   "exit_date": "2026-06-26",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-0.20%·放行",
+    "main_contract_on_fill_day": "I2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 57,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['V', 'FG', 'EB', 'SA', 'I'], held=['FU'])"
+   },
+   "C": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['V', 'FG', 'EB', 'SA', 'I'], held=['FU'])"
+   }
+  },
+  {
+   "code": "FU",
+   "dir": "空",
+   "signal_day": "2026-06-25",
+   "entry_date": "2026-06-26",
+   "exit_date": "2026-07-08",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.80%·放行",
+    "main_contract_on_fill_day": "FU2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 54,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-06-26 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-06-26 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "NI",
+   "dir": "空",
+   "signal_day": "2026-07-08",
+   "entry_date": "2026-07-09",
+   "exit_date": "2026-07-09",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.27%·放行",
+    "main_contract_on_fill_day": "NI2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 45,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-07-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-07-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "EB",
+   "dir": "空",
+   "signal_day": "2026-07-08",
+   "entry_date": "2026-07-09",
+   "exit_date": "2026-07-13",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "升水+0.03%·放行",
+    "main_contract_on_fill_day": "EB2608",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 22,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-07-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-07-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "SA",
+   "dir": "空",
+   "signal_day": "2026-07-28",
+   "entry_date": "2026-07-29",
+   "exit_date": "2026-07-30",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+7.34%·放行",
+    "main_contract_on_fill_day": "SA2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 31,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-07-29 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-07-29 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "SA",
+   "dir": "空",
+   "signal_day": "2026-07-30",
+   "entry_date": "2026-07-31",
+   "exit_date": "2026-08-10",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+5.94%·放行",
+    "main_contract_on_fill_day": "SA2609",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 29,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-07-31 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-07-31 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "EG",
+   "dir": "多",
+   "signal_day": "2026-08-26",
+   "entry_date": "2026-08-27",
+   "exit_date": "2026-09-01",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-14.85%·放行",
+    "main_contract_on_fill_day": "EG2610",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 31,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-08-27 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-08-27 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "EG",
+   "dir": "多",
+   "signal_day": "2026-09-01",
+   "entry_date": "2026-09-02",
+   "exit_date": "2026-09-03",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "缺席位",
+    "seat_short": true,
+    "carry": "贴水-14.16%·放行",
+    "main_contract_on_fill_day": "EG2610",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 27,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "JM",
+   "dir": "多",
+   "signal_day": "2026-09-01",
+   "entry_date": "2026-09-02",
+   "exit_date": "2026-09-03",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.17%·放行",
+    "main_contract_on_fill_day": "JM2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 92,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "JM",
+   "dir": "多",
+   "signal_day": "2026-09-03",
+   "entry_date": "2026-09-04",
+   "exit_date": "2026-09-07",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-1.06%·放行",
+    "main_contract_on_fill_day": "JM2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 90,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-04 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-04 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "BU",
+   "dir": "多",
+   "signal_day": "2026-09-03",
+   "entry_date": "2026-09-04",
+   "exit_date": "2026-09-08",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-3.60%·放行",
+    "main_contract_on_fill_day": "BU2611",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 47,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-04 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-04 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "BU",
+   "dir": "多",
+   "signal_day": "2026-09-08",
+   "entry_date": "2026-09-09",
+   "exit_date": "2026-09-11",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-3.18%·放行",
+    "main_contract_on_fill_day": "BU2611",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 44,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "JM",
+   "dir": "多",
+   "signal_day": "2026-09-07",
+   "entry_date": "2026-09-08",
+   "exit_date": "2026-09-14",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-0.64%·放行",
+    "main_contract_on_fill_day": "JM2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 88,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-08 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-08 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "M",
+   "dir": "多",
+   "signal_day": "2026-09-01",
+   "entry_date": "2026-09-02",
+   "exit_date": "2026-09-16",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.06%·放行",
+    "main_contract_on_fill_day": "M2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 92,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-02 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "FU",
+   "dir": "多",
+   "signal_day": "2026-09-29",
+   "entry_date": "2026-09-30",
+   "exit_date": "2026-10-08",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-14.76%·放行",
+    "main_contract_on_fill_day": "FU2611",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 29,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-30 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-09-30 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "BU",
+   "dir": "多",
+   "signal_day": "2026-10-08",
+   "entry_date": "2026-10-09",
+   "exit_date": "2026-10-09",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-10.78%·放行",
+    "main_contract_on_fill_day": "BU2611",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 22,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['MA', 'FG', 'EB', 'TA', 'SA', 'PP', 'L', 'BU', 'RU', 'I'], held=['CF'])"
+   },
+   "C": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['MA', 'FG', 'EB', 'TA', 'SA', 'PP', 'L', 'BU', 'RU', 'I'], held=['CF'])"
+   }
+  },
+  {
+   "code": "FU",
+   "dir": "多",
+   "signal_day": "2026-10-15",
+   "entry_date": "2026-10-16",
+   "exit_date": "2026-10-21",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-6.93%·放行",
+    "main_contract_on_fill_day": "FU2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 65,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "no_free_slot",
+    "detail": "A had no free position slot on 2026-10-15 (held after day: ['I', 'MA', 'NI'])"
+   },
+   "C": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=1, cands=['FG', 'EB', 'TA', 'SA', 'PP', 'FU'], held=['I', 'MA'])"
+   }
+  },
+  {
+   "code": "AG",
+   "dir": "空",
+   "signal_day": "2026-10-22",
+   "entry_date": "2026-10-23",
+   "exit_date": "2026-10-26",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.17%·放行",
+    "main_contract_on_fill_day": "AG2612",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 37,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['FG', 'EB', 'SA', 'PP', 'AG', 'SP', 'I'], held=['FU'])"
+   },
+   "C": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=2, cands=['FG', 'EB', 'SA', 'PP', 'AG', 'SP', 'I'], held=['FU'])"
+   }
+  },
+  {
+   "code": "AG",
+   "dir": "空",
+   "signal_day": "2026-10-26",
+   "entry_date": "2026-10-27",
+   "exit_date": "2026-10-30",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.11%·放行",
+    "main_contract_on_fill_day": "AG2612",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 35,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "no_free_slot",
+    "detail": "A had no free position slot on 2026-10-26 (held after day: ['AG', 'FU', 'I'])"
+   },
+   "C": {
+    "where": "no_free_slot",
+    "detail": "A had no free position slot on 2026-10-26 (held after day: ['AG', 'FU', 'I'])"
+   }
+  },
+  {
+   "code": "P",
+   "dir": "空",
+   "signal_day": "2026-10-29",
+   "entry_date": "2026-10-30",
+   "exit_date": "2026-10-30",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+6.01%·放行",
+    "main_contract_on_fill_day": "P2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 50,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-10-30 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-10-30 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "FU",
+   "dir": "多",
+   "signal_day": "2026-10-29",
+   "entry_date": "2026-10-30",
+   "exit_date": "2026-11-02",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-21.35%·放行",
+    "main_contract_on_fill_day": "FU2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 55,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-10-30 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-10-30 flags={'near_delivery': True}",
+    "fill_flags": {
+     "near_delivery": true
+    }
+   }
+  },
+  {
+   "code": "MA",
+   "dir": "多",
+   "signal_day": "2026-11-02",
+   "entry_date": "2026-11-03",
+   "exit_date": "2026-11-03",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-9.17%·放行",
+    "main_contract_on_fill_day": "MA2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 48,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-03 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-03 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "MA",
+   "dir": "多",
+   "signal_day": "2026-11-03",
+   "entry_date": "2026-11-04",
+   "exit_date": "2026-11-04",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-10.94%·放行",
+    "main_contract_on_fill_day": "MA2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 47,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-04 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-04 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "FU",
+   "dir": "多",
+   "signal_day": "2026-11-04",
+   "entry_date": "2026-11-05",
+   "exit_date": "2026-11-05",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-5.35%·放行",
+    "main_contract_on_fill_day": "FU2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 51,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "NI",
+   "dir": "空",
+   "signal_day": "2026-11-04",
+   "entry_date": "2026-11-05",
+   "exit_date": "2026-11-05",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.13%·放行",
+    "main_contract_on_fill_day": "NI2612",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 25,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=3, cands=['MA', 'EG', 'PP', 'L', 'P', 'FU', 'BU', 'AG', 'NI'], held=[])"
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "P",
+   "dir": "空",
+   "signal_day": "2026-11-04",
+   "entry_date": "2026-11-05",
+   "exit_date": "2026-11-06",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+5.44%·放行",
+    "main_contract_on_fill_day": "P2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 46,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-05 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "P",
+   "dir": "空",
+   "signal_day": "2026-11-06",
+   "entry_date": "2026-11-09",
+   "exit_date": "2026-11-11",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+5.54%·放行",
+    "main_contract_on_fill_day": "P2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 44,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   },
+   "C": {
+    "where": "fill_time_quality",
+    "detail": "selected on signal day; fill bar 2026-11-09 flags={'delivery_restricted': True, 'near_delivery': True, 'roll_blocked': True, 'no_new_position': True}",
+    "fill_flags": {
+     "delivery_restricted": true,
+     "near_delivery": true,
+     "roll_blocked": true,
+     "no_new_position": true
+    }
+   }
+  },
+  {
+   "code": "AG",
+   "dir": "空",
+   "signal_day": "2026-11-05",
+   "entry_date": "2026-11-06",
+   "exit_date": "2026-11-13",
+   "reason": "target",
+   "in_C": true,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.10%·放行",
+    "main_contract_on_fill_day": "AG2702",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 71,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "caps:not_selected",
+    "detail": "A candidate but not selected (slots_left=3, cands=['P', 'AG'], held=[])"
+   },
+   "C": {
+    "where": "selected_but_not_filled",
+    "detail": "selected on signal day; fill bar 2026-11-06 flags={}",
+    "fill_flags": {}
+   }
+  },
+  {
+   "code": "P",
+   "dir": "空",
+   "signal_day": "2026-11-11",
+   "entry_date": "2026-11-12",
+   "exit_date": "2026-11-16",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+5.67%·放行",
+    "main_contract_on_fill_day": "P2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 41,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   },
+   "C": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "EG",
+   "dir": "多",
+   "signal_day": "2026-11-13",
+   "entry_date": "2026-11-16",
+   "exit_date": "2026-11-17",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-9.21%·放行",
+    "main_contract_on_fill_day": "EG2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 39,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "no_free_slot",
+    "detail": "A had no free position slot on 2026-11-13 (held after day: ['AG', 'EG', 'P'])"
+   },
+   "C": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "P",
+   "dir": "空",
+   "signal_day": "2026-11-16",
+   "entry_date": "2026-11-17",
+   "exit_date": "2026-11-18",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+5.60%·放行",
+    "main_contract_on_fill_day": "P2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 38,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   },
+   "C": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "EG",
+   "dir": "多",
+   "signal_day": "2026-11-17",
+   "entry_date": "2026-11-18",
+   "exit_date": "2026-11-18",
+   "reason": "stop",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "贴水-9.09%·放行",
+    "main_contract_on_fill_day": "EG2701",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 37,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   },
+   "C": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  },
+  {
+   "code": "AG",
+   "dir": "空",
+   "signal_day": "2026-11-18",
+   "entry_date": "2026-11-19",
+   "exit_date": "2026-11-20",
+   "reason": "target",
+   "in_C": false,
+   "B": {
+    "status": "ok",
+    "seat_label": "跟随机构",
+    "seat_short": false,
+    "carry": "升水+0.15%·放行",
+    "main_contract_on_fill_day": "AG2702",
+    "main_contract_in_delivery_window": false,
+    "sessions_to_last_trade": 62,
+    "seat_row_present": true,
+    "carry_pair_present": true
+   },
+   "A": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   },
+   "C": {
+    "where": "not_evaluated",
+    "detail": "A already held this code"
+   }
+  }
+ ]
+}

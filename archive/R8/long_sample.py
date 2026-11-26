@@ -217,7 +217,7 @@ def run_long(group_kind: str, equity: float, scenario: str, pack, main_map, stor
         out = hb._simulate_cfg(p, mode, pack=pk, contract_root=store, candidate_log=clog if with_taps else None, long_sample=ls)
     finally:
         hb.path_a_candidate, hb.apply_portfolio_caps = orig_cand, orig_caps
-    res = {"out": out, "p": p, "cand_attr": cand_attr, "pool": ls.get("candidate_pool")}
+    res = {"out": out, "p": p, "cand_attr": cand_attr, "pool": ls.get("candidate_pool"), "clog": clog}
     if with_taps:
         held_by_day = {e["date"]: e.get("held") or {} for e in clog}
         cats: Counter = Counter()

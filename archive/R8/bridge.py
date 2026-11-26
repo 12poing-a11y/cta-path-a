@@ -42,7 +42,9 @@ def _params(snap_obj_p, mode, scenario):
     return p
 
 
-def run_cell(data, fill, mode, scenario, official, *, minute=True):
+def run_cell(data, fill, mode, scenario, official, *, minute=True, keep=None):
+    """``keep`` (dict, optional): receives the raw run result ``r`` and the engine's ``_LAST_PACK`` (post-lag seats / carry) for the
+    138-trade check (read-only); default None = unchanged behaviour."""
     import historical_backtest as hb
 
     names = ("prepare_pack_for_execution", "load_member_seats", "load_member_changes", "lag_member", "load_curves", "lag_curves_carry")
@@ -73,6 +75,8 @@ def run_cell(data, fill, mode, scenario, official, *, minute=True):
             if fill == "cal":
                 hb.prepare_pack_for_execution = saved["prepare_pack_for_execution"]  # the real calendar front-contract stamp
         r = ls.run_long("A", 1_000_000.0, scenario, pack, main_map, store, p=p, mode=entry_mode, ls_extra=lsx)
+        if keep is not None:
+            keep.update(r=r, last_pack=dict(hb._LAST_PACK), pack=pack, main_map=main_map)
     finally:
         for k, v in saved.items():
             setattr(hb, k, v)

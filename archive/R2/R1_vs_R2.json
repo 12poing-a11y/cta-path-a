@@ -1,0 +1,103 @@
+{
+  "R1": {
+    "ret_pct": 12.674,
+    "gross_ret_pct": 15.165,
+    "max_dd_pct": 4.044,
+    "closed_trades": 63,
+    "exits": {
+      "target": 27,
+      "stop": 33,
+      "signal": 3
+    },
+    "minute_stop_exits": 3,
+    "minute_rejected_mismatch": 9,
+    "minute_manage_checks": null,
+    "daily_exit_fallback_checks": 183
+  },
+  "R2": {
+    "ret_pct": 13.414,
+    "gross_ret_pct": 15.927,
+    "max_dd_pct": 4.044,
+    "closed_trades": 64,
+    "exits": {
+      "target": 27,
+      "stop": 34,
+      "signal": 3
+    },
+    "minute_stop_exits": 4,
+    "minute_rejected_mismatch": 9,
+    "minute_manage_checks": 13,
+    "daily_exit_fallback_checks": 184
+  },
+  "exit_changes": [
+    {
+      "code": "PP",
+      "entry_date": "2026-10-14",
+      "direction": "多",
+      "lots": 1,
+      "R1_exit_date": "2026-10-26",
+      "R1_reason": "target",
+      "R1_R": 2.0,
+      "R2_exit_date": "2026-10-21",
+      "R2_reason": "stop",
+      "R2_R": -1.0
+    }
+  ],
+  "only_in_R1": [],
+  "only_in_R2": [
+    {
+      "code": "FU",
+      "direction": "多",
+      "lots": 1,
+      "entry_date": "2026-10-22",
+      "date": "2026-10-26",
+      "reason": "target",
+      "R": 2.0,
+      "fill_price_basis": "continuous_proxy"
+    }
+  ],
+  "audit_after_R2": {
+    "checked": 61,
+    "mismatches": 2,
+    "continuous_proxy_mismatches": 0,
+    "contract_mismatches": 2,
+    "contract_mismatch_trades": [
+      {
+        "date": "2026-04-16",
+        "code": "I",
+        "direction": "空",
+        "lots": 1,
+        "reason": "stop",
+        "stop": 796.3143,
+        "target": 756.3714,
+        "open": 764.0,
+        "high": 783.5,
+        "low": 764.0,
+        "close": 782.5,
+        "fill_price_basis": "contract",
+        "fill_contract": "I2605",
+        "bar_source": "snap_contract"
+      },
+      {
+        "date": "2026-11-18",
+        "code": "P",
+        "direction": "空",
+        "lots": 1,
+        "reason": "target",
+        "stop": 9016.7143,
+        "target": 8513.5714,
+        "open": 8793.0,
+        "high": 8803.0,
+        "low": 8606.0,
+        "close": 8606.0,
+        "fill_price_basis": "contract",
+        "fill_contract": "P2612",
+        "bar_source": "snap_contract"
+      }
+    ]
+  },
+  "AB_branch": {
+    "A": "daily_HL_includes_night → match_daily on full trading-day minutes",
+    "B": "daily_open ≈ night_open → entry day keeps full trading-day minutes (no 09:00 cutoff)"
+  }
+}

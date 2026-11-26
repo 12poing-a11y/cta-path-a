@@ -1,0 +1,59 @@
+{
+  "checked": 51,
+  "mismatches": 3,
+  "skipped_proxied": 0,
+  "skipped_no_bar": 12,
+  "mismatch_trades": [
+    {
+      "date": "2026-09-28",
+      "code": "FU",
+      "direction": "多",
+      "lots": 2,
+      "reason": "stop",
+      "stop": 3951.7714,
+      "target": 4456.4571,
+      "open": 4363.0,
+      "high": 4463.0,
+      "low": 4293.0,
+      "close": 4418.0,
+      "fill_price_basis": "continuous_proxy",
+      "fill_contract": "FU2610",
+      "bar_source": "cache_history"
+    },
+    {
+      "date": "2026-10-20",
+      "code": "PP",
+      "direction": "多",
+      "lots": 1,
+      "reason": "stop",
+      "stop": 9131.8857,
+      "target": 9756.2286,
+      "open": 9350.0,
+      "high": 9452.0,
+      "low": 9250.0,
+      "close": 9376.0,
+      "fill_price_basis": "continuous_proxy",
+      "fill_contract": "PP2611",
+      "bar_source": "cache_history"
+    },
+    {
+      "date": "2026-11-13",
+      "code": "P",
+      "direction": "空",
+      "lots": 1,
+      "reason": "stop",
+      "stop": 9045.9143,
+      "target": 8551.1714,
+      "open": 8984.0,
+      "high": 9022.0,
+      "low": 8944.0,
+      "close": 8961.0,
+      "fill_price_basis": "continuous_proxy",
+      "fill_contract": "P2612",
+      "bar_source": "cache_history"
+    }
+  ],
+  "bt_path": "D:\\AI\\cta-path-a\\archive\\R0\\formal_bt.json",
+  "snap_path": "D:\\AI\\cta-path-a\\archive\\snapshots\\bt_input_20261120_53d47ac78c7b.json",
+  "snap_loaded": false
+}

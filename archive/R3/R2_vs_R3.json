@@ -1,0 +1,124 @@
+{
+  "R2": {
+    "ret_pct": 13.414,
+    "gross_ret_pct": 15.927,
+    "max_dd_pct": 4.044,
+    "closed_trades": 64,
+    "exits": {
+      "target": 27,
+      "stop": 34,
+      "signal": 3
+    },
+    "minute_stop_exits": 4,
+    "minute_rejected_mismatch": 9,
+    "daily_exit_fallback_checks": 184
+  },
+  "R3": {
+    "ret_pct": 10.026,
+    "gross_ret_pct": 12.528,
+    "max_dd_pct": 6.904,
+    "closed_trades": 65,
+    "exits": {
+      "target": 26,
+      "stop": 35,
+      "signal": 4
+    },
+    "minute_stop_exits": 4,
+    "minute_rejected_mismatch": 9,
+    "daily_exit_fallback_checks": 189
+  },
+  "gap_stop_exits": 4,
+  "gap_slippage_R": 6.4806,
+  "stops_with_R_lt_neg1_05": 4,
+  "gap_stops": [
+    {
+      "code": "MA",
+      "direction": "多",
+      "entry_date": "2026-04-13",
+      "exit_date": "2026-04-14",
+      "stop": 2895.2286,
+      "open_fill": 2860.0,
+      "daily_open": null,
+      "R": -1.18,
+      "extra_R_vs_stop": 0.1818,
+      "fill_price_basis": "contract"
+    },
+    {
+      "code": "FG",
+      "direction": "空",
+      "entry_date": "2026-04-15",
+      "exit_date": "2026-04-16",
+      "stop": 981.7714,
+      "open_fill": 1072.0,
+      "daily_open": null,
+      "R": -6.08,
+      "extra_R_vs_stop": 5.0772,
+      "fill_price_basis": "contract"
+    },
+    {
+      "code": "EG",
+      "direction": "多",
+      "entry_date": "2026-08-25",
+      "exit_date": "2026-08-26",
+      "stop": 5268.0571,
+      "open_fill": 5250.0,
+      "daily_open": 5250.0,
+      "R": -1.12,
+      "extra_R_vs_stop": 0.1204,
+      "fill_price_basis": "continuous_proxy"
+    },
+    {
+      "code": "EG",
+      "direction": "多",
+      "entry_date": "2026-09-18",
+      "exit_date": "2026-09-22",
+      "stop": 5806.8,
+      "open_fill": 5539.0,
+      "daily_open": 5539.0,
+      "R": -2.1,
+      "extra_R_vs_stop": 1.1012,
+      "fill_price_basis": "continuous_proxy"
+    }
+  ],
+  "audit_after_R3": {
+    "checked": 61,
+    "mismatches": 2,
+    "continuous_proxy_mismatches": 0,
+    "contract_mismatches": 2,
+    "contract_mismatch_trades": [
+      {
+        "date": "2026-04-16",
+        "code": "I",
+        "direction": "空",
+        "lots": 1,
+        "reason": "stop",
+        "stop": 796.3143,
+        "target": 756.3714,
+        "open": 764.0,
+        "high": 783.5,
+        "low": 764.0,
+        "close": 782.5,
+        "fill_price_basis": "contract",
+        "fill_contract": "I2605",
+        "bar_source": "snap_contract"
+      },
+      {
+        "date": "2026-11-18",
+        "code": "P",
+        "direction": "空",
+        "lots": 1,
+        "reason": "target",
+        "stop": 9016.7143,
+        "target": 8513.5714,
+        "open": 8793.0,
+        "high": 8803.0,
+        "low": 8606.0,
+        "close": 8606.0,
+        "fill_price_basis": "contract",
+        "fill_contract": "P2612",
+        "bar_source": "snap_contract"
+      }
+    ]
+  },
+  "weekend_bar_source": "iFinD sparse bars via historical_backtest._row_to_bar / _parse_zl_history regex fallback (date+H=L=C, no open); market_data.merge_bars+save_chart_history merge into .cache/history; Sina refreshes never overwrite weekend dates so placeholders persist. Likely path: daily_update→fetch_history or scripts/refresh_chart_history with paid ifind fill."
+}

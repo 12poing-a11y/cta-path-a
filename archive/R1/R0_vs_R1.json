@@ -1,0 +1,84 @@
+{
+  "R0": {
+    "ret_pct": 7.253,
+    "gross_ret_pct": 9.787,
+    "max_dd_pct": 6.739,
+    "closed_trades": 65,
+    "exits": {
+      "target": 26,
+      "stop": 36,
+      "signal": 3
+    },
+    "minute_stop_exits": 6,
+    "minute_rejected_mismatch": null,
+    "daily_exit_fallback_checks": 183
+  },
+  "R1": {
+    "ret_pct": 12.674,
+    "gross_ret_pct": 15.165,
+    "max_dd_pct": 4.044,
+    "closed_trades": 63,
+    "exits": {
+      "target": 27,
+      "stop": 33,
+      "signal": 3
+    },
+    "minute_stop_exits": 3,
+    "minute_rejected_mismatch": 9,
+    "daily_exit_fallback_checks": 183
+  },
+  "FU_2026_09_23_entry": {
+    "code": "FU",
+    "direction": "多",
+    "lots": 2,
+    "entry_date": "2026-09-23",
+    "date": "2026-09-28",
+    "reason": "target",
+    "entry": 4120.0,
+    "exit": 4456.4571,
+    "stop": 3951.7714,
+    "target": 4456.4571,
+    "R": 2.0,
+    "fill_price_basis": "continuous_proxy"
+  },
+  "audit_after_R1": {
+    "checked": 60,
+    "mismatches": 2,
+    "continuous_proxy_mismatches": 0,
+    "contract_mismatches": 2,
+    "contract_mismatch_trades": [
+      {
+        "date": "2026-04-16",
+        "code": "I",
+        "direction": "空",
+        "lots": 1,
+        "reason": "stop",
+        "stop": 796.3143,
+        "target": 756.3714,
+        "open": 764.0,
+        "high": 783.5,
+        "low": 764.0,
+        "close": 782.5,
+        "fill_price_basis": "contract",
+        "fill_contract": "I2605",
+        "bar_source": "snap_contract"
+      },
+      {
+        "date": "2026-11-18",
+        "code": "P",
+        "direction": "空",
+        "lots": 1,
+        "reason": "target",
+        "stop": 9016.7143,
+        "target": 8513.5714,
+        "open": 8793.0,
+        "high": 8803.0,
+        "low": 8606.0,
+        "close": 8606.0,
+        "fill_price_basis": "contract",
+        "fill_contract": "P2612",
+        "bar_source": "snap_contract"
+      }
+    ]
+  }
+}

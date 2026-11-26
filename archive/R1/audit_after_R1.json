@@ -1,0 +1,43 @@
+{
+  "checked": 60,
+  "mismatches": 2,
+  "skipped_proxied": 0,
+  "skipped_no_bar": 0,
+  "mismatch_trades": [
+    {
+      "date": "2026-04-16",
+      "code": "I",
+      "direction": "空",
+      "lots": 1,
+      "reason": "stop",
+      "stop": 796.3143,
+      "target": 756.3714,
+      "open": 764.0,
+      "high": 783.5,
+      "low": 764.0,
+      "close": 782.5,
+      "fill_price_basis": "contract",
+      "fill_contract": "I2605",
+      "bar_source": "snap_contract"
+    },
+    {
+      "date": "2026-11-18",
+      "code": "P",
+      "direction": "空",
+      "lots": 1,
+      "reason": "target",
+      "stop": 9016.7143,
+      "target": 8513.5714,
+      "open": 8793.0,
+      "high": 8803.0,
+      "low": 8606.0,
+      "close": 8606.0,
+      "fill_price_basis": "contract",
+      "fill_contract": "P2612",
+      "bar_source": "snap_contract"
+    }
+  ],
+  "bt_path": "D:\\AI\\cta-path-a\\archive\\R1\\replay_after_R1.json",
+  "snap_path": "D:\\AI\\cta-path-a\\archive\\snapshots\\bt_input_20261123_da9c8de64ab4.json",
+  "snap_loaded": true
+}

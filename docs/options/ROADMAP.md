@@ -6,6 +6,7 @@
 **逐步开放 / 迭代反馈 / 合并总表**：见 `docs/UPGRADE_ITERATIONS.md`（五轨 O/T/A/V/VP；个人档案已同步）。  
 **当前姿态**：**只积盘口，不开新刀**；锁定下一刀仍为 **F2**，gate `ready=false`（CF=2/10，SR/MA=1/5）前不升级。  
 **R 审计升级旁注（2026-11-25）**：R8 本金 + 极端风险过滤研究已跑完（分支 `r8-equity-filter`，未合入；无组通过预注册标准；正式层未动；后续已冻结候选并提交样本外预注册，长样本数据可行性检查已完成（`archive/R8/LONG_FEASIBILITY_REPORT.md`，只读，27 个品种不能算全部齐全，待磊决定；磊决定后做了主力字面重判与本地数据核对 `archive/R8/MAIN_RECOMPUTE_REPORT.md`，因换月对等比较不为 0 停在等磊；磊选成交量守卫（5%，仅官方路径）后，做了阈值敏感性与 216 天窗口缺口检查（`GUARD_SENSITIVITY_REPORT.md` / `WINDOW_GAP_REPORT.md`，A/B 交易均不受影响），并已提交附录 1 `archive/R8/APPENDIX_1.md`（早于任何长样本运行）；之后实现长样本入口与 C，9 个正式组已跑完：A/B/C 均未通过预注册标准，B、C 均不优于 A，见 `archive/R8/OOS_VERDICT.md`；之后 30 万诊断档已跑（均不适用）、分支已合入 main、收尾前三项只读归因已做（R8_CLOSEOUT.md 附录 A.5：信号层判定无优势，问题在信号层）；管道未实现、shadow 未开，停在等磊看诊断结果），详见 `docs/UPGRADE_ITERATIONS.md` §7；与本期权研究台路线无依赖。  
+**官方数据管道（2026-11-26）**：已实现并注册本地计划任务（official_pipeline/，docs/OFFICIAL_DATA_PIPELINE_DESIGN.md 实现记录）；**shadow 未开**：衍生主力依赖的新浪当日 bar 待磊定来源，5 天计数尚未开始。  
 **旁轨**：可信度旁轨已完成；**Vol-V1.4 已归档但不晋级**；**VP-1A** 已合 main；**VP-1B-0 只读收件箱已落地（停）**；锁定 **F2**（积样）。后续刀序见总表 §4。
 
 ---

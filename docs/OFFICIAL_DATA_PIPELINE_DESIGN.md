@@ -105,3 +105,24 @@ cta-official-data/
 5. **种子**：把 R8 的 `raw_contract` 迁入官方库作为第 0 天（保留 R8 目录不动）。
 6. **告警**：第一版只落文件，够不够。
 7. 主仓库是否提交每日校验摘要（体积小），还是只留在官方库。
+
+## 实现记录与偏差（2026-11-26）
+
+**状态**：管道代码已实现（`official_pipeline/`），计划任务已注册（`CTA_Official_Run_1730` / `CTA_Official_Retry_1830` / `CTA_Official_Retry_2000` / `CTA_Official_Retry_2200` / `CTA_Official_Judge_0830`，周一至周五，WakeToRun，StartWhenAvailable）。**shadow 未启动**：5 天计数尚未达标（见下）。
+
+**与设计一致的已确认决定**：本地计划任务；正式库在仓库外 `D:\AI\data\official\`（可用环境变量 `CTA_OFFICIAL_STORE` 覆盖）；仓库只入库哈希清单 `official_pipeline/manifest_repo/hashes_{shfe,czce,dce}.json`；每周备份到 `D:\AI\data\official_backup\`；Playwright 固定 `1.65.2`（`official_pipeline/requirements.txt`）；种子来自 `archive/R8/raw_contract`，逐日校验解压后 sha256 与 manifest 一致才复制（R8 目录只读，未改动）；告警 = `alerts/ALERT_{date}.md` + Windows 气泡通知；日报不入 main。
+
+**实现中的确定与偏差（需磊确认）**：
+1. **交易日历**：仓库内没有节假日表。规则：工作日；若三所对该日都明确返回"未发布"（404 / empty），判为**休市**（不计入、不打断 streak）。任何网络错误、HTTP 412、格式异常**都不算休市**，照常告警。
+2. **DCE 格式已验证**：原始应答为 JSON。请求为 `POST` JSON 体 `{"tradeDate":"YYYYMMDD","varietyId":"all","tradeType":"1"}`（Content-Type application/json）；表单编码请求返回业务码 500。规范化与 R8 `ingest_dce.py` 相同（仅 10 个品种行，紧凑排序 JSON）。对 2026-11-20 / 11-24 / 11-25 重抓，与 R8 已入库 body 逐字节一致（sha256 相同）。
+3. **衍生主力依赖新浪连续缓存的当日 bar**：价格匹配对象是 `.cache/history/{code}0.json`。该缓存由 CTA 日更任务（`daily.yml` → main）生成，本流水线不改写它。若某品种缺当日 bar，判为不正常并跳过衍生（不沿用前一日假装成功）。2026-11-26 本地缓存只到 11-25（M 只到 11-20），因此该日按规则判为异常。需要的动作：每个交易日 08:30 前，本地缓存须已含当日 bar（拉取主仓库 main 或运行日更）；或由磊决定流水线自行拉取新浪 bar（见下方待决定）。
+4. **streak 起点**：仅统计 `start_day`（首次运行日 2026-11-26）之后的交易日；种子历史不计入 5 天门槛。streak 按已判定日期排序后末尾连续正常天数重算；正常判定为终局，异常日可被后续重判（如 DCE 恢复）。
+5. **判定窗口**：08:30 任务判定窗口内（最近 14 个工作日）所有尚未正常的日期；告警只在首次判定或原因变化时发出，避免每天重复刷屏。
+6. **修订**：已入库日若内容变化，原件不覆盖，差异写入 `revisions/`，`run` 返回码 3 并告警；修订记录需人工处理（当前不自动清除）。
+7. **DCE 原始应答**：每次 200 应答原样保存在 `D:\AI\data\official\responses\`（仓库外，仅审计用途，不做分析）。
+
+**测试**：`tests/test_official_pipeline.py` 12 项通过（窗口、streak/休市/终局、store 新增/未变/修订、DCE 规范化、种子哈希校验、告警文件、计划任务 XML、路径边界）；全量 `pytest tests/` 584 passed。受保护文件（`universe.json`、`execution_rules.json`、`configs/formal_rule_lock.json`、`.github/workflows/historical_backtest.yml`）无改动。
+
+**待决定**：
+- 衍生主力所需的新浪当日 bar 由谁负责：A) 每个交易日 08:30 前拉取主仓库 main 的缓存（不改代码）；B) 管道自行用免费新浪源补当日 bar 到独立缓存（需改 `build_official_pack` 的输入路径，属于口径相关改动，需单独确认）。
+- shadow 启动门 = 连续 5 个"正常"交易日；在 A/B 未定之前，计数不会推进。

@@ -587,6 +587,14 @@ ext_open。
 
 ---
 
+### OFFICIAL-PIPELINE 官方数据管道（2026-11-26）
+
+- **做了**：按磊确认的 7 项决定实现官方日更管道（`official_pipeline/`）：本地计划任务（17:30 + 18:30/20:00/22:00 重试 + 次日 08:30 判定补抓）、仓库外正式库 `D:\AI\data\official\`、哈希清单入库、Playwright 固定版本、种子自 R8 原始库（逐日哈希校验后复制）、告警文件 + 气泡通知、日报不入 main；DCE 请求形式已验证（JSON 体）。
+- **产物**：`official_pipeline/`（config/store/sources/validate/state/alerts/notify.ps1/seed/run/install_tasks）；`official_pipeline/manifest_repo/hashes_{shfe,czce,dce}.json`；`tests/test_official_pipeline.py`；`docs/OFFICIAL_DATA_PIPELINE_DESIGN.md` 实现记录与偏差段；5 个计划任务已注册。
+- **验证**：新增 12 项单测通过；全量 `pytest tests/` 584 passed；DCE 规范化对 3 个 R8 已入库交易日逐字节一致；种子 2,645 SHFE / 2,645 CZCE / 2,646 DCE 条哈希校验通过、0 不一致；受保护文件无 diff；`lab/research` 由测试产生的改动已还原。
+- **风险/未做**：① 衍生主力依赖本地新浪连续缓存的当日 bar（由 CTA 日更生成），2026-11-26 缓存只到 11-25（M 只到 11-20），该日判为**不正常**，**shadow 计数未开始**；② 交易日历无节假日表，以"三所均未发布"判休市；③ 修订记录当前需人工清理；④ 未推送 origin，本地 main 领先。
+- **建议下一刀**：**停**。待磊决定衍生用的新浪当日 bar 来源（A 主仓库日更 / B 管道自取）后，再开 5 天计数。
+
 ## 反馈模板
 
 ```text

@@ -1,0 +1,287 @@
+{
+ "window": [
+  "2024-11-26",
+  "2026-11-25"
+ ],
+ "stats": {
+  "contract_not_in_sina": 2790,
+  "paired": 111938,
+  "open:exact": 111725,
+  "high:exact": 111725,
+  "low:exact": 111725,
+  "close:exact": 111800,
+  "settle:exact": 111937,
+  "volume:exact": 108704,
+  "oi:exact": 108607,
+  "official_day_missing_in_sina": 2269,
+  "oi:both_zero": 128,
+  "settle:sina_zero_official_nonzero": 1,
+  "oi:official_zero_sina_nonzero": 53,
+  "open:official_zero_sina_nonzero": 213,
+  "high:official_zero_sina_nonzero": 213,
+  "low:official_zero_sina_nonzero": 213
+ },
+ "per_field": {
+  "open": {
+   "n_both_nonzero": 111725,
+   "exact_share": 1.0,
+   "median_abs_rel": 0.0,
+   "p95_abs_rel": 0.0,
+   "max_abs_rel": 0.0,
+   "share_gt_0.5pct": 0.0,
+   "share_gt_2pct": 0.0,
+   "mean_signed_rel": 0.0,
+   "official_zero_sina_nonzero": 213,
+   "sina_zero_official_nonzero": 0
+  },
+  "high": {
+   "n_both_nonzero": 111725,
+   "exact_share": 1.0,
+   "median_abs_rel": 0.0,
+   "p95_abs_rel": 0.0,
+   "max_abs_rel": 0.0,
+   "share_gt_0.5pct": 0.0,
+   "share_gt_2pct": 0.0,
+   "mean_signed_rel": 0.0,
+   "official_zero_sina_nonzero": 213,
+   "sina_zero_official_nonzero": 0
+  },
+  "low": {
+   "n_both_nonzero": 111725,
+   "exact_share": 1.0,
+   "median_abs_rel": 0.0,
+   "p95_abs_rel": 0.0,
+   "max_abs_rel": 0.0,
+   "share_gt_0.5pct": 0.0,
+   "share_gt_2pct": 0.0,
+   "mean_signed_rel": 0.0,
+   "official_zero_sina_nonzero": 213,
+   "sina_zero_official_nonzero": 0
+  },
+  "close": {
+   "n_both_nonzero": 111938,
+   "exact_share": 0.9988,
+   "median_abs_rel": 0.0,
+   "p95_abs_rel": 0.0,
+   "max_abs_rel": 0.1222,
+   "share_gt_0.5pct": 0.0006,
+   "share_gt_2pct": 0.0002,
+   "mean_signed_rel": -2e-06,
+   "official_zero_sina_nonzero": 0,
+   "sina_zero_official_nonzero": 0
+  },
+  "settle": {
+   "n_both_nonzero": 111937,
+   "exact_share": 1.0,
+   "median_abs_rel": 0.0,
+   "p95_abs_rel": 0.0,
+   "max_abs_rel": 0.0,
+   "share_gt_0.5pct": 0.0,
+   "share_gt_2pct": 0.0,
+   "mean_signed_rel": 0.0,
+   "official_zero_sina_nonzero": 0,
+   "sina_zero_official_nonzero": 1
+  },
+  "volume": {
+   "n_both_nonzero": 111938,
+   "exact_share": 0.9711,
+   "median_abs_rel": 0.0,
+   "p95_abs_rel": 0.0,
+   "max_abs_rel": 0.9991,
+   "share_gt_0.5pct": 0.0067,
+   "share_gt_2pct": 0.0051,
+   "mean_signed_rel": -0.001674,
+   "official_zero_sina_nonzero": 0,
+   "sina_zero_official_nonzero": 0
+  },
+  "oi": {
+   "n_both_nonzero": 111757,
+   "exact_share": 0.9718,
+   "median_abs_rel": 0.0,
+   "p95_abs_rel": 0.0,
+   "max_abs_rel": 9.2564,
+   "share_gt_0.5pct": 0.0047,
+   "share_gt_2pct": 0.003,
+   "mean_signed_rel": 0.000583,
+   "official_zero_sina_nonzero": 53,
+   "sina_zero_official_nonzero": 0
+  }
+ },
+ "examples": [
+  {
+   "contract": "BU2512",
+   "date": "2025-11-05",
+   "field": "volume",
+   "official": 20806.0,
+   "sina": 20805.0
+  },
+  {
+   "contract": "BU2512",
+   "date": "2025-11-11",
+   "field": "volume",
+   "official": 10113.0,
+   "sina": 10102.0
+  },
+  {
+   "contract": "BU2512",
+   "date": "2025-11-17",
+   "field": "volume",
+   "official": 4604.0,
+   "sina": 4572.0
+  },
+  {
+   "contract": "BU2512",
+   "date": "2025-11-24",
+   "field": "volume",
+   "official": 11387.0,
+   "sina": 7874.0
+  },
+  {
+   "contract": "BU2603",
+   "date": "2025-11-28",
+   "field": "volume",
+   "official": 64122.0,
+   "sina": 64120.0
+  },
+  {
+   "contract": "BU2603",
+   "date": "2026-01-19",
+   "field": "volume",
+   "official": 124762.0,
+   "sina": 124761.0
+  },
+  {
+   "contract": "BU2603",
+   "date": "2026-01-28",
+   "field": "volume",
+   "official": 454575.0,
+   "sina": 454467.0
+  },
+  {
+   "contract": "BU2603",
+   "date": "2026-01-29",
+   "field": "volume",
+   "official": 402578.0,
+   "sina": 402461.0
+  },
+  {
+   "contract": "BU2603",
+   "date": "2026-02-11",
+   "field": "volume",
+   "official": 58932.0,
+   "sina": 58901.0
+  },
+  {
+   "contract": "BU2603",
+   "date": "2026-02-12",
+   "field": "volume",
+   "official": 45617.0,
+   "sina": 45572.0
+  },
+  {
+   "contract": "BU2603",
+   "date": "2026-02-13",
+   "field": "volume",
+   "official": 34862.0,
+   "sina": 31356.0
+  },
+  {
+   "contract": "BU2606",
+   "date": "2026-03-02",
+   "field": "volume",
+   "official": 199461.0,
+   "sina": 199460.0
+  },
+  {
+   "contract": "BU2606",
+   "date": "2026-03-17",
+   "field": "volume",
+   "official": 1419479.0,
+   "sina": 1419478.0
+  },
+  {
+   "contract": "BU2606",
+   "date": "2026-05-12",
+   "field": "volume",
+   "official": 314024.0,
+   "sina": 313966.0
+  },
+  {
+   "contract": "BU2606",
+   "date": "2026-05-18",
+   "field": "volume",
+   "official": 352577.0,
+   "sina": 352548.0
+  },
+  {
+   "contract": "BU2606",
+   "date": "2026-05-20",
+   "field": "volume",
+   "official": 316463.0,
+   "sina": 316093.0
+  },
+  {
+   "contract": "BU2606",
+   "date": "2026-05-22",
+   "field": "volume",
+   "official": 287068.0,
+   "sina": 287045.0
+  },
+  {
+   "contract": "BU2606",
+   "date": "2026-05-25",
+   "field": "volume",
+   "official": 324363.0,
+   "sina": 316871.0
+  },
+  {
+   "contract": "AU2510",
+   "date": "2025-04-07",
+   "field": "volume",
+   "official": 50492.0,
+   "sina": 50490.0
+  },
+  {
+   "contract": "AU2510",
+   "date": "2025-04-22",
+   "field": "volume",
+   "official": 60195.0,
+   "sina": 60192.0
+  },
+  {
+   "contract": "AU2510",
+   "date": "2025-07-21",
+   "field": "volume",
+   "official": 216188.0,
+   "sina": 216182.0
+  },
+  {
+   "contract": "AU2510",
+   "date": "2025-07-23",
+   "field": "volume",
+   "official": 286795.0,
+   "sina": 286794.0
+  },
+  {
+   "contract": "AU2510",
+   "date": "2025-07-24",
+   "field": "volume",
+   "official": 331217.0,
+   "sina": 331215.0
+  },
+  {
+   "contract": "AU2510",
+   "date": "2025-08-19",
+   "field": "volume",
+   "official": 121675.0,
+   "sina": 121660.0
+  },
+  {
+   "contract": "AU2510",
+   "date": "2025-09-08",
+   "field": "volume",
+   "official": 258829.0,
+   "sina": 258708.0
+  }
+ ]
+}

@@ -1,0 +1,586 @@
+{
+ "prereg": "archive/R8/PREREG_OOS.md + APPENDIX_1.md",
+ "n_trials": 30,
+ "guard_pct": 0.05,
+ "pack_sha256": "850b9021c082d129e3f6b24ed9abddf2ff55c9bc14d915344fdc9f47e2f83d96",
+ "max_loaded_date": "2025-12-31",
+ "rows": {
+  "A800k": {
+   "equity0": 800000.0,
+   "ret_base": -22.393,
+   "ret_stress": -52.369,
+   "dd_base": 41.097,
+   "dd_stress": 55.708,
+   "net_yuan_base": -179142.35,
+   "net_yuan_stress": -418948.24,
+   "trades_base": 1667,
+   "trades_stress": 1549,
+   "folds_stress": {
+    "2016": -0.02701,
+    "2017": -0.06907,
+    "2018": -0.0488,
+    "2019": -0.13878,
+    "2020": -0.13499,
+    "2021": -0.17525,
+    "2022": -0.08204,
+    "2023": 0.06752,
+    "2024": 0.07751,
+    "2025": -0.14784
+   },
+   "folds_positive": 2,
+   "skips_base": {
+    "lots0": 33,
+    "bucket_full": 2236,
+    "gross_cap_to_0": 762,
+    "positions_full": 4664
+   },
+   "pool_blocked_base": 0,
+   "pool_blocked_total": 0,
+   "roll_shifted_base": 61,
+   "roll_cost_yuan_base": 8485.06,
+   "roll_cost_yuan_stress": 12403.96,
+   "roll_unpriced_cont": 0,
+   "held_contract_missing": 0,
+   "open_positions_at_end": 3,
+   "cost_yuan_base": 263531.92,
+   "cost_yuan_stress": 371574.53,
+   "start": "2016-04-05",
+   "end": "2025-12-31",
+   "psr": 0.227631,
+   "dsr30": 0.002401,
+   "exits": {
+    "target": 570,
+    "stop": 1029,
+    "signal": 68
+   }
+  },
+  "A1000k": {
+   "equity0": 1000000.0,
+   "ret_base": -20.446,
+   "ret_stress": -26.732,
+   "dd_base": 41.499,
+   "dd_stress": 43.739,
+   "net_yuan_base": -204462.69,
+   "net_yuan_stress": -267318.76,
+   "trades_base": 1710,
+   "trades_stress": 1675,
+   "folds_stress": {
+    "2016": -0.00014,
+    "2017": -0.04054,
+    "2018": -0.04227,
+    "2019": -0.16375,
+    "2020": -0.10911,
+    "2021": -0.10534,
+    "2022": 0.01169,
+    "2023": 0.08204,
+    "2024": 0.06405,
+    "2025": 0.02715
+   },
+   "folds_positive": 4,
+   "skips_base": {
+    "lots0": 24,
+    "bucket_full": 2109,
+    "gross_cap_to_0": 580,
+    "positions_full": 4761,
+    "hard_trim": 1
+   },
+   "pool_blocked_base": 0,
+   "pool_blocked_total": 0,
+   "roll_shifted_base": 61,
+   "roll_cost_yuan_base": 11703.68,
+   "roll_cost_yuan_stress": 16275.64,
+   "roll_unpriced_cont": 0,
+   "held_contract_missing": 0,
+   "open_positions_at_end": 2,
+   "cost_yuan_base": 338178.55,
+   "cost_yuan_stress": 519688.61,
+   "start": "2016-04-05",
+   "end": "2025-12-31",
+   "psr": 0.264387,
+   "dsr30": 0.003433,
+   "exits": {
+    "target": 584,
+    "stop": 1057,
+    "signal": 69
+   }
+  },
+  "A1200k": {
+   "equity0": 1200000.0,
+   "ret_base": -14.87,
+   "ret_stress": -36.686,
+   "dd_base": 41.065,
+   "dd_stress": 49.589,
+   "net_yuan_base": -178441.67,
+   "net_yuan_stress": -440235.68,
+   "trades_base": 1720,
+   "trades_stress": 1681,
+   "folds_stress": {
+    "2016": -0.01286,
+    "2017": -0.0209,
+    "2018": -0.05876,
+    "2019": -0.14664,
+    "2020": -0.11277,
+    "2021": -0.14016,
+    "2022": -0.0624,
+    "2023": 0.05184,
+    "2024": 0.03176,
+    "2025": 0.05068
+   },
+   "folds_positive": 3,
+   "skips_base": {
+    "lots0": 11,
+    "bucket_full": 2000,
+    "gross_cap_to_0": 480,
+    "positions_full": 4770
+   },
+   "pool_blocked_base": 0,
+   "pool_blocked_total": 0,
+   "roll_shifted_base": 60,
+   "roll_cost_yuan_base": 12582.3,
+   "roll_cost_yuan_stress": 18194.36,
+   "roll_unpriced_cont": 0,
+   "held_contract_missing": 0,
+   "open_positions_at_end": 2,
+   "cost_yuan_base": 403118.67,
+   "cost_yuan_stress": 596229.1,
+   "start": "2016-04-05",
+   "end": "2025-12-31",
+   "psr": 0.343221,
+   "dsr30": 0.006623,
+   "exits": {
+    "target": 589,
+    "stop": 1056,
+    "signal": 75
+   }
+  },
+  "B800k": {
+   "equity0": 800000.0,
+   "ret_base": -35.193,
+   "ret_stress": -54.27,
+   "dd_base": 48.153,
+   "dd_stress": 58.882,
+   "net_yuan_base": -281541.96,
+   "net_yuan_stress": -434158.35,
+   "trades_base": 1590,
+   "trades_stress": 1505,
+   "folds_stress": {
+    "2016": 0.02372,
+    "2017": -0.05053,
+    "2018": -0.0556,
+    "2019": -0.15417,
+    "2020": -0.14062,
+    "2021": -0.11762,
+    "2022": -0.15583,
+    "2023": -0.00827,
+    "2024": -0.02584,
+    "2025": -0.04763
+   },
+   "folds_positive": 1,
+   "skips_base": {
+    "lots0": 65,
+    "bucket_full": 2304,
+    "gross_cap_to_0": 789,
+    "positions_full": 3682
+   },
+   "pool_blocked_base": 0,
+   "pool_blocked_total": 0,
+   "roll_shifted_base": 60,
+   "roll_cost_yuan_base": 9789.36,
+   "roll_cost_yuan_stress": 13071.81,
+   "roll_unpriced_cont": 0,
+   "held_contract_missing": 0,
+   "open_positions_at_end": 2,
+   "cost_yuan_base": 264058.67,
+   "cost_yuan_stress": 384983.21,
+   "start": "2016-04-05",
+   "end": "2025-12-31",
+   "psr": 0.078138,
+   "dsr30": 0.000241,
+   "exits": {
+    "target": 544,
+    "stop": 985,
+    "signal": 61
+   }
+  },
+  "B1000k": {
+   "equity0": 1000000.0,
+   "ret_base": -30.169,
+   "ret_stress": -45.006,
+   "dd_base": 46.959,
+   "dd_stress": 54.85,
+   "net_yuan_base": -301686.33,
+   "net_yuan_stress": -450055.12,
+   "trades_base": 1627,
+   "trades_stress": 1603,
+   "folds_stress": {
+    "2016": 0.02004,
+    "2017": -0.00274,
+    "2018": -0.06312,
+    "2019": -0.14943,
+    "2020": -0.15048,
+    "2021": -0.1233,
+    "2022": -0.10519,
+    "2023": 0.07661,
+    "2024": -0.07204,
+    "2025": 0.01897
+   },
+   "folds_positive": 3,
+   "skips_base": {
+    "lots0": 39,
+    "bucket_full": 2272,
+    "gross_cap_to_0": 617,
+    "positions_full": 3797
+   },
+   "pool_blocked_base": 0,
+   "pool_blocked_total": 0,
+   "roll_shifted_base": 62,
+   "roll_cost_yuan_base": 10901.99,
+   "roll_cost_yuan_stress": 17188.11,
+   "roll_unpriced_cont": 0,
+   "held_contract_missing": 0,
+   "open_positions_at_end": 2,
+   "cost_yuan_base": 318280.19,
+   "cost_yuan_stress": 499557.83,
+   "start": "2016-04-05",
+   "end": "2025-12-31",
+   "psr": 0.125188,
+   "dsr30": 0.000635,
+   "exits": {
+    "target": 544,
+    "stop": 1021,
+    "signal": 62
+   }
+  },
+  "B1200k": {
+   "equity0": 1200000.0,
+   "ret_base": -24.378,
+   "ret_stress": -42.832,
+   "dd_base": 42.705,
+   "dd_stress": 54.695,
+   "net_yuan_base": -292532.13,
+   "net_yuan_stress": -513983.12,
+   "trades_base": 1647,
+   "trades_stress": 1634,
+   "folds_stress": {
+    "2016": 0.04296,
+    "2017": -0.04024,
+    "2018": -0.05295,
+    "2019": -0.12665,
+    "2020": -0.16813,
+    "2021": -0.17284,
+    "2022": -0.04819,
+    "2023": 0.02175,
+    "2024": -0.02501,
+    "2025": 0.05834
+   },
+   "folds_positive": 3,
+   "skips_base": {
+    "lots0": 13,
+    "bucket_full": 2154,
+    "gross_cap_to_0": 472,
+    "positions_full": 3699
+   },
+   "pool_blocked_base": 0,
+   "pool_blocked_total": 0,
+   "roll_shifted_base": 60,
+   "roll_cost_yuan_base": 13282.57,
+   "roll_cost_yuan_stress": 19150.42,
+   "roll_unpriced_cont": 0,
+   "held_contract_missing": 0,
+   "open_positions_at_end": 2,
+   "cost_yuan_base": 405865.56,
+   "cost_yuan_stress": 596696.41,
+   "start": "2016-04-05",
+   "end": "2025-12-31",
+   "psr": 0.20277,
+   "dsr30": 0.001835,
+   "exits": {
+    "target": 559,
+    "stop": 1020,
+    "signal": 68
+   }
+  },
+  "C800k": {
+   "equity0": 800000.0,
+   "ret_base": -36.745,
+   "ret_stress": -47.561,
+   "dd_base": 47.985,
+   "dd_stress": 50.048,
+   "net_yuan_base": -293957.42,
+   "net_yuan_stress": -380490.18,
+   "trades_base": 1623,
+   "trades_stress": 1599,
+   "folds_stress": {
+    "2016": -0.02701,
+    "2017": -0.06298,
+    "2018": -0.05225,
+    "2019": -0.12889,
+    "2020": -0.10194,
+    "2021": -0.11402,
+    "2022": -0.02669,
+    "2023": 0.01578,
+    "2024": -0.02916,
+    "2025": -0.08778
+   },
+   "folds_positive": 1,
+   "skips_base": {
+    "lots0": 47,
+    "bucket_full": 2381,
+    "gross_cap_to_0": 651,
+    "positions_full": 3830
+   },
+   "pool_blocked_base": 1009,
+   "pool_blocked_total": 1009,
+   "roll_shifted_base": 65,
+   "roll_cost_yuan_base": 9241.62,
+   "roll_cost_yuan_stress": 12160.44,
+   "roll_unpriced_cont": 0,
+   "held_contract_missing": 0,
+   "open_positions_at_end": 3,
+   "cost_yuan_base": 257361.85,
+   "cost_yuan_stress": 391727.04,
+   "start": "2016-04-05",
+   "end": "2025-12-31",
+   "psr": 0.071177,
+   "dsr30": 0.0002,
+   "exits": {
+    "target": 549,
+    "stop": 1010,
+    "signal": 64
+   }
+  },
+  "C1000k": {
+   "equity0": 1000000.0,
+   "ret_base": -16.826,
+   "ret_stress": -52.031,
+   "dd_base": 40.493,
+   "dd_stress": 54.242,
+   "net_yuan_base": -168260.52,
+   "net_yuan_stress": -520308.75,
+   "trades_base": 1703,
+   "trades_stress": 1664,
+   "folds_stress": {
+    "2016": -0.00014,
+    "2017": -0.05533,
+    "2018": -0.03321,
+    "2019": -0.16387,
+    "2020": -0.09993,
+    "2021": -0.12438,
+    "2022": -0.0622,
+    "2023": -0.01212,
+    "2024": -0.08503,
+    "2025": -0.05958
+   },
+   "folds_positive": 0,
+   "skips_base": {
+    "lots0": 21,
+    "bucket_full": 2119,
+    "gross_cap_to_0": 454,
+    "positions_full": 4229
+   },
+   "pool_blocked_base": 580,
+   "pool_blocked_total": 580,
+   "roll_shifted_base": 62,
+   "roll_cost_yuan_base": 11923.17,
+   "roll_cost_yuan_stress": 15575.72,
+   "roll_unpriced_cont": 0,
+   "held_contract_missing": 0,
+   "open_positions_at_end": 2,
+   "cost_yuan_base": 339006.23,
+   "cost_yuan_stress": 487226.04,
+   "start": "2016-04-05",
+   "end": "2025-12-31",
+   "psr": 0.313709,
+   "dsr30": 0.005252,
+   "exits": {
+    "target": 584,
+    "stop": 1049,
+    "signal": 70
+   }
+  },
+  "C1200k": {
+   "equity0": 1200000.0,
+   "ret_base": -16.295,
+   "ret_stress": -41.139,
+   "dd_base": 40.373,
+   "dd_stress": 51.574,
+   "net_yuan_base": -195537.99,
+   "net_yuan_stress": -493665.18,
+   "trades_base": 1719,
+   "trades_stress": 1685,
+   "folds_stress": {
+    "2016": -0.01286,
+    "2017": -0.0209,
+    "2018": -0.05876,
+    "2019": -0.15,
+    "2020": -0.13979,
+    "2021": -0.14212,
+    "2022": -0.07129,
+    "2023": 0.04709,
+    "2024": 0.04989,
+    "2025": 0.01035
+   },
+   "folds_positive": 3,
+   "skips_base": {
+    "lots0": 11,
+    "bucket_full": 2028,
+    "gross_cap_to_0": 379,
+    "positions_full": 4329
+   },
+   "pool_blocked_base": 469,
+   "pool_blocked_total": 469,
+   "roll_shifted_base": 64,
+   "roll_cost_yuan_base": 12922.94,
+   "roll_cost_yuan_stress": 19256.89,
+   "roll_unpriced_cont": 0,
+   "held_contract_missing": 0,
+   "open_positions_at_end": 2,
+   "cost_yuan_base": 407566.7,
+   "cost_yuan_stress": 581433.32,
+   "start": "2016-04-05",
+   "end": "2025-12-31",
+   "psr": 0.325966,
+   "dsr30": 0.005794,
+   "exits": {
+    "target": 588,
+    "stop": 1052,
+    "signal": 79
+   }
+  }
+ },
+ "criteria_A_pass": {
+  "A": {
+   "conditions": {
+    "1_stress_ret_1000k_gt0": false,
+    "2_dd_base_and_stress_le10_1000k": false,
+    "3_folds_positive_ge6_1000k": false,
+    "4_stress_ret_gt0_all_three_levels": false
+   },
+   "pass": false
+  },
+  "B": {
+   "conditions": {
+    "1_stress_ret_1000k_gt0": false,
+    "2_dd_base_and_stress_le10_1000k": false,
+    "3_folds_positive_ge6_1000k": false,
+    "4_stress_ret_gt0_all_three_levels": false
+   },
+   "pass": false
+  },
+  "C": {
+   "conditions": {
+    "1_stress_ret_1000k_gt0": false,
+    "2_dd_base_and_stress_le10_1000k": false,
+    "3_folds_positive_ge6_1000k": false,
+    "4_stress_ret_gt0_all_three_levels": false
+   },
+   "pass": false
+  }
+ },
+ "B_better_than_A": {
+  "conditions": {
+   "1_B_passes_A_criteria": false,
+   "2_stress_ret_diff_ge_3pp": false,
+   "3_ex_best_trade_still_beats_A": false,
+   "4_filtered_trades_negative_in_ge7_of_10_years": false
+  },
+  "verdict": false,
+  "B_best_trade_stress": {
+   "code": "JM",
+   "entry_date": "2016-09-02",
+   "date": "2016-09-05",
+   "net": 27217.36
+  },
+  "filtered_by_year": {
+   "2016": {
+    "n": 44,
+    "net": -39035.18
+   },
+   "2017": {
+    "n": 0,
+    "net": 0.0
+   },
+   "2018": {
+    "n": 24,
+    "net": -20408.65
+   },
+   "2019": {
+    "n": 27,
+    "net": -15055.91
+   },
+   "2020": {
+    "n": 53,
+    "net": -25710.23
+   },
+   "2021": {
+    "n": 52,
+    "net": -10899.32
+   },
+   "2022": {
+    "n": 18,
+    "net": 32798.0
+   },
+   "2023": {
+    "n": 11,
+    "net": 1801.36
+   },
+   "2024": {
+    "n": 9,
+    "net": 10928.01
+   },
+   "2025": {
+    "n": 12,
+    "net": -16132.54
+   }
+  },
+  "filtered_n": 250,
+  "filtered_missing_attr": 1,
+  "years_negative": 6
+ },
+ "C_better_than_A": {
+  "conditions": {
+   "1_C_passes_A_criteria": false,
+   "2_stress_range_C_lt_A": true,
+   "3_C_stress_ret_ge_A_minus_1pp": false
+  },
+  "verdict": false,
+  "stress_range_pp": {
+   "A": 25.637,
+   "B": 11.438,
+   "C": 10.892
+  }
+ },
+ "degrade_rule": {
+  "symbols_below_99pct_identified": {},
+  "empty_buckets_in_A1000k_trades": [],
+  "rule": "remove failing symbols one by one; > 3 removed or any bucket empty throughout => diagnostic only",
+  "n_failing": 0,
+  "triggered": false
+ },
+ "c_pool": {
+  "800k": {
+   "months": 117,
+   "months_nonferrous_empty": [],
+   "settle_fallback_close": [],
+   "no_prior_bar_total": 225,
+   "min_pool_size": 18,
+   "max_pool_size": 25
+  },
+  "1000k": {
+   "months": 117,
+   "months_nonferrous_empty": [],
+   "settle_fallback_close": [],
+   "no_prior_bar_total": 225,
+   "min_pool_size": 19,
+   "max_pool_size": 26
+  },
+  "1200k": {
+   "months": 117,
+   "months_nonferrous_empty": [],
+   "settle_fallback_close": [],
+   "no_prior_bar_total": 225,
+   "min_pool_size": 21,
+   "max_pool_size": 26
+  }
+ }
+}

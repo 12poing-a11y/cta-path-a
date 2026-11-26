@@ -1,0 +1,5642 @@
+{
+ "rows": {
+  "A300k": {
+   "ret_base": -23.123,
+   "ret_stress": -43.224,
+   "dd_base": 29.942,
+   "dd_stress": 46.365,
+   "trades_base": 1233,
+   "trades_stress": 1130,
+   "folds_stress": {
+    "2016": -0.00809,
+    "2017": -0.02626,
+    "2018": -0.07093,
+    "2019": -0.12838,
+    "2020": -0.0323,
+    "2021": -0.0427,
+    "2022": -0.17839,
+    "2023": -0.01513,
+    "2024": -0.01546,
+    "2025": -0.01645
+   },
+   "folds_positive": 0,
+   "skips_base": {
+    "lots0": 643,
+    "bucket_full": 3142,
+    "gross_cap_to_0": 2224,
+    "positions_full": 4961
+   },
+   "skips_stress": {
+    "lots0": 975,
+    "bucket_full": 3345,
+    "gross_cap_to_0": 2525,
+    "positions_full": 4820
+   },
+   "pool_blocked_base": 0,
+   "pool_blocked_stress": 0,
+   "stress_net_yuan": -129673.48,
+   "best_trade_stress": {
+    "code": "I",
+    "entry_date": "2017-02-06",
+    "date": "2017-02-10",
+    "net": 9613.86
+   },
+   "best_trade_share": null,
+   "label": "30 万不适用",
+   "open_positions_at_end": 2,
+   "roll_shifted_base": 41
+  },
+  "B300k": {
+   "ret_base": -15.666,
+   "ret_stress": -54.645,
+   "dd_base": 34.378,
+   "dd_stress": 58.144,
+   "trades_base": 1180,
+   "trades_stress": 1084,
+   "folds_stress": {
+    "2016": -0.00934,
+    "2017": -0.0263,
+    "2018": -0.0777,
+    "2019": -0.12327,
+    "2020": -0.06856,
+    "2021": -0.25368,
+    "2022": -0.08587,
+    "2023": -0.04571,
+    "2024": -0.07171,
+    "2025": 0.03297
+   },
+   "folds_positive": 1,
+   "skips_base": {
+    "lots0": 745,
+    "bucket_full": 2878,
+    "gross_cap_to_0": 2153,
+    "positions_full": 4015
+   },
+   "skips_stress": {
+    "lots0": 1308,
+    "bucket_full": 3125,
+    "gross_cap_to_0": 2472,
+    "positions_full": 3461
+   },
+   "pool_blocked_base": 0,
+   "pool_blocked_stress": 0,
+   "stress_net_yuan": -163935.59,
+   "best_trade_stress": {
+    "code": "I",
+    "entry_date": "2017-02-06",
+    "date": "2017-02-10",
+    "net": 9613.86
+   },
+   "best_trade_share": null,
+   "label": "30 万不适用",
+   "open_positions_at_end": 2,
+   "roll_shifted_base": 43
+  },
+  "C300k": {
+   "ret_base": -43.789,
+   "ret_stress": -64.26,
+   "dd_base": 47.02,
+   "dd_stress": 65.553,
+   "trades_base": 1082,
+   "trades_stress": 816,
+   "folds_stress": {
+    "2016": -0.02894,
+    "2017": -0.14226,
+    "2018": -0.09141,
+    "2019": -0.16106,
+    "2020": -0.07258,
+    "2021": -0.24396,
+    "2022": -0.15142,
+    "2023": -0.01599,
+    "2024": 0.0686,
+    "2025": -0.10023
+   },
+   "folds_positive": 1,
+   "skips_base": {
+    "lots0": 1083,
+    "bucket_full": 3537,
+    "gross_cap_to_0": 662,
+    "positions_full": 779
+   },
+   "skips_stress": {
+    "lots0": 1893,
+    "bucket_full": 2130,
+    "gross_cap_to_0": 422,
+    "positions_full": 642
+   },
+   "pool_blocked_base": 5667,
+   "pool_blocked_stress": 7591,
+   "stress_net_yuan": -192779.29,
+   "best_trade_stress": {
+    "code": "I",
+    "entry_date": "2017-02-06",
+    "date": "2017-02-10",
+    "net": 9613.86
+   },
+   "best_trade_share": null,
+   "label": "30 万不适用",
+   "open_positions_at_end": 2,
+   "roll_shifted_base": 29,
+   "pool_stress_months_equal_base": null
+  }
+ },
+ "c_pool_summary": {
+  "months": 117,
+  "months_nonferrous_empty": [
+   "2019-08",
+   "2019-09",
+   "2019-10",
+   "2019-11",
+   "2019-12",
+   "2020-01",
+   "2020-02",
+   "2020-03",
+   "2020-05",
+   "2020-06",
+   "2020-07",
+   "2020-08",
+   "2020-09",
+   "2020-10",
+   "2020-11",
+   "2020-12",
+   "2021-01",
+   "2021-02",
+   "2021-03",
+   "2021-04",
+   "2021-05",
+   "2021-06",
+   "2021-07",
+   "2021-08",
+   "2021-09",
+   "2021-10",
+   "2021-11",
+   "2021-12",
+   "2022-01",
+   "2022-02",
+   "2022-03",
+   "2022-04",
+   "2022-05",
+   "2022-06",
+   "2022-07",
+   "2022-08",
+   "2022-09",
+   "2022-10",
+   "2022-11",
+   "2022-12",
+   "2023-01",
+   "2023-02",
+   "2023-03",
+   "2023-04",
+   "2023-05",
+   "2023-06",
+   "2023-07",
+   "2023-08",
+   "2023-09",
+   "2023-10",
+   "2023-11",
+   "2023-12",
+   "2024-01",
+   "2024-02",
+   "2024-03",
+   "2024-04",
+   "2024-05",
+   "2024-06",
+   "2024-07",
+   "2024-08",
+   "2024-09",
+   "2024-10",
+   "2024-11",
+   "2024-12",
+   "2025-01",
+   "2025-02",
+   "2025-03",
+   "2025-04",
+   "2025-05",
+   "2025-06",
+   "2025-07",
+   "2025-08",
+   "2025-09",
+   "2025-10",
+   "2025-11",
+   "2025-12"
+  ],
+  "months_nonferrous_empty_stress_path": [
+   "2019-02",
+   "2019-03",
+   "2019-06",
+   "2019-07",
+   "2019-08",
+   "2019-09",
+   "2019-10",
+   "2019-11",
+   "2019-12",
+   "2020-01",
+   "2020-02",
+   "2020-03",
+   "2020-04",
+   "2020-05",
+   "2020-06",
+   "2020-07",
+   "2020-08",
+   "2020-09",
+   "2020-10",
+   "2020-11",
+   "2020-12",
+   "2021-01",
+   "2021-02",
+   "2021-03",
+   "2021-04",
+   "2021-05",
+   "2021-06",
+   "2021-07",
+   "2021-08",
+   "2021-09",
+   "2021-10",
+   "2021-11",
+   "2021-12",
+   "2022-01",
+   "2022-02",
+   "2022-03",
+   "2022-04",
+   "2022-05",
+   "2022-06",
+   "2022-07",
+   "2022-08",
+   "2022-09",
+   "2022-10",
+   "2022-11",
+   "2022-12",
+   "2023-01",
+   "2023-02",
+   "2023-03",
+   "2023-04",
+   "2023-05",
+   "2023-06",
+   "2023-07",
+   "2023-08",
+   "2023-09",
+   "2023-10",
+   "2023-11",
+   "2023-12",
+   "2024-01",
+   "2024-02",
+   "2024-03",
+   "2024-04",
+   "2024-05",
+   "2024-06",
+   "2024-07",
+   "2024-08",
+   "2024-09",
+   "2024-10",
+   "2024-11",
+   "2024-12",
+   "2025-01",
+   "2025-02",
+   "2025-03",
+   "2025-04",
+   "2025-05",
+   "2025-06",
+   "2025-07",
+   "2025-08",
+   "2025-09",
+   "2025-10",
+   "2025-11",
+   "2025-12"
+  ],
+  "settle_fallback_close_total": 0,
+  "pool_size_min": 9,
+  "pool_size_max": 18,
+  "n_buckets_min": 2,
+  "n_buckets_max": 4,
+  "n_buckets_universe": 4,
+  "months_with_zero_pool": []
+ },
+ "c_pool_months": [
+  {
+   "month": "2016-04",
+   "E": 300000.0,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "CF",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "NI",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CU",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL",
+    "NI"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2016-05",
+   "E": 307907.99914285727,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "CF",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "NI",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CU",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL",
+    "NI"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2016-06",
+   "E": 304302.36552857154,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "CF",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "NI",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CU",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL",
+    "NI"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2016-07",
+   "E": 305481.9024428573,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "CF",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "NI",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CU",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL",
+    "NI"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2016-08",
+   "E": 289954.5381500002,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2016-09",
+   "E": 281027.0031571431,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "CF",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2016-10",
+   "E": 284124.2639285717,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2016-11",
+   "E": 295198.15370000026,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2016-12",
+   "E": 295619.66912857175,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-01",
+   "E": 304352.69012857176,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "CF",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-02",
+   "E": 298565.7622714289,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-03",
+   "E": 303453.90370000043,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-04",
+   "E": 294393.7168428576,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-05",
+   "E": 292092.42041428614,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-06",
+   "E": 303008.31852857186,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "NI",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL",
+    "NI"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-07",
+   "E": 295520.85252857185,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CF",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-08",
+   "E": 300521.6008357147,
+   "pool": [
+    "AG",
+    "AL",
+    "BU",
+    "CF",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AU",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG",
+    "AL"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-09",
+   "E": 310221.2697642862,
+   "pool": [
+    "AG",
+    "BU",
+    "CF",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-10",
+   "E": 297330.48990714323,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-11",
+   "E": 285233.4887642861,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2017-12",
+   "E": 279694.1166214289,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-01",
+   "E": 269501.4031357146,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-02",
+   "E": 271269.05799285753,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-03",
+   "E": 265107.56975000043,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-04",
+   "E": 262328.49982142897,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-05",
+   "E": 249788.89982142896,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-06",
+   "E": 243351.87553571473,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-07",
+   "E": 241196.51725000044,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-08",
+   "E": 247151.66725000044,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-09",
+   "E": 257967.39253571472,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-10",
+   "E": 251510.39642142897,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "FU",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-11",
+   "E": 250530.01542142895,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "FU",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "SA",
+    "SP",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2018-12",
+   "E": 255603.81170714324,
+   "pool": [
+    "AG",
+    "BU",
+    "FG",
+    "FU",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "EG",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-01",
+   "E": 243212.99813571468,
+   "pool": [
+    "AG",
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-02",
+   "E": 238458.77139285757,
+   "pool": [
+    "AG",
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "I",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-03",
+   "E": 233747.46060714324,
+   "pool": [
+    "AG",
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-04",
+   "E": 233196.8371785718,
+   "pool": [
+    "AG",
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-05",
+   "E": 231281.67003571463,
+   "pool": [
+    "AG",
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-06",
+   "E": 228904.11146428602,
+   "pool": [
+    "AG",
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-07",
+   "E": 223698.64060714314,
+   "pool": [
+    "AG",
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [
+    "EB",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-08",
+   "E": 220917.280464286,
+   "pool": [
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [
+    "EB",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-09",
+   "E": 212658.71442142883,
+   "pool": [
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU",
+    "SR"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [
+    "EB",
+    "SA",
+    "SS"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-10",
+   "E": 212260.12113571452,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [
+    "SA"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-11",
+   "E": 205472.1194928574,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [
+    "SA"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2019-12",
+   "E": 207217.2714214288,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [
+    "SA"
+   ],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-01",
+   "E": 204090.59970714306,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-02",
+   "E": 198532.39599285737,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-03",
+   "E": 195475.58842142884,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-04",
+   "E": 209190.49563571453,
+   "pool": [
+    "AG",
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 4,
+   "buckets": [
+    "农产品",
+    "有色",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [
+    "AG"
+   ],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-05",
+   "E": 193418.13899285733,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-06",
+   "E": 192521.83127857163,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "P",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-07",
+   "E": 192508.49456428597,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-08",
+   "E": 199419.4041357145,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-09",
+   "E": 204578.90013571444,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-10",
+   "E": 200250.18313571444,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-11",
+   "E": 197726.499707143,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2020-12",
+   "E": 206402.2529214287,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "SP",
+    "SR",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-01",
+   "E": 204937.35036428587,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-02",
+   "E": 195449.51750714303,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-03",
+   "E": 197579.27293571446,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-04",
+   "E": 186750.5096500002,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-05",
+   "E": 192335.75079285735,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JD",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-06",
+   "E": 193490.32222142883,
+   "pool": [
+    "BU",
+    "EB",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "FG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-07",
+   "E": 192163.58843571454,
+   "pool": [
+    "BU",
+    "EB",
+    "FU",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "FG",
+    "I",
+    "JD",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-08",
+   "E": 187555.73922142884,
+   "pool": [
+    "BU",
+    "EB",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "FG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-09",
+   "E": 183507.8269357146,
+   "pool": [
+    "BU",
+    "EB",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "TA"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "FG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS",
+    "V"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-10",
+   "E": 194781.52836428606,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "TA"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "PP",
+    "RB",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS",
+    "V"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-11",
+   "E": 193637.08693571461,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2021-12",
+   "E": 188071.5675071432,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-01",
+   "E": 180694.0230785717,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-02",
+   "E": 179465.72222142888,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "JD",
+    "M",
+    "MA",
+    "PP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JM",
+    "L",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-03",
+   "E": 184013.48207857175,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-04",
+   "E": 189929.78636428603,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-05",
+   "E": 184378.02829285743,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JD",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-06",
+   "E": 189746.02829285743,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-07",
+   "E": 182561.79815000028,
+   "pool": [
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "BU",
+    "CF",
+    "CU",
+    "EB",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-08",
+   "E": 193458.3169357146,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-09",
+   "E": 192904.17036428602,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-10",
+   "E": 184232.0134357146,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-11",
+   "E": 177903.4385785717,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2022-12",
+   "E": 177755.368864286,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-01",
+   "E": 175107.7135785717,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-02",
+   "E": 172906.63100714312,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JD",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-03",
+   "E": 166369.47300714313,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JD",
+    "JM",
+    "NI",
+    "P",
+    "RB",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 2,
+   "buckets": [
+    "农产品",
+    "能化"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-04",
+   "E": 169909.50057857166,
+   "pool": [
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "I",
+    "JD",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-05",
+   "E": 166861.14486428598,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JD",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-06",
+   "E": 176698.71015000023,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-07",
+   "E": 176888.41115000023,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-08",
+   "E": 182248.0453642859,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-09",
+   "E": 191087.3442928573,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-10",
+   "E": 189255.1916500001,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-11",
+   "E": 184591.4788642858,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2023-12",
+   "E": 187894.85829285727,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SA",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-01",
+   "E": 190059.812507143,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-02",
+   "E": 186628.28086428586,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-03",
+   "E": 182931.7577214287,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-04",
+   "E": 187450.39093571441,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-05",
+   "E": 184883.53479285733,
+   "pool": [
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-06",
+   "E": 186417.5046500002,
+   "pool": [
+    "BU",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-07",
+   "E": 179892.7066500002,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-08",
+   "E": 181823.71436428593,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-09",
+   "E": 182650.4132214288,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-10",
+   "E": 174804.55193571444,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-11",
+   "E": 173956.27693571444,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2024-12",
+   "E": 170116.88050714298,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-01",
+   "E": 167490.18965000013,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-02",
+   "E": 167667.87022142872,
+   "pool": [
+    "BU",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EB",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-03",
+   "E": 170812.30965000013,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-04",
+   "E": 175196.12907857157,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-05",
+   "E": 170253.49929285725,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-06",
+   "E": 175761.91850714295,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-07",
+   "E": 173818.19386428574,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-08",
+   "E": 169699.67857857145,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-09",
+   "E": 172238.6530071429,
+   "pool": [
+    "BU",
+    "EB",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "EG",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-10",
+   "E": 168730.4467214286,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-11",
+   "E": 171210.52372142862,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  },
+  {
+   "month": "2025-12",
+   "E": 169795.66479285722,
+   "pool": [
+    "BU",
+    "EB",
+    "EG",
+    "FG",
+    "FU",
+    "JD",
+    "L",
+    "M",
+    "MA",
+    "PP",
+    "RB",
+    "SA",
+    "TA",
+    "V"
+   ],
+   "excluded": [
+    "AG",
+    "AL",
+    "AU",
+    "CF",
+    "CU",
+    "I",
+    "JM",
+    "NI",
+    "P",
+    "RU",
+    "SP",
+    "SR",
+    "SS"
+   ],
+   "n_buckets": 3,
+   "buckets": [
+    "农产品",
+    "能化",
+    "黑色"
+   ],
+   "nonferrous_in_pool": [],
+   "no_prior_bar": [],
+   "settle_fallback_close": []
+  }
+ ]
+}

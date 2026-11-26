@@ -1374,7 +1374,14 @@ def simulate(
     filter_unit_risk=False,
     filter_atr_spike=False,
     filter_unit_risk_budget=False,
+    long_sample=None,
 ):
+    # R8 long-sample hooks (research only; ``None`` = formal behaviour, byte-identical).  Keys:
+    #   main_map                prebuilt MainMap (official-data main, guard applied) replacing build_main_map
+    #   skip_contract_overlay   do not stamp the calendar front-contract overlay (series is already the stitched main)
+    #   no_minute               never read the local 15m minute cache (official-data-only run)
+    #   candidate_pool          object with begin_day(d, equity) / allows(code, d) (candidate C); see entry_filters
+    _ls = long_sample or {}
     if fill_price not in FILL_PRICES:
         raise ValueError(f"fill_price must be one of {FILL_PRICES}")
     cost_scenario = str(cost_scenario or "base").strip().lower()
@@ -1406,7 +1413,14 @@ def simulate(
         contract_root if isinstance(contract_root, ContractStore)
         else (Path(contract_root) if contract_root else ROOT)
     )
-    contract_pack_report = prepare_pack_for_execution(pack, root=_croot)
+    if _ls.get("skip_contract_overlay"):
+        contract_pack_report = {
+            "ok": True,
+            "fill_series": "continuous_proxy",
+            "note": "long_sample: stitched official main-contract series; no calendar front-contract overlay",
+        }
+    else:
+        contract_pack_report = prepare_pack_for_execution(pack, root=_croot)
     series, errors, sources = pack
     _LAST_PACK.clear()
     _LAST_PACK.update(
@@ -1497,8 +1511,12 @@ def simulate(
     except Exception:  # noqa: BLE001
         build_main_map = None  # type: ignore[assignment]
     main_map = None
-    if freeze_fix and build_main_map is not None:
+    if freeze_fix and _ls.get("main_map") is not None:
+        main_map = _ls["main_map"]
+    elif freeze_fix and build_main_map is not None:
         main_map = build_main_map(series, root=_croot, start=trade_dates[0])
+    _pool = _ls.get("candidate_pool")
+    pool_blocked: dict[str, int] = {}
     # R6c: roll-free r20/r60, same-contract ATR14 and vol for SIGNALS only (fills, stops,
     # target tests and mark-to-market keep using real prices).  ``adjusted_signals=False``
     # reproduces the R6b-fix signal inputs (raw continuous series).
@@ -1558,6 +1576,8 @@ def simulate(
         delivery_entry_blocks=delivery_entry_blocks,
         closed=closed_pnls,
     )
+    if _ls.get("no_minute"):
+        eng._load_minute = None  # official-data-only run: never read the local 15m minute cache
     _held_close = eng.held_close
     _ret = eng.ret
     _atr = eng.atr
@@ -1586,6 +1606,8 @@ def simulate(
         sizing_eq = compound_equity(equity, equity0, compound)
         day_risk = risk_budget_yuan(sizing_eq, risk_pct, l1_mult)
         slots_left = max(0, int(max_positions) - len(pos))
+        if _pool is not None:
+            _pool.begin_day(d, equity)  # equity at the previous close (= last day of the previous month on a month's first day)
         if slots_left > 0:
             for code, s in series.items():
                 if code in pos:
@@ -1705,6 +1727,9 @@ def simulate(
                             }
                         )
                         continue
+                if _pool is not None and not _pool.allows(code, d):
+                    pool_blocked[code] = pool_blocked.get(code, 0) + 1
+                    continue
                 cands.append(_res["candidate"])
             # R4: usage of the open book on d's close (adjusted ATR; held contract's real close)
             used_g, used_r, held_buckets = _book_usage(
@@ -2115,6 +2140,19 @@ def simulate(
             if entry_filters_on
             else {}
         ),
+        **(
+            {
+                "long_sample": {
+                    "main_map_override": _ls.get("main_map") is not None,
+                    "skip_contract_overlay": bool(_ls.get("skip_contract_overlay")),
+                    "no_minute": bool(_ls.get("no_minute")),
+                    "pool_blocked_signals": dict(pool_blocked),
+                    "pool": (_pool.report() if _pool is not None and hasattr(_pool, "report") else None),
+                }
+            }
+            if _ls
+            else {}
+        ),
         "option_hedge": option_hedge,
         "premium_atr_mult": premium_atr_mult if option_hedge else None,
         "strike_atr_mult": strike_atr_mult if option_hedge else None,
@@ -2315,6 +2353,7 @@ def _simulate_cfg(
     candidate_log=None,
     contract_root=None,
     state_log=None,
+    long_sample=None,
 ):
     cfg = p["cfg"]
     print(f"[bt] mode={mode} ifind_so_far={usage_report()['count']}")
@@ -2360,6 +2399,7 @@ def _simulate_cfg(
         filter_unit_risk=bool(p.get("filter_unit_risk")),
         filter_atr_spike=bool(p.get("filter_atr_spike")),
         filter_unit_risk_budget=bool(p.get("filter_unit_risk_budget")),
+        long_sample=long_sample,
     )
 
 

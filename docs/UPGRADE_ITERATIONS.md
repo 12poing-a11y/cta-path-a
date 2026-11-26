@@ -303,6 +303,7 @@ ext_open。
 - **验证**：全量 pytest 568 passed；受保护文件（universe / execution_rules / formal_rule_lock / historical_backtest.yml）与 main diff 为空；2025-12-31 之后无任何加载；未写 paper_book / 席位 / 正式 BT。
 - **风险/披露**：预热在窗口内消耗（2016 折不足一年）；成交取主力合约（≠216 天日历前月口径）；守卫仅官方路径；乘数/手续费用当前值套全部年份；未跑 30 万诊断档与 shadow（须在 `OOS_VERDICT.md` 提交后、且经磊明示）。
 - **建议**：停，等磊决定是否开 30 万诊断档 / shadow，或结束 R8。
+- **后续（磊明示，2026-11-26）**：①30 万诊断档已跑（`DIAG300K_REPORT.md`，一次跑完）：A300k/B300k/C300k Base −23.1/−15.7/−43.8、Stress −43.2/−54.6/−64.3，Stress 回撤 46/58/66%，标签均「30 万不适用」；C300k 有色全不在池内的月数 76/117；只报告，不计 DSR。②`PREREG_SHADOW_300K.md` 已提交（C@300k 主对象、A@300k 参照，原 A/B/C@100 万并行；完整模式、不进正式账本；6 个月且 30 笔，12 个月不足标低统计效力；账户回撤 >15% 即停；**未启动**，需官方数据管道连续 5 个交易日正常）。③`R8_CLOSEOUT.md` 已写；分支合入**未执行，停在等磊确认**（`r8-equity-filter` 相对 main 可快进；`r8-gross-equity` 打 tag 归档、不合入）。④官方数据每日管道**只出了设计**（`docs/OFFICIAL_DATA_PIPELINE_DESIGN.md`），未实现，等磊确认。
 
 ### R7b v14 正式写入（阶段 A 收口，2026-11-25，本地未 push）
 

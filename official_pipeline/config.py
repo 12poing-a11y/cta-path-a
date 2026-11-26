@@ -22,6 +22,8 @@ REVISIONS = STORE / "revisions"     # changed content for an already-stored day:
 REPORTS = STORE / "reports"         # daily validation reports (not committed)
 ALERTS = STORE / "alerts"           # ALERT_{date}.md
 DERIVED = STORE / "derived"         # official main-contract map per day
+MATCHER = STORE / "matcher"         # price matcher = .cache/history merged with newest .cache/sina snapshot (regenerated, not in git)
+SINA_SNAPSHOTS = ROOT / ".cache" / "sina"  # daily Sina snapshots written by the CTA daily job: sina/<YYYY-MM-DD>/<CODE>0.json
 LOGS = STORE / "logs"
 STATE = STORE / "state.json"        # normal-day streak for the shadow start gate
 BACKUP_ROOT = STORE.parent / "official_backup"   # weekly backup target (outside the store)

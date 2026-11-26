@@ -183,6 +183,52 @@ def test_task_xml_has_wake_and_catchup_and_the_right_command():
     assert install_tasks.TASKS["CTA_Official_Judge_0830"] == ("08:30", "judge")
 
 
+# ---- price matcher: history merged with newest Sina snapshot ---------------------------------------------------------------
+def test_matcher_snapshot_overrides_history_on_same_date_and_newest_snapshot_wins(tmp_path):
+    from official_pipeline import matcher as M
+
+    hist = tmp_path / "history"
+    snaps = tmp_path / "sina"
+    hist.mkdir()
+    (snaps / "2026-11-24").mkdir(parents=True)
+    (snaps / "2026-11-25").mkdir(parents=True)
+    (hist / "AG0.json").write_text(json.dumps([
+        {"date": "2026-11-23", "close": 1},
+        {"date": "2026-11-25", "close": 99, "open": 9},  # pre-close snapshot in history
+    ]), encoding="utf-8")
+    (snaps / "2026-11-24" / "AG0.json").write_text(json.dumps([{"date": "2026-11-24", "close": 2}]), encoding="utf-8")
+    (snaps / "2026-11-25" / "AG0.json").write_text(json.dumps([
+        {"date": "2026-11-24", "close": 2},
+        {"date": "2026-11-25", "close": 100, "open": 10},  # final version overrides history
+        {"date": "2026-11-26", "close": 101, "open": 11},
+    ]), encoding="utf-8")
+    rows, snap = M.merged_series("AG", history=hist, snapshots=snaps)
+    assert snap == "2026-11-25"  # newest snapshot that contains the product
+    assert [r["date"] for r in rows] == ["2026-11-23", "2026-11-24", "2026-11-25", "2026-11-26"]
+    assert rows[2]["close"] == 100 and rows[2]["open"] == 10
+
+
+def test_matcher_falls_back_to_history_when_no_snapshot(tmp_path):
+    from official_pipeline import matcher as M
+
+    hist = tmp_path / "history"
+    hist.mkdir()
+    (hist / "M0.json").write_text(json.dumps([{"date": "2026-11-20", "close": 5}]), encoding="utf-8")
+    rows, snap = M.merged_series("M", history=hist, snapshots=tmp_path / "none")
+    assert snap is None and rows == [{"date": "2026-11-20", "close": 5}]
+
+
+def test_matcher_build_writes_one_file_per_product(tmp_path):
+    from official_pipeline import matcher as M
+
+    hist = tmp_path / "history"
+    hist.mkdir()
+    (hist / "CF0.json").write_text(json.dumps([{"date": "2026-11-25", "close": 1}]), encoding="utf-8")
+    used = M.build_matcher(codes=["CF"], history=hist, snapshots=tmp_path / "none", out_dir=tmp_path / "out")
+    assert used == {"CF": None}
+    assert json.loads((tmp_path / "out" / "CF0.json").read_text(encoding="utf-8")) == [{"date": "2026-11-25", "close": 1}]
+
+
 # ---- accuracy check and GitHub sync ----------------------------------------------------------------------------------------
 def test_verify_flags_tampered_and_missing_bodies(tmp_path, monkeypatch):
     raw = tmp_path / "raw"

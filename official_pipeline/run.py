@@ -125,7 +125,7 @@ def derive_main(by: dict, day: str) -> dict:
     matcher). Full rebuild every day; `by` is truncated to `day` so nothing after the judged day is visible."""
     from long_sample import build_official_pack, W0
 
-    _pack, main_map, _store, info = build_official_pack(w0=W0, w1=day, by=by)
+    _pack, main_map, _store, info = build_official_pack(w0=W0, w1=day, by=by, matcher_dir=C.MATCHER)
     mains = {p: main_map.main(p, day) for p in C.PRODUCTS}
     unidentified = sorted(p for p, m in mains.items() if m is None)
     return {
@@ -163,6 +163,7 @@ def judge_day(store: Store, day: str, *, log) -> dict:
         if not val["ok"]:
             reasons.append("validation failed")
             code = code or EXIT_VALID
+        ensure_matcher()
         sina, stale = sina_status(day)
         if sina == "gap":
             # The cache has been synced to this day or later, but these products still lack the day: a real gap.
@@ -191,6 +192,8 @@ def judge_day(store: Store, day: str, *, log) -> dict:
     normal = status == "normal"
     rep = {"day": day, "status": status, "normal": normal, "reasons": reasons, "details": details, "exit_code": code,
            "validation": val, "derived": {k: v for k, v in (derived or {}).items() if k != "mains"} or None,
+           "matcher_snapshot_dates": sorted({v for v in (_MATCHER_USED or {}).values() if v}),
+           "matcher_products_without_snapshot": sorted(p for p, v in (_MATCHER_USED or {}).items() if v is None),
            "judged_utc": utc_now()}
     C.REPORTS.mkdir(parents=True, exist_ok=True)
     (C.REPORTS / f"{day}.json").write_text(json.dumps(rep, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
@@ -199,12 +202,24 @@ def judge_day(store: Store, day: str, *, log) -> dict:
 
 
 _SINA_DAYS: dict[str, set[str]] = {}
+_MATCHER_USED: dict[str, str | None] | None = None
+
+
+def ensure_matcher() -> dict[str, str | None]:
+    """Build the price matcher once per process (history + newest .cache/sina snapshot per product)."""
+    global _MATCHER_USED
+    if _MATCHER_USED is None:
+        from .matcher import build_matcher
+
+        _MATCHER_USED = build_matcher()
+        _SINA_DAYS.clear()
+    return _MATCHER_USED
 
 
 def sina_bar_days(code: str) -> set[str]:
-    """Dates present in the local Sina continuous cache for one product (read-only)."""
+    """Dates present in the price matcher for one product (read-only; matcher = history + newest Sina snapshot)."""
     if code not in _SINA_DAYS:
-        f = C.ROOT / ".cache" / "history" / f"{code}0.json"
+        f = C.MATCHER / f"{code}0.json"
         days: set[str] = set()
         if f.exists():
             days = {str(b["date"])[:10] for b in json.loads(f.read_text(encoding="utf-8"))}

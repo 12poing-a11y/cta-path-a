@@ -83,7 +83,8 @@ def guarded_main_series(code: str, hist: list[dict], store, tick: float, pct: fl
     return m
 
 
-def build_official_pack(*, guard_pct: float = GUARD_PCT, w0: str = W0, w1: str = W1, by: dict | None = None, codes=None):
+def build_official_pack(*, guard_pct: float = GUARD_PCT, w0: str = W0, w1: str = W1, by: dict | None = None, codes=None,
+                        matcher_dir=None):
     """-> (pack, main_map, store, info).  ``pack`` = (series, errors, sources) as the engine expects."""
     import historical_backtest as hb
     from contract_loader import load_all
@@ -104,7 +105,8 @@ def build_official_pack(*, guard_pct: float = GUARD_PCT, w0: str = W0, w1: str =
     n_unid_days = Counter()
     for u in symbols:
         code = u["code"]
-        cont = [b for b in json.loads((ROOT / ".cache" / "history" / f"{code}0.json").read_text(encoding="utf-8"))
+        mdir = Path(matcher_dir) if matcher_dir is not None else ROOT / ".cache" / "history"  # default = R8 frozen input
+        cont = [b for b in json.loads((mdir / f"{code}0.json").read_text(encoding="utf-8"))
                 if w0 <= str(b["date"])[:10] <= w1 and str(b["date"])[:10] in qd]
         start = FU_START if code == "FU" else w0
         cont = [b for b in cont if str(b["date"])[:10] >= start]

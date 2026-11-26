@@ -266,9 +266,9 @@
         "to": 6200.0,
         "move": 0.0,
         "label": "unchanged",
-        "gex_change_pct": -0.1243,
-        "futures_price": 6096.0,
-        "dist_pct": 1.706
+        "gex_change_pct": -0.1369,
+        "futures_price": 6076.0,
+        "dist_pct": 2.041
       },
       {
         "date": "2026-11-26",
@@ -277,9 +277,9 @@
         "to": 5500.0,
         "move": 0.0,
         "label": "unchanged",
-        "gex_change_pct": -0.2052,
-        "futures_price": 6096.0,
-        "dist_pct": -9.777
+        "gex_change_pct": -0.1568,
+        "futures_price": 6076.0,
+        "dist_pct": -9.48
       }
     ]
   },

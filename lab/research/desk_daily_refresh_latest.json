@@ -2,15 +2,15 @@
   "ok": true,
   "schema": "cta-desk-daily-refresh-v1",
   "pack": "merged",
-  "generated_at": "2026-11-26 22:34:48",
+  "generated_at": "2026-11-27 01:58:20",
   "n_ok": 8,
   "n_fail": 2,
-  "seconds_total": 55.87,
+  "seconds_total": 127.56,
   "steps": [
     {
       "id": "lsp",
       "ok": true,
-      "at": "2026-11-26 22:33:52",
+      "at": "2026-11-27 01:56:12",
       "pack": "core",
       "writes": [
         "lab/research/lsp/lsp_*_{15m,60m}_{latest,events}.json"
@@ -21,12 +21,12 @@
         "n_ok": 24,
         "n_skip": 0
       },
-      "seconds": 0.68
+      "seconds": 0.83
     },
     {
       "id": "p4_light",
       "ok": true,
-      "at": "2026-11-26 22:33:53",
+      "at": "2026-11-27 01:56:13",
       "pack": "core",
       "writes": [
         "lab/research/ml/p4_light_latest.json"
@@ -44,12 +44,12 @@
         "path": "lab/research/ml/p4_light_latest.json"
       },
       "path": "lab/research/ml/p4_light_latest.json",
-      "seconds": 0.95
+      "seconds": 1.15
     },
     {
       "id": "gamma_research",
       "ok": true,
-      "at": "2026-11-26 22:33:54",
+      "at": "2026-11-27 01:56:14",
       "pack": "core",
       "writes": [
         "lab/research/gamma/gamma_*_latest.json"
@@ -71,12 +71,12 @@
         ]
       },
       "path": "lab/research/gamma/gamma_OI2701_latest.json",
-      "seconds": 0.09
+      "seconds": 0.12
     },
     {
       "id": "ablation",
       "ok": true,
-      "at": "2026-11-26 22:33:54",
+      "at": "2026-11-27 01:56:15",
       "pack": "heavy",
       "writes": [
         "data/ablation/strategy_indicator_ablation_latest.json"
@@ -87,12 +87,12 @@
         "path": "scripts/strategy_indicator_ablation.py"
       },
       "path": "scripts/strategy_indicator_ablation.py",
-      "seconds": 11.35
+      "seconds": 15.05
     },
     {
       "id": "strategy_blend",
       "ok": true,
-      "at": "2026-11-26 22:34:06",
+      "at": "2026-11-27 01:56:30",
       "pack": "heavy",
       "writes": [
         "data/ablation/strategy_blend_latest.json"
@@ -103,12 +103,12 @@
         "path": "scripts/strategy_blend_grid.py"
       },
       "path": "scripts/strategy_blend_grid.py",
-      "seconds": 0.41
+      "seconds": 0.46
     },
     {
       "id": "ic_groups",
       "ok": false,
-      "at": "2026-11-26 22:33:54",
+      "at": "2026-11-27 01:56:14",
       "pack": "core",
       "writes": [
         "lab/research/ic/ic_groups_latest.json"
@@ -121,7 +121,7 @@
     {
       "id": "oos_vs_path_a",
       "ok": false,
-      "at": "2026-11-26 22:33:54",
+      "at": "2026-11-27 01:56:14",
       "pack": "core",
       "writes": [
         "lab/research/oos/oos_vs_path_a_latest.json",
@@ -135,7 +135,7 @@
     {
       "id": "portfolio_risk",
       "ok": true,
-      "at": "2026-11-26 22:33:54",
+      "at": "2026-11-27 01:56:14",
       "pack": "core",
       "writes": [
         "lab/research/portfolio/portfolio_risk_latest.json"
@@ -146,12 +146,12 @@
         "path": "lab/scripts/run_portfolio_risk.py"
       },
       "path": "lab/scripts/run_portfolio_risk.py",
-      "seconds": 0.04
+      "seconds": 0.05
     },
     {
       "id": "npd_reminders",
       "ok": true,
-      "at": "2026-11-26 22:33:54",
+      "at": "2026-11-27 01:56:14",
       "pack": "core",
       "writes": [
         "data/cotton/npd_reminders_latest.json"
@@ -161,15 +161,15 @@
         "ok": true,
         "n": 0,
         "path": "data/cotton/npd_reminders_latest.json",
-        "asof": "2026-11-26"
+        "asof": "2026-11-27"
       },
       "path": "data/cotton/npd_reminders_latest.json",
-      "seconds": 0.08
+      "seconds": 0.1
     },
     {
       "id": "gamma_wall_collect",
       "ok": true,
-      "at": "2026-11-26 22:34:06",
+      "at": "2026-11-27 01:56:30",
       "pack": "heavy",
       "writes": [
         "data/gamma_wall/<contract>/<asof>.json",
@@ -181,7 +181,7 @@
         "path": "scripts/gamma_wall_daily_collect.py"
       },
       "path": "scripts/gamma_wall_daily_collect.py",
-      "seconds": 42.18
+      "seconds": 109.71
     }
   ],
   "packs_run": [

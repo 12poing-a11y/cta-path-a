@@ -148,6 +148,44 @@ def test_candidate_c_excludes_big_notional_symbol_on_constructed_data():
     assert "long_sample" in a and a["long_sample"]["pool"] is None  # A has no pool; formal output has no such key (below)
 
 
+def _run_synth_ls(extra, p_over=None):
+    series, mm, cfg = _synthetic_pack()
+    p = hb._load_cfg()
+    p["cfg"] = {**cfg, "symbols": [s["meta"] for s in series.values()]}
+    p["equity0"] = 1_000_000.0
+    p["carry_bypass"] = {"enabled": False}
+    p.update(p_over or {})
+    lsd = {"main_map": mm, "skip_contract_overlay": True, "no_minute": True, **extra}
+    return hb._simulate_cfg(p, "base", pack=(series, {}, {}), contract_root=BundleContractStore({}), long_sample=lsd), series
+
+
+def test_trade_start_hook_only_delays_the_first_trading_day():
+    full, series = _run_synth_ls({})
+    days = [b["date"] for b in series["XA"]["hist"]]
+    ts = days[120]
+    late, _ = _run_synth_ls({"trade_start": ts})
+    assert late["equity_curve"][0]["date"] >= ts and full["equity_curve"][0]["date"] < ts
+    assert all(str(t["entry_date"])[:10] >= ts for t in late["closed_pnls"])
+    assert late["long_sample"]["trade_dates"][0] >= ts
+    again, _ = _run_synth_ls({"trade_start": None})
+    assert _canon(again["closed_pnls"]) == _canon(full["closed_pnls"])  # default inert
+
+
+def test_signal_layer_hook_trades_every_candidate_independently_with_one_lot():
+    out, _ = _run_synth_ls({"signal_layer": {}}, {"max_positions": 10 ** 6})
+    sl = out["long_sample"]["signal_layer"]
+    filled = [e for e in sl["events"] if e["status"] == "filled"]
+    assert filled, "constructed up-trend must produce entry signals"
+    assert len(filled) == len(out["closed_pnls"]) + len(sl["open_at_end"])
+    assert all(int(t["lots"]) == 1 for t in out["closed_pnls"]) and all(int(p["lots"]) == 1 for p in sl["open_at_end"])
+    keys = {(t["code"], t["entry_date"]) for t in out["closed_pnls"]} | {(p["code"], p["entry_date"]) for p in sl["open_at_end"]}
+    assert keys == {(e["code"], e["entry_date"]) for e in filled}
+    assert out["final_positions"] == {}  # the real book is never used in the signal layer
+    # the same code may be re-entered while a previous signal trade is still open (no per-code / slot limit)
+    plain, _ = _run_synth_ls({})
+    assert "signal_layer" not in plain["long_sample"]
+
+
 def test_formal_output_has_no_long_sample_key_and_default_hooks_are_inert():
     snap = ROOT / "archive" / "snapshots" / "bt_input_20261125_05dade0b049c.json"
     if not snap.exists():

@@ -1472,6 +1472,8 @@ def simulate(
     quality_blocks: dict[str, int] = {}
 
     trade_dates = dates[WARMUP:]
+    if _ls.get("trade_start"):  # research only: history before this date is warm-up, trading starts here
+        trade_dates = [d_ for d_ in trade_dates if str(d_)[:10] >= str(_ls["trade_start"])[:10]]
     curves = {}
     if mode == "roll" or mode not in ("base", "seats", "ctf") or bypass.get("enabled"):
         curves = load_curves([u["code"] for u in symbols])
@@ -1517,6 +1519,12 @@ def simulate(
         main_map = build_main_map(series, root=_croot, start=trade_dates[0])
     _pool = _ls.get("candidate_pool")
     pool_blocked: dict[str, int] = {}
+    # signal layer (research only, R8 appendix A.3): every candidate becomes its own independent 1-lot trade (no position /
+    # bucket / gross caps, no interaction).  ``pos`` stays empty so every code is evaluated every day.
+    _sl = _ls.get("signal_layer")
+    _slp: dict[str, dict] = {}
+    _sl_events: list[dict] = []
+    _sl_n = 0
     # R6c: roll-free r20/r60, same-contract ATR14 and vol for SIGNALS only (fills, stops,
     # target tests and mark-to-market keep using real prices).  ``adjusted_signals=False``
     # reproduces the R6b-fix signal inputs (raw continuous series).
@@ -1597,6 +1605,12 @@ def simulate(
                     raise AssertionError(f"exit before entry: {code} entry={_row.get('entry_date')} exit={d}")
                 del pos[code]
         price_pnl, day_cost = _acc["price_pnl"], _acc["day_cost"]
+        if _sl is not None:
+            _acc = {"price_pnl": price_pnl, "day_cost": day_cost}
+            for _k, _p in list(_slp.items()):
+                if eng.manage(_p["code"], _p, d, prev_d=prev_d, nxt=nxt, acc=_acc) is not None:
+                    del _slp[_k]
+            price_pnl, day_cost = _acc["price_pnl"], _acc["day_cost"]
 
         # 2) Path-A entries with ATR stop/target (RR=reward_rr)
         cands = []
@@ -1731,6 +1745,24 @@ def simulate(
                     pool_blocked[code] = pool_blocked.get(code, 0) + 1
                     continue
                 cands.append(_res["candidate"])
+            if _sl is not None:
+                for _c in cands:
+                    _c1 = dict(_c)
+                    _c1["lots"] = 1
+                    _ev = {"day": d, "code": _c["code"], "direction": _c["direction"],
+                           "risk_per_lot": abs(float(_c["entry"]) - float(_c["stop"])) * float(_c["mult"]),
+                           "bucket": _c.get("bucket"), "r20": _c.get("r20"), "r60": _c.get("r60"), "status": "unfilled"}
+                    _tmp: dict = {}
+                    _acc = {"price_pnl": price_pnl, "day_cost": day_cost}
+                    _ent, _ = eng.fill_selected([_c1], _tmp, d, acc=_acc)
+                    price_pnl, day_cost = _acc["price_pnl"], _acc["day_cost"]
+                    for _ce in _ent:
+                        _sl_n += 1
+                        _slp[f"{_ce}#{_sl_n}"] = _tmp[_ce]
+                        _ev["status"] = "filled"
+                        _ev["entry_date"] = _tmp[_ce]["entry_date"]
+                    _sl_events.append(_ev)
+                cands = []
             # R4: usage of the open book on d's close (adjusted ATR; held contract's real close)
             used_g, used_r, held_buckets = _book_usage(
                 pos, idx, series, d, atr_fn=_atr, close_fn=_held_close
@@ -2148,6 +2180,8 @@ def simulate(
                     "no_minute": bool(_ls.get("no_minute")),
                     "pool_blocked_signals": dict(pool_blocked),
                     "pool": (_pool.report() if _pool is not None and hasattr(_pool, "report") else None),
+                    "trade_dates": [trade_dates[0], trade_dates[-1], len(trade_dates)] if trade_dates else None,
+                    **({"signal_layer": {"events": _sl_events, "open_at_end": list(_slp.values())}} if _sl is not None else {}),
                 }
             }
             if _ls

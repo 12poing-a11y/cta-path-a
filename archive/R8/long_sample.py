@@ -166,17 +166,22 @@ def _long_params(group_kind: str, equity: float, scenario: str):
     return p
 
 
-def run_long(group_kind: str, equity: float, scenario: str, pack, main_map, store, *, with_taps: bool = True) -> dict:
-    """One official-data long run.  ``group_kind`` in {A, B, C}."""
+def run_long(group_kind: str, equity: float, scenario: str, pack, main_map, store, *, with_taps: bool = True,
+             p: dict | None = None, mode: str = "base", ls_extra: dict | None = None) -> dict:
+    """One official-data long run.  ``group_kind`` in {A, B, C}.
+
+    ``p`` / ``mode`` / ``ls_extra`` (default None / "base" / None = exactly the registered long-sample run) are only used by the
+    read-only attribution (bridge cells): another parameter set, entry mode or ``long_sample`` keys."""
     import historical_backtest as hb
     import research.data_quality.adjusted as adj_mod
     from position_rules import _strength
     from research.execution import entry_filters as ef
 
-    p = _long_params(group_kind, equity, scenario)
+    p = p if p is not None else _long_params(group_kind, equity, scenario)
     series = copy.deepcopy(pack[0])
     pk = (series, dict(pack[1]), dict(pack[2]))
     ls = {"main_map": main_map, "skip_contract_overlay": True, "no_minute": True}
+    ls.update(ls_extra or {})
     if group_kind == "C":
         ls["candidate_pool"] = ef.MonthlyNotionalPool(
             equity0=equity, mult={c: float(s["meta"]["mult"]) for c, s in series.items()},
@@ -209,7 +214,7 @@ def run_long(group_kind: str, equity: float, scenario: str, pack, main_map, stor
     if with_taps:
         hb.path_a_candidate, hb.apply_portfolio_caps = cand_wrap, caps_wrap
     try:
-        out = hb._simulate_cfg(p, "base", pack=pk, contract_root=store, candidate_log=clog if with_taps else None, long_sample=ls)
+        out = hb._simulate_cfg(p, mode, pack=pk, contract_root=store, candidate_log=clog if with_taps else None, long_sample=ls)
     finally:
         hb.path_a_candidate, hb.apply_portfolio_caps = orig_cand, orig_caps
     res = {"out": out, "p": p, "cand_attr": cand_attr, "pool": ls.get("candidate_pool")}
@@ -217,6 +222,8 @@ def run_long(group_kind: str, equity: float, scenario: str, pack, main_map, stor
         held_by_day = {e["date"]: e.get("held") or {} for e in clog}
         cats: Counter = Counter()
         cats["lots0"] = sum(1 for r in cand_log if r["status"] == "lots0")
+        ev_cat: dict = {(r["day"], r["code"]): "lots0" for r in cand_log if r["status"] == "lots0"}  # attribution only
+        res["clog_days"] = {e["date"]: {"slots_left": e.get("slots_left"), "n_cands": len(e.get("cands") or [])} for e in clog}
         for d, v in caps_first.items():
             m, cands, final = v["meta"], v["cands"], set(v["selected"])
             weak, bsk = set(m.get("weak_filtered") or []), set(m.get("bucket_skipped") or [])
@@ -236,6 +243,7 @@ def run_long(group_kind: str, equity: float, scenario: str, pack, main_map, stor
             for c in cands:
                 code = c["code"]
                 if code in final:
+                    ev_cat[(d, code)] = "selected"
                     continue
                 if code in weak:
                     k = "weak_momentum"
@@ -249,6 +257,8 @@ def run_long(group_kind: str, equity: float, scenario: str, pack, main_map, stor
                     lr = math.floor(lg * sr) if sr < 1 else lg
                     k = "gross_cap_to_0" if (sg < 1 and lg == 0) else ("atr_risk_cap_to_0" if lr == 0 else "hard_trim")
                 cats[k] += 1
+                ev_cat[(d, code)] = k
+        res["ev_cat"] = ev_cat
         res["skips"] = dict(cats)
         res["pool_blocked_signals"] = sum((out.get("long_sample") or {}).get("pool_blocked_signals", {}).values())
     return res

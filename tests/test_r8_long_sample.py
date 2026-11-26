@@ -205,7 +205,7 @@ def test_local_default_path_reproduces_the_frozen_216_day_result_bit_for_bit(gro
     if not bt.exists():
         pytest.skip("frozen result missing")
     live = json.loads(bt.read_text(encoding="utf-8"))
-    snap = ROOT / live["input_snapshot"]["path"]
+    snap = ROOT / live["input_snapshot"]["path"].replace("\\", "/")  # result files were written on Windows
     saved = {k: getattr(hb, k) for k in ("prepare_pack_for_execution", "load_member_seats", "load_curves", "lag_curves_carry")}
     out = ls.run_group(group, data_source="local", snap_path=snap, bt_path=bt, overrides=overrides)
     assert _canon(out["closed_pnls"]) == _canon(live["closed_pnls"])

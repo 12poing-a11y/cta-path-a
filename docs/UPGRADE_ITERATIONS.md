@@ -118,7 +118,8 @@
 | **R 审计升级** | R8–R12（原阶段 B：长样本入口等） | 长样本入口、出场预注册 5 组、风险预算生效、波动目标 + 回撤刹车、品种池 | **封闭** | 依赖 R7 |
 | **R 审计升级** | R13（阶段 C） | 席位因子长样本验证（回补 2019+） | **封闭** | 依赖 R8 |
 | **R 审计升级** | **R14 / K0–K7（阶段 C）** | carry 独立袖套：分月库 → 可交易曲线 → 持有指数 → 预登记 10 试验 → 闸门 → Shadow | **封闭** | K0–K2 可与阶段 A 并行（需明示）；K4 起依赖 R6、R8 |
-| **R 审计升级** | R15–R16（阶段 D） | 试验登记强制化 + DSR 真实 n_trials；晋级门槛写进代码 | **封闭** | 可随时插入 |
+| **R 审计升级** | R15–R16（阶段 D） | 试验登记强制化 + DSR 真实 n_trials；晋级门槛写进代码 | **吸收进 SQF** | 见下栏 SQF |
+| **SQF 信号评价** | **SQF-Design** | 信号质量评价体系（独立事件接口、四层 R 归因、结构/衰减分解、月分块 bootstrap + PSR/DSR + `trial_ledger.jsonl`、市场状态描述、CUSUM/成本监测、G0–G5 与封存一次性盲测、一页报告卡、R8 A 验收规范） | **设计已出 · 停等确认** | **实现未开（等磊确认门槛/状态/报警阈值）；管道与 shadow 优先级不变** |
 
 ---
 
@@ -243,6 +244,7 @@ ext_open。
 | `docs/CURSOR_PROMPTS_R0_R1.md` | R0、R1 可直接粘贴给 Cursor 的执行指令（一次一段） |
 | `docs/CARRY_SLEEVE_R14.md` | R14 carry 袖套细则：原型结果、数据缺陷 D1–D4、K0–K7、闸门 |
 | `docs/STRATEGY_EVIDENCE_REVIEW.md` | 证据综述：哪些量化/期权策略有长期证据、在中国是否成立（37 个来源） |
+| `docs/SIGNAL_QUALITY_FRAMEWORK.md` | 信号质量评价体系（SQF）设计：接口、四层归因、结构/衰减分解、台账、市场状态、衰减监测、G0–G5 与 R8 A 验收标准 |
 | `docs/audit/VIRTUAL_PORTFOLIO_*.md` | VP Phase 0 审计四件套 |
 | `docs/audit/VP_PHASE1_GO_NO_GO.md` | VP Phase 1 准入裁决 |
 | `docs/audit/VP_PHASE1B0_SPEC.md` | 1B-0 实施规格（读口/inbox/权限） |
@@ -616,6 +618,14 @@ ext_open。
 - **验证**：`tests/test_official_pipeline.py` 19 项；全量 pytest 591 passed；本地与 GitHub 克隆各校验 7939 个原始文件，0 问题；推送前扫描无密钥、无超限大文件；受保护文件无 diff。
 - **风险/未做**：判定依赖本地新浪缓存同步（待同步日记 pending，不计 streak）；M 的缓存缺 11-21～11-25；T+2 修订复核未做；shadow 未启动，需连续 5 个正常交易日。
 - **建议下一刀**：**停**；同步新浪缓存后运行 `judge`，积累正常交易日；确认后再开 T+2 复核。
+
+### SQF-Design 信号质量评价体系设计（2026-11-26）
+
+- **做了**：按磊的指令完成信号质量评价体系（SQF）纯设计方案（不写代码、不建台账文件、不开发新信号、不在 2016–2025 做新探索）：定义解耦的 `SignalSpec`/`SignalEvent` 接口、①毛信号→②Base/Stress→③组合层→④前向执行四层 R 归因（复用 R8 `signal_layer`/`trade_start`/`trade_net_pnl` 钩子）、状态内真衰减 vs 状态比例变化拆分、按月分块 bootstrap + 非重叠月度 PSR/DSR + `research/trial_ledger.jsonl`（含 R1–R8 历史补登与 `incomplete` 规则）、3 维市场状态候选（只做描述、严禁直转过滤）、滚动均值 + 单侧 CUSUM + 成本偏差监测、G0–G5 门禁（2010–2015 封存样本只开一次，不过即永久淘汰不回 G1）、单页报告卡及 R8 A 信号复现 `R8_CLOSEOUT.md` A.5.3 的定量容差验收标准。
+- **产物**：`docs/SIGNAL_QUALITY_FRAMEWORK.md`；同步本表与 `docs/options/ROADMAP.md`。
+- **验证**：纯文档改动；验收真值与 `archive/R8/R8_CLOSEOUT.md` A.5.3 及 `archive/R8/ATTRIB/signal_layer.json` 逐项核对一致；受保护文件与代码零改动。
+- **风险/未做**：市场状态定义、监测报警阈值、G1–G4 数值门槛及 DSR 试验数主口径均标为「待确认」，确认前不开代码实现；CZCE 2010–2015 覆盖路径仍未确认（保持只查覆盖不看价格）。
+- **建议下一刀**：**停**。官方管道与 R8 前向 shadow 照常推进（当前 streak 1/5）；待磊确认 `docs/SIGNAL_QUALITY_FRAMEWORK.md` §10 四组参数后，再开 SQF 实现与 R8 A 验收测试。
 
 ## 反馈模板
 

@@ -25372,5 +25372,2267 @@
 "sha256": "4368db19e9c0bb329a8102c30143976aac94d5da82cb43027f1b37707a698a45",
 "status": "ok",
 "url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-05": {
+"api_rows": 275,
+"bytes": 8621,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107594,
+"sha256": "7dc8dd1046a0181ee06f63335869a5b5cbd785eb65aeaddd27705f103dff8b8f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-06": {
+"api_rows": 275,
+"bytes": 8629,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107386,
+"sha256": "93dee12b7e6e25c996886d986ac7310fb697bb8907cb2be87fdcf70c919e7e56",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-07": {
+"api_rows": 275,
+"bytes": 8681,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107620,
+"sha256": "fcf1fefd4508bb07c47729874d5875e2d2ac447d6f07f4cc3b676aec5c6e252c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-08": {
+"api_rows": 275,
+"bytes": 8680,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107522,
+"sha256": "99ff630d69da9941b8a7564a381fd3d0ccaef1abdbc796b6ba5e3493e1ff1914",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-09": {
+"api_rows": 275,
+"bytes": 8615,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107295,
+"sha256": "14c4adf8f97a6ea8435eab3a7864f20c9679374afc0fa97118c54b6b28bcce6f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-12": {
+"api_rows": 275,
+"bytes": 8689,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107445,
+"sha256": "598b18592776e5f2f67cc3d08264f11abec1f3361b7d80c55d6e96f85a2d173a",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-13": {
+"api_rows": 275,
+"bytes": 8704,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107456,
+"sha256": "354cd002d9d7d9e698978179c97d988e91dcd32d6034d09c81e8acd476e39d78",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-14": {
+"api_rows": 275,
+"bytes": 8628,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107359,
+"sha256": "724f282b961fce840502c3d2f0757a358cc70da08c6fcaa3725a2d0bc77f1985",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-15": {
+"api_rows": 275,
+"bytes": 8633,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107320,
+"sha256": "108587ddbeb97e2267eab33f959669e8e44a5c8809a82e0c2d51e468c694bb37",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-16": {
+"api_rows": 275,
+"bytes": 8589,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107472,
+"sha256": "5df4deed0ca3d3a16be8cd65921e4f29c4e59dce6c402d338094ac7d29c5e837",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-19": {
+"api_rows": 275,
+"bytes": 8615,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107446,
+"sha256": "16824f9d758caceb618d68ad9784fcd8be8ed1630852d6f2f9c6a0d2cd6dada9",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-20": {
+"api_rows": 275,
+"bytes": 8610,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107475,
+"sha256": "b3c54e4f6b200d4e04a944c2ce5746fbcad449746c6937de169213c13902a192",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-21": {
+"api_rows": 275,
+"bytes": 8613,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107252,
+"sha256": "fc93f8d0cc84431673bb36f01092b99ab5bfcdb4c84cd42ff2e9370af65b7d20",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-22": {
+"api_rows": 275,
+"bytes": 8634,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107297,
+"sha256": "26ec0d1a1c653032c8851aef2054046842d620dcc208704d29783c17053e9636",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-23": {
+"api_rows": 275,
+"bytes": 8644,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107355,
+"sha256": "b651cff7ceec535002ac5bbd4f48e80d2ee08c4638ba9c029b2a8d42f58d3b1d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-26": {
+"api_rows": 275,
+"bytes": 8645,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107343,
+"sha256": "7e7063712b7d7107f83a30c756485c53041e905178f734710ed7f1fe195c33bd",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-27": {
+"api_rows": 275,
+"bytes": 8647,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107594,
+"sha256": "dbefb665aa06565fa894cc2e840e3a21b54a937afd4b550312b63989058f813f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-28": {
+"api_rows": 276,
+"bytes": 8660,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107793,
+"sha256": "2f8ace71f0a69aebbe2186e0b9d82961c1548fff6e201e258a1574621bb89f1e",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-29": {
+"api_rows": 276,
+"bytes": 8630,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107787,
+"sha256": "b14b58e592340ea31ee42ca9d97ea4fa148dbe7913dee8d414f2943786aaa480",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-01-30": {
+"api_rows": 276,
+"bytes": 8694,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108006,
+"sha256": "54baeffd7a308ac5285d7aa760463e1010d18088dd213572b2a65034209016aa",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-02": {
+"api_rows": 276,
+"bytes": 8673,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108441,
+"sha256": "936f1ce9dc92fb4fc3ac87ad38aebba5ab2a50d3b55114f7377975d34f9577e4",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-03": {
+"api_rows": 276,
+"bytes": 8613,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107981,
+"sha256": "6e256d2c44df34cb8423b8126e6ca6282a0ba6665090a6c53cbd5423285fbad7",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-04": {
+"api_rows": 276,
+"bytes": 8626,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107824,
+"sha256": "bb922b376ec4137107811b60e2aed9dd34793192294b3580e8ec19d1f4a12600",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-05": {
+"api_rows": 276,
+"bytes": 8611,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107935,
+"sha256": "20a2107b4702d3d0be74f73bad4396d3e2490ef37cda7721d7b328e8fd8ae0d7",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-06": {
+"api_rows": 276,
+"bytes": 8616,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107935,
+"sha256": "7cb3c9ea3455ecedbbaf09ffe7e75de1ec624fdaff9214c67c6a533b337a9af9",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-09": {
+"api_rows": 276,
+"bytes": 8571,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107660,
+"sha256": "dba568cd00e4ce1a951034105a8e85701bc32408e0b20c89838c8b8c4e36a334",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-10": {
+"api_rows": 276,
+"bytes": 8537,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107695,
+"sha256": "5bc7c0b3f02d7be6c4dcc96c1b6b1c6116f3fb08d87e53fd68a53a9b8173530c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-11": {
+"api_rows": 276,
+"bytes": 8484,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107493,
+"sha256": "c211c3773b6ad683238b77e870c9a93c8bef7ce9658b317182e5ac846886a1bf",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-12": {
+"api_rows": 276,
+"bytes": 8525,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107737,
+"sha256": "98e59736792399d649af77dd92615f81d1e001be322aa6c5f5c6857d3702d560",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-13": {
+"api_rows": 276,
+"bytes": 8535,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107925,
+"sha256": "174627d81f0e7a50c1d07df84cef787c52f5a03597905b4cc17e5a6beec214c8",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-16": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-02-17": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-02-18": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-02-19": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-02-20": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-02-23": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-02-24": {
+"api_rows": 276,
+"bytes": 8601,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 107949,
+"sha256": "871f503db1380eae0f9b1ababdd9e0bb89399d77beba70a1556c3df0d5fa8d37",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-25": {
+"api_rows": 277,
+"bytes": 8608,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108206,
+"sha256": "477b2852cc5701a184bd579028ea6df15e7cef8d402e11c09713bbf3adb392cf",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-26": {
+"api_rows": 277,
+"bytes": 8622,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108262,
+"sha256": "edcbe16893b2df10c1e576b3204040f90bd52855f971c4df9b53b73366d57721",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-02-27": {
+"api_rows": 277,
+"bytes": 8605,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108279,
+"sha256": "1d9e88d71cba64fa836e69f65faa2ce086b57eee320480146013c215396ec837",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-02": {
+"api_rows": 277,
+"bytes": 8690,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108452,
+"sha256": "312244a4e52c29bdbc44e8d01796310ba4dee67f2934c1b8c7d056827ba448e1",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-03": {
+"api_rows": 277,
+"bytes": 8680,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108503,
+"sha256": "06b2f720248a7b8f6ebaee58cae717542f0abe0904ab80a6eb0bd2673d1ee7dc",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-04": {
+"api_rows": 277,
+"bytes": 8669,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108217,
+"sha256": "9d96490926ea068acf1d1bae130cf9f34cbf16e22ce9126f14d453b22108e539",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-05": {
+"api_rows": 277,
+"bytes": 8682,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108195,
+"sha256": "56876ac6f42a118d3b365f948b0fd9375dc757a168250a6e352d86a136d6f8fd",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-06": {
+"api_rows": 277,
+"bytes": 8638,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108196,
+"sha256": "a566ebc8dccba2fa380a312acc887b5b29c08b38e3192f9480f5379a3cf70206",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-09": {
+"api_rows": 277,
+"bytes": 8649,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108560,
+"sha256": "6e857bf0eee61305a0ba3c22e5481483dfa106f4e61ff6fe3e1fbee0492302bf",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-10": {
+"api_rows": 277,
+"bytes": 8680,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108784,
+"sha256": "f3c621d1c2e95276e382aa93e45c51d2a5194e6880f9b9ce5a40c773f1311101",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-11": {
+"api_rows": 277,
+"bytes": 8639,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108156,
+"sha256": "422a7b212df0b98d247e17235bbd59eb45ec6964ae928d55b305858889c0d38d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-12": {
+"api_rows": 277,
+"bytes": 8666,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108260,
+"sha256": "1b4b3d5a6c134d826f5247ecc831eb72878a0ecdf3075be7bdacf3def7716c1e",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-13": {
+"api_rows": 277,
+"bytes": 8655,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108232,
+"sha256": "a867d97faf53b7ae3e8b573ace83715470ed4d5952a4918b6a7548371b5935e2",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-16": {
+"api_rows": 277,
+"bytes": 8663,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108449,
+"sha256": "856633bed9919fbb96837f46286a49a58920563ae2e10e3bd5f197a2b33004a3",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-17": {
+"api_rows": 277,
+"bytes": 8639,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108298,
+"sha256": "40e2c6a3de72d340eff720b908657dac3e6b49d3b8a700a7b796144b706e25cd",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-18": {
+"api_rows": 277,
+"bytes": 8629,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108364,
+"sha256": "ade0cde56a9c0b76a21084900c63d3573d479c1252d0555f8486e82187b86591",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-19": {
+"api_rows": 277,
+"bytes": 8681,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108400,
+"sha256": "a177abb1718df7996316c49c28991958ac089aaa67e5047e9d2f8588c21f3bfa",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-20": {
+"api_rows": 277,
+"bytes": 8642,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108286,
+"sha256": "37a26da864eab9ae017c3039a71b84a5fc30fea4093cca88578adc1a73915074",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-23": {
+"api_rows": 277,
+"bytes": 8726,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108654,
+"sha256": "3226c628fee9ea46f9eb41cf3b1f97b859971f1f6e3066662df027fa740a026f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-24": {
+"api_rows": 277,
+"bytes": 8697,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108834,
+"sha256": "557c22864a75264dd52b078056ae853b191467bd7aca29cfdbbd63a453a43639",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-25": {
+"api_rows": 277,
+"bytes": 8679,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108949,
+"sha256": "e32a7672d059b4289a023f5ae2e546ffd9b79bc66b75b0b7653d67bdec0c1223",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-26": {
+"api_rows": 277,
+"bytes": 8631,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108331,
+"sha256": "e8f84eb4518888c642a75a5dab9c50f9f456703dd10ff7df810f7c02958f218d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-27": {
+"api_rows": 277,
+"bytes": 8634,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108327,
+"sha256": "943ccba8c01d755d24934103f72f1863781691589bc595f7fff4c5b299fe72df",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-30": {
+"api_rows": 277,
+"bytes": 8717,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108410,
+"sha256": "a1836dbb7347448e57f90fe30e697ee3f669da10bf9d73b50ddf82cb555cf1c3",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-03-31": {
+"api_rows": 277,
+"bytes": 8718,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108845,
+"sha256": "ef9d93c9477c03f94c510f6c7042d012b356d0f68718d76da2ab6cd65e8e02ac",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-01": {
+"api_rows": 277,
+"bytes": 8732,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108822,
+"sha256": "2a7ff46b688a778e49608451578d383577918739b382465ac08b532bed976c9c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-02": {
+"api_rows": 277,
+"bytes": 8716,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108511,
+"sha256": "2cbb4fbff37b7604d9dc61e9791ba434dbbd943fc315efcd69c363161969721d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-03": {
+"api_rows": 277,
+"bytes": 8661,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108319,
+"sha256": "2366047ac2a2a4a190646499b2c5d510926a6030ab4080b4c8b893a2c062380f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-06": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-04-07": {
+"api_rows": 277,
+"bytes": 8686,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108339,
+"sha256": "d5c0947a96e61b11edecacde05d7a8edc143633e0873ad51d682950cda30e308",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-08": {
+"api_rows": 277,
+"bytes": 8719,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108705,
+"sha256": "006d0352dc2a1c5d2e9ae0c44531cb6020002a63dcc72ba2366d3a354fde5ff2",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-09": {
+"api_rows": 277,
+"bytes": 8630,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108457,
+"sha256": "0b6130b951d6b3c031d5b20bbbb5dc874656133559cf9b66caf995b4f58aa15c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-10": {
+"api_rows": 277,
+"bytes": 8603,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108410,
+"sha256": "adf31260494894ac83f760a7a348c15f42e1dbf6b7585cbbf35a8304785f10cd",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-13": {
+"api_rows": 277,
+"bytes": 8660,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108442,
+"sha256": "9939698d968f296e8cca481b1c676a34ec3f78cf1b2941cee9c2e8e614e08813",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-14": {
+"api_rows": 277,
+"bytes": 8625,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108445,
+"sha256": "09dae747cfd2c4513f0ba6ea71730845f905d381d635694bdd7abd2ed0289439",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-15": {
+"api_rows": 277,
+"bytes": 8637,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108326,
+"sha256": "ea6ce1a9c67b62f7218a1b555291b0db5570d6abcf202ca99da0544f456655e9",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-16": {
+"api_rows": 277,
+"bytes": 8637,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108145,
+"sha256": "9888ac51caca1a1bddc37df00daf3f8b1192f3306da2e58d30e0a3b67ca263c8",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-17": {
+"api_rows": 277,
+"bytes": 8634,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108210,
+"sha256": "456f20d22ec6e3658ab8f78e2f0123c5e29b3f559a78654ceb11bd9557a3d49c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-20": {
+"api_rows": 277,
+"bytes": 8663,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108608,
+"sha256": "19b9c16c364a245b84314e5d1716ec86efed14d58dc1ade8651566f2bd994b2f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-21": {
+"api_rows": 277,
+"bytes": 8641,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108409,
+"sha256": "5f0926fddb2f79ba703a44727080c8bcfdec6f22dc8fd5b71ea811b3353550fb",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-22": {
+"api_rows": 277,
+"bytes": 8639,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108378,
+"sha256": "a48fe2eab91ffbd91840672dd9646aed2f7816bd2584a96abcfdcdef416736af",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-23": {
+"api_rows": 277,
+"bytes": 8663,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108347,
+"sha256": "c2ee6f2a0b634edd2c9d524e103b0a2f9f3996a10305e3a4976016a63c6b9265",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-24": {
+"api_rows": 277,
+"bytes": 8655,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108430,
+"sha256": "b01fe5fa782902a1159151f9b7ec3e0f56dbba53d826067b3a535828b772c91f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-27": {
+"api_rows": 277,
+"bytes": 8603,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108209,
+"sha256": "132356b8e226b77d37054bde3cfbe74ab75c79c52a386b075fed5270395d228f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-28": {
+"api_rows": 277,
+"bytes": 8693,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108505,
+"sha256": "2bf146fa2f6178becbc9e32d63f809365dfc19b2e0ebbfa3487318d9ab47f8d8",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-29": {
+"api_rows": 277,
+"bytes": 8669,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108177,
+"sha256": "bd37519e856fcb66693ddb424ace0b21cfb57a9e683612cb136adcf14fb585e7",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-04-30": {
+"api_rows": 277,
+"bytes": 8663,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108196,
+"sha256": "b2d471a1f1819b988f47c7ee8314f84f7f7ae4299007fd2cbee52f946a27050e",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-01": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-05-04": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-05-05": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-05-06": {
+"api_rows": 277,
+"bytes": 8635,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108259,
+"sha256": "0a322f0c84ecf9577dbc67bb654c9e01ea0011a8f5036e6464985997e2d99ffb",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-07": {
+"api_rows": 277,
+"bytes": 8693,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108740,
+"sha256": "867dfe55920cf4acd4d0097af2a51b75654d36560ece72960695ef157b04a19e",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-08": {
+"api_rows": 277,
+"bytes": 8646,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108491,
+"sha256": "b34451e0758b4ae93d32c2ee88643d8a31a2f1cf70dc2afe016cf057b4b6f5c0",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-11": {
+"api_rows": 277,
+"bytes": 8633,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108320,
+"sha256": "84cd36a9d7b7a50a67e8251405e45e891666aa5e3ba22c7c084caedd75cda8d4",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-12": {
+"api_rows": 277,
+"bytes": 8627,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108346,
+"sha256": "14c1b01d3efb0e378dd00a0d4d207f23018f3e837a3b93394b9b651b58b48d6b",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-13": {
+"api_rows": 277,
+"bytes": 8609,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108096,
+"sha256": "69c15f7846eaecbf29c3835b027c8ea761f98cf8b3cbead15e1c7f7d6bf2bf3b",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-14": {
+"api_rows": 277,
+"bytes": 8618,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108210,
+"sha256": "44ecb9bf046c5645f1a3dafba90e5e75b9d32f42296f37549ff2946f5973564c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-15": {
+"api_rows": 277,
+"bytes": 8606,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108274,
+"sha256": "fd24d3204057e6df604c9f514465e349f4e68258d5897147d36902984f0009e3",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-18": {
+"api_rows": 277,
+"bytes": 8652,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108224,
+"sha256": "a935e81a668e92ae691535950706ff45a87c54feee4d070717dcca13d4b55577",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-19": {
+"api_rows": 277,
+"bytes": 8622,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108195,
+"sha256": "ae3498bde510d15e862542cd4694e920e53362e10b844e2da0d599726fa32edb",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-20": {
+"api_rows": 277,
+"bytes": 8637,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108161,
+"sha256": "7e123d57003ea7f17a770356a52dca93d3b201a1710894ed93206a673d245f21",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-21": {
+"api_rows": 277,
+"bytes": 8648,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108574,
+"sha256": "5c78b156522412dedae9c594e6bb790689a9e43fc4ebe97082b883dd22ccb729",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-22": {
+"api_rows": 277,
+"bytes": 8670,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108532,
+"sha256": "7dea2d2d2407eca29b5a740def9e10a6a4d56507ae5c20d0bdfcc8851f31b211",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-25": {
+"api_rows": 277,
+"bytes": 8695,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108664,
+"sha256": "781709f229a7438e887e351068edac85a765e0b2f1893696c87bf05e74f80a77",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-26": {
+"api_rows": 277,
+"bytes": 8666,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108604,
+"sha256": "8df44a74e978c50187b02d7dea7d0094a9464d0caf88662ceef0e1bca7819421",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-27": {
+"api_rows": 277,
+"bytes": 8663,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108336,
+"sha256": "dccb63c976a7d68c2deb0bea0e2233d65fcaf49d2c9d5ccc41dac3eda09e40b1",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-28": {
+"api_rows": 277,
+"bytes": 8680,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108215,
+"sha256": "217bdc45d3980060454757012df843245d08418d6dc3772d0722f31e1307b122",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-05-29": {
+"api_rows": 277,
+"bytes": 8675,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108183,
+"sha256": "ed75eba9ee22d46812b268214c9a88446ab0959a458b42308d31e336ca83e7ca",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-01": {
+"api_rows": 277,
+"bytes": 8743,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108570,
+"sha256": "b850a2ce61383769c8a4408cd7d53c19e76a7152759e2a1551f0752ac8183d80",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-02": {
+"api_rows": 277,
+"bytes": 8679,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108294,
+"sha256": "081dc81a173af7eacdfcddce2a650d102cc2c6344101ea8c4a8fde233a39a451",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-03": {
+"api_rows": 277,
+"bytes": 8604,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108362,
+"sha256": "e21c6819b9392dc5ce3b82eaae7a97adc7f2c6c7a810a5006bc4139af3c9e0bf",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-04": {
+"api_rows": 277,
+"bytes": 8641,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108565,
+"sha256": "ce0950325629def534cd6a14e66c44312daf3cde1221ee12519c7a10426a2077",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-05": {
+"api_rows": 277,
+"bytes": 8637,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108467,
+"sha256": "78274388f745a7d7fabf79d6a4adb260cd2566a34764e019a81fb1fd44fed476",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-08": {
+"api_rows": 277,
+"bytes": 8663,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108448,
+"sha256": "97ddeafd6ea79a13dcebce73e5ecab7ba97ffe9e740d30589bd1836515ae74b7",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-09": {
+"api_rows": 277,
+"bytes": 8668,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108545,
+"sha256": "85dc01afd09439f05fd6e4bdea2a6c76fc9b1f60780b3302bc2b03ed41f08d74",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-10": {
+"api_rows": 277,
+"bytes": 8630,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108302,
+"sha256": "1849398e430460c9efa133ae50c88a64aec51fed3d8573645b5f59a3850815ab",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-11": {
+"api_rows": 277,
+"bytes": 8624,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108017,
+"sha256": "b27373142eab3f91aa5a5b49371a06df2f47ec6acbf87b10556adfff8ce0e2cc",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-12": {
+"api_rows": 277,
+"bytes": 8631,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108345,
+"sha256": "604d35d9f5ff0bca657fdbe7ef6fbb85d7c5954ff6393d3b92b6d6c1699baf99",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-15": {
+"api_rows": 277,
+"bytes": 8714,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108886,
+"sha256": "7ecae1380ea2315c1a3ec49ea3e1b3a26b9a00e1336aafd4972cd8c0638e9b4c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-16": {
+"api_rows": 277,
+"bytes": 8720,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108832,
+"sha256": "af3585bd7eaec71f33b33ea226a27cc3553cc5e1832d850b1c4330270dcb213c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-17": {
+"api_rows": 277,
+"bytes": 8686,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108662,
+"sha256": "017f2b61fb2ebda9fa0884aece50e60198378e8aa0a7353efdadd9cb8b5b1d29",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-18": {
+"api_rows": 277,
+"bytes": 8678,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108726,
+"sha256": "03e7503e3b7dc5fb29b5c50e1ac3652d10b2ef86a12a7aa0cddca27e8557fce3",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-19": {
+"api_rows": 1,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 462,
+"status": "empty"
+},
+"2026-06-22": {
+"api_rows": 277,
+"bytes": 8695,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108562,
+"sha256": "827d4a006540c1c8dae422a6f6b2d763bb185a760389068a97e024514df28a42",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-23": {
+"api_rows": 277,
+"bytes": 8671,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108622,
+"sha256": "c27097877116b12e7f1a0fea306285ffcad7e1f0352788ce938dbce033b2b291",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-24": {
+"api_rows": 277,
+"bytes": 8691,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108361,
+"sha256": "8dbf4d7594252c547e09f076d437dc190ef74ac24028080e865e6225b742dafd",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-25": {
+"api_rows": 277,
+"bytes": 8684,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108608,
+"sha256": "57a6a2d94611478097c088adfaf83d8c03c3b11a0167c941c946120c34fa74c5",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-26": {
+"api_rows": 277,
+"bytes": 8671,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108479,
+"sha256": "3c77916129b24f9e14ff7b2de8eebdbbd381fff7aac94a7f399559d8cfb08f6d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-29": {
+"api_rows": 277,
+"bytes": 8637,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108292,
+"sha256": "a098c1e2098ee2577aa7f3451fda64e5f2641dda287230743cb0b8e467d8ea53",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-06-30": {
+"api_rows": 277,
+"bytes": 8636,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108434,
+"sha256": "cd8e0024367bbedb45e0dee2c4dcc4724dad37bfc02f4604160264ee76069e1d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-01": {
+"api_rows": 277,
+"bytes": 8656,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108635,
+"sha256": "b81242b82eef8b4e1abc70ef502979fa4e5506756900afa7e01041e00d3868e0",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-02": {
+"api_rows": 277,
+"bytes": 8605,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108398,
+"sha256": "4e35db7fc5d2fa2e8170e80abd8bfc2e472847681b2198fb2691dc4d0e0a5336",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-03": {
+"api_rows": 277,
+"bytes": 8606,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108454,
+"sha256": "315bf32dc25a3f9cd82fcd983e09c132a50dac5650a3665bd612927a773c0f58",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-06": {
+"api_rows": 277,
+"bytes": 8632,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108250,
+"sha256": "d652a83404000544c66a6ca95b0b1d84ca1bc3b6cbd7a2f16cc88cbf016b4a36",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-07": {
+"api_rows": 277,
+"bytes": 8627,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108370,
+"sha256": "ae358dfcdb44a7e60935d30039af8fb0beb009f31dd94ed9bed7826762fb48fa",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-08": {
+"api_rows": 277,
+"bytes": 8656,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108332,
+"sha256": "14e64ea3370dead255aeee12632e5bc67d772dc31548987f22807114209641da",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-09": {
+"api_rows": 277,
+"bytes": 8625,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108096,
+"sha256": "99a808516a34cf9ee55fa150297ce276c9baa3826051f5d68ad294aa3fa2a633",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-10": {
+"api_rows": 277,
+"bytes": 8644,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108340,
+"sha256": "43a4ba78c4f6b674a6d46f9b50a7d963dad34f556f5dd67f719526166ed19ee2",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-13": {
+"api_rows": 277,
+"bytes": 8670,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108457,
+"sha256": "c7fe2db6c499df10f09c47eba9bc25f58478bc8afce5047fe584ddd318f6845c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-14": {
+"api_rows": 277,
+"bytes": 8713,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108676,
+"sha256": "28ff1196f2f4a614d3fafba6cde0384578daf55c5a040c7ea013c10c31d3664c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-15": {
+"api_rows": 277,
+"bytes": 8655,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108320,
+"sha256": "9c3f27a30ea5d7dfbf5aec679e471219bdebc3e8efd0270b77db8e5e9b309e70",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-16": {
+"api_rows": 277,
+"bytes": 8622,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108229,
+"sha256": "1c42d3d2604f1609809ae30cfc558a91de7c0f77f704a7a3ab2c016dc62fc513",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-17": {
+"api_rows": 277,
+"bytes": 8648,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108619,
+"sha256": "2ba35dcb5549b7ca0da65d51b8227782bd954c158added104491cb199ed26d9d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-20": {
+"api_rows": 277,
+"bytes": 8712,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108748,
+"sha256": "ecded13ab1e7566690b226cae9599b4e6349f18c17aae410cd0accbc9d46e1c2",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-21": {
+"api_rows": 277,
+"bytes": 8656,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108616,
+"sha256": "189f22c8a77c5e6ab49562781bcd7d5d6098889f622bc337da4232db596f2a0c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-22": {
+"api_rows": 277,
+"bytes": 8631,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108212,
+"sha256": "5f28cbac2709cc408f8ac4c6b20e49c85cda4b4c41d353209131f0d2734384ee",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-23": {
+"api_rows": 277,
+"bytes": 8697,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108317,
+"sha256": "a026a120c65d3df201a5176e1838f178cfc8198287d63de6c19623e714df262d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-24": {
+"api_rows": 277,
+"bytes": 8676,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108298,
+"sha256": "acfa75572d021da660b90edddffe23b862eef978d93422e1f07549ede33d48e2",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-27": {
+"api_rows": 277,
+"bytes": 8690,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108699,
+"sha256": "fa75ffadf5fb8bc14e02886781aa99fb28deb384604c3fadcef592bc99871840",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-28": {
+"api_rows": 277,
+"bytes": 8673,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108721,
+"sha256": "925c8d266b1e0003e61302d445ddb68768842347e6294123d91bd7dc2cef126f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-29": {
+"api_rows": 277,
+"bytes": 8653,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108229,
+"sha256": "826bcbbb2783c4fb948e45cd96b46a7eaf9b424cc9ba12aaffbd26dd92da2440",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-30": {
+"api_rows": 277,
+"bytes": 8686,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108605,
+"sha256": "d39578e25a23c45a622eed1f4fd2b9d44b9bbe0cd3a5879483f7178080dc3e8e",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-07-31": {
+"api_rows": 277,
+"bytes": 8678,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108685,
+"sha256": "84dc41f3e8ad9d5e1f911a92c4840fc7684ee6184d413179bffc71eab3dc726c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-03": {
+"api_rows": 277,
+"bytes": 8715,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108861,
+"sha256": "da0ddad1ad629809e6580f4fd55ddcdd689f6750999b6470bab14bc143e75f34",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-04": {
+"api_rows": 277,
+"bytes": 8680,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108343,
+"sha256": "7aeca65b557d66cdb7beaf736b277473d1880a82db1f1233e03223fe7be1f61a",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-05": {
+"api_rows": 277,
+"bytes": 8696,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108702,
+"sha256": "351aa50b2c1405abe5dda1cf7f59f42313a141fe933b35d25a855501eb8de6f8",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-06": {
+"api_rows": 277,
+"bytes": 8702,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108543,
+"sha256": "498428ba0356d30711c2c8226b29ec8580eb629161b7a19096f33d21ce6c50ce",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-07": {
+"api_rows": 277,
+"bytes": 8672,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108399,
+"sha256": "8ec300cb9447399026e60a8282cf43dd3b1dc6d81c87a1b002ea8fd8fccd70a6",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-10": {
+"api_rows": 277,
+"bytes": 8662,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108234,
+"sha256": "88e0bb6180ecaddb4b1db59de40d5fb8093bc13d3b395cd3cf540ec6c620d230",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-11": {
+"api_rows": 277,
+"bytes": 8676,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108354,
+"sha256": "c9ba25653c02c4e1c01d9ec5da25b3da457799204efe2c26a5cf1266a304ea89",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-12": {
+"api_rows": 277,
+"bytes": 8655,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108229,
+"sha256": "9d10c007dc58bf46a40be1ee697387439cf31abec4c36659d952bbacf7eafdd1",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-13": {
+"api_rows": 277,
+"bytes": 8628,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108246,
+"sha256": "49b60d35ced12581a5db857bf971bfd7f54ac42d3d2a753efdd27162e5aa3540",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-14": {
+"api_rows": 277,
+"bytes": 8670,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108324,
+"sha256": "a556bb3452d0abeae99fcbd32a47e8e9d906500b0a5ba4bbb2990be3bb5b7fe8",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-17": {
+"api_rows": 277,
+"bytes": 8740,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108623,
+"sha256": "1583d072893451a7e9255245b2a9fad3099382eae59207903e17afba983fb622",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-18": {
+"api_rows": 277,
+"bytes": 8704,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108596,
+"sha256": "f0203f61807beb31234f7a3f86ae5ac987ce7853d9b36e56aa90c388cb1134dc",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-19": {
+"api_rows": 277,
+"bytes": 8750,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108511,
+"sha256": "593424a4bd3b2ab9ba650f85235d54b33959a035055de2c07e399964ec5b4cd4",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-20": {
+"api_rows": 277,
+"bytes": 8765,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108663,
+"sha256": "613683a8745c6cb65b2f507b6e03c26d8c22fc06282390f124aea85e72e3d311",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-21": {
+"api_rows": 277,
+"bytes": 8757,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108490,
+"sha256": "5d9c782e3526ca6215f8831e479f7263f6eb10398119296a3ef1e8dd82e51969",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-24": {
+"api_rows": 277,
+"bytes": 8761,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108692,
+"sha256": "a0dd18edc4dcda2f951539ba375ab281df91bc852364e823c815999914f79566",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-25": {
+"api_rows": 277,
+"bytes": 8820,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108918,
+"sha256": "8247b9f33e91e4f42028551851d9d47b869eb6e0615b500629489b75450ac127",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-26": {
+"api_rows": 277,
+"bytes": 8794,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 109024,
+"sha256": "7b1a8ae08cc1fa9e53b9fb2f2fc46534be1cad6400f7795963e56a02b35455ca",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-27": {
+"api_rows": 277,
+"bytes": 8790,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108596,
+"sha256": "9953795491d168f8e8f44b6efedc9215f2004ade73793c678c291d5485554b59",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-28": {
+"api_rows": 277,
+"bytes": 8770,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108530,
+"sha256": "2a76114c671dd98aecdca497f09df73aabe730c2c462ca9657da44ec5db35588",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-08-31": {
+"api_rows": 277,
+"bytes": 8804,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108755,
+"sha256": "eaa380a95d1dfc6405c708cd2962a55b5a3d151434019aa1381010b5828bc090",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-01": {
+"api_rows": 277,
+"bytes": 8798,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108818,
+"sha256": "3057676d39499dd00842907778330967f2902e68778b1c66d0835f6a90f8ada5",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-02": {
+"api_rows": 277,
+"bytes": 8798,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108885,
+"sha256": "72aff90805f7f74987dd7b272268bb36d55de66ce98631169c71aca67c39b4da",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-03": {
+"api_rows": 277,
+"bytes": 8794,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108806,
+"sha256": "a046c56e9a5bfbaba9969e0f7ae4a7a5ee935cde62cbc458b5839623696d02a2",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-04": {
+"api_rows": 277,
+"bytes": 8777,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108519,
+"sha256": "9cc57506e874519797dd562b47df5a40fbaddc87c07706854e168bf3fdeae5a2",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-07": {
+"api_rows": 277,
+"bytes": 8789,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108638,
+"sha256": "24555f1ba352aa5757b132ce95472ef77e0ec525f8f667f45d4b18eeacb0d646",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-08": {
+"api_rows": 277,
+"bytes": 8758,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108531,
+"sha256": "2483aee22a378d09b42f765f4448345cdf9718d7b18bedcf8022d59e2759cb7f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-09": {
+"api_rows": 277,
+"bytes": 8732,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108442,
+"sha256": "1cb54d466b32c4dd1d4ac8a63c494bf563b932d82fcbb33a406b183ac61e8891",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-10": {
+"api_rows": 277,
+"bytes": 8780,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108753,
+"sha256": "e41617c830715c38e772aac18dbf1593ba3ee3c122852043eff1709840decab7",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-11": {
+"api_rows": 277,
+"bytes": 8825,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108865,
+"sha256": "b52bca6b1f315a962632dbe6e1464d2eb909ce533670a1c14eb4a43beb5eebee",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-14": {
+"api_rows": 277,
+"bytes": 8740,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108856,
+"sha256": "b1f7867bdbd80e29cda03f18a6b4e9bd228c202ebffc05958c4cce73292d929b",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-15": {
+"api_rows": 277,
+"bytes": 8735,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108718,
+"sha256": "f92d0bfef19742ea180542c4b4a5948fec0a16f73d5dc16c48c15220cae55753",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-16": {
+"api_rows": 277,
+"bytes": 8742,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108653,
+"sha256": "85c46924c382d81878f5c73244567d391d05229965f556f50cb5a1bd3aa4d35a",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-17": {
+"api_rows": 277,
+"bytes": 8755,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108737,
+"sha256": "73bb9ddacd44b6ad09378375285f1266d8814d69acb2316bd8206b92e692d295",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-18": {
+"api_rows": 277,
+"bytes": 8750,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108917,
+"sha256": "666370dc2a390ec1729d7a40c92e9d8db50d5db3537f46c19d1c55a4697a1caa",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-21": {
+"api_rows": 277,
+"bytes": 8750,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108535,
+"sha256": "02aa290a3ef17189a84b5212bdb49b3f0a133e7e46d8d12d72024cc5cc00737b",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-22": {
+"api_rows": 277,
+"bytes": 8753,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108380,
+"sha256": "e5ef7334ada24c690ab43d76a8fc75238cecdf5c5e13c86dd2eb505a48464040",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-23": {
+"api_rows": 277,
+"bytes": 8729,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108619,
+"sha256": "c4d312b108d83422bce54267c295af837f89d097c1baa9adc2811776a99caa26",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-24": {
+"api_rows": 277,
+"bytes": 8671,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108293,
+"sha256": "96acc902f2a2aca44f29eda4dfb33a4345d3c7a2c0be0241d7b8748c59db4bc0",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-25": {
+"api_rows": 0,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 50,
+"status": "empty"
+},
+"2026-09-28": {
+"api_rows": 277,
+"bytes": 8664,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108473,
+"sha256": "9bd4cc4cd3324a98b245e6e745c61e206d5fd7162db33972dad972c4b5bbb04d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-29": {
+"api_rows": 277,
+"bytes": 8685,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108527,
+"sha256": "8759d4d0cd45eb1e95ba1151bb7f24d3de0f78e5a8afed132a801d76a8b3e3ce",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-09-30": {
+"api_rows": 277,
+"bytes": 8684,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108424,
+"sha256": "f1ca2dd44db573b550afc40b9f579734166ed10eb05378cdd3b609461edf0cca",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-01": {
+"api_rows": 0,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 50,
+"status": "empty"
+},
+"2026-10-02": {
+"api_rows": 0,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 50,
+"status": "empty"
+},
+"2026-10-05": {
+"api_rows": 0,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 50,
+"status": "empty"
+},
+"2026-10-06": {
+"api_rows": 0,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 50,
+"status": "empty"
+},
+"2026-10-07": {
+"api_rows": 0,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"resp_len": 50,
+"status": "empty"
+},
+"2026-10-08": {
+"api_rows": 277,
+"bytes": 8723,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108720,
+"sha256": "66202275f725d9fb4d1f318074d44d8fcf8ed7bf043ade8b043749f082ba20f7",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-09": {
+"api_rows": 277,
+"bytes": 8749,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108755,
+"sha256": "2e42deef87cdbe6ba76ecd37aadf0dd2a28cbf76e484984293d544a9d7a3aaa2",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-12": {
+"api_rows": 277,
+"bytes": 8754,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108671,
+"sha256": "535e36c18a463c234ab4967f8d3a7704bd147183f6d4963538b3a3604ab2b58a",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-13": {
+"api_rows": 277,
+"bytes": 8719,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108636,
+"sha256": "081251be9a77b2ee6de1f424fef90712542b13b84af0e6dd93c0bcec761f444c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-14": {
+"api_rows": 277,
+"bytes": 8755,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108585,
+"sha256": "2197d9f50327c2255992d425378c5b0525fed06a896e35c1a80d62c62755ea67",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-15": {
+"api_rows": 277,
+"bytes": 8718,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108874,
+"sha256": "bc4778a971efc43a4cc7135a863999c19f04cf80826f3ef6fdca69c8caae1fdd",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-16": {
+"api_rows": 277,
+"bytes": 8691,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108595,
+"sha256": "744c23d7ed45b8577eba4da4fe62be94830c7cd65cb815357f83269532259d40",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-19": {
+"api_rows": 277,
+"bytes": 8769,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108690,
+"sha256": "2dc63422d5e18cd20eea0bfc34c7fbb52609caff6a9cba98ca7011830c4927ad",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-20": {
+"api_rows": 277,
+"bytes": 8756,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108685,
+"sha256": "7c255de75befab046a8db23380a3e9ca8365c0bd5e628298809cfdd81f8d5c3b",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-21": {
+"api_rows": 277,
+"bytes": 8734,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108557,
+"sha256": "84d8ff7587b3d5557d28c88570802740a537788529465ecba708f1b7dd529f94",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-22": {
+"api_rows": 277,
+"bytes": 8732,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108569,
+"sha256": "fd8b3eb241d71bac167874af82929307ff2a0e6b41c7f92b8029f997a4be03bf",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-23": {
+"api_rows": 277,
+"bytes": 8747,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108680,
+"sha256": "12e6989fe348bd569227229997d195563e7bca6e6a8a62161a6990e587adeb8a",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-26": {
+"api_rows": 277,
+"bytes": 8787,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108812,
+"sha256": "2ca8aa046fddf4034c5ff491bff1d8dfcce3efe2f2a1bd860bca674545a42777",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-27": {
+"api_rows": 277,
+"bytes": 8749,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108755,
+"sha256": "1d841a29c5676ab569a5f34374c0735e8391f336af53478f0f70dde91de1a025",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-28": {
+"api_rows": 277,
+"bytes": 8722,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108589,
+"sha256": "9747f8563cb51cfa891e53aa969efeeefebc8a656c6cc062ca32d82d04f19fc9",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-29": {
+"api_rows": 277,
+"bytes": 8705,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108649,
+"sha256": "ebdda953c7994d9263a90ae10739685196a673e00e889ea9ecad8f80d7a9f6eb",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-10-30": {
+"api_rows": 277,
+"bytes": 8738,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108583,
+"sha256": "49aee61a951b0f0abe1bc231d98a115b994e4cae218db450441638f168ad55fa",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-02": {
+"api_rows": 277,
+"bytes": 8756,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108671,
+"sha256": "3ea29437d253b04a3b756079afac569bdef005d25e5476aae52fd6d569785bb1",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-03": {
+"api_rows": 277,
+"bytes": 8734,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108834,
+"sha256": "2137787054a4e574d1723767268f61bd1009714dc90a4134bd601b6ca7bf3b38",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-04": {
+"api_rows": 277,
+"bytes": 8734,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108784,
+"sha256": "3980685cc11e60e16076b437f7570c9094c8276807727401be2a16d49cb43157",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-05": {
+"api_rows": 277,
+"bytes": 8711,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108936,
+"sha256": "38e2a12801bd121cbfd0a8b09661b54f064f359a8622bf89374648accdd8ec4c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-06": {
+"api_rows": 277,
+"bytes": 8692,
+"fetched_utc": "2026-11-26T11:30:40Z",
+"kept_rows": 116,
+"resp_len": 108679,
+"sha256": "fff024df01c24be55e4b65efc09315d43fc46b1caf9654a83a97fcfbb71ca1e1",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-09": {
+"api_rows": 277,
+"bytes": 8633,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108524,
+"sha256": "6e157953ab166a5fcc0b3310142f3629f4b4825c2f2ed4c7cb15f6d6ecc563d1",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-10": {
+"api_rows": 277,
+"bytes": 8651,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108527,
+"sha256": "3f6cdd6e0141bf76295572a0cba4507374397a855770a5572751d85cb4e8ac2d",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-11": {
+"api_rows": 277,
+"bytes": 8672,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108384,
+"sha256": "3ab62b460d871e8b6792b9d60d62a7e047ae89d9889777636f08bacc7ab0eb7a",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-12": {
+"api_rows": 277,
+"bytes": 8616,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108128,
+"sha256": "026a2e16a2445f85e6871458deb3fe53b2b96032a52238750fb40acb6cf83541",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-13": {
+"api_rows": 277,
+"bytes": 8639,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108342,
+"sha256": "b45bacbede79c7404d6a50d6702d72122e310cbce8f5be6674a64f7c2d48a60f",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-16": {
+"api_rows": 277,
+"bytes": 8608,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108252,
+"sha256": "3ebcd47d55be6e48970ecbf3a2df1474f5af42141464277c55d084d46932a42c",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-17": {
+"api_rows": 277,
+"bytes": 8663,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108909,
+"sha256": "aa5c556577e7f2390aa1074834a7dcd13914aba4ee5aef69df6faecfbf91b0be",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-18": {
+"api_rows": 277,
+"bytes": 8638,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108717,
+"sha256": "3d097d74006d2554c47fd44a5a84cbc6a7fd00a66be7712ebe1853fac8a3a389",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-19": {
+"api_rows": 277,
+"bytes": 8682,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108593,
+"sha256": "748be14ea1c513785613afbd028a75cf3a04fb32b70bb8cf5a6c4f9f72cce4e6",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-20": {
+"api_rows": 277,
+"bytes": 8676,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108315,
+"sha256": "e3a3f4307cf731a31b19b96be141512784119379769f428861c54675c4b2ecc0",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-23": {
+"api_rows": 277,
+"bytes": 8640,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108641,
+"sha256": "8aef2ffdca10855dcdd5b62e9f42b77ddd3dfa83bcd8e4329a43d07c0f8e1fab",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-24": {
+"api_rows": 277,
+"bytes": 8678,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108473,
+"sha256": "58b73781e7202b427c0259e102801d2f2a196acf7bf1b91dadc5ca28d8c870b6",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
+},
+"2026-11-25": {
+"api_rows": 277,
+"bytes": 8702,
+"fetched_utc": "2026-11-26T11:31:58Z",
+"kept_rows": 116,
+"resp_len": 108388,
+"sha256": "2e53f1b0801a8428eeda9cd478156afb678f708f6ac9b8a84b107070a0f80587",
+"status": "ok",
+"url": "POST https://www.dce.com.cn/dcereport/publicweb/dailystat/dayQuotes {tradeDate,varietyId:all,tradeType:1}"
 }
 }

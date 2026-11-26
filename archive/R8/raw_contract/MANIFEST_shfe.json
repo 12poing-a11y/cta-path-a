@@ -17013,5 +17013,1589 @@
 "sha256": "922cd6943ceb114f6b3e20e2c278133a3615b619f959f601c4c51be79819b6c3",
 "status": "ok",
 "url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20251231.dat"
+},
+"2026-01-05": {
+"bytes": 122849,
+"fetched_utc": "2026-11-26T11:28:37Z",
+"sha256": "8ac7ab8929a13615c2e95e091e3fc6c5f45db0a62297cd0ae9cce9cc5ed90684",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260105.dat"
+},
+"2026-01-06": {
+"bytes": 123732,
+"fetched_utc": "2026-11-26T11:28:37Z",
+"sha256": "74f43a06b29db1009f89248e63a7c810b7117b15e2d3e0caeaaf1212ecfa782b",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260106.dat"
+},
+"2026-01-07": {
+"bytes": 123987,
+"fetched_utc": "2026-11-26T11:28:37Z",
+"sha256": "8b31d3a6464bcb381e9f4309abb6bef170ab046fcc20e3776a8e82f7c905ee58",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260107.dat"
+},
+"2026-01-08": {
+"bytes": 124438,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "b9e30c9755ff79535cdbb8f5f5f880fa8eb102acafe7c8c53a9ccd952fddee30",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260108.dat"
+},
+"2026-01-09": {
+"bytes": 124232,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "8dbd30f08756a52bad5d1ea32f715b96f5d64168015a916c2ca7d96f19f3ab94",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260109.dat"
+},
+"2026-01-12": {
+"bytes": 124116,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "f590a72384c42f5517486ee200115985d97e830ff45e7237275504bfacb49607",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260112.dat"
+},
+"2026-01-13": {
+"bytes": 123727,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "ac03dd2b9ad3822cf46b77a4cc6dd710665c98b2ac877e38219e58ff6f5dfa41",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260113.dat"
+},
+"2026-01-14": {
+"bytes": 122972,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "f988b6b33e6ff330a7e8f8499da44e4ef75fa6eabc5ed7dd841f3320f9330d93",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260114.dat"
+},
+"2026-01-15": {
+"bytes": 123025,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "108781118bec29f738eba3c9608ccda39593277f1b4ea6e50791fcc59b14e3c5",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260115.dat"
+},
+"2026-01-16": {
+"bytes": 123435,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "d350e033cefe6c31ec87a6d5e6a7483e33c682a4fb61a4243e6722d3bcd010b5",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260116.dat"
+},
+"2026-01-19": {
+"bytes": 123101,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "03170c2537db414f1f5f1244a8525687fb7ebbc97d4c64932463d1623ee4aa0c",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260119.dat"
+},
+"2026-01-20": {
+"bytes": 122730,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "4b9ca8c8ae5d7d034c85c8112653e1c4135808292d072d9477dfa1145d32c415",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260120.dat"
+},
+"2026-01-21": {
+"bytes": 122428,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "96c9368596db46bf56b2fdc0a5f644e687505cf9fcfe1f98eeef4d74b51eb75b",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260121.dat"
+},
+"2026-01-22": {
+"bytes": 122926,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "9a4418cbfb3a3ee430257756ea14cca13ed47dac2a6091b171b4d75f9eba6513",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260122.dat"
+},
+"2026-01-23": {
+"bytes": 122511,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "c9f661a89cf49fe67b287ff575c364f5d130e8961732c7f10a38d2d6e99e9e1b",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260123.dat"
+},
+"2026-01-26": {
+"bytes": 122750,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "7f682b534028ef1f99c72a8feb58f31dc6a1b27329219643fe82b2e65f55228a",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260126.dat"
+},
+"2026-01-27": {
+"bytes": 122886,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "09f251c6d880669560516765a3916deee4c9748e25cba8b9355f77f074221ee2",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260127.dat"
+},
+"2026-01-28": {
+"bytes": 123242,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "8ac03ef2c6560bb2977b1fa93c915feab16e7a026ee43354e24e04f2abbef4c9",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260128.dat"
+},
+"2026-01-29": {
+"bytes": 123039,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "47b21a73383df47db38f179de1915a00b2c746fbe52b27f426db99b29449be15",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260129.dat"
+},
+"2026-01-30": {
+"bytes": 123746,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "953a9e3ed9ea8b2c66fc7fcff4f96bc268c16ad31dc58ce3d2ddaccb9cdf6d48",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260130.dat"
+},
+"2026-02-02": {
+"bytes": 124098,
+"fetched_utc": "2026-11-26T11:28:38Z",
+"sha256": "7f738e33cefe655c634f95b7fb2478b4496efae90db9a3efd974269cbd472c90",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260202.dat"
+},
+"2026-02-03": {
+"bytes": 123304,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "a441de702155cb1c4d02d1772bbfa35a8f2b8ee6b2260b33c0b8421e9215adaf",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260203.dat"
+},
+"2026-02-04": {
+"bytes": 123506,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "7cad0633f77cb22e7a168b8cb38f31d51dbe6586e26f127f1f12f0754afd9566",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260204.dat"
+},
+"2026-02-05": {
+"bytes": 124309,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "b502d8f0a9ac18c0d0e67130addfe256e40e13d4eeb6c00a15680c7f4fd80207",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260205.dat"
+},
+"2026-02-06": {
+"bytes": 123623,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "110b2ef35333b22c482acbd937b6683f77c673a112ce703d7fa7e2e7da139f6d",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260206.dat"
+},
+"2026-02-09": {
+"bytes": 123216,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "bb9fd3de60b86415bcc49b46b3e061737acc483c82141520b05bd26ebd5784c1",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260209.dat"
+},
+"2026-02-10": {
+"bytes": 123394,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "5d3827c1a95a0337ab5b5f211f1f2eba59526115aa20fab111493225a2d3e9cf",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260210.dat"
+},
+"2026-02-11": {
+"bytes": 123186,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "5e61fbe63f47a0663ec7673ba8b25f19605b5da554387902bedb6583e5ba5ae1",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260211.dat"
+},
+"2026-02-12": {
+"bytes": 123031,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "b1f0412f82f8978478fa72d1fe0748714a1616f65e32b790f81fba94aadd5101",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260212.dat"
+},
+"2026-02-13": {
+"bytes": 123646,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "fb502aa64d63324d7056958a08a14b352c2e50bbbb7b01c04bd5c5a3b7cf7d07",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260213.dat"
+},
+"2026-02-24": {
+"bytes": 123438,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "ee5baa881874e4533bb5f32c4ae525e38c115bac1bd8577ed8742d1b8d022fcc",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260224.dat"
+},
+"2026-02-25": {
+"bytes": 123551,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "604ecf402b5d0efae870d0ad8dee5da95e404f9184c1f6bf47d224ae14b01cb7",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260225.dat"
+},
+"2026-02-26": {
+"bytes": 123488,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "01d48a812977c581943cf5123076cb28cff644e748100be851af394946267615",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260226.dat"
+},
+"2026-02-27": {
+"bytes": 123722,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "e56d43a89af57de10659a5f02bb7f31ddf72f52a9cbad4290c31253d00c43894",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260227.dat"
+},
+"2026-03-02": {
+"bytes": 123845,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "45950364f5ac664c1b982c6ff06c412f6c7910b071e4d18469a0adbb5270dee5",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260302.dat"
+},
+"2026-03-03": {
+"bytes": 124562,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "920f673ee3772bc46c7f333ff3dbf1f216ae69d13fb6a787359d0a18381c7ae7",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260303.dat"
+},
+"2026-03-04": {
+"bytes": 124328,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "bcd45d1f991b3b66718ec02f238bb71e824859ec78d80c75b6a62979bc3e0666",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260304.dat"
+},
+"2026-03-05": {
+"bytes": 123684,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "3f087ef1b8be4c4ede5473fff00e7d6ba697b4de561fc0de92dc54f5eb3b8014",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260305.dat"
+},
+"2026-03-06": {
+"bytes": 123674,
+"fetched_utc": "2026-11-26T11:28:39Z",
+"sha256": "4651a856554b84100d8193c4b10ff2ae421ab75b99cfbfd1d12fc973b3e39c8e",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260306.dat"
+},
+"2026-03-09": {
+"bytes": 124396,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "ae5eb39dec5fbc01628f28e1d5e5c65d0a6f4282d6de627f580047739e470cba",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260309.dat"
+},
+"2026-03-10": {
+"bytes": 123959,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "0717bb299174460a8e06b169a20576b3a1d969e331c6b712c130bb61eeb4aeaf",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260310.dat"
+},
+"2026-03-11": {
+"bytes": 123861,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "0a54dcaa94f66943c4b3db990aa52d6a6b9dc07c4c033b3a565b83defce811e9",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260311.dat"
+},
+"2026-03-12": {
+"bytes": 123944,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "ea908beb78ed09ef889a7bf7f2a4bd10ada13acdf0838a89ad79ed3632c912fe",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260312.dat"
+},
+"2026-03-13": {
+"bytes": 123733,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "1c6614ef6fb899a80ddd6053cae14e5fde25e6f24486c5a9ad855ce8ab3d77f4",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260313.dat"
+},
+"2026-03-16": {
+"bytes": 123769,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "4200b23cc51c260c8b63027304aeaa53575828912ad45a511b9fd13086992066",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260316.dat"
+},
+"2026-03-17": {
+"bytes": 123379,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "71abca9b8599b43bff64787f32930b08fa8c6f32bcf9c67ae3e0b7298ce2868a",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260317.dat"
+},
+"2026-03-18": {
+"bytes": 124407,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "4a4898cab866cc80b59cb64e71cb75b4e268cb2ed5558b77971c7f79824c3cce",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260318.dat"
+},
+"2026-03-19": {
+"bytes": 124068,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "0692272cbe15f18d0b9779dd3e2dfa6d179bbfc50cb5426ee38c378f100dbe10",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260319.dat"
+},
+"2026-03-20": {
+"bytes": 123570,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "11c09d1c63bb66f78b1c1d3e8e7b5474683fd9c19f2d66217efeb0e0b44e7419",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260320.dat"
+},
+"2026-03-23": {
+"bytes": 124044,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "f101c58c25fb24b471c0a77b52a84898b3b453fa8f1a131d162589853af071fa",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260323.dat"
+},
+"2026-03-24": {
+"bytes": 123303,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "90aa9a9c589cdfdb6e1ffc9b6369d64b7252791cb12ff53887b23e2e5b7b8b6a",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260324.dat"
+},
+"2026-03-25": {
+"bytes": 123241,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "3d8d30a22abdc487574ece47cfac38d48ae2e387d808b82b8cc985779c4248a7",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260325.dat"
+},
+"2026-03-26": {
+"bytes": 123081,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "1b2e8cd1622e4ebb024c8185267e767ebd4f57df82606adf5e34071eaf5223a5",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260326.dat"
+},
+"2026-03-27": {
+"bytes": 122893,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "224238f4637e5468eb5ded4d245fd734a284fba6acedbd661c537e841e3b46c8",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260327.dat"
+},
+"2026-03-30": {
+"bytes": 122965,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "dfee42a8e128b2a84c85f1cece558a61d5507c7ad0b8efc3aaa8a846cab841e8",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260330.dat"
+},
+"2026-03-31": {
+"bytes": 123526,
+"fetched_utc": "2026-11-26T11:28:40Z",
+"sha256": "fbbff5f9db40a950121ab1ae000ac7f1191c6da29c3f7fea6365d615d1c109ad",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260331.dat"
+},
+"2026-04-01": {
+"bytes": 124053,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "0319e97abe1a85d509c43e2b8f84fda88654861dce15f2fea59d7742c2874d52",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260401.dat"
+},
+"2026-04-02": {
+"bytes": 123895,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "c473b087ed6bb9997238b66b1356e934ccfceea749b81c4786800f482a81702b",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260402.dat"
+},
+"2026-04-03": {
+"bytes": 123876,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "04050bb652ba66893e33b50f5b9ccbcb8915bc66ca3bd247efd3f37f31b4ff08",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260403.dat"
+},
+"2026-04-07": {
+"bytes": 123512,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "562b4164beaf90c7756e8a89080a059cd49b1cf3cdc40c84aaa37356b67f8e44",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260407.dat"
+},
+"2026-04-08": {
+"bytes": 124320,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "69cdd047d2ee5a3f7fdbd9b8952c0bff6e09faad108a727e72ee553878e71607",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260408.dat"
+},
+"2026-04-09": {
+"bytes": 123774,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "ba5e7d00b79460954997c9282eb0d49bcf637a4bbab45efc92e52b84863c66e4",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260409.dat"
+},
+"2026-04-10": {
+"bytes": 123477,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "f054b5f5ec718b974241439913966bf5dd3752808949229727db3023c3614d68",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260410.dat"
+},
+"2026-04-13": {
+"bytes": 123711,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "b80656889e5b2c2d732c3a55055ba92cf484e464b06d6a690ca35969e10342d5",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260413.dat"
+},
+"2026-04-14": {
+"bytes": 123835,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "19550075a675f59fdbac4eacd03ea4977d27438bb06309fb07265bff478bac49",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260414.dat"
+},
+"2026-04-15": {
+"bytes": 123845,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "313285ff10e81f4a1b47e7de9b4ef5c9651a25e47a8f623a633b24f1141fcbdd",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260415.dat"
+},
+"2026-04-16": {
+"bytes": 123282,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "be0042d815fbdc2d49ea6b33975b5e6b356bc1601ea2b4d7d6a79b69f66ca7b0",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260416.dat"
+},
+"2026-04-17": {
+"bytes": 123520,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "25df34106f7505869ac91f2547169e54aec87de2631f79c0d68cf336edee8e8d",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260417.dat"
+},
+"2026-04-20": {
+"bytes": 124280,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "1ea28c39e8a03992d083989177c76e69e51a41f0c75a23bd8de9778c977d61f3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260420.dat"
+},
+"2026-04-21": {
+"bytes": 123881,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "7884b085e1ff7791f5c108581ee5a0b3371e27b8bac152ee8ee4308c5cb4f4c8",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260421.dat"
+},
+"2026-04-22": {
+"bytes": 123330,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "e53af72b6cb2fafd77a60812ab6a00d9f9da73ff385fd769c0ef69d65eaae757",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260422.dat"
+},
+"2026-04-23": {
+"bytes": 123757,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "de6f8a071919807ced7cfcfe478c669829970355e10bd0fcc9422e73bffecce6",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260423.dat"
+},
+"2026-04-24": {
+"bytes": 123491,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "3944cf558de7ccf469b1b27ec72db9bc88b1767e30e086d93344100dc3ad3354",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260424.dat"
+},
+"2026-04-27": {
+"bytes": 123353,
+"fetched_utc": "2026-11-26T11:28:41Z",
+"sha256": "c12fb0abc6c9dbda2f38e83cb75b7cfccf94674f843e7a249f57c54b481a040d",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260427.dat"
+},
+"2026-04-28": {
+"bytes": 123398,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "0073e33dcfaea5b1de84cd5058b04b492db636147ee829ce2ef6813798e58bc5",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260428.dat"
+},
+"2026-04-29": {
+"bytes": 123026,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "7e18dc8b68f9e9d48615bd2e95f79e76d45418141ed13d75ba494a56423cb5a2",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260429.dat"
+},
+"2026-04-30": {
+"bytes": 123133,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "da38f76f6491a3cd56b3338475751f76eac1ab1faf2e6050f92a302aa2565b86",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260430.dat"
+},
+"2026-05-06": {
+"bytes": 123240,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "a0fff10babab5b5c3c9f5552ebe982ebc37066b92d7a1290128a68d033bfa21d",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260506.dat"
+},
+"2026-05-07": {
+"bytes": 123763,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "91dd66ef6cb3b1d841a995e1eb8bb4679ebcebbb48e1f222b32da5c67cb480bf",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260507.dat"
+},
+"2026-05-08": {
+"bytes": 123561,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "6897d1bf2d74b9660cbcb95f54cf8d306c8dde43d680e0d4cedbd63b32ab1ec1",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260508.dat"
+},
+"2026-05-11": {
+"bytes": 123310,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "b5c23e848376cfa99e3d13774a745576f0bdcb23b121a5069e8a7a210cf7a0c6",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260511.dat"
+},
+"2026-05-12": {
+"bytes": 123343,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "4e845ea73aef08e952b9c22f30af6ab6ed23d5269466e1c97fdd0caa591aaf0d",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260512.dat"
+},
+"2026-05-13": {
+"bytes": 123231,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "3a6afe0a20650b79730f4b29b2e4cf6b1eb5bedbcb2ddc39f4292fd7ea9c2e33",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260513.dat"
+},
+"2026-05-14": {
+"bytes": 123308,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "f147d49d724c77d859edd66465b61586cefe6d868f8c85c80f6734f2aff8b5ee",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260514.dat"
+},
+"2026-05-15": {
+"bytes": 123645,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "187afd5c82a454f96fcc681df755363cf936305f8120ae8bb86560238d701b4b",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260515.dat"
+},
+"2026-05-18": {
+"bytes": 123549,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "87801d659588671423b39e16bb94800b089aa9b1e3be92cf5bbb4c6076860efd",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260518.dat"
+},
+"2026-05-19": {
+"bytes": 123164,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "77aa67751bac8edb965c1cbd806cdabf41506f1886dde32e015241851019c110",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260519.dat"
+},
+"2026-05-20": {
+"bytes": 123227,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "1f9d48ad82c9e7c5304e5f148905645ad83b1bddaead69de61023575fb6dde06",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260520.dat"
+},
+"2026-05-21": {
+"bytes": 123106,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "aa3f79fefa482aadd4510f70daadc6385eb0504096bd27920c64877a4084c144",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260521.dat"
+},
+"2026-05-22": {
+"bytes": 122888,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "c7a6f8be26a322c89105466e273aeadebd5a2252bf76fe6ff0b00d813d64c179",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260522.dat"
+},
+"2026-05-25": {
+"bytes": 123051,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "a4d78bcd62aff46a1997c21040172de78e5c32f6b0be656f694278d92cee7bd8",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260525.dat"
+},
+"2026-05-26": {
+"bytes": 123158,
+"fetched_utc": "2026-11-26T11:28:42Z",
+"sha256": "490bbe0393dfdbdf4c07db7dc655c6a33b9dde5947ac78a2dce53ef6a11ce500",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260526.dat"
+},
+"2026-05-27": {
+"bytes": 122981,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "946d7565e784d890a90c3db8904a26cb94b31e5a9f7095cabf56739331c51683",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260527.dat"
+},
+"2026-05-28": {
+"bytes": 123146,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "f7636255ab3dbcdf3e5674b98a241983c0d21a8e9c903911398cd3e9bb67c60e",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260528.dat"
+},
+"2026-05-29": {
+"bytes": 122913,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "00323be04ecf171689364669329e6656010f876501400c21d86d10027134e4a9",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260529.dat"
+},
+"2026-06-01": {
+"bytes": 123191,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "c6c1b9fdd69f2fb3c55358c5cbfb1936e563d8928c8ba5813ff9f26419d46e60",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260601.dat"
+},
+"2026-06-02": {
+"bytes": 123733,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "3a7afb6d79f5b77f526c32347a5c43ca5d9c5ba3f04f132066281e9e9270ad44",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260602.dat"
+},
+"2026-06-03": {
+"bytes": 123218,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "9c8be80b3a7ce7f02945175b60dacfcb5031f2749bd91ec7b427eaea2b475690",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260603.dat"
+},
+"2026-06-04": {
+"bytes": 123923,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "dc76faace9a96f6ff26b2b8e5e016f94b18e02aa7526b71745a5d9c38dd2e8c0",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260604.dat"
+},
+"2026-06-05": {
+"bytes": 123649,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "4e3d967ae1725ef35bf393c85d1e8e8a4123d2bcec9969946860cd6f343b9772",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260605.dat"
+},
+"2026-06-08": {
+"bytes": 123892,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "607028985a8444387ee43e84df9f360c29bb94bb1e802f0f3c9cc04aa411503a",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260608.dat"
+},
+"2026-06-09": {
+"bytes": 123406,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "45d2d7ed12075c1a1a1e0b66407d7fa9916dfa66b287c8b976ba0766c687b778",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260609.dat"
+},
+"2026-06-10": {
+"bytes": 123698,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "9539e4b6caa46de42ab1e6a23467c1ebcf91ff2c0378b527d50ed424d8066dd6",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260610.dat"
+},
+"2026-06-11": {
+"bytes": 123124,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "fa8dde762958668f9f7d8f32577c8094a4c3e27167c2021301b60ef110482929",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260611.dat"
+},
+"2026-06-12": {
+"bytes": 123187,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "0251fc528608a5690443419e208313718a56667d1d40f66175b8f3bc9109a67d",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260612.dat"
+},
+"2026-06-15": {
+"bytes": 123382,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "200243f2bcd6be7a5e54768f90576a85b82f60e20b3db45bc454ae6bc1138d1e",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260615.dat"
+},
+"2026-06-16": {
+"bytes": 123188,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "e3c139827fbd1b65cd7b9cf95d5eae4253f83415082a731e76b73ab3e266ebbd",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260616.dat"
+},
+"2026-06-17": {
+"bytes": 123175,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "13a39e5fafddbcdb36c9b8d02078ad064b2422f46e82971b3a335c906c68285e",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260617.dat"
+},
+"2026-06-18": {
+"bytes": 123083,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "8e97e8d03a56b25162636d0156a60f656103ea2ec5e7e92a61dc55a919a19230",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260618.dat"
+},
+"2026-06-22": {
+"bytes": 122685,
+"fetched_utc": "2026-11-26T11:28:43Z",
+"sha256": "04111963f4a8e995e0746c49853afd79e4ae0cf58c42c09ae27053033562edd2",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260622.dat"
+},
+"2026-06-23": {
+"bytes": 123422,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "cc8141528f652dd3920bda0db9495ff3f49f2df5acaffc58abdc304182b6106d",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260623.dat"
+},
+"2026-06-24": {
+"bytes": 123171,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "dee1551fcd23d218ca613ef9ce16fec06b32dc3ce47885ed0f591139e25ba35c",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260624.dat"
+},
+"2026-06-25": {
+"bytes": 123747,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "ab1fc0ebaa8569ae98736a642a8ade56d607d781cd9ed5c048b94a91927e57f8",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260625.dat"
+},
+"2026-06-26": {
+"bytes": 123121,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "2ddb290a7b9c0534b1379483cbe30cdc922d4f412c166fed4d8eec931e2abe9f",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260626.dat"
+},
+"2026-06-29": {
+"bytes": 122995,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "f346d41536df68a314da35b3226dda5990119fbaffa20756f46307b246616414",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260629.dat"
+},
+"2026-06-30": {
+"bytes": 123041,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "12c098f57492b43bf4c4458740b9b7527ae464951bb4db4bfddeae9725ba666b",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260630.dat"
+},
+"2026-07-01": {
+"bytes": 123274,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "f32b0342eac7ac0d593fba2e840dde94ade22134be5e4134724ddf3903135f1d",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260701.dat"
+},
+"2026-07-02": {
+"bytes": 123706,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "0cd1a393616ce2a54b72583d964187d737116c22f892c24cf47801a3474e33e8",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260702.dat"
+},
+"2026-07-03": {
+"bytes": 123321,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "57d76b933f931c87ef24cb2e9069ad0f3f634421aa5ace55231d3b8e29539561",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260703.dat"
+},
+"2026-07-06": {
+"bytes": 122925,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "203c55db855fb49d8e7659530257030407e2df2568020c3bb57321f5abc124eb",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260706.dat"
+},
+"2026-07-07": {
+"bytes": 123185,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "6ea40179e9fc8dc22ca43074a983dbb7925e6a217ada0b2cf1f4c324a1451638",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260707.dat"
+},
+"2026-07-08": {
+"bytes": 123419,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "f0dd4ee325f1978fb82693f50d85a461124e3150c4c06aa9cb168bd0cdaf5a75",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260708.dat"
+},
+"2026-07-09": {
+"bytes": 123213,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "866891a14836ff4c55899af39bc3b05d9aeb4f546e407f49e9957b3b9685c2cc",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260709.dat"
+},
+"2026-07-10": {
+"bytes": 123000,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "41a3ceb4552d5ee5d749751d71d4b6c694785ef6a8781493c8af4690545dd130",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260710.dat"
+},
+"2026-07-13": {
+"bytes": 123080,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "b6d17659f391f7fd043c5d1c428da913d87a09b3a90006514943428ad318948c",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260713.dat"
+},
+"2026-07-14": {
+"bytes": 123249,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "071df8f22d0496737e8b8151c15efc6ba0a62389f7b74c3178dd2f2ca9c9d365",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260714.dat"
+},
+"2026-07-15": {
+"bytes": 123168,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "b9358892a9ed5e1e4e84c4c8b0305d53f7e462a2fe4f07574da9db898f6e25d2",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260715.dat"
+},
+"2026-07-16": {
+"bytes": 123132,
+"fetched_utc": "2026-11-26T11:28:44Z",
+"sha256": "8a4cf3947a4e6abc26f5c28ee7ec1dbc76f76da499198dca32b26be0aaba6875",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260716.dat"
+},
+"2026-07-17": {
+"bytes": 123811,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "9987338f35d7eb145fb23a1e693162576c81a7d2337b7604cb9094857221c093",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260717.dat"
+},
+"2026-07-20": {
+"bytes": 123903,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "11de68824f7a7f0d718ecab151ba5378cc1454555202e453b5753c744be581ba",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260720.dat"
+},
+"2026-07-21": {
+"bytes": 123454,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "15faa72845c67aaf872971631388abde397679f8d4d14c207bd24efa1d890379",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260721.dat"
+},
+"2026-07-22": {
+"bytes": 122908,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "e1bcdf4cf1a9cbd3f600b0b1c2b5cad5dca07bc75a6b09583e6af6a269297d6b",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260722.dat"
+},
+"2026-07-23": {
+"bytes": 122747,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "eead25d81c66784a789989d302ea7b319ef32710bc53b584cf7d99436f6fa167",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260723.dat"
+},
+"2026-07-24": {
+"bytes": 123169,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "d0ce15adfb2ca6b024a4a2c3cdd6e52d49adddeed3056e841f20b1893b600131",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260724.dat"
+},
+"2026-07-27": {
+"bytes": 123563,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "882a8ca38bd4c663d474236dff2026be1399817aaae3bba9406007e0ae25c9e9",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260727.dat"
+},
+"2026-07-28": {
+"bytes": 123226,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "9f676f2140126ae0f510f2dc46cd7fdfef2acc4e9136f00e31a071de498426f8",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260728.dat"
+},
+"2026-07-29": {
+"bytes": 122970,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "351930520cdb5c593d401c9a32986fcad025e82f47b9467dfd25887761189fa3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260729.dat"
+},
+"2026-07-30": {
+"bytes": 123130,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "72ba1066f5649b557942101fa44cf7458482de981cbd00a6b0ccbb4ebead9e83",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260730.dat"
+},
+"2026-07-31": {
+"bytes": 123446,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "a8bcb8dea99d49ebc05dcec49b3efdf4fefed5688a39068cd9e359cbffb9867c",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260731.dat"
+},
+"2026-08-03": {
+"bytes": 123880,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "8377997f5caa659a4570806bfe634dfacde658f0f66023d3acdbcd821d7583ba",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260803.dat"
+},
+"2026-08-04": {
+"bytes": 123158,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "7c933e47a067a275cbacd163b6f0a374c817ca8bb15e60e7fed1529531d73c30",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260804.dat"
+},
+"2026-08-05": {
+"bytes": 123795,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "67ed1e83f8e5f2a2c3fd00a69cf89bcccb4d7f24006c5a3cc86bb27155df18ef",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260805.dat"
+},
+"2026-08-06": {
+"bytes": 123726,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "cbf9bfb65dbde8d54627ee9fb520a598bf5f6621621276db278555404827d61c",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260806.dat"
+},
+"2026-08-07": {
+"bytes": 123241,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "84f3407c81c60916afc6b99d2b5f6b828beb836bc551951dbe601364f1617348",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260807.dat"
+},
+"2026-08-10": {
+"bytes": 123125,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "3eacbc8fd50346e9759efad39894f4ea742b5d2c739f919d523da46aae921d63",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260810.dat"
+},
+"2026-08-11": {
+"bytes": 123229,
+"fetched_utc": "2026-11-26T11:28:45Z",
+"sha256": "08bf949d235b2aca1f189a2b8e52b4d400aee3a89a562e65668cad39ef0f6612",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260811.dat"
+},
+"2026-08-12": {
+"bytes": 122907,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "910056eea039b87a12a3707da8605ee95f68970f229f37ccf3e2fe70daf20fa3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260812.dat"
+},
+"2026-08-13": {
+"bytes": 123133,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "9d7579f1e3611efa1c4c1530d46bddb25958e1a539286d606efb9e9739e4ef02",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260813.dat"
+},
+"2026-08-14": {
+"bytes": 123300,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "9fbc438bf246a83470e6ce8a73d96edc2bf4011e3534c95b104c241da65357ae",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260814.dat"
+},
+"2026-08-17": {
+"bytes": 123403,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "8ff0e55adeff76ffffb1eb67066f70877081ac452b9c3f94149517a8403bbb72",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260817.dat"
+},
+"2026-08-18": {
+"bytes": 123122,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "15c2fe29f61b439661638430c542705777ee6922ff96939b977efe405aa2debf",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260818.dat"
+},
+"2026-08-19": {
+"bytes": 123290,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "2210a8ae5e446a62144f5515677a8ed76e92b63b64c82e1a1ec856fa463d08b6",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260819.dat"
+},
+"2026-08-20": {
+"bytes": 122841,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "db07e0d6c1eebb7f503bc350b5ecbe4cd0f2b07266418aeb78aabd210f1da3e2",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260820.dat"
+},
+"2026-08-21": {
+"bytes": 122920,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "bedaf2f1f987291aab370bcae27840d24395b50be9807022b1b585f041648495",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260821.dat"
+},
+"2026-08-24": {
+"bytes": 122966,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "a77b82f672e64ad72c855ab32d938cbc77bf9dba5ca9e885e3f296bddd658a20",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260824.dat"
+},
+"2026-08-25": {
+"bytes": 123308,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "d4cd2f9e3b587ff05fc11cebedc472a284dc513bf32aae1f0856c414d2370689",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260825.dat"
+},
+"2026-08-26": {
+"bytes": 123736,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "b052db27636bd3abd43e0f4d25908933bc041edf886296b122872bb8cfea7b86",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260826.dat"
+},
+"2026-08-27": {
+"bytes": 123139,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "8037f2658b20df41aa118aab25e814400b43225fa1ab67a6b752cc57654d3926",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260827.dat"
+},
+"2026-08-28": {
+"bytes": 123009,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "09820b4ff6132309da7ac0690519e5108cf4b429bbbd27ee10989524135f3ae3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260828.dat"
+},
+"2026-08-31": {
+"bytes": 123352,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "81686cd4f0a5724726e31795acafeb720297a244126736af0e995a81f2a32a89",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260831.dat"
+},
+"2026-09-01": {
+"bytes": 123021,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "34734c6bddb4ff32d2dacff069c958fce0def39565bd2c9c0c441e94b0d680b1",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260901.dat"
+},
+"2026-09-02": {
+"bytes": 123628,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "bfd9a7e3beab27e03a5db92a479c6d172f242489bb09a8d3a42e3df875e84e88",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260902.dat"
+},
+"2026-09-03": {
+"bytes": 123455,
+"fetched_utc": "2026-11-26T11:28:46Z",
+"sha256": "92c4edfc8cd8420fcd3da96cef0583fa676246454c828eb563849730b753da7d",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260903.dat"
+},
+"2026-09-04": {
+"bytes": 122679,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "c38ccb6ddd408ba0abc77f7bdee60dabe6a68fd597d452eb8e0e39ca3e508ca3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260904.dat"
+},
+"2026-09-07": {
+"bytes": 122809,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "12a4bd09042e99135322a7adcf1d3704b7ac87e9cb45289afa61977efa740856",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260907.dat"
+},
+"2026-09-08": {
+"bytes": 122847,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "875dccc9c369aeaf7a367ac23cbf38824d3d6f0ab3f84e7692e469a24337f155",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260908.dat"
+},
+"2026-09-09": {
+"bytes": 122738,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "8e1f2067dee545611d36d2867ae6512927515f54ab88dd2805ea62b125759b12",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260909.dat"
+},
+"2026-09-10": {
+"bytes": 123327,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "91be3872550ce4511c0690a2c89407072258b51de83606c6f46b5de53ae86cab",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260910.dat"
+},
+"2026-09-11": {
+"bytes": 124004,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "6a143efbbd3ae23c9de268305d65c951da0fac113f55d3deb8c4d577b2e5172a",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260911.dat"
+},
+"2026-09-14": {
+"bytes": 123526,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "526d8c519613526febeed4620575564aa5b8c8e95c25a32c57971b05923107e6",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260914.dat"
+},
+"2026-09-15": {
+"bytes": 123177,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "80c1eb825c211615036cec4775b44d0e1180538e7ff43fd2fca41a453ec85c97",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260915.dat"
+},
+"2026-09-16": {
+"bytes": 122631,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "f46e53aa0eaf26ba26f6f0cb9074d84f65c67786957767a4ac6b7631d8737fec",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260916.dat"
+},
+"2026-09-17": {
+"bytes": 122784,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "84e325e4a27b471e6ce53cb86d3e705704cdf529cff284f7706342a347a08536",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260917.dat"
+},
+"2026-09-18": {
+"bytes": 122814,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "224819fc35027afc7019db9652d42bd37cf2f768e97f59df1f1eb68f3d82b123",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260918.dat"
+},
+"2026-09-21": {
+"bytes": 122523,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "73a3226a61c97703364a7ac225b83cf65596a795f1daa9d362741fb401954802",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260921.dat"
+},
+"2026-09-22": {
+"bytes": 122395,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "9a097cc124e0d5a6154c48e174c2cfcb8b14cfec1326bea9cb546ce6a9ae8274",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260922.dat"
+},
+"2026-09-23": {
+"bytes": 122604,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "ebf9d76c20228451cce24eed77195e8ba1faeab481bb705ebe14c0c7e99b833e",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260923.dat"
+},
+"2026-09-24": {
+"bytes": 123100,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "6c3dc7380fd763e1a5bc281697fe94c1f0e46ad330ef9cd77d75bcd2b345fd20",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260924.dat"
+},
+"2026-09-28": {
+"bytes": 123197,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "1a3bd8be49a0b61830a90ddae53e7dc1793233f1e869961cadf5a1b35062a99e",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260928.dat"
+},
+"2026-09-29": {
+"bytes": 122828,
+"fetched_utc": "2026-11-26T11:28:47Z",
+"sha256": "3d0d56b6fdf30eef1916da041c05dc7182ec8b14744d1993d11a68e3c89b1fc3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260929.dat"
+},
+"2026-09-30": {
+"bytes": 122959,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "93119c5a95307b09ef655c7693154217e94271ad6284eab3987d517cee1fca33",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20260930.dat"
+},
+"2026-10-08": {
+"bytes": 123353,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "7931b993edd9d44ced772837db578f82cb8ca3b25c3291241698819dd1fc5f04",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261008.dat"
+},
+"2026-10-09": {
+"bytes": 123262,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "8ec1cd03a5338b6f18fef649c58872d21e9e25c6af05a9ba7c7a223ae5b8e931",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261009.dat"
+},
+"2026-10-12": {
+"bytes": 122880,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "b83dac05261d0cdc4a8f0f6f2e0ea988105baf511c8e3891b7264c213a60ff5e",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261012.dat"
+},
+"2026-10-13": {
+"bytes": 123284,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "64b7854a2c153ae94fda5ed18993ed2332f196ab7f87e2603da0e18c22337af2",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261013.dat"
+},
+"2026-10-14": {
+"bytes": 123313,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "3128be959b3da58ebd8276a284658029f52c6a43d864062cecd976b3e78b33e3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261014.dat"
+},
+"2026-10-15": {
+"bytes": 123484,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "31b4f723682821c2ed493ca02dc9aa7689dfc8e40fd2a449aca1f5a7f9f6e094",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261015.dat"
+},
+"2026-10-16": {
+"bytes": 123320,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "8f326624d3a04b439d78f3faffdb74201a5f4e842a46f09769591d894a2015ec",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261016.dat"
+},
+"2026-10-17": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261017.dat"
+},
+"2026-10-18": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261018.dat"
+},
+"2026-10-19": {
+"bytes": 122752,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "6849f85d4b7bc1e1ff8d9a4d492c1e98c32f72dbc84ddf5db3ff76c3284b5ed3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261019.dat"
+},
+"2026-10-20": {
+"bytes": 122690,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "54d97093506354c845bdf245d47512f680608d44931bc0bb720683b1032da98e",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261020.dat"
+},
+"2026-10-21": {
+"bytes": 122540,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "1928b23fd611dde20d444e2a8393434a36abe91d234cbf4c2083b40340615822",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261021.dat"
+},
+"2026-10-22": {
+"bytes": 123066,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "be3cf5396526d74852b0394b7629478665e3735a3c5b6c0b7d3bb7466ddb28e7",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261022.dat"
+},
+"2026-10-23": {
+"bytes": 122744,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "94f7c4848554d27ae1e45409705d70ba93e49e71f9f418d75015b5651f187e49",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261023.dat"
+},
+"2026-10-24": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261024.dat"
+},
+"2026-10-25": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261025.dat"
+},
+"2026-10-26": {
+"bytes": 122749,
+"fetched_utc": "2026-11-26T11:28:48Z",
+"sha256": "d571fc321467f073a5e8fabbee1c0bc1dcab8b55086b217964d93751ebdca173",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261026.dat"
+},
+"2026-10-27": {
+"bytes": 122752,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "634fbf9705f452d77dc5907d84f5d1950d46dae1a71d733d4ce365a942386a73",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261027.dat"
+},
+"2026-10-28": {
+"bytes": 122991,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "44f2e36046abb5c2d0ecb5d889eccc3212a36f20b895e57c9665cf75d011b203",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261028.dat"
+},
+"2026-10-29": {
+"bytes": 123009,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "1f900f3bd90bef28d0f1a743737f5e325a2606f1a607809e6170ed040c030a6a",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261029.dat"
+},
+"2026-10-30": {
+"bytes": 123007,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "21fd5c6d6a2a14c842576657cd2e4a347551628c00bf8edae7c00985683d1b75",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261030.dat"
+},
+"2026-10-31": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261031.dat"
+},
+"2026-11-01": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261101.dat"
+},
+"2026-11-02": {
+"bytes": 123399,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "d992d13ae01a4c483553940d05ca6e65238db721d348f0754c4fbdb78925650e",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261102.dat"
+},
+"2026-11-03": {
+"bytes": 123489,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "913ee268b928f0dbda76ad6ceec6f6c1a48cb4c294ae586ee876463f9d1dd6bf",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261103.dat"
+},
+"2026-11-04": {
+"bytes": 123255,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "9c2826c4b02798738d81b30372108fba451ae82a387bf0729f416fac14bd59b3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261104.dat"
+},
+"2026-11-05": {
+"bytes": 123238,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "0b9295eea158447066e3927dafef95708a1ba060063cdf2cfb16dee61ad982fb",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261105.dat"
+},
+"2026-11-06": {
+"bytes": 123145,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "1f851717d46e009dedb41147567dda52f26fb1749cf26c78061bd5f2c54eace5",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261106.dat"
+},
+"2026-11-07": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261107.dat"
+},
+"2026-11-08": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261108.dat"
+},
+"2026-11-09": {
+"bytes": 123047,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "f31d655c0a68e8e4b7136ade7623401fb3da9e1484b1b598b98ad7354775d5b4",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261109.dat"
+},
+"2026-11-10": {
+"bytes": 123214,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "a774ee7bd70a02f910d8e84d910eca19cca412a0c354f7ab6e48bc214e477429",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261110.dat"
+},
+"2026-11-11": {
+"bytes": 123069,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "d1f39945538c6d9fd5bbc2a7d6dfd4a9d5dc8f43d654405c25e2bf4ea0f5abe1",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261111.dat"
+},
+"2026-11-12": {
+"bytes": 123442,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "4143dfdebd11489d243d91f74f96f9c62e53eaa95469307135f9aac11ff2df63",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261112.dat"
+},
+"2026-11-13": {
+"bytes": 122894,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"sha256": "7c7e7ed7620f77c04919a7fa7549a5a6f614bae5fe9fa316ad07a1accdbfa0c7",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261113.dat"
+},
+"2026-11-14": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261114.dat"
+},
+"2026-11-15": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:49Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261115.dat"
+},
+"2026-11-16": {
+"bytes": 123175,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"sha256": "487ff85b898034f4a7218e40103442bead79985f6167aefc81317e29b4cb0b12",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261116.dat"
+},
+"2026-11-17": {
+"bytes": 123273,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"sha256": "28c51467cd1f678ac8e167e7be3249e5acfdd540986f26948d9060efbc8d717a",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261117.dat"
+},
+"2026-11-18": {
+"bytes": 123258,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"sha256": "615c4b1f72746fd690a24e4eb306d70d868dcc2addee92be690e4bab8b4210ee",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261118.dat"
+},
+"2026-11-19": {
+"bytes": 122973,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"sha256": "e376a2d960e40d1a5734ff71b27d0d74f641d5ab46e670ee2fd0331f7ee858a3",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261119.dat"
+},
+"2026-11-20": {
+"bytes": 122819,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"sha256": "f54c6a3aaca464809d45da4ede81f7471408938a6a698707921925d330ad30d8",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261120.dat"
+},
+"2026-11-21": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261121.dat"
+},
+"2026-11-22": {
+"bytes": 4832,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"status": "404",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261122.dat"
+},
+"2026-11-23": {
+"bytes": 122973,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"sha256": "04a2b2bcf7db82d3ee1d9a53ec9e915b2536ce60a0451782bc8aa9010e0c6cbe",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261123.dat"
+},
+"2026-11-24": {
+"bytes": 122896,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"sha256": "5ea1f5fd1c82d5546dde6cae8183e49a68b891f2c3dc22ada7122bb1ed640942",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261124.dat"
+},
+"2026-11-25": {
+"bytes": 123059,
+"fetched_utc": "2026-11-26T11:28:50Z",
+"sha256": "92c73d161440fd08d5971354ccae8c77995d4b877f44d1e0ef03e9d989c86c71",
+"status": "ok",
+"url": "https://www.shfe.com.cn/data/tradedata/future/dailydata/kx20261125.dat"
 }
 }

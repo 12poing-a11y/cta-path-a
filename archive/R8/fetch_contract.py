@@ -28,6 +28,9 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "archive" / "R8" / "raw_contract"
 H = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36"}
 W0, W1 = "2016-01-04", "2025-12-31"
+if "--range" in sys.argv:  # optional: --range 2026-01-05 2026-11-25 (extra window, same manifests)
+    _i = sys.argv.index("--range")
+    W0, W1 = sys.argv[_i + 1], sys.argv[_i + 2]
 
 
 def master_calendar() -> list[str]:

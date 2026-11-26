@@ -17013,5 +17013,1589 @@
 "sha256": "e32d46429a93e2ae37589ec13565dc088c0c9632dde7544a0593574fd52fe856",
 "status": "ok",
 "url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2025/20251231/FutureDataDaily.txt"
+},
+"2026-01-05": {
+"bytes": 38535,
+"fetched_utc": "2026-11-26T11:28:51Z",
+"sha256": "38a1375d615b36b72b7700ed903f39e857aca19f79e3a0136c69e5fd0a1be34f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260105/FutureDataDaily.txt"
+},
+"2026-01-06": {
+"bytes": 38535,
+"fetched_utc": "2026-11-26T11:28:51Z",
+"sha256": "fc5c58f063c1431580498f4b964e450e2bad861c2fa1e53657aefd2c55d5c6ef",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260106/FutureDataDaily.txt"
+},
+"2026-01-07": {
+"bytes": 38535,
+"fetched_utc": "2026-11-26T11:28:51Z",
+"sha256": "7e5c4e60a3c1375ef58ee93761dc11dfaae15c3ee1598e2342522712bdfbf7ee",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260107/FutureDataDaily.txt"
+},
+"2026-01-08": {
+"bytes": 38535,
+"fetched_utc": "2026-11-26T11:28:51Z",
+"sha256": "d7bfdc68b4cf2b65652bf3f61ec1289109679ad1662b14562a54ff07816c53dd",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260108/FutureDataDaily.txt"
+},
+"2026-01-09": {
+"bytes": 38535,
+"fetched_utc": "2026-11-26T11:28:51Z",
+"sha256": "57b508ff7c9e6058eec1a478e69479b08ff61e3db04adb3a4a529ead2bc53f21",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260109/FutureDataDaily.txt"
+},
+"2026-01-12": {
+"bytes": 38521,
+"fetched_utc": "2026-11-26T11:28:51Z",
+"sha256": "8adadf158e530a208c053031712d37963079c1bdfe60fc70a67b4c582c9083c2",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260112/FutureDataDaily.txt"
+},
+"2026-01-13": {
+"bytes": 38521,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "922816072ef795ae6f216b40a0fac3e16e095e3c01ec2628f28b532854e6ca7e",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260113/FutureDataDaily.txt"
+},
+"2026-01-14": {
+"bytes": 38521,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "c02e0c1747a6a0ceced31e40c70b5c78b6feb66fd19c760f25c7949c93711d1d",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260114/FutureDataDaily.txt"
+},
+"2026-01-15": {
+"bytes": 38521,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "dc46a07e977b4008338c2b86ddeac43d422739148f577582237a21199abfae80",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260115/FutureDataDaily.txt"
+},
+"2026-01-16": {
+"bytes": 38521,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "e384cd22b5f72ac53b9770f6b28bcdc9448cb081947f6b0888a7a538b890a155",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260116/FutureDataDaily.txt"
+},
+"2026-01-19": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "69b07835d37196f988d0c926873e5639bdcf4454d97b6929f38af2b58b8ff51b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260119/FutureDataDaily.txt"
+},
+"2026-01-20": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "32592d00d80630e8db4b5c54bccb74dd522ad06981f509c113dfad97f6aa0ea6",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260120/FutureDataDaily.txt"
+},
+"2026-01-21": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "a58e1244afbf5ddb69931d849b2471e8b3921be5f903057977a31b086884e2d8",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260121/FutureDataDaily.txt"
+},
+"2026-01-22": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "b6dab2128d62b625ae49a8354bce46146ccedfeb265d677b12529dec861d0f75",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260122/FutureDataDaily.txt"
+},
+"2026-01-23": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "6778f024e745c599fa9c20d6103414948220f260bde7abc949ec62297fa93933",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260123/FutureDataDaily.txt"
+},
+"2026-01-26": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "8e65c0d0f2bf98d80d30d9fa20cf904a40782c1a0a83c075d562acd0226222ab",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260126/FutureDataDaily.txt"
+},
+"2026-01-27": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "76ae4f8e80411db12c32762b9160cb762f7149a0ed9858ef2073ac93c06c93ab",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260127/FutureDataDaily.txt"
+},
+"2026-01-28": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:52Z",
+"sha256": "f75d324334d908627df31df6bf3a3cef68f77c28f6d6f0474efd163ed928238a",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260128/FutureDataDaily.txt"
+},
+"2026-01-29": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "ae0a735bc62afd322c4682a23428906b93ca9a643bb9ba87ca6922aee0b81c02",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260129/FutureDataDaily.txt"
+},
+"2026-01-30": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "ce167c5cc4b2f8330b3416fcdb7c45b785ec822a2b970e41fada8569ea065090",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260130/FutureDataDaily.txt"
+},
+"2026-02-02": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "2786df400d2bcf846228f353afa715c54d354ae09dedce79cc31322056cfc0bd",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260202/FutureDataDaily.txt"
+},
+"2026-02-03": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "ef7b4e8d9c7884899b167e1036eb32b649d7ccab6461b0de3b8e694e9c862e39",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260203/FutureDataDaily.txt"
+},
+"2026-02-04": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "e6425590b65cb85eb5a40b071879d2635f48ea85fff7311a58a8913994d8557e",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260204/FutureDataDaily.txt"
+},
+"2026-02-05": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "546f0b8536030f557408ffa440b59013db9fad1e2586b04e1d84dc1fc14d4bf2",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260205/FutureDataDaily.txt"
+},
+"2026-02-06": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "7d919daa342683dfde5b87fb99bb729f362391d0a422b4194231d3eccd1ece89",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260206/FutureDataDaily.txt"
+},
+"2026-02-09": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "1fa2d04cf0c1285470e984646caab342050b3b6247b8b9ab80163f672216af80",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260209/FutureDataDaily.txt"
+},
+"2026-02-10": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "ddb8c11d6b60b86d6bf5e22c9ac8a23fa58f74d28e02ed3de6a48b4c665e56ed",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260210/FutureDataDaily.txt"
+},
+"2026-02-11": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "986b8c18759d5a8a596a8bb383a72871ac5a46ba6e2c2fc92d335423f0fefc66",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260211/FutureDataDaily.txt"
+},
+"2026-02-12": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "8926683c94da34763b1d8e305e9e94b992e07d9df0b8b9468d110d9798310f8e",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260212/FutureDataDaily.txt"
+},
+"2026-02-13": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:28:53Z",
+"sha256": "4a20106bfdb325910d88dcc842c0df30183617d62db48b591b77e111d6867c17",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260213/FutureDataDaily.txt"
+},
+"2026-02-24": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "4dc040e27060a5e409885df3e66bcf8fbe74dd64e545b2fd8d9cb38adb3e2580",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260224/FutureDataDaily.txt"
+},
+"2026-02-25": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "a303486139e0d12736febce43526f607513dbf08e67f73bf7ca55333e6a2bbbc",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260225/FutureDataDaily.txt"
+},
+"2026-02-26": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "c013d78241fb3ae455573ddcef030608a6ec8944b56e6bbfe9a7dc6ed61f819f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260226/FutureDataDaily.txt"
+},
+"2026-02-27": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "bde8a3b13512b6f515fd594ca17f55b3242d35b4ce0fbbf69c03022ba9141435",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260227/FutureDataDaily.txt"
+},
+"2026-03-02": {
+"bytes": 38237,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "b43a9ab97a7bae3d3271cc5c9f63ff59b7e8b9a6a05edcaca281640a20f2ef0c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260302/FutureDataDaily.txt"
+},
+"2026-03-03": {
+"bytes": 38239,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "f8f9ef9f8379098cebf59308397d13b1e922c9d7021367815bef525de97af28a",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260303/FutureDataDaily.txt"
+},
+"2026-03-04": {
+"bytes": 38239,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "8366dcb4e8a82a135422ef14debb8475169452b2dd9a5529f3cfc3402c93068c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260304/FutureDataDaily.txt"
+},
+"2026-03-05": {
+"bytes": 38239,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "89e98dd391588ab95cb92622c9e6b2392df1f391f6bed69b1d98b98fea28c017",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260305/FutureDataDaily.txt"
+},
+"2026-03-06": {
+"bytes": 38237,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "f6c328d22f69278af2cc03933a59ba2275503079046b52fa8bb88dca2a4ace26",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260306/FutureDataDaily.txt"
+},
+"2026-03-09": {
+"bytes": 38224,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "a19087818463a14af1e6dc9b0897ac88ae0bf4bbc20ee45680087011174c975c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260309/FutureDataDaily.txt"
+},
+"2026-03-10": {
+"bytes": 38225,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "243d0f2b1cbdced9713e749d2156cf5f83fe3e29179b1a1be8cebbb840689710",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260310/FutureDataDaily.txt"
+},
+"2026-03-11": {
+"bytes": 38224,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "9ace116bad40dd083ff573e7d192a47f9addb5e0bf28cb3f4326468816f640d2",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260311/FutureDataDaily.txt"
+},
+"2026-03-12": {
+"bytes": 38225,
+"fetched_utc": "2026-11-26T11:28:54Z",
+"sha256": "b0aeec7d934fd180f01fc385db57520e7bbd90e29fd2c8a7917e3543614bb520",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260312/FutureDataDaily.txt"
+},
+"2026-03-13": {
+"bytes": 38225,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "d703444f34e4bd949590873488c86848351e28447c53ebf2cec56fc998b1533b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260313/FutureDataDaily.txt"
+},
+"2026-03-16": {
+"bytes": 37888,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "60223fe8a11524e26ba09e1235bdb0903613a670e45482b0408af55d84ee7360",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260316/FutureDataDaily.txt"
+},
+"2026-03-17": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "f2f22e48c7016ea5254b650f45666dd400c978308fd1ef4fa2c1a8657f0b23d7",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260317/FutureDataDaily.txt"
+},
+"2026-03-18": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "ce2015d191179b422d098f7ec844b60fa31a1f14c2ac03284129be7b0924eddd",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260318/FutureDataDaily.txt"
+},
+"2026-03-19": {
+"bytes": 37888,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "47240d61aaf6f00bb9d05a42c42f8a31a8563e65f33d7e231255b22d9b3a6464",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260319/FutureDataDaily.txt"
+},
+"2026-03-20": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "1da9b93cd59c8496a11cecfb9487856bb7903a9d44e743a9e35ddc13603e5e1b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260320/FutureDataDaily.txt"
+},
+"2026-03-23": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "54abbee99b40b385d025e8eb15fe83f3fd7a4df82f2e564d326b1a850f564d20",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260323/FutureDataDaily.txt"
+},
+"2026-03-24": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "7629813fe1a93411495fdef0688f91a3d72192d6e0ddeaa08c5790840f36aad3",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260324/FutureDataDaily.txt"
+},
+"2026-03-25": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "d62899c0a27db617cef136c1fedad6793a19ea4f02c74758ebaf917d02b69a56",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260325/FutureDataDaily.txt"
+},
+"2026-03-26": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "1a95c63b837f5af0c56509b6f85714bdc89dc6d03595d9f2d375fc8aa12f578f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260326/FutureDataDaily.txt"
+},
+"2026-03-27": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:55Z",
+"sha256": "95787a9e3a68098d9a044dc4c26f6ad010258e25102375a34b8e8bbaa33afed0",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260327/FutureDataDaily.txt"
+},
+"2026-03-30": {
+"bytes": 37888,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "28867334738143853585e66b90d12a13f74952b1c06bb542eb39e05f01197950",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260330/FutureDataDaily.txt"
+},
+"2026-03-31": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "a887d5b9ebc12d4755ce9ac73546ae9649a9ab2f2c10487600fab91c8ace148b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260331/FutureDataDaily.txt"
+},
+"2026-04-01": {
+"bytes": 38112,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "56f570114839ca633565522f7de8b5fa08ab9fa7dc1c03ef410d6a98254653c5",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260401/FutureDataDaily.txt"
+},
+"2026-04-02": {
+"bytes": 38111,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "57d087c85bf59274632fcfd6102a0e2073b1c7b67b2d9240dce1c02d30fa98cc",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260402/FutureDataDaily.txt"
+},
+"2026-04-03": {
+"bytes": 38112,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "ac4d5d853b189e02af13065c664944c5461d364b36132e736466391927c9071c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260403/FutureDataDaily.txt"
+},
+"2026-04-07": {
+"bytes": 38111,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "3f243ebf445d68f2c3fcdc3e415c027b98efeeaa5f8a516401abd0d39fa3c8e0",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260407/FutureDataDaily.txt"
+},
+"2026-04-08": {
+"bytes": 38112,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "00e6d5d621f7a83f936fc292ebabd430b26ac14b40e93c27552690fe2a3f7f3e",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260408/FutureDataDaily.txt"
+},
+"2026-04-09": {
+"bytes": 38097,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "c86faf054470d2b057b37c5740ffd2feef3fc87fc2c02f74bc1153add71ea658",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260409/FutureDataDaily.txt"
+},
+"2026-04-10": {
+"bytes": 38098,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "620b3009a435483f2ea3ee0e9772e2a01fe28b240b8bf319fcf7d5d28cfce597",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260410/FutureDataDaily.txt"
+},
+"2026-04-13": {
+"bytes": 38097,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "5a44d7a371b091a2b3eec0f0559adc861f36d660dd4c7d2f0d553a144b2cc6a1",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260413/FutureDataDaily.txt"
+},
+"2026-04-14": {
+"bytes": 38097,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "457855ac9daafb61a71072717a6345461f33394d2c95fff6daf4f583c20fd353",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260414/FutureDataDaily.txt"
+},
+"2026-04-15": {
+"bytes": 38097,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "479a5d7ee3cb744181c87c0497ae5c778c32ed02cf4cc7b94797a6dc416d8d17",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260415/FutureDataDaily.txt"
+},
+"2026-04-16": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:56Z",
+"sha256": "01bcb439be8a63076b397ec503db825fd0205dea62461ede8746d8a0d0cba852",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260416/FutureDataDaily.txt"
+},
+"2026-04-17": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "646c812393fe5b3c233c6bc352d0685fece88ce66eef3eae333cf53eda6ba4cd",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260417/FutureDataDaily.txt"
+},
+"2026-04-20": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "3d896c5510dfbef48a73ab55abdedca1741ed4bd7cf7e2984fe7abc04a5bd9cb",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260420/FutureDataDaily.txt"
+},
+"2026-04-21": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "b9976988c2896475d94a06851c0fbb2925f63bb5acdd1f40395d88235b507898",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260421/FutureDataDaily.txt"
+},
+"2026-04-22": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "80bd0ea70e22dfcb58f83b66df9639786e246f3a7905e95c3a4c3fd21b2506f9",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260422/FutureDataDaily.txt"
+},
+"2026-04-23": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "00ff1045997221a6e1caae7f1baf4610aea7a95b91f609c7e5605d5e437f3698",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260423/FutureDataDaily.txt"
+},
+"2026-04-24": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "2491ce2f57355d540138f7b3a9e25ca0199f03e97ab4837826f594945b9e37ca",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260424/FutureDataDaily.txt"
+},
+"2026-04-27": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "c73abf8b420991ab354e978f39c92d90dc3ce4ef08dc5b7cdfc8cc0b2cdd5238",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260427/FutureDataDaily.txt"
+},
+"2026-04-28": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "75b116a258455d63df69c853fe29bbfe9bc08ca08b747aaa762268d671978f1f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260428/FutureDataDaily.txt"
+},
+"2026-04-29": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "c629be36d9455cd28623feffb1417da2e555f8637e470c3678bca24fb2878424",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260429/FutureDataDaily.txt"
+},
+"2026-04-30": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "4b9ecd3ca480ea901ba7bd50c5b9d8362a4a17afb64dc33ef140f898feedbaeb",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260430/FutureDataDaily.txt"
+},
+"2026-05-06": {
+"bytes": 38237,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "151cc4f40ba7201bfba4dd689541b1ad141bccb0bdacdea7ceedacbb82cf7d6f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260506/FutureDataDaily.txt"
+},
+"2026-05-07": {
+"bytes": 38237,
+"fetched_utc": "2026-11-26T11:28:57Z",
+"sha256": "96237d1182b1c1b8339ed22f9f0df96f7a7e7ee128f7af3b4f9b15f9b699b239",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260507/FutureDataDaily.txt"
+},
+"2026-05-08": {
+"bytes": 38237,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "36dbf560f2b6c2ab6e260912591f53cfea1e92eca89785aa20a1eafd6a66c099",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260508/FutureDataDaily.txt"
+},
+"2026-05-11": {
+"bytes": 38237,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "1df2581b1134e78f0b17e2cd950ed9a9197ef487af5c79290acef83bcb26457a",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260511/FutureDataDaily.txt"
+},
+"2026-05-12": {
+"bytes": 38237,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "1a9984a11d4b45472390b5b81c2b18fffb5a328e9f88dc1cde608a6920ef50eb",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260512/FutureDataDaily.txt"
+},
+"2026-05-13": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "51969c579df36d8d9e4af041570df747317d3443401492c20f8ba82a1a7d9b6c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260513/FutureDataDaily.txt"
+},
+"2026-05-14": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "98f00de208426259eb1a29297eb57aa0108b050b801668c40e19f86bdbdab171",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260514/FutureDataDaily.txt"
+},
+"2026-05-15": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "b4eb9d6327f322e9eb406c054fc7774339ff9db312d1e75ed65d5f13c24742a7",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260515/FutureDataDaily.txt"
+},
+"2026-05-18": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "40e442149ae56882f8fc8cc2160366899651a66589e3cc0f783789e8dad0ea0e",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260518/FutureDataDaily.txt"
+},
+"2026-05-19": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "8b0807952b423b20977fd8e6a0e0d2b133c3d5332696286db325f52e69498951",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260519/FutureDataDaily.txt"
+},
+"2026-05-20": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "5f65e5cea1c192d7d47bc28748305b1c763e1e97a53f3f6e59a5bd71a698a7df",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260520/FutureDataDaily.txt"
+},
+"2026-05-21": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "d6d0302ae8074b298bbe1c388c1955a9132fc1c69d5e453ba5b38ebce9b66de0",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260521/FutureDataDaily.txt"
+},
+"2026-05-22": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "40ed73f963210ac4e070188ab91b1d1eedffdf9adc694403764d2f962369b8a4",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260522/FutureDataDaily.txt"
+},
+"2026-05-25": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:58Z",
+"sha256": "339b6a1ff85d76abff287049f7335058ace8dd26ca235e7d0b25065e62a5f585",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260525/FutureDataDaily.txt"
+},
+"2026-05-26": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "5ae60cd776e6b416c805245791b3e5e215e0ecd21aa410ff9f107cd99771c4d1",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260526/FutureDataDaily.txt"
+},
+"2026-05-27": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "6f340e74c8d68ead24031eab5b92602a8eef08089729002743242a291523650f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260527/FutureDataDaily.txt"
+},
+"2026-05-28": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "5a7d46cff46948ae91e16c7048f21c3f61fee8beec5a0969d0fdfbc21d3e42ad",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260528/FutureDataDaily.txt"
+},
+"2026-05-29": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "703f170ba90442b49ea66991c07d18df52feba9cbf6b119695e71f5c7bf0533f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260529/FutureDataDaily.txt"
+},
+"2026-06-01": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "7137b3593bc0189b44d626a9a282be71d60e7b701005f7eaa08a50fd6672e920",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260601/FutureDataDaily.txt"
+},
+"2026-06-02": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "01e308144581d249b7df1da98dfed063914222717edede5f5eb6edd421e55695",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260602/FutureDataDaily.txt"
+},
+"2026-06-03": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "fee6c3ee5411d1761b5f20352c71504f626c7f98b55aae827d81d4ad5461cb16",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260603/FutureDataDaily.txt"
+},
+"2026-06-04": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "81de0695558953b48ae1c43477ddca5586232770b884af6ba8b73706d3527321",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260604/FutureDataDaily.txt"
+},
+"2026-06-05": {
+"bytes": 38083,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "ec847d68405c249d8b7b8d015223d2c846fb113b1374623da0afd2596a9754a1",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260605/FutureDataDaily.txt"
+},
+"2026-06-08": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "1fc9f398fb2cad0aa62e1ff7fb115f50eacd5411454e9a3522d068bd8ad42190",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260608/FutureDataDaily.txt"
+},
+"2026-06-09": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:28:59Z",
+"sha256": "948e8c4f95b4ab981695b93f1fb1b25231486ce013297e5d9a06eaa2d5daeb4c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260609/FutureDataDaily.txt"
+},
+"2026-06-10": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "751e557ae5822d38d5634f7e750a1f3e032d6b9248380546e2d0e90e3f758054",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260610/FutureDataDaily.txt"
+},
+"2026-06-11": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "49fde0a3e9d27ff4122fd5a3fdce6b9b12412dfd992405778db041e9da121cbb",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260611/FutureDataDaily.txt"
+},
+"2026-06-12": {
+"bytes": 38069,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "345fdccd5a47fec8793780a9eeaa57264c898a2e8b79c2fd3892fb123a1ec4fc",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260612/FutureDataDaily.txt"
+},
+"2026-06-15": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "a0e82ad06cfd52f3322d62e3fa272ec3649aaee70fb32dc0c20bcbfd658e712d",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260615/FutureDataDaily.txt"
+},
+"2026-06-16": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "06996010c728a70fe1fd48bf1ba433dc7653e4a55692cdf79506a6deb260dd5c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260616/FutureDataDaily.txt"
+},
+"2026-06-17": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "01bb354a68a890a3ca9730cae938b1a4174a47f8ba2a87125721248f06cad2b5",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260617/FutureDataDaily.txt"
+},
+"2026-06-18": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "c969a1edcb600d206ac46f91ef4869600c96f1c78aa79f81f6f87554482f7787",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260618/FutureDataDaily.txt"
+},
+"2026-06-22": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "224e1006095031e8db8b908c75f581ae46f81fadbc6fcbe14cdce1b2e3f5cfd3",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260622/FutureDataDaily.txt"
+},
+"2026-06-23": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "a637aaac207681c9bdffdeba22ba9297e790d2caa1e5e05d4c99076a81218b83",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260623/FutureDataDaily.txt"
+},
+"2026-06-24": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "e3cac86dcb2c591a117933d655a5d473057caaefdedd49664f1f35d563fee530",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260624/FutureDataDaily.txt"
+},
+"2026-06-25": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "827d922023093c307f05467c30f02d0f6e72bf55fac4ecfbf1be7b77435fb737",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260625/FutureDataDaily.txt"
+},
+"2026-06-26": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:00Z",
+"sha256": "237282457709d70b7b45869e56d113a4b96921074982338864944b5eb3d45d00",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260626/FutureDataDaily.txt"
+},
+"2026-06-29": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "16281f7e59cf23b33509f76e269ada5d80e72923f51ef97a887ce04d122a387b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260629/FutureDataDaily.txt"
+},
+"2026-06-30": {
+"bytes": 37887,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "9b1da063265e32aa81b07cf74d25800ffc3543aba1a3ddc6f0ac6388c297c760",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260630/FutureDataDaily.txt"
+},
+"2026-07-01": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "712fe7d61b923f6d3787baf87fdd29b331e9578beba145c47a2bf28bbbbd68a8",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260701/FutureDataDaily.txt"
+},
+"2026-07-02": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "ed5b365815da3ee60d011a15bd9f01785ec584c81cddd9b60cdd8d26ea9f31ba",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260702/FutureDataDaily.txt"
+},
+"2026-07-03": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "1c47bb72f1ce2e3592f33e80a8a70539987c8447d42d5c24f390868fd585ca87",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260703/FutureDataDaily.txt"
+},
+"2026-07-06": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "df79879a9befd4361d0004ab89d3f1743f2f9ba7cb92d96385859b72057520f6",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260706/FutureDataDaily.txt"
+},
+"2026-07-07": {
+"bytes": 38223,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "943a01ec069495935a618fde2f9928f16d36d981a09fdc50ad1c87fa81643ba0",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260707/FutureDataDaily.txt"
+},
+"2026-07-08": {
+"bytes": 38209,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "b352ae518a74811de50dee55f980d3ae8cb23ec353a4cc9abf160f33e053588f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260708/FutureDataDaily.txt"
+},
+"2026-07-09": {
+"bytes": 38209,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "59787aff6fc6ea8d2c7b4e229c1eb911c66b1016acfa12b0bc54eb614180d6d4",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260709/FutureDataDaily.txt"
+},
+"2026-07-10": {
+"bytes": 38209,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "67503cedf2455a1177704990768f0e28ffba4f46a360af07fc2a436bb867aa63",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260710/FutureDataDaily.txt"
+},
+"2026-07-13": {
+"bytes": 38209,
+"fetched_utc": "2026-11-26T11:29:01Z",
+"sha256": "36b28d8b28dccf899aaf0c0d0792a81788e4ce1ba69032ac28af654f5c04ebc0",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260713/FutureDataDaily.txt"
+},
+"2026-07-14": {
+"bytes": 38209,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "aa9f87b99346ab7f2ff01028b68ac9ea4627c3b4925dff4b02023bfd03712975",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260714/FutureDataDaily.txt"
+},
+"2026-07-15": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "d58de8104d139dc066f3274ad5e9a79534018963e974a0203296c53b1cf03563",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260715/FutureDataDaily.txt"
+},
+"2026-07-16": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "6a9653eb335c203114f7bd6f4271b4252266aa47cfc243982de4581f93672da7",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260716/FutureDataDaily.txt"
+},
+"2026-07-17": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "b66955432e1c49d21d3bbb9db2f4a2ed0fd85d6b1e932330d45807020a1f7e94",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260717/FutureDataDaily.txt"
+},
+"2026-07-20": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "fef9d561169d88b07a482ed21d0241f17b45c9e0d820d203de744e347bd8dcd3",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260720/FutureDataDaily.txt"
+},
+"2026-07-21": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "6156a92d125358bd04919f1715bd3a6483f6a7822cf793c26fe50064b7e4134b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260721/FutureDataDaily.txt"
+},
+"2026-07-22": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "bb2d6c5b8ecb3c52b882f139be1a56d3170ee92f9528fb6f3661d4241f15dd83",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260722/FutureDataDaily.txt"
+},
+"2026-07-23": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "0b5adb938b179505855480e2b60d4db2a1af65169ee9128d21323a9dd1f6b5fb",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260723/FutureDataDaily.txt"
+},
+"2026-07-24": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "92ca441d37a744fd8c241c4325ea9d6aeaa35a343ba516df3affec794683df30",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260724/FutureDataDaily.txt"
+},
+"2026-07-27": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "0c10af4399229e20bbde797290a80fbe5cf1698816a45950a27ca6ec93d72c39",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260727/FutureDataDaily.txt"
+},
+"2026-07-28": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "3d5e7a4698788f69f7e798410dbfc3597429aeef6a0c04f07fbf00908216330a",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260728/FutureDataDaily.txt"
+},
+"2026-07-29": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "caf43ee6ea888e2b047b0a4d243e6f3c8f55387cd9bc90cefa1cdd1f5abe379f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260729/FutureDataDaily.txt"
+},
+"2026-07-30": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "593d72de9d2366b841431725bfbe791be2d0f772507e7ff70d1e86f1f622ad5e",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260730/FutureDataDaily.txt"
+},
+"2026-07-31": {
+"bytes": 37747,
+"fetched_utc": "2026-11-26T11:29:02Z",
+"sha256": "d96409577561326f420c23173859e30fd4413fa377862c536ee71289d4c2a9fd",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260731/FutureDataDaily.txt"
+},
+"2026-08-03": {
+"bytes": 37971,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "a03a156a7728b7d9ead7ba62825d0580b13ac1adddd95e7e18245f7212450c40",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260803/FutureDataDaily.txt"
+},
+"2026-08-04": {
+"bytes": 37971,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "489800dd60302bf52f36bfc6a664822cb641928a1306b76f566ee09c5b9d9754",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260804/FutureDataDaily.txt"
+},
+"2026-08-05": {
+"bytes": 37971,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "a7c17e0b69ff7990950c04ad625249acf6768c38fcb34691fd66a9d5661d9e61",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260805/FutureDataDaily.txt"
+},
+"2026-08-06": {
+"bytes": 37971,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "eb7be309fbe91a01d7722f2db2cb7c6fff6d7f2fa68d8d128e7f6d51a0406918",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260806/FutureDataDaily.txt"
+},
+"2026-08-07": {
+"bytes": 37971,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "2f26b30599d6cc7e08381695c51d609ce9871192c2ce1c2a71fe8821d703ff6b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260807/FutureDataDaily.txt"
+},
+"2026-08-10": {
+"bytes": 37957,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "8398f921532e74213907ece86e84eaafe277bb7c369cc1210e3e22ee330fe782",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260810/FutureDataDaily.txt"
+},
+"2026-08-11": {
+"bytes": 37957,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "0afbe9aa48b5ebdb4bab66ac07e3e516e528b2061304c7795c80403f54acccfe",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260811/FutureDataDaily.txt"
+},
+"2026-08-12": {
+"bytes": 37957,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "ae610a19d65e7e0885cd995e099d6707404f88e5d5d4ecabac4a4118d205b68a",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260812/FutureDataDaily.txt"
+},
+"2026-08-13": {
+"bytes": 37957,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "10ea70ec744861b09e20866238b02099db53ea6caec1fd4f107bfbd86c5ffebc",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260813/FutureDataDaily.txt"
+},
+"2026-08-14": {
+"bytes": 37957,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "5f6a6fde1199c1d8f26d77e7498f086103075a6ba6958f3f0b69f443bd211425",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260814/FutureDataDaily.txt"
+},
+"2026-08-17": {
+"bytes": 37607,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "8fad2d23f14ccbfa2c5a6209c5f5d1af092e9f8967c8e240792acefaa5bf9c40",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260817/FutureDataDaily.txt"
+},
+"2026-08-18": {
+"bytes": 37607,
+"fetched_utc": "2026-11-26T11:29:03Z",
+"sha256": "38d768b972fa3604e3da44b8e30713a71ec74cf5a275e83655b7e182f0b7d1ee",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260818/FutureDataDaily.txt"
+},
+"2026-08-19": {
+"bytes": 37607,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "72ed5211d2106b29b4fd926e9cf05ebbfa2ef43ddb5899e20446debe3ca95dc5",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260819/FutureDataDaily.txt"
+},
+"2026-08-20": {
+"bytes": 37607,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "3fa3401551bc992918e98233b867c55d2a2d9f68f0ac009f5ec0598ec9982a13",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260820/FutureDataDaily.txt"
+},
+"2026-08-21": {
+"bytes": 37607,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "0af8977f65c5caf25fc8665758d8230eb7afc65a9df94b93d5275eb5efb56963",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260821/FutureDataDaily.txt"
+},
+"2026-08-24": {
+"bytes": 37607,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "d25adcf4d890306eb95d08226b9ba52dc60eac12c011dec2a55eb50d2ca26a57",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260824/FutureDataDaily.txt"
+},
+"2026-08-25": {
+"bytes": 37608,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "e66fd92b22eb09714098d81e9fc4f4a1348dee8c2c693e2dbb9df3fe568d62a2",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260825/FutureDataDaily.txt"
+},
+"2026-08-26": {
+"bytes": 37608,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "bfa84538b7964f41aae4212fe1302d449099daab0f77e04253b1e4391fe4eb28",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260826/FutureDataDaily.txt"
+},
+"2026-08-27": {
+"bytes": 37607,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "ff03d4cc6a853010f5ea5a2e3b4d257e862a49d509e56d789dc5517b15ca8dfb",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260827/FutureDataDaily.txt"
+},
+"2026-08-28": {
+"bytes": 37607,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "1e5a1fc5094eee5b3626a1d53df19c932a4f2c28403e36197ed7b8797e33099d",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260828/FutureDataDaily.txt"
+},
+"2026-08-31": {
+"bytes": 37607,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "75cc18e546ea324d310c85e3bae2c3d962796dec3e0b0a0b8755fd420565b2f2",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260831/FutureDataDaily.txt"
+},
+"2026-09-01": {
+"bytes": 37944,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "c2f84c4611fb632feba6eb1eb1b0eb88e011263f5f6b77a2a649df15495400da",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260901/FutureDataDaily.txt"
+},
+"2026-09-02": {
+"bytes": 37944,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "fa33c582dc9e0aef7d34cb451e46434e264ba79679a03668827ddb79f568b5de",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260902/FutureDataDaily.txt"
+},
+"2026-09-03": {
+"bytes": 37945,
+"fetched_utc": "2026-11-26T11:29:04Z",
+"sha256": "cd24ca8e569b95cc4857bccfed7fd5e8f95d4457f44f5603885b31741d062674",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260903/FutureDataDaily.txt"
+},
+"2026-09-04": {
+"bytes": 37944,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "910f00ba4ecd8b1666df6dd61ce5d80a07f943bf36e4099b2cbb3b71e51c715c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260904/FutureDataDaily.txt"
+},
+"2026-09-07": {
+"bytes": 37944,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "38986dbc77c6a31ee5596298c66332c495b604799975bee5805ad426d88c70e1",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260907/FutureDataDaily.txt"
+},
+"2026-09-08": {
+"bytes": 37930,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "04ec7a6834fbaa8fa188cb17e2e9c00a89a4d77453bf9db9c98b6c782fc77f44",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260908/FutureDataDaily.txt"
+},
+"2026-09-09": {
+"bytes": 37931,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "09fcbe164228545ac14e2b4ac4a75644915e31c46e4ce928c903384f698709c9",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260909/FutureDataDaily.txt"
+},
+"2026-09-10": {
+"bytes": 37931,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "5f91f27612cff3d73840261823b7b040b97ba6afa6f5e6cf1decd8b749eccb90",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260910/FutureDataDaily.txt"
+},
+"2026-09-11": {
+"bytes": 37931,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "aca7995a1166fb235c81a45bfeee2e5d725f0f9633154704c4458b1db87b7d4b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260911/FutureDataDaily.txt"
+},
+"2026-09-14": {
+"bytes": 37932,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "b0c3d83a90ccf1a518f01a4c371cf4c8d4ca8b66d6a42ca5aacc7b965bd3b7ae",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260914/FutureDataDaily.txt"
+},
+"2026-09-15": {
+"bytes": 37468,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "0b496872e55801eb73ae7718e6ee33908dfb90f43c1f561c7c330108cfe2baf0",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260915/FutureDataDaily.txt"
+},
+"2026-09-16": {
+"bytes": 38169,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "79c36ec2231832d5a3fca69c850455558f1b03cc2cc928e997497a973571be67",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260916/FutureDataDaily.txt"
+},
+"2026-09-17": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "25c7a6cf569c8a822d11e6b0d7243dc7f1610a819c103f44fa3dfca820daa569",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260917/FutureDataDaily.txt"
+},
+"2026-09-18": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "595f24d939400c97bc4b64bdd43a1873ab58bf3bfa654143e9460eaf51d4ab60",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260918/FutureDataDaily.txt"
+},
+"2026-09-21": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:05Z",
+"sha256": "2ac9af7ad8b61bd9f08c8c9631656722f2b13628ab23d4b045962d274646d242",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260921/FutureDataDaily.txt"
+},
+"2026-09-22": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "e9dd3adc99d6edc98a69a8e7580a4aadd2d55a28b94868ffe7f2ce3c0c50e62d",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260922/FutureDataDaily.txt"
+},
+"2026-09-23": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "d4e7b32362d834582fa452a0b941bc2bb379feb7df568a176801e80fad392d71",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260923/FutureDataDaily.txt"
+},
+"2026-09-24": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "c8a48482a48fca42f1017143ef8b41fefb7abad36da5973c83e8d93227d27e6c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260924/FutureDataDaily.txt"
+},
+"2026-09-28": {
+"bytes": 38167,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "4c71304e349c9b83b1268567e6afab98c140749d02bd7814b45484799d232a60",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260928/FutureDataDaily.txt"
+},
+"2026-09-29": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "49c1ccf22bdd75f23f2e5c586e3d37991b51ca5a780b5011b83353ae50a22834",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260929/FutureDataDaily.txt"
+},
+"2026-09-30": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "dd52fc3ae949ea12f2568b56977c2840ee6801c0e0e1d29bee3c5f5e3bd3b7df",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20260930/FutureDataDaily.txt"
+},
+"2026-10-08": {
+"bytes": 38391,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "8b7d410b5e34e1de10455a5576a0cb3df2b947b721e7adc5189e994cc21d0b90",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261008/FutureDataDaily.txt"
+},
+"2026-10-09": {
+"bytes": 38393,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "c2069535231b18096fd4a5ab139d1c088616336893ed0ba48a82077b64aac04e",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261009/FutureDataDaily.txt"
+},
+"2026-10-12": {
+"bytes": 38393,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "fda6df13a2bee9682417a24de85ab322f28a7018a2f48835089a4686d3717386",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261012/FutureDataDaily.txt"
+},
+"2026-10-13": {
+"bytes": 38392,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "34aa6a602d3725497d44c3666253a7e3da7ff72979224247398f2156ad516262",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261013/FutureDataDaily.txt"
+},
+"2026-10-14": {
+"bytes": 38392,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "25d5b2bf9797fb8a271e61729dc33b30a29623409c731accde8d721089d5e211",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261014/FutureDataDaily.txt"
+},
+"2026-10-15": {
+"bytes": 38378,
+"fetched_utc": "2026-11-26T11:29:06Z",
+"sha256": "70a48b583ebefce78c7f8f55b2a5c37b0a56615033fcad980ebf51ff1b2539d2",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261015/FutureDataDaily.txt"
+},
+"2026-10-16": {
+"bytes": 38378,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"sha256": "459b0c0caed8f34dd5fc6e46ddc0af99ae1fd3fee691807b932ba981b39f2a8c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261016/FutureDataDaily.txt"
+},
+"2026-10-17": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261017/FutureDataDaily.txt"
+},
+"2026-10-18": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261018/FutureDataDaily.txt"
+},
+"2026-10-19": {
+"bytes": 38378,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"sha256": "e49a0a7277bb558456360b2b7ac5e44325103b0a906b164d59854ab143ba8ddb",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261019/FutureDataDaily.txt"
+},
+"2026-10-20": {
+"bytes": 38378,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"sha256": "6f978e65b276c1723a077927ed2aea03ce61804d5fbd4a4fe5fe95de74ac5adc",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261020/FutureDataDaily.txt"
+},
+"2026-10-21": {
+"bytes": 38378,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"sha256": "1cf9746f9f6656fd31fcb4a32051b9082d5e8f8f05e08f6418a4524a0e5244e4",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261021/FutureDataDaily.txt"
+},
+"2026-10-22": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"sha256": "dcf072d5278a2ddf2560a74cd79ad46218319b9c316cea70cf100d9d30e87f3f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261022/FutureDataDaily.txt"
+},
+"2026-10-23": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"sha256": "2c0fcc875b1236b1fd0e4aa0603e36886e1a1128e06a7bf2ee13c0b589d045c4",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261023/FutureDataDaily.txt"
+},
+"2026-10-24": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261024/FutureDataDaily.txt"
+},
+"2026-10-25": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261025/FutureDataDaily.txt"
+},
+"2026-10-26": {
+"bytes": 38169,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"sha256": "e63044a1e166fb06cdffed24b0e690ddace6369f3588ad8d20a7c10d69d441d6",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261026/FutureDataDaily.txt"
+},
+"2026-10-27": {
+"bytes": 38169,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"sha256": "a6803f00e4f59ef997f476ec88249c8f7f7b08cf40ad42b5f442c633414fed98",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261027/FutureDataDaily.txt"
+},
+"2026-10-28": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:07Z",
+"sha256": "a68a91cad944250acac860075a224a7cf6615dd06c9c2f09150621db000d96a9",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261028/FutureDataDaily.txt"
+},
+"2026-10-29": {
+"bytes": 38168,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"sha256": "6e1390d02d2bb47bf6a0ffa315ef2ccadf247dbc4b671405c827b5b7171352e7",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261029/FutureDataDaily.txt"
+},
+"2026-10-30": {
+"bytes": 38169,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"sha256": "976eeda718afc17aae094d85dfe61f938b3db0c7e3a9999718275b67cbebbe0d",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261030/FutureDataDaily.txt"
+},
+"2026-10-31": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261031/FutureDataDaily.txt"
+},
+"2026-11-01": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261101/FutureDataDaily.txt"
+},
+"2026-11-02": {
+"bytes": 38519,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"sha256": "62d8ea21e8f8a4e8baabae15e3f32c212b14c7681d12c03d50060940ad5e2508",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261102/FutureDataDaily.txt"
+},
+"2026-11-03": {
+"bytes": 38519,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"sha256": "33b41258c1ebcc7d1d7cf36124e278565477103e4e5d196d3d92b14f9468a58c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261103/FutureDataDaily.txt"
+},
+"2026-11-04": {
+"bytes": 38519,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"sha256": "c80daa16b085039f8681ab4edd9fa5fb66d3dca861f276908cb69761b73534e8",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261104/FutureDataDaily.txt"
+},
+"2026-11-05": {
+"bytes": 38519,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"sha256": "7e35900999fd518485a472ac01c7e9238ee897968258927f4096425b8806da68",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261105/FutureDataDaily.txt"
+},
+"2026-11-06": {
+"bytes": 38518,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"sha256": "1ddfcfd35495c0dd8ddbad9e017f253f99d4a81ac94b3095c4b76c889778d52b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261106/FutureDataDaily.txt"
+},
+"2026-11-07": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261107/FutureDataDaily.txt"
+},
+"2026-11-08": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261108/FutureDataDaily.txt"
+},
+"2026-11-09": {
+"bytes": 38504,
+"fetched_utc": "2026-11-26T11:29:08Z",
+"sha256": "a353083fad99180a6b35c056d9304e5fb8235fa3f24a3f3bb09be96a9dfdfbdb",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261109/FutureDataDaily.txt"
+},
+"2026-11-10": {
+"bytes": 38504,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"sha256": "a1568c1ece364e2a42eea2038a4fba54b03346477d75dbf6b9ddb2c310a9f9ee",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261110/FutureDataDaily.txt"
+},
+"2026-11-11": {
+"bytes": 38504,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"sha256": "20ef43e52e74d8ea1023d9ce7172abe3bb25ef5ea5ab328d0bacbc581bb9978a",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261111/FutureDataDaily.txt"
+},
+"2026-11-12": {
+"bytes": 39208,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"sha256": "dd2acb000ec6dbcf127b70e95b100ea15881765c20a36a71f7b69966e6ac8d21",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261112/FutureDataDaily.txt"
+},
+"2026-11-13": {
+"bytes": 39208,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"sha256": "87d2e203321ea644481253bd1f227752ac50ef9487d87ca0b22b6cd0c307eb7c",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261113/FutureDataDaily.txt"
+},
+"2026-11-14": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261114/FutureDataDaily.txt"
+},
+"2026-11-15": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261115/FutureDataDaily.txt"
+},
+"2026-11-16": {
+"bytes": 38872,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"sha256": "17137867d7d66e58d1d6f802794b6f2ef84383de62469339507374ed75d74553",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261116/FutureDataDaily.txt"
+},
+"2026-11-17": {
+"bytes": 38872,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"sha256": "e85a3d590b195ff52fe94c80a5df312a16274c7a322da3dbddc4677e039e253b",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261117/FutureDataDaily.txt"
+},
+"2026-11-18": {
+"bytes": 38872,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"sha256": "889eb8133181083f4e4e071ec65b78f982522de361b4eff35bb5b8598b28dbb9",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261118/FutureDataDaily.txt"
+},
+"2026-11-19": {
+"bytes": 38872,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"sha256": "1ca331131c110069f1f8c2f6d15659b08c29aa58bb0300e0b859fc737dc1b36f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261119/FutureDataDaily.txt"
+},
+"2026-11-20": {
+"bytes": 38872,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"sha256": "9dd46246df9f2edcf7de5b5c168cc4f5f053afe60fb073f2eabf904752ae09d0",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261120/FutureDataDaily.txt"
+},
+"2026-11-21": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:09Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261121/FutureDataDaily.txt"
+},
+"2026-11-22": {
+"bytes": 709,
+"fetched_utc": "2026-11-26T11:29:10Z",
+"status": "404",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261122/FutureDataDaily.txt"
+},
+"2026-11-23": {
+"bytes": 38872,
+"fetched_utc": "2026-11-26T11:29:10Z",
+"sha256": "686f657cd634461f95f883fe946afdaf6fe4cbf78bc58250a3c0fad130560b4f",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261123/FutureDataDaily.txt"
+},
+"2026-11-24": {
+"bytes": 38872,
+"fetched_utc": "2026-11-26T11:29:10Z",
+"sha256": "7896d393c754ab349fab3056661175c595c6e44ba85a12edbd2eb20cd55260e6",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261124/FutureDataDaily.txt"
+},
+"2026-11-25": {
+"bytes": 38872,
+"fetched_utc": "2026-11-26T11:29:10Z",
+"sha256": "78deba3df0df37ed9743cc5114849b1989bbb004a1d0b6ad846a8b965f9b7aff",
+"status": "ok",
+"url": "http://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261125/FutureDataDaily.txt"
 }
 }

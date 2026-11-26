@@ -93,6 +93,47 @@ def test_iv_surface_uses_asof_not_future_tenor():
     assert surf["error"] == "bad_or_expired_tenor"
 
 
+def _write_chain_and_gamma(tmp_path: Path, *, with_gamma: bool, gamma_expiry: str = "2026-12-11"):
+    import json
+
+    from research.options.chain_store import snapshot_path
+
+    snap = _synth_snap(asof="2026-11-23", expiry=None)
+    p = snapshot_path(tmp_path, "CF", "2026-11-23")
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(snap), encoding="utf-8")
+    if with_gamma:
+        g = tmp_path / "data" / "gamma_wall" / "CF2701"
+        g.mkdir(parents=True, exist_ok=True)
+        # same-day file lacks nothing; an older day proves the per-contract fallback
+        (g / "2026-11-20.json").write_text(
+            json.dumps({"contract": "CF2701", "expiry": gamma_expiry}), encoding="utf-8"
+        )
+
+
+def test_load_snapshot_backfills_missing_expiry_from_gamma(tmp_path: Path):
+    """Gamma-cache snapshots were written with expiry=null → surface failed closed."""
+    from research.options.chain_store import load_snapshot
+
+    _write_chain_and_gamma(tmp_path, with_gamma=True)
+    snap = load_snapshot(tmp_path, "CF", "2026-11-23")
+    assert snap["expiry"] == "2026-12-11"
+    assert snap["expiry_source"] == "gamma_wall_snapshot"
+    surf = build_iv_surface(snap)
+    assert surf["ok"] is True
+
+
+def test_load_snapshot_does_not_guess_expiry_without_gamma(tmp_path: Path):
+    from research.options.chain_store import load_snapshot
+
+    _write_chain_and_gamma(tmp_path, with_gamma=False)
+    snap = load_snapshot(tmp_path, "CF", "2026-11-23")
+    assert snap["expiry"] is None
+    surf = build_iv_surface(snap)
+    assert surf["ok"] is False
+    assert surf["error"] == "bad_or_expired_tenor"
+
+
 def test_vanilla_greeks_signs():
     g = vanilla_greeks(
         futures=15000, strike=15000, years=30 / 365, rate=0.02, iv=0.2, side="C"

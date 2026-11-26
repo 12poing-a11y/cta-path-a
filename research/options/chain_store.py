@@ -87,6 +87,33 @@ def write_snapshot(root: Path, snap: dict[str, Any], *, allow_reject: bool = Tru
     return path
 
 
+def resolve_option_expiry(root: Path, futures_contract: str, asof: str) -> str | None:
+    """Option last-trading day for ``futures_contract`` from validated Gamma snapshots.
+
+    Gamma Wall snapshots carry a verified ``expiry``. It is constant per contract,
+    so prefer the snapshot dated ``asof`` and otherwise the newest earlier/later one.
+    Returns ``YYYY-MM-DD`` or None (never guesses a date).
+    """
+    contract = str(futures_contract or "").upper()
+    if not contract:
+        return None
+    gdir = Path(root) / "data" / "gamma_wall" / contract
+    if not gdir.is_dir():
+        return None
+    asof_s = str(asof)[:10]
+    exact = gdir / f"{asof_s}.json"
+    others = sorted((p for p in gdir.glob("*.json") if p != exact), reverse=True)
+    for path in ([exact] if exact.is_file() else []) + others:
+        try:
+            g = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        exp = str((g or {}).get("expiry") or "")[:10] if isinstance(g, dict) else ""
+        if len(exp) == 10:
+            return exp
+    return None
+
+
 def load_snapshot(root: Path, code: str, asof: str) -> dict[str, Any] | None:
     path = snapshot_path(root, code, asof)
     if not path.is_file():
@@ -95,7 +122,18 @@ def load_snapshot(root: Path, code: str, asof: str) -> dict[str, Any] | None:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return None
-    return data if isinstance(data, dict) else None
+    if not isinstance(data, dict):
+        return None
+    # Older gamma-cache snapshots were written without ``expiry``; the IV surface
+    # then fails closed (bad_or_expired_tenor). Backfill in memory only.
+    if not data.get("expiry"):
+        exp = resolve_option_expiry(
+            root, str(data.get("futures_contract") or ""), str(data.get("asof") or asof)
+        )
+        if exp:
+            data["expiry"] = exp
+            data["expiry_source"] = "gamma_wall_snapshot"
+    return data
 
 
 def list_snapshot_dates(root: Path, code: str) -> list[str]:
@@ -310,6 +348,9 @@ def build_from_gamma_raw_cache(
                 expiry = expiry or g.get("expiry")
             except (OSError, json.JSONDecodeError):
                 pass
+
+    if not expiry:
+        expiry = resolve_option_expiry(root, contract, asof_s)
 
     snap = build_snapshot(
         code=code_u,

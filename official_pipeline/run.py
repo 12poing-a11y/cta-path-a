@@ -2,7 +2,9 @@
 """Official daily pipeline entry point.
 
   python -m official_pipeline run              fetch missing days in the window (17:30 / 18:30 / 20:00 / 22:00 tasks)
-  python -m official_pipeline judge [--day D]  fetch + validate + derive + judge every pending weekday before today (08:30 task)
+  python -m official_pipeline judge [--day D]  catch-up: fetch + validate + derive + judge every unjudged weekday from the
+                                               pipeline start to yesterday. Run it any time after syncing the Sina cache
+                                               (08:30 task is best-effort; days still waiting for the sync stay pending)
   python -m official_pipeline seed             verified seed from archive/R8/raw_contract (one-off)
   python -m official_pipeline status           streak / gate status
   python -m official_pipeline export-hashes    hash manifests -> official_pipeline/manifest_repo (only repo-side data)
@@ -147,6 +149,7 @@ def judge_day(store: Store, day: str, *, log) -> dict:
         reasons.append("revision of stored day: " + ",".join(e for e, v in rev.items() if v))
         code = EXIT_REVISION
     val = derived = None
+    sina = "not_checked"
     if not missing:
         prev = prev_stored_day(store, day)
         by_all = load_store_by(store, upto=day)
@@ -155,14 +158,15 @@ def judge_day(store: Store, day: str, *, log) -> dict:
         if not val["ok"]:
             reasons.append("validation failed")
             code = code or EXIT_VALID
-        stale = [p for p in C.PRODUCTS if day not in sina_bar_days(p)]
-        if stale:
-            # The derived main needs the local Sina continuous bar of the judged day as its price matcher. That cache is
-            # produced by the CTA daily job (daily.yml -> main), not by this pipeline. Missing bar = not normal, never guessed.
-            reasons.append(f"sina continuous bar missing for {len(stale)} products")
-            details.append("sina continuous bar missing (cache not updated to this day): " + ",".join(stale))
+        sina, stale = sina_status(day)
+        if sina == "gap":
+            # The cache has been synced to this day or later, but these products still lack the day: a real gap.
+            reasons.append(f"sina continuous bar gap for {len(stale)} products")
+            details.append("sina continuous cache synced past this day but missing it for: " + ",".join(stale))
             code = code or EXIT_VALID
-        else:
+        elif sina == "pending":
+            details.append("sina continuous cache not yet synced to this day (waiting for local sync)")
+        if sina == "ok":
             try:
                 derived = derive_main(by_all, day)
                 C.DERIVED.mkdir(parents=True, exist_ok=True)
@@ -173,13 +177,19 @@ def judge_day(store: Store, day: str, *, log) -> dict:
                 reasons.append("derived main failed")
                 details.append(repr(e)[:300])
                 code = code or EXIT_VALID
-    normal = not reasons
-    rep = {"day": day, "normal": normal, "reasons": reasons, "details": details, "exit_code": code,
+    # pending = raw data complete and clean, but the Sina continuous cache has not been synced to this day yet.
+    # Pending is neither normal nor abnormal: it is not judged, not alerted, and does not touch the streak.
+    if sina == "pending" and not reasons:
+        status = "pending"
+    else:
+        status = "normal" if not reasons else "abnormal"
+    normal = status == "normal"
+    rep = {"day": day, "status": status, "normal": normal, "reasons": reasons, "details": details, "exit_code": code,
            "validation": val, "derived": {k: v for k, v in (derived or {}).items() if k != "mains"} or None,
            "judged_utc": utc_now()}
     C.REPORTS.mkdir(parents=True, exist_ok=True)
     (C.REPORTS / f"{day}.json").write_text(json.dumps(rep, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
-    log(f"judge {day}: normal={normal} reasons={reasons}")
+    log(f"judge {day}: status={status} reasons={reasons}")
     return rep
 
 
@@ -195,6 +205,33 @@ def sina_bar_days(code: str) -> set[str]:
             days = {str(b["date"])[:10] for b in json.loads(f.read_text(encoding="utf-8"))}
         _SINA_DAYS[code] = days
     return _SINA_DAYS[code]
+
+
+def sina_global_max() -> str | None:
+    """Latest date present in any product's local Sina continuous cache = how far the cache has been synced."""
+    dates = [max(sina_bar_days(p)) for p in C.PRODUCTS if sina_bar_days(p)]
+    return max(dates) if dates else None
+
+
+def sina_status(day: str) -> tuple[str, list[str]]:
+    """'pending' = cache not synced to `day` yet (no product has a bar on/after day).
+    'gap' = cache is synced to `day` or later, but some products still lack `day` (real gap, abnormal).
+    'ok' = every product has a bar on `day`."""
+    gmax = sina_global_max()
+    if gmax is None or gmax < day:
+        return "pending", []
+    stale = [p for p in C.PRODUCTS if day not in sina_bar_days(p)]
+    return ("gap", stale) if stale else ("ok", [])
+
+
+def weekdays_between(start: str, end: str) -> list[str]:
+    out, d = [], date.fromisoformat(start)
+    e = date.fromisoformat(end)
+    while d <= e:
+        if d.weekday() < 5:
+            out.append(d.isoformat())
+        d += timedelta(days=1)
+    return out
 
 
 def prev_stored_day(store: Store, day: str) -> str | None:
@@ -245,9 +282,11 @@ def cmd_judge(today: date, day: str | None, log) -> int:
     store = Store()
     st = S.load()
     start = _start_day(st, today)
-    targets = [day] if day else [t for t in weekdays_before(today) if t >= start]
+    # Catch-up window: every weekday from the pipeline start up to yesterday, so a long gap in syncing loses nothing.
+    targets = [day] if day else weekdays_between(start, (today - timedelta(days=1)).isoformat())
     worst = EXIT_OK
     fetch_missing(store, [t for t in targets if t not in st["closed"] and not S.is_final_normal(st, t)], log=log)
+    pending: list[str] = []
     for t in targets:
         if S.is_final_normal(st, t) or t in st["closed"]:
             continue
@@ -257,13 +296,19 @@ def cmd_judge(today: date, day: str | None, log) -> int:
             continue
         prior = st["days"].get(t)
         rep = judge_day(store, t, log=log)
+        if rep["status"] == "pending":
+            pending.append(t)
+            continue
         st = S.judge(st, t, rep["normal"], rep["reasons"])
         if not rep["normal"]:
             worst = max(worst, rep["exit_code"])
             if prior is None or prior.get("reasons") != rep["reasons"]:  # alert on first judgement or changed reasons only
                 p = write_alert(t, rep["reasons"], rep["details"] or ["(no detail)"])
                 notify("CTA 官方数据：" + t + " 不正常", str(p))
+    st["pending"] = pending
     S.save(st)
+    if pending:
+        log(f"pending (Sina cache not synced yet, not judged): {pending}")
     if worst == EXIT_OK:
         maybe_backup(log=log)
     log(f"streak={st['streak']} ready={S.gate_ready(st)}")
@@ -272,8 +317,9 @@ def cmd_judge(today: date, day: str | None, log) -> int:
 
 def cmd_status() -> int:
     st = S.load()
-    print(json.dumps({"streak": st["streak"], "gate_ready": S.gate_ready(st), "closed_recent": st["closed"][-5:],
-                      "last_judged": sorted(st["days"])[-5:]}, ensure_ascii=False, indent=1))
+    print(json.dumps({"streak": st["streak"], "gate_ready": S.gate_ready(st), "pending_waiting_for_sina_sync": st.get("pending", []),
+                      "closed_recent": st["closed"][-5:], "last_judged": sorted(st["days"])[-5:],
+                      "sina_cache_synced_to": sina_global_max()}, ensure_ascii=False, indent=1))
     return 0
 
 

@@ -34,6 +34,33 @@ def test_weekdays_before_skips_weekends_and_today():
     assert days == sorted(days)
 
 
+def test_weekdays_between_is_the_full_catch_up_range():
+    days = R.weekdays_between("2026-11-20", "2026-11-26")  # Fri .. Thu
+    assert days == ["2026-11-20", "2026-11-23", "2026-11-24", "2026-11-25", "2026-11-26"]
+    assert R.weekdays_between("2026-11-27", "2026-11-26") == []
+
+
+def _fake_cache(monkeypatch, per_product: dict[str, set[str]]):
+    monkeypatch.setattr(R, "sina_bar_days", lambda code: per_product.get(code, set()))
+    monkeypatch.setattr(R.C, "PRODUCTS", sorted(per_product))
+
+
+def test_sina_status_pending_when_cache_not_synced_to_day(monkeypatch):
+    _fake_cache(monkeypatch, {"AG": {"2026-11-24", "2026-11-25"}, "M": {"2026-11-20"}})
+    assert R.sina_status("2026-11-26") == ("pending", [])
+
+
+def test_sina_status_gap_when_synced_past_day_but_product_missing(monkeypatch):
+    _fake_cache(monkeypatch, {"AG": {"2026-11-25", "2026-11-26"}, "M": {"2026-11-20"}})
+    status, stale = R.sina_status("2026-11-25")
+    assert status == "gap" and stale == ["M"]
+
+
+def test_sina_status_ok_when_every_product_has_the_day(monkeypatch):
+    _fake_cache(monkeypatch, {"AG": {"2026-11-26"}, "M": {"2026-11-26", "2026-11-25"}})
+    assert R.sina_status("2026-11-26") == ("ok", [])
+
+
 # ---- state: streak, closed days, final normal ----------------------------------------------------------------------------
 def test_streak_counts_trailing_normal_days_and_ignores_closed():
     st = S.empty()

@@ -603,6 +603,12 @@ ext_open。
 - **封存**：已确认可取的 SHFE/DCE 2010–2015 数据，在新信号设计完成且预注册提交之前不得打开。
 - **风险/未做**：抽样不是全量；郑商所历史路径未找到；DCE 中秋日 1 条记录的应答性质未确认。
 
+### OFFICIAL-PIPELINE 同步模式修订（2026-11-26）
+
+- **做了**：判定改为补判（首次运行日至昨天的全部工作日）；Sina 缓存未同步到某日记为 pending（不告警、不计 streak），缓存已同步但个别品种缺口才判异常；08:30 任务降为尽力而为，同步后手动 `python -m official_pipeline judge`。
+- **验证**：tests/test_official_pipeline.py 16 项通过；真实库 judge --day 2026-11-26 → pending，无告警，streak 0。
+- **待办**：磊同步 GitHub 日更产物前，本地 main 需先从 origin 拉取合并（未做、未推送）。
+
 ## 反馈模板
 
 ```text

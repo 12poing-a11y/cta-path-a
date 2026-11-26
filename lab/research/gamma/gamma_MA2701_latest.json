@@ -7,11 +7,11 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "MA2701",
-    "n_snapshots": 10,
-    "n_events": 18,
+    "n_snapshots": 12,
+    "n_events": 22,
     "label_counts": {
-      "unchanged": 14,
-      "new_or_shifted_wall": 4
+      "unchanged": 16,
+      "new_or_shifted_wall": 6
     },
     "live_trading": false,
     "note": "Display GEX convention; OI does not identify dealer side.",
@@ -213,6 +213,50 @@
         "gex_change_pct": 0.2498,
         "futures_price": 3001.0,
         "dist_pct": -6.698
+      },
+      {
+        "date": "2026-11-25",
+        "side": "call",
+        "from": 3300.0,
+        "to": 3300.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.2263,
+        "futures_price": 3064.0,
+        "dist_pct": 7.702
+      },
+      {
+        "date": "2026-11-25",
+        "side": "put",
+        "from": 2800.0,
+        "to": 2800.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.0577,
+        "futures_price": 3064.0,
+        "dist_pct": -8.616
+      },
+      {
+        "date": "2026-11-26",
+        "side": "call",
+        "from": 3300.0,
+        "to": 3500.0,
+        "move": 200.0,
+        "label": "new_or_shifted_wall",
+        "gex_change_pct": 0.4437,
+        "futures_price": 3176.0,
+        "dist_pct": 10.202
+      },
+      {
+        "date": "2026-11-26",
+        "side": "put",
+        "from": 2800.0,
+        "to": 3000.0,
+        "move": 200.0,
+        "label": "new_or_shifted_wall",
+        "gex_change_pct": -0.1596,
+        "futures_price": 3176.0,
+        "dist_pct": -5.542
       }
     ]
   },
@@ -220,15 +264,15 @@
     "ok": true,
     "schema": "cta-gamma-touch-v1",
     "contract": "MA2701",
-    "n_events": 16,
+    "n_events": 18,
     "touch_atr": 3.0,
     "outcome_counts": {
-      "stay": 12,
+      "stay": 14,
       "bounce": 4
     },
     "outcome_probs": {
-      "stay": 0.75,
-      "bounce": 0.25
+      "stay": 0.7778,
+      "bounce": 0.2222
     },
     "live_trading": false,
     "note": "Sparse when gamma history is short; not a trade signal.",
@@ -440,6 +484,32 @@
         "ret_1": 0.020993,
         "ret_3": null,
         "ret_5": null
+      },
+      {
+        "date": "2026-11-25",
+        "side": "call",
+        "wall": 3300.0,
+        "futures": 3064.0,
+        "dist_atr": -2.1737,
+        "outcome": "stay",
+        "mfe_atr": 0.0,
+        "mae_atr": 0.0,
+        "ret_1": null,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-25",
+        "side": "put",
+        "wall": 2800.0,
+        "futures": 3064.0,
+        "dist_atr": 2.4316,
+        "outcome": "stay",
+        "mfe_atr": 0.0,
+        "mae_atr": 0.0,
+        "ret_1": null,
+        "ret_3": null,
+        "ret_5": null
       }
     ]
   },
@@ -447,42 +517,11 @@
     "ok": true,
     "schema": "cta-gamma-iv-oi-v1",
     "product": "MA",
-    "n_days": 4,
-    "regime_counts": {
-      "iv_down_oi_down": 1,
-      "iv_up_oi_up": 2
-    },
+    "n_days": 0,
+    "regime_counts": {},
     "live_trading": false,
     "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
-    "changes_tail": [
-      {
-        "date": "2026-11-19",
-        "d_iv": -0.142252,
-        "d_oi": -400238.0,
-        "regime": "iv_down_oi_down",
-        "call_put_oi_same_sign": true,
-        "iv": 0.488569,
-        "oi": 689346.0
-      },
-      {
-        "date": "2026-11-20",
-        "d_iv": 0.001366,
-        "d_oi": 12692.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.489935,
-        "oi": 702038.0
-      },
-      {
-        "date": "2026-11-23",
-        "d_iv": 0.04059,
-        "d_oi": 29673.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.530525,
-        "oi": 731711.0
-      }
-    ]
+    "changes_tail": []
   },
   "n_daily_bars": 2889,
   "live_trading": false,

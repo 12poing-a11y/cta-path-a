@@ -7,11 +7,11 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "SA2701",
-    "n_snapshots": 11,
-    "n_events": 20,
+    "n_snapshots": 13,
+    "n_events": 24,
     "label_counts": {
-      "unchanged": 15,
-      "migrated": 3,
+      "unchanged": 18,
+      "migrated": 4,
       "micro_move": 2
     },
     "live_trading": false,
@@ -236,6 +236,50 @@
         "gex_change_pct": 0.0144,
         "futures_price": 951.0,
         "dist_pct": -5.363
+      },
+      {
+        "date": "2026-11-25",
+        "side": "call",
+        "from": 1000.0,
+        "to": 1000.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.1812,
+        "futures_price": 970.0,
+        "dist_pct": 3.093
+      },
+      {
+        "date": "2026-11-25",
+        "side": "put",
+        "from": 900.0,
+        "to": 950.0,
+        "move": 50.0,
+        "label": "migrated",
+        "gex_change_pct": 0.0224,
+        "futures_price": 970.0,
+        "dist_pct": -2.062
+      },
+      {
+        "date": "2026-11-26",
+        "side": "call",
+        "from": 1000.0,
+        "to": 1000.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.023,
+        "futures_price": 967.0,
+        "dist_pct": 3.413
+      },
+      {
+        "date": "2026-11-26",
+        "side": "put",
+        "from": 950.0,
+        "to": 950.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.0551,
+        "futures_price": 967.0,
+        "dist_pct": -1.758
       }
     ]
   },
@@ -243,17 +287,17 @@
     "ok": true,
     "schema": "cta-gamma-touch-v1",
     "contract": "SA2701",
-    "n_events": 19,
+    "n_events": 21,
     "touch_atr": 3.0,
     "outcome_counts": {
-      "stay": 16,
+      "stay": 18,
       "bounce": 2,
       "pierce": 1
     },
     "outcome_probs": {
-      "stay": 0.8421,
-      "bounce": 0.1053,
-      "pierce": 0.0526
+      "stay": 0.8571,
+      "bounce": 0.0952,
+      "pierce": 0.0476
     },
     "live_trading": false,
     "note": "Sparse when gamma history is short; not a trade signal.",
@@ -504,6 +548,32 @@
         "ret_1": 0.019979,
         "ret_3": null,
         "ret_5": null
+      },
+      {
+        "date": "2026-11-25",
+        "side": "call",
+        "wall": 1000.0,
+        "futures": 970.0,
+        "dist_atr": -1.2963,
+        "outcome": "stay",
+        "mfe_atr": 0.0,
+        "mae_atr": 0.0,
+        "ret_1": null,
+        "ret_3": null,
+        "ret_5": null
+      },
+      {
+        "date": "2026-11-25",
+        "side": "put",
+        "wall": 950.0,
+        "futures": 970.0,
+        "dist_atr": 0.8642,
+        "outcome": "stay",
+        "mfe_atr": 0.0,
+        "mae_atr": 0.0,
+        "ret_1": null,
+        "ret_3": null,
+        "ret_5": null
       }
     ]
   },
@@ -511,51 +581,11 @@
     "ok": true,
     "schema": "cta-gamma-iv-oi-v1",
     "product": "SA",
-    "n_days": 5,
-    "regime_counts": {
-      "iv_up_oi_up": 3,
-      "iv_down_oi_down": 1
-    },
+    "n_days": 0,
+    "regime_counts": {},
     "live_trading": false,
     "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
-    "changes_tail": [
-      {
-        "date": "2026-11-06",
-        "d_iv": 0.014845,
-        "d_oi": 33069.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": false,
-        "iv": 0.369664,
-        "oi": 868971.0
-      },
-      {
-        "date": "2026-11-19",
-        "d_iv": -0.02434,
-        "d_oi": -180164.0,
-        "regime": "iv_down_oi_down",
-        "call_put_oi_same_sign": true,
-        "iv": 0.345324,
-        "oi": 688807.0
-      },
-      {
-        "date": "2026-11-20",
-        "d_iv": 0.041605,
-        "d_oi": 15230.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.386929,
-        "oi": 704037.0
-      },
-      {
-        "date": "2026-11-23",
-        "d_iv": 0.018953,
-        "d_oi": 11849.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.405882,
-        "oi": 715886.0
-      }
-    ]
+    "changes_tail": []
   },
   "n_daily_bars": 1689,
   "live_trading": false,

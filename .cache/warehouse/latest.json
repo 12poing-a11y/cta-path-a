@@ -1,10 +1,10 @@
 {
   "ok": true,
-  "asof": "2026-11-25",
+  "asof": "2026-11-26",
   "architecture": "exchange_warehouse_daily_primary + eastmoney_inventory_bypass",
-  "exchange_ymd": "20261125",
+  "exchange_ymd": "20261126",
   "exchange_tried": [
-    "20261125"
+    "20261126"
   ],
   "exchange_status": {
     "CZCE": {
@@ -45,43 +45,43 @@
   "rows": [
     {
       "code": "MA",
-      "date": "2026-11-25",
-      "receipt": 650.0,
-      "change": 0.0,
+      "date": "2026-11-26",
+      "receipt": 750.0,
+      "change": 100.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "V",
-      "date": "2026-11-25",
-      "receipt": 91385.0,
-      "change": -820.0,
+      "date": "2026-11-26",
+      "receipt": 90104.0,
+      "change": -1281.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "EG",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 4007.0,
-      "change": 200.0,
+      "change": 0.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "M",
-      "date": "2026-11-25",
-      "receipt": 43949.0,
-      "change": -351.0,
+      "date": "2026-11-26",
+      "receipt": 37073.0,
+      "change": -6876.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "FG",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 0.0,
       "change": 0.0,
       "source": "eastmoney.futures_inventory_em",
@@ -90,16 +90,16 @@
     },
     {
       "code": "EB",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 260.0,
-      "change": 260.0,
+      "change": 0.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "TA",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 2719.0,
       "change": 0.0,
       "source": "eastmoney.futures_inventory_em",
@@ -108,36 +108,36 @@
     },
     {
       "code": "SA",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 1121.0,
-      "change": 845.0,
+      "change": 0.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "PP",
-      "date": "2026-11-25",
-      "receipt": 22187.0,
-      "change": -66.0,
+      "date": "2026-11-26",
+      "receipt": 21598.0,
+      "change": -589.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "L",
-      "date": "2026-11-25",
-      "receipt": 4515.0,
-      "change": -70.0,
+      "date": "2026-11-26",
+      "receipt": 4415.0,
+      "change": -100.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "JD",
-      "date": "2026-11-25",
-      "receipt": 6.0,
-      "change": -8.0,
+      "date": "2026-11-26",
+      "receipt": 20.0,
+      "change": 14.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
@@ -153,7 +153,7 @@
     },
     {
       "code": "RB",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 25500.0,
       "change": 0.0,
       "source": "exchange.shfe",
@@ -162,34 +162,34 @@
     },
     {
       "code": "FU",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 34830.0,
-      "change": 14830.0,
+      "change": 0.0,
       "source": "exchange.shfe",
       "exchange": "SHFE",
       "bypass": false
     },
     {
       "code": "CF",
-      "date": "2026-11-25",
-      "receipt": 59.0,
-      "change": 0.0,
+      "date": "2026-11-26",
+      "receipt": 68.0,
+      "change": 9.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "BU",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 0.0,
-      "change": -66560.0,
+      "change": 0.0,
       "source": "exchange.shfe",
       "exchange": "SHFE",
       "bypass": false
     },
     {
       "code": "RU",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 1500.0,
       "change": 0.0,
       "source": "exchange.shfe",
@@ -198,16 +198,16 @@
     },
     {
       "code": "AG",
-      "date": "2026-11-25",
-      "receipt": 998735.0,
-      "change": -17156.0,
+      "date": "2026-11-26",
+      "receipt": 995195.0,
+      "change": -3540.0,
       "source": "exchange.shfe",
       "exchange": "SHFE",
       "bypass": false
     },
     {
       "code": "SP",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 18580.0,
       "change": 0.0,
       "source": "exchange.shfe",
@@ -216,16 +216,16 @@
     },
     {
       "code": "SR",
-      "date": "2026-11-25",
-      "receipt": 15004.0,
-      "change": 0.0,
+      "date": "2026-11-26",
+      "receipt": 11885.0,
+      "change": -3119.0,
       "source": "eastmoney.futures_inventory_em",
       "exchange": null,
       "bypass": true
     },
     {
       "code": "AU",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 119892.0,
       "change": 0.0,
       "source": "exchange.shfe",
@@ -234,16 +234,16 @@
     },
     {
       "code": "CU",
-      "date": "2026-11-25",
-      "receipt": 1547.0,
-      "change": -472.0,
+      "date": "2026-11-26",
+      "receipt": 921.0,
+      "change": -626.0,
       "source": "exchange.shfe",
       "exchange": "SHFE",
       "bypass": false
     },
     {
       "code": "AL",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 198.0,
       "change": 0.0,
       "source": "exchange.shfe",
@@ -252,16 +252,16 @@
     },
     {
       "code": "NI",
-      "date": "2026-11-25",
-      "receipt": 63897.0,
-      "change": -437.0,
+      "date": "2026-11-26",
+      "receipt": 63533.0,
+      "change": -364.0,
       "source": "exchange.shfe",
       "exchange": "SHFE",
       "bypass": false
     },
     {
       "code": "I",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "receipt": 4850.0,
       "change": 0.0,
       "source": "eastmoney.futures_inventory_em",
@@ -279,14 +279,14 @@
     },
     {
       "code": "SS",
-      "date": "2026-11-25",
-      "receipt": 5332.0,
-      "change": 0.0,
+      "date": "2026-11-26",
+      "receipt": 5218.0,
+      "change": -114.0,
       "source": "exchange.shfe",
       "exchange": "SHFE",
       "bypass": false
     }
   ],
   "note": "正式仓单优先交易所日报（AKShare 三所）；东财库存仅旁路补洞。缺数保持 null，不编造。",
-  "fetched_at": "2026-11-25 08:44:47"
+  "fetched_at": "2026-11-26 14:36:25"
 }

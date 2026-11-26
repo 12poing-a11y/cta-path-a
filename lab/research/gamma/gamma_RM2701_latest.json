@@ -7,10 +7,10 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "RM2701",
-    "n_snapshots": 9,
-    "n_events": 16,
+    "n_snapshots": 11,
+    "n_events": 20,
     "label_counts": {
-      "unchanged": 16
+      "unchanged": 20
     },
     "live_trading": false,
     "note": "Display GEX convention; OI does not identify dealer side.",
@@ -190,6 +190,50 @@
         "gex_change_pct": 0.1162,
         "futures_price": 2229.0,
         "dist_pct": -1.301
+      },
+      {
+        "date": "2026-11-25",
+        "side": "call",
+        "from": 2300.0,
+        "to": 2300.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.1576,
+        "futures_price": 2219.0,
+        "dist_pct": 3.65
+      },
+      {
+        "date": "2026-11-25",
+        "side": "put",
+        "from": 2200.0,
+        "to": 2200.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.0378,
+        "futures_price": 2219.0,
+        "dist_pct": -0.856
+      },
+      {
+        "date": "2026-11-26",
+        "side": "call",
+        "from": 2300.0,
+        "to": 2300.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.067,
+        "futures_price": 2235.0,
+        "dist_pct": 2.908
+      },
+      {
+        "date": "2026-11-26",
+        "side": "put",
+        "from": 2200.0,
+        "to": 2200.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.1496,
+        "futures_price": 2235.0,
+        "dist_pct": -1.566
       }
     ]
   },
@@ -202,33 +246,11 @@
     "ok": true,
     "schema": "cta-gamma-iv-oi-v1",
     "product": "RM",
-    "n_days": 3,
-    "regime_counts": {
-      "iv_down_oi_up": 1,
-      "iv_up_oi_up": 1
-    },
+    "n_days": 0,
+    "regime_counts": {},
     "live_trading": false,
     "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
-    "changes_tail": [
-      {
-        "date": "2026-11-20",
-        "d_iv": -0.004676,
-        "d_oi": 3534.0,
-        "regime": "iv_down_oi_up",
-        "call_put_oi_same_sign": false,
-        "iv": 0.202907,
-        "oi": 263526.0
-      },
-      {
-        "date": "2026-11-23",
-        "d_iv": 0.008965,
-        "d_oi": 970.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": false,
-        "iv": 0.211872,
-        "oi": 264496.0
-      }
-    ]
+    "changes_tail": []
   },
   "n_daily_bars": 0,
   "live_trading": false,

@@ -1,15 +1,15 @@
 {
   "ok": true,
   "engine": "R5b",
-  "asof": "2026-11-25",
-  "asof_ymd": "20261125",
+  "asof": "2026-11-26",
+  "asof_ymd": "20261126",
   "source": "paper_book",
   "seed": "R7b:B_reseed_formal_backtest",
   "batch": "pathA",
   "stop_atr_mult": 0.8,
   "reward_rr": 2.0,
   "equity": 196557.68,
-  "equity_floating": 0.0,
+  "equity_floating": 0,
   "equity_mark": 196557.68,
   "equity_mtm": 196557.6844285714,
   "equity_realized": 196557.6844285714,
@@ -19,23 +19,30 @@
       "code": "P",
       "direction": "空",
       "lots": 1,
-      "close": 8216.0,
+      "close": 8322.0,
       "mult": 10,
-      "r20": -11.855,
-      "r60": -18.484,
-      "atr": 209.07,
+      "r20": -8.449,
+      "r60": -16.797,
+      "atr": 207.29,
       "bucket": "农产品",
-      "entry": 8216.0,
-      "stop": 8383.257142857143,
-      "target": 7881.4857142857145,
+      "entry": 8322.0,
+      "stop": 8487.828571428572,
+      "target": 7990.342857142858,
       "reason": "path_a_rr2",
       "factor": null,
-      "signal_date": "2026-11-25"
+      "signal_date": "2026-11-26"
     }
   ],
   "closed_today": [],
   "opened_today": [],
-  "skipped_today": [],
+  "skipped_today": [
+    {
+      "code": "P",
+      "signal_date": "2026-11-25",
+      "why": "quality:VALID_ONLY",
+      "day": "2026-11-26"
+    }
+  ],
   "trade_ledger": [],
   "opened_n": 0,
   "closed_n": 0,
@@ -45,6 +52,53 @@
   "noop": false,
   "parent_backtest_end": "2026-11-25",
   "sizing_equity": 196557.6844285714,
-  "parent_backtest": "historical_backtest_latest.json",
-  "parent_snapshot": "archive\\snapshots\\bt_input_20261125_016deed19684.json"
+  "base": {
+    "asof": "2026-11-25",
+    "positions": {},
+    "pending": [
+      {
+        "code": "P",
+        "direction": "空",
+        "lots": 1,
+        "close": 8216.0,
+        "mult": 10,
+        "r20": -11.855,
+        "r60": -18.484,
+        "atr": 209.07,
+        "bucket": "农产品",
+        "entry": 8216.0,
+        "stop": 8383.257142857143,
+        "target": 7881.4857142857145,
+        "reason": "path_a_rr2",
+        "factor": null,
+        "signal_date": "2026-11-25"
+      }
+    ],
+    "equity": 196557.6844285714,
+    "equity_realized": 196557.6844285714
+  },
+  "today_trade_ids": [],
+  "days_rolled": [
+    "2026-11-26"
+  ],
+  "notes": "R5b 引擎账本：与回测共用持仓管理与 T+1 开仓（book_core）。T 日收盘生成 pending，T+1 开盘成交；每日先成交 pending，再管理全部持仓（含当日新开）；15m 首触，缺分钟或分钟与日线不符时按日线高低价；equity_mark/equity_mtm 为逐日盯市扣成本权益；equity 为已实现（equity_mtm − 浮动），equity_floating 为未平仓净盈亏。",
+  "plan": {
+    "slots_left": 3,
+    "sizing_equity": 196557.6844285714,
+    "candidates": [
+      "P",
+      "AU"
+    ],
+    "held_book": {
+      "held_n": 0,
+      "used_gross_pct": 0.0,
+      "used_atr_risk_pct": 0.0,
+      "held_buckets": {},
+      "note": "R5b：先平今天该平的仓，再用剩余持仓算组合上限（与回测同序）"
+    },
+    "selected": [
+      "P"
+    ]
+  },
+  "state_fingerprint": "3738fabd82338919"
 }

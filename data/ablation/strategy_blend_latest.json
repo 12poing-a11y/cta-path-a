@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "asof": "2026-11-25 16:35",
+  "asof": "2026-11-26 22:34",
   "disclaimer": "纸面研究：A=离散资金配比，B=消融上下文只读；代理曲线无 Path-A 成本/席位/ATR，跨族不可直接当实盘预期；观察袖套权重硬帽≤10%；全表仅保留收益>0且最大回撤≤15%的组合；不改 entry_filter / paper_book。",
   "observe_id": "proxy_observe_f_short_mom",
   "observe_cap": 0.1,
@@ -13,62 +13,76 @@
     "proxy_long_short_cwft",
     "proxy_observe_f_short_mom"
   ],
-  "n_common_days": 205,
+  "n_common_days": 203,
   "b_context": {
     "available": true,
-    "asof": "2026-11-25 16:35",
+    "asof": "2026-11-26 22:34",
     "grid_mode": "ablation",
     "top_pairs_by_ret": [
       {
-        "strategy_id": "proxy_cwft",
-        "variant": "no_F",
-        "variant_label": "关F期现",
-        "kept": [
-          "C",
-          "T"
-        ],
-        "ret_pct": 37.321,
-        "max_dd_pct": 9.572,
-        "calmar": 4.076
+        "strategy_id": "path_a",
+        "variant": "carry_filter",
+        "variant_label": "过滤改 carry",
+        "kept": null,
+        "ret_pct": 7.764,
+        "max_dd_pct": 6.821,
+        "calmar": 1.138
       },
       {
-        "strategy_id": "proxy_long_short_cwft",
-        "variant": "no_F",
-        "variant_label": "关F期现",
-        "kept": [
-          "C",
-          "LONG_MOM",
-          "SHORT_MOM"
-        ],
-        "ret_pct": 36.809,
-        "max_dd_pct": 10.706,
-        "calmar": 3.606
+        "strategy_id": "path_a",
+        "variant": "no_seats",
+        "variant_label": "关席位→base",
+        "kept": null,
+        "ret_pct": 6.307,
+        "max_dd_pct": 6.621,
+        "calmar": 0.953
       },
       {
-        "strategy_id": "proxy_cwft",
+        "strategy_id": "path_a",
+        "variant": "no_r20",
+        "variant_label": "关 min_r20",
+        "kept": null,
+        "ret_pct": -1.179,
+        "max_dd_pct": 7.243,
+        "calmar": -0.163
+      },
+      {
+        "strategy_id": "path_a",
         "variant": "full",
-        "variant_label": "完整",
-        "kept": [
-          "C",
-          "F",
-          "T"
-        ],
-        "ret_pct": 35.453,
-        "max_dd_pct": 10.154,
-        "calmar": 3.681
+        "variant_label": "完整 seats",
+        "kept": null,
+        "ret_pct": -1.721,
+        "max_dd_pct": 8.232,
+        "calmar": -0.209
       },
       {
-        "strategy_id": "proxy_long_short_cwft",
-        "variant": "no_long_mom",
-        "variant_label": "关长端动量",
-        "kept": [
-          "C",
-          "F",
-          "SHORT_MOM"
-        ],
-        "ret_pct": 35.208,
-        "max_dd_pct": 11.549,
-        "calmar": 3.212
+        "strategy_id": "path_a",
+        "variant": "no_carry_bypass",
+        "variant_label": "关 carry_bypass",
+        "kept": null,
+        "ret_pct": -3.971,
+        "max_dd_pct": 8.059,
+        "calmar": -0.493
+      }
+    ],
+    "top_pairs_by_calmar": [
+      {
+        "strategy_id": "path_a",
+        "variant": "carry_filter",
+        "variant_label": "过滤改 carry",
+        "kept": null,
+        "ret_pct": 7.764,
+        "max_dd_pct": 6.821,
+        "calmar": 1.138
+      },
+      {
+        "strategy_id": "path_a",
+        "variant": "no_seats",
+        "variant_label": "关席位→base",
+        "kept": null,
+        "ret_pct": 6.307,
+        "max_dd_pct": 6.621,
+        "calmar": 0.953
       },
       {
         "strategy_id": "proxy_cwft",
@@ -78,104 +92,59 @@
           "C",
           "F"
         ],
-        "ret_pct": 34.276,
-        "max_dd_pct": 11.797,
-        "calmar": 3.068
-      }
-    ],
-    "top_pairs_by_calmar": [
-      {
-        "strategy_id": "proxy_cwft",
-        "variant": "no_F",
-        "variant_label": "关F期现",
-        "kept": [
-          "C",
-          "T"
-        ],
-        "ret_pct": 37.321,
-        "max_dd_pct": 9.572,
-        "calmar": 4.076
-      },
-      {
-        "strategy_id": "proxy_cwft",
-        "variant": "full",
-        "variant_label": "完整",
-        "kept": [
-          "C",
-          "F",
-          "T"
-        ],
-        "ret_pct": 35.453,
-        "max_dd_pct": 10.154,
-        "calmar": 3.681
-      },
-      {
-        "strategy_id": "proxy_long_short_cwft",
-        "variant": "no_F",
-        "variant_label": "关F期现",
-        "kept": [
-          "C",
-          "LONG_MOM",
-          "SHORT_MOM"
-        ],
-        "ret_pct": 36.809,
-        "max_dd_pct": 10.706,
-        "calmar": 3.606
-      },
-      {
-        "strategy_id": "proxy_long_short_cwft",
-        "variant": "no_short_mom",
-        "variant_label": "关短端动量",
-        "kept": [
-          "C",
-          "F",
-          "LONG_MOM"
-        ],
-        "ret_pct": 32.942,
-        "max_dd_pct": 10.373,
-        "calmar": 3.392
+        "ret_pct": -4.111,
+        "max_dd_pct": 21.349,
+        "calmar": -0.137
       },
       {
         "strategy_id": "proxy_frontnext_st",
-        "variant": "full",
-        "variant_label": "完整",
+        "variant": "no_ST",
+        "variant_label": "关短趋势r5",
         "kept": [
-          "C",
-          "ST"
+          "C"
         ],
-        "ret_pct": 31.919,
-        "max_dd_pct": 10.148,
-        "calmar": 3.383
+        "ret_pct": -4.111,
+        "max_dd_pct": 21.349,
+        "calmar": -0.137
+      },
+      {
+        "strategy_id": "path_a",
+        "variant": "no_r20",
+        "variant_label": "关 min_r20",
+        "kept": null,
+        "ret_pct": -1.179,
+        "max_dd_pct": 7.243,
+        "calmar": -0.163
       }
     ],
     "best_full_strategies": [
       {
-        "strategy_id": "proxy_cwft",
-        "strategy_name": "本地代理·CWFT",
-        "ret_pct": 35.453,
-        "max_dd_pct": 10.154,
-        "calmar": 3.681
-      },
-      {
-        "strategy_id": "proxy_long_short_cwft",
-        "strategy_name": "本地代理·Long/Short CWFT",
-        "ret_pct": 32.766,
-        "max_dd_pct": 10.439,
-        "calmar": 3.353
+        "strategy_id": "path_a",
+        "strategy_name": "路径A seats",
+        "ret_pct": -1.721,
+        "max_dd_pct": 8.232,
+        "calmar": -0.209
       },
       {
         "strategy_id": "proxy_frontnext_st",
         "strategy_name": "本地代理·C_frontnext&ShortTrend",
-        "ret_pct": 31.919,
-        "max_dd_pct": 10.148,
-        "calmar": 3.383
+        "ret_pct": -8.338,
+        "max_dd_pct": 19.338,
+        "calmar": -0.411
       },
       {
-        "strategy_id": "path_a",
-        "strategy_name": "路径A seats",
-        "ret_pct": 7.197,
-        "max_dd_pct": 6.739,
-        "calmar": 1.068
+        "strategy_id": "proxy_cwft",
+        "strategy_name": "本地代理·CWFT",
+        "ret_pct": -9.109,
+        "max_dd_pct": 21.325,
+        "calmar": -0.418
+      },
+      {
+        "strategy_id": "proxy_long_short_cwft",
+        "strategy_name": "本地代理·Long/Short CWFT",
+        "ret_pct": -11.496,
+        "max_dd_pct": 22.384,
+        "calmar": -0.537
       }
     ]
   },
@@ -192,11 +161,11 @@
       "ok": true,
       "error": "",
       "risk_note": "",
-      "ret_pct": 5.948,
-      "max_dd_pct": 6.739,
-      "calmar": 0.883,
-      "n_days": 205,
-      "start": "2025-12-31",
+      "ret_pct": 2.09,
+      "max_dd_pct": 4.674,
+      "calmar": 0.447,
+      "n_days": 203,
+      "start": "2026-01-06",
       "end": "2026-11-09"
     },
     {
@@ -210,11 +179,11 @@
       "ok": true,
       "error": "",
       "risk_note": "",
-      "ret_pct": 6.962,
-      "max_dd_pct": 6.189,
-      "calmar": 1.125,
-      "n_days": 205,
-      "start": "2025-12-31",
+      "ret_pct": 3.298,
+      "max_dd_pct": 4.259,
+      "calmar": 0.774,
+      "n_days": 203,
+      "start": "2026-01-06",
       "end": "2026-11-09"
     },
     {
@@ -228,11 +197,11 @@
       "ok": true,
       "error": "",
       "risk_note": "",
-      "ret_pct": 7.974,
-      "max_dd_pct": 5.639,
-      "calmar": 1.414,
-      "n_days": 205,
-      "start": "2025-12-31",
+      "ret_pct": 4.509,
+      "max_dd_pct": 4.411,
+      "calmar": 1.022,
+      "n_days": 203,
+      "start": "2026-01-06",
       "end": "2026-11-09"
     },
     {
@@ -248,11 +217,11 @@
       "ok": true,
       "error": "",
       "risk_note": "",
-      "ret_pct": 11.977,
-      "max_dd_pct": 4.545,
-      "calmar": 2.635,
-      "n_days": 205,
-      "start": "2025-12-31",
+      "ret_pct": 8.544,
+      "max_dd_pct": 5.146,
+      "calmar": 1.66,
+      "n_days": 203,
+      "start": "2026-01-06",
       "end": "2026-11-09"
     },
     {
@@ -269,11 +238,11 @@
       "ok": true,
       "error": "",
       "risk_note": "",
-      "ret_pct": 14.103,
-      "max_dd_pct": 4.475,
-      "calmar": 3.152,
-      "n_days": 205,
-      "start": "2025-12-31",
+      "ret_pct": 11.105,
+      "max_dd_pct": 5.352,
+      "calmar": 2.075,
+      "n_days": 203,
+      "start": "2026-01-06",
       "end": "2026-11-09"
     }
   ],
@@ -293,41 +262,41 @@
       "blend_id": "pa60_proxy30_obs10",
       "label": "路径A 60% + 三完整代理 30% + 观察袖套 10%",
       "weights_zh": "路径A 60% + 本地代理·CWFT 10% + 本地代理·Long/Short CWFT 10% + 本地代理·C_frontnext&ShortTrend 10% + 观察袖套·F+短动量 10%",
-      "ret_pct": 14.103,
-      "max_dd_pct": 4.475,
-      "calmar": 3.152
+      "ret_pct": 11.105,
+      "max_dd_pct": 5.352,
+      "calmar": 2.075
     },
     {
       "blend_id": "pa70_proxy30",
       "label": "路径A 70% + 三完整代理等权 30%",
       "weights_zh": "路径A 70% + 本地代理·CWFT 10% + 本地代理·Long/Short CWFT 10% + 本地代理·C_frontnext&ShortTrend 10%",
-      "ret_pct": 11.977,
-      "max_dd_pct": 4.545,
-      "calmar": 2.635
+      "ret_pct": 8.544,
+      "max_dd_pct": 5.146,
+      "calmar": 1.66
     },
     {
       "blend_id": "pa90_obs10",
       "label": "路径A 90% + 观察袖套 10%",
       "weights_zh": "路径A 90% + 观察袖套·F+短动量 10%",
-      "ret_pct": 7.974,
-      "max_dd_pct": 5.639,
-      "calmar": 1.414
+      "ret_pct": 4.509,
+      "max_dd_pct": 4.411,
+      "calmar": 1.022
     },
     {
       "blend_id": "pa95_obs5",
       "label": "路径A 95% + 观察袖套 5%",
       "weights_zh": "路径A 95% + 观察袖套·F+短动量 5%",
-      "ret_pct": 6.962,
-      "max_dd_pct": 6.189,
-      "calmar": 1.125
+      "ret_pct": 3.298,
+      "max_dd_pct": 4.259,
+      "calmar": 0.774
     },
     {
       "blend_id": "path_a_100",
       "label": "100% 路径A",
       "weights_zh": "路径A 100%",
-      "ret_pct": 5.948,
-      "max_dd_pct": 6.739,
-      "calmar": 0.883
+      "ret_pct": 2.09,
+      "max_dd_pct": 4.674,
+      "calmar": 0.447
     }
   ],
   "best_by_ret": [
@@ -335,41 +304,41 @@
       "blend_id": "pa60_proxy30_obs10",
       "label": "路径A 60% + 三完整代理 30% + 观察袖套 10%",
       "weights_zh": "路径A 60% + 本地代理·CWFT 10% + 本地代理·Long/Short CWFT 10% + 本地代理·C_frontnext&ShortTrend 10% + 观察袖套·F+短动量 10%",
-      "ret_pct": 14.103,
-      "max_dd_pct": 4.475,
-      "calmar": 3.152
+      "ret_pct": 11.105,
+      "max_dd_pct": 5.352,
+      "calmar": 2.075
     },
     {
       "blend_id": "pa70_proxy30",
       "label": "路径A 70% + 三完整代理等权 30%",
       "weights_zh": "路径A 70% + 本地代理·CWFT 10% + 本地代理·Long/Short CWFT 10% + 本地代理·C_frontnext&ShortTrend 10%",
-      "ret_pct": 11.977,
-      "max_dd_pct": 4.545,
-      "calmar": 2.635
+      "ret_pct": 8.544,
+      "max_dd_pct": 5.146,
+      "calmar": 1.66
     },
     {
       "blend_id": "pa90_obs10",
       "label": "路径A 90% + 观察袖套 10%",
       "weights_zh": "路径A 90% + 观察袖套·F+短动量 10%",
-      "ret_pct": 7.974,
-      "max_dd_pct": 5.639,
-      "calmar": 1.414
+      "ret_pct": 4.509,
+      "max_dd_pct": 4.411,
+      "calmar": 1.022
     },
     {
       "blend_id": "pa95_obs5",
       "label": "路径A 95% + 观察袖套 5%",
       "weights_zh": "路径A 95% + 观察袖套·F+短动量 5%",
-      "ret_pct": 6.962,
-      "max_dd_pct": 6.189,
-      "calmar": 1.125
+      "ret_pct": 3.298,
+      "max_dd_pct": 4.259,
+      "calmar": 0.774
     },
     {
       "blend_id": "path_a_100",
       "label": "100% 路径A",
       "weights_zh": "路径A 100%",
-      "ret_pct": 5.948,
-      "max_dd_pct": 6.739,
-      "calmar": 0.883
+      "ret_pct": 2.09,
+      "max_dd_pct": 4.674,
+      "calmar": 0.447
     }
   ]
 }

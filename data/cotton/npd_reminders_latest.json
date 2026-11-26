@@ -3,7 +3,7 @@
   "live_trading": false,
   "shadow": true,
   "counts_toward_score": false,
-  "asof": "2026-11-25",
+  "asof": "2026-11-26",
   "is_entry_day": false,
   "n": 0,
   "n_scored": 0,
@@ -259,7 +259,7 @@
     "CN_CUSTOMS_IMPORT": "海关棉花进口月度数据"
   },
   "schema": "cta-npd-reminders-v1",
-  "generated_at": "2026-11-25 16:26:12",
+  "generated_at": "2026-11-26 22:33:54",
   "status": "Research",
   "note": "Snapshot only; cotton_events.csv remains human-audited."
 }

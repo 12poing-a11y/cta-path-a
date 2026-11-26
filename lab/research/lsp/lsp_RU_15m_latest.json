@@ -2,7 +2,7 @@
   "ok": true,
   "schema": "cta-lsp-run-v1",
   "symbol": "RU",
-  "contract": "RU2701",
+  "contract": "RU2705",
   "timeframe": "15m",
   "n_bars": 1023,
   "n_events": 193,
@@ -108,7 +108,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-10 22:30:00",
       "timeframe": "15m",
       "bar_index": 775,
@@ -141,7 +141,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-11 09:45:00",
       "timeframe": "15m",
       "bar_index": 780,
@@ -172,7 +172,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-11 11:15:00",
       "timeframe": "15m",
       "bar_index": 785,
@@ -203,7 +203,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-11 14:30:00",
       "timeframe": "15m",
       "bar_index": 790,
@@ -234,7 +234,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-11 21:45:00",
       "timeframe": "15m",
       "bar_index": 795,
@@ -265,7 +265,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-11 23:00:00",
       "timeframe": "15m",
       "bar_index": 800,
@@ -296,7 +296,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-12 10:15:00",
       "timeframe": "15m",
       "bar_index": 805,
@@ -327,7 +327,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-12 13:45:00",
       "timeframe": "15m",
       "bar_index": 810,
@@ -358,7 +358,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-12 15:00:00",
       "timeframe": "15m",
       "bar_index": 815,
@@ -389,7 +389,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-12 22:15:00",
       "timeframe": "15m",
       "bar_index": 820,
@@ -420,7 +420,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-13 09:30:00",
       "timeframe": "15m",
       "bar_index": 825,
@@ -451,7 +451,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-13 11:00:00",
       "timeframe": "15m",
       "bar_index": 830,
@@ -482,7 +482,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-13 14:15:00",
       "timeframe": "15m",
       "bar_index": 835,
@@ -515,7 +515,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-13 21:30:00",
       "timeframe": "15m",
       "bar_index": 840,
@@ -546,7 +546,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-13 22:45:00",
       "timeframe": "15m",
       "bar_index": 845,
@@ -577,7 +577,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-16 10:00:00",
       "timeframe": "15m",
       "bar_index": 850,
@@ -608,7 +608,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-16 11:30:00",
       "timeframe": "15m",
       "bar_index": 855,
@@ -639,7 +639,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-16 14:45:00",
       "timeframe": "15m",
       "bar_index": 860,
@@ -670,7 +670,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-16 22:00:00",
       "timeframe": "15m",
       "bar_index": 865,
@@ -701,7 +701,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-17 09:15:00",
       "timeframe": "15m",
       "bar_index": 870,
@@ -732,7 +732,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-17 10:45:00",
       "timeframe": "15m",
       "bar_index": 875,
@@ -763,7 +763,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-17 14:00:00",
       "timeframe": "15m",
       "bar_index": 880,
@@ -794,7 +794,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-17 21:15:00",
       "timeframe": "15m",
       "bar_index": 885,
@@ -825,7 +825,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-17 22:30:00",
       "timeframe": "15m",
       "bar_index": 890,
@@ -856,7 +856,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-18 09:45:00",
       "timeframe": "15m",
       "bar_index": 895,
@@ -887,7 +887,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-18 11:15:00",
       "timeframe": "15m",
       "bar_index": 900,
@@ -918,7 +918,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-18 14:30:00",
       "timeframe": "15m",
       "bar_index": 905,
@@ -949,7 +949,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-18 21:45:00",
       "timeframe": "15m",
       "bar_index": 910,
@@ -982,7 +982,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-18 23:00:00",
       "timeframe": "15m",
       "bar_index": 915,
@@ -1013,7 +1013,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-19 10:15:00",
       "timeframe": "15m",
       "bar_index": 920,
@@ -1044,7 +1044,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-19 13:45:00",
       "timeframe": "15m",
       "bar_index": 925,
@@ -1075,7 +1075,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-19 15:00:00",
       "timeframe": "15m",
       "bar_index": 930,
@@ -1106,7 +1106,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-19 22:15:00",
       "timeframe": "15m",
       "bar_index": 935,
@@ -1137,7 +1137,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-20 09:30:00",
       "timeframe": "15m",
       "bar_index": 940,
@@ -1170,7 +1170,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-20 11:00:00",
       "timeframe": "15m",
       "bar_index": 945,
@@ -1203,7 +1203,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-20 14:15:00",
       "timeframe": "15m",
       "bar_index": 950,
@@ -1234,7 +1234,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-20 21:30:00",
       "timeframe": "15m",
       "bar_index": 955,
@@ -1265,7 +1265,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-20 22:45:00",
       "timeframe": "15m",
       "bar_index": 960,
@@ -1296,7 +1296,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-23 10:00:00",
       "timeframe": "15m",
       "bar_index": 965,
@@ -1327,7 +1327,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-23 11:30:00",
       "timeframe": "15m",
       "bar_index": 970,
@@ -1358,7 +1358,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-23 14:45:00",
       "timeframe": "15m",
       "bar_index": 975,
@@ -1389,7 +1389,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-23 22:00:00",
       "timeframe": "15m",
       "bar_index": 980,
@@ -1420,7 +1420,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-24 09:15:00",
       "timeframe": "15m",
       "bar_index": 985,
@@ -1451,7 +1451,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-24 10:45:00",
       "timeframe": "15m",
       "bar_index": 990,
@@ -1482,7 +1482,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-24 14:00:00",
       "timeframe": "15m",
       "bar_index": 995,
@@ -1513,7 +1513,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-24 21:15:00",
       "timeframe": "15m",
       "bar_index": 1000,
@@ -1544,7 +1544,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-24 22:30:00",
       "timeframe": "15m",
       "bar_index": 1005,
@@ -1575,7 +1575,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-25 09:45:00",
       "timeframe": "15m",
       "bar_index": 1010,
@@ -1606,7 +1606,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-25 11:15:00",
       "timeframe": "15m",
       "bar_index": 1015,
@@ -1637,7 +1637,7 @@
     {
       "schema": "cta-lsp-event-v1",
       "symbol": "RU",
-      "contract": "RU2701",
+      "contract": "RU2705",
       "timestamp": "2026-11-25 14:30:00",
       "timeframe": "15m",
       "bar_index": 1020,

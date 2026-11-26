@@ -7,11 +7,11 @@
     "ok": true,
     "schema": "cta-gamma-migration-v1",
     "contract": "OI2701",
-    "n_snapshots": 10,
-    "n_events": 18,
+    "n_snapshots": 12,
+    "n_events": 22,
     "label_counts": {
-      "unchanged": 16,
-      "new_or_shifted_wall": 2
+      "unchanged": 18,
+      "new_or_shifted_wall": 4
     },
     "live_trading": false,
     "note": "Display GEX convention; OI does not identify dealer side.",
@@ -213,6 +213,50 @@
         "gex_change_pct": 0.1729,
         "futures_price": 9932.0,
         "dist_pct": -1.329
+      },
+      {
+        "date": "2026-11-25",
+        "side": "call",
+        "from": 10400.0,
+        "to": 10000.0,
+        "move": -400.0,
+        "label": "new_or_shifted_wall",
+        "gex_change_pct": -0.0825,
+        "futures_price": 9836.0,
+        "dist_pct": 1.667
+      },
+      {
+        "date": "2026-11-25",
+        "side": "put",
+        "from": 9800.0,
+        "to": 9800.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": -0.0547,
+        "futures_price": 9836.0,
+        "dist_pct": -0.366
+      },
+      {
+        "date": "2026-11-26",
+        "side": "call",
+        "from": 10000.0,
+        "to": 10400.0,
+        "move": 400.0,
+        "label": "new_or_shifted_wall",
+        "gex_change_pct": 0.069,
+        "futures_price": 9900.0,
+        "dist_pct": 5.051
+      },
+      {
+        "date": "2026-11-26",
+        "side": "put",
+        "from": 9800.0,
+        "to": 9800.0,
+        "move": 0.0,
+        "label": "unchanged",
+        "gex_change_pct": 0.0907,
+        "futures_price": 9900.0,
+        "dist_pct": -1.01
       }
     ]
   },
@@ -225,43 +269,11 @@
     "ok": true,
     "schema": "cta-gamma-iv-oi-v1",
     "product": "OI",
-    "n_days": 4,
-    "regime_counts": {
-      "iv_up_oi_down": 1,
-      "iv_down_oi_up": 1,
-      "iv_up_oi_up": 1
-    },
+    "n_days": 0,
+    "regime_counts": {},
     "live_trading": false,
     "note": "OI-weighted IV; not dealer direction. Prefer vol demand reading over side inference.",
-    "changes_tail": [
-      {
-        "date": "2026-11-19",
-        "d_iv": 0.026827,
-        "d_oi": -783.0,
-        "regime": "iv_up_oi_down",
-        "call_put_oi_same_sign": false,
-        "iv": 0.228847,
-        "oi": 81381.0
-      },
-      {
-        "date": "2026-11-20",
-        "d_iv": -0.036942,
-        "d_oi": 3381.0,
-        "regime": "iv_down_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.191905,
-        "oi": 84762.0
-      },
-      {
-        "date": "2026-11-23",
-        "d_iv": 0.012483,
-        "d_oi": 4355.0,
-        "regime": "iv_up_oi_up",
-        "call_put_oi_same_sign": true,
-        "iv": 0.204388,
-        "oi": 89117.0
-      }
-    ]
+    "changes_tail": []
   },
   "n_daily_bars": 0,
   "live_trading": false,

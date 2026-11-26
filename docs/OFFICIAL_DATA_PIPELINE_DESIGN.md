@@ -142,3 +142,22 @@ cta-official-data/
 **待确认**：
 - 本地 main 当前领先 origin，GitHub 日更产物（`.cache/history`）要在本地同步到位，需要先从 origin 拉取并合并。这一步未执行，也未推送。
 - 此前理解为"GitHub 累计"指 Sina 日更缓存。官方原始数据仍按决定 2 留在本地（仓库只存哈希）。如需把官方原始数据也放到 GitHub，请说明。
+
+## 存储位置变更：官方数据进入 GitHub 私有仓库（2026-11-26，磊）
+
+磊确认：官方原始数据要在 GitHub 上累计，需要时同步到本地。以下替代决定 2 中"仓库外、仅哈希入库"的做法：
+
+- **私有仓库**：`12poing-a11y/cta-official-data`（private）。正式库 `D:\AI\data\official\` 本身就是该仓库的工作目录（`git` 远程为 origin）。
+- **入库内容**：`raw/`（gz 原始 body + manifest）、`revisions/`（修订原件）、`state.json`、`reports/`、`alerts/`、`derived/`。`responses/`（DCE 原始应答）与 `logs/` 通过 `.gitignore` 排除，它们与 `raw/` 内容重复或仅用于排查。
+- **主仓库**：`official_pipeline/manifest_repo/` 仍保留哈希清单副本（审计用），代码与文档在主仓库。
+- **自动同步**：`run` 与 `judge` 结束时自动执行 `sync`（提交 → `pull --rebase` → `push`）。推送失败只记日志，本地保留提交，下次运行再推。
+- **手动命令**：
+  - `python -m official_pipeline verify`：逐个重算已存 body 的 sha256 与清单比对，只读，给出问题清单。
+  - `python -m official_pipeline sync`：立即提交并推送。
+  - `python -m official_pipeline pull`：拉取（换机或同步到本地时用）。
+
+**准确性依据（已执行）**：
+- 本地库 `verify`：7939 个已存 body 全部与清单 sha256 一致，0 问题。
+- 全新 `git clone` 到临时目录后，对克隆出的库运行 `verify`：7939 个全部一致，0 问题。这证明 GitHub 上的数据与本地一致，同步链路可用。
+
+**未变更**：主仓库 `main` 仍领先 origin 32 个提交，**未推送**（磊确认暂不推送）。

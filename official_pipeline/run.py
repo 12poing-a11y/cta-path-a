@@ -9,6 +9,9 @@
   python -m official_pipeline status           streak / gate status
   python -m official_pipeline export-hashes    hash manifests -> official_pipeline/manifest_repo (only repo-side data)
   python -m official_pipeline install-tasks    register Windows scheduled tasks (wake-to-run)
+  python -m official_pipeline verify          re-hash every stored body vs manifest (accuracy check, read-only)
+  python -m official_pipeline sync            commit + push the store to the private GitHub repo (run/judge do this too)
+  python -m official_pipeline pull            pull the store from GitHub (e.g. on another machine)
 
 Exit codes: 0 ok | 1 fetch incomplete | 2 validation or derivation failed | 3 revision of a stored day | 9 crash.
 Trading-day rule (deviation from a holiday table, documented in the design doc): a weekday is CLOSED only if all three
@@ -17,8 +20,10 @@ exchanges answered "not published" (404 / empty). Any error, HTTP 412 or format 
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import shutil
+import subprocess
 import sys
 import traceback
 from datetime import date, datetime, timedelta
@@ -27,7 +32,7 @@ from pathlib import Path
 from . import config as C
 from . import state as S
 from .alerts import notify, write_alert
-from .store import Store, utc_now
+from .store import Store, sha256_bytes, utc_now
 
 EXIT_OK, EXIT_FETCH, EXIT_VALID, EXIT_REVISION, EXIT_CRASH = 0, 1, 2, 3, 9
 NOT_PUBLISHED = {"not_published", "404", "empty", "status:404", "status:empty"}
@@ -261,6 +266,61 @@ def _start_day(st: dict, today: date) -> str:
     return st["start_day"]
 
 
+# ---- GitHub store (private repo cta-official-data) -------------------------------------------------------------------------
+def _git(args: list[str]) -> subprocess.CompletedProcess:
+    return subprocess.run(["git", *args], cwd=str(C.STORE), capture_output=True, text=True, encoding="utf-8", errors="replace")
+
+
+def sync_store(log, message: str) -> bool:
+    """Commit everything new in the store and push to the private repo. Never raises: a failed push is logged and
+    kept locally, and the next run pushes the accumulated commits again."""
+    if not (C.STORE / ".git").exists():
+        log("store is not a git repo; sync skipped")
+        return False
+    try:
+        _git(["add", "-A"])
+        if _git(["diff", "--cached", "--quiet"]).returncode != 0:
+            r = _git(["commit", "-q", "-m", message])
+            if r.returncode != 0:
+                log("store commit failed: " + (r.stderr or r.stdout)[:300])
+                return False
+        r = _git(["pull", "--rebase", "origin", "main"])
+        if r.returncode != 0:
+            log("store pull --rebase failed: " + (r.stderr or r.stdout)[:300])
+            return False
+        r = _git(["push", "origin", "main"])
+        if r.returncode != 0:
+            log("store push failed (kept locally, retried next run): " + (r.stderr or r.stdout)[:300])
+            return False
+        log("store synced to GitHub")
+        return True
+    except Exception as e:  # noqa: BLE001
+        log("store sync error: " + repr(e)[:200])
+        return False
+
+
+def cmd_verify(log) -> int:
+    """Re-hash every stored raw body and compare with its manifest sha256 (accuracy check, read-only)."""
+    store = Store()
+    bad: list[str] = []
+    n = 0
+    for ex in C.EXCHANGES:
+        for day, rec in sorted(store.load_manifest(ex).items()):
+            if rec.get("status") != "ok":
+                continue
+            n += 1
+            p = store.raw_path(ex, day)
+            if not p.exists():
+                bad.append(f"{ex} {day}: raw file missing")
+                continue
+            if sha256_bytes(gzip.decompress(p.read_bytes())) != rec.get("sha256"):
+                bad.append(f"{ex} {day}: sha256 differs from manifest")
+    log(f"verify: {n} stored bodies checked, {len(bad)} problems")
+    for b in bad[:50]:
+        log("  " + b)
+    return EXIT_OK if not bad else EXIT_VALID
+
+
 def cmd_run(today: date, log) -> int:
     store = Store()
     st = S.load()
@@ -275,6 +335,7 @@ def cmd_run(today: date, log) -> int:
         notify("CTA 官方数据：已入库日期出现修订", str(p))
         return EXIT_REVISION
     log(f"run {today}: window {days[0]}..{days[-1]}; new {res['new']}; failed {res['failed']}")
+    sync_store(log, f"run {today.isoformat()}: fetched {len(res['new'])} new, {len(res['failed'])} failed")
     return EXIT_OK
 
 
@@ -312,6 +373,7 @@ def cmd_judge(today: date, day: str | None, log) -> int:
     if worst == EXIT_OK:
         maybe_backup(log=log)
     log(f"streak={st['streak']} ready={S.gate_ready(st)}")
+    sync_store(log, f"judge {today.isoformat()}: streak {st['streak']}, pending {len(pending)}, abnormal {len([d for d in st['days'] if not st['days'][d]['normal']])}")
     return worst
 
 
@@ -336,7 +398,7 @@ def cmd_export_hashes() -> int:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="official_pipeline")
-    ap.add_argument("cmd", choices=["run", "judge", "seed", "status", "export-hashes", "install-tasks"])
+    ap.add_argument("cmd", choices=["run", "judge", "seed", "status", "export-hashes", "install-tasks", "verify", "sync", "pull"])
     ap.add_argument("--day", default=None)
     a = ap.parse_args(argv)
     log = _log_factory()
@@ -351,6 +413,15 @@ def main(argv=None) -> int:
             rep = verify_and_copy()
             print(json.dumps(rep, ensure_ascii=False, indent=1, default=str))
             return EXIT_OK if not rep["mismatch"] else EXIT_VALID
+        if a.cmd == "verify":
+            return cmd_verify(log)
+        if a.cmd == "sync":
+            ok = sync_store(log, f"manual sync {today.isoformat()}")
+            return EXIT_OK if ok else EXIT_FETCH
+        if a.cmd == "pull":
+            r = _git(["pull", "--rebase", "origin", "main"])
+            log("pull: " + (r.stdout + r.stderr).strip()[-300:])
+            return EXIT_OK if r.returncode == 0 else EXIT_FETCH
         if a.cmd == "status":
             return cmd_status()
         if a.cmd == "export-hashes":

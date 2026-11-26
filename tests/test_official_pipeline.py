@@ -183,6 +183,37 @@ def test_task_xml_has_wake_and_catchup_and_the_right_command():
     assert install_tasks.TASKS["CTA_Official_Judge_0830"] == ("08:30", "judge")
 
 
+# ---- accuracy check and GitHub sync ----------------------------------------------------------------------------------------
+def test_verify_flags_tampered_and_missing_bodies(tmp_path, monkeypatch):
+    raw = tmp_path / "raw"
+    store = Store(raw_root=raw, revisions_root=tmp_path / "rev")
+    good, bad = b'{"a":1}', b'{"a":2}'
+    store.put("shfe", "2026-11-26", good)
+    store.put("shfe", "2026-11-25", bad)
+    store.raw_path("shfe", "2026-11-25").write_bytes(gzip.compress(b'{"a":999}'))  # tampered after manifest
+    store.put("shfe", "2026-11-24", b"x")
+    store.raw_path("shfe", "2026-11-24").unlink()  # missing file
+    monkeypatch.setattr(R, "Store", lambda: store)
+    lines: list[str] = []
+    rc = R.cmd_verify(lines.append)
+    assert rc == R.EXIT_VALID
+    text = "\n".join(lines)
+    assert "2026-11-25: sha256 differs" in text and "2026-11-24: raw file missing" in text
+    assert "2026-11-26" not in text.replace("checked", "")  # the good body is not reported
+
+
+def test_sync_is_skipped_safely_when_store_is_not_a_repo(tmp_path, monkeypatch):
+    monkeypatch.setattr(R.C, "STORE", tmp_path)  # no .git here
+    lines: list[str] = []
+    assert R.sync_store(lines.append, "test") is False
+    assert any("not a git repo" in s for s in lines)
+
+
+def test_store_gitignore_keeps_raw_replies_out_of_git():
+    gi = (C.STORE / ".gitignore").read_text(encoding="utf-8") if (C.STORE / ".gitignore").exists() else ""
+    assert "responses/" in gi and "logs/" in gi
+
+
 # ---- config guard: store must be outside the repo -----------------------------------------------------------------------
 def test_store_is_outside_repo_and_protected_files_not_referenced():
     assert ROOT not in C.STORE.parents and C.STORE != ROOT

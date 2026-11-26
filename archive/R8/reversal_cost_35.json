@@ -1,0 +1,399 @@
+{
+ "n_events": 35,
+ "total_cost_per_lot_if_held_yuan": {
+  "base": 4386.21,
+  "stress": 7432.76
+ },
+ "mean_per_event_per_lot_yuan": {
+  "base": 125.32,
+  "stress": 212.36
+ },
+ "note": "cost of the 4 extra fills per reversal event for ONE lot held through it; real cost = x lots held x only when a position was held",
+ "events": [
+  {
+   "symbol": "AL",
+   "date": "2016-04-05",
+   "old_main": "AL1606",
+   "new_main": "AL1604",
+   "new_vol": 7170.0,
+   "old_vol": 83516.0,
+   "px": 11850.0,
+   "cost_per_lot_4fills_base": 160.0,
+   "cost_per_lot_4fills_stress": 275.0
+  },
+  {
+   "symbol": "AL",
+   "date": "2017-10-09",
+   "old_main": "AL1712",
+   "new_main": "AL1710",
+   "new_vol": 15942.0,
+   "old_vol": 228044.0,
+   "px": 16685.0,
+   "cost_per_lot_4fills_base": 160.0,
+   "cost_per_lot_4fills_stress": 275.0
+  },
+  {
+   "symbol": "AL",
+   "date": "2020-02-10",
+   "old_main": "AL2003",
+   "new_main": "AL2004",
+   "new_vol": 34228.0,
+   "old_vol": 32053.0,
+   "px": 13715.0,
+   "cost_per_lot_4fills_base": 160.0,
+   "cost_per_lot_4fills_stress": 275.0
+  },
+  {
+   "symbol": "AL",
+   "date": "2020-02-12",
+   "old_main": "AL2004",
+   "new_main": "AL2003",
+   "new_vol": 35508.0,
+   "old_vol": 23955.0,
+   "px": 13760.0,
+   "cost_per_lot_4fills_base": 160.0,
+   "cost_per_lot_4fills_stress": 275.0
+  },
+  {
+   "symbol": "BU",
+   "date": "2023-04-06",
+   "old_main": "BU2306",
+   "new_main": "BU2307",
+   "new_vol": 117476.0,
+   "old_vol": 141136.0,
+   "px": 3807.0,
+   "cost_per_lot_4fills_base": 78.07,
+   "cost_per_lot_4fills_stress": 127.59
+  },
+  {
+   "symbol": "BU",
+   "date": "2023-04-07",
+   "old_main": "BU2307",
+   "new_main": "BU2306",
+   "new_vol": 155511.0,
+   "old_vol": 333548.0,
+   "px": 3809.0,
+   "cost_per_lot_4fills_base": 78.09,
+   "cost_per_lot_4fills_stress": 127.61
+  },
+  {
+   "symbol": "BU",
+   "date": "2023-04-10",
+   "old_main": "BU2306",
+   "new_main": "BU2307",
+   "new_vol": 116611.0,
+   "old_vol": 138248.0,
+   "px": 3823.0,
+   "cost_per_lot_4fills_base": 78.23,
+   "cost_per_lot_4fills_stress": 127.79
+  },
+  {
+   "symbol": "BU",
+   "date": "2023-04-11",
+   "old_main": "BU2307",
+   "new_main": "BU2308",
+   "new_vol": 159783.0,
+   "old_vol": 295781.0,
+   "px": 3844.0,
+   "cost_per_lot_4fills_base": 78.44,
+   "cost_per_lot_4fills_stress": 128.05
+  },
+  {
+   "symbol": "BU",
+   "date": "2023-04-13",
+   "old_main": "BU2307",
+   "new_main": "BU2306",
+   "new_vol": 158479.0,
+   "old_vol": 134138.0,
+   "px": 3909.0,
+   "cost_per_lot_4fills_base": 79.09,
+   "cost_per_lot_4fills_stress": 128.86
+  },
+  {
+   "symbol": "CU",
+   "date": "2016-04-05",
+   "old_main": "CU1606",
+   "new_main": "CU1604",
+   "new_vol": 18330.0,
+   "old_vol": 204600.0,
+   "px": 36730.0,
+   "cost_per_lot_4fills_base": 236.73,
+   "cost_per_lot_4fills_stress": 445.91
+  },
+  {
+   "symbol": "CU",
+   "date": "2017-10-09",
+   "old_main": "CU1712",
+   "new_main": "CU1710",
+   "new_vol": 31928.0,
+   "old_vol": 87856.0,
+   "px": 52130.0,
+   "cost_per_lot_4fills_base": 252.13,
+   "cost_per_lot_4fills_stress": 465.16
+  },
+  {
+   "symbol": "EB",
+   "date": "2020-09-28",
+   "old_main": "EB2101",
+   "new_main": "EB2011",
+   "new_vol": 26188.0,
+   "old_vol": 83546.0,
+   "px": 5645.0,
+   "cost_per_lot_4fills_base": 40.0,
+   "cost_per_lot_4fills_stress": 65.0
+  },
+  {
+   "symbol": "FU",
+   "date": "2023-08-28",
+   "old_main": "FU2310",
+   "new_main": "FU2311",
+   "new_vol": 463542.0,
+   "old_vol": 550809.0,
+   "px": 3583.0,
+   "cost_per_lot_4fills_base": 75.83,
+   "cost_per_lot_4fills_stress": 124.79
+  },
+  {
+   "symbol": "FU",
+   "date": "2023-08-29",
+   "old_main": "FU2311",
+   "new_main": "FU2310",
+   "new_vol": 465195.0,
+   "old_vol": 436970.0,
+   "px": 3426.0,
+   "cost_per_lot_4fills_base": 74.26,
+   "cost_per_lot_4fills_stress": 122.82
+  },
+  {
+   "symbol": "I",
+   "date": "2017-10-09",
+   "old_main": "I1801",
+   "new_main": "I1805",
+   "new_vol": 71583.0,
+   "old_vol": 885626.0,
+   "px": 442.5,
+   "cost_per_lot_4fills_base": 217.7,
+   "cost_per_lot_4fills_stress": 422.12
+  },
+  {
+   "symbol": "I",
+   "date": "2020-12-22",
+   "old_main": "I2105",
+   "new_main": "I2102",
+   "new_vol": 66768.0,
+   "old_vol": 692065.0,
+   "px": 1055.0,
+   "cost_per_lot_4fills_base": 242.2,
+   "cost_per_lot_4fills_stress": 452.75
+  },
+  {
+   "symbol": "JD",
+   "date": "2016-04-05",
+   "old_main": "JD1609",
+   "new_main": "JD1605",
+   "new_vol": 12825.0,
+   "old_vol": 104373.0,
+   "px": 3776.0,
+   "cost_per_lot_4fills_base": 153.28,
+   "cost_per_lot_4fills_stress": 221.6
+  },
+  {
+   "symbol": "JD",
+   "date": "2020-02-04",
+   "old_main": "JD2005",
+   "new_main": "JD2009",
+   "new_vol": 104371.0,
+   "old_vol": 420664.0,
+   "px": 3179.0,
+   "cost_per_lot_4fills_base": 135.37,
+   "cost_per_lot_4fills_stress": 199.21
+  },
+  {
+   "symbol": "JD",
+   "date": "2020-06-24",
+   "old_main": "JD2009",
+   "new_main": "JD2008",
+   "new_vol": 346885.0,
+   "old_vol": 320722.0,
+   "px": 3900.0,
+   "cost_per_lot_4fills_base": 157.0,
+   "cost_per_lot_4fills_stress": 226.25
+  },
+  {
+   "symbol": "JD",
+   "date": "2020-06-30",
+   "old_main": "JD2008",
+   "new_main": "JD2009",
+   "new_vol": 278212.0,
+   "old_vol": 338745.0,
+   "px": 3552.0,
+   "cost_per_lot_4fills_base": 146.56,
+   "cost_per_lot_4fills_stress": 213.2
+  },
+  {
+   "symbol": "JD",
+   "date": "2020-07-01",
+   "old_main": "JD2009",
+   "new_main": "JD2008",
+   "new_vol": 257984.0,
+   "old_vol": 365621.0,
+   "px": 3966.0,
+   "cost_per_lot_4fills_base": 158.98,
+   "cost_per_lot_4fills_stress": 228.72
+  },
+  {
+   "symbol": "JD",
+   "date": "2020-07-02",
+   "old_main": "JD2008",
+   "new_main": "JD2009",
+   "new_vol": 290262.0,
+   "old_vol": 320384.0,
+   "px": 3665.0,
+   "cost_per_lot_4fills_base": 149.95,
+   "cost_per_lot_4fills_stress": 217.44
+  },
+  {
+   "symbol": "JD",
+   "date": "2020-07-03",
+   "old_main": "JD2009",
+   "new_main": "JD2008",
+   "new_vol": 190100.0,
+   "old_vol": 268741.0,
+   "px": 3930.0,
+   "cost_per_lot_4fills_base": 157.9,
+   "cost_per_lot_4fills_stress": 227.38
+  },
+  {
+   "symbol": "JM",
+   "date": "2020-04-02",
+   "old_main": "JM2005",
+   "new_main": "JM2009",
+   "new_vol": 61309.0,
+   "old_vol": 63967.0,
+   "px": 1233.0,
+   "cost_per_lot_4fills_base": 149.59,
+   "cost_per_lot_4fills_stress": 276.99
+  },
+  {
+   "symbol": "JM",
+   "date": "2020-04-03",
+   "old_main": "JM2009",
+   "new_main": "JM2005",
+   "new_vol": 52388.0,
+   "old_vol": 59328.0,
+   "px": 1075.0,
+   "cost_per_lot_4fills_base": 145.8,
+   "cost_per_lot_4fills_stress": 272.25
+  },
+  {
+   "symbol": "JM",
+   "date": "2020-10-30",
+   "old_main": "JM2101",
+   "new_main": "JM2102",
+   "new_vol": 77267.0,
+   "old_vol": 66801.0,
+   "px": 1355.5,
+   "cost_per_lot_4fills_base": 152.53,
+   "cost_per_lot_4fills_stress": 280.67
+  },
+  {
+   "symbol": "JM",
+   "date": "2020-11-03",
+   "old_main": "JM2102",
+   "new_main": "JM2101",
+   "new_vol": 91639.0,
+   "old_vol": 42695.0,
+   "px": 1301.5,
+   "cost_per_lot_4fills_base": 151.24,
+   "cost_per_lot_4fills_stress": 279.05
+  },
+  {
+   "symbol": "JM",
+   "date": "2020-11-05",
+   "old_main": "JM2101",
+   "new_main": "JM2102",
+   "new_vol": 69498.0,
+   "old_vol": 84694.0,
+   "px": 1306.5,
+   "cost_per_lot_4fills_base": 151.36,
+   "cost_per_lot_4fills_stress": 279.19
+  },
+  {
+   "symbol": "M",
+   "date": "2016-04-05",
+   "old_main": "M1609",
+   "new_main": "M1605",
+   "new_vol": 30727.0,
+   "old_vol": 518673.0,
+   "px": 2354.0,
+   "cost_per_lot_4fills_base": 70.0,
+   "cost_per_lot_4fills_stress": 117.5
+  },
+  {
+   "symbol": "NI",
+   "date": "2022-03-11",
+   "old_main": "NI2204",
+   "new_main": "NI2208",
+   "new_vol": 27696.0,
+   "old_vol": 5187.0,
+   "px": 222190.0,
+   "cost_per_lot_4fills_base": 52.0,
+   "cost_per_lot_4fills_stress": 95.0
+  },
+  {
+   "symbol": "PP",
+   "date": "2021-12-28",
+   "old_main": "PP2205",
+   "new_main": "PP2202",
+   "new_vol": 48672.0,
+   "old_vol": 568364.0,
+   "px": 7980.0,
+   "cost_per_lot_4fills_base": 40.0,
+   "cost_per_lot_4fills_stress": 65.0
+  },
+  {
+   "symbol": "RB",
+   "date": "2016-04-05",
+   "old_main": "RB1610",
+   "new_main": "RB1605",
+   "new_vol": 835324.0,
+   "old_vol": 7784670.0,
+   "px": 2194.0,
+   "cost_per_lot_4fills_base": 83.88,
+   "cost_per_lot_4fills_stress": 134.85
+  },
+  {
+   "symbol": "SR",
+   "date": "2024-09-25",
+   "old_main": "SR2501",
+   "new_main": "SR2505",
+   "new_vol": 51134.0,
+   "old_vol": 372183.0,
+   "px": 5921.0,
+   "cost_per_lot_4fills_base": 80.0,
+   "cost_per_lot_4fills_stress": 130.0
+  },
+  {
+   "symbol": "V",
+   "date": "2020-10-16",
+   "old_main": "V2101",
+   "new_main": "V2102",
+   "new_vol": 50004.0,
+   "old_vol": 141923.0,
+   "px": 6855.0,
+   "cost_per_lot_4fills_base": 40.0,
+   "cost_per_lot_4fills_stress": 65.0
+  },
+  {
+   "symbol": "V",
+   "date": "2020-12-22",
+   "old_main": "V2105",
+   "new_main": "V2103",
+   "new_vol": 22513.0,
+   "old_vol": 351822.0,
+   "px": 7465.0,
+   "cost_per_lot_4fills_base": 40.0,
+   "cost_per_lot_4fills_stress": 65.0
+  }
+ ]
+}

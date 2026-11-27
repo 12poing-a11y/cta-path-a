@@ -1,11 +1,11 @@
 {
   "ok": true,
-  "desk_score": 49.4,
+  "desk_score": 49.8,
   "parts": [
     {
       "名": "全面统计分",
       "权重": 0.55,
-      "分": 46.7
+      "分": 47.3
     },
     {
       "名": "账本盯市",
@@ -23,11 +23,11 @@
     "book_mark": 0.2,
     "selected": 0.25
   },
-  "full_score": 46.7,
+  "full_score": 47.3,
   "book": {
     "ok": true,
     "source": "paper_book",
-    "asof": "2026-11-26",
+    "asof": "2026-11-27",
     "equity": 196557.68,
     "equity_floating": 0.0,
     "equity_mark": 196557.68,
@@ -40,10 +40,10 @@
       "P"
     ],
     "n": 1,
-    "asof": "20261126"
+    "asof": "20261127"
   },
-  "asof": "20261126",
+  "asof": "20261127",
   "live_trading": false,
   "note": "研究桌面综合分；纸面，不下单。情绪已计入全面统计分分层投票。",
-  "generated_at": "2026-11-26T17:59:07+00:00"
+  "generated_at": "2026-11-27T09:05:33+00:00"
 }

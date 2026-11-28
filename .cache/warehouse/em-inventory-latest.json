@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "asof": "2026-11-27",
+  "asof": "2026-11-28",
   "source": "eastmoney.futures_inventory_em",
   "role": "bypass",
   "universe_n": 27,
@@ -128,7 +128,7 @@
     },
     {
       "code": "L",
-      "em_symbol": "塑料",
+      "em_symbol": "聚乙烯",
       "date": "2026-11-27",
       "inventory": 3967.0,
       "change": -448.0,
@@ -307,5 +307,5 @@
       "end": "2026-11-27"
     }
   ],
-  "fetched_at": "2026-11-27 09:05:31"
+  "fetched_at": "2026-11-28 13:48:49"
 }

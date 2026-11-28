@@ -1,7 +1,7 @@
 {
   "ok": true,
   "code": "L",
-  "em_symbol": "塑料",
+  "em_symbol": "聚乙烯",
   "source": "eastmoney.futures_inventory_em",
   "rows": [
     {
@@ -349,5 +349,5 @@
     "inventory": 3967.0,
     "change": -448.0
   },
-  "fetched_at": "2026-11-27 09:05:03"
+  "fetched_at": "2026-11-28 13:48:41"
 }

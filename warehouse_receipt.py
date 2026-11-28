@@ -36,7 +36,7 @@ _EM_SYMBOL: dict[str, str] = {
     "TA": "PTA",
     "SA": "纯碱",
     "PP": "聚丙烯",
-    "L": "塑料",
+    "L": "聚乙烯",  # 东财 futures_inventory_em 可选名（「塑料」不存在，会导致 L 缺品种）
     "JD": "鸡蛋",
     "P": "棕榈",
     "RB": "螺纹钢",
@@ -614,6 +614,38 @@ def _recent_ymds(n: int = 5) -> list[str]:
     return out
 
 
+EM_BYPASS_MAX_LAG_BDAYS = 2  # 东财旁路最后一行落后交易所日超过此值视为陈旧
+
+
+def _asof_day(ex_pack: dict | None) -> date:
+    ymd = (ex_pack or {}).get("ymd")
+    try:
+        return datetime.strptime(str(ymd), "%Y%m%d").date()
+    except (TypeError, ValueError):
+        return date.today()
+
+
+def _bypass_stale_reason(row: dict[str, Any], asof: date) -> str | None:
+    """Why an EM bypass last row must not be shown as current receipts (None = usable)."""
+    try:
+        last = datetime.strptime(str(row.get("date")), "%Y-%m-%d").date()
+    except (TypeError, ValueError):
+        return "em_date_unparsed"
+    # business days strictly after `last` up to and including `asof`
+    lag = 0
+    d = last
+    while d < asof:
+        d = d + timedelta(days=1)
+        if d.weekday() < 5:
+            lag += 1
+    inv = row.get("inventory")
+    if inv == 0 and lag >= 1:
+        return "em_zero_no_follow_up"
+    if lag > EM_BYPASS_MAX_LAG_BDAYS:
+        return f"em_stale_{lag}bd"
+    return None
+
+
 def merge_latest(
     root: Path | None = None,
     *,
@@ -647,6 +679,7 @@ def merge_latest(
         if r.get("code")
     }
     ex_by = (ex_pack or {}).get("by_code") or {}
+    asof_day = _asof_day(ex_pack)
 
     rows = []
     for code in codes:
@@ -665,6 +698,25 @@ def merge_latest(
             )
         elif code in em_by and em_by[code].get("inventory") is not None:
             r = em_by[code]
+            stale_reason = _bypass_stale_reason(r, asof_day)
+            if stale_reason:
+                # 东财旁路不可信：不把 0 或陈旧数当作当前库存，保持 null。
+                rows.append(
+                    {
+                        "code": code,
+                        "date": r.get("date"),
+                        "receipt": None,
+                        "change": None,
+                        "source": None,
+                        "exchange": None,
+                        "bypass": False,
+                        "missing": True,
+                        "reason": stale_reason,
+                        "em_last_date": r.get("date"),
+                        "em_last_value": r.get("inventory"),
+                    }
+                )
+                continue
             rows.append(
                 {
                     "code": code,

@@ -114,6 +114,145 @@ def _df_zh(rows: list[dict[str, Any]] | dict[str, Any]) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
+_INBOX_STATUS_ZH = {"OK": "成功", "DUPLICATE": "重复（同日同源，未改动）", "REJECTED": "已拒绝"}
+_INBOX_REASON_ZH = {
+    "MISSING_L1": "缺少 l1_report.json",
+    "BAD_JSON": "JSON 无法解析",
+    "NOT_OBJECT": "根节点不是对象",
+    "SKIPPED": "L1 本日已跳过",
+    "MISSING_ASOF": "缺少业务日",
+    "SIGNALS_NOT_LIST": "signals 不是列表",
+}
+_INBOX_FLAG_ZH = {
+    "UNMAPPED": "未映射品种",
+    "QUALITY_WARN": "质量警告",
+    "MISSING_CODE": "缺少代码",
+}
+_INBOX_EVENT_ZH = {"ingest": "摄入"}
+
+# Inbox signal rows: display order and Chinese headers (storage keys stay English).
+# ``symbol`` / ``code`` are always identical in the archive, so both fold into one 品种 column;
+# ticker / source_path / source_hash / idempotency_key are audit-only and stay out of the table.
+_INBOX_ROW_COLS: list[tuple[str, str]] = [
+    ("_variety", "品种"),
+    ("bucket", "板块"),
+    ("direction_raw", "方向"),
+    ("selected", "日选"),
+    ("lots_l1", "L1手数"),
+    ("sleeve", "子策略"),
+    ("align", "对齐"),
+    ("action", "动作"),
+    ("close", "收盘"),
+    ("atr", "ATR"),
+    ("bar_date", "行情日期"),
+    ("signal_asof", "业务日"),
+    ("flags", "标记"),
+    ("received_at", "接收时间"),
+]
+
+
+def _universe_names(root: Path) -> dict[str, str]:
+    try:
+        doc = json.loads((Path(root) / "universe.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return {
+        str(s.get("code") or "").upper(): str(s.get("name") or "")
+        for s in (doc.get("symbols") or [])
+        if isinstance(s, dict)
+    }
+
+
+def _inbox_variety_label(root: Path, row: dict[str, Any], names: dict[str, str]) -> str:
+    """``MA2701 甲醇``: contract period + Chinese name (one column; replaces code/symbol)."""
+    from desk.loaders import format_variety_label
+
+    code = str(row.get("code") or row.get("symbol") or "").upper()
+    if not code:
+        return "—"
+    name = str(row.get("name") or names.get(code) or "")
+    return format_variety_label(code, name, root=root)
+
+
+def _inbox_rows_df(root: Path, rows: list[dict[str, Any]]) -> pd.DataFrame:
+    names = _universe_names(root)
+    labels: dict[str, str] = {}  # one dominant-contract lookup per code
+    out: list[dict[str, Any]] = []
+    for row in rows:
+        code = str(row.get("code") or row.get("symbol") or "").upper()
+        if code not in labels:
+            labels[code] = _inbox_variety_label(root, row, names)
+        item: dict[str, Any] = {}
+        for key, zh in _INBOX_ROW_COLS:
+            if key == "_variety":
+                v: Any = labels[code]
+            else:
+                v = row.get(key)
+                if key == "selected":
+                    v = "是" if v else "否"
+                elif key == "flags":
+                    v = "、".join(_INBOX_FLAG_ZH.get(str(f), str(f)) for f in (v or [])) or "—"
+                elif v is None or v == "":
+                    v = "—"
+            item[zh] = v
+        out.append(item)
+    return pd.DataFrame(out)
+
+
+def _inbox_summary_df(root: Path, latest: dict[str, Any]) -> pd.DataFrame:
+    """Chinese one-row summary of the latest ingest (latest.json + its by_asof doc for warn counts)."""
+    asof = str(latest.get("signal_asof") or "")
+    doc = load_inbox_asof(root, asof) if asof else None
+    doc = doc or {}
+    status = str(latest.get("status") or "")
+    item: dict[str, Any] = {
+        "状态": _INBOX_STATUS_ZH.get(status, status or "—"),
+        "业务日": asof or "—",
+        "接收时间": latest.get("received_at") or "—",
+        "信号行数": latest.get("n_rows"),
+        "未映射品种": latest.get("n_unmapped"),
+        "质量警告行数": doc.get("n_quality_warn", "—"),
+        "L1质量": ("通过" if doc.get("quality_ok") else "未通过") if "quality_ok" in doc else "—",
+        "源哈希(前12位)": str(latest.get("source_hash") or "")[:12] or "—",
+        "归档文件": latest.get("by_asof_rel") or "—",
+    }
+    return pd.DataFrame([item])
+
+
+def _ingest_result_df(result: dict[str, Any]) -> pd.DataFrame:
+    status = str(result.get("status") or "")
+    item: dict[str, Any] = {
+        "状态": _INBOX_STATUS_ZH.get(status, status or "—"),
+        "业务日": result.get("signal_asof") or "—",
+        "信号行数": result.get("n_rows", "—"),
+        "未映射品种": result.get("n_unmapped", "—"),
+        "接收时间": result.get("received_at") or "—",
+    }
+    if result.get("reason"):
+        item["原因"] = _INBOX_REASON_ZH.get(str(result["reason"]), str(result["reason"]))
+    return pd.DataFrame([item])
+
+
+def _inbox_events_df(rows: list[dict[str, Any]]) -> pd.DataFrame:
+    out: list[dict[str, Any]] = []
+    for r in rows:
+        status = str(r.get("status") or "")
+        reason = str(r.get("reason") or "")
+        out.append(
+            {
+                "接收时间": r.get("received_at") or "—",
+                "事件": _INBOX_EVENT_ZH.get(str(r.get("event") or ""), r.get("event") or "—"),
+                "状态": _INBOX_STATUS_ZH.get(status, status or "—"),
+                "业务日": r.get("signal_asof") or "—",
+                "信号行数": r.get("n_rows", "—"),
+                "原因": _INBOX_REASON_ZH.get(reason, reason) if reason else "—",
+                "备注": ("同业务日、同源哈希" if r.get("note") == "same asof+source_hash" else r.get("note")) or "—",
+                "源哈希(前12位)": str(r.get("source_hash") or "")[:12] or "—",
+            }
+        )
+    return pd.DataFrame(out)
+
+
 def _render_signal_inbox(root: Path) -> None:
     st.markdown("#### 信号收件箱（1B-0 · 只读观察）")
     st.caption(
@@ -138,16 +277,21 @@ def _render_signal_inbox(root: Path) -> None:
 
     if st.button("摄入今日 L1 → 收件箱", key="vp_ingest_l1"):
         try:
-            result = ingest_l1_to_inbox(root)
-            st.info(json.dumps(result, ensure_ascii=False))
+            # Keep the result across st.rerun() so the summary is visible after ingest.
+            st.session_state["vp_last_ingest"] = ingest_l1_to_inbox(root)
             st.rerun()
         except Exception as exc:  # noqa: BLE001 — show permission/guard errors
             st.error(str(exc))
 
+    last_ingest = st.session_state.get("vp_last_ingest")
+    if last_ingest:
+        st.markdown("**本次摄入结果**")
+        st.dataframe(_ingest_result_df(last_ingest), hide_index=True, use_container_width=True)
+
     latest = load_inbox_latest(root)
     if latest:
         st.markdown("**最近摄入摘要**")
-        st.dataframe(_df_zh(latest), hide_index=True, use_container_width=True)
+        st.dataframe(_inbox_summary_df(root, latest), hide_index=True, use_container_width=True)
 
     asofs = list_inbox_asofs(root)
     if asofs:
@@ -158,14 +302,19 @@ def _render_signal_inbox(root: Path) -> None:
             f"源哈希={doc.get('source_hash') or '—'} · 行数={len(rows)} · "
             f"未映射={doc.get('n_unmapped')} · 质量警告={doc.get('n_quality_warn')}"
         )
-        st.dataframe(_df_zh(rows[:200]) if rows else _df_zh({"msg": "无行"}), hide_index=True)
+        st.dataframe(
+            _inbox_rows_df(root, rows[:200]) if rows else pd.DataFrame({"说明": ["无行"]}),
+            hide_index=True,
+            use_container_width=True,
+        )
+        st.caption("品种列 = 期号 + 中文名（原代码与品种两列合并）。")
     else:
         st.info("收件箱为空。开启只读收信号后点击「摄入今日 L1」。")
 
     evs = load_inbox_events(root, limit=30)
     st.markdown("**收件箱事件尾部**")
     st.dataframe(
-        _df_zh(evs) if evs else _df_zh({"msg": "暂无事件"}),
+        _inbox_events_df(evs) if evs else pd.DataFrame({"说明": ["暂无事件"]}),
         hide_index=True,
         use_container_width=True,
     )

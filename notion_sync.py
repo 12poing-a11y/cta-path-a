@@ -397,6 +397,13 @@ def verify_signals(report_path: Path | None = None) -> dict:
     path = report_path or (ROOT / "l1_report_risk15.json")
     report = json.loads(path.read_text(encoding="utf-8"))
     asof = str(report.get("asof") or "")
+    if report.get("skipped"):
+        # Weekend / non-session run: daily_update writes a skip marker, not a signal day.
+        # Nothing to verify; do not fail the workflow on an empty signal set.
+        result = {"ok": True, "skipped": str(report.get("skipped")), "asof": asof, "quality": None, "notion": None}
+        (ROOT / "notion_daily_quality.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"[notion] verify skipped: {report.get('skipped')} asof={asof}")
+        return result
     if len(asof) != 8 or not asof.isdigit():
         raise RuntimeError(f"[notion] invalid report asof: {asof!r}")
     from research_quality import validate_signals

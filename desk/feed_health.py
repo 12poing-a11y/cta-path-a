@@ -139,6 +139,12 @@ def _vol_feed(root: Path, expected: date) -> dict[str, Any]:
     }
 
 
+_WH_REASON_ZH = {
+    "em_zero_no_follow_up": "东财末行为0且之后无数据，疑似停更",
+    "em_date_unparsed": "东财日期无法解析",
+}
+
+
 def _warehouse_feed(root: Path, expected: date) -> dict[str, Any]:
     raw = _read_json(Path(root) / ".cache" / "warehouse" / "latest.json") or {}
     asof = _parse_ymd(raw.get("asof") or raw.get("exchange_ymd"))
@@ -161,6 +167,13 @@ def _warehouse_feed(root: Path, expected: date) -> dict[str, Any]:
         notes.append("大商所主源反爬(412)，铁矿/焦煤等用东财旁路")
     if lag and lag > 0:
         notes.append(f"落后约 {lag} 日")
+    missing_rows = [r for r in (raw.get("rows") or []) if isinstance(r, dict) and r.get("missing")]
+    if missing_rows:
+        parts = [
+            f"{r.get('code')}({_WH_REASON_ZH.get(str(r.get('reason') or ''), r.get('reason') or '无数据')})"
+            for r in missing_rows
+        ]
+        notes.append("缺: " + "、".join(parts))
     if hard_down or missing_n > 0 or stale:
         status = "主源异常" if hard_down else ("滞后" if stale else "缺品种")
         is_stale = True
